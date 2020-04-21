@@ -30,7 +30,7 @@ export class ApiCheckComponent implements OnInit {
   public params = '{}';
 
   constructor(
-    private restApiService: RestApiService,
+    private restAPIService: RestApiService,
     private apiFactory: APIFactory
   ) { }
 
@@ -45,7 +45,7 @@ export class ApiCheckComponent implements OnInit {
   }
 
   send() {
-    this.api$ = this.restApiService.dispatchRestApi(this.currentSelectAPI, JSON.parse(this.params)).pipe(
+    this.api$ = this.restAPIService.dispatchRestApi(this.currentSelectAPI, JSON.parse(this.params)).pipe(
       map(x => JSON.stringify(x.body)),
       catchError(err => {
         this.errorObject = `Error:${err}`;

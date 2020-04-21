@@ -12,7 +12,7 @@ import { GlobalHeader } from './common/global-header';
 @NgModule({
   declarations: [
     AppComponent,
-    ApiCheckComponent
+    ApiCheckComponent,
   ],
   imports: [
     BrowserModule,

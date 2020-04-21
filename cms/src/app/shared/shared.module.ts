@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UiModule } from '@neux/ui';
 import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from '@neux/core';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     FormsModule,
     UiModule,
-    HttpClientModule
+    HttpClientModule,
+    CoreModule
   ]
 })
 export class SharedModule { }

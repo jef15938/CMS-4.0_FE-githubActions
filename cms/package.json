@@ -20,7 +20,7 @@
     "@angular/platform-browser": "~9.1.1",
     "@angular/platform-browser-dynamic": "~9.1.1",
     "@angular/router": "~9.1.1",
-    "@neux/core": "0.0.9",
+    "@neux/core": "file:../../neux-core/neux-core/dist/core",
     "@neux/ui": "0.0.25-beta.5",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.1",
