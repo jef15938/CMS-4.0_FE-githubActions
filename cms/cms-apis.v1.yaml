@@ -1,0 +1,743 @@
+openapi: 3.0.0
+info:
+  title: CMS Backend API
+  version: "4.0"
+  description: Provider CMS Backend communication API
+  license:
+    name: neux-garden
+servers:
+  - url: "http://cms.decoder.com.tw"
+paths:
+  "/Gallery/{categoryID}":
+    get:
+      summary: GetGallery
+      tags:
+        - Gallery
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GalleryGetResponse"
+      operationId: get-gallery
+      description: 顯示該目錄底下的媒體清單
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+        - schema:
+            type: number
+            default: 1
+            minimum: 1
+          in: query
+          name: page
+    parameters:
+      - schema:
+          type: string
+        name: categoryID
+        in: path
+        required: true
+  /GalleryCategory:
+    get:
+      summary: GetGalleryCategory
+      tags:
+        - Gallery
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GalleryCaregoryGetResponse"
+      operationId: get-GalleryCategory
+      description: 顯示該使用者可看到哪些媒體庫目錄
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+    parameters: []
+  /Login:
+    post:
+      summary: Login
+      operationId: post-Logout
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+      tags:
+        - Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+      description: 登入CMS
+    parameters: []
+  /Department:
+    get:
+      summary: GetDepartment
+      tags:
+        - System
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DepartmentGetResponse"
+      operationId: get-Dept
+      description: 顯示所有部門樹狀結構
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          required: true
+          description: application/json
+    parameters: []
+  "/GalleryCategory/{categoryID}":
+    parameters:
+      - schema:
+          type: string
+        name: categoryID
+        in: path
+        description: 新增不需傳值
+    delete:
+      summary: DeleteGalleryCategory
+      operationId: delete-GalleryCategory-categoryID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationHeader"
+      tags:
+        - Gallery
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+      description: 刪除媒體目錄
+    put:
+      summary: UpdateGalleryCategory
+      operationId: put-GalleryCategory-categoryID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationHeader"
+      tags:
+        - Gallery
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GalleryCategoryMaintainRequest"
+        description: ""
+      description: 用於更新目錄名稱/移動父層使用
+    post:
+      summary: CreateGalleryCategory
+      operationId: post-GalleryCategory-categoryID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationHeader"
+      description: 建立媒體目錄
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GalleryCategoryMaintainRequest"
+      tags:
+        - Gallery
+  "/Menu/{userID}":
+    get:
+      summary: GetCMSMenu
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuGetResponse"
+      operationId: get-Function
+      description: |-
+        登入後取得使用者可存取的CMS選單需傳入userID。
+        當如果針對群組設定可使用功能時，會需要顯示「所有」CMS的功能就不需傳入userID。
+      tags:
+        - Menu
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+    parameters:
+      - schema:
+          type: string
+        name: userID
+        in: path
+        description: ""
+  /Logout:
+    get:
+      summary: Logout
+      tags:
+        - Authorization
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LogoutResponse"
+      operationId: get-Logout
+      description: 登出CMS
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+  "/Department/{deptID}":
+    parameters:
+      - schema:
+          type: string
+        name: deptID
+        in: path
+        required: true
+    put:
+      summary: UpdateDepartment
+      operationId: put-Department-deptID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationHeader"
+      description: 更新部門節點
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DepartmentMaintainRequest"
+      tags:
+        - System
+    delete:
+      summary: DeleteDepartment
+      operationId: delete-Department-deptID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationHeader"
+      description: 刪除部門節點
+      tags:
+        - System
+    post:
+      summary: CreateDepartment
+      operationId: post-Department-deptID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationHeader"
+      description: 顯示所有部門樹狀結構
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DepartmentMaintainRequest"
+      tags:
+        - System
+  /Auditing:
+    get:
+      summary: GetAuditingList
+      tags:
+        - Auditing
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditingGetResponse"
+        "":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditingGetResponse"
+      operationId: get-Auditing
+      description: 取得主管待審清單
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+        - schema:
+            type: number
+            default: 1
+            minimum: 1
+          in: query
+          name: page
+    parameters: []
+  "/Auditing/{orderID}":
+    get:
+      summary: GetAuditingDetail
+      tags:
+        - Auditing
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditingDetailGetResponse"
+      operationId: get-Auditing
+      description: 取得審核單明細
+    parameters:
+      - schema:
+          type: number
+        name: orderID
+        in: path
+        required: true
+    post:
+      summary: ApproveAuditing
+      operationId: post-Auditing-orderID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationHeader"
+      description: 主管簽核
+      tags:
+        - Auditing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuditingSubmitRequest"
+components:
+  schemas:
+    LoginRequest:
+      title: LoginRequest
+      type: object
+      properties:
+        username:
+          type: string
+          description: 帳號
+        password:
+          type: string
+          description: 密碼
+        validation_code:
+          type: number
+          description: 圖形驗證碼
+      required:
+        - username
+        - password
+        - validation_code
+    GenerationHeader:
+      title: GenerationHeader
+      type: object
+      properties:
+        error_code:
+          type: string
+          description: 錯誤碼，成功回傳：000，其他視為異常
+        error_message:
+          type: string
+          description: 異常訊息
+      required:
+        - error_code
+    LoginResponse:
+      title: LoginResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+        body:
+          $ref: "#/components/schemas/LoginInfo"
+      required:
+        - header
+        - body
+    LoginInfo:
+      title: LoginInfo
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: 登入帳號
+        user_name:
+          type: string
+          description: 登入者姓名
+        dept_id:
+          type: string
+          description: 部門代碼
+      required:
+        - user_id
+        - user_name
+        - dept_id
+    LogoutResponse:
+      title: LogoutResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+      required:
+        - header
+    MenuGetResponse:
+      title: MenuGetResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+        body:
+          type: array
+          items:
+            $ref: "#/components/schemas/MenuInfo"
+    MenuInfo:
+      title: MenuInfo
+      type: object
+      properties:
+        func_id:
+          type: string
+          example: sitemanagement
+          description: 功能代碼
+        func_name:
+          type: string
+          example: 節點管理
+          description: 功能名稱
+        component_id:
+          type: string
+          description: 元件代碼
+        children:
+          type: array
+          description: 下層功能
+          items:
+            $ref: "#/components/schemas/MenuInfo"
+      required:
+        - func_id
+        - func_name
+        - children
+    GalleryCaregoryGetResponse:
+      title: GalleryCaregoryGetResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+        body:
+          type: array
+          items:
+            $ref: "#/components/schemas/GalleryCategoryInfo"
+    GalleryCategoryInfo:
+      title: GalleryCategoryInfo
+      type: object
+      properties:
+        category_id:
+          type: string
+          example: "1"
+          description: 目錄代碼
+        category_name:
+          type: string
+          example: 個資相關PDF
+          description: 目錄名稱
+        can_upload:
+          type: boolean
+          example: "true"
+          description: 是否能上傳至該目錄
+        children:
+          type: array
+          description: 子層目錄
+          items:
+            $ref: "#/components/schemas/GalleryCategoryInfo"
+      required:
+        - category_id
+        - category_name
+        - can_upload
+    GalleryCategoryPushResponse:
+      title: GalleryCategoryPushResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+        body:
+          $ref: "#/components/schemas/GalleryCategoryInfo"
+    GalleryGetResponse:
+      title: GalleryGetResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+        body:
+          type: object
+          properties:
+            pageInfo:
+              $ref: "#/components/schemas/PageInfo"
+            datas:
+              type: array
+              items:
+                $ref: "#/components/schemas/GalleryInfo"
+    GalleryInfo:
+      title: GalleryInfo
+      type: object
+      properties:
+        gallery_id:
+          type: number
+          description: 媒體代碼
+        file_name:
+          type: string
+          example: sample-1.png
+          description: 檔名
+        size:
+          type: string
+          description: 檔案大小(單位：kb)
+          example: "350"
+        file_type:
+          type: string
+          enum:
+            - PDF
+            - DOC
+            - DOCX
+            - XLS
+            - XLSX
+            - PNG
+            - JPG
+            - JPEG
+            - GIF
+          description: 檔案類型
+        create_time:
+          type: string
+          format: date-time
+          example: "2020-04-30 15:00:00"
+          description: 檔案建立時間
+      required:
+        - gallery_id
+        - file_name
+        - size
+        - file_type
+        - create_time
+    PageInfo:
+      title: PageInfo
+      type: object
+      properties:
+        totalPageSize:
+          type: number
+          description: 總頁數
+        totalRecSize:
+          type: number
+          description: 總筆數
+        page:
+          type: number
+          description: 目前頁數
+    DepartmentInfo:
+      title: DepartmentInfo
+      type: object
+      description: ""
+      properties:
+        dept_id:
+          type: string
+          description: 部門代碼
+        dept_name:
+          type: string
+          description: 部門名稱
+        children:
+          type: array
+          description: 子層部門
+          items:
+            $ref: "#/components/schemas/DepartmentInfo"
+      required:
+        - dept_id
+        - dept_name
+        - children
+    DepartmentGetResponse:
+      title: DepartmentGetResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+        body:
+          type: object
+          properties:
+            pageInfo:
+              $ref: "#/components/schemas/PageInfo"
+            datas:
+              type: array
+              items:
+                $ref: "#/components/schemas/DepartmentInfo"
+    DepartmentMaintainRequest:
+      title: DepartmentMaintainRequest
+      type: object
+      description: ""
+      properties:
+        dept_name:
+          type: string
+          description: 部門名稱
+        parent_id:
+          type: string
+          description: 上層部門(若為第一層不需傳值)
+      required:
+        - dept_name
+    GalleryCategoryMaintainRequest:
+      title: GalleryCategoryMaintainRequest
+      type: object
+      properties:
+        category_name:
+          type: string
+          description: 目錄名稱
+        parent_id:
+          type: string
+          description: 上層代碼(若為第一層不需傳值)
+        assign_dept_id:
+          type: string
+          description: |-
+            指定給哪些部門使用(新增需帶入登入者部門且不能取消)
+
+            多個部門用半形(,)逗點分開
+      required:
+        - category_name
+        - assign_dept_id
+    AuditingInfo:
+      title: AuditingInfo
+      type: object
+      properties:
+        order_id:
+          type: number
+          description: 審核單號
+        order_name:
+          type: string
+          description: 審核單名稱
+        version:
+          type: number
+          description: 資料版本
+        start_time:
+          type: string
+          format: date-time
+          description: 上架時間
+        end_time:
+          type: string
+          format: date-time
+          description: 下架時間
+        submit_comment:
+          type: string
+          description: 送審意見
+        create_name:
+          type: string
+          description: 送審姓名
+      required:
+        - order_id
+        - order_name
+        - version
+        - start_time
+        - end_time
+        - create_name
+    AuditingGetResponse:
+      title: AuditingGetResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+        body:
+          type: object
+          properties:
+            pageInfo:
+              $ref: "#/components/schemas/PageInfo"
+            datas:
+              type: array
+              items:
+                $ref: "#/components/schemas/AuditingInfo"
+    AuditingDetailInfo:
+      title: AuditingDetailInfo
+      type: object
+      properties:
+        auditing_group_name:
+          type: string
+          description: 簽核群組名稱
+        auditing_stage:
+          type: number
+          description: 簽核階段
+        auditing_name:
+          type: string
+          description: 簽核主管姓名
+        auditing_dept_name:
+          type: string
+          description: 簽核部門名稱
+        status:
+          type: string
+          description: 簽核狀態
+        auditing_time:
+          type: string
+          format: date-time
+          description: 簽核時間
+        auditing_comment:
+          type: string
+          description: 簽核意見
+      required:
+        - auditing_group_name
+        - auditing_stage
+    AuditingDetailGetResponse:
+      title: AuditingDetailGetResponse
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/GenerationHeader"
+        body:
+          type: array
+          items:
+            $ref: "#/components/schemas/AuditingDetailInfo"
+    AuditingSubmitRequest:
+      title: AuditingSubmitRequest
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - REJECT
+            - APPROVED
+          description: 審核結果
+        comment:
+          type: string
+          description: 審核意見
+      required:
+        - status
+  securitySchemes: {}
