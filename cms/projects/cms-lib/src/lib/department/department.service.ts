@@ -62,6 +62,13 @@ export class DepartmentService {
     return this.restAPIService.dispatchRestApi('GetDepartment', {});
   }
 
+  /**
+   *
+   *
+   * @param {string} deptID
+   * @returns
+   * @memberof DepartmentService
+   */
   updateDepartment(deptID: string) {
     if (!deptID) {
       throw new ParamsError('deptID', 'createDepartment', 'string', deptID);

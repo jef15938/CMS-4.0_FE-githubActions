@@ -123,6 +123,46 @@
           }
         }
       }
+    },
+    "cms-lib": {
+      "projectType": "library",
+      "root": "projects/cms-lib",
+      "sourceRoot": "projects/cms-lib/src",
+      "prefix": "cms",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/cms-lib/tsconfig.lib.json",
+            "project": "projects/cms-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/cms-lib/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/cms-lib/src/test.ts",
+            "tsConfig": "projects/cms-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/cms-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/cms-lib/tsconfig.lib.json",
+              "projects/cms-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "cms",
