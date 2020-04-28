@@ -4,9 +4,9 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * GetCMSMenu
+ * GetCMSAllMenu
  */
-export class GetMenuByUserIDAPI implements API, MockAPI, RestfulAPI {
+export class GetCMSMenuAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
     
@@ -14,7 +14,7 @@ export class GetMenuByUserIDAPI implements API, MockAPI, RestfulAPI {
     constructor() { }
 
     public getAPIName(): string {
-        return 'GetMenuByUserID';
+        return 'GetCMSMenu';
     }
 
     public getRequestData(): APIRequest {
@@ -28,7 +28,7 @@ export class GetMenuByUserIDAPI implements API, MockAPI, RestfulAPI {
     }
 
     public getMockPath(): string {
-        return './assets/mock/GetMenuByUserIDAPI.json';
+        return './assets/mock/GetCMSMenuAPI.json';
     }
 
 }

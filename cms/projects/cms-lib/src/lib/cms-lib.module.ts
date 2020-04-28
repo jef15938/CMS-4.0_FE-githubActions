@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-
+import { SharedModule } from './shared/shared.module';
+import { ApiCheckComponent } from './neuxAPI/api-check.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ApiCheckComponent
+  ],
   imports: [
-    CommonModule
+    SharedModule
+  ],
+  exports: [
+    ApiCheckComponent
   ]
 })
 export class CmsLibModule { }

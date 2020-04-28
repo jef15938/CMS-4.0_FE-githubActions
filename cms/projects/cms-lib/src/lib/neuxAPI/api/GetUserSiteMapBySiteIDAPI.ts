@@ -1,37 +1,34 @@
 import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
-import {GalleryCategoryMaintainRequest} from '../bean/GalleryCategoryMaintainRequest';
 
 
 /**
- * CreateGalleryCategory
+ * GetUserSiteMap
  */
-export class PostGalleryCategoryByCategoryIDAPI implements API, MockAPI, RestfulAPI {
+export class GetUserSiteMapBySiteIDAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
-    public requestBody: GalleryCategoryMaintainRequest;
-
+    
 
     constructor() { }
 
     public getAPIName(): string {
-        return 'PostGalleryCategoryByCategoryID';
+        return 'GetUserSiteMapBySiteID';
     }
 
     public getRequestData(): APIRequest {
         let queryParams = new HttpParams();
         let requestData = new APIRequest();
-        requestData.body = this.requestBody;
-
-        requestData.type = 'POST';
+        
+        requestData.type = 'GET';
         requestData.params = queryParams;
         requestData.url = this.url;
         return requestData;
     }
 
     public getMockPath(): string {
-        return './assets/mock/PostGalleryCategoryByCategoryIDAPI.json';
+        return './assets/mock/GetUserSiteMapBySiteIDAPI.json';
     }
 
 }

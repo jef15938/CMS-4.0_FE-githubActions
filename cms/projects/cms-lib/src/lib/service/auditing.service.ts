@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from 'src/neuxAPI/rest-api.service';
+import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
 
 @Injectable({
@@ -14,15 +14,24 @@ export class AuditingService {
   /**
    *
    *
-   * @param {string} orderID Auditing order ID
+   * @param {number} orderID Auditing order ID
+   * @param {string} status required
+   * @param {string} comment optional
    * @returns
    * @memberof AuditingService
    */
-  approveAuditing(orderID: string) {
-    if (!orderID) {
-      throw new ParamsError('orderID', 'approveAuditing', 'string', orderID);
-    }
-    return this.restAPIService.dispatchRestApi('PostAuditingByOrderID', { orderID });
+  approveAuditing(orderID: number, status: string, comment?: string) {
+    if (!orderID) { throw new ParamsError('deptID', 'approveAuditing', 'number', orderID); }
+    if (!status) { throw new ParamsError('status', 'approveAuditing', 'string', status); }
+
+    const params: { [k: string]: any } = {
+      orderID,
+      status,
+    };
+
+    if (comment) { params.comment = comment; }
+
+    return this.restAPIService.dispatchRestApi('PostAuditingByOrderID', params);
   }
 
   /**
@@ -32,7 +41,7 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  getAuditingDetail(orderID: string) {
+  getAuditingDetail(orderID: number) {
     if (!orderID) {
       throw new ParamsError('orderID', 'approveAuditing', 'string', orderID);
     }

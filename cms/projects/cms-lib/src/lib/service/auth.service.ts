@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from 'src/neuxAPI/rest-api.service';
+import { RestApiService } from '../neuxAPI/rest-api.service';
+import { LoginRequest } from '../neuxAPI/bean/LoginRequest';
 import { ParamsError } from '@neux/core';
-import { LoginRequest } from 'src/neuxAPI/bean/LoginRequest';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,6 +12,16 @@ export class AuthService {
   constructor(
     private restAPIService: RestApiService,
   ) { }
+
+  /**
+   *
+   *
+   * @returns
+   * @memberof AuthService
+   */
+  getLoginInfo() {
+    return this.restAPIService.dispatchRestApi('GetLoginInfo', {});
+  }
 
   /**
    *
@@ -40,9 +50,14 @@ export class AuthService {
     return this.restAPIService.dispatchRestApi('PostLoginAPI', { requestBody: loginRequest });
   }
 
-
+  /**
+   *
+   *
+   * @returns
+   * @memberof AuthService
+   */
   logout() {
-    // TODO:check api spec
+    return this.restAPIService.dispatchRestApi('GetLogout', {});
   }
 
 

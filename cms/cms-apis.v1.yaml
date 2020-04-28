@@ -1,25 +1,25 @@
 openapi: 3.0.0
 info:
   title: CMS Backend API
-  version: "4.0"
+  version: '4.0'
   description: Provider CMS Backend communication API
   license:
     name: neux-garden
 servers:
-  - url: "http://cms.decoder.com.tw"
+  - url: 'http://cms.decoder.com.tw'
 paths:
-  "/Gallery/{categoryID}":
+  '/Gallery/{categoryID}':
     get:
       summary: GetGallery
       tags:
         - Gallery
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GalleryGetResponse"
+                $ref: '#/components/schemas/GalleryGetResponse'
       operationId: get-gallery
       description: 顯示該目錄底下的媒體清單
       parameters:
@@ -47,12 +47,12 @@ paths:
       tags:
         - Gallery
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GalleryCaregoryGetResponse"
+                $ref: '#/components/schemas/GalleryCaregoryGetResponse'
       operationId: get-GalleryCategory
       description: 顯示該使用者可看到哪些媒體庫目錄
       parameters:
@@ -63,24 +63,42 @@ paths:
           description: application/json
           required: true
     parameters: []
+    post:
+      summary: CreateGalleryCategory
+      operationId: post-GalleryCategory
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      description: 建立媒體庫目錄
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GalleryCategoryPutRequest'
+      tags:
+        - Gallery
   /Login:
     post:
       summary: Login
       operationId: post-Logout
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LoginResponse"
+                $ref: '#/components/schemas/LoginResponse'
       tags:
         - Authorization
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoginRequest"
+              $ref: '#/components/schemas/LoginRequest'
       parameters:
         - schema:
             type: string
@@ -96,12 +114,12 @@ paths:
       tags:
         - System
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DepartmentGetResponse"
+                $ref: '#/components/schemas/DepartmentGetResponse'
       operationId: get-Dept
       description: 顯示所有部門樹狀結構
       parameters:
@@ -112,23 +130,24 @@ paths:
           required: true
           description: application/json
     parameters: []
-  "/GalleryCategory/{categoryID}":
+  '/GalleryCategory/{categoryID}':
     parameters:
       - schema:
           type: string
         name: categoryID
         in: path
-        description: 新增不需傳值
+        description: ''
+        required: true
     delete:
       summary: DeleteGalleryCategory
       operationId: delete-GalleryCategory-categoryID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GenerationHeader"
+                $ref: '#/components/schemas/GenerationHeader'
       tags:
         - Gallery
       parameters:
@@ -143,12 +162,12 @@ paths:
       summary: UpdateGalleryCategory
       operationId: put-GalleryCategory-categoryID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GenerationHeader"
+                $ref: '#/components/schemas/GenerationHeader'
       tags:
         - Gallery
       parameters:
@@ -162,41 +181,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GalleryCategoryMaintainRequest"
-        description: ""
+              $ref: '#/components/schemas/GalleryCategoryPutRequest'
+        description: ''
       description: 用於更新目錄名稱/移動父層使用
-    post:
-      summary: CreateGalleryCategory
-      operationId: post-GalleryCategory-categoryID
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GenerationHeader"
-      description: 建立媒體目錄
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/GalleryCategoryMaintainRequest"
-      tags:
-        - Gallery
-  "/Menu/{userID}":
+  /UserMenu:
     get:
-      summary: GetCMSMenu
+      summary: GetLoginUserCMSMenu
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MenuGetResponse"
-      operationId: get-Function
-      description: |-
-        登入後取得使用者可存取的CMS選單需傳入userID。
-        當如果針對群組設定可使用功能時，會需要顯示「所有」CMS的功能就不需傳入userID。
+                $ref: '#/components/schemas/MenuGetResponse'
+      operationId: get-UserMenu
+      description: 取得User登入可存取的CMSMenu
       tags:
         - Menu
       parameters:
@@ -206,24 +205,19 @@ paths:
           name: Content-Type
           description: application/json
           required: true
-    parameters:
-      - schema:
-          type: string
-        name: userID
-        in: path
-        description: ""
+    parameters: []
   /Logout:
     get:
       summary: Logout
       tags:
         - Authorization
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LogoutResponse"
+                $ref: '#/components/schemas/LogoutResponse'
       operationId: get-Logout
       description: 登出CMS
       parameters:
@@ -233,7 +227,7 @@ paths:
           name: Content-Type
           description: application/json
           required: true
-  "/Department/{deptID}":
+  '/Department/{deptID}':
     parameters:
       - schema:
           type: string
@@ -244,30 +238,30 @@ paths:
       summary: UpdateDepartment
       operationId: put-Department-deptID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GenerationHeader"
+                $ref: '#/components/schemas/GenerationHeader'
       description: 更新部門節點
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DepartmentMaintainRequest"
+              $ref: '#/components/schemas/DepartmentMaintainRequest'
       tags:
         - System
     delete:
       summary: DeleteDepartment
       operationId: delete-Department-deptID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GenerationHeader"
+                $ref: '#/components/schemas/GenerationHeader'
       description: 刪除部門節點
       tags:
         - System
@@ -275,18 +269,18 @@ paths:
       summary: CreateDepartment
       operationId: post-Department-deptID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GenerationHeader"
+                $ref: '#/components/schemas/GenerationHeader'
       description: 顯示所有部門樹狀結構
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DepartmentMaintainRequest"
+              $ref: '#/components/schemas/DepartmentMaintainRequest'
       tags:
         - System
   /Auditing:
@@ -295,17 +289,12 @@ paths:
       tags:
         - Auditing
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuditingGetResponse"
-        "":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AuditingGetResponse"
+                $ref: '#/components/schemas/AuditingGetResponse'
       operationId: get-Auditing
       description: 取得主管待審清單
       parameters:
@@ -321,19 +310,19 @@ paths:
           in: query
           name: page
     parameters: []
-  "/Auditing/{orderID}":
+  '/Auditing/{orderID}':
     get:
       summary: GetAuditingDetail
       tags:
         - Auditing
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuditingDetailGetResponse"
-      operationId: get-Auditing
+                $ref: '#/components/schemas/AuditingDetailGetResponse'
+      operationId: get-AuditingDetail
       description: 取得審核單明細
     parameters:
       - schema:
@@ -345,12 +334,12 @@ paths:
       summary: ApproveAuditing
       operationId: post-Auditing-orderID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GenerationHeader"
+                $ref: '#/components/schemas/GenerationHeader'
       description: 主管簽核
       tags:
         - Auditing
@@ -358,7 +347,133 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AuditingSubmitRequest"
+              $ref: '#/components/schemas/AuditingSubmitRequest'
+  /LoginInfo:
+    get:
+      summary: GetLoginInfo
+      tags:
+        - Authorization
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+      operationId: get-LoginInfo
+      description: 取得登入者資料
+  '/CMSSiteMap/{siteID}':
+    get:
+      summary: GetCMSSiteMap
+      tags:
+        - SiteMap
+      operationId: get-SiteMap
+      description: 取得全站SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMapGetResponse'
+    parameters:
+      - schema:
+          type: string
+        name: siteID
+        in: path
+        required: true
+        description: 網站代碼
+  /CMSMenu:
+    get:
+      summary: GetCMSAllMenu
+      tags:
+        - Menu
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuGetResponse'
+      operationId: get-CMSMenu
+      description: 取得CMS所有功能清單
+  '/UserSiteMap/{siteID}':
+    get:
+      summary: GetUserSiteMap
+      tags:
+        - SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMapGetResponse'
+      operationId: get-UserSiteMap
+      description: 取得登入者可存取SiteMap
+    post:
+      summary: CreateSiteNode
+      operationId: post-UserSiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      tags:
+        - SiteMap
+      description: 建立節點
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSiteMapPostRequest'
+        description: ''
+    parameters:
+      - schema:
+          type: string
+        name: siteID
+        in: path
+        required: true
+        description: 網站代碼
+  '/UserSiteMap/{nodeID}':
+    put:
+      summary: UpdateUserSiteMap
+      operationId: put-UserSiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      description: 更新節點
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSiteMapPutRequest'
+      tags:
+        - SiteMap
+    parameters:
+      - schema:
+          type: string
+        name: nodeID
+        in: path
+        required: true
+    delete:
+      summary: DeleteUserSiteMap
+      operationId: delete-UserSiteMap-nodeID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      tags:
+        - SiteMap
 components:
   schemas:
     LoginRequest:
@@ -378,6 +493,8 @@ components:
         - username
         - password
         - validation_code
+      x-tags:
+        - Model
     GenerationHeader:
       title: GenerationHeader
       type: object
@@ -390,17 +507,21 @@ components:
           description: 異常訊息
       required:
         - error_code
+      x-tags:
+        - Model
     LoginResponse:
       title: LoginResponse
       type: object
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
         body:
-          $ref: "#/components/schemas/LoginInfo"
+          $ref: '#/components/schemas/LoginInfo'
       required:
         - header
         - body
+      x-tags:
+        - Model
     LoginInfo:
       title: LoginInfo
       type: object
@@ -418,24 +539,30 @@ components:
         - user_id
         - user_name
         - dept_id
+      x-tags:
+        - Model
     LogoutResponse:
       title: LogoutResponse
       type: object
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
       required:
         - header
+      x-tags:
+        - Model
     MenuGetResponse:
       title: MenuGetResponse
       type: object
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
         body:
           type: array
           items:
-            $ref: "#/components/schemas/MenuInfo"
+            $ref: '#/components/schemas/MenuInfo'
+      x-tags:
+        - Model
     MenuInfo:
       title: MenuInfo
       type: object
@@ -455,28 +582,32 @@ components:
           type: array
           description: 下層功能
           items:
-            $ref: "#/components/schemas/MenuInfo"
+            $ref: '#/components/schemas/MenuInfo'
       required:
         - func_id
         - func_name
         - children
+      x-tags:
+        - Model
     GalleryCaregoryGetResponse:
       title: GalleryCaregoryGetResponse
       type: object
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
         body:
           type: array
           items:
-            $ref: "#/components/schemas/GalleryCategoryInfo"
+            $ref: '#/components/schemas/GalleryCategoryInfo'
+      x-tags:
+        - Model
     GalleryCategoryInfo:
       title: GalleryCategoryInfo
       type: object
       properties:
         category_id:
           type: string
-          example: "1"
+          example: '1'
           description: 目錄代碼
         category_name:
           type: string
@@ -484,40 +615,46 @@ components:
           description: 目錄名稱
         can_upload:
           type: boolean
-          example: "true"
+          example: 'true'
           description: 是否能上傳至該目錄
         children:
           type: array
           description: 子層目錄
           items:
-            $ref: "#/components/schemas/GalleryCategoryInfo"
+            $ref: '#/components/schemas/GalleryCategoryInfo'
       required:
         - category_id
         - category_name
         - can_upload
+      x-tags:
+        - Model
     GalleryCategoryPushResponse:
       title: GalleryCategoryPushResponse
       type: object
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
         body:
-          $ref: "#/components/schemas/GalleryCategoryInfo"
+          $ref: '#/components/schemas/GalleryCategoryInfo'
+      x-tags:
+        - Model
     GalleryGetResponse:
       title: GalleryGetResponse
       type: object
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
         body:
           type: object
           properties:
             pageInfo:
-              $ref: "#/components/schemas/PageInfo"
+              $ref: '#/components/schemas/PageInfo'
             datas:
               type: array
               items:
-                $ref: "#/components/schemas/GalleryInfo"
+                $ref: '#/components/schemas/GalleryInfo'
+      x-tags:
+        - Model
     GalleryInfo:
       title: GalleryInfo
       type: object
@@ -532,7 +669,7 @@ components:
         size:
           type: string
           description: 檔案大小(單位：kb)
-          example: "350"
+          example: '350'
         file_type:
           type: string
           enum:
@@ -549,7 +686,7 @@ components:
         create_time:
           type: string
           format: date-time
-          example: "2020-04-30 15:00:00"
+          example: '2020-04-30 15:00:00'
           description: 檔案建立時間
       required:
         - gallery_id
@@ -557,6 +694,8 @@ components:
         - size
         - file_type
         - create_time
+      x-tags:
+        - Model
     PageInfo:
       title: PageInfo
       type: object
@@ -570,10 +709,12 @@ components:
         page:
           type: number
           description: 目前頁數
+      x-tags:
+        - Model
     DepartmentInfo:
       title: DepartmentInfo
       type: object
-      description: ""
+      description: ''
       properties:
         dept_id:
           type: string
@@ -585,30 +726,29 @@ components:
           type: array
           description: 子層部門
           items:
-            $ref: "#/components/schemas/DepartmentInfo"
+            $ref: '#/components/schemas/DepartmentInfo'
       required:
         - dept_id
         - dept_name
         - children
+      x-tags:
+        - Model
     DepartmentGetResponse:
       title: DepartmentGetResponse
       type: object
+      x-tags:
+        - Model
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
         body:
-          type: object
-          properties:
-            pageInfo:
-              $ref: "#/components/schemas/PageInfo"
-            datas:
-              type: array
-              items:
-                $ref: "#/components/schemas/DepartmentInfo"
+          type: array
+          items:
+            $ref: '#/components/schemas/DepartmentInfo'
     DepartmentMaintainRequest:
       title: DepartmentMaintainRequest
       type: object
-      description: ""
+      description: ''
       properties:
         dept_name:
           type: string
@@ -618,8 +758,10 @@ components:
           description: 上層部門(若為第一層不需傳值)
       required:
         - dept_name
-    GalleryCategoryMaintainRequest:
-      title: GalleryCategoryMaintainRequest
+      x-tags:
+        - Model
+    GalleryCategoryPutRequest:
+      title: GalleryCategoryPutRequest
       type: object
       properties:
         category_name:
@@ -637,6 +779,8 @@ components:
       required:
         - category_name
         - assign_dept_id
+      x-tags:
+        - Model
     AuditingInfo:
       title: AuditingInfo
       type: object
@@ -671,21 +815,25 @@ components:
         - start_time
         - end_time
         - create_name
+      x-tags:
+        - Model
     AuditingGetResponse:
       title: AuditingGetResponse
       type: object
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
         body:
           type: object
           properties:
             pageInfo:
-              $ref: "#/components/schemas/PageInfo"
+              $ref: '#/components/schemas/PageInfo'
             datas:
               type: array
               items:
-                $ref: "#/components/schemas/AuditingInfo"
+                $ref: '#/components/schemas/AuditingInfo'
+      x-tags:
+        - Model
     AuditingDetailInfo:
       title: AuditingDetailInfo
       type: object
@@ -715,16 +863,20 @@ components:
       required:
         - auditing_group_name
         - auditing_stage
+      x-tags:
+        - Model
     AuditingDetailGetResponse:
       title: AuditingDetailGetResponse
       type: object
       properties:
         header:
-          $ref: "#/components/schemas/GenerationHeader"
+          $ref: '#/components/schemas/GenerationHeader'
         body:
           type: array
           items:
-            $ref: "#/components/schemas/AuditingDetailInfo"
+            $ref: '#/components/schemas/AuditingDetailInfo'
+      x-tags:
+        - Model
     AuditingSubmitRequest:
       title: AuditingSubmitRequest
       type: object
@@ -740,4 +892,217 @@ components:
           description: 審核意見
       required:
         - status
+      x-tags:
+        - Model
+    SiteMapInfo:
+      title: SiteMapInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        node_id:
+          type: string
+          description: 節點流水號
+        node_name:
+          type: string
+          description: 節點名稱
+        layout_id:
+          type: string
+          description: 模版代碼
+        node_type:
+          type: string
+          enum:
+            - URL
+            - CONTENT
+          description: 節點類型
+        url_type:
+          type: string
+          enum:
+            - INSIDE
+            - OUTSIDE
+          description: URL類型
+        url_link_node_id:
+          type: string
+          description: |-
+            URL站內節點
+            有url_type為INSIDE才有
+        url:
+          type: string
+          description: |-
+            URL站外網址
+            有url_type為OUTSIDE才有
+        url_blank:
+          type: string
+          enum:
+            - 'Y'
+            - 'N'
+          description: URL是否另開視窗
+        content_path:
+          type: string
+          description: 節點連結路徑
+        meta_title:
+          type: string
+          description: SEO-Meta標題
+        meta_description:
+          type: string
+          description: SEO-Meta描述
+        meta_keyword:
+          type: string
+          description: SEO-Meta關鍵字
+        meta_image:
+          type: string
+          description: SEO-Meta縮圖
+        version:
+          type: string
+          description: 資料版本
+        canModify:
+          type: boolean
+          description: 是否能修改
+        canSubmit:
+          type: boolean
+          description: 是否能送審
+        create_by:
+          type: string
+        create_time:
+          type: string
+        update_by:
+          type: string
+        update_time:
+          type: string
+        publish_info:
+          $ref: '#/components/schemas/PublishInfo'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteMapInfo'
+      required:
+        - node_id
+        - node_name
+        - meta_title
+        - canModify
+        - canSubmit
+        - create_by
+        - create_time
+        - update_by
+        - update_time
+    PublishInfo:
+      title: PublishInfo
+      type: object
+      properties:
+        draft:
+          type: object
+          properties:
+            start_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+            end_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+        pending_published:
+          type: object
+          properties:
+            start_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+            end_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+        published:
+          type: object
+          properties:
+            start_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+            end_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+      x-tags:
+        - Model
+    SiteMapGetResponse:
+      title: SiteMapGetResponse
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/GenerationHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteMapInfo'
+      x-tags:
+        - Model
+    UserSiteMapPutRequest:
+      title: UserSiteMapPutRequest
+      type: object
+      properties:
+        node_name:
+          type: string
+        node_orders:
+          type: string
+        parent_id:
+          type: string
+        url_type:
+          type: string
+        url_link_node_id:
+          type: string
+        url:
+          type: string
+        url_blank:
+          type: string
+        content_path:
+          type: string
+        meta_title:
+          type: string
+        meta_description:
+          type: string
+        meta_keyword:
+          type: string
+        meta_image:
+          type: string
+      required:
+        - node_name
+        - node_orders
+        - meta_title
+      x-tags:
+        - Model
+    UserSiteMapPostRequest:
+      title: UserSiteMapPostRequest
+      type: object
+      properties:
+        node_name:
+          type: string
+        layout_id:
+          type: string
+        parent_id:
+          type: string
+        node_type:
+          type: string
+        url_type:
+          type: string
+        url_link_node_id:
+          type: string
+        url:
+          type: string
+        url_blank:
+          type: string
+        content_path:
+          type: string
+        meta_title:
+          type: string
+        meta_description:
+          type: string
+        meta_keyword:
+          type: string
+        meta_image:
+          type: string
+      required:
+        - node_name
+        - meta_title
+      x-tags:
+        - Model
   securitySchemes: {}

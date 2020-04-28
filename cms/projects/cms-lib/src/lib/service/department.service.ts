@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from 'src/neuxAPI/rest-api.service';
+import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
 
 @Injectable({
@@ -69,10 +69,21 @@ export class DepartmentService {
    * @returns
    * @memberof DepartmentService
    */
-  updateDepartment(deptID: string) {
+  updateDepartment(deptID: string, deptName: string, parentID?: string) {
     if (!deptID) {
-      throw new ParamsError('deptID', 'createDepartment', 'string', deptID);
+      throw new ParamsError('deptID', 'updateDepartment', 'string', deptID);
     }
-    return this.restAPIService.dispatchRestApi('PutDepartmentByDeptID', { deptID });
+    if (!deptName) {
+      throw new ParamsError('deptName', 'updateDepartment', 'string', deptName);
+    }
+
+    const params: { [k: string]: any } = {
+      deptID,
+      dept_name: deptName
+    };
+    if (parentID) {
+      params.parent_id = parentID;
+    }
+    return this.restAPIService.dispatchRestApi('PutDepartmentByDeptID', params);
   }
 }

@@ -1,7 +1,7 @@
 import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
-import {GalleryCategoryMaintainRequest} from '../bean/GalleryCategoryMaintainRequest';
+import {GalleryCategoryPutRequest} from '../bean/GalleryCategoryPutRequest';
 
 
 /**
@@ -10,7 +10,7 @@ import {GalleryCategoryMaintainRequest} from '../bean/GalleryCategoryMaintainReq
 export class PutGalleryCategoryByCategoryIDAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
-    public requestBody: GalleryCategoryMaintainRequest;
+    public requestBody: GalleryCategoryPutRequest;
 
 
     constructor() { }
