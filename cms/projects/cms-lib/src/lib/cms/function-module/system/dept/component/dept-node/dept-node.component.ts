@@ -3,6 +3,16 @@ import { DepartmentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/Department
 import { CmsTreeNodeRenderer, CmsTreeNode } from 'projects/cms-lib/src/lib/ui/tree/tree.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
 
+export class DeptNodeCustomEvent {
+  action: 'Create' | 'Update';
+  dept: DepartmentInfo;
+
+  constructor(action: 'Create' | 'Update', dept: DepartmentInfo) {
+    this.action = action;
+    this.dept = dept;
+  }
+}
+
 @Component({
   selector: 'cms-dept-node',
   templateUrl: './dept-node.component.html',
@@ -30,14 +40,12 @@ export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, O
     event.preventDefault();
   }
 
-  onAddBtnClicked() {
-    alert('Add');
-    this.node.tree.triggerCustomEvent('Add');
+  onCreateBtnClicked() {
+    this.node.tree.triggerCustomEvent(new DeptNodeCustomEvent('Create', this.node.data));
   }
 
-  onEditBtnClicked() {
-    alert('Edit');
-    this.node.tree.triggerCustomEvent('Edit');
+  onUpdateBtnClicked() {
+    this.node.tree.triggerCustomEvent(new DeptNodeCustomEvent('Update', this.node.data));
   }
 
 }

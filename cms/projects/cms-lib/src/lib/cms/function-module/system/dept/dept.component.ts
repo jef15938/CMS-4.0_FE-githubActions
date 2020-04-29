@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DeptNodeComponent } from './component/dept-node/dept-node.component';
+import { DeptNodeComponent, DeptNodeCustomEvent } from './component/dept-node/dept-node.component';
 import { DepartmentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/DepartmentInfo';
 
 @Component({
@@ -22,12 +22,17 @@ export class DeptComponent implements OnInit {
     this.depts = this._route.snapshot.data['depts'];
   }
 
-  onNodeClicked(data: DepartmentInfo) {
-    console.warn('DeptComponent onNodeClicked() data = ', data);
-  }
-
-  onCustomEvent(event) {
-    console.warn('DeptComponent onCustomEvent() event = ', event);
+  onCustomEvent(event: DeptNodeCustomEvent) {
+    if (event instanceof DeptNodeCustomEvent) {
+      switch (event.action) {
+        case 'Create':
+          console.warn('DeptComponent onCustomEvent() Create', event);
+          break;
+        case 'Update':
+          console.warn('DeptComponent onCustomEvent() Update', event);
+          break;
+      }
+    }
   }
 
 }
