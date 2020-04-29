@@ -1,0 +1,8 @@
+<ng-container *ngIf="menu">
+  <li><a (click)="navigate()">{{menu.func_name}}</a></li>
+  <ng-container *ngIf="menu.children.length">
+    <ul style="padding-left: 10px;">
+      <cms-menu-node *ngFor="let child of menu.children" [menu]="child" [category]="menu.func_id"></cms-menu-node>
+    </ul>
+  </ng-container>
+</ng-container>

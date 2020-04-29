@@ -8,6 +8,7 @@ import { ConfigToken, RestHeaderToken } from '@neux/core';
 import { environment } from 'src/environments/environment';
 import { GlobalHeader } from './common/global-header';
 import { CmsLibModule } from 'projects/cms-lib/src/lib/cms-lib.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CmsLibModule } from 'projects/cms-lib/src/lib/cms-lib.module';
     SharedModule,
     AppRoutingModule,
     CmsLibModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: ConfigToken, useValue: environment },

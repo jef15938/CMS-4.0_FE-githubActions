@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, from} from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { APIFactory, APIDispatch, ConfigGetter, AppConfig } from '@neux/core';
 import { map, switchMap } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
@@ -39,30 +39,29 @@ import { AuditingDetailGetResponse } from './bean/AuditingDetailGetResponse';
 import { SiteMapGetResponse } from './bean/SiteMapGetResponse';
 
 
-const APIResponseMap= {
+const APIResponseMap = {
     GetGalleryByCategoryID: GalleryGetResponse,
-GetGalleryCategory: GalleryCaregoryGetResponse,
-PostGalleryCategory: GenerationHeader,
-PostLogin: LoginResponse,
-GetDepartment: DepartmentGetResponse,
-DeleteGalleryCategoryByCategoryID: GenerationHeader,
-PutGalleryCategoryByCategoryID: GenerationHeader,
-GetUserMenu: MenuGetResponse,
-GetLogout: LogoutResponse,
-PutDepartmentByDeptID: GenerationHeader,
-DeleteDepartmentByDeptID: GenerationHeader,
-PostDepartmentByDeptID: GenerationHeader,
-GetAuditing: AuditingGetResponse,
-GetAuditingByOrderID: AuditingDetailGetResponse,
-PostAuditingByOrderID: GenerationHeader,
-GetLoginInfo: LoginResponse,
-GetCMSSiteMapBySiteID: SiteMapGetResponse,
-GetCMSMenu: MenuGetResponse,
-GetUserSiteMapBySiteID: SiteMapGetResponse,
-PostUserSiteMapBySiteID: GenerationHeader,
-PutUserSiteMapByNodeID: GenerationHeader,
-DeleteUserSiteMapByNodeID: GenerationHeader,
-
+    GetGalleryCategory: GalleryCaregoryGetResponse,
+    PostGalleryCategory: GenerationHeader,
+    PostLogin: LoginResponse,
+    GetDepartment: DepartmentGetResponse,
+    DeleteGalleryCategoryByCategoryID: GenerationHeader,
+    PutGalleryCategoryByCategoryID: GenerationHeader,
+    GetUserMenu: MenuGetResponse,
+    GetLogout: LogoutResponse,
+    PutDepartmentByDeptID: GenerationHeader,
+    DeleteDepartmentByDeptID: GenerationHeader,
+    PostDepartmentByDeptID: GenerationHeader,
+    GetAuditing: AuditingGetResponse,
+    GetAuditingByOrderID: AuditingDetailGetResponse,
+    PostAuditingByOrderID: GenerationHeader,
+    GetLoginInfo: LoginResponse,
+    GetCMSSiteMapBySiteID: SiteMapGetResponse,
+    GetCMSMenu: MenuGetResponse,
+    GetUserSiteMapBySiteID: SiteMapGetResponse,
+    PostUserSiteMapBySiteID: GenerationHeader,
+    PutUserSiteMapByNodeID: GenerationHeader,
+    DeleteUserSiteMapByNodeID: GenerationHeader,
 }
 
 @Injectable({
@@ -79,27 +78,27 @@ export class RestApiService {
     ) {
         this.appConfig = this.configGetter.getAppConfig();
         this.ApiFactory.registerAPI(new GetGalleryByCategoryIDAPI());
-this.ApiFactory.registerAPI(new GetGalleryCategoryAPI());
-this.ApiFactory.registerAPI(new PostGalleryCategoryAPI());
-this.ApiFactory.registerAPI(new PostLoginAPI());
-this.ApiFactory.registerAPI(new GetDepartmentAPI());
-this.ApiFactory.registerAPI(new DeleteGalleryCategoryByCategoryIDAPI());
-this.ApiFactory.registerAPI(new PutGalleryCategoryByCategoryIDAPI());
-this.ApiFactory.registerAPI(new GetUserMenuAPI());
-this.ApiFactory.registerAPI(new GetLogoutAPI());
-this.ApiFactory.registerAPI(new PutDepartmentByDeptIDAPI());
-this.ApiFactory.registerAPI(new DeleteDepartmentByDeptIDAPI());
-this.ApiFactory.registerAPI(new PostDepartmentByDeptIDAPI());
-this.ApiFactory.registerAPI(new GetAuditingAPI());
-this.ApiFactory.registerAPI(new GetAuditingByOrderIDAPI());
-this.ApiFactory.registerAPI(new PostAuditingByOrderIDAPI());
-this.ApiFactory.registerAPI(new GetLoginInfoAPI());
-this.ApiFactory.registerAPI(new GetCMSSiteMapBySiteIDAPI());
-this.ApiFactory.registerAPI(new GetCMSMenuAPI());
-this.ApiFactory.registerAPI(new GetUserSiteMapBySiteIDAPI());
-this.ApiFactory.registerAPI(new PostUserSiteMapBySiteIDAPI());
-this.ApiFactory.registerAPI(new PutUserSiteMapByNodeIDAPI());
-this.ApiFactory.registerAPI(new DeleteUserSiteMapByNodeIDAPI());
+        this.ApiFactory.registerAPI(new GetGalleryCategoryAPI());
+        this.ApiFactory.registerAPI(new PostGalleryCategoryAPI());
+        this.ApiFactory.registerAPI(new PostLoginAPI());
+        this.ApiFactory.registerAPI(new GetDepartmentAPI());
+        this.ApiFactory.registerAPI(new DeleteGalleryCategoryByCategoryIDAPI());
+        this.ApiFactory.registerAPI(new PutGalleryCategoryByCategoryIDAPI());
+        this.ApiFactory.registerAPI(new GetUserMenuAPI());
+        this.ApiFactory.registerAPI(new GetLogoutAPI());
+        this.ApiFactory.registerAPI(new PutDepartmentByDeptIDAPI());
+        this.ApiFactory.registerAPI(new DeleteDepartmentByDeptIDAPI());
+        this.ApiFactory.registerAPI(new PostDepartmentByDeptIDAPI());
+        this.ApiFactory.registerAPI(new GetAuditingAPI());
+        this.ApiFactory.registerAPI(new GetAuditingByOrderIDAPI());
+        this.ApiFactory.registerAPI(new PostAuditingByOrderIDAPI());
+        this.ApiFactory.registerAPI(new GetLoginInfoAPI());
+        this.ApiFactory.registerAPI(new GetCMSSiteMapBySiteIDAPI());
+        this.ApiFactory.registerAPI(new GetCMSMenuAPI());
+        this.ApiFactory.registerAPI(new GetUserSiteMapBySiteIDAPI());
+        this.ApiFactory.registerAPI(new PostUserSiteMapBySiteIDAPI());
+        this.ApiFactory.registerAPI(new PutUserSiteMapByNodeIDAPI());
+        this.ApiFactory.registerAPI(new DeleteUserSiteMapByNodeIDAPI());
 
     }
 

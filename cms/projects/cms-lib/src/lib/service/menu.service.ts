@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
+import { MenuGetResponse } from '../neuxAPI/bean/MenuGetResponse';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class MenuService {
    * @returns
    * @memberof MenuService
    */
-  getCMSMenu() {
+  getCMSMenu(): Observable<MenuGetResponse> {
     return this.restAPIService.dispatchRestApi('GetCMSMenu', {});
   }
 
@@ -27,7 +29,7 @@ export class MenuService {
    * @returns
    * @memberof MenuService
    */
-  getUserMenu() {
+  getUserMenu(): Observable<MenuGetResponse> {
     return this.restAPIService.dispatchRestApi('GetUserMenu', {});
   }
 }

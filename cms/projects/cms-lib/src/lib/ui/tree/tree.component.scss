@@ -1,0 +1,16 @@
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 20px;
+  list-style-type: none;
+
+  .node-display {
+    margin-left: 10px;
+  }
+}
+  

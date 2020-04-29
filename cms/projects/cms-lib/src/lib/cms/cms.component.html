@@ -1,0 +1,10 @@
+<div class="sidebar">
+  <ul *ngIf="menus.length">
+    <cms-menu-node *ngFor="let menu of menus" [menu]="menu"></cms-menu-node>
+  </ul>
+</div>
+<div class="page">
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
