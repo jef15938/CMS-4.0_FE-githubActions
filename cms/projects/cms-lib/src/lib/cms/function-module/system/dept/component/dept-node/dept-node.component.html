@@ -4,6 +4,6 @@
     <button mat-menu-item (click)="onUpdateBtnClicked()">修改</button>
   </mat-menu>
   <span class="not-selectable" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
-    <span (click)="$event.stopPropagation()">{{node.data.dept_name}} ({{node.data.dept_id}})</span>
+    <span (click)="$event.stopPropagation()">{{node.data.dept_name}}</span>
   </span>
 </ng-container>
