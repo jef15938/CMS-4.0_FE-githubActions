@@ -1,0 +1,9 @@
+<ng-container *ngIf="node">
+  <mat-menu #appMenu="matMenu">
+    <button mat-menu-item (click)="onAddBtnClicked()">新增</button>
+    <button mat-menu-item (click)="onEditBtnClicked()">修改</button>
+  </mat-menu>
+  <span class="not-selectable" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
+    <span (click)="$event.stopPropagation()">{{node.data.dept_name}} ({{node.data.dept_id}})</span>
+  </span>
+</ng-container>

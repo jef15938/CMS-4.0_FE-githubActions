@@ -1,1 +1,3 @@
-<cms-tree class="cms-tree" [nodeDatas]="depts" nodeDisplayField="dept_name"></cms-tree>
+<cms-tree class="cms-tree" [context]="this" [nodeDatas]="depts" nodeDisplayField="dept_name"
+  [customNodeRenderer]="customNodeRenderer" (nodeClicked)="onNodeClicked($event.data)"
+  (customEvent)="onCustomEvent($event)"></cms-tree>

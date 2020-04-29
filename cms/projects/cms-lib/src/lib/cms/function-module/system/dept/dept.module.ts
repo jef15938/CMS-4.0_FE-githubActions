@@ -4,14 +4,24 @@ import { DeptRoutingModule } from './dept-routing.module';
 import { DeptComponent } from './dept.component';
 import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
 import { DeptListResolver } from './dept-list-resolver';
+import { DeptNodeComponent } from './component/dept-node/dept-node.component';
+import { MatMenuModule } from '@angular/material/menu';
+
+const COMPONENTS = [
+  DeptComponent,
+  DeptNodeComponent,
+]
 
 @NgModule({
   imports: [
     CommonModule,
     DeptRoutingModule,
-    TreeModule
+    TreeModule,
+    MatMenuModule
   ],
-  declarations: [DeptComponent],
+  declarations: [
+    ...COMPONENTS
+  ],
   providers: [
     DeptListResolver,
   ]
