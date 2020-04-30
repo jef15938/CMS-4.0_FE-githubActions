@@ -6,6 +6,8 @@ import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
 import { DeptListResolver } from './dept-list-resolver';
 import { DeptNodeComponent } from './component/dept-node/dept-node.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { DeptMaintainDialogComponent } from './component/dept-maintain-dialog/dept-maintain-dialog.component';
+import { DialogModule } from 'projects/cms-lib/src/lib/ui/dialog/dialog.module';
 
 const COMPONENTS = [
   DeptComponent,
@@ -17,10 +19,12 @@ const COMPONENTS = [
     CommonModule,
     DeptRoutingModule,
     TreeModule,
-    MatMenuModule
+    MatMenuModule,
+    DialogModule,
   ],
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    DeptMaintainDialogComponent
   ],
   providers: [
     DeptListResolver,

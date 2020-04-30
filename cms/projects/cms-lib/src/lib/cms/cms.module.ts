@@ -4,6 +4,7 @@ import { CmsRoutingModule } from './cms-routing.module';
 import { CmsComponent } from './cms.component';
 import { CmsUserMenuResolver } from './cms-menu-resolver';
 import { MenuNodeComponent } from './layouts/menu-node.component';
+import { DialogModule } from '../ui/dialog/dialog.module';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -12,14 +13,16 @@ const LAYOUTS = [
 @NgModule({
   imports: [
     CommonModule,
-    CmsRoutingModule
+    CmsRoutingModule,
+    DialogModule,
   ],
   declarations: [
     CmsComponent,
     ...LAYOUTS
   ],
   providers: [
-    CmsUserMenuResolver
+    CmsUserMenuResolver,
+    ...(DialogModule.forRoot().providers)
   ]
 })
 export class CmsModule { }
