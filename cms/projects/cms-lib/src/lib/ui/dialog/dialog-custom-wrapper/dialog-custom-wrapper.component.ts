@@ -13,7 +13,7 @@ export class DialogCustomWrapperComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DialogCustomWrapperDirective) customRenderWrapper: DialogCustomWrapperDirective;
 
-  title: string;
+  instance: CustomDialogBase;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private _config: DialogOpenComponentConfig,
@@ -22,7 +22,7 @@ export class DialogCustomWrapperComponent implements OnInit, AfterViewInit {
     private _changeDetectorRef: ChangeDetectorRef,
   ) {
     if (_config && _config.dialogSetting) {
-      
+
     }
   }
 
@@ -46,8 +46,14 @@ export class DialogCustomWrapperComponent implements OnInit, AfterViewInit {
       }
     }
     instance.dialogRef = this._dialogRef;
-    console.warn('instance = ', instance);
+    this.instance = instance;
     this._changeDetectorRef.detectChanges();
+  }
+
+  getInstanceTitle(): string {
+    if (!this.instance || !this.instance.title) { return ''; }
+    if (typeof (this.instance.title) === 'string') { return this.instance.title; }
+    return this.instance.title() || '';
   }
 
 }

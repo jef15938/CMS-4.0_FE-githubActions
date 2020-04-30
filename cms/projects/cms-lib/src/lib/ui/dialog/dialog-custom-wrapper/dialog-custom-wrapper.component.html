@@ -1,2 +1,16 @@
-<!-- <span matDialogTitle="My Title">MyTitle</span> -->
-<span cmsDialogCustomWrapper></span>
+<!-- header -->
+<ng-container *ngIf="getInstanceTitle(); let title">
+  <span matDialogTitle>{{title}}</span>
+</ng-container>
+<!-- content -->
+<div mat-dialog-content>
+  <span cmsDialogCustomWrapper></span>
+</div>
+<!-- footer -->
+<ng-container *ngIf="instance&&instance.actions&&instance.actions.length">
+  <div mat-dialog-actions>
+    <span class="action-btn-group">
+      <button mat-button *ngFor="let action of instance.actions" (click)="action.onClick($event)">{{action.text}}</button>
+    </span>
+  </div>
+</ng-container>

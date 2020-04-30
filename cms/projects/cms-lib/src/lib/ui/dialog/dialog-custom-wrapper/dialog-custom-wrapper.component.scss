@@ -1,0 +1,10 @@
+.action-btn-group {
+  > button { cursor: pointer; }
+  > button:not(:first-child) {
+    margin-left: 20px;
+  }
+}
+
+.mat-dialog-actions {
+  margin-top: 20px;
+}
