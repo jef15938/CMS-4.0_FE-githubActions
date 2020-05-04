@@ -1,14 +1,17 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {GenerationHeader} from './GenerationHeader';
+import {GalleryInfo} from './GalleryInfo';
+import {PageInfo} from './PageInfo';
 
 
 export class GalleryGetResponse {
 
-@Type(() => GenerationHeader)
+@Type(() => PageInfo)
 @ValidateNested()
-public header: GenerationHeader;
-public body: object;
+public pageInfo: PageInfo;
+@Type(() => GalleryInfo)
+@ValidateNested()
+public datas: Array<GalleryInfo>;
 
 
 }

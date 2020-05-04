@@ -3,10 +3,12 @@ import {Type} from 'class-transformer';
 import {IsNotEmpty} from 'class-validator';
 
 
-export class GenerationHeader {
+export class ErrorInfo {
 
 @IsNotEmpty()
-public success: boolean;
+public error_code: string;
+@IsNotEmpty()
+public error_message: string;
 
 
 }

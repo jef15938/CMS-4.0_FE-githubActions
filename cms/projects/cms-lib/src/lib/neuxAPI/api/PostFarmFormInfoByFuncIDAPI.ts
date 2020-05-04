@@ -4,9 +4,9 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * GetAuditingDetail
+ * CreateFarmForm
  */
-export class GetAuditingByOrderIDAPI implements API, MockAPI, RestfulAPI {
+export class PostFarmFormInfoByFuncIDAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
     
@@ -14,21 +14,21 @@ export class GetAuditingByOrderIDAPI implements API, MockAPI, RestfulAPI {
     constructor() { }
 
     public getAPIName(): string {
-        return 'GetAuditingByOrderID';
+        return 'PostFarmFormInfoByFuncID';
     }
 
     public getRequestData(): APIRequest {
         let queryParams = new HttpParams();
         let requestData = new APIRequest();
         
-        requestData.type = 'GET';
+        requestData.type = 'POST';
         requestData.params = queryParams;
         requestData.url = this.url;
         return requestData;
     }
 
     public getMockPath(): string {
-        return './assets/mock/GetAuditingByOrderIDAPI.json';
+        return './assets/mock/PostFarmFormInfoByFuncIDAPI.json';
     }
 
 }

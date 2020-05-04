@@ -17,7 +17,6 @@ import { PutDepartmentByDeptIDAPI } from './api/PutDepartmentByDeptIDAPI';
 import { DeleteDepartmentByDeptIDAPI } from './api/DeleteDepartmentByDeptIDAPI';
 import { PostDepartmentByDeptIDAPI } from './api/PostDepartmentByDeptIDAPI';
 import { GetAuditingAPI } from './api/GetAuditingAPI';
-import { GetAuditingByOrderIDAPI } from './api/GetAuditingByOrderIDAPI';
 import { PostAuditingByOrderIDAPI } from './api/PostAuditingByOrderIDAPI';
 import { GetLoginInfoAPI } from './api/GetLoginInfoAPI';
 import { GetCMSSiteMapBySiteIDAPI } from './api/GetCMSSiteMapBySiteIDAPI';
@@ -26,6 +25,16 @@ import { GetUserSiteMapBySiteIDAPI } from './api/GetUserSiteMapBySiteIDAPI';
 import { PostUserSiteMapBySiteIDAPI } from './api/PostUserSiteMapBySiteIDAPI';
 import { PutUserSiteMapByNodeIDAPI } from './api/PutUserSiteMapByNodeIDAPI';
 import { DeleteUserSiteMapByNodeIDAPI } from './api/DeleteUserSiteMapByNodeIDAPI';
+import { GetContentByContentIDAPI } from './api/GetContentByContentIDAPI';
+import { PutContentByContentIDAPI } from './api/PutContentByContentIDAPI';
+import { GetMyAuditingByOrderIDAPI } from './api/GetMyAuditingByOrderIDAPI';
+import { GetMyAuditingAPI } from './api/GetMyAuditingAPI';
+import { GetFarmByFuncIDAPI } from './api/GetFarmByFuncIDAPI';
+import { GetFarmTableInfoByFuncIDAPI } from './api/GetFarmTableInfoByFuncIDAPI';
+import { GetFarmFormInfoByFuncIDAPI } from './api/GetFarmFormInfoByFuncIDAPI';
+import { PostFarmFormInfoByFuncIDAPI } from './api/PostFarmFormInfoByFuncIDAPI';
+import { PutFarmFormInfoByFuncIDAPI } from './api/PutFarmFormInfoByFuncIDAPI';
+import { GetFarmDetailInfoByFarmIDAPI } from './api/GetFarmDetailInfoByFarmIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GalleryCaregoryGetResponse } from './bean/GalleryCaregoryGetResponse';
@@ -33,10 +42,14 @@ import { GenerationHeader } from './bean/GenerationHeader';
 import { LoginResponse } from './bean/LoginResponse';
 import { DepartmentGetResponse } from './bean/DepartmentGetResponse';
 import { MenuGetResponse } from './bean/MenuGetResponse';
-import { LogoutResponse } from './bean/LogoutResponse';
 import { AuditingGetResponse } from './bean/AuditingGetResponse';
-import { AuditingDetailGetResponse } from './bean/AuditingDetailGetResponse';
 import { SiteMapGetResponse } from './bean/SiteMapGetResponse';
+// import { object } from './bean/object';
+import { MyAuditingDetailGetResponse } from './bean/MyAuditingDetailGetResponse';
+import { MyAuditingGetResponse } from './bean/MyAuditingGetResponse';
+import { FarmInfoGetResponse } from './bean/FarmInfoGetResponse';
+import { FarmTableInfo } from './bean/FarmTableInfo';
+import { FarmFormInfo } from './bean/FarmFormInfo';
 
 
 const APIResponseMap = {
@@ -48,12 +61,11 @@ const APIResponseMap = {
     DeleteGalleryCategoryByCategoryID: GenerationHeader,
     PutGalleryCategoryByCategoryID: GenerationHeader,
     GetUserMenu: MenuGetResponse,
-    GetLogout: LogoutResponse,
+    GetLogout: GenerationHeader,
     PutDepartmentByDeptID: GenerationHeader,
     DeleteDepartmentByDeptID: GenerationHeader,
     PostDepartmentByDeptID: GenerationHeader,
     GetAuditing: AuditingGetResponse,
-    GetAuditingByOrderID: AuditingDetailGetResponse,
     PostAuditingByOrderID: GenerationHeader,
     GetLoginInfo: LoginResponse,
     GetCMSSiteMapBySiteID: SiteMapGetResponse,
@@ -62,6 +74,17 @@ const APIResponseMap = {
     PostUserSiteMapBySiteID: GenerationHeader,
     PutUserSiteMapByNodeID: GenerationHeader,
     DeleteUserSiteMapByNodeID: GenerationHeader,
+    // GetContentByContentID: object,
+    PutContentByContentID: GenerationHeader,
+    GetMyAuditingByOrderID: MyAuditingDetailGetResponse,
+    GetMyAuditing: MyAuditingGetResponse,
+    GetFarmByFuncID: FarmInfoGetResponse,
+    GetFarmTableInfoByFuncID: FarmTableInfo,
+    GetFarmFormInfoByFuncID: FarmFormInfo,
+    PostFarmFormInfoByFuncID: GenerationHeader,
+    PutFarmFormInfoByFuncID: GenerationHeader,
+    GetFarmDetailInfoByFarmID: FarmFormInfo,
+
 }
 
 @Injectable({
@@ -90,7 +113,6 @@ export class RestApiService {
         this.ApiFactory.registerAPI(new DeleteDepartmentByDeptIDAPI());
         this.ApiFactory.registerAPI(new PostDepartmentByDeptIDAPI());
         this.ApiFactory.registerAPI(new GetAuditingAPI());
-        this.ApiFactory.registerAPI(new GetAuditingByOrderIDAPI());
         this.ApiFactory.registerAPI(new PostAuditingByOrderIDAPI());
         this.ApiFactory.registerAPI(new GetLoginInfoAPI());
         this.ApiFactory.registerAPI(new GetCMSSiteMapBySiteIDAPI());
@@ -99,6 +121,16 @@ export class RestApiService {
         this.ApiFactory.registerAPI(new PostUserSiteMapBySiteIDAPI());
         this.ApiFactory.registerAPI(new PutUserSiteMapByNodeIDAPI());
         this.ApiFactory.registerAPI(new DeleteUserSiteMapByNodeIDAPI());
+        this.ApiFactory.registerAPI(new GetContentByContentIDAPI());
+        this.ApiFactory.registerAPI(new PutContentByContentIDAPI());
+        this.ApiFactory.registerAPI(new GetMyAuditingByOrderIDAPI());
+        this.ApiFactory.registerAPI(new GetMyAuditingAPI());
+        this.ApiFactory.registerAPI(new GetFarmByFuncIDAPI());
+        this.ApiFactory.registerAPI(new GetFarmTableInfoByFuncIDAPI());
+        this.ApiFactory.registerAPI(new GetFarmFormInfoByFuncIDAPI());
+        this.ApiFactory.registerAPI(new PostFarmFormInfoByFuncIDAPI());
+        this.ApiFactory.registerAPI(new PutFarmFormInfoByFuncIDAPI());
+        this.ApiFactory.registerAPI(new GetFarmDetailInfoByFarmIDAPI());
 
     }
 
@@ -111,7 +143,8 @@ export class RestApiService {
                 x['_body'] = plainToClass(APIResponseMap[name], x.body);
                 return x;
             }),
-            switchMap(x => from(this.validateBodyClass(x)))
+            switchMap(x => from(this.validateBodyClass(x))),
+            map(x => x['_body']), // 因應res結構調整，暫時先用此方式處理 // TODO: 調整lib相關程式?
         );
     }
 

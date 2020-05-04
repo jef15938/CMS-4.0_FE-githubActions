@@ -3,7 +3,7 @@ import {Type} from 'class-transformer';
 import {IsNotEmpty} from 'class-validator';
 
 
-export class AuditingDetailInfo {
+export class MyAuditingDetailInfo {
 
 @IsNotEmpty()
 public auditing_group_name: string;

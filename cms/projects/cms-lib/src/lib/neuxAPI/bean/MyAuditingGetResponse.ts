@@ -1,17 +1,17 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {AuditingInfo} from './AuditingInfo';
+import {MyAuditingInfo} from './MyAuditingInfo';
 import {PageInfo} from './PageInfo';
 
 
-export class AuditingGetResponse {
+export class MyAuditingGetResponse {
 
 @Type(() => PageInfo)
 @ValidateNested()
 public pageInfo: PageInfo;
-@Type(() => AuditingInfo)
+@Type(() => MyAuditingInfo)
 @ValidateNested()
-public datas: Array<AuditingInfo>;
+public datas: Array<MyAuditingInfo>;
 
 
 }

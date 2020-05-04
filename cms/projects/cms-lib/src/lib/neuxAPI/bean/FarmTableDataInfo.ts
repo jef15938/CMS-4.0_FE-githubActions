@@ -3,10 +3,13 @@ import {Type} from 'class-transformer';
 import {IsNotEmpty} from 'class-validator';
 
 
-export class GenerationHeader {
+export class FarmTableDataInfo {
 
 @IsNotEmpty()
-public success: boolean;
+public data_id: string;
+@IsNotEmpty()
+public is_checked: boolean;
+public columns: Array<object>;
 
 
 }

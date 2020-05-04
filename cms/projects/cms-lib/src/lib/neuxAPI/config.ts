@@ -14,7 +14,6 @@ const API_URL = {
     DeleteDepartmentByDeptID: `${BASE_URL}\/Department/{deptID}`,
     PostDepartmentByDeptID: `${BASE_URL}\/Department/{deptID}`,
     GetAuditing: `${BASE_URL}\/Auditing`,
-    GetAuditingByOrderID: `${BASE_URL}\/Auditing/{orderID}`,
     PostAuditingByOrderID: `${BASE_URL}\/Auditing/{orderID}`,
     GetLoginInfo: `${BASE_URL}\/LoginInfo`,
     GetCMSSiteMapBySiteID: `${BASE_URL}\/CMSSiteMap/{siteID}`,
@@ -23,6 +22,16 @@ const API_URL = {
     PostUserSiteMapBySiteID: `${BASE_URL}\/UserSiteMap/{siteID}`,
     PutUserSiteMapByNodeID: `${BASE_URL}\/UserSiteMap/{nodeID}`,
     DeleteUserSiteMapByNodeID: `${BASE_URL}\/UserSiteMap/{nodeID}`,
+    GetContentByContentID: `${BASE_URL}\/Content/{contentID}`,
+    PutContentByContentID: `${BASE_URL}\/Content/{contentID}`,
+    GetMyAuditingByOrderID: `${BASE_URL}\/MyAuditing/{orderID}`,
+    GetMyAuditing: `${BASE_URL}\/MyAuditing`,
+    GetFarmByFuncID: `${BASE_URL}\/Farm/{funcID}`,
+    GetFarmTableInfoByFuncID: `${BASE_URL}\/FarmTableInfo/{funcID}`,
+    GetFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
+    PostFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
+    PutFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
+    GetFarmDetailInfoByFarmID: `${BASE_URL}\/FarmDetailInfo/{farmID}`,
 
 };
 const API_TYPE = {
@@ -39,7 +48,6 @@ const API_TYPE = {
     DeleteDepartmentByDeptID: 'Restful',
     PostDepartmentByDeptID: 'Restful',
     GetAuditing: 'Restful',
-    GetAuditingByOrderID: 'Restful',
     PostAuditingByOrderID: 'Restful',
     GetLoginInfo: 'Restful',
     GetCMSSiteMapBySiteID: 'Restful',
@@ -48,5 +56,15 @@ const API_TYPE = {
     PostUserSiteMapBySiteID: 'Restful',
     PutUserSiteMapByNodeID: 'Restful',
     DeleteUserSiteMapByNodeID: 'Restful',
+    GetContentByContentID: 'Restful',
+    PutContentByContentID: 'Restful',
+    GetMyAuditingByOrderID: 'Restful',
+    GetMyAuditing: 'Restful',
+    GetFarmByFuncID: 'Restful',
+    GetFarmTableInfoByFuncID: 'Restful',
+    GetFarmFormInfoByFuncID: 'Restful',
+    PostFarmFormInfoByFuncID: 'Restful',
+    PutFarmFormInfoByFuncID: 'Restful',
+    GetFarmDetailInfoByFarmID: 'Restful',
 
 };
