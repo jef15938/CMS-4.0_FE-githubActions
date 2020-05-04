@@ -8,6 +8,14 @@ const routes: Routes = [
     path: '', component: CmsComponent, resolve: { menus: CmsUserMenuResolver },
     children: [
       {
+        path: 'multiSite',
+        loadChildren: () => import('./function-module/multi-site/multi-site.module').then(m => m.MultiSiteModule)
+      },
+      {
+        path: 'MyAuditingReport',
+        loadChildren: () => import('./function-module/my-auditing/my-auditing.module').then(m => m.MyAuditingModule)
+      },
+      {
         path: 'system',
         loadChildren: () => import('./function-module/system/system.module').then(m => m.SystemModule)
       }

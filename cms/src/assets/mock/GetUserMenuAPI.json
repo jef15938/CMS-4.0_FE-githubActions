@@ -1,14 +1,26 @@
 {
   "datas": [
     {
+      "func_id": "multiSite",
+      "func_name": "多網站管理",
+      "component_id ": "multiSite",
+      "children": []
+    },
+    {
+      "func_id": "MyAuditingReport",
+      "func_name": "我的申請單",
+      "component_id ": "MyAuditingReport",
+      "children": []
+    },
+    {
       "func_id": "system",
       "func_name": "中央權限管理",
-      "component_id ": "c02",
+      "component_id ": "system",
       "children": [
         {
           "func_id": "dept",
           "func_name": "部門管理",
-          "component_id": "c02-1",
+          "component_id": "dept",
           "children": []
         }
       ]
