@@ -41,18 +41,19 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   ngAfterViewInit(): void {
-    if (this.customNodeRenderer) {
-      this.renderCustom();
-    }
+    this.renderCustom();
   }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.dataSource && changes['nodeDatas']) {
       this.dataSource.data = changes['nodeDatas'].currentValue;
+      this.renderCustom();
     }
   }
 
   renderCustom() {
+    if (!this.customNodeRenderer) { return }
+    this._changeDetectorRef.detectChanges();
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(this.customNodeRenderer);
     this.customRenderWrappers.forEach(wrapper => {
       wrapper.viewContainerRef.clear();
