@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
+import { Observable, of } from 'rxjs';
+import { DepartmentInfo } from '../neuxAPI/bean/DepartmentInfo';
+import { map } from 'rxjs/operators';
+import { DepartmentGetResponse } from '../neuxAPI/bean/DepartmentGetResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +39,8 @@ export class DepartmentService {
     if (parentID) {
       params.parent_id = parentID;
     }
+
+    return of(undefined);
     return this.restAPIService.dispatchRestApi('PostDepartmentByDeptID', params);
   }
 
@@ -49,6 +55,8 @@ export class DepartmentService {
     if (!deptID) {
       throw new ParamsError('deptID', 'createDepartment', 'string', deptID);
     }
+
+    return of(undefined);
     return this.restAPIService.dispatchRestApi('DeleteDepartmentByDeptID', { deptID });
   }
 
@@ -58,8 +66,37 @@ export class DepartmentService {
    * @returns
    * @memberof DepartmentService
    */
-  getAllDepartment() {
-    return this.restAPIService.dispatchRestApi('GetDepartment', {});
+  getAllDepartment(): Observable<DepartmentInfo[]> {
+    return (this.restAPIService.dispatchRestApi('GetDepartment', {}) as Observable<DepartmentGetResponse>).pipe(
+      map(res => res.datas)
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {string} deptID
+   * @returns
+   * @memberof DepartmentService
+   */
+  getDepartmentByID(deptID: string): Observable<DepartmentInfo> {
+    if (!deptID) {
+      throw new ParamsError('deptID', 'getDepartmentByID', 'string', deptID);
+    }
+    return this.getAllDepartment().pipe(
+      map(depts => this._getDeptFromAllById(deptID, depts))
+    );
+  }
+
+  private _getDeptFromAllById(id: string, all: DepartmentInfo[]): DepartmentInfo {
+    if (!all || !all.length) {
+      return null;
+    }
+    const dept = all.find(d => d.dept_id === id);
+    if (dept)
+      return dept;
+    else
+      return all.map(d => this._getDeptFromAllById(id, d.children)).find(x => x !== null);
   }
 
   /**
@@ -84,6 +121,8 @@ export class DepartmentService {
     if (parentID) {
       params.parent_id = parentID;
     }
+
+    return of(undefined);
     return this.restAPIService.dispatchRestApi('PutDepartmentByDeptID', params);
   }
 }

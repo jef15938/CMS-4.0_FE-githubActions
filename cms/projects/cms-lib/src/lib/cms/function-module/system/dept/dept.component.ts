@@ -4,6 +4,9 @@ import { DeptNodeComponent, DeptNodeCustomEvent } from './component/dept-node/de
 import { DepartmentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/DepartmentInfo';
 import { DeptMaintainDialogComponent } from './component/dept-maintain-dialog/dept-maintain-dialog.component';
 import { DialogService } from 'projects/cms-lib/src/lib/ui/dialog/dialog.service';
+import { Observable, concat } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { DepartmentService } from 'projects/cms-lib/src/lib/service/department.service';
 
 @Component({
   selector: 'cms-dept',
@@ -18,26 +21,35 @@ export class DeptComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
+    private _departmentService: DepartmentService,
     private _dialogService: DialogService,
   ) { }
 
   ngOnInit(): void {
-    this.depts = this._route.snapshot.data['depts'];
+    this._initPage().subscribe();
+  }
+
+  private _initPage(): Observable<any> {
+    return concat(
+      this._getDepts(),
+    )
+  }
+
+  private _getDepts() {
+    return this._departmentService.getAllDepartment().pipe(
+      tap(depts => this.depts = depts),
+    )
   }
 
   onCustomEvent(event: DeptNodeCustomEvent) {
     if (event instanceof DeptNodeCustomEvent) {
       switch (event.action) {
         case 'Create':
-          console.warn('DeptComponent onCustomEvent() Create', event);
-          this.openDialog('Create', event.dept).subscribe(res => {
-            console.warn('Dialog Close res = ', res);
-          });
-          break;
         case 'Update':
-          console.warn('DeptComponent onCustomEvent() Update', event);
-          this.openDialog('Update', event.dept).subscribe(res => {
-            console.warn('Dialog Close res = ', res);
+          this.openDialog(event.action, event.dept).subscribe(res => {
+            if (res) {
+              this._initPage().subscribe();
+            }
           });
           break;
       }

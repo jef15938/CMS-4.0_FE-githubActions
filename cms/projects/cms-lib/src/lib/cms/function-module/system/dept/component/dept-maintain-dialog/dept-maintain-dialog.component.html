@@ -1,7 +1,21 @@
-deptId:{{deptId}}
-<br>
-deptName:{{deptName}}
-<hr>
-parentId:{{parentId}}
-<br>
-parentName:{{parentName}}
+<ng-container *ngIf="dept">
+  <form #form="ngForm">
+    <mat-form-field appearance="fill">
+      <mat-label>ID</mat-label>
+      <input matInput [(ngModel)]="dept.dept_id" name="dept_id" required #modelId="ngModel">
+      <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="dept.dept_name" name="dept_name" required #modelName="ngModel">
+      <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error>
+    </mat-form-field>
+    <br>
+    <div class="btn-group">
+      <button mat-button (click)="close()">取消</button>
+      <button mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+
+</ng-container>

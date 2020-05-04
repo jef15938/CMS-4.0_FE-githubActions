@@ -10,7 +10,8 @@ import { ApiCheckComponent } from './neuxAPI/api-check.component';
     SharedModule
   ],
   exports: [
-    ApiCheckComponent
+    ApiCheckComponent,
+    SharedModule
   ]
 })
 export class CmsLibModule { }

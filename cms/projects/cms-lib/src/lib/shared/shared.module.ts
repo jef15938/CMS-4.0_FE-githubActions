@@ -3,7 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '@neux/core';
-
+// cms-lib
+import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
+import { DialogModule } from 'projects/cms-lib/src/lib/ui/dialog/dialog.module';
+// Material
+import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [],
@@ -14,7 +20,14 @@ import { CoreModule } from '@neux/core';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+    // Material
+    MatMenuModule,
+    MatInputModule,
+    MatFormFieldModule,
+    // cms-lib
+    TreeModule,
+    DialogModule,
   ]
 })
 export class SharedModule { }
