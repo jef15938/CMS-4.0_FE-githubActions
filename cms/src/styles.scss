@@ -6,3 +6,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.btn-group {
+  > button { cursor: pointer; }
+  > button:not(:first-child) {
+    margin-left: 20px;
+  }
+}
