@@ -7,6 +7,36 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.sidebar {
+  position: fixed;
+  height: 100%;
+  width: 200px;
+  background-color: lightgray;
+  padding: 10px;
+}
+
+.header {
+  position: fixed;
+  height: 40px;
+  left: 200px;
+  width: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+  z-index: 99;
+}
+
+.content {
+  position: fixed;
+  height: 100%;
+  margin-left: 200px;
+  margin-top: 40px;
+  width: calc(100% - 200px);
+
+  .page-title-container {
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+  }
+}
+
 .btn-group {
   > button { cursor: pointer; }
   > button:not(:first-child) {

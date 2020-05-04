@@ -1,1 +1,39 @@
-<p>multi-site works!</p>
+<div [hidden]="editMode==='node'">
+  <div style="width: 30%; float: left;">
+    <div class="page-title-container">
+      <h1>網站列表 <button type="button" mat-button>新增網站</button></h1>
+    </div>
+    <mat-list>
+      <ng-container *ngFor="let site of sites">
+        <div [class.selected-site]="selectedSite===site">
+          <mat-list-item (click)="selectSite(site)">[{{site.siteId}}]-[{{site.siteName}}]</mat-list-item>
+        </div>
+      </ng-container>
+    </mat-list>
+  </div>
+  <div style="width: 70%; float: right; border-left: 1px solid lightgray;">
+    <div class="page-title-container">
+      <h1>網站設定 <button type="button" mat-button (click)="swichMode('node')">編輯節點</button></h1>
+    </div>
+    <div>
+      <ng-container *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]">
+        <div style="height: 100px">
+          {{n}}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="editMode==='site'">
+  <div style="width: 50%; float: left;">
+    <div class="page-title-container">
+      <h1>[網站名稱] <button type="button" mat-button (click)="swichMode('site')">返回</button></h1>
+    </div>
+  </div>
+  <div style="width: 50%; float: right; border-left: 1px solid lightgray;">
+    <div class="page-title-container">
+      <h1>節點名稱</h1>
+    </div>
+  </div>
+</div>

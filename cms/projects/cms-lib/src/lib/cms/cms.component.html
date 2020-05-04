@@ -1,10 +1,13 @@
+<div class="header">
+  <h1>This is Header</h1>
+</div>
 <div class="sidebar">
   <ul *ngIf="menus.length">
     <cms-menu-node *ngFor="let menu of menus" [menu]="menu"></cms-menu-node>
   </ul>
 </div>
-<div class="page">
-  <div class="page-content">
+<div class="content">
+  <div style="position: relative; height: 100%; overflow: auto;">
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <ng-container *ngIf="node">
   <mat-menu #appMenu="matMenu">
-    <button mat-menu-item (click)="onCreateBtnClicked()">新增</button>
-    <button mat-menu-item (click)="onUpdateBtnClicked()">修改</button>
+    <button type="button" mat-menu-item (click)="onCreateBtnClicked()">新增</button>
+    <button type="button" mat-menu-item (click)="onUpdateBtnClicked()">修改</button>
   </mat-menu>
   <span class="menu-trigger" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <span class="not-selectable" (click)="$event.stopPropagation()">{{node.data.dept_name}}</span>

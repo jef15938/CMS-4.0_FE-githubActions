@@ -10,6 +10,9 @@ import { DialogModule } from 'projects/cms-lib/src/lib/ui/dialog/dialog.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -25,6 +28,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatMenuModule,
     MatInputModule,
     MatFormFieldModule,
+    MatListModule,
+    MatDividerModule,
+    MatCardModule,
     // cms-lib
     TreeModule,
     DialogModule,

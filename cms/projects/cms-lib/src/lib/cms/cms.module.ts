@@ -5,6 +5,7 @@ import { CmsComponent } from './cms.component';
 import { CmsUserMenuResolver } from './cms-menu-resolver';
 import { MenuNodeComponent } from './layouts/menu-node.component';
 import { DialogModule } from '../ui/dialog/dialog.module';
+import { SharedModule } from '../shared/shared.module';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -14,7 +15,7 @@ const LAYOUTS = [
   imports: [
     CommonModule,
     CmsRoutingModule,
-    DialogModule,
+    SharedModule,
   ],
   declarations: [
     CmsComponent,
