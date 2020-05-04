@@ -1,8 +1,9 @@
-import { ViewContainerRef } from '@angular/core';
+import { ViewContainerRef, Type, TemplateRef } from '@angular/core';
+import { CustomDialogBase } from './custom-dialog-base';
 
-export interface DialogOpenComponentConfig {
-  component: any,
-  componentInitData?: any,
+export interface DialogOpenComponentConfig<TComponent extends CustomDialogBase> {
+  component: Type<TComponent> | TemplateRef<TComponent>,
+  componentInitData?: Partial<TComponent>,
   dialogSetting?: {
     /**
      * Where the attached component should live in Angular's *logical* component tree.

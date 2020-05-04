@@ -51,9 +51,7 @@ export class DeptComponent implements OnInit {
       componentInitData: {
         action,
         deptId: action === 'Create' ? '' : selectedDept.dept_id,
-        deptName: action === 'Create' ? '' : selectedDept.dept_name,
         parentId: action === 'Create' ? selectedDept.dept_id : parent ? parent.dept_id : '',
-        parentName: action === 'Create' ? selectedDept.dept_name : parent ? parent.dept_name : '',
       }
     });
   }

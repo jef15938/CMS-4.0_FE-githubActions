@@ -13,7 +13,7 @@ export class DialogService {
 
   }
 
-  openComponent<TComponent extends CustomDialogBase>(config: DialogOpenComponentConfig) {
+  openComponent<TComponent extends CustomDialogBase>(config: DialogOpenComponentConfig<TComponent>) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     // dialogConfig.disableClose = true;

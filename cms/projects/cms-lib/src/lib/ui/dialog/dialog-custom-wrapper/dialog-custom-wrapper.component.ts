@@ -16,7 +16,7 @@ export class DialogCustomWrapperComponent implements OnInit, AfterViewInit {
   instance: CustomDialogBase;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private _config: DialogOpenComponentConfig,
+    @Inject(MAT_DIALOG_DATA) private _config: DialogOpenComponentConfig<any>,
     private _dialogRef: MatDialogRef<DialogCustomWrapperComponent>,
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _changeDetectorRef: ChangeDetectorRef,
