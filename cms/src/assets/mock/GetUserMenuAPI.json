@@ -1,34 +1,36 @@
-[
-  {
-    "func_id": "01",
-    "func_name": "Menu_01",
-    "component_id": "c01",
-    "children": []
-  },
-  {
-    "func_id": "system",
-    "func_name": "中央權限管理",
-    "component_id ": "c02",
-    "children": [
-      {
-        "func_id": "dept",
-        "func_name": "部門管理",
-        "component_id": "c02-1",
-        "children": []
-      },
-      {
-        "func_id": "02-2",
-        "func_name": "Menu_02-2",
-        "component_id": "c02-2",
-        "children": [
-          {
-            "func_id": "02-2-1",
-            "func_name": "Menu_02-2-1",
-            "component_id": "c02-2-1",
-            "children": []
-          }
-        ]
-      }
-    ]
-  }
-]
+{
+  "datas": [
+    {
+      "func_id": "01",
+      "func_name": "Menu_01",
+      "component_id": "c01",
+      "children": []
+    },
+    {
+      "func_id": "system",
+      "func_name": "中央權限管理",
+      "component_id ": "c02",
+      "children": [
+        {
+          "func_id": "dept",
+          "func_name": "部門管理",
+          "component_id": "c02-1",
+          "children": []
+        },
+        {
+          "func_id": "02-2",
+          "func_name": "Menu_02-2",
+          "component_id": "c02-2",
+          "children": [
+            {
+              "func_id": "02-2-1",
+              "func_name": "Menu_02-2-1",
+              "component_id": "c02-2-1",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
