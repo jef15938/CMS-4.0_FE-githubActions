@@ -16,4 +16,16 @@
     cursor: pointer;
   }
 }
+
+.mat-tree-node.selected {
+  background-color: lightgreen;
+}
+
+li.mat-tree-node:not(.selected):hover, div.mat-tree-node:not(.selected):hover {
+  background-color: rgb(191, 244, 191);
   
+}
+
+.tree-children {
+  padding-top: 10px;
+}

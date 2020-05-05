@@ -27,11 +27,13 @@
 <div [hidden]="editMode===EditModeType.Site" style="height: 100%;">
   <div style="width: 50%; height: 100%; float: left; border-right: 1px solid lightgray;">
     <div class="page-title-container">
-      <h1>[網站名稱] <button type="button" mat-button (click)="swichMode(EditModeType.Site)">返回</button></h1>
+      <h1>{{selectedSite?.siteName}} <button type="button" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
+      </h1>
     </div>
     <div>
       <cms-tree class="cms-tree" [context]="this" [nodeDatas]="sitemaps" [customNodeRenderer]="customNodeRenderer"
-        [defaultExpandLevel]="1" (customEvent)="onCustomEvent($event)"></cms-tree>
+        [defaultExpandLevel]="1" (customEvent)="onCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
+        (afterRender)="afterTreeRender($event)"></cms-tree>
     </div>
   </div>
   <div style="width: 50%; float: right; border-left: 1px solid lightgray;">

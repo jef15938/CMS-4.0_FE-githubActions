@@ -4,6 +4,7 @@ import { TreeComponent } from './tree.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
+import { DirectiveModule } from '../../directive/directive.module';
 
 const COMPONENTS = [
   TreeComponent
@@ -14,6 +15,7 @@ const COMPONENTS = [
     CommonModule,
     MatTreeModule,
     MatIconModule,
+    DirectiveModule,
   ],
   declarations: [
     ...COMPONENTS,

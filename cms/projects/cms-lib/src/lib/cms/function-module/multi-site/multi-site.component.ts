@@ -5,6 +5,7 @@ import { DialogService } from '../../../ui/dialog/dialog.service';
 import { SitemapService } from '../../../service/sitemap.service';
 import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
 import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from './component/multi-site-node/multi-site-node.component';
+import { CmsTree } from '../../../ui/tree/tree.interface';
 
 enum EditModeType {
   Site, Node,
@@ -54,7 +55,10 @@ export class MultiSiteComponent implements OnInit {
   }
 
   private _getSites(): Observable<Site[]> {
-    return of([new Site('transglobe', 'Demo官網')]).pipe(
+    return of([
+      new Site('transglobe', 'Demo官網'),
+      new Site('transglobe', 'My官網'),
+    ]).pipe(
       tap(sites => this.sites = sites),
       tap(_ => this.selectSite(this.sites[0])),
     );
@@ -79,6 +83,16 @@ export class MultiSiteComponent implements OnInit {
         this.editMode = mode;
         break;
     }
+  }
+
+  onNodeSelected(event: { node: SiteMapInfo }) {
+    const node = event.node;
+    console.warn('onNodeSelected() node = ', node);
+  }
+
+  afterTreeRender(tree: CmsTree<SiteMapInfo>) {
+    const defaultSelect = this.sitemaps ? this.sitemaps[0] : undefined;
+    tree.selectNode(defaultSelect);
   }
 
   onCustomEvent(event: MultiSiteNodeCustomEvent) {

@@ -7,6 +7,7 @@ import { DialogService } from 'projects/cms-lib/src/lib/ui/dialog/dialog.service
 import { Observable, concat } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DepartmentService } from 'projects/cms-lib/src/lib/service/department.service';
+import { CmsTree } from 'projects/cms-lib/src/lib/ui/tree/tree.interface';
 
 @Component({
   selector: 'cms-dept',
@@ -39,6 +40,11 @@ export class DeptComponent implements OnInit {
     return this._departmentService.getAllDepartment().pipe(
       tap(depts => this.depts = depts),
     )
+  }
+
+  afterTreeRender(tree: CmsTree<DepartmentInfo>) {
+    const defaultSelect = this.depts ? this.depts[0] : undefined;
+    tree.selectNode(defaultSelect);
   }
 
   onCustomEvent(event: DeptNodeCustomEvent) {

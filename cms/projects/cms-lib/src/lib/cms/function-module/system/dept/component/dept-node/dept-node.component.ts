@@ -1,7 +1,9 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/core';
 import { DepartmentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/DepartmentInfo';
 import { CmsTreeNodeRenderer, CmsTreeNode } from 'projects/cms-lib/src/lib/ui/tree/tree.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export class DeptNodeCustomEvent {
   action: 'Create' | 'Update';
@@ -18,11 +20,13 @@ export class DeptNodeCustomEvent {
   templateUrl: './dept-node.component.html',
   styleUrls: ['./dept-node.component.scss']
 })
-export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, OnInit {
+export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, OnInit, OnDestroy {
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   node: CmsTreeNode<DepartmentInfo>;
+
+  private _destroy$ = new Subject();
 
   constructor() { }
 
@@ -32,12 +36,18 @@ export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, O
   }
 
   ngOnInit(): void {
+    this.node.tree.rightClickedNode
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(data => {
+        if (data === this.node.data) {
+          this.trigger.openMenu();
+        }
+      });
   }
 
-  @HostListener('contextmenu', ['$event'])
-  onRightClick(event) {
-    this.trigger.openMenu();
-    event.preventDefault();
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.unsubscribe();
   }
 
   onCreateBtnClicked() {

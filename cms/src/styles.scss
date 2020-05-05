@@ -24,6 +24,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   z-index: 99;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.not-selectable {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */      
+}
+
 .content {
   position: fixed;
   height: 100%;
