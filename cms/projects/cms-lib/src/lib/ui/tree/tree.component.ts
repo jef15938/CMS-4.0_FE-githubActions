@@ -18,11 +18,12 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   @Input() context: any;
 
-  @Input() nodeDisplayField = 'name';
-  @Input() nodeChildrenEntryField = 'children';
-  @Input() nodeDatas: TData[] = [];
+  @Input() nodeDisplayField = 'name'; // 顯示欄位
+  @Input() nodeChildrenEntryField = 'children'; //children的進入口欄位
+  @Input() nodeDatas: TData[] = []; // 樹資料
+  @Input() defaultExpandLevel = 0; // 預設展開層數：-1=全展開
 
-  @Input() customNodeRenderer;
+  @Input() customNodeRenderer; // 客制的節點Template
 
   @Output() nodeClicked = new EventEmitter<{ $event: any, data: TData }>();
   @Output() customEvent = new EventEmitter<{ $event: any, data: TData }>();
@@ -68,6 +69,24 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
       }
     });
     this._changeDetectorRef.detectChanges();
+    this._expandLevel(this.defaultExpandLevel);
+  }
+
+  private _expandLevel(level: number) {
+    if (!this.dataSource.data) { return; }
+    if (!level) { return; }
+    if (level === -1) { this.treeControl.expandAll(); return; }
+    let nowExpand = 0;
+    let datasToExpand = this.dataSource.data || [];
+    while (nowExpand < level) {
+      let children = [];
+      datasToExpand.forEach(data => {
+        children = children.concat(this.treeControl.getDescendants(data));
+        this.treeControl.expand(data);
+      });
+      datasToExpand = children;
+      nowExpand++;
+    }
   }
 
   hasChild = (_: number, node: TData) => !!node[this.nodeChildrenEntryField] && node[this.nodeChildrenEntryField].length > 0;
