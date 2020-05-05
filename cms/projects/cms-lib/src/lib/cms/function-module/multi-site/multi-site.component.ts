@@ -87,7 +87,6 @@ export class MultiSiteComponent implements OnInit {
 
   onNodeSelected(event: { node: SiteMapInfo }) {
     const node = event.node;
-    console.warn('onNodeSelected() node = ', node);
   }
 
   afterTreeRender(tree: CmsTree<SiteMapInfo>) {
@@ -96,7 +95,6 @@ export class MultiSiteComponent implements OnInit {
   }
 
   onCustomEvent(event: MultiSiteNodeCustomEvent) {
-    console.warn('onCustomEvent() event = ', event);
     if (event instanceof MultiSiteNodeCustomEvent) {
       switch (event.action) {
         case 'Create':

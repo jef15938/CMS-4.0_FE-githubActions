@@ -86,7 +86,6 @@ export class MyAuditingComponent implements OnInit {
     if (event instanceof MyAuditingActionCellCustomEvent) {
       switch (event.action) {
         case event.EventType.Detail:
-          console.warn('event.EventType.Detail');
           this._dialogService.openComponent({
             component: MyAuditingDetailDialogComponent,
             componentInitData: {
@@ -98,16 +97,12 @@ export class MyAuditingComponent implements OnInit {
           });
           break;
         case event.EventType.PreviewPc:
-          console.warn('event.EventType.PreviewPc');
           break;
         case event.EventType.PreviewPadH:
-          console.warn('event.EventType.PreviewPadH');
           break;
         case event.EventType.PreviewPadV:
-          console.warn('event.EventType.PreviewPadV');
           break;
         case event.EventType.PreviewMobile:
-          console.warn('event.EventType.PreviewMobile');
           break;
       }
     }

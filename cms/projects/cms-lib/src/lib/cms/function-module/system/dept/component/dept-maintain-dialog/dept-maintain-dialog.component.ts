@@ -48,9 +48,7 @@ export class DeptMaintainDialogComponent extends CustomDialogBase implements OnI
       this.action === 'Create'
         ? this._departmentService.createDepartment(this.dept.dept_id, this.dept.dept_name, this.parentId)
         : this._departmentService.updateDepartment(this.dept.dept_id, this.dept.dept_name, this.parentId)
-    ).pipe(
-      tap(_ => console.warn('_save() Success'))
-    )
+    );
   }
 
   confirm() {

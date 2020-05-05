@@ -20,11 +20,7 @@ export class DialogCustomWrapperComponent implements OnInit, AfterViewInit {
     private _dialogRef: MatDialogRef<DialogCustomWrapperComponent>,
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _changeDetectorRef: ChangeDetectorRef,
-  ) {
-    if (_config && _config.dialogSetting) {
-
-    }
-  }
+  ) { }
 
   ngOnInit(): void {
 
