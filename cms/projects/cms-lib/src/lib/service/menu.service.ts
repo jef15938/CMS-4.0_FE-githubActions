@@ -21,7 +21,7 @@ export class MenuService {
    * @memberof MenuService
    */
   getCMSMenu(): Observable<MenuInfo[]> {
-    return (this.restAPIService.dispatchRestApi('GetCMSMenu', {}) as Observable<MenuGetResponse>).pipe(
+    return this.restAPIService.dispatchRestApi<MenuGetResponse>('GetCMSMenu', {}).pipe(
       map(res => res.datas)
     );
   }
@@ -33,7 +33,7 @@ export class MenuService {
    * @memberof MenuService
    */
   getUserMenu(): Observable<MenuInfo[]> {
-    return (this.restAPIService.dispatchRestApi('GetUserMenu', {}) as Observable<MenuGetResponse>).pipe(
+    return this.restAPIService.dispatchRestApi<MenuGetResponse>('GetUserMenu', {}).pipe(
       map(res => res.datas)
     );
   }

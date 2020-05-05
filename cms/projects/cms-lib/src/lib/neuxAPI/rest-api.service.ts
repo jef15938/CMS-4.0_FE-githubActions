@@ -134,7 +134,7 @@ export class RestApiService {
 
     }
 
-    public dispatchRestApi(name: string, params: any): Observable<any> {
+    public dispatchRestApi<TResponse>(name: string, params: any): Observable<TResponse> {
         const restAPI = this.ApiFactory.getAPI(name);
         this.setAPIParams(restAPI, params);
         this.setUrl(restAPI, params);
