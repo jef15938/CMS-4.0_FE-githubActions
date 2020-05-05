@@ -2,7 +2,7 @@
 <div [hidden]="editMode===EditModeType.Node" style="height: 100%;">
   <div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;">
     <div class="page-title-container">
-      <h1>網站列表 <button type="button" mat-button>新增網站</button></h1>
+      <h1>網站列表</h1>
     </div>
     <div class="page-content-container">
       <mat-list>
@@ -28,7 +28,7 @@
       <br>
       <mat-form-field appearance="outline">
         <mat-label>子目錄名稱</mat-label>
-        <input matInput [(ngModel)]="selectedSiteUpdateModel.site_id" name="site_name" required #modelId="ngModel"
+        <input matInput [(ngModel)]="selectedSiteUpdateModel.site_id" name="site_id" required #modelId="ngModel"
           disabled>
         <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
       </mat-form-field>
