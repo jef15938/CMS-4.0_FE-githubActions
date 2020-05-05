@@ -142,7 +142,13 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this._selectNode(data);
   }
 
+  @HostListener('document:selectstart', ['$event'])
+  onSelectstart(event) {
+    event.preventDefault();
+  }
+
   onRowDbClicked($event, data: TData) {
+    $event.preventDefault();
     $event.stopPropagation();
     this.treeControl.isExpanded(data) ? this.treeControl.collapse(data) : this.treeControl.expand(data);
   }
