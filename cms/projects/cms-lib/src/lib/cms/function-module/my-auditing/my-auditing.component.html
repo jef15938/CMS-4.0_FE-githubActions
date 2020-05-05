@@ -2,5 +2,13 @@
   <h1>我的申請單</h1>
 </div>
 <div class="page-content-container">
+  <ng-container *ngIf="myAuditings?.length">
+    <div>目前頁數:{{page}}</div>
+    <br>
+  </ng-container>
   <cms-table [colDefs]="colDefs" [dataSource]="myAuditings" (customEvent)="onCustomEvent($event)"></cms-table>
+  <ng-container *ngIf="myAuditings?.length">
+    <mat-paginator [length]="totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
+    </mat-paginator>
+  </ng-container>
 </div>

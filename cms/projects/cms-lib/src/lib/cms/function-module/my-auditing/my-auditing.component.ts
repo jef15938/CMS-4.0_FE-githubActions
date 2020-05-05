@@ -108,4 +108,9 @@ export class MyAuditingComponent implements OnInit {
     }
   }
 
+  onPageChanged(event: { pageIndex: number }) {
+    this.page = event.pageIndex + 1;
+    this._init().subscribe();
+  }
+
 }

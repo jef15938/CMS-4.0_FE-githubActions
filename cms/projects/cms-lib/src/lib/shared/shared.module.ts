@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 // cms-lib
 import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
 import { DialogModule } from 'projects/cms-lib/src/lib/ui/dialog/dialog.module';
@@ -32,6 +33,7 @@ import { TableModule } from 'projects/cms-lib/src/lib/ui/table/table.module';
     MatListModule,
     MatDividerModule,
     MatIconModule,
+    MatPaginatorModule,
     // cms-lib
     TreeModule,
     DialogModule,
