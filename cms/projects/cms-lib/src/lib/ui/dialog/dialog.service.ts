@@ -19,16 +19,23 @@ export class DialogService {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     // dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
-    // dialogConfig.height = "350px";
-    dialogConfig.width = "600px";
+
+    dialogConfig.id = config.dialogSetting?.id || 'modal-component';
+    dialogConfig.width = config.dialogSetting?.width || '600px';
+    dialogConfig.height = config.dialogSetting?.height || dialogConfig.height;
+    dialogConfig.minWidth = config.dialogSetting?.minWidth || dialogConfig.minWidth;
+    dialogConfig.minHeight = config.dialogSetting?.minHeight || dialogConfig.minHeight;
+    dialogConfig.maxWidth = config.dialogSetting?.maxWidth || dialogConfig.maxWidth;
+    dialogConfig.maxHeight = config.dialogSetting?.maxHeight || dialogConfig.maxHeight;
+
     // https://material.angular.io/components/dialog/overview
+
     dialogConfig.data = config;
     const modalDialog = this._matDialog.open(DialogCustomWrapperComponent, dialogConfig);
     return modalDialog.afterClosed();
   }
 
-  openMessage(componentInitData: { message: string, title?: string }){
+  openMessage(componentInitData: { message: string, title?: string }) {
     return this.openComponent({
       component: MessageDialogComponent,
       componentInitData

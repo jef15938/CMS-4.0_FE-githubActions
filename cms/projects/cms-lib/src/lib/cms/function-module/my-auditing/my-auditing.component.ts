@@ -91,6 +91,9 @@ export class MyAuditingComponent implements OnInit {
             component: MyAuditingDetailDialogComponent,
             componentInitData: {
               orderId: event.data.order_id
+            },
+            dialogSetting: {
+              width: '100%'
             }
           });
           break;
