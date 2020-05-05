@@ -1,0 +1,35 @@
+{
+  "datas": [
+    {
+      "node_id": "N000",
+      "node_name": "Root",
+      "layout_id": "L001",
+      "node_type": "",
+      "url_type": "INSIDE",
+      "url_link_node_id": "N001",
+      "url": "",
+      "children": [
+        {
+          "node_id": "N001",
+          "node_name": "其他",
+          "layout_id": "L001",
+          "node_type": "",
+          "url_type": "INSIDE",
+          "url_link_node_id": "N001",
+          "url": "",
+          "children": [
+            {
+              "node_id": "N001-1",
+              "node_name": "FAQ",
+              "layout_id": "L001",
+              "node_type": "Page",
+              "url_type": "INSIDE",
+              "url_link_node_id": "N001",
+              "url": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

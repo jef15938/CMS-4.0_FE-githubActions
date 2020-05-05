@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, concat } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { DialogService } from '../../../ui/dialog/dialog.service';
+import { SitemapService } from '../../../service/sitemap.service';
+import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
+import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from './component/multi-site-node/multi-site-node.component';
+
+enum EditModeType {
+  Site, Node,
+}
 
 class Site {
   siteId: string;
@@ -19,12 +27,21 @@ class Site {
 })
 export class MultiSiteComponent implements OnInit {
 
+  EditModeType = EditModeType;
+
   sites: Site[] = [];
   selectedSite: Site;
 
-  editMode: 'site' | 'node' = 'site';
+  editMode: EditModeType = EditModeType.Site;
 
-  constructor() { }
+  sitemaps: SiteMapInfo[];
+  selectedSiteMap: SiteMapInfo;
+  customNodeRenderer = MultiSiteNodeComponent;
+
+  constructor(
+    private _dialogService: DialogService,
+    private _sitemapService: SitemapService,
+  ) { }
 
   ngOnInit(): void {
     this._init().subscribe();
@@ -47,10 +64,37 @@ export class MultiSiteComponent implements OnInit {
     this.selectedSite = site;
   }
 
-  swichMode(mode: 'site' | 'node') {
-    this.editMode = mode;
+  swichMode(mode: EditModeType) {
+    switch (mode) {
+      case EditModeType.Node:
+        if (!this.selectedSite) { this._dialogService.openMessage({ message: '尚未選擇網站' }); return; }
+        this._sitemapService.getUserSiteMap(this.selectedSite.siteId).subscribe(sitemap => {
+          this.sitemaps = sitemap;
+          this.editMode = mode;
+        });
+        break;
+      case EditModeType.Site:
+        this.sitemaps = undefined;
+        this.selectedSiteMap = undefined;
+        this.editMode = mode;
+        break;
+    }
   }
 
-
+  onCustomEvent(event: MultiSiteNodeCustomEvent) {
+    console.warn('onCustomEvent() event = ', event);
+    if (event instanceof MultiSiteNodeCustomEvent) {
+      switch (event.action) {
+        case 'Create':
+        case 'Delete':
+          // this.openDialog(event.action, event.dept).subscribe(res => {
+          //   if (res) {
+          //     this._initPage().subscribe();
+          //   }
+          // });
+          break;
+      }
+    }
+  }
 
 }

@@ -55,7 +55,7 @@ export const environment = {
     GetLoginInfo: 'Restful',
     GetCMSSiteMapBySiteID: 'Restful',
     GetCMSMenu: 'Restful',
-    GetUserSiteMapBySiteID: 'Restful',
+    GetUserSiteMapBySiteID: 'Mock',
     PostUserSiteMapBySiteID: 'Restful',
     PutUserSiteMapByNodeID: 'Restful',
     DeleteUserSiteMapByNodeID: 'Restful',

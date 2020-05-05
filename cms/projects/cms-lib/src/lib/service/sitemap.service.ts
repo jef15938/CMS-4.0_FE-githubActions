@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
+import { SiteMapGetResponse } from '../neuxAPI/bean/SiteMapGetResponse';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -79,7 +81,9 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getCMSSiteMap(siteID: string) {
-    return this.restAPIService.dispatchRestApi('GetCMSSiteMapBySiteID', { siteID });
+    return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetCMSSiteMapBySiteID', { siteID }).pipe(
+      map(res => res.datas)
+    );
   }
 
   /**
@@ -89,7 +93,9 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getUserSiteMap(siteID: string) {
-    return this.restAPIService.dispatchRestApi('GetUserSiteMapBySiteID', { siteID });
+    return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetUserSiteMapBySiteID', { siteID }).pipe(
+      map(res => res.datas)
+    );
   }
 
   /**
