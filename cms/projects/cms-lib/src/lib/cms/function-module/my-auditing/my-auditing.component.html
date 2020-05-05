@@ -2,5 +2,5 @@
   <h1>我的申請單</h1>
 </div>
 <div>
-  <cms-table [colDefs]="colDefs" [dataSource]="myAuditings"></cms-table>
+  <cms-table [colDefs]="colDefs" [dataSource]="myAuditings" (customEvent)="onCustomEvent($event)"></cms-table>
 </div>

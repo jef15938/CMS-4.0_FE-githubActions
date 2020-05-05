@@ -23,6 +23,7 @@ export class CellRendererWrapperDirective {
     const instance = componentRef.instance as CustomCellRenderer;
     if (instance.compInit && typeof (instance.compInit) === 'function') {
       instance.compInit({
+        table: this.table,
         data: this.data,
       });
     }

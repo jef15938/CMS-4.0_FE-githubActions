@@ -1,9 +1,16 @@
 <ng-container *ngIf="config">
-  <mat-icon #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
+  <mat-icon class="pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
   <span>
     <mat-menu #appMenu="matMenu">
-      <button type="button" mat-menu-item>新增</button>
-      <button type="button" mat-menu-item>修改</button>
+      <button type="button" class="pointer" mat-menu-item (click)="onAction(EventType.Detail)">看更多</button>
+      <button type="button" class="pointer" mat-menu-item [matMenuTriggerFor]="subMenu">預覽</button>
+    </mat-menu>
+
+    <mat-menu #subMenu="matMenu">
+      <button mat-menu-item (click)="onAction(EventType.PreviewPc)">PC</button>
+      <button mat-menu-item (click)="onAction(EventType.PreviewPadH)">Pad-H</button>
+      <button mat-menu-item (click)="onAction(EventType.PreviewPadV)">Pad-V</button>
+      <button mat-menu-item (click)="onAction(EventType.PreviewMobile)">Mobile</button>
     </mat-menu>
   </span>
 </ng-container>

@@ -9,6 +9,10 @@ export interface ColDef {
   headClass?: string;
 }
 
+export interface CmsTable {
+  triggerCustomEvent: (event: any) => void;
+}
+
 export interface CustomCellRenderer {
-  compInit: (config: { data }) => any;
+  compInit: (config: { table: CmsTable, data: any }) => any;
 }

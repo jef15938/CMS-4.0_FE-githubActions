@@ -4,7 +4,7 @@ import { Observable, concat } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { MyAuditingInfo } from '../../../neuxAPI/bean/MyAuditingInfo';
 
-import { MyAuditingActionCellComponent } from './component/cell-renderer/my-auditing-action-cell/my-auditing-action-cell.component';
+import { MyAuditingActionCellComponent, MyAuditingActionCellCustomEvent } from './component/cell-renderer/my-auditing-action-cell/my-auditing-action-cell.component';
 import { ColDef } from '../../../ui/table/table.interface';
 
 @Component({
@@ -74,10 +74,31 @@ export class MyAuditingComponent implements OnInit {
         this.totalPageSize = res.pageInfo.totalPageSize;
         this.totalRecSize = res.pageInfo.totalRecSize;
         this.myAuditings = res.datas;
-        console.warn('this.myAuditings = ', this.myAuditings);
       }),
       map(res => res.datas)
     );
+  }
+
+  onCustomEvent(event: MyAuditingActionCellCustomEvent) {
+    if (event instanceof MyAuditingActionCellCustomEvent) {
+      switch (event.action) {
+        case event.EventType.Detail:
+          console.warn('event.EventType.Detail');
+          break;
+        case event.EventType.PreviewPc:
+          console.warn('event.EventType.PreviewPc');
+          break;
+        case event.EventType.PreviewPadH:
+          console.warn('event.EventType.PreviewPadH');
+          break;
+        case event.EventType.PreviewPadV:
+          console.warn('event.EventType.PreviewPadV');
+          break;
+        case event.EventType.PreviewMobile:
+          console.warn('event.EventType.PreviewMobile');
+          break;
+      }
+    }
   }
 
 }

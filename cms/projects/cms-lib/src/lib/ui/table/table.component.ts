@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
 import { ColDef } from './table.interface';
 
@@ -13,6 +13,8 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
 
   @Input() colDefs: ColDef[];
   @Input() dataSource: TData[];
+
+  @Output() customEvent = new EventEmitter<{ $event: any, data: TData }>();
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -40,6 +42,10 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
 
   getDisplayedColumns() {
     return this.colDefs ? this.colDefs.map(c => c.colId) : [];
+  }
+
+  triggerCustomEvent(event) {
+    this.customEvent.next(event);
   }
 
 }
