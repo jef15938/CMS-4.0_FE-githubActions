@@ -1,0 +1,9 @@
+<ng-container *ngIf="config">
+  <mat-icon #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
+  <span>
+    <mat-menu #appMenu="matMenu">
+      <button type="button" mat-menu-item>新增</button>
+      <button type="button" mat-menu-item>修改</button>
+    </mat-menu>
+  </span>
+</ng-container>
