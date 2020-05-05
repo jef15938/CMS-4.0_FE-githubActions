@@ -4,6 +4,9 @@ import { ParamsError } from '@neux/core';
 import { AuditingGetResponse } from '../neuxAPI/bean/AuditingGetResponse';
 import { Observable } from 'rxjs';
 import { MyAuditingGetResponse } from '../neuxAPI/bean/MyAuditingGetResponse';
+import { map } from 'rxjs/operators';
+import { MyAuditingDetailGetResponse } from '../neuxAPI/bean/MyAuditingDetailGetResponse';
+import { MyAuditingDetailInfo } from '../neuxAPI/bean/MyAuditingDetailInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +38,13 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  getMyAuditingDetail(orderID: number) {
+  getMyAuditingDetail(orderID: number): Observable<MyAuditingDetailInfo[]> {
     if (!orderID) {
       throw new ParamsError('orderID', 'getMyAuditingDetail', 'number', orderID);
     }
-    return this.restAPIService.dispatchRestApi('GetMyAuditingByOrderID', { orderID });
+    return this.restAPIService.dispatchRestApi('GetMyAuditingByOrderID', { orderID }).pipe(
+      map((res: MyAuditingDetailGetResponse) => res.datas)
+    );
   }
 
   /**

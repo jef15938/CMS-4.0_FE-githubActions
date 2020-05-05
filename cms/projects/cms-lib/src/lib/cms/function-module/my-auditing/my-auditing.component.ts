@@ -6,6 +6,8 @@ import { MyAuditingInfo } from '../../../neuxAPI/bean/MyAuditingInfo';
 
 import { MyAuditingActionCellComponent, MyAuditingActionCellCustomEvent } from './component/cell-renderer/my-auditing-action-cell/my-auditing-action-cell.component';
 import { ColDef } from '../../../ui/table/table.interface';
+import { DialogService } from '../../../ui/dialog/dialog.service';
+import { MyAuditingDetailDialogComponent } from './component/dialog/my-auditing-detail-dialog/my-auditing-detail-dialog.component';
 
 @Component({
   selector: 'cms-my-auditing',
@@ -56,6 +58,7 @@ export class MyAuditingComponent implements OnInit {
 
   constructor(
     private _auditingService: AuditingService,
+    private _dialogService: DialogService,
   ) { }
 
   ngOnInit(): void {
@@ -84,6 +87,12 @@ export class MyAuditingComponent implements OnInit {
       switch (event.action) {
         case event.EventType.Detail:
           console.warn('event.EventType.Detail');
+          this._dialogService.openComponent({
+            component: MyAuditingDetailDialogComponent,
+            componentInitData: {
+              orderId: event.data.order_id
+            }
+          });
           break;
         case event.EventType.PreviewPc:
           console.warn('event.EventType.PreviewPc');

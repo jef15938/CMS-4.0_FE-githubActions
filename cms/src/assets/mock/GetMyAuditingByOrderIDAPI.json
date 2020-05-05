@@ -1,0 +1,22 @@
+{
+  "datas": [
+    {
+      "auditing_group_name": "群組1",
+      "auditing_stage": 999,
+      "auditing_name": "甲主管",
+      "auditing_dept_name": "部門A",
+      "status": "N/A",
+      "auditing_time": "",
+      "auditing_comment": "無"
+    },
+    {
+      "auditing_group_name": "群組2",
+      "auditing_stage": 65536,
+      "auditing_name": "乙主管",
+      "auditing_dept_name": "部門B",
+      "status": "審核中",
+      "auditing_time": "",
+      "auditing_comment": "好！"
+    }
+  ]
+}

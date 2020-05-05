@@ -66,7 +66,7 @@ export const environment = {
     DeleteUserSiteMapByNodeID: 'Restful',
     GetContentByContentID: 'Restful',
     PutContentByContentID: 'Restful',
-    GetMyAuditingByOrderID: 'Restful',
+    GetMyAuditingByOrderID: 'Mock',
     GetMyAuditing: 'Mock',
     GetFarmByFuncID: 'Restful',
     GetFarmTableInfoByFuncID: 'Restful',
