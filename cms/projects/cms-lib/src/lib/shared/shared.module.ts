@@ -3,16 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '@neux/core';
-// cms-lib
-import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
-import { DialogModule } from 'projects/cms-lib/src/lib/ui/dialog/dialog.module';
 // Material
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+// cms-lib
+import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
+import { DialogModule } from 'projects/cms-lib/src/lib/ui/dialog/dialog.module';
+import { TableModule } from 'projects/cms-lib/src/lib/ui/table/table.module';
 
 @NgModule({
   declarations: [],
@@ -30,10 +31,11 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatListModule,
     MatDividerModule,
-    MatCardModule,
+    MatIconModule,
     // cms-lib
     TreeModule,
     DialogModule,
+    TableModule,
   ]
 })
 export class SharedModule { }
