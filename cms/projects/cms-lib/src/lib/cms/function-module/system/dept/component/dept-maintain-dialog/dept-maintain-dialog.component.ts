@@ -15,16 +15,6 @@ export class DeptMaintainDialogComponent extends CustomDialogBase implements OnI
 
   title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}部門`;
   actions: CustomDialogActionButton[] = [];
-  // actions: CustomDialogActionButton[] = [
-  //   {
-  //     text: '取消',
-  //     onClick: () => this.close(),
-  //   },
-  //   {
-  //     text: '儲存',
-  //     onClick: () => this.confirm(),
-  //   }
-  // ];
 
   action: 'Create' | 'Update' = 'Create';
 
