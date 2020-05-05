@@ -45,7 +45,7 @@ export class ApiCheckComponent implements OnInit {
   }
 
   send() {
-    this.api$ = this.restApiService.dispatchRestApi<any>(this.currentSelectAPI, JSON.parse(this.params)).pipe(
+    this.api$ = this.restApiService.dispatchRestApi(this.currentSelectAPI, JSON.parse(this.params)).pipe(
       map(x => JSON.stringify(x.body)),
       catchError(err => {
         this.errorObject = `Error:${err}`;

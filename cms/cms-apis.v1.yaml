@@ -114,7 +114,7 @@ paths:
   /Login:
     post:
       summary: Login
-      operationId: post-Logout
+      operationId: post-Login
       responses:
         '200':
           description: OK
@@ -399,6 +399,25 @@ paths:
               $ref: '#/components/schemas/DepartmentMaintainRequest'
       tags:
         - System
+    get:
+      summary: GetDepartmentInfo
+      operationId: get-Department-deptID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentDetailInfo'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - System
+      description: 取得部門節點
   /Auditing:
     get:
       summary: GetAuditingList
@@ -675,8 +694,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                example: "{   \"templates\": [     {       \"id\": \"UUID1\",       \"templateId\": \"template-main-1\",       \"fields\": [         {           \"fieldId\": \"title\",           \"fieldType\": \"TEXT\",           \"fieldVal\": \"Hello\",           \"extension\": {}         },         {           \"fieldId\": \"description\",           \"fieldType\": \"TEXTAREA\",           \"fieldVal\": \"更多的感動，來自人與人之間的交流， 我們紀錄那些時刻，分享愛，讓你我深刻感受「因為愛，責任在」。\\n\",           \"extension\": {}         },         {           \"fieldId\": \"url\",           \"fieldType\": \"LINK\",           \"fieldVal\": \"http://www.google.com.tw\",           \"extension\": {             \"target\": \"_self\"           }         },         {           \"fieldId\": \"picture\",           \"fieldType\": \"IMG\",           \"fieldVal\": \"img/themeImg/list-circle-img-04.png\",           \"extension\": {}         },         {           \"fieldId\": \"background\",           \"fieldType\": \"BGIMG\",           \"fieldVal\": \"img/themeImg/bg-eng.png\",           \"extension\": {}         },         {           \"fieldId\": \"detail\",           \"fieldType\": \"HTMLDETAIL\",           \"fieldVal\": \"<table></table>\",           \"extension\": {}         }       ],       \"attributes\": {}     },     {       \"id\": \"UUID2\",       \"templateId\": \"template-source-1\",       \"source\": \"home-slider\",       \"fields\": [],       \"attributes\": {}     },     {       \"id\": \"UUID3\",       \"templateId\": \"template-customize-1\",       \"fields\": [],       \"attributes\": {}     },     {       \"id\": \"UUID4\",       \"templateId\": \"template-tab-1\",       \"fields\": [         {           \"fieldId\": \"title\",           \"fieldType\": \"TEXT\",           \"fieldVal\": \"Hello\",           \"extension\": {}         }       ],       \"tabs\": [         {           \"id\": \"UUID5\",           \"templateId\": \"template-main-2\",           \"fields\": []         }       ],       \"attributes\": {}     }   ] }"
+                $ref: '#/components/schemas/ContentInfo'
         '400':
           description: Bad Request
           content:
@@ -715,8 +733,7 @@ paths:
         content:
           application/json:
             schema:
-              type: string
-              example: "{   \"templates\": [     {       \"id\": \"UUID1\",       \"templateId\": \"template-main-1\",       \"fields\": [         {           \"fieldId\": \"title\",           \"fieldType\": \"TEXT\",           \"fieldVal\": \"Hello\",           \"extension\": {}         },         {           \"fieldId\": \"description\",           \"fieldType\": \"TEXTAREA\",           \"fieldVal\": \"更多的感動，來自人與人之間的交流， 我們紀錄那些時刻，分享愛，讓你我深刻感受「因為愛，責任在」。\\n\",           \"extension\": {}         },         {           \"fieldId\": \"url\",           \"fieldType\": \"LINK\",           \"fieldVal\": \"http://www.google.com.tw\",           \"extension\": {             \"target\": \"_self\"           }         },         {           \"fieldId\": \"picture\",           \"fieldType\": \"IMG\",           \"fieldVal\": \"img/themeImg/list-circle-img-04.png\",           \"extension\": {}         },         {           \"fieldId\": \"background\",           \"fieldType\": \"BGIMG\",           \"fieldVal\": \"img/themeImg/bg-eng.png\",           \"extension\": {}         },         {           \"fieldId\": \"detail\",           \"fieldType\": \"HTMLDETAIL\",           \"fieldVal\": \"<table></table>\",           \"extension\": {}         }       ],       \"attributes\": {}     },     {       \"id\": \"UUID2\",       \"templateId\": \"template-source-1\",       \"source\": \"home-slider\",       \"fields\": [],       \"attributes\": {}     },     {       \"id\": \"UUID3\",       \"templateId\": \"template-customize-1\",       \"fields\": [],       \"attributes\": {}     },     {       \"id\": \"UUID4\",       \"templateId\": \"template-tab-1\",       \"fields\": [         {           \"fieldId\": \"title\",           \"fieldType\": \"TEXT\",           \"fieldVal\": \"Hello\",           \"extension\": {}         }       ],       \"tabs\": [         {           \"id\": \"UUID5\",           \"templateId\": \"template-main-2\",           \"fields\": []         }       ],       \"attributes\": {}     }   ] }"
+              $ref: '#/components/schemas/ContentInfo'
       description: 更新Content JSON資料
     parameters:
       - schema:
@@ -778,6 +795,12 @@ paths:
           description: Internal Server Error
       operationId: get-MyAuditing
       description: 取得我的申請單資料
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: page
+          description: 沒有傳入預設帶入1
   '/Farm/{funcID}':
     get:
       summary: GetFarmInfo
@@ -991,6 +1014,86 @@ paths:
         in: path
         required: true
         description: 功能代碼
+  /Site:
+    get:
+      summary: GetSiteList
+      tags:
+        - SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Site
+      description: 取得多個網站清單
+  '/Group/Menu/{groupID}':
+    get:
+      summary: GetGroupMenuList
+      tags:
+        - System
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupMenuGetResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Group-Menu
+      description: 取得群組設定的後台功能
+    parameters:
+      - schema:
+          type: string
+        name: groupID
+        in: path
+        required: true
+  '/Group/SiteMap/{groupID}':
+    get:
+      summary: GetGroupSiteMapList
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupSiteMapGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Group-SiteMap
+      tags:
+        - System
+      description: 取得群組設定的前台功能
+    parameters:
+      - schema:
+          type: string
+        name: groupID
+        in: path
+        required: true
 components:
   schemas:
     LoginRequest:
@@ -1207,6 +1310,8 @@ components:
       title: DepartmentInfo
       type: object
       description: ''
+      x-tags:
+        - Model
       properties:
         dept_id:
           type: string
@@ -1223,8 +1328,6 @@ components:
         - dept_id
         - dept_name
         - children
-      x-tags:
-        - Model
     DepartmentGetResponse:
       title: DepartmentGetResponse
       type: object
@@ -1923,4 +2026,146 @@ components:
       required:
         - category
       description: ''
+    ContentInfo:
+      title: ContentInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentTemplateInfo'
+    ContentTemplateInfo:
+      title: ContentTemplateInfo
+      type: object
+      x-tags:
+        - Model
+      description: ''
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID
+        templateId:
+          type: string
+          description: 版型代碼
+        fields:
+          type: array
+          description: 版型中的欄位
+          items:
+            $ref: '#/components/schemas/ContentFieldInfo'
+        attributes:
+          type: object
+          description: 做Extension使用
+      required:
+        - id
+        - templateId
+        - fields
+        - attributes
+    ContentFieldInfo:
+      title: ContentFieldInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        fieldId:
+          type: string
+          description: 欄位代碼
+        fieldType:
+          type: string
+          description: 欄位型態
+          enum:
+            - TEXT
+            - TEXTAREA
+            - LINK
+            - IMG
+            - BGIMG
+            - HTMLDETAIL
+        fieldVal:
+          type: string
+          description: 屬性值
+        extension:
+          type: object
+          description: 用來extension使用
+      required:
+        - fieldId
+        - fieldType
+        - fieldVal
+        - extension
+    DepartmentDetailInfo:
+      title: DepartmentDetailInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        dept_id:
+          type: string
+        dept_name:
+          type: string
+      required:
+        - dept_id
+        - dept_name
+    SiteInfo:
+      title: SiteInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        site_id:
+          type: string
+        site_name:
+          type: string
+      required:
+        - site_id
+        - site_name
+    SiteGetResponse:
+      title: SiteGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteInfo'
+    GroupMenuGetResponse:
+      title: GroupMenuGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: object
+          required:
+            - func_id
+          properties:
+            func_id:
+              type: string
+      required:
+        - datas
+    GroupSiteMapGetResponse:
+      title: GroupSiteMapGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: object
+          required:
+            - node_id
+            - can_add
+            - can_modify
+            - can_delete
+          properties:
+            node_id:
+              type: string
+            can_add:
+              type: boolean
+            can_modify:
+              type: boolean
+            can_delete:
+              type: boolean
+      required:
+        - datas
   securitySchemes: {}

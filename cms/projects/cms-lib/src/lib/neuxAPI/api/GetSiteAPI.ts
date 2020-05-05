@@ -4,26 +4,23 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * GetMyAuditing
+ * GetSiteList
  */
-export class GetMyAuditingAPI implements API, MockAPI, RestfulAPI {
+export class GetSiteAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
-    public page: number;
-
+    
 
     constructor() { }
 
     public getAPIName(): string {
-        return 'GetMyAuditing';
+        return 'GetSite';
     }
 
     public getRequestData(): APIRequest {
         let queryParams = new HttpParams();
         let requestData = new APIRequest();
-        queryParams = queryParams.set('page', 
-                      StringUtils.coerceStringProperty(this.page));
-
+        
         requestData.type = 'GET';
         requestData.params = queryParams;
         requestData.url = this.url;
@@ -31,7 +28,7 @@ export class GetMyAuditingAPI implements API, MockAPI, RestfulAPI {
     }
 
     public getMockPath(): string {
-        return './assets/mock/GetMyAuditingAPI.json';
+        return './assets/mock/GetSiteAPI.json';
     }
 
 }

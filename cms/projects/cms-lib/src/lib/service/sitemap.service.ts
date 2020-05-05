@@ -81,8 +81,8 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getCMSSiteMap(siteID: string) {
-    return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetCMSSiteMapBySiteID', { siteID }).pipe(
-      map(res => res.datas)
+    return this.restAPIService.dispatchRestApi('GetCMSSiteMapBySiteID', { siteID }).pipe(
+      map((res: SiteMapGetResponse) => res.datas)
     );
   }
 
@@ -93,8 +93,8 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getUserSiteMap(siteID: string) {
-    return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetUserSiteMapBySiteID', { siteID }).pipe(
-      map(res => res.datas)
+    return this.restAPIService.dispatchRestApi('GetUserSiteMapBySiteID', { siteID }).pipe(
+      map((res: SiteMapGetResponse) => res.datas)
     );
   }
 

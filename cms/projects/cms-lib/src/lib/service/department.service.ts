@@ -67,8 +67,8 @@ export class DepartmentService {
    * @memberof DepartmentService
    */
   getAllDepartment(): Observable<DepartmentInfo[]> {
-    return this.restAPIService.dispatchRestApi<DepartmentGetResponse>('GetDepartment', {}).pipe(
-      map(res => res.datas)
+    return this.restAPIService.dispatchRestApi('GetDepartment', {}).pipe(
+      map((res: DepartmentGetResponse) => res.datas)
     );
   }
 

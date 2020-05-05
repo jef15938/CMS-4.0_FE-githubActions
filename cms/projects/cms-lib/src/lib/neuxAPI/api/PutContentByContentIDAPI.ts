@@ -1,6 +1,7 @@
 import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
+import {ContentInfo} from '../bean/ContentInfo';
 
 
 /**
@@ -9,7 +10,7 @@ import { StringUtils } from '@neux/core';
 export class PutContentByContentIDAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
-    public requestBody: string;
+    public requestBody: ContentInfo;
 
 
     constructor() { }
