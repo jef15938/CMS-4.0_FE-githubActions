@@ -8,7 +8,7 @@
       <mat-list>
         <ng-container *ngFor="let site of sites">
           <div [class.selected-site]="selectedSite===site">
-            <mat-list-item (click)="selectSite(site)">[{{site.siteId}}]-[{{site.siteName}}]</mat-list-item>
+            <mat-list-item (click)="selectSite(site)">{{site.site_name}}</mat-list-item>
           </div>
         </ng-container>
       </mat-list>
@@ -27,7 +27,7 @@
 <div [hidden]="editMode===EditModeType.Site" style="height: 100%;">
   <div style="width: 50%; height: 100%; float: left; border-right: 1px solid lightgray;">
     <div class="page-title-container">
-      <h1>{{selectedSite?.siteName}} <button type="button" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
+      <h1>{{selectedSite?.site_name}} <button type="button" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
       </h1>
     </div>
     <div class="page-content-container">

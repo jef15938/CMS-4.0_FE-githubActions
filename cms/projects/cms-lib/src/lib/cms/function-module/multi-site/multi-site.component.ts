@@ -1,24 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, concat } from 'rxjs';
+import { Observable, concat } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DialogService } from '../../../ui/dialog/dialog.service';
 import { SitemapService } from '../../../service/sitemap.service';
 import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
 import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from './component/multi-site-node/multi-site-node.component';
 import { CmsTree } from '../../../ui/tree/tree.interface';
+import { SiteInfo } from '../../../neuxAPI/bean/SiteInfo';
 
 enum EditModeType {
   Site, Node,
-}
-
-class Site {
-  siteId: string;
-  siteName: string;
-
-  constructor(siteId: string, siteName: string) {
-    this.siteId = siteId;
-    this.siteName = siteName;
-  }
 }
 
 @Component({
@@ -30,8 +21,8 @@ export class MultiSiteComponent implements OnInit {
 
   EditModeType = EditModeType;
 
-  sites: Site[] = [];
-  selectedSite: Site;
+  sites: SiteInfo[] = [];
+  selectedSite: SiteInfo;
 
   editMode: EditModeType = EditModeType.Site;
 
@@ -54,17 +45,14 @@ export class MultiSiteComponent implements OnInit {
     )
   }
 
-  private _getSites(): Observable<Site[]> {
-    return of([
-      new Site('transglobe', 'Demo官網'),
-      new Site('transglobe', 'My官網'),
-    ]).pipe(
+  private _getSites(): Observable<SiteInfo[]> {
+    return this._sitemapService.getSiteList().pipe(
       tap(sites => this.sites = sites),
       tap(_ => this.selectSite(this.sites[0])),
     );
   }
 
-  selectSite(site: Site) {
+  selectSite(site: SiteInfo) {
     this.selectedSite = site;
   }
 
@@ -72,7 +60,7 @@ export class MultiSiteComponent implements OnInit {
     switch (mode) {
       case EditModeType.Node:
         if (!this.selectedSite) { this._dialogService.openMessage({ message: '尚未選擇網站' }); return; }
-        this._sitemapService.getUserSiteMap(this.selectedSite.siteId).subscribe(sitemap => {
+        this._sitemapService.getUserSiteMap(this.selectedSite.site_id).subscribe(sitemap => {
           this.sitemaps = sitemap;
           this.editMode = mode;
         });

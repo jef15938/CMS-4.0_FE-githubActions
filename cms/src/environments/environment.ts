@@ -74,7 +74,7 @@ export const environment = {
     PostFarmFormInfoByFuncID: 'Restful',
     PutFarmFormInfoByFuncID: 'Restful',
     GetFarmDetailInfoByFarmID: 'Restful',
-    GetSite: 'Restful',
+    GetSite: 'Mock',
     GetGroupMenuByGroupID: 'Restful',
     GetGroupSiteMapByGroupID: 'Restful',
   }

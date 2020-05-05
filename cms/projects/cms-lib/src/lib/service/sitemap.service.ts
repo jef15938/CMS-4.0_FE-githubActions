@@ -3,6 +3,9 @@ import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
 import { SiteMapGetResponse } from '../neuxAPI/bean/SiteMapGetResponse';
 import { map } from 'rxjs/operators';
+import { SiteGetResponse } from '../neuxAPI/bean/SiteGetResponse';
+import { Observable } from 'rxjs';
+import { SiteInfo } from '../neuxAPI/bean/SiteInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -144,6 +147,17 @@ export class SitemapService {
     }
 
     return this.restAPIService.dispatchRestApi('PostUserSiteMapBySiteID', params);
+  }
+
+  /**
+   *
+   * @returns
+   * @memberof SitemapService
+   */
+  getSiteList(): Observable<SiteInfo[]> {
+    return this.restAPIService.dispatchRestApi('GetSite', {}).pipe(
+      map((res: SiteGetResponse) => res.datas)
+    );
   }
 
 }
