@@ -4,7 +4,7 @@
     <div class="page-title-container">
       <h1>網站列表 <button type="button" mat-button>新增網站</button></h1>
     </div>
-    <div>
+    <div class="page-content-container">
       <mat-list>
         <ng-container *ngFor="let site of sites">
           <div [class.selected-site]="selectedSite===site">
@@ -18,7 +18,7 @@
     <div class="page-title-container">
       <h1>網站設定 <button type="button" mat-button (click)="swichMode(EditModeType.Node)">編輯節點</button></h1>
     </div>
-    <div *ngIf="selectedSite">
+    <div class="page-content-container" *ngIf="selectedSite">
     </div>
   </div>
 </div>
@@ -30,12 +30,14 @@
       <h1>{{selectedSite?.siteName}} <button type="button" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
       </h1>
     </div>
-    <div>
+    <div class="page-content-container">
       <cms-tree class="cms-tree" [context]="this" [nodeDatas]="sitemaps" [customNodeRenderer]="customNodeRenderer"
         [defaultExpandLevel]="1" (customEvent)="onCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
         (afterRender)="afterTreeRender($event)"></cms-tree>
     </div>
   </div>
   <div style="width: 50%; float: right; border-left: 1px solid lightgray;">
+    <div class="page-content-container">
+    </div>
   </div>
 </div>

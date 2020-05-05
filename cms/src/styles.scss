@@ -45,6 +45,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .page-title-container {
     padding: 10px;
     border-bottom: 1px solid lightgray;
+
+    h1 {
+      margin-bottom: 0;
+    }
+  }
+
+  .page-content-container {
+    padding: 10px;
   }
 }
 

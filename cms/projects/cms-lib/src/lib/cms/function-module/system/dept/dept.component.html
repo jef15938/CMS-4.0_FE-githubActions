@@ -1,7 +1,7 @@
 <div class="page-title-container">
   <h1>部門管理</h1>
 </div>
-<div>
+<div class="page-content-container">
   <cms-tree class="cms-tree" [context]="this" [nodeDatas]="depts" nodeDisplayField="dept_name"
     [customNodeRenderer]="customNodeRenderer" (customEvent)="onCustomEvent($event)"
     (afterRender)="afterTreeRender($event)"></cms-tree>
