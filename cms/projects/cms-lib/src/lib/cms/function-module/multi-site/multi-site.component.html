@@ -18,7 +18,20 @@
     <div class="page-title-container">
       <h1>網站設定 <button type="button" mat-button (click)="swichMode(EditModeType.Node)">編輯節點</button></h1>
     </div>
-    <div class="page-content-container" *ngIf="selectedSite">
+    <div class="page-content-container" *ngIf="selectedSiteUpdateModel">
+      <mat-form-field appearance="outline">
+        <mat-label>網站名稱</mat-label>
+        <input matInput [(ngModel)]="selectedSiteUpdateModel.site_name" name="site_name" required #modelName="ngModel"
+          disabled>
+        <!-- <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error> -->
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <mat-label>子目錄名稱</mat-label>
+        <input matInput [(ngModel)]="selectedSiteUpdateModel.site_id" name="site_name" required #modelId="ngModel"
+          disabled>
+        <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+      </mat-form-field>
     </div>
   </div>
 </div>
@@ -27,7 +40,8 @@
 <div [hidden]="editMode===EditModeType.Site" style="height: 100%;">
   <div style="width: 50%; height: 100%; float: left; border-right: 1px solid lightgray;">
     <div class="page-title-container">
-      <h1>{{selectedSite?.site_name}} <button type="button" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
+      <h1>{{selectedSite?.site_name}} <button type="button" mat-button
+          (click)="swichMode(EditModeType.Site)">返回</button>
       </h1>
     </div>
     <div class="page-content-container">

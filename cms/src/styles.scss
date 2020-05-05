@@ -41,19 +41,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-left: 200px;
   margin-top: 40px;
   width: calc(100% - 200px);
+}
 
-  .page-title-container {
-    padding: 10px;
-    border-bottom: 1px solid lightgray;
+.page-title-container {
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
 
-    h1 {
-      margin-bottom: 0;
-    }
+  h1 {
+    margin-bottom: 0;
   }
+}
 
-  .page-content-container {
-    padding: 10px;
-  }
+.page-content-container {
+  padding: 10px;
+}
+
+:disabled, [disabled] {
+  cursor: not-allowed !important;
 }
 
 .btn-group {

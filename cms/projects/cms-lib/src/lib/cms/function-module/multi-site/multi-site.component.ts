@@ -12,6 +12,15 @@ enum EditModeType {
   Site, Node,
 }
 
+class SiteInfoUpdateModel extends SiteInfo {
+  constructor(siteInfo: SiteInfo) {
+    super();
+    for (let k of Object.keys(siteInfo)) {
+      this[k] = siteInfo[k];
+    }
+  }
+}
+
 @Component({
   selector: 'cms-multi-site',
   templateUrl: './multi-site.component.html',
@@ -23,6 +32,7 @@ export class MultiSiteComponent implements OnInit {
 
   sites: SiteInfo[] = [];
   selectedSite: SiteInfo;
+  selectedSiteUpdateModel: SiteInfoUpdateModel;
 
   editMode: EditModeType = EditModeType.Site;
 
@@ -53,7 +63,9 @@ export class MultiSiteComponent implements OnInit {
   }
 
   selectSite(site: SiteInfo) {
+    if (!site) { this.selectedSite = this.selectedSiteUpdateModel = undefined; return; }
     this.selectedSite = site;
+    this.selectedSiteUpdateModel = new SiteInfoUpdateModel(this.selectedSite);
   }
 
   swichMode(mode: EditModeType) {
