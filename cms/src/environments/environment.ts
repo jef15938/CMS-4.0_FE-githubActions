@@ -17,6 +17,7 @@ export const environment = {
     PutDepartmentByDeptID: `${BASE_URL}\/Department/{deptID}`,
     DeleteDepartmentByDeptID: `${BASE_URL}\/Department/{deptID}`,
     PostDepartmentByDeptID: `${BASE_URL}\/Department/{deptID}`,
+    GetDepartmentByDeptID: `${BASE_URL}\/Department/{deptID}`,
     GetAuditing: `${BASE_URL}\/Auditing`,
     PostAuditingByOrderID: `${BASE_URL}\/Auditing/{orderID}`,
     GetLoginInfo: `${BASE_URL}\/LoginInfo`,
@@ -36,6 +37,9 @@ export const environment = {
     PostFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
     PutFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
     GetFarmDetailInfoByFarmID: `${BASE_URL}\/FarmDetailInfo/{farmID}`,
+    GetSite: `${BASE_URL}\/Site`,
+    GetGroupMenuByGroupID: `${BASE_URL}\/Group/Menu/{groupID}`,
+    GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -50,6 +54,7 @@ export const environment = {
     PutDepartmentByDeptID: 'Mock',
     DeleteDepartmentByDeptID: 'Restful',
     PostDepartmentByDeptID: 'Mock',
+    GetDepartmentByDeptID: 'Restful',
     GetAuditing: 'Restful',
     PostAuditingByOrderID: 'Restful',
     GetLoginInfo: 'Restful',
@@ -62,13 +67,16 @@ export const environment = {
     GetContentByContentID: 'Restful',
     PutContentByContentID: 'Restful',
     GetMyAuditingByOrderID: 'Restful',
-    GetMyAuditing: 'Restful',
+    GetMyAuditing: 'Mock',
     GetFarmByFuncID: 'Restful',
     GetFarmTableInfoByFuncID: 'Restful',
     GetFarmFormInfoByFuncID: 'Restful',
     PostFarmFormInfoByFuncID: 'Restful',
     PutFarmFormInfoByFuncID: 'Restful',
     GetFarmDetailInfoByFarmID: 'Restful',
+    GetSite: 'Restful',
+    GetGroupMenuByGroupID: 'Restful',
+    GetGroupSiteMapByGroupID: 'Restful',
   }
 };
 
