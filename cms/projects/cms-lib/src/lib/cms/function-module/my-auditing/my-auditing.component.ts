@@ -86,9 +86,6 @@ export class MyAuditingComponent implements OnInit {
             component: MyAuditingDetailModalComponent,
             componentInitData: {
               orderId: event.data.order_id
-            },
-            modalSetting: {
-              width: '100%'
             }
           });
           break;

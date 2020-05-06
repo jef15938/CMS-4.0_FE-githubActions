@@ -63,6 +63,7 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
   }
 
   ngOnInit(): void {
+    this.updateSize('1280px');
     this._auditingService.getMyAuditingDetail(this.orderId).pipe(
       tap(myAuditingDetail => this.myAuditingDetail = myAuditingDetail)
     ).subscribe();

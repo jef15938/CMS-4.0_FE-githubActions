@@ -17,6 +17,10 @@ export abstract class CustomModalBase {
 
   }
 
+  updateSize(width?: string, height?: string) {
+    this.modalRef.updateSize(width, height);
+  }
+
   close(result?: any) {
     this.modalRef.close(result);
   }
