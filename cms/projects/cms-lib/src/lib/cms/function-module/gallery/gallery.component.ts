@@ -10,6 +10,7 @@ import { ColDef } from '../../../ui/table/table.interface';
 import { ModalService } from '../../../ui/modal/modal.service';
 import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery-category-maintain-modal/gallery-category-maintain-modal.component';
 import { TreeComponent } from '../../../ui/tree/tree.component';
+import { UploadGalleryModalComponent } from './component/modal/upload-gallery-modal/upload-gallery-modal.component';
 
 @Component({
   selector: 'cms-gallery',
@@ -114,10 +115,23 @@ export class GalleryComponent implements OnInit, OnDestroy {
     })
   }
 
+  private _uploadFileToCategory(category: GalleryCategoryInfo) {
+    return this._modalService.openComponent({
+      component: UploadGalleryModalComponent,
+      componentInitData: {
+        category_name: category.category_name,
+        categoryId: category.category_id,
+      }
+    });
+  }
+
   onTreeCustomEvent(event: GalleryCategoryNodeCustomEvent) {
     if (event instanceof GalleryCategoryNodeCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
+        case event.ActionType.Upload:
+          action = this._uploadFileToCategory(event.data);
+          break;
         case event.ActionType.Create:
           action = this._maintainCategory('Create', event.data);
           break;
