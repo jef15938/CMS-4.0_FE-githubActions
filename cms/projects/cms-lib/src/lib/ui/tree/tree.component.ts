@@ -158,11 +158,23 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   onRowDbClicked($event, data: TData) {
     $event.preventDefault();
     $event.stopPropagation();
-    this.treeControl.isExpanded(data) ? this.treeControl.collapse(data) : this.treeControl.expand(data);
+    this.treeControl.toggle(data);
   }
 
   triggerCustomEvent(event) {
     this.customEvent.next(event);
+  }
+
+  private _findParent(node: TData, sources: TData[] = this.treeControl.dataNodes): TData {
+    if (!sources.length) { return null; }
+    if (sources.indexOf(node) > -1) { return null; } // 第一層無parent
+    const finder: (d: TData) => boolean = (d: TData) => (d[this.nodeChildrenEntryField] || []).indexOf(node) > -1;
+    const parent = sources.find(finder);
+    return parent || sources.map(s => this._findParent(node, s[this.nodeChildrenEntryField])).find(finder);
+  }
+
+  findParent(node: TData): TData {
+    return this._findParent(node);
   }
 
 }
