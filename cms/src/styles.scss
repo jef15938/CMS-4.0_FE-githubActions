@@ -24,7 +24,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   z-index: 99;
 }
 
-.pointer {
+button, .pointer {
   cursor: pointer;
 }
 
@@ -65,7 +65,6 @@ mat-form-field {
 }
 
 .btn-group {
-  > button { cursor: pointer; }
   > button:not(:first-child) {
     margin-left: 20px;
   }

@@ -2,12 +2,12 @@
   <mat-icon class="pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
   <span>
     <mat-menu #appMenu="matMenu">
-      <button type="button" class="pointer" mat-menu-item (click)="onAction(ActionType.Detail)">
-        <mat-icon class="pointer">details</mat-icon>
+      <button type="button" mat-menu-item (click)="onAction(ActionType.Detail)">
+        <mat-icon>details</mat-icon>
         看更多
       </button>
-      <button type="button" class="pointer" mat-menu-item [matMenuTriggerFor]="subMenu">
-        <mat-icon class="pointer">visibility</mat-icon>
+      <button type="button" mat-menu-item [matMenuTriggerFor]="subMenu">
+        <mat-icon>visibility</mat-icon>
         預覽
       </button>
     </mat-menu>

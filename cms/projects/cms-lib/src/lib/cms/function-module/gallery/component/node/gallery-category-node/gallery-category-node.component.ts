@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { GalleryCategoryInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/GalleryCategoryInfo';
 
 enum ActionType {
-  Create, Edit, Delete
+  Create, Edit, Delete, Upload
 }
 
 export class GalleryCategoryNodeCustomEvent {

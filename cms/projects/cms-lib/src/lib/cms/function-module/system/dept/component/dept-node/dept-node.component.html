@@ -3,11 +3,11 @@
   <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
       <button type="button" mat-menu-item (click)="onActionClicked(ActionType.Create)">
-        <mat-icon class="pointer">add</mat-icon>
+        <mat-icon>add</mat-icon>
         新增
       </button>
       <button type="button" mat-menu-item (click)="onActionClicked(ActionType.Edit)">
-        <mat-icon class="pointer">edit</mat-icon>
+        <mat-icon>edit</mat-icon>
         修改
       </button>
     </mat-menu>
