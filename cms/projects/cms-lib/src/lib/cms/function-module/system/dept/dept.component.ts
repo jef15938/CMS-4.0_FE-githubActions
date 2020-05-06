@@ -56,7 +56,7 @@ export class DeptComponent implements OnInit {
           action = 'Update';
           break;
       }
-      this.openDialog(action, event.dept).subscribe(res => {
+      this.openDialog(action, event.data).subscribe(res => {
         if (res) {
           this._initPage().subscribe();
         }
