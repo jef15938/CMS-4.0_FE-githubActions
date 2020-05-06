@@ -48,7 +48,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   ngOnInit(): void {
     this.treeControl = new NestedTreeControl<TData>(node => node[this.nodeChildrenEntryField]);
     this.dataSource = new MatTreeNestedDataSource<TData>();
-    this.dataSource.data = this.nodeDatas;
+    this._setDataSource(this.nodeDatas);
 
     this._selectedNodeEmitter.pipe(
       takeUntil(this._destroy$),
@@ -63,7 +63,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.dataSource && changes['nodeDatas']) {
-      this.dataSource.data = changes['nodeDatas'].currentValue;
+      this._setDataSource(changes['nodeDatas'].currentValue);
       this._init();
     }
   }
@@ -107,7 +107,9 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   private _expandLevel(level: number) {
     if (!this.dataSource.data) { return; }
     if (!level) { return; }
+    // 展開全部
     if (level === -1) { this.treeControl.expandAll(); return; }
+    // 依照設定展開level
     let nowExpand = 0;
     let datasToExpand = this.dataSource.data || [];
     while (nowExpand < level) {
@@ -119,6 +121,11 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
       datasToExpand = children;
       nowExpand++;
     }
+  }
+
+  private _setDataSource(data: TData[]) {
+    this.dataSource.data = data;
+    this.treeControl.dataNodes = data;
   }
 
   hasChild = (_: number, node: TData) => !!node[this.nodeChildrenEntryField] && node[this.nodeChildrenEntryField].length > 0;
