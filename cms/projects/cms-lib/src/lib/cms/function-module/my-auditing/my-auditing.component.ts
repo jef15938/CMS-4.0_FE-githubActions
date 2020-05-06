@@ -3,11 +3,11 @@ import { AuditingService } from '../../../service/auditing.service';
 import { Observable, concat } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { MyAuditingInfo } from '../../../neuxAPI/bean/MyAuditingInfo';
-
 import { MyAuditingActionCellComponent, MyAuditingActionCellCustomEvent } from './component/cell-renderer/my-auditing-action-cell/my-auditing-action-cell.component';
 import { ColDef } from '../../../ui/table/table.interface';
 import { DialogService } from '../../../ui/dialog/dialog.service';
 import { MyAuditingDetailDialogComponent } from './component/dialog/my-auditing-detail-dialog/my-auditing-detail-dialog.component';
+import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
 
 @Component({
   selector: 'cms-my-auditing',
@@ -17,10 +17,7 @@ import { MyAuditingDetailDialogComponent } from './component/dialog/my-auditing-
 export class MyAuditingComponent implements OnInit {
 
   myAuditings: MyAuditingInfo[];
-
-  totalPageSize: number;
-  totalRecSize: number;
-  page: number = 1;
+  pageInfo: PageInfo;
 
   colDefs: ColDef[] = [
     {
@@ -72,10 +69,9 @@ export class MyAuditingComponent implements OnInit {
   }
 
   private _getMyAuditings(): Observable<MyAuditingInfo[]> {
-    return this._auditingService.getMyAuditingList(this.page).pipe(
+    return this._auditingService.getMyAuditingList(this.pageInfo?.page).pipe(
       tap(res => {
-        this.totalPageSize = res.pageInfo.totalPageSize;
-        this.totalRecSize = res.pageInfo.totalRecSize;
+        this.pageInfo = res.pageInfo;
         this.myAuditings = res.datas;
       }),
       map(res => res.datas)
@@ -109,7 +105,7 @@ export class MyAuditingComponent implements OnInit {
   }
 
   onPageChanged(event: { pageIndex: number }) {
-    this.page = event.pageIndex + 1;
+    this.pageInfo.page = event.pageIndex + 1;
     this._init().subscribe();
   }
 

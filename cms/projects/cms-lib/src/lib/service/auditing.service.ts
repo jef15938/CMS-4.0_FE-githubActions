@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
-import { AuditingGetResponse } from '../neuxAPI/bean/AuditingGetResponse';
 import { Observable } from 'rxjs';
-import { MyAuditingGetResponse } from '../neuxAPI/bean/MyAuditingGetResponse';
 import { map } from 'rxjs/operators';
 import { MyAuditingDetailGetResponse } from '../neuxAPI/bean/MyAuditingDetailGetResponse';
 import { MyAuditingDetailInfo } from '../neuxAPI/bean/MyAuditingDetailInfo';
+import { MyAuditingGetResponse } from '../neuxAPI/bean/MyAuditingGetResponse';
+import { AuditingGetResponse } from '../neuxAPI/bean/AuditingGetResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  getMyAuditingList(pageNumber: number): Observable<MyAuditingGetResponse> {
+  getMyAuditingList(pageNumber: number = 1): Observable<MyAuditingGetResponse> {
     if (!pageNumber) {
       throw new ParamsError('pageNumber', 'getMyAuditingList', 'number', pageNumber);
     }
@@ -54,9 +54,9 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  getAuditingListForManager(pageNumber: number) {
+  getAuditingListForManager(pageNumber: number = 1): Observable<AuditingGetResponse> {
     if (!pageNumber) {
-      throw new ParamsError('pageNumber', 'getAuditingListByManager', 'number', pageNumber);
+      throw new ParamsError('pageNumber', 'getAuditingListForManager', 'number', pageNumber);
     }
     return this.restAPIService.dispatchRestApi('GetAuditing', { page: pageNumber });
   }

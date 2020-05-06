@@ -55,7 +55,7 @@ export const environment = {
     DeleteDepartmentByDeptID: 'Restful',
     PostDepartmentByDeptID: 'Mock',
     GetDepartmentByDeptID: 'Restful',
-    GetAuditing: 'Restful',
+    GetAuditing: 'Mock',
     PostAuditingByOrderID: 'Restful',
     GetLoginInfo: 'Restful',
     GetCMSSiteMapBySiteID: 'Restful',

@@ -1,0 +1,17 @@
+<ng-container *ngIf="approveRequest">
+  <form #form="ngForm">
+    <div class="page-content-container">
+      <mat-form-field appearance="outline">
+        <mat-label>意見</mat-label>
+        <input matInput [(ngModel)]="approveRequest.comment" name="comment" required #modelComment="ngModel">
+        <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+      </mat-form-field>
+    </div>
+    <div class="btn-group">
+      <button type="button" mat-button (click)="close()">取消</button>
+      <button type="button" mat-button *ngIf="status" (click)="confirm()" [disabled]="form.invalid">
+        {{status===AuditingApproveStatus.Approve?'通過':'退回'}}
+      </button>
+    </div>
+  </form>
+</ng-container>

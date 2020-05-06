@@ -2,8 +2,14 @@
   <span class="pointer not-selectable">{{node.data.node_name}}</span>
   <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
-      <button type="button" mat-menu-item (click)="onMenuClicked('Create')">新增</button>
-      <button type="button" mat-menu-item (click)="onMenuClicked('Delete')">刪除</button>
+      <button type="button" mat-menu-item (click)="onMenuClicked('Create')">
+        <mat-icon class="pointer">add</mat-icon>
+        新增
+      </button>
+      <button type="button" mat-menu-item (click)="onMenuClicked('Delete')">
+        <mat-icon class="pointer">delete</mat-icon>
+        刪除
+      </button>
     </mat-menu>
   </span>
 </ng-container>

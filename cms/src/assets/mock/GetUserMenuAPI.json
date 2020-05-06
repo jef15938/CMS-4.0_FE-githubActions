@@ -13,6 +13,12 @@
       "children": []
     },
     {
+      "func_id": "auditing",
+      "func_name": "審核/放行管理",
+      "component_id ": "auditing",
+      "children": []
+    },
+    {
       "func_id": "system",
       "func_name": "中央權限管理",
       "component_id ": "system",

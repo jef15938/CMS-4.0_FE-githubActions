@@ -2,9 +2,13 @@
   <mat-icon class="pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
   <span>
     <mat-menu #appMenu="matMenu">
-      <button type="button" class="pointer" mat-menu-item (click)="onAction(EventType.Detail)">
-        <mat-icon class="pointer">details</mat-icon>
-        看更多
+      <button type="button" class="pointer" mat-menu-item (click)="onAction(EventType.Approve)">
+        <mat-icon class="pointer">check</mat-icon>
+        同意
+      </button>
+      <button type="button" class="pointer" mat-menu-item (click)="onAction(EventType.Refuse)">
+        <mat-icon class="pointer">reply</mat-icon>
+        退回
       </button>
       <button type="button" class="pointer" mat-menu-item [matMenuTriggerFor]="subMenu">
         <mat-icon class="pointer">visibility</mat-icon>

@@ -1,12 +1,12 @@
 <div class="page-title-container">
-  <h1>我的申請單</h1>
+  <h1>審核/放行管理</h1>
 </div>
 <div class="page-content-container">
   <ng-container *ngIf="pageInfo?.page">
     <div>目前頁數:{{pageInfo.page}}</div>
     <br>
   </ng-container>
-  <cms-table [colDefs]="colDefs" [dataSource]="myAuditings" (customEvent)="onCustomEvent($event)"></cms-table>
+  <cms-table [colDefs]="colDefs" [dataSource]="auditings" (customEvent)="onCustomEvent($event)"></cms-table>
   <ng-container *ngIf="pageInfo?.totalPageSize && pageInfo?.totalRecSize">
     <ng-container *ngIf="pageInfo?.totalRecSize">
       <br>
