@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AuditingInfo } from '../../../neuxAPI/bean/AuditingInfo';
 import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
 import { AuditingService } from '../../../service/auditing.service';
-import { DialogService } from '../../../ui/dialog/dialog.service';
+import { ModalService } from '../../../ui/modal/modal.service';
 import { ColDef } from '../../../ui/table/table.interface';
 import { Observable, concat } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { AuditingActionCellComponent, AuditingActionCellCustomEvent } from './component/cell-renderer/auditing-action-cell/auditing-action-cell.component';
-import { ApproveAuditingDialogComponent, AuditingApproveStatus } from './component/dialog/approve-auditing-dialog/approve-auditing-dialog.component';
+import { ApproveAuditingModalComponent, AuditingApproveStatus } from './component/modal/approve-auditing-modal/approve-auditing-modal.component';
 
 @Component({
   selector: 'cms-auditing',
@@ -60,7 +60,7 @@ export class AuditingComponent implements OnInit {
 
   constructor(
     private _auditingService: AuditingService,
-    private _dialogService: DialogService,
+    private _modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -95,8 +95,8 @@ export class AuditingComponent implements OnInit {
             status = AuditingApproveStatus.Refuse;
             break;
         }
-        this._dialogService.openComponent({
-          component: ApproveAuditingDialogComponent,
+        this._modalService.openComponent({
+          component: ApproveAuditingModalComponent,
           componentInitData: {
             batch: false,
             status,

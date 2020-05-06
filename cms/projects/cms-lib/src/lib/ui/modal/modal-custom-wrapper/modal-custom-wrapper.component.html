@@ -1,0 +1,17 @@
+<!-- header -->
+<ng-container *ngIf="getInstanceTitle(); let title">
+  <span matModalTitle>{{title}}</span>
+</ng-container>
+<!-- content -->
+<div mat-modal-content>
+  <span cmsModalCustomWrapper></span>
+</div>
+<!-- footer -->
+<ng-container *ngIf="instance&&instance.actions&&instance.actions.length">
+  <div mat-modal-actions>
+    <span class="btn-group">
+      <button type="button" mat-button *ngFor="let action of instance.actions"
+        (click)="action.onClick($event)">{{action.text}}</button>
+    </span>
+  </div>
+</ng-container>

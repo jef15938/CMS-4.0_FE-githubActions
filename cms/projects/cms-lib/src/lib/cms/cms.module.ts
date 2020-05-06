@@ -4,7 +4,7 @@ import { CmsRoutingModule } from './cms-routing.module';
 import { CmsComponent } from './cms.component';
 import { CmsUserMenuResolver } from './cms-menu-resolver';
 import { MenuNodeComponent } from './layouts/menu-node.component';
-import { DialogModule } from '../ui/dialog/dialog.module';
+import { ModalModule } from '../ui/modal/modal.module';
 import { SharedModule } from '../shared/shared.module';
 
 const LAYOUTS = [
@@ -23,7 +23,7 @@ const LAYOUTS = [
   ],
   providers: [
     CmsUserMenuResolver,
-    ...(DialogModule.forRoot().providers)
+    ...(ModalModule.forRoot().providers)
   ]
 })
 export class CmsModule { }

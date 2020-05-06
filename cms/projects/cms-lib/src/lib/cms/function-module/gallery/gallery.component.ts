@@ -7,8 +7,8 @@ import { tap, takeUntil, debounceTime, concatMap } from 'rxjs/operators';
 import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
 import { GalleryInfo } from '../../../neuxAPI/bean/GalleryInfo';
 import { ColDef } from '../../../ui/table/table.interface';
-import { DialogService } from '../../../ui/dialog/dialog.service';
-import { GalleryCategoryMaintainDialogComponent } from './component/dialog/gallery-category-maintain-dialog/gallery-category-maintain-dialog.component';
+import { ModalService } from '../../../ui/modal/modal.service';
+import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery-category-maintain-modal/gallery-category-maintain-modal.component';
 import { TreeComponent } from '../../../ui/tree/tree.component';
 
 @Component({
@@ -56,7 +56,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   constructor(
     private _galleryService: GalleryService,
-    private _dialogService: DialogService,
+    private _modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -102,8 +102,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   private _maintainCategory(action: 'Create' | 'Update', category: GalleryCategoryInfo) {
-    return this._dialogService.openComponent({
-      component: GalleryCategoryMaintainDialogComponent,
+    return this._modalService.openComponent({
+      component: GalleryCategoryMaintainModalComponent,
       componentInitData: {
         action,
         categoryID: action === 'Update' ? category.category_id : undefined,

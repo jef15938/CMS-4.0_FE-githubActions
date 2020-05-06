@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, concat } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { DialogService } from '../../../ui/dialog/dialog.service';
+import { ModalService } from '../../../ui/modal/modal.service';
 import { SitemapService } from '../../../service/sitemap.service';
 import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
 import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from './component/multi-site-node/multi-site-node.component';
@@ -41,7 +41,7 @@ export class MultiSiteComponent implements OnInit {
   customNodeRenderer = MultiSiteNodeComponent;
 
   constructor(
-    private _dialogService: DialogService,
+    private _modalService: ModalService,
     private _sitemapService: SitemapService,
   ) { }
 
@@ -71,7 +71,7 @@ export class MultiSiteComponent implements OnInit {
   swichMode(mode: EditModeType) {
     switch (mode) {
       case EditModeType.Node:
-        if (!this.selectedSite) { this._dialogService.openMessage({ message: '尚未選擇網站' }); return; }
+        if (!this.selectedSite) { this._modalService.openMessage({ message: '尚未選擇網站' }); return; }
         this._sitemapService.getUserSiteMap(this.selectedSite.site_id).subscribe(sitemap => {
           this.sitemaps = sitemap;
           this.editMode = mode;
@@ -99,7 +99,7 @@ export class MultiSiteComponent implements OnInit {
       switch (event.action) {
         case 'Create':
         case 'Delete':
-          // this.openDialog(event.action, event.dept).subscribe(res => {
+          // this.openModal(event.action, event.dept).subscribe(res => {
           //   if (res) {
           //     this._initPage().subscribe();
           //   }

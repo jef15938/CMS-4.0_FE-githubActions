@@ -4,7 +4,7 @@ import { AuditingRoutingModule } from './auditing-routing.module';
 import { AuditingComponent } from './auditing.component';
 import { SharedModule } from 'projects/cms-lib/src/lib/shared/shared.module';
 import { AuditingActionCellComponent } from './component/cell-renderer/auditing-action-cell/auditing-action-cell.component';
-import { ApproveAuditingDialogComponent } from './component/dialog/approve-auditing-dialog/approve-auditing-dialog.component';
+import { ApproveAuditingModalComponent } from './component/modal/approve-auditing-modal/approve-auditing-modal.component';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { ApproveAuditingDialogComponent } from './component/dialog/approve-audit
   declarations: [
     AuditingComponent,
     AuditingActionCellComponent,
-    ApproveAuditingDialogComponent,
+    ApproveAuditingModalComponent,
   ],
 })
 export class AuditingModule { }

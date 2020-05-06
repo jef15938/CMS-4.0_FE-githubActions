@@ -5,8 +5,8 @@ import { tap, map } from 'rxjs/operators';
 import { MyAuditingInfo } from '../../../neuxAPI/bean/MyAuditingInfo';
 import { MyAuditingActionCellComponent, MyAuditingActionCellCustomEvent } from './component/cell-renderer/my-auditing-action-cell/my-auditing-action-cell.component';
 import { ColDef } from '../../../ui/table/table.interface';
-import { DialogService } from '../../../ui/dialog/dialog.service';
-import { MyAuditingDetailDialogComponent } from './component/dialog/my-auditing-detail-dialog/my-auditing-detail-dialog.component';
+import { ModalService } from '../../../ui/modal/modal.service';
+import { MyAuditingDetailModalComponent } from './component/modal/my-auditing-detail-modal/my-auditing-detail-modal.component';
 import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
 
 @Component({
@@ -55,7 +55,7 @@ export class MyAuditingComponent implements OnInit {
 
   constructor(
     private _auditingService: AuditingService,
-    private _dialogService: DialogService,
+    private _modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -82,12 +82,12 @@ export class MyAuditingComponent implements OnInit {
     if (event instanceof MyAuditingActionCellCustomEvent) {
       switch (event.action) {
         case event.ActionType.Detail:
-          this._dialogService.openComponent({
-            component: MyAuditingDetailDialogComponent,
+          this._modalService.openComponent({
+            component: MyAuditingDetailModalComponent,
             componentInitData: {
               orderId: event.data.order_id
             },
-            dialogSetting: {
+            modalSetting: {
               width: '100%'
             }
           });

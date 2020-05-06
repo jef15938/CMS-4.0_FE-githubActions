@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DeptNodeComponent, DeptNodeCustomEvent } from './component/dept-node/dept-node.component';
 import { DepartmentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/DepartmentInfo';
-import { DeptMaintainDialogComponent } from './component/dept-maintain-dialog/dept-maintain-dialog.component';
-import { DialogService } from 'projects/cms-lib/src/lib/ui/dialog/dialog.service';
+import { DeptMaintainModalComponent } from './component/dept-maintain-modal/dept-maintain-modal.component';
+import { ModalService } from 'projects/cms-lib/src/lib/ui/modal/modal.service';
 import { Observable, concat } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DepartmentService } from 'projects/cms-lib/src/lib/service/department.service';
@@ -21,7 +21,7 @@ export class DeptComponent implements OnInit {
 
   constructor(
     private _departmentService: DepartmentService,
-    private _dialogService: DialogService,
+    private _modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -56,7 +56,7 @@ export class DeptComponent implements OnInit {
           action = 'Update';
           break;
       }
-      this.openDialog(action, event.data).subscribe(res => {
+      this.openModal(action, event.data).subscribe(res => {
         if (res) {
           this._initPage().subscribe();
         }
@@ -64,10 +64,10 @@ export class DeptComponent implements OnInit {
     }
   }
 
-  openDialog(action: 'Create' | 'Update', selectedDept: DepartmentInfo) {
+  openModal(action: 'Create' | 'Update', selectedDept: DepartmentInfo) {
     const parent = this.findParentDept(selectedDept);
-    return this._dialogService.openComponent({
-      component: DeptMaintainDialogComponent,
+    return this._modalService.openComponent({
+      component: DeptMaintainModalComponent,
       componentInitData: {
         action,
         deptId: action === 'Create' ? '' : selectedDept.dept_id,

@@ -4,7 +4,7 @@ import { GalleryRoutingModule } from './gallery-routing.module';
 import { GalleryComponent } from './gallery.component';
 import { SharedModule } from 'projects/cms-lib/src/lib/shared/shared.module';
 import { GalleryCategoryNodeComponent } from './component/node/gallery-category-node/gallery-category-node.component';
-import { GalleryCategoryMaintainDialogComponent } from './component/dialog/gallery-category-maintain-dialog/gallery-category-maintain-dialog.component';
+import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery-category-maintain-modal/gallery-category-maintain-modal.component';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { GalleryCategoryMaintainDialogComponent } from './component/dialog/galle
   declarations: [
     GalleryComponent,
     GalleryCategoryNodeComponent,
-    GalleryCategoryMaintainDialogComponent,
+    GalleryCategoryMaintainModalComponent,
   ],
 })
 export class GalleryModule { }

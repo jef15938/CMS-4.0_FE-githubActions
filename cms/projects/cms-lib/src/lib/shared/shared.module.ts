@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 // cms-lib
 import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
-import { DialogModule } from 'projects/cms-lib/src/lib/ui/dialog/dialog.module';
+import { ModalModule } from 'projects/cms-lib/src/lib/ui/modal/modal.module';
 import { TableModule } from 'projects/cms-lib/src/lib/ui/table/table.module';
 
 @NgModule({
@@ -36,7 +36,7 @@ import { TableModule } from 'projects/cms-lib/src/lib/ui/table/table.module';
     MatPaginatorModule,
     // cms-lib
     TreeModule,
-    DialogModule,
+    ModalModule,
     TableModule,
   ]
 })

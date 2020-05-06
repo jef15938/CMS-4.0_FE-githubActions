@@ -1,0 +1,52 @@
+import { Injectable } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ModalCustomWrapperComponent } from './modal-custom-wrapper/modal-custom-wrapper.component';
+import { ModalOpenComponentConfig } from './modal.interface';
+import { CustomModalBase } from './custom-modal-base';
+import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.component';
+import { MessageModalComponent } from './component/message-modal/message-modal.component';
+
+@Injectable()
+export class ModalService {
+
+  constructor(
+    private _matDialog: MatDialog,
+  ) {
+
+  }
+
+  openComponent<TComponent extends CustomModalBase>(config: ModalOpenComponentConfig<TComponent>) {
+    const modalConfig = new MatDialogConfig();
+    // The user can't close the modal by clicking outside its body
+    // modalConfig.disableClose = true;
+
+    modalConfig.id = config.modalSetting?.id || 'modal-component';
+    modalConfig.width = config.modalSetting?.width || '600px';
+    modalConfig.height = config.modalSetting?.height || modalConfig.height;
+    modalConfig.minWidth = config.modalSetting?.minWidth || modalConfig.minWidth;
+    modalConfig.minHeight = config.modalSetting?.minHeight || modalConfig.minHeight;
+    modalConfig.maxWidth = config.modalSetting?.maxWidth || modalConfig.maxWidth;
+    modalConfig.maxHeight = config.modalSetting?.maxHeight || modalConfig.maxHeight;
+
+    // https://material.angular.io/components/modal/overview
+
+    modalConfig.data = config;
+    const modalModal = this._matDialog.open(ModalCustomWrapperComponent, modalConfig);
+    return modalModal.afterClosed();
+  }
+
+  openMessage(componentInitData: { message: string, title?: string }) {
+    return this.openComponent({
+      component: MessageModalComponent,
+      componentInitData
+    });
+  }
+
+  openConfirm(componentInitData?: { message?: string, title?: string }) {
+    return this.openComponent({
+      component: ConfirmModalComponent,
+      componentInitData
+    });
+  }
+
+}

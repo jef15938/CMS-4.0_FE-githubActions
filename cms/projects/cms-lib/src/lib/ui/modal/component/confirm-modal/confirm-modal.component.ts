@@ -1,0 +1,33 @@
+import { Component, OnInit } from '@angular/core';
+import { CustomModalBase, CustomModalActionButton } from '../../custom-modal-base';
+
+@Component({
+  selector: 'cms-confirm-modal',
+  templateUrl: './confirm-modal.component.html',
+  styleUrls: ['./confirm-modal.component.css']
+})
+export class ConfirmModalComponent extends CustomModalBase implements OnInit {
+  title: string | (() => string) = '';
+  actions: CustomModalActionButton[] = [
+    {
+      text: '取消',
+      onClick: () => this.close(),
+    },
+    {
+      text: '確認',
+      onClick: () => this._confirm(),
+    }
+  ];
+
+  message = '確認?';
+
+  constructor() { super() }
+
+  ngOnInit(): void {
+  }
+
+  private _confirm() {
+    this.close(true);
+  }
+
+}
