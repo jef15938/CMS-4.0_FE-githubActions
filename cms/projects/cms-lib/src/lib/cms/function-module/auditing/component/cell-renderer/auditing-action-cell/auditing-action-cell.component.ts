@@ -2,19 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CustomCellRenderer, CmsTable } from 'projects/cms-lib/src/lib/ui/table/table.interface';
 import { AuditingInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/AuditingInfo';
 
-enum EventType {
+enum ActionType {
   Approve, Refuse, PreviewPc, PreviewPadH, PreviewPadV, PreviewMobile
 }
 
 export class AuditingActionCellCustomEvent {
-  EventType = EventType;
+  ActionType = ActionType;
   constructor(
-    public action: EventType,
+    public action: ActionType,
     public data: AuditingInfo,
-  ) {
-    this.action = action;
-    this.data = data;
-  }
+  ) { }
 }
 
 @Component({
@@ -24,7 +21,7 @@ export class AuditingActionCellCustomEvent {
 })
 export class AuditingActionCellComponent implements CustomCellRenderer, OnInit {
 
-  EventType = EventType;
+  ActionType = ActionType;
 
   config: { data: AuditingInfo, table: CmsTable }
 
@@ -37,7 +34,7 @@ export class AuditingActionCellComponent implements CustomCellRenderer, OnInit {
     this.config = config;
   };
 
-  onAction(action: EventType) {
+  onAction(action: ActionType) {
     this.config.table.triggerCustomEvent(new AuditingActionCellCustomEvent(action, this.config.data));
   }
 

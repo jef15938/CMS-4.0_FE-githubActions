@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter, ComponentFactoryResolver, AfterViewInit, ViewChildren, QueryList, ElementRef, ViewContainerRef, ChangeDetectorRef, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter, ComponentFactoryResolver, AfterViewInit, ViewChildren, QueryList, ChangeDetectorRef, HostListener, OnDestroy } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
@@ -70,6 +70,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   ngOnDestroy(): void {
     this._destroy$.next();
+    this._destroy$.complete();
     this._destroy$.unsubscribe();
   }
 

@@ -2,11 +2,11 @@
   <span class="pointer not-selectable">{{node.data.dept_name}}</span>
   <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
-      <button type="button" mat-menu-item (click)="onCreateBtnClicked()">
+      <button type="button" mat-menu-item (click)="onActionClicked(ActionType.Create)">
         <mat-icon class="pointer">add</mat-icon>
         新增
       </button>
-      <button type="button" mat-menu-item (click)="onUpdateBtnClicked()">
+      <button type="button" mat-menu-item (click)="onActionClicked(ActionType.Edit)">
         <mat-icon class="pointer">edit</mat-icon>
         修改
       </button>

@@ -1,18 +1,20 @@
-import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { DepartmentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/DepartmentInfo';
 import { CmsTreeNodeRenderer, CmsTreeNode } from 'projects/cms-lib/src/lib/ui/tree/tree.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-export class DeptNodeCustomEvent {
-  action: 'Create' | 'Update';
-  dept: DepartmentInfo;
+enum ActionType {
+  Create, Edit
+}
 
-  constructor(action: 'Create' | 'Update', dept: DepartmentInfo) {
-    this.action = action;
-    this.dept = dept;
-  }
+export class DeptNodeCustomEvent {
+  ActionType = ActionType;
+  constructor(
+    public action: ActionType,
+    public data: DepartmentInfo
+  ) { }
 }
 
 @Component({
@@ -21,6 +23,7 @@ export class DeptNodeCustomEvent {
   styleUrls: ['./dept-node.component.scss']
 })
 export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, OnInit, OnDestroy {
+  ActionType = ActionType;
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
@@ -47,15 +50,12 @@ export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, O
 
   ngOnDestroy(): void {
     this._destroy$.next();
+    this._destroy$.complete();
     this._destroy$.unsubscribe();
   }
 
-  onCreateBtnClicked() {
-    this.node.tree.triggerCustomEvent(new DeptNodeCustomEvent('Create', this.node.data));
-  }
-
-  onUpdateBtnClicked() {
-    this.node.tree.triggerCustomEvent(new DeptNodeCustomEvent('Update', this.node.data));
+  onActionClicked(action: ActionType) {
+    this.node.tree.triggerCustomEvent(new DeptNodeCustomEvent(action, this.node.data));
   }
 
 }

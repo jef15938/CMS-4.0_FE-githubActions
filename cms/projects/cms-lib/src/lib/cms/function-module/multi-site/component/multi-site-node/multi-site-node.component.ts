@@ -47,6 +47,7 @@ export class MultiSiteNodeComponent implements CmsTreeNodeRenderer<SiteMapInfo>,
 
   ngOnDestroy(): void {
     this._destroy$.next();
+    this._destroy$.complete();
     this._destroy$.unsubscribe();
   }
 

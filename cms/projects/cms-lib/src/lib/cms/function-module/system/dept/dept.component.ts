@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { DeptNodeComponent, DeptNodeCustomEvent } from './component/dept-node/dept-node.component';
 import { DepartmentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/DepartmentInfo';
 import { DeptMaintainDialogComponent } from './component/dept-maintain-dialog/dept-maintain-dialog.component';
@@ -21,7 +20,6 @@ export class DeptComponent implements OnInit {
   depts: DepartmentInfo[] = [];
 
   constructor(
-    private _route: ActivatedRoute,
     private _departmentService: DepartmentService,
     private _dialogService: DialogService,
   ) { }
@@ -49,16 +47,20 @@ export class DeptComponent implements OnInit {
 
   onCustomEvent(event: DeptNodeCustomEvent) {
     if (event instanceof DeptNodeCustomEvent) {
+      let action: 'Create' | 'Update';
       switch (event.action) {
-        case 'Create':
-        case 'Update':
-          this.openDialog(event.action, event.dept).subscribe(res => {
-            if (res) {
-              this._initPage().subscribe();
-            }
-          });
+        case event.ActionType.Create:
+          action = 'Create';
+          break;
+        case event.ActionType.Edit:
+          action = 'Update';
           break;
       }
+      this.openDialog(action, event.dept).subscribe(res => {
+        if (res) {
+          this._initPage().subscribe();
+        }
+      });
     }
   }
 

@@ -85,13 +85,13 @@ export class AuditingComponent implements OnInit {
 
   onCustomEvent(event: AuditingActionCellCustomEvent) {
     if (event instanceof AuditingActionCellCustomEvent) {
-      if (event.action === event.EventType.Approve || event.EventType.Refuse) {
+      if (event.action === event.ActionType.Approve || event.ActionType.Refuse) {
         let status: AuditingApproveStatus;
         switch (event.action) {
-          case event.EventType.Approve:
+          case event.ActionType.Approve:
             status = AuditingApproveStatus.Approve;
             break;
-          case event.EventType.Refuse:
+          case event.ActionType.Refuse:
             status = AuditingApproveStatus.Refuse;
             break;
         }
@@ -104,13 +104,13 @@ export class AuditingComponent implements OnInit {
         }).subscribe(res => console.warn('res = ', res));
       } else {
         switch (event.action) {
-          case event.EventType.PreviewPc:
+          case event.ActionType.PreviewPc:
             break;
-          case event.EventType.PreviewPadH:
+          case event.ActionType.PreviewPadH:
             break;
-          case event.EventType.PreviewPadV:
+          case event.ActionType.PreviewPadV:
             break;
-          case event.EventType.PreviewMobile:
+          case event.ActionType.PreviewMobile:
             break;
         }
       }

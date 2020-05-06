@@ -2,11 +2,11 @@
   <mat-icon class="pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
   <span>
     <mat-menu #appMenu="matMenu">
-      <button type="button" class="pointer" mat-menu-item (click)="onAction(EventType.Approve)">
+      <button type="button" class="pointer" mat-menu-item (click)="onAction(ActionType.Approve)">
         <mat-icon class="pointer">check</mat-icon>
         同意
       </button>
-      <button type="button" class="pointer" mat-menu-item (click)="onAction(EventType.Refuse)">
+      <button type="button" class="pointer" mat-menu-item (click)="onAction(ActionType.Refuse)">
         <mat-icon class="pointer">reply</mat-icon>
         退回
       </button>
@@ -17,10 +17,10 @@
     </mat-menu>
 
     <mat-menu #subMenu="matMenu">
-      <button mat-menu-item (click)="onAction(EventType.PreviewPc)">PC</button>
-      <button mat-menu-item (click)="onAction(EventType.PreviewPadH)">Pad-H</button>
-      <button mat-menu-item (click)="onAction(EventType.PreviewPadV)">Pad-V</button>
-      <button mat-menu-item (click)="onAction(EventType.PreviewMobile)">Mobile</button>
+      <button mat-menu-item (click)="onAction(ActionType.PreviewPc)">PC</button>
+      <button mat-menu-item (click)="onAction(ActionType.PreviewPadH)">Pad-H</button>
+      <button mat-menu-item (click)="onAction(ActionType.PreviewPadV)">Pad-V</button>
+      <button mat-menu-item (click)="onAction(ActionType.PreviewMobile)">Mobile</button>
     </mat-menu>
   </span>
 </ng-container>

@@ -2,7 +2,7 @@
   <mat-icon class="pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
   <span>
     <mat-menu #appMenu="matMenu">
-      <button type="button" class="pointer" mat-menu-item (click)="onAction(EventType.Detail)">
+      <button type="button" class="pointer" mat-menu-item (click)="onAction(ActionType.Detail)">
         <mat-icon class="pointer">details</mat-icon>
         看更多
       </button>
@@ -13,10 +13,10 @@
     </mat-menu>
 
     <mat-menu #subMenu="matMenu">
-      <button mat-menu-item (click)="onAction(EventType.PreviewPc)">PC</button>
-      <button mat-menu-item (click)="onAction(EventType.PreviewPadH)">Pad-H</button>
-      <button mat-menu-item (click)="onAction(EventType.PreviewPadV)">Pad-V</button>
-      <button mat-menu-item (click)="onAction(EventType.PreviewMobile)">Mobile</button>
+      <button mat-menu-item (click)="onAction(ActionType.PreviewPc)">PC</button>
+      <button mat-menu-item (click)="onAction(ActionType.PreviewPadH)">Pad-H</button>
+      <button mat-menu-item (click)="onAction(ActionType.PreviewPadV)">Pad-V</button>
+      <button mat-menu-item (click)="onAction(ActionType.PreviewMobile)">Mobile</button>
     </mat-menu>
   </span>
 </ng-container>

@@ -81,7 +81,7 @@ export class MyAuditingComponent implements OnInit {
   onCustomEvent(event: MyAuditingActionCellCustomEvent) {
     if (event instanceof MyAuditingActionCellCustomEvent) {
       switch (event.action) {
-        case event.EventType.Detail:
+        case event.ActionType.Detail:
           this._dialogService.openComponent({
             component: MyAuditingDetailDialogComponent,
             componentInitData: {
@@ -92,13 +92,13 @@ export class MyAuditingComponent implements OnInit {
             }
           });
           break;
-        case event.EventType.PreviewPc:
+        case event.ActionType.PreviewPc:
           break;
-        case event.EventType.PreviewPadH:
+        case event.ActionType.PreviewPadH:
           break;
-        case event.EventType.PreviewPadV:
+        case event.ActionType.PreviewPadV:
           break;
-        case event.EventType.PreviewMobile:
+        case event.ActionType.PreviewMobile:
           break;
       }
     }
