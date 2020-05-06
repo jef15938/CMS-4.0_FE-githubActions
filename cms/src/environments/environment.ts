@@ -42,8 +42,8 @@ export const environment = {
     GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
   },
   API_TYPE: {
-    GetGalleryByCategoryID: 'Restful',
-    GetGalleryCategory: 'Restful',
+    GetGalleryByCategoryID: 'Mock',
+    GetGalleryCategory: 'Mock',
     PostGalleryCategory: 'Restful',
     PostLogin: 'Restful',
     GetDepartment: 'Mock',

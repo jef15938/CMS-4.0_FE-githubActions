@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
+import { GalleryGetResponse } from '../neuxAPI/bean/GalleryGetResponse';
+import { Observable } from 'rxjs';
+import { GalleryCategoryInfo } from '../neuxAPI/bean/GalleryCategoryInfo';
+import { map } from 'rxjs/operators';
+import { GalleryCaregoryGetResponse } from '../neuxAPI/bean/GalleryCaregoryGetResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -57,12 +62,11 @@ export class GalleryService {
    * @returns
    * @memberof GalleryService
    */
-  getGalleryByCategoryID(categoryID: string) {
+  getGalleryByCategoryID(categoryID: string, page = 1): Observable<GalleryGetResponse> {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
-    return this.respAPIService.dispatchRestApi('GetGalleryByCategoryID', { categoryID });
-
+    return this.respAPIService.dispatchRestApi('GetGalleryByCategoryID', { categoryID, page });
   }
 
   /**
@@ -71,8 +75,10 @@ export class GalleryService {
    * @returns
    * @memberof GalleryService
    */
-  getGalleryCategory() {
-    return this.respAPIService.dispatchRestApi('GetGalleryCategory', {});
+  getGalleryCategory(): Observable<GalleryCategoryInfo[]> {
+    return this.respAPIService.dispatchRestApi('GetGalleryCategory', {}).pipe(
+      map((res: GalleryCaregoryGetResponse) => res.datas)
+    );
   }
 
   /**

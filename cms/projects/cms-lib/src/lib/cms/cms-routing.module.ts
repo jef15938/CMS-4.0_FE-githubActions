@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import('./function-module/my-auditing/my-auditing.module').then(m => m.MyAuditingModule)
       },
       {
+        path: 'gallery',
+        loadChildren: () => import('./function-module/gallery/gallery.module').then(m => m.GalleryModule)
+      },
+      {
         path: 'auditing',
         loadChildren: () => import('./function-module/auditing/auditing.module').then(m => m.AuditingModule)
       },
