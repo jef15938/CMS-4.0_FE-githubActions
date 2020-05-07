@@ -48,18 +48,4 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
     this.customEvent.next(event);
   }
 
-  onMouseDown(e) {
-    console.warn('onMouseDown()', e);
-  }
-
-  // @HostListener('document:mousemove', ['$event'])
-  // onMouseMove(e) {
-  //   console.warn('onMouseMove()', e);
-  // }
-
-  // @HostListener('document:mouseup', ['$event'])
-  // onMouseUp(e) {
-  //   console.warn('onMouseUp()', e);
-  // }
-
 }
