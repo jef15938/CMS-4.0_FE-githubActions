@@ -3,8 +3,8 @@ import { CustomModalBase } from 'projects/cms-lib/src/lib/ui/modal/custom-modal-
 import { AuditingSubmitRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/AuditingSubmitRequest';
 
 export enum AuditingApproveStatus {
-  Approve = 'approve',
-  Refuse = 'refuse',
+  Approve = 'APPROVED',
+  Reject = 'REJECT',
 }
 
 @Component({
@@ -20,7 +20,7 @@ export class ApproveAuditingModalComponent extends CustomModalBase implements On
     () => [
       '審核',
       this.batch ? '批次' : '',
-      this.status === AuditingApproveStatus.Approve ? '通過' : this.status === AuditingApproveStatus.Refuse ? '退回' : ''
+      this.status === AuditingApproveStatus.Approve ? '通過' : this.status === AuditingApproveStatus.Reject ? '退回' : ''
     ].join('');
 
   actions;

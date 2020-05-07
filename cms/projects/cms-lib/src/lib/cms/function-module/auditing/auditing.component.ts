@@ -92,7 +92,7 @@ export class AuditingComponent implements OnInit {
             status = AuditingApproveStatus.Approve;
             break;
           case event.ActionType.Refuse:
-            status = AuditingApproveStatus.Refuse;
+            status = AuditingApproveStatus.Reject;
             break;
         }
         this._modalService.openComponent({
