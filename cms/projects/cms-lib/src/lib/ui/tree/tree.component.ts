@@ -165,7 +165,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.customEvent.next(event);
   }
 
-  private _findParent(node: TData, sources: TData[] = this.treeControl.dataNodes): TData {
+  private _findParent(node: TData, sources: TData[] = this.treeControl.dataNodes || []): TData {
     if (!sources.length) { return null; }
     if (sources.indexOf(node) > -1) { return null; } // 第一層無parent
     const finder: (d: TData) => boolean = (d: TData) => (d[this.nodeChildrenEntryField] || []).indexOf(node) > -1;
@@ -173,8 +173,8 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     return parent || sources.map(s => this._findParent(node, s[this.nodeChildrenEntryField])).find(finder);
   }
 
-  findParent(node: TData): TData {
-    return this._findParent(node);
+  findParent(node: TData, sources?: TData[]): TData {
+    return this._findParent(node, sources);
   }
 
 }
