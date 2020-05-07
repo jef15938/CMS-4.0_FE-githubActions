@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter, HostListener } from '@angular/core';
 import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
 import { ColDef } from './table.interface';
 
@@ -47,5 +47,19 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
   triggerCustomEvent(event) {
     this.customEvent.next(event);
   }
+
+  onMouseDown(e) {
+    console.warn('onMouseDown()', e);
+  }
+
+  // @HostListener('document:mousemove', ['$event'])
+  // onMouseMove(e) {
+  //   console.warn('onMouseMove()', e);
+  // }
+
+  // @HostListener('document:mouseup', ['$event'])
+  // onMouseUp(e) {
+  //   console.warn('onMouseUp()', e);
+  // }
 
 }
