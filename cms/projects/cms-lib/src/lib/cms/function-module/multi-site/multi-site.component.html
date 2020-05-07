@@ -1,6 +1,6 @@
 <!-- 網站編輯 -->
-<div [hidden]="editMode===EditModeType.Node" style="height: 100%;">
-  <div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;">
+<div #SiteBlock [hidden]="editMode===EditModeType.Node" style="height: 100%;">
+  <div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer>
     <div class="page-title-container">
       <h1>網站列表</h1>
     </div>
@@ -38,7 +38,8 @@
 
 <!-- 節點編輯 -->
 <div [hidden]="editMode===EditModeType.Site" style="height: 100%;">
-  <div style="width: 50%; height: 100%; float: left; border-right: 1px solid lightgray;">
+  <div style="width: 50%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer
+    [heightBase]="SiteBlock">
     <div class="page-title-container">
       <h1>{{selectedSite?.site_name}} <button type="button" mat-button
           (click)="swichMode(EditModeType.Site)">返回</button>

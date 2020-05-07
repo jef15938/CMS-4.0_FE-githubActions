@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RightClickHandlerDirective } from './right-click-handler.directive';
+import { ResizerDirective } from './resizer.directive';
 
 const DIRECTIVES = [
-  RightClickHandlerDirective
+  RightClickHandlerDirective,
+  ResizerDirective,
 ];
 
 @NgModule({

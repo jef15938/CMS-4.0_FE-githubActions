@@ -20,6 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
 import { ModalModule } from 'projects/cms-lib/src/lib/ui/modal/modal.module';
 import { TableModule } from 'projects/cms-lib/src/lib/ui/table/table.module';
+import { DirectiveModule } from 'projects/cms-lib/src/lib/directive/directive.module';
 
 @NgModule({
   declarations: [],
@@ -48,6 +49,7 @@ import { TableModule } from 'projects/cms-lib/src/lib/ui/table/table.module';
     TreeModule,
     ModalModule,
     TableModule,
+    DirectiveModule
   ]
 })
 export class SharedModule { }

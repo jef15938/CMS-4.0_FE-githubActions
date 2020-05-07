@@ -5,7 +5,3 @@ td, th {
 th.mat-header-cell, td.mat-cell {
   position: relative;
 }
-
-::ng-deep .cms-col-resizer:hover {
-  border-right: 5px solid lightgray;
-}

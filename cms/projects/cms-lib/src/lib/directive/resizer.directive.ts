@@ -1,11 +1,13 @@
-import { Directive, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Directive, ViewContainerRef, AfterViewInit, OnDestroy, Input } from '@angular/core';
 import { Subject, fromEvent, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[cmsColResizer]'
+  selector: '[cmsResizer]'
 })
-export class ColResizerDirective implements AfterViewInit, OnDestroy {
+export class ResizerDirective implements AfterViewInit, OnDestroy {
+
+  @Input() heightBase: HTMLElement;
 
   private _destroy$ = new Subject();
 
@@ -22,9 +24,8 @@ export class ColResizerDirective implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-
     const element = this._viewContainerRef.element.nativeElement as HTMLElement;
-    const resizer = this._createDiv(element.offsetHeight);
+    const resizer = this._createDiv(this.heightBase ? this.heightBase.offsetHeight : element.offsetHeight);
 
     element.appendChild(resizer);
     element.style.position = 'relative';
@@ -69,11 +70,11 @@ export class ColResizerDirective implements AfterViewInit, OnDestroy {
 
   private _createDiv(height: number) {
     const div = document.createElement('div');
-    div.className = 'cms-col-resizer';
+    div.className = 'cms-resizer';
     div.style.position = 'absolute';
     div.style.top = '0';
     div.style.right = '0';
-    div.style.width = '5px';
+    div.style.width = '3px';
     div.style.userSelect = 'none';
     div.style.height = height + 'px';
     div.style.cursor = 'col-resize';

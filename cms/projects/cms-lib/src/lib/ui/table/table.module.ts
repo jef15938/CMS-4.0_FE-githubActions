@@ -4,7 +4,7 @@ import { TableComponent } from './table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
-import { ColResizerDirective } from './col-resizer.directive';
+import { DirectiveModule } from 'projects/cms-lib/src/lib/directive/directive.module';
 
 const COMPONENTS = [
   TableComponent
@@ -15,11 +15,11 @@ const COMPONENTS = [
     CommonModule,
     MatTableModule,
     MatPaginatorModule,
+    DirectiveModule,
   ],
   declarations: [
     ...COMPONENTS,
     CellRendererWrapperDirective,
-    ColResizerDirective
   ],
   exports: [
     ...COMPONENTS
