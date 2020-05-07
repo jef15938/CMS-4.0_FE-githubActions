@@ -83,7 +83,7 @@
         </ng-container>
       </ng-container>
       <div class="btn-group">
-        <button type="button" mat-button [disabled]="form.invalid">儲存</button>
+        <button type="button" mat-button (click)="save()" [disabled]="form.invalid">儲存</button>
       </div>
     </form>
   </div>

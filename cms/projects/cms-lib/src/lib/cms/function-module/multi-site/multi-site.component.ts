@@ -84,6 +84,9 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   }
 
   swichMode(mode: EditModeType) {
+    this.sitemaps = undefined;
+    this.selectedSiteMap = undefined;
+    this.selectedSiteMapParendId = undefined;
     switch (mode) {
       case EditModeType.Node:
         if (!this.selectedSite) { this._modalService.openMessage({ message: '尚未選擇網站' }); return; }
@@ -93,9 +96,6 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
         });
         break;
       case EditModeType.Site:
-        this.sitemaps = undefined;
-        this.selectedSiteMap = undefined;
-        this.selectedSiteMapParendId = undefined;
         this.editMode = mode;
         break;
     }
@@ -145,6 +145,10 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     return this.sitemapTree && this.selectedSiteMap
       ? this.sitemapTree.findParent(this.selectedSiteMap)?.node_id
       : undefined;
+  }
+
+  onSiteMapUpdated(ev) {
+    this.swichMode(EditModeType.Node);
   }
 
 }

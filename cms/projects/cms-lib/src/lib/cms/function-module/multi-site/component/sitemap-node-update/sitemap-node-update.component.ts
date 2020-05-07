@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter } from '@angular/core';
 import { SiteMapInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/SiteMapInfo';
 import { UserSiteMapPutRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/UserSiteMapPutRequest';
 import { NgForm } from '@angular/forms';
@@ -38,6 +38,8 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   @Input() sitemap: SiteMapInfo;
   @Input() parent_id: string;
+
+  @Output() updated = new EventEmitter<UserSiteMapPutRequest>();
 
   sitemapMaintainModel: SiteMapUpdateModel;
 
@@ -83,6 +85,10 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   getStartEndTime(timeObj: { start_time: string, end_time: string }): string {
     return !timeObj ? '' : [timeObj.start_time || 'unknown', timeObj.end_time || 'unknown'].join(' / ');
+  }
+
+  save() {
+    this.updated.emit(this.sitemapMaintainModel);
   }
 
 }
