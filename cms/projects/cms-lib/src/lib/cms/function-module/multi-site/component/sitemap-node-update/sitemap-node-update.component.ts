@@ -1,24 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { SiteMapInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/SiteMapInfo';
 import { UserSiteMapPutRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/UserSiteMapPutRequest';
-import { UserSiteMapPostRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/UserSiteMapPostRequest';
 import { NgForm } from '@angular/forms';
-
-enum NodeType {
-  None = '',
-  Url = 'URL',
-  Content = 'CONTENT'
-}
-
-enum UrlType {
-  Inside = 'INSIDE',
-  Outside = 'OUTSIDE',
-}
-
-enum UrlBlankType {
-  Yes = 'Y',
-  No = 'N',
-}
+import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
   constructor(siteMapInfo: SiteMapInfo, parent_id: string) {
@@ -49,28 +33,28 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   @ViewChild('form') form: NgForm;
 
-  NodeType = NodeType;
-  UrlType = UrlType;
+  NodeType = SiteMapNodeType;
+  UrlType = SiteMapUrlType;
 
   @Input() sitemap: SiteMapInfo;
   @Input() parent_id: string;
 
   sitemapMaintainModel: SiteMapUpdateModel;
 
-  urlTypeOptions: { value: UrlType, name: string }[] = [
-    { value: UrlType.Inside, name: '站內' },
-    { value: UrlType.Outside, name: '站外' },
+  urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
+    { value: SiteMapUrlType.Inside, name: '站內' },
+    { value: SiteMapUrlType.Outside, name: '站外' },
   ];
 
-  urlBlankTypeOptions: { value: UrlBlankType, name: string }[] = [
-    { value: UrlBlankType.Yes, name: '是' },
-    { value: UrlBlankType.No, name: '否' },
+  urlBlankTypeOptions: { value: SiteMapUrlBlankType, name: string }[] = [
+    { value: SiteMapUrlBlankType.Yes, name: '是' },
+    { value: SiteMapUrlBlankType.No, name: '否' },
   ];
 
-  nodeTypeOptions: { value: NodeType, name: string }[] = [
-    { value: NodeType.None, name: '無' },
-    { value: NodeType.Url, name: '連結' },
-    { value: NodeType.Content, name: '頁面' },
+  nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
+    { value: SiteMapNodeType.None, name: '無' },
+    { value: SiteMapNodeType.Url, name: '連結' },
+    { value: SiteMapNodeType.Content, name: '頁面' },
   ];
 
   constructor() { }
@@ -99,10 +83,6 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   getStartEndTime(timeObj: { start_time: string, end_time: string }): string {
     return !timeObj ? '' : [timeObj.start_time || 'unknown', timeObj.end_time || 'unknown'].join(' / ');
-  }
-
-  onNodeTypeChange(event) {
-    console.warn('onNodeTypeChange() event = ', event);
   }
 
 }

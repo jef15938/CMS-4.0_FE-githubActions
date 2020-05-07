@@ -8,6 +8,7 @@ import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from './component/mu
 import { CmsTree } from '../../../ui/tree/tree.interface';
 import { SiteInfo } from '../../../neuxAPI/bean/SiteInfo';
 import { TreeComponent } from '../../../ui/tree/tree.component';
+import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
 
 enum EditModeType {
   Site, Node,
@@ -41,6 +42,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   sitemaps: SiteMapInfo[];
   selectedSiteMap: SiteMapInfo;
+  selectedSiteMapParendId: string;
   customNodeRenderer = MultiSiteNodeComponent;
   private _sitemapSelected$ = new Subject<SiteMapInfo>();
 
@@ -93,6 +95,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
       case EditModeType.Site:
         this.sitemaps = undefined;
         this.selectedSiteMap = undefined;
+        this.selectedSiteMapParendId = undefined;
         this.editMode = mode;
         break;
     }
@@ -110,8 +113,19 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   onCustomEvent(event: MultiSiteNodeCustomEvent) {
     if (event instanceof MultiSiteNodeCustomEvent) {
       switch (event.action) {
-        case 'Create':
-        case 'Delete':
+        case event.ActionType.Create:
+          this._modalService.openComponent({
+            component: SitemapNodeCreateModalComponent,
+            componentInitData: {
+              parent_id: event.data.node_id
+            }
+          }).subscribe(res => {
+            if (res) {
+              this.swichMode(EditModeType.Node);
+            }
+          });
+          break;
+        case event.ActionType.Delete:
           break;
       }
     }
@@ -121,7 +135,10 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     this._sitemapSelected$.pipe(
       debounceTime(300),
       takeUntil(this._destroy$)
-    ).subscribe(selectedSitemap => this.selectedSiteMap = selectedSitemap);
+    ).subscribe(selectedSitemap => {
+      this.selectedSiteMap = selectedSitemap;
+      this.selectedSiteMapParendId = this.sitemapTree.findParent(selectedSitemap)?.node_id;
+    });
   }
 
   getSelectedSitemapParentId() {

@@ -5,14 +5,16 @@ import { SiteMapInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/SiteMapInfo';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-export class MultiSiteNodeCustomEvent {
-  action: 'Create' | 'Delete';
-  sitemap: SiteMapInfo;
+enum ActionType {
+  Create, Delete
+}
 
-  constructor(action: 'Create' | 'Delete', sitemap: SiteMapInfo) {
-    this.action = action;
-    this.sitemap = sitemap;
-  }
+export class MultiSiteNodeCustomEvent {
+  ActionType = ActionType;
+  constructor(
+    public action: ActionType,
+    public data: SiteMapInfo,
+  ) { }
 }
 
 @Component({
@@ -21,6 +23,8 @@ export class MultiSiteNodeCustomEvent {
   styleUrls: ['./multi-site-node.component.scss']
 })
 export class MultiSiteNodeComponent implements CmsTreeNodeRenderer<SiteMapInfo>, OnInit, OnDestroy {
+
+  ActionType = ActionType;
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
@@ -56,7 +60,7 @@ export class MultiSiteNodeComponent implements CmsTreeNodeRenderer<SiteMapInfo>,
     this.trigger.openMenu();
   }
 
-  onMenuClicked(action: 'Create' | 'Delete') {
+  onMenuClicked(action: ActionType) {
     this.node.tree.triggerCustomEvent(new MultiSiteNodeCustomEvent(action, this.node.data));
   }
 
