@@ -2,10 +2,10 @@
   <span class="pointer not-selectable">{{node.data.category_id}}:{{node.data.category_name}}</span>
   <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
-      <button type="button" mat-menu-item (click)="onMenuClicked(ActionType.Upload)" [disabled]="!node.data.can_upload">
+      <!-- <button type="button" mat-menu-item (click)="onMenuClicked(ActionType.Upload)" [disabled]="!node.data.can_upload">
         <mat-icon>file_upload</mat-icon>
         上傳
-      </button>
+      </button> -->
       <button type="button" mat-menu-item (click)="onMenuClicked(ActionType.Create)">
         <mat-icon>add</mat-icon>
         新增
