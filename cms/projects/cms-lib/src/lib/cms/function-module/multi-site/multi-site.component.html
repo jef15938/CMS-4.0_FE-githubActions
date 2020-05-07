@@ -45,13 +45,13 @@
       </h1>
     </div>
     <div class="page-content-container">
-      <cms-tree class="cms-tree" [context]="this" [nodeDatas]="sitemaps" [customNodeRenderer]="customNodeRenderer"
-        [defaultExpandLevel]="1" (customEvent)="onCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
-        (afterRender)="afterTreeRender($event)"></cms-tree>
+      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="sitemaps"
+        [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1" (customEvent)="onCustomEvent($event)"
+        (nodeSelect)="onNodeSelected($event)" (afterRender)="afterTreeRender($event)"></cms-tree>
     </div>
   </div>
-  <div style="width: 50%; float: right; border-left: 1px solid lightgray;">
-    <div class="page-content-container">
-    </div>
+  <div *ngIf="selectedSiteMap" style="width: 50%; float: right; border-left: 1px solid lightgray;">
+    <cms-sitemap-node-update [sitemap]="selectedSiteMap" [parent_id]="getSelectedSitemapParentId()">
+    </cms-sitemap-node-update>
   </div>
 </div>

@@ -11,7 +11,7 @@
       "children": [
         {
           "node_id": "N001",
-          "node_name": "其他",
+          "node_name": "Node_None",
           "layout_id": "L001",
           "node_type": "",
           "url_type": "INSIDE",
@@ -20,12 +20,48 @@
           "children": [
             {
               "node_id": "N001-1",
-              "node_name": "FAQ",
+              "node_name": "Node_Content",
               "layout_id": "L001",
-              "node_type": "Page",
+              "node_type": "CONTENT",
+              "meta_title": "M_Title",
+              "meta_description": "M_Desc",
+              "meta_keyword": "M_Keyword",
+              "meta_image":"",
+              "version": "3.1415926",
+              "canModify": true,
+              "canSubmit": true,
+              "publish_info": {
+                "draft": {
+                  "start_time": "2020-01-01",
+                  "end_time": "2020-01-02"
+                },
+                "pending_published": {
+                  "start_time": "2020-01-02",
+                  "end_time": "2020-01-03"
+                },
+                "published": {
+                  "start_time": "2020-01-03",
+                  "end_time": "2020-01-04"
+                }
+              }
+            },
+            {
+              "node_id": "N001-2",
+              "node_name": "Node_Link_INSIDE",
+              "layout_id": "L001",
+              "node_type": "URL",
               "url_type": "INSIDE",
               "url_link_node_id": "N001",
-              "url": ""
+              "url_blank": "N"
+            },
+            {
+              "node_id": "N001-3",
+              "node_name": "Node_Link_OUTSIDE",
+              "layout_id": "L001",
+              "node_type": "URL",
+              "url_type": "OUTSIDE",
+              "url": "https://www.google.com.tw",
+              "url_blank": "Y"
             }
           ]
         }

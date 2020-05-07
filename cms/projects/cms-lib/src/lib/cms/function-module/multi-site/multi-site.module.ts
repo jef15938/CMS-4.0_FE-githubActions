@@ -6,6 +6,7 @@ import { MultiSiteComponent } from './multi-site.component';
 import { SharedModule } from 'projects/cms-lib/src/lib/shared/shared.module';
 import { MultiSiteNodeComponent } from './component/multi-site-node/multi-site-node.component';
 import { SitemapEditComponent } from './component/sitemap-edit/sitemap-edit.component';
+import { SitemapNodeUpdateComponent } from './component/sitemap-node-update/sitemap-node-update.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { SitemapEditComponent } from './component/sitemap-edit/sitemap-edit.comp
     MultiSiteComponent,
     MultiSiteNodeComponent,
     SitemapEditComponent,
+    SitemapNodeUpdateComponent,
   ],
   imports: [
     CommonModule,

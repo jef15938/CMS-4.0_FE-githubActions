@@ -1,12 +1,17 @@
+// angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+// neux
 import { CoreModule } from '@neux/core';
-// Material
-import { MatMenuModule } from '@angular/material/menu';
-import { MatInputModule } from '@angular/material/input';
+// material form
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+// material others
+import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,14 +27,19 @@ import { TableModule } from 'projects/cms-lib/src/lib/ui/table/table.module';
     CommonModule
   ],
   exports: [
+    // angular
     CommonModule,
     FormsModule,
     HttpClientModule,
+    // neux
     CoreModule,
-    // Material
-    MatMenuModule,
-    MatInputModule,
+    // material form
     MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    // material others
+    MatMenuModule,
     MatListModule,
     MatDividerModule,
     MatIconModule,

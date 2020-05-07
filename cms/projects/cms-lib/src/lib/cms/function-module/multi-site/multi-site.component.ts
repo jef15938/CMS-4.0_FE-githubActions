@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, concat } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Observable, concat, Subject } from 'rxjs';
+import { tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { ModalService } from '../../../ui/modal/modal.service';
 import { SitemapService } from '../../../service/sitemap.service';
 import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
 import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from './component/multi-site-node/multi-site-node.component';
 import { CmsTree } from '../../../ui/tree/tree.interface';
 import { SiteInfo } from '../../../neuxAPI/bean/SiteInfo';
+import { TreeComponent } from '../../../ui/tree/tree.component';
 
 enum EditModeType {
   Site, Node,
@@ -26,7 +27,9 @@ class SiteInfoUpdateModel extends SiteInfo {
   templateUrl: './multi-site.component.html',
   styleUrls: ['./multi-site.component.scss']
 })
-export class MultiSiteComponent implements OnInit {
+export class MultiSiteComponent implements OnInit, OnDestroy {
+
+  @ViewChild('sitemapTree') sitemapTree: TreeComponent<SiteMapInfo>;
 
   EditModeType = EditModeType;
 
@@ -39,6 +42,9 @@ export class MultiSiteComponent implements OnInit {
   sitemaps: SiteMapInfo[];
   selectedSiteMap: SiteMapInfo;
   customNodeRenderer = MultiSiteNodeComponent;
+  private _sitemapSelected$ = new Subject<SiteMapInfo>();
+
+  private _destroy$ = new Subject();
 
   constructor(
     private _modalService: ModalService,
@@ -46,7 +52,14 @@ export class MultiSiteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this._registerSubjects();
     this._init().subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+    this._destroy$.unsubscribe();
   }
 
   private _init(): Observable<any> {
@@ -86,7 +99,7 @@ export class MultiSiteComponent implements OnInit {
   }
 
   onNodeSelected(event: { node: SiteMapInfo }) {
-    const node = event.node;
+    this._sitemapSelected$.next(event.node);
   }
 
   afterTreeRender(tree: CmsTree<SiteMapInfo>) {
@@ -99,14 +112,22 @@ export class MultiSiteComponent implements OnInit {
       switch (event.action) {
         case 'Create':
         case 'Delete':
-          // this.openModal(event.action, event.dept).subscribe(res => {
-          //   if (res) {
-          //     this._initPage().subscribe();
-          //   }
-          // });
           break;
       }
     }
+  }
+
+  private _registerSubjects() {
+    this._sitemapSelected$.pipe(
+      debounceTime(300),
+      takeUntil(this._destroy$)
+    ).subscribe(selectedSitemap => this.selectedSiteMap = selectedSitemap);
+  }
+
+  getSelectedSitemapParentId() {
+    return this.sitemapTree && this.selectedSiteMap
+      ? this.sitemapTree.findParent(this.selectedSiteMap)?.node_id
+      : undefined;
   }
 
 }
