@@ -52,8 +52,7 @@
     </div>
   </div>
   <div *ngIf="selectedSiteMap" style="width: 50%; float: right; border-left: 1px solid lightgray;">
-    <cms-sitemap-node-update [sitemap]="selectedSiteMap" [parent_id]="selectedSiteMapParendId"
-      (updated)="onSiteMapUpdated($event)">
+    <cms-sitemap-node-update [siteMapUpdateInfo]="selectedSiteMap" (updated)="onSiteMapUpdated($event)">
     </cms-sitemap-node-update>
   </div>
 </div>

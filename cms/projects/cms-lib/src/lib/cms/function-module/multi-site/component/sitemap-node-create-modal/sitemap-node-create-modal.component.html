@@ -8,8 +8,9 @@
 
     <mat-form-field appearance="outline">
       <mat-label>節點類型</mat-label>
-      <mat-select [(ngModel)]="sitemapMaintainModel.node_type" name="node_type">
-        <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value" (change)="onNodeTypeChange($event)">
+      <mat-select [(ngModel)]="sitemapMaintainModel.node_type" name="node_type"
+        (selectionChange)="sitemapMaintainModel.checkFieldsByNodeType()">
+        <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
           {{option.name}}
         </mat-option>
       </mat-select>
@@ -51,15 +52,20 @@
           </mat-form-field>
         </ng-container>
       </ng-container>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Meta標題</mat-label>
-        <input matInput [(ngModel)]="sitemapMaintainModel.meta_title" name="meta_title" required
-          #modelMetaTitle="ngModel">
-        <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
-      </mat-form-field>
       <!-- CONTENT -->
       <ng-container *ngSwitchCase="NodeType.Content">
+        <mat-form-field appearance="outline">
+          <mat-label>網址名稱</mat-label>
+          <input matInput [(ngModel)]="sitemapMaintainModel.content_path" name="content_path" required
+            #modelMetaTitle="ngModel">
+          <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Meta標題</mat-label>
+          <input matInput [(ngModel)]="sitemapMaintainModel.meta_title" name="meta_title" required
+            #modelMetaTitle="ngModel">
+          <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+        </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Meta描述</mat-label>
           <input matInput [(ngModel)]="sitemapMaintainModel.meta_description" name="meta_description">

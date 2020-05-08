@@ -9,6 +9,7 @@ import { CmsTree } from '../../../ui/tree/tree.interface';
 import { SiteInfo } from '../../../neuxAPI/bean/SiteInfo';
 import { TreeComponent } from '../../../ui/tree/tree.component';
 import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
+import { SiteMapUpdateInfo } from './multi-site.interface';
 
 enum EditModeType {
   Site, Node,
@@ -41,8 +42,8 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   editMode: EditModeType = EditModeType.Site;
 
   sitemaps: SiteMapInfo[];
-  selectedSiteMap: SiteMapInfo;
-  selectedSiteMapParendId: string;
+
+  selectedSiteMap: SiteMapUpdateInfo;
   customNodeRenderer = MultiSiteNodeComponent;
   private _sitemapSelected$ = new Subject<SiteMapInfo>();
 
@@ -86,7 +87,6 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   swichMode(mode: EditModeType) {
     this.sitemaps = undefined;
     this.selectedSiteMap = undefined;
-    this.selectedSiteMapParendId = undefined;
     switch (mode) {
       case EditModeType.Node:
         if (!this.selectedSite) { this._modalService.openMessage({ message: '尚未選擇網站' }); return; }
@@ -136,15 +136,14 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
       debounceTime(300),
       takeUntil(this._destroy$)
     ).subscribe(selectedSitemap => {
-      this.selectedSiteMap = selectedSitemap;
-      this.selectedSiteMapParendId = this.sitemapTree.findParent(selectedSitemap)?.node_id;
+      const parent = this.sitemapTree.findParent(selectedSitemap);
+      const order = (parent?.children || []).indexOf(selectedSitemap);
+      this.selectedSiteMap = {
+        siteMap: selectedSitemap,
+        parentId: parent?.node_id,
+        nodeOrder: order > -1 ? `${order}` : '',
+      }
     });
-  }
-
-  getSelectedSitemapParentId() {
-    return this.sitemapTree && this.selectedSiteMap
-      ? this.sitemapTree.findParent(this.selectedSiteMap)?.node_id
-      : undefined;
   }
 
   onSiteMapUpdated(ev) {

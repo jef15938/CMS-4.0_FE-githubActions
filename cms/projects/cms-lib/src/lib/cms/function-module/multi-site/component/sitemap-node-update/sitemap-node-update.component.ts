@@ -3,12 +3,13 @@ import { SiteMapInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/SiteMapInfo';
 import { UserSiteMapPutRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/UserSiteMapPutRequest';
 import { NgForm } from '@angular/forms';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
+import { SiteMapUpdateInfo } from '../../multi-site.interface';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
-  constructor(siteMapInfo: SiteMapInfo, parent_id: string) {
+  constructor(siteMapInfo: SiteMapInfo, parent_id: string, node_orders: string) {
     super();
     this.node_name = siteMapInfo.node_name;
-    this.node_orders = "";
+    this.node_orders = node_orders;
     this.parent_id = parent_id;
     // URL
     this.url = siteMapInfo.url;
@@ -36,8 +37,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   NodeType = SiteMapNodeType;
   UrlType = SiteMapUrlType;
 
-  @Input() sitemap: SiteMapInfo;
-  @Input() parent_id: string;
+  @Input() siteMapUpdateInfo: SiteMapUpdateInfo;
 
   @Output() updated = new EventEmitter<UserSiteMapPutRequest>();
 
@@ -62,23 +62,27 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.sitemapMaintainModel = new SiteMapUpdateModel(this.sitemap, this.parent_id);
+    console.warn('ngOnInit() this.siteMapUpdateInfo = ', this.siteMapUpdateInfo);
+    const info = this.siteMapUpdateInfo;
+    if (info?.siteMap) {
+      this.sitemapMaintainModel = new SiteMapUpdateModel(info.siteMap, info.parentId, info.nodeOrder);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['sitemap']) {
-      this.sitemapMaintainModel = new SiteMapUpdateModel(changes['sitemap'].currentValue, this.parent_id);
-      if (this.form) {
-        for (let controlName of Object.keys(this.form.controls)) {
-          const c = this.form.controls[controlName];
-          c.markAsUntouched();
-          c.markAsPristine();
+    if (changes['siteMapUpdateInfo']) {
+      console.warn('ngOnChanges() changes = ', changes);
+      const info: SiteMapUpdateInfo = changes['siteMapUpdateInfo'].currentValue;
+      if (info?.siteMap) {
+        console.warn('ngOnChanges() info = ', info);
+        this.sitemapMaintainModel = new SiteMapUpdateModel(info.siteMap, info.parentId, info.nodeOrder);
+        if (this.form) {
+          for (let controlName of Object.keys(this.form.controls)) {
+            const c = this.form.controls[controlName];
+            c.markAsUntouched();
+            c.markAsPristine();
+          }
         }
-      }
-    }
-    if (changes['parent_id']) {
-      if (this.sitemapMaintainModel) {
-        this.sitemapMaintainModel.parent_id = changes['parent_id'].currentValue;
       }
     }
   }

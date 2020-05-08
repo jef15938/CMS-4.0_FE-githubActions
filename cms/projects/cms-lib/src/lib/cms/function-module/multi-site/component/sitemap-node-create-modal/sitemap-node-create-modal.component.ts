@@ -5,9 +5,42 @@ import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../mult
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
   node_type = SiteMapNodeType.None;
+
   constructor(parent_id: string) {
     super();
     this.parent_id = parent_id;
+  }
+
+  private _clearLink() {
+    this.url = undefined;
+    this.url_blank = undefined;
+    this.url_link_node_id = undefined;
+    this.url_type = undefined;
+  }
+
+  private _clearContent() {
+    this.layout_id = undefined;
+    this.content_path = undefined;
+    this.meta_description = undefined;
+    this.meta_image = undefined;
+    this.meta_keyword = undefined;
+  }
+
+  check
+
+  checkFieldsByNodeType() {
+    switch (this.node_type) {
+      case SiteMapNodeType.None:
+        this._clearLink();
+        this._clearContent();
+        break;
+      case SiteMapNodeType.Url:
+        this._clearContent();
+        break;
+      case SiteMapNodeType.Content:
+        this._clearLink();
+        break;
+    }
   }
 }
 
@@ -49,11 +82,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     this.sitemapMaintainModel = new SiteMapCreateModel(this.parent_id);
   }
 
-  onNodeTypeChange(event) {
-    console.warn('onNodeTypeChange() event = ', event);
-  }
-
-  confirm(){
+  confirm() {
     this.close('Created');
   }
 
