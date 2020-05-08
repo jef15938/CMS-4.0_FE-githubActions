@@ -71,10 +71,8 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['siteMapUpdateInfo']) {
-      console.warn('ngOnChanges() changes = ', changes);
       const info: SiteMapUpdateInfo = changes['siteMapUpdateInfo'].currentValue;
       if (info?.siteMap) {
-        console.warn('ngOnChanges() info = ', info);
         this.sitemapMaintainModel = new SiteMapUpdateModel(info.siteMap, info.parentId, info.nodeOrder);
         if (this.form) {
           for (let controlName of Object.keys(this.form.controls)) {
