@@ -1,15 +1,15 @@
 {
   "datas": [
     {
-      "func_id": "multiSite",
+      "func_id": "multi-site",
       "func_name": "多網站管理",
-      "component_id ": "multiSite",
+      "component_id ": "multi-site",
       "children": []
     },
     {
-      "func_id": "MyAuditingReport",
+      "func_id": "my-auditing",
       "func_name": "我的申請單",
-      "component_id ": "MyAuditingReport",
+      "component_id ": "my-auditing",
       "children": []
     },
     {

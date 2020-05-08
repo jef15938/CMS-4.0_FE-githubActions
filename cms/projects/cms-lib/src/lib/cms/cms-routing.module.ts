@@ -8,11 +8,11 @@ const routes: Routes = [
     path: '', component: CmsComponent, resolve: { menus: CmsUserMenuResolver },
     children: [
       {
-        path: 'multiSite',
+        path: 'multi-site',
         loadChildren: () => import('./function-module/multi-site/multi-site.module').then(m => m.MultiSiteModule)
       },
       {
-        path: 'MyAuditingReport',
+        path: 'my-auditing',
         loadChildren: () => import('./function-module/my-auditing/my-auditing.module').then(m => m.MyAuditingModule)
       },
       {
