@@ -4,6 +4,8 @@ import { UserSiteMapPutRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/Use
 import { NgForm } from '@angular/forms';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
 import { SiteMapUpdateInfo } from '../../multi-site.interface';
+import { ModalService } from 'projects/cms-lib/src/lib/ui/modal/modal.service';
+import { SitemapEditContentModalComponent } from '../sitemap-edit-content-modal/sitemap-edit-content-modal.component';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
   constructor(siteMapInfo: SiteMapInfo, parent_id: string, node_orders: string) {
@@ -59,10 +61,11 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     { value: SiteMapNodeType.Content, name: '頁面' },
   ];
 
-  constructor() { }
+  constructor(
+    private _modalService: ModalService,
+  ) { }
 
   ngOnInit(): void {
-    console.warn('ngOnInit() this.siteMapUpdateInfo = ', this.siteMapUpdateInfo);
     const info = this.siteMapUpdateInfo;
     if (info?.siteMap) {
       this.sitemapMaintainModel = new SiteMapUpdateModel(info.siteMap, info.parentId, info.nodeOrder);
@@ -83,6 +86,15 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  editContent() {
+    this._modalService.openComponent({
+      component: SitemapEditContentModalComponent,
+      componentInitData: {
+
+      },
+    }, true).subscribe();
   }
 
   getStartEndTime(timeObj: { start_time: string, end_time: string }): string {

@@ -10,6 +10,7 @@ import { SiteInfo } from '../../../neuxAPI/bean/SiteInfo';
 import { TreeComponent } from '../../../ui/tree/tree.component';
 import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
 import { SiteMapUpdateInfo } from './multi-site.interface';
+import { SitemapEditContentModalComponent } from './component/sitemap-edit-content-modal/sitemap-edit-content-modal.component';
 
 enum EditModeType {
   Site, Node,
@@ -148,6 +149,15 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   onSiteMapUpdated(ev) {
     this.swichMode(EditModeType.Node);
+  }
+
+  test() {
+    this._modalService.openComponent({
+      component: SitemapEditContentModalComponent,
+      componentInitData: {
+
+      },
+    }, true).subscribe();
   }
 
 }

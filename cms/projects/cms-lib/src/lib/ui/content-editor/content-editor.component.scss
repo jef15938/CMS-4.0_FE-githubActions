@@ -1,0 +1,42 @@
+.cms-content-editor {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  .main-block {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .btn-panel {
+      padding: 10px;
+    
+      button:not(:first-child) {
+        margin-left: 5px;
+      }
+    }
+
+    .template-control-panel {
+      width: 300px;
+      height: 100%;
+      position: fixed;
+      overflow: auto;
+    }
+  
+    .action-list-panel {
+      width: 100%;
+      height: 100px;
+      bottom: 0;
+      position: fixed;
+      overflow: auto;
+      border: 1px solid purple;
+    }
+
+    .content-panel {
+      
+    }
+
+  }
+
+}
+

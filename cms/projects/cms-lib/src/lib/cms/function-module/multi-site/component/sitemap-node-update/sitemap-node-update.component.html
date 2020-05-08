@@ -2,6 +2,11 @@
   <div *ngIf="siteMapUpdateInfo?.siteMap" class="page-title-container">
     <h1>{{siteMapUpdateInfo.siteMap.node_name}}</h1>
     <div>ParentId：{{siteMapUpdateInfo.parentId}} / NodeOrder：{{siteMapUpdateInfo.nodeOrder}}</div>
+    <div class="btn-group" *ngIf="siteMapUpdateInfo?.siteMap?.node_type === NodeType.Content">
+      <button type="button" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"
+        (click)="editContent()">編輯</button>
+      <button type="button" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canSubmit">送審</button>
+    </div>
     <div *ngIf="siteMapUpdateInfo.siteMap.publish_info" style="color: gray;">
       <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.draft; let obj">後台草稿上下架：{{getStartEndTime(obj)}}</div>
       <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.pending_published; let obj">等待發布：{{getStartEndTime(obj)}}</div>

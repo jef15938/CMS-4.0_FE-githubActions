@@ -15,18 +15,21 @@ export class ModalService {
 
   }
 
-  openComponent<TComponent extends CustomModalBase>(config: ModalOpenComponentConfig<TComponent>) {
+  openComponent<TComponent extends CustomModalBase>(
+    config: ModalOpenComponentConfig<TComponent>,
+    fullScreen = false,
+  ) {
     const modalConfig = new MatDialogConfig();
     // The user can't close the modal by clicking outside its body
     // modalConfig.disableClose = true;
 
     modalConfig.id = config.modalSetting?.id || 'modal-component';
-    modalConfig.width = config.modalSetting?.width || '600px';
-    modalConfig.height = config.modalSetting?.height || modalConfig.height;
-    modalConfig.minWidth = config.modalSetting?.minWidth || modalConfig.minWidth;
-    modalConfig.minHeight = config.modalSetting?.minHeight || modalConfig.minHeight;
-    modalConfig.maxWidth = config.modalSetting?.maxWidth || modalConfig.maxWidth;
-    modalConfig.maxHeight = config.modalSetting?.maxHeight || modalConfig.maxHeight;
+    modalConfig.width = fullScreen ? '100%' : config.modalSetting?.width || '600px';
+    modalConfig.height = fullScreen ? '100%' : config.modalSetting?.height || modalConfig.height;
+    modalConfig.minWidth = fullScreen ? '100%' : config.modalSetting?.minWidth || modalConfig.minWidth;
+    modalConfig.minHeight = fullScreen ? '100%' : config.modalSetting?.minHeight || modalConfig.minHeight;
+    modalConfig.maxWidth = fullScreen ? '100%' : config.modalSetting?.maxWidth || modalConfig.maxWidth;
+    modalConfig.maxHeight = fullScreen ? '100%' : config.modalSetting?.maxHeight || modalConfig.maxHeight;
 
     // https://material.angular.io/components/modal/overview
 
