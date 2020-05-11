@@ -5,10 +5,10 @@
       <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave">
         <mat-icon>save</mat-icon>
       </button>
-      <button #btnUndo type="button" mat-button alt="undo" [disabled]="!canUndo" (click)="undo()">
+      <button #btnUndo type="button" mat-button alt="undo" [disabled]="!actionManager.canUndo" (click)="undo()">
         <mat-icon>undo</mat-icon>
       </button>
-      <button #btnRedo type="button" mat-button alt="redo" [disabled]="!canRedo" (click)="redo()">
+      <button #btnRedo type="button" mat-button alt="redo" [disabled]="!actionManager.canRedo" (click)="redo()">
         <mat-icon>redo</mat-icon>
       </button>
       <button #btnRedo type="button" mat-button alt="clear" (click)="clear()">
@@ -25,26 +25,26 @@
           <mat-icon>add</mat-icon>
         </button>
       </div>
-      <div *ngFor="let template of contentInfoModel.templates; let i = templateIndex">
+      <div *ngFor="let template of contentInfoModel.templates; let templateIndex = index">
         <div>
           {{template.id}}-{{template.templateId}}
         </div>
         <div class="add-template-btn">
-          <button type="button" mat-menu-item (click)="addTemplate(i+1)" style="width: 100%; text-align: center;">
+          <button type="button" mat-menu-item (click)="addTemplate(templateIndex+1)" style="width: 100%; text-align: center;">
             <mat-icon>add</mat-icon>
           </button>
         </div>
       </div>
     </div>
     <!-- 版面控制 -->
-    <div *ngIf="showTemplateControlPanel" class="template-control-panel">
+    <!-- <div *ngIf="showTemplateControlPanel" class="template-control-panel">
       <div>版面控制</div>
-    </div>
+    </div> -->
     <!-- Action列表 -->
     <div *ngIf="showActionListPanel" class="action-list-panel">
       <div>Action列表</div>
-      <div *ngFor="let action of actions; let i = index">
-        <span [style.color]="action===latestAction?'red': ''">{{i}}.</span>
+      <div *ngFor="let action of actionManager.actions; let i = index">
+        <span [style.color]="action===actionManager.latestAction?'red': ''">{{i}}.</span>
         <span>{{action.toString()}}</span>
         <br>
       </div>
