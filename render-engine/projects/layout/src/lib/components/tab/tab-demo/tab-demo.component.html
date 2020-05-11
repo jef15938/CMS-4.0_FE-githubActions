@@ -1,0 +1,9 @@
+<app-tab-frame *ngIf="templateInfo">
+  <!-- <app-tab-item [tabTitle]="'頁籤1'">頁籤1的內容拉啦啦啦</app-tab-item>
+  <app-tab-item [tabTitle]="'頁籤2'">頁籤2的內容拉啦啦啦</app-tab-item>
+  <app-tab-item [tabTitle]="'頁籤3'">頁籤3的內容拉啦啦啦</app-tab-item> -->
+  <app-tab-item *ngFor="let tabInfo of templateInfo.tabList" [tabTitle]="tabInfo.tabId">
+    <!-- <ng-container #contentHost></ng-container> -->
+    <layout-wrapper [templateInfo]="tabInfo.child"></layout-wrapper>
+  </app-tab-item>
+</app-tab-frame>

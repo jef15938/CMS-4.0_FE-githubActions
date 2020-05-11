@@ -1,0 +1,9 @@
+<p>swiper</p>
+<swiper class="swiper-container" [config]="config" [disabled]="disabled" (indexChange)="onIndexChange($event)"
+  (swiperTransitionStart)="onSwiperEvent('transitionStart')" (swiperTransitionEnd)="onSwiperEvent('transitionEnd')">
+  <div *ngFor="let slide of slides" class="swiper-slide">
+    <div>
+      {{slide}}
+    </div>
+  </div>
+</swiper>

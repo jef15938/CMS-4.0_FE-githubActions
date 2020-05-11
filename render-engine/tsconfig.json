@@ -14,7 +14,17 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@layout": [
+        "dist/layout/layout",
+        "dist/layout"
+      ],
+      "@render": [
+        "dist/render/render",
+        "dist/render"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
