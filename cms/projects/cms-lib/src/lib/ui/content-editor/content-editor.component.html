@@ -1,53 +1,59 @@
 <div class="cms-content-editor">
-  <div class="main-block" *ngIf="contentInfoModel">
-    <!-- 按鈕們 -->
-    <div class="btn-panel">
-      <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave">
-        <mat-icon>save</mat-icon>
-      </button>
-      <button #btnUndo type="button" mat-button alt="undo" [disabled]="!actionManager.canUndo" (click)="undo()">
-        <mat-icon>undo</mat-icon>
-      </button>
-      <button #btnRedo type="button" mat-button alt="redo" [disabled]="!actionManager.canRedo" (click)="redo()">
-        <mat-icon>redo</mat-icon>
-      </button>
-      <button #btnRedo type="button" mat-button alt="clear" (click)="clear()">
-        <mat-icon>delete</mat-icon>
-      </button>
-      <button #btnClose type="button" mat-button alt="close" (click)="close()" *ngIf="btnClose">
-        <mat-icon>clear</mat-icon>
-      </button>
-    </div>
+  <!-- 按鈕們 -->
+  <div class="btn-panel">
+    <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button #btnUndo type="button" mat-button alt="undo" [disabled]="!actionManager.canUndo" (click)="undo()">
+      <mat-icon>undo</mat-icon>
+    </button>
+    <button #btnRedo type="button" mat-button alt="redo" [disabled]="!actionManager.canRedo" (click)="redo()">
+      <mat-icon>redo</mat-icon>
+    </button>
+    <button #btnRedo type="button" mat-button alt="clear" (click)="clear()">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button #btnClose type="button" mat-button alt="close" (click)="close()" *ngIf="btnClose">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+  <div class="main-block" *ngIf="contentInfoModel" [class.layout-control]="layoutControlPanel?.show"
+    [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
-    <div class="content-panel">
+    <div class="content-panel" (click)="resetSelected()">
       <div class="add-template-btn">
-        <button type="button" mat-menu-item (click)="addTemplate()" style="width: 100%; text-align: center;">
-          <mat-icon>add</mat-icon>
+        <button type="button" mat-menu-item (click)="addTemplate($event)" style="width: 100%; text-align: center;">
+          {{selectedTemplateAddPosition !== 0?'+':'請選擇版型加入此區塊'}}
         </button>
       </div>
       <div *ngFor="let template of contentInfoModel.templates; let templateIndex = index">
         <div>
-          {{template.id}}-{{template.templateId}}
+          <layout-wrapper [templateInfo]="template" (click)="selectContent($event, this)"></layout-wrapper>
         </div>
         <div class="add-template-btn">
-          <button type="button" mat-menu-item (click)="addTemplate(templateIndex+1)" style="width: 100%; text-align: center;">
-            <mat-icon>add</mat-icon>
+          <button type="button" mat-menu-item (click)="addTemplate($event, templateIndex+1)"
+            style="width: 100%; text-align: center;">
+            {{selectedTemplateAddPosition !== templateIndex+1?'+':'請選擇版型加入此區塊'}}
           </button>
         </div>
       </div>
     </div>
     <!-- 版面控制 -->
-    <!-- <div *ngIf="showTemplateControlPanel" class="template-control-panel">
-      <div>版面控制</div>
-    </div> -->
+    <div class="layout-control-panel">
+      <cms-layout-control-panel [position]="selectedTemplateAddPosition"></cms-layout-control-panel>
+    </div>
+    <!-- 內容編輯 -->
+    <div class="content-edit-panel">
+      <cms-content-control-panel [content]="selectedContentTemplate"></cms-content-control-panel>
+    </div>
     <!-- Action列表 -->
-    <div *ngIf="showActionListPanel" class="action-list-panel">
+    <!-- <div *ngIf="showActionListPanel" class="action-list-panel">
       <div>Action列表</div>
       <div *ngFor="let action of actionManager.actions; let i = index">
         <span [style.color]="action===actionManager.latestAction?'red': ''">{{i}}.</span>
         <span>{{action.toString()}}</span>
         <br>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

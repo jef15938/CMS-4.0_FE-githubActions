@@ -3,39 +3,65 @@
   width: 100%;
   height: 100%;
 
+  .btn-panel {
+    padding: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+  
+    button:not(:first-child) {
+      margin-left: 5px;
+    }
+  }
+
   .main-block {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 100%;  
 
-    .btn-panel {
-      padding: 10px;
-    
-      button:not(:first-child) {
-        margin-left: 5px;
-      }
+    .content-panel {
+      height: 100%;
+      overflow: auto;
+      padding: 20px;
+      margin: 20px auto;
+      width: 100%;
     }
 
-    .template-control-panel {
+    .layout-control-panel {
       width: 300px;
       height: 100%;
-      position: fixed;
+      position: absolute;
       overflow: auto;
+      left: 0;
+      top: 0;
+    }
+
+    .content-edit-panel {
+      width: 300px;
+      height: 100%;
+      position: absolute;
+      overflow: auto;
+      right: 0;
+      top: 0;
     }
   
     .action-list-panel {
       width: 100%;
       height: 100px;
       bottom: 0;
-      position: fixed;
+      position: absolute;
       overflow: auto;
-      border: 1px solid purple;
+      border: 3px solid purple;
+      background-color: white;
     }
 
-    .content-panel {
-      
-    }
+  }
 
+  .main-block.layout-control .content-panel, .main-block.content-control .content-panel {
+    position: absolute;
+    width: calc(100% - 300px);
+  }
+
+  .main-block.layout-control .content-panel {
+    left: 300px;
   }
 
 }

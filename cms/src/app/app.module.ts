@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 import { GlobalHeader } from './common/global-header';
 import { CmsLibModule } from 'projects/cms-lib/src/lib/cms-lib.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { COMPONENT_SERVICE_TOKEN } from 'layout';
+import { DynamicComponentFactoryService } from './service/dynamic-component-factory.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   providers: [
     { provide: ConfigToken, useValue: environment },
-    { provide: RestHeaderToken, useExisting: GlobalHeader }
+    { provide: RestHeaderToken, useExisting: GlobalHeader },
+    { provide: COMPONENT_SERVICE_TOKEN, useExisting: DynamicComponentFactoryService }
   ],
   bootstrap: [AppComponent]
 })
