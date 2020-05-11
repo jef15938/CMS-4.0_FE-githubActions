@@ -16,7 +16,7 @@ export abstract class EditorAction<Target> {
   }
 }
 
-export class AddTemplateAction extends EditorAction<{ contentInfo: ContentInfo, position: number }> {
+export class AddTemplateAction extends EditorAction<{ contentInfo: ContentInfo, position: number, template: ContentTemplateInfo }> {
   type = AddTemplateAction;
 
   undo(): void {
@@ -30,8 +30,7 @@ export class AddTemplateAction extends EditorAction<{ contentInfo: ContentInfo, 
 
   do(): void {
     const target = this.target;
-    const template = new ContentTemplateInfo();
-    target.contentInfo.templates.splice(target.position, 0, template);
+    target.contentInfo.templates.splice(target.position, 0, this.target.template);
   }
 
   toString() {

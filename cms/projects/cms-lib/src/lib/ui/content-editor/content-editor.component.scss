@@ -18,29 +18,54 @@
     height: 100%;  
 
     .content-panel {
-      height: 100%;
+      border: lightgray 1px solid;
+      height: calc(100% - 100px);
       overflow: auto;
       padding: 20px;
       margin: 20px auto;
-      width: 100%;
+      width: 90%;
+
+      .add-template-btn {
+        > button {
+          background-color: lightgreen;
+          color: black;
+          width: 100%; 
+          text-align: center;
+        }
+        
+        &:hover, &.active {
+          > button {
+            background-color: darkgreen;
+            color: white;
+          }
+        }
+      }
     }
 
     .layout-control-panel {
-      width: 300px;
+      width: 0;
       height: 100%;
       position: absolute;
       overflow: auto;
       left: 0;
       top: 0;
+
+      &.active {
+        width: 300px;
+      }
     }
 
     .content-edit-panel {
-      width: 300px;
+      width: 0;
       height: 100%;
       position: absolute;
       overflow: auto;
       right: 0;
       top: 0;
+
+      &.active {
+        width: 300px;
+      }
     }
   
     .action-list-panel {
@@ -62,6 +87,7 @@
 
   .main-block.layout-control .content-panel {
     left: 300px;
+    margin: 20px;
   }
 
 }

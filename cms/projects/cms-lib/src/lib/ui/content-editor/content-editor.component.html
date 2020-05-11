@@ -4,10 +4,10 @@
     <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave">
       <mat-icon>save</mat-icon>
     </button>
-    <button #btnUndo type="button" mat-button alt="undo" [disabled]="!actionManager.canUndo" (click)="undo()">
+    <button #btnUndo type="button" mat-button alt="undo" [disabled]="!actionManager?.canUndo" (click)="undo()">
       <mat-icon>undo</mat-icon>
     </button>
-    <button #btnRedo type="button" mat-button alt="redo" [disabled]="!actionManager.canRedo" (click)="redo()">
+    <button #btnRedo type="button" mat-button alt="redo" [disabled]="!actionManager?.canRedo" (click)="redo()">
       <mat-icon>redo</mat-icon>
     </button>
     <button #btnRedo type="button" mat-button alt="clear" (click)="clear()">
@@ -21,30 +21,28 @@
     [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
     <div class="content-panel" (click)="resetSelected()">
-      <div class="add-template-btn">
-        <button type="button" mat-menu-item (click)="addTemplate($event)" style="width: 100%; text-align: center;">
-          {{selectedTemplateAddPosition !== 0?'+':'請選擇版型加入此區塊'}}
+      <div class="add-template-btn" [class.active]="layoutControlPanel?.position===0">
+        <button type="button" mat-menu-item (click)="selectAddTemplatePosition($event)">
+          {{layoutControlPanel?.position !== 0?'+':'請選擇版型加入此區塊'}}
         </button>
       </div>
       <div *ngFor="let template of contentInfoModel.templates; let templateIndex = index">
-        <div>
-          <layout-wrapper [templateInfo]="template" (click)="selectContent($event, this)"></layout-wrapper>
-        </div>
-        <div class="add-template-btn">
-          <button type="button" mat-menu-item (click)="addTemplate($event, templateIndex+1)"
-            style="width: 100%; text-align: center;">
-            {{selectedTemplateAddPosition !== templateIndex+1?'+':'請選擇版型加入此區塊'}}
+        <layout-wrapper [templateInfo]="template" (click)="selectContent($event, template)"></layout-wrapper>
+        <div class="add-template-btn" [class.active]="layoutControlPanel?.position===templateIndex+1">
+          <button type="button" mat-menu-item (click)="selectAddTemplatePosition($event, templateIndex+1)">
+            {{layoutControlPanel?.position !== templateIndex+1?'+':'請選擇版型加入此區塊'}}
           </button>
         </div>
       </div>
     </div>
     <!-- 版面控制 -->
-    <div class="layout-control-panel">
-      <cms-layout-control-panel [position]="selectedTemplateAddPosition"></cms-layout-control-panel>
+    <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
+      <cms-layout-control-panel (select)="onTemplateSelect($event)">
+      </cms-layout-control-panel>
     </div>
     <!-- 內容編輯 -->
-    <div class="content-edit-panel">
-      <cms-content-control-panel [content]="selectedContentTemplate"></cms-content-control-panel>
+    <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
+      <cms-content-control-panel [content]="selectedContent"></cms-content-control-panel>
     </div>
     <!-- Action列表 -->
     <!-- <div *ngIf="showActionListPanel" class="action-list-panel">

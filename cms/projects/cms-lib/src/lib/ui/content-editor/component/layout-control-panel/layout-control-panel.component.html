@@ -1,3 +1,21 @@
 <div *ngIf="show" class="cms-layout-control-panel">
-  <p>layout-control-panel works!</p>
+  <h1>新增版面: {{position}}</h1>
+  <hr>
+  <mat-accordion>
+    <mat-expansion-panel *ngIf="mainTemplates.length">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          主題版型
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let template of mainTemplates" class="template-container" (click)="selectTemplate(template)">
+        <div>
+          {{template.templateName}}
+        </div>
+        <div class="img-container">
+          <img [src]="template.img">
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

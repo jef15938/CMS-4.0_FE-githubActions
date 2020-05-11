@@ -3,4 +3,23 @@
   height: 100%;
   border-right: 1px solid burlywood;
   background-color: lightgray;
+
+  .template-container {
+    cursor: pointer;
+
+    &:hover{
+      background-color: lightblue;  
+    }
+
+    .img-container {
+      padding: 5px;
+
+      img {
+        max-width: 100%;
+        width: 232px;
+        height: 90px;
+        background-color: #888;
+      }
+    }
+  }
 }
