@@ -15,6 +15,8 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
     return this._isViewInit;
   }
 
+  @Input() mode: 'preview' | 'edit' = 'preview';
+
   @Input()
   public get templateInfo(): TInfo {
     return this._templateInfo;
@@ -46,7 +48,5 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
     const componentRef = vc.createComponent(componentFactory);
     return componentRef;
   }
-
-
 
 }

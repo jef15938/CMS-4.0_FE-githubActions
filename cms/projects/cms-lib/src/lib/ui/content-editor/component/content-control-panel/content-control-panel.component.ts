@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
 import { LayoutWrapperEvent } from 'layout';
-import { LayoutWrapperStatus } from '../../content-editor.enum';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -23,21 +21,13 @@ export class ContentControlPanelComponent implements OnInit {
   setContent(newContent?: LayoutWrapperEvent, isTemplate = false) {
     const oldContent = this.content;
     if (oldContent) {
-      (oldContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Edit);
+      oldContent.wrapper.setNowEdit(false);
     }
     if (newContent) {
-      (newContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.add(LayoutWrapperStatus.Edit);
+      newContent.wrapper.setNowEdit(true);
     }
     this.content = newContent;
     this.isTemplate = isTemplate;
-  }
-
-  onContentIn(ev: LayoutWrapperEvent) {
-    (ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.add(LayoutWrapperStatus.Hover);
-  }
-
-  onContentOut(ev: LayoutWrapperEvent) {
-    (ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Hover);
   }
 
 }

@@ -14,6 +14,12 @@ import { LayoutWrapperEvent, LayoutWrapper } from './layout-wrapper.interface';
 export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewInit, OnDestroy {
 
   @Input() templateInfo: TemplateInfo;
+
+  mode: 'preview' | 'edit' = 'preview';
+
+  nowHover = false;
+  nowEdit = false;
+
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
   @ViewChild('WrapperContainer') containerDiv: ElementRef;
 
@@ -53,6 +59,7 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     const componentRef = this.host.createComponent(componentFactory) as ComponentRef<LayoutBase<TemplateInfo>>;
     // console.log('load component:', componentRef);
     componentRef.instance.templateInfo = this.templateInfo;
+    componentRef.instance.mode = this.mode;
     this.componentRef = componentRef;
 
     this._changeDetectorRef.detectChanges();
@@ -60,8 +67,8 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     if (this.componentRef.instance.childLayoutWrappers) {
       const childLayoutWrappers = this.componentRef.instance.childLayoutWrappers as QueryList<LayoutWrapperComponent>;
       merge(...[
-        merge(...childLayoutWrappers.map(c => c.mouseEnter).filter(l => !!l)).pipe(tap(e => this.mouseEnter.next(e as LayoutWrapperEvent))),
-        merge(...childLayoutWrappers.map(c => c.mouseLeave).filter(l => !!l)).pipe(tap(e => this.mouseLeave.next(e as LayoutWrapperEvent))),
+        // merge(...childLayoutWrappers.map(c => c.mouseEnter).filter(l => !!l)).pipe(tap(e => this.mouseEnter.next(e as LayoutWrapperEvent))),
+        // merge(...childLayoutWrappers.map(c => c.mouseLeave).filter(l => !!l)).pipe(tap(e => this.mouseLeave.next(e as LayoutWrapperEvent))),
         merge(...childLayoutWrappers.map(c => c.select).filter(l => !!l)).pipe(tap(e => this.select.next(e as LayoutWrapperEvent))),
       ]).pipe(takeUntil(this._destroy$)).subscribe();
     }
@@ -74,6 +81,17 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
       componentRef: this.componentRef,
       templateInfo: this.templateInfo,
     }
+  }
+
+  setMode(mode: 'preview' | 'edit') {
+    this.mode = mode;
+    if (this.componentRef?.instance) {
+      this.componentRef.instance.mode = mode;
+    }
+  }
+
+  setNowEdit(nowEdit: boolean) {
+    this.nowEdit = nowEdit;
   }
 
 }

@@ -1,3 +1,12 @@
-.dynamic {
-    padding: 10px;
+.layout-wrapper-container {
+  padding: 10px;
+
+  &.now-hover {
+    border: 1px solid #71d306 !important;
+    cursor: pointer;
+  }
+  
+  &.now-edit {
+    border: 5px solid #71d306 !important;
+  }        
 }

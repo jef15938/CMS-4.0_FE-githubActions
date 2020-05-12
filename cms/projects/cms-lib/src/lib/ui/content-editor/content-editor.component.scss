@@ -40,16 +40,6 @@
           }
         }
       }
-
-      ::ng-deep layout-wrapper {
-        .now-hover {
-          border: 1px solid #71d306 !important;
-          cursor: pointer;
-        }
-        .now-edit {
-          border: 5px solid #71d306 !important;
-        }        
-      }
     }
 
     .layout-control-panel {
@@ -90,9 +80,11 @@
 
   }
 
-  .main-block.layout-control .content-panel, .main-block.content-control .content-panel {
-    position: absolute;
-    width: calc(100% - 300px);
+  .main-block.layout-control, .main-block.content-control {
+    & .content-panel {
+      position: absolute;
+      width: calc(100% - 300px);
+    }
   }
 
   .main-block.layout-control .content-panel {
