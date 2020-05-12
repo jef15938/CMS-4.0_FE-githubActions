@@ -34,4 +34,14 @@ export class ContentControlPanelComponent implements OnInit {
     this.isTemplate = isTemplate;
   }
 
+  onContentIn(ev: LayoutWrapperEvent) {
+    if (!(ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.contains(LayoutWrapperStatus.Edit)) {
+      (ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.add(LayoutWrapperStatus.Hover);
+    }
+  }
+
+  onContentOut(ev: LayoutWrapperEvent) {
+    (ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Hover);
+  }
+
 }

@@ -4,11 +4,10 @@ import { ContentEditorSaveEvent } from './content-editor.interface';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
 import { ContentTemplateInfo } from '../../neuxAPI/bean/ContentTemplateInfo';
 import { ActionManager } from './service/action-manager';
-import { TabTemplateInfo, FieldType, LayoutWrapperEvent } from 'layout';
+import { TabTemplateInfo, FieldType } from 'layout';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
 import { AddTemplateAction } from './content-editor.action-class';
-import { LayoutWrapperStatus } from './content-editor.enum';
 
 class ContentInfoModel extends ContentInfo {
   constructor(contentInfo: ContentInfo) {
@@ -181,20 +180,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
     }));
     this.resetSelected();
     this._changeDetectorRef.detectChanges();
-  }
-
-  onMouseEnter(ev: LayoutWrapperEvent) {
-    if (!(ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.contains(LayoutWrapperStatus.Edit)) {
-      (ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.add(LayoutWrapperStatus.Hover);
-    }
-  }
-
-  onMouseLeave(ev: LayoutWrapperEvent) {
-    (ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Hover);
-  }
-
-  onSelect(ev: LayoutWrapperEvent) {
-    this.contentControlPanel.setContent(ev);
   }
 
 }
