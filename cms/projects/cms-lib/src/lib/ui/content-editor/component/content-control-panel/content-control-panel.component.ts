@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
+import { Component, OnInit } from '@angular/core';
+import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
+import { LayoutWrapperEvent } from 'layout';
+import { LayoutWrapperStatus } from '../../content-editor.enum';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -8,13 +10,28 @@ import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
 })
 export class ContentControlPanelComponent implements OnInit {
 
-  @Input() content: ContentInfo;
+  content: LayoutWrapperEvent;
+  isTemplate = false;
 
   get show() { return !!this.content; }
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  setContent(newContent?: LayoutWrapperEvent, isTemplate = false) {
+    const oldContent = this.content;
+    if (oldContent) {
+      (oldContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Edit);
+      (oldContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Hover);
+    }
+    if (newContent) {
+      (newContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Hover);
+      (newContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.add(LayoutWrapperStatus.Edit);
+    }
+    this.content = newContent;
+    this.isTemplate = isTemplate;
   }
 
 }

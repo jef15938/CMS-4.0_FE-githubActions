@@ -40,6 +40,17 @@
           }
         }
       }
+
+      ::ng-deep layout-wrapper {
+        .now-edit {
+          border: 5px solid #71d306 !important;
+        }
+
+        .now-hover {
+          border: 1px solid #71d306 !important;
+          cursor: pointer;
+        }
+      }
     }
 
     .layout-control-panel {
