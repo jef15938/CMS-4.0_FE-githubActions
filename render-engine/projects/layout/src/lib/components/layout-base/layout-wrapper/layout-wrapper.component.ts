@@ -27,8 +27,6 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
 
   componentRef: ComponentRef<LayoutBase<TemplateInfo>>;
 
-  @Output() mouseEnter = new EventEmitter<LayoutWrapperEvent>();
-  @Output() mouseLeave = new EventEmitter<LayoutWrapperEvent>();
   @Output() select = new EventEmitter<LayoutWrapperEvent>();
 
   private _destroy$ = new Subject();
@@ -67,8 +65,6 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     if (this.componentRef.instance.childLayoutWrappers) {
       const childLayoutWrappers = this.componentRef.instance.childLayoutWrappers as QueryList<LayoutWrapperComponent>;
       merge(...[
-        // merge(...childLayoutWrappers.map(c => c.mouseEnter).filter(l => !!l)).pipe(tap(e => this.mouseEnter.next(e as LayoutWrapperEvent))),
-        // merge(...childLayoutWrappers.map(c => c.mouseLeave).filter(l => !!l)).pipe(tap(e => this.mouseLeave.next(e as LayoutWrapperEvent))),
         merge(...childLayoutWrappers.map(c => c.select).filter(l => !!l)).pipe(tap(e => this.select.next(e as LayoutWrapperEvent))),
       ]).pipe(takeUntil(this._destroy$)).subscribe();
     }

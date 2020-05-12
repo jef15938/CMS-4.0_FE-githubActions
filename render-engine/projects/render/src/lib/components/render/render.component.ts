@@ -21,14 +21,6 @@ export class RenderComponent implements OnInit {
 
   }
 
-  onMouseEnter(ev){
-    // console.warn('onMouseenter() ev = ', ev);
-  }
-
-  onMouseLeave(ev){
-    // console.warn('onMouseLeave() ev = ', ev);
-  }
-
   onSelect(ev){
     // console.warn('onSelect() ev = ', ev);
   }
