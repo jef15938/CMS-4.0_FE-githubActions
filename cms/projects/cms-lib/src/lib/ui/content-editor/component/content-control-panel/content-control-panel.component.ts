@@ -24,10 +24,8 @@ export class ContentControlPanelComponent implements OnInit {
     const oldContent = this.content;
     if (oldContent) {
       (oldContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Edit);
-      (oldContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Hover);
     }
     if (newContent) {
-      (newContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.remove(LayoutWrapperStatus.Hover);
       (newContent.wrapper.containerDiv.nativeElement as HTMLElement).classList.add(LayoutWrapperStatus.Edit);
     }
     this.content = newContent;
@@ -35,9 +33,7 @@ export class ContentControlPanelComponent implements OnInit {
   }
 
   onContentIn(ev: LayoutWrapperEvent) {
-    if (!(ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.contains(LayoutWrapperStatus.Edit)) {
-      (ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.add(LayoutWrapperStatus.Hover);
-    }
+    (ev.wrapper.containerDiv.nativeElement as HTMLElement).classList.add(LayoutWrapperStatus.Hover);
   }
 
   onContentOut(ev: LayoutWrapperEvent) {
