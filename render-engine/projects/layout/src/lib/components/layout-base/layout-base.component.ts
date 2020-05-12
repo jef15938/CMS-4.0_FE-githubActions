@@ -1,8 +1,12 @@
-import { OnInit, Input, AfterViewInit, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { OnInit, Input, AfterViewInit, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { TemplateInfo } from '../../interface';
+import { LayoutBase } from './layout-base.interface';
+import { LayoutWrapperComponent } from '..';
 
 
-export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements OnInit, AfterViewInit {
+export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit {
+
+  @ViewChildren(LayoutWrapperComponent) childLayoutWrappers: QueryList<LayoutWrapperComponent>;
 
   private _templateInfo: TInfo;
   private _isViewInit: boolean = false;
@@ -19,10 +23,6 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
     this._templateInfo = value;
     console.log('set templateInfo:', value);
   }
-
-  @Output() mouseEnter = new EventEmitter();
-  @Output() mouseLeave = new EventEmitter();
-  @Output() select = new EventEmitter();
 
   constructor(
     protected componentFactory: any,
