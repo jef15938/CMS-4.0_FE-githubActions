@@ -10,3 +10,4 @@ export * from './tab/tab.module';
 
 export * from './layout-base/layout-base.component';
 export * from './layout-base/layout-wrapper/layout-wrapper.component';
+export * from './layout-base/layout-wrapper/layout-wrapper.interface';

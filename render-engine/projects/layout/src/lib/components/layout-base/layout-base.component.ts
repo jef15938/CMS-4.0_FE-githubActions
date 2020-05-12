@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ChangeDetectorRef } from '@angular/core';
+import { OnInit, Input, AfterViewInit, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { TemplateInfo } from '../../interface';
 
 
@@ -19,6 +19,10 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
     this._templateInfo = value;
     console.log('set templateInfo:', value);
   }
+
+  @Output() mouseEnter = new EventEmitter();
+  @Output() mouseLeave = new EventEmitter();
+  @Output() select = new EventEmitter();
 
   constructor(
     protected componentFactory: any,

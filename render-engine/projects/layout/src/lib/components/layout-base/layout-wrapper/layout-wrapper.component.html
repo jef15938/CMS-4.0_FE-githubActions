@@ -1,1 +1,5 @@
-<ng-container #DynamicHost></ng-container>
+<div class="layout-wrapper-container" (mouseenter)="mouseEnter.next(getEvent())" (mouseleave)="mouseLeave.next(getEvent())" (click)="$event.stopPropagation();select.next(getEvent())">
+    <div #WrapperContainer class="dynamic">
+        <ng-container #DynamicHost></ng-container>
+    </div>
+</div>

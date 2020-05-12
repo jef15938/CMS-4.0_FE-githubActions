@@ -4,12 +4,7 @@ import { RenderService } from '../../render.service';
 
 @Component({
   selector: 'lib-render',
-  template: `
-    <p>
-      render works!
-    </p>
-    <layout-wrapper *ngFor="let info of contentInfo.templateList" [templateInfo]="info"></layout-wrapper>
-  `,
+  templateUrl: './render.component.html',
   styles: [
   ]
 })
@@ -24,6 +19,18 @@ export class RenderComponent implements OnInit {
   ngOnInit(): void {
     this.contentInfo = this.renderService.getContentInfo('test');
 
+  }
+
+  onMouseEnter(ev){
+    // console.warn('onMouseenter() ev = ', ev);
+  }
+
+  onMouseLeave(ev){
+    // console.warn('onMouseLeave() ev = ', ev);
+  }
+
+  onSelect(ev){
+    // console.warn('onSelect() ev = ', ev);
   }
 
 
