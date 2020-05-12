@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, ViewChildren, QueryList, ElementRef, OnDestroy } from '@angular/core';
 import { TemplateInfo } from '../../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../../injection-token';
 import { LayoutBase } from '../layout-base.interface';
@@ -11,7 +11,7 @@ import { LayoutWrapperEvent, LayoutWrapper } from './layout-wrapper.interface';
   templateUrl: './layout-wrapper.component.html',
   styleUrls: ['./layout-wrapper.component.scss']
 })
-export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewInit {
+export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewInit, OnDestroy {
 
   @Input() templateInfo: TemplateInfo;
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
@@ -38,6 +38,12 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
 
   ngAfterViewInit() {
     this.loadComponent();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+    this._destroy$.unsubscribe();
   }
 
   loadComponent() {
