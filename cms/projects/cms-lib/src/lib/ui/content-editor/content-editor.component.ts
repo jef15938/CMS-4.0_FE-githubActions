@@ -63,7 +63,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
 
   private _init() {
     this.resetSelected();
-    // this.contentInfo = this._getMock();
+    this.contentInfo = this._getMock();
     this.actionManager = new ActionManager();
     this.contentInfoModel = new ContentInfoModel(this.contentInfo);
   }

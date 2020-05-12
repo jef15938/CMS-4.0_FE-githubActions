@@ -26,9 +26,24 @@ export class LayoutControlPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.mainTemplates = [
+      // {
+      //   templateId: 'Mock',
+      //   templateName: 'Mock',
+      //   img: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      // },
       {
         templateId: 'Tab',
         templateName: 'Tab',
+        img: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      },
+      {
+        templateId: 'IconPage',
+        templateName: 'IconPage',
+        img: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      },
+      {
+        templateId: 'Slide',
+        templateName: 'Slide',
         img: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
       }
     ];
@@ -41,7 +56,7 @@ export class LayoutControlPanelComponent implements OnInit {
   selectTemplate(t: TemplateInfo) {
     const yes = window.confirm(`確定加入${t.templateName}？`);
     if (!yes) { return; }
-    const mock = this._getMock() as any;
+    const mock = this[`_get${t.templateId}`]();
     this.select.emit({ template: mock, position: this.position });
   }
 
@@ -57,31 +72,50 @@ export class LayoutControlPanelComponent implements OnInit {
         fieldVal: '',
         extensionMap: new Map(),
         tabId: '1-1',
-        child: {
-          id: '2',
-          templateId: 'IconPage',
-          fieldList: [],
-          attributeMap: new Map(),
-          toJson: () => ''
-        }
+        child: this._getIconPage(),
       }, {
         fieldId: '1-2',
         fieldType: FieldType.GROUP,
         fieldVal: '',
         extensionMap: new Map(),
         tabId: '1-2',
-        child: {
-          id: '3',
-          templateId: 'Slide',
-          fieldList: [],
-          attributeMap: new Map(),
-          toJson: () => ''
-        }
+        child: this._getSlide(),
       }],
       toJson: () => ''
     };
 
     return tabTemplateInfo;
+  }
+
+  private _getTab() {
+    return {
+      id: '1',
+      templateId: 'Tab',
+      fieldList: [],
+      attributeMap: new Map(),
+      tabList: [],
+      toJson: () => ''
+    };
+  }
+
+  private _getIconPage() {
+    return {
+      id: '2',
+      templateId: 'IconPage',
+      fieldList: [],
+      attributeMap: new Map(),
+      toJson: () => ''
+    };
+  }
+
+  private _getSlide() {
+    return {
+      id: '3',
+      templateId: 'Slide',
+      fieldList: [],
+      attributeMap: new Map(),
+      toJson: () => ''
+    }
   }
 
 }
