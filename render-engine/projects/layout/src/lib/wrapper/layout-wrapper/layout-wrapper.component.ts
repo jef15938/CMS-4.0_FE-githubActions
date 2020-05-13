@@ -4,7 +4,7 @@ import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 import { LayoutBase } from '../layout-base/layout-base.interface';
 import { takeUntil, map } from 'rxjs/operators'
 import { merge, Subject } from 'rxjs';
-import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent } from './layout-wrapper.interface';
+import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
 
 @Component({
   selector: 'layout-wrapper',
@@ -91,7 +91,7 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
   createLayoutWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {
     const event: LayoutWrapperSelectEvent = {
       selectedTarget: this.wrapperContainer?.nativeElement,
-      selectedTargetType: 'Template',
+      selectedTargetType: LayoutWrapperSelectedTargetType.TEMPLATE,
       wrapper: this,
       componentRef: this.componentRef,
       templateInfo: this.templateInfo,

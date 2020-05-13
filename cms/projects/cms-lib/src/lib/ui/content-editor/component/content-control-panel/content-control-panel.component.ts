@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutWrapperSelectEvent, FieldType } from 'layout';
+import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType } from 'layout';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -8,6 +8,7 @@ import { LayoutWrapperSelectEvent, FieldType } from 'layout';
 })
 export class ContentControlPanelComponent implements OnInit {
 
+  LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
   FieldType = FieldType;
 
   content: LayoutWrapperSelectEvent;

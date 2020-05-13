@@ -2,7 +2,7 @@
   Select : {{content.selectedTargetType}}
   <hr>
   <ng-container [ngSwitch]="content.selectedTargetType">
-    <div *ngSwitchCase="'Template'">
+    <div *ngSwitchCase="LayoutWrapperSelectedTargetType.TEMPLATE">
       <div>
         Id : {{content.templateInfo.id}}
         <br>
@@ -10,7 +10,7 @@
         <hr>
       </div>
     </div>
-    <div *ngSwitchCase="'Field'">
+    <div *ngSwitchCase="LayoutWrapperSelectedTargetType.FIELD">
       <div>
         FieldId : {{content.fieldInfo.fieldId}}
         <br>

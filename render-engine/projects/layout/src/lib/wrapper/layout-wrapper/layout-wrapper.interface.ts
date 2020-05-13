@@ -6,7 +6,10 @@ export interface LayoutWrapper {
   setMode(mode: 'preview' | 'edit'): void;
 }
 
-export type LayoutWrapperSelectedTargetType = 'Template' | 'Field';
+export enum LayoutWrapperSelectedTargetType {
+  TEMPLATE = 'Template',
+  FIELD = 'Field',
+};
 
 export interface TemplateFieldSelectEvent {
   selectedTarget: HTMLElement,

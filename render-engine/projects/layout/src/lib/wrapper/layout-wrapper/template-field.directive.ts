@@ -1,6 +1,6 @@
 import { Directive, Input, OnInit, HostListener, ElementRef, Output, EventEmitter, HostBinding } from '@angular/core';
 import { FieldInfo } from '../../interface/field-info.interface';
-import { TemplateFieldSelectEvent } from './layout-wrapper.interface';
+import { TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
 
 @Directive({
   selector: '[libTemplateField]'
@@ -24,7 +24,7 @@ export class TemplateFieldDirective implements OnInit {
     ev.stopPropagation();
     this.select.emit({
       selectedTarget: this._elementRef?.nativeElement,
-      selectedTargetType: 'Field',
+      selectedTargetType: LayoutWrapperSelectedTargetType.FIELD,
       fieldInfo: this.fieldInfo,
     });
   }
