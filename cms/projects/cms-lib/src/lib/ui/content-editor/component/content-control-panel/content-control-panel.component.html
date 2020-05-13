@@ -1,4 +1,4 @@
-<div *ngIf="show" class="cms-content-control-panel">
+<div *ngIf="show" class="cms-content-control-panel" style="padding: 0 10px;">
   Select : {{content.selectedTargetType}}
   <hr>
   <ng-container [ngSwitch]="content.selectedTargetType">
@@ -19,8 +19,11 @@
       </div>
       <div [ngSwitch]="content.fieldInfo.fieldType">
         <input *ngSwitchCase="FieldType.TEXT" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
-        <textarea *ngSwitchCase="FieldType.TEXTEREA" [(ngModel)]="content.fieldInfo.fieldVal"
-          style="width: 100%;"></textarea>
+        <textarea *ngSwitchCase="FieldType.TEXTEREA" [(ngModel)]="content.fieldInfo.fieldVal" rows="10" cols="50" style="width: 100%;"></textarea>
+        <input *ngSwitchCase="FieldType.LINK" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
+        <input *ngSwitchCase="FieldType.BGIMG" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
+        <input *ngSwitchCase="FieldType.IMG" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
+        <textarea *ngSwitchCase="FieldType.HTMLEDITOR" [(ngModel)]="content.fieldInfo.fieldVal" rows="10" cols="50" style="width: 100%;"></textarea>
       </div>
     </div>
   </ng-container>

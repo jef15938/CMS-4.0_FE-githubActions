@@ -1,54 +1,41 @@
 <ng-container *ngIf="templateInfo">
-  <div *ngFor="let field of templateInfo.fieldList">
-    <ng-container [ngSwitch]="field.fieldType">
-      <div *ngSwitchCase="FieldType.TEXT" [libTemplateField]="field">
-        TEXT :
-        <div>
-          <input [value]="field.fieldVal" disabled>
-        </div>
+  <div style="padding: 10px;" [style.background]="'url('+templateInfo.fieldList[3].fieldVal+')'"
+    [libTemplateField]="templateInfo.fieldList[3]">
+    <div style="text-align: center;" [libTemplateField]="templateInfo.fieldList[0]">
+      <h1>{{templateInfo.fieldList[0].fieldVal}}</h1>
+    </div>
+
+    <div style="padding: 10px; height: 350px;">
+      <div style="float: left; padding: 10px; height:300px; width: 300px; max-height: 100%;" [libTemplateField]="templateInfo.fieldList[4]">
+        <img [src]="templateInfo.fieldList[4].fieldVal" style="width: 100%; height: auto;">
       </div>
-      <div *ngSwitchCase="FieldType.TEXTEREA" [libTemplateField]="field">
-        TEXTEREA :
-        <div>
-          <textarea [value]="field.fieldVal" disabled></textarea>
-        </div>
+      <div style="padding: 10px;" [libTemplateField]="templateInfo.fieldList[1]">
+        {{templateInfo.fieldList[1].fieldVal}}
       </div>
-      <div *ngSwitchCase="FieldType.LINK" [libTemplateField]="field">
-        LINK :
-        <div>
-          <a [href]="field.fieldVal" target="_blank">{{field.fieldVal}}</a>
-        </div>
-      </div>
-      <div *ngSwitchCase="FieldType.BGIMG" [libTemplateField]="field">
-        BGIMG :
-        <div style="height: 200px; width: 100%">
-          <img [src]="field.fieldVal" height="100%" width="auto">
-        </div>
-      </div>
-      <div *ngSwitchCase="FieldType.IMG" [libTemplateField]="field">
-        IMG :
-        <div style="height: 200px; width: 100%">
-          <img [src]="field.fieldVal" height="100%" width="auto">
-        </div>
-      </div>
-      <div *ngSwitchCase="FieldType.GROUP" [libTemplateField]="field">
-        GROUP :
-        <div>
-          <pre>{{field|json}}</pre>
-        </div>
-      </div>
-      <div *ngSwitchCase="FieldType.HTMLEDITOR" [libTemplateField]="field">
-        HTMLEDITOR :
-        <div>
-          <pre>{{field|json}}</pre>
-        </div>
-      </div>
-      <div *ngSwitchDefault>
-        <div>
-          <pre>{{field|json}}</pre>
-        </div>
-      </div>
-    </ng-container>
+    </div>
+
+    <div style="padding: 10px;">
+      <div style="height:40px; line-height:40px; vertical-align: middle; width: 100%; max-width: 240px; background-color: aquamarine; border-radius: 10px; text-align: center; padding: 2px;" [libTemplateField]="templateInfo.fieldList[2]">拍手</div>
+    </div>
+
     <hr>
+
+    <div style="padding: 10px;">
+      自訂Html
+      <div [innerHTML]="templateInfo.fieldList[6].fieldVal | safeHtml" [libTemplateField]="templateInfo.fieldList[6]"></div>
+    </div>
+
+    <hr>
+
+    <div *ngFor="let field of templateInfo.fieldList">
+      <ng-container [ngSwitch]="field.fieldType">
+        <div *ngSwitchCase="FieldType.GROUP" [libTemplateField]="field">
+          GROUP :
+          <div>
+            <pre>{{field|json}}</pre>
+          </div>
+        </div>
+      </ng-container>
+    </div>
   </div>
 </ng-container>

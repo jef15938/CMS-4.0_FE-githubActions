@@ -6,8 +6,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { LayoutBaseModule } from './wrapper/layout-base/layout-base.module';
 import { FieldsDemoComponent } from './components/fields-demo/fields-demo.component';
 import { TemplateFieldDirective } from './wrapper/layout-wrapper/template-field.directive';
-
-
+import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 
 @NgModule({
   imports: [
@@ -20,6 +19,7 @@ import { TemplateFieldDirective } from './wrapper/layout-wrapper/template-field.
     SliderComponent,
     FieldsDemoComponent,
     TemplateFieldDirective,
+    SafeHtmlPipe,
   ],
   exports: [
     IconPageComponent,

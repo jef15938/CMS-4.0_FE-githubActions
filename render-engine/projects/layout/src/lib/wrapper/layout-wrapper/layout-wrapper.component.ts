@@ -15,7 +15,7 @@ import { LayoutWrapperBase } from './layout-wrapper-base';
 export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutWrapper, OnInit, AfterViewInit {
 
   @Input() templateInfo: TemplateInfo;
-  @Input() mode: 'preview' | 'edit' = 'preview';
+  @Input() mode: 'preview' | 'edit' = 'edit';
 
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
   @ViewChild('WrapperContainer') wrapperContainer: ElementRef;
