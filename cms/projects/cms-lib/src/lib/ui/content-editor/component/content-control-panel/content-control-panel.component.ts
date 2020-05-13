@@ -9,7 +9,6 @@ import { LayoutWrapperSelectEvent } from 'layout';
 export class ContentControlPanelComponent implements OnInit {
 
   content: LayoutWrapperSelectEvent;
-  isTemplate = false;
 
   get show() { return !!this.content; }
 
@@ -18,7 +17,7 @@ export class ContentControlPanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setContent(newContent?: LayoutWrapperSelectEvent, isTemplate = false) {
+  setContent(newContent?: LayoutWrapperSelectEvent) {
     const oldContent = this.content;
     if (oldContent) {
       oldContent.selectedTarget.classList.remove('now-edit');
@@ -27,7 +26,6 @@ export class ContentControlPanelComponent implements OnInit {
       newContent.selectedTarget.classList.add('now-edit');
     }
     this.content = newContent;
-    this.isTemplate = isTemplate;
   }
 
 }

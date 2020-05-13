@@ -1,7 +1,8 @@
 import { Component, OnInit, ComponentFactoryResolver, Inject, ChangeDetectorRef } from '@angular/core';
-import { LayoutBaseComponent } from '../layout-base/layout-base.component';
+import { LayoutBaseComponent } from '../../wrapper/layout-base/layout-base.component';
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
+import { FieldType } from '../../interface/field-info.interface';
 
 @Component({
   selector: 'lib-fields-demo',
@@ -10,6 +11,8 @@ import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 })
 export class FieldsDemoComponent extends LayoutBaseComponent<TemplateInfo> implements OnInit {
   
+  FieldType = FieldType;
+
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
     @Inject(COMPONENT_SERVICE_TOKEN) componentFactory: any,

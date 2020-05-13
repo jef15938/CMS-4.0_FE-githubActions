@@ -1,1 +1,42 @@
-<p>fields-demo works!</p>
+<ng-container *ngIf="templateInfo">
+  <div *ngFor="let field of templateInfo.fieldList">
+    <ng-container [ngSwitch]="field.fieldType">
+      <div *ngSwitchCase="FieldType.TEXT" [libTemplateField]="field">
+        TEXT :
+        <div>
+          <input [value]="field.fieldVal" disabled>
+        </div>
+      </div>
+      <div *ngSwitchCase="FieldType.TEXTEREA" [libTemplateField]="field">
+        TEXTEREA :
+        <div>
+          <textarea [value]="field.fieldVal" disabled></textarea>
+        </div>
+      </div>
+      <div *ngSwitchCase="FieldType.LINK" [libTemplateField]="field">
+        LINK :
+        <div>
+          <a [href]="field.fieldVal" target="_blank">{{field.fieldVal}}</a>
+        </div>
+      </div>
+      <div *ngSwitchCase="FieldType.BGIMG" [libTemplateField]="field">
+        BGIMG :
+        <div style="height: 200px; width: 100%">
+          <img [src]="field.fieldVal" height="100%" width="auto">
+        </div>
+      </div>
+      <div *ngSwitchCase="FieldType.IMG" [libTemplateField]="field">
+        IMG :
+        <div style="height: 200px; width: 100%">
+          <img [src]="field.fieldVal" height="100%" width="auto">
+        </div>
+      </div>
+      <div *ngSwitchDefault>
+        <div>
+          <pre>{{field|json}}</pre>
+        </div>
+      </div>
+    </ng-container>
+    <hr>
+  </div>
+</ng-container>

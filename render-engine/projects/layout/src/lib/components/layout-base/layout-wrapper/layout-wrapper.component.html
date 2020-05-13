@@ -1,6 +1,0 @@
-<div (mouseenter)="nowHover=true" (mouseleave)="nowHover=false"
-    (click)="$event.stopPropagation();emitSelectEvent(TemplateContainer)">
-    <div #TemplateContainer class="layout-wrapper-container" [class.now-edit]="nowEdit" [class.now-hover]="nowHover">
-        <ng-container #DynamicHost></ng-container>
-    </div>
-</div>

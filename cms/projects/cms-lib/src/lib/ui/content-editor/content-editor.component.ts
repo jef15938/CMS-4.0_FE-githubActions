@@ -4,7 +4,7 @@ import { ContentEditorSaveEvent } from './content-editor.interface';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
 import { ContentTemplateInfo } from '../../neuxAPI/bean/ContentTemplateInfo';
 import { ActionManager } from './service/action-manager';
-import { TabTemplateInfo, FieldType } from 'layout';
+import { TabTemplateInfo, FieldType, TemplateInfo } from 'layout';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
 import { AddTemplateAction } from './content-editor.action-class';
@@ -104,9 +104,66 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
       toJson: () => ''
     };
 
+    const fieldsDemoTemplateInfo: TemplateInfo = {
+      id: 'fd01',
+      templateId: 'FieldsDemo',
+      fieldList: [
+        {
+          fieldId: 'f01',
+          fieldType: FieldType.TEXT,
+          fieldVal: 'This is TEXT field.',
+          extensionMap: new Map(),
+        },
+        {
+          fieldId: 'f02',
+          fieldType: FieldType.TEXTEREA,
+          fieldVal: 'This is TEXTEREA field.',
+          extensionMap: new Map(),
+        },
+        {
+          fieldId: 'f03',
+          fieldType: FieldType.LINK,
+          fieldVal: 'https://www.google.com.tw',
+          extensionMap: new Map(),
+        },
+        {
+          fieldId: 'f04',
+          fieldType: FieldType.BGIMG,
+          fieldVal: 'https://garden.decoder.com.tw/demo_cms/assets/img/CMS-login-bg.png',
+          extensionMap: new Map(),
+        },
+        {
+          fieldId: 'f05',
+          fieldType: FieldType.IMG,
+          fieldVal: 'http://www.neux.com.tw/neuximg/neuxLOGO.png',
+          extensionMap: new Map(),
+        },
+        {
+          fieldId: 'f06',
+          fieldType: FieldType.GROUP,
+          fieldVal: '',
+          extensionMap: new Map(),
+        },
+        {
+          fieldId: 'f06',
+          fieldType: FieldType.HTMLEDITOR,
+          fieldVal: '',
+          extensionMap: new Map(),
+        }
+      ],
+      attributeMap: new Map(),
+      toJson: () => ''
+    };
+
     const mock: ContentInfo = {
-      templateList: [tabTemplateInfo],
-      templates: [tabTemplateInfo],
+      templateList: [
+        fieldsDemoTemplateInfo,
+        tabTemplateInfo
+      ],
+      templates: [
+        fieldsDemoTemplateInfo,
+        tabTemplateInfo
+      ],
     } as any;
 
     return mock as any;

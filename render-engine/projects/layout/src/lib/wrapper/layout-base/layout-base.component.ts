@@ -1,13 +1,16 @@
 import { OnInit, Input, AfterViewInit, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { LayoutBase } from './layout-base.interface';
-import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.component';
+import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
+import { TemplateFieldDirective } from '../layout-wrapper/template-field.directive';
 
 
 export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit {
 
   parentLayoutWrapper: LayoutWrapperComponent;
   @ViewChildren(LayoutWrapperComponent) childLayoutWrappers: QueryList<LayoutWrapperComponent>;
+
+  @ViewChildren(TemplateFieldDirective) templateFieldDirectives: QueryList<TemplateFieldDirective>;
 
   private _templateInfo: TInfo;
   private _isViewInit: boolean = false;

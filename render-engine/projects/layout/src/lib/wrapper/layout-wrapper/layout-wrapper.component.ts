@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, ViewChildren, QueryList, ElementRef, OnDestroy } from '@angular/core';
-import { TemplateInfo, FieldInfo } from '../../../interface';
-import { COMPONENT_SERVICE_TOKEN } from '../../../injection-token';
-import { LayoutBase } from '../layout-base.interface';
-import { tap, takeUntil } from 'rxjs/operators'
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, ViewChildren, QueryList, ElementRef, OnDestroy, HostListener } from '@angular/core';
+import { TemplateInfo } from '../../interface';
+import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
+import { LayoutBase } from '../layout-base/layout-base.interface';
+import { takeUntil, map } from 'rxjs/operators'
 import { merge, Subject } from 'rxjs';
-import { LayoutWrapperSelectEvent, LayoutWrapper, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
+import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent } from './layout-wrapper.interface';
 
 @Component({
   selector: 'layout-wrapper',
@@ -18,10 +18,9 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
   mode: 'preview' | 'edit' = 'preview';
 
   nowHover = false;
-  nowEdit = false;
 
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
-  @ViewChild('WrapperContainer') containerDiv: ElementRef;
+  @ViewChild('WrapperContainer') wrapperContainer: ElementRef;
 
   @ViewChildren(LayoutWrapperComponent) children: QueryList<LayoutWrapperComponent>;
 
@@ -57,7 +56,7 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     // console.log('load component:', componentRef);
     this.componentRef = componentRef;
     this._changeDetectorRef.detectChanges();
-    this._registerInstanceEvent(componentRef?.instance);
+    this._registerInstanceSelectEvents(componentRef?.instance);
   }
 
   private _createComponentRef(): ComponentRef<LayoutBase<TemplateInfo>> {
@@ -75,29 +74,30 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     }
   }
 
-  private _registerInstanceEvent(instance: LayoutBase<TemplateInfo>) {
-    if (instance.childLayoutWrappers) {
-      const childLayoutWrappers = instance.childLayoutWrappers as QueryList<LayoutWrapperComponent>;
-      merge(...[
-        merge(...childLayoutWrappers.map(c => c.select).filter(l => !!l)).pipe(tap(e => this.select.next(e as LayoutWrapperSelectEvent))),
-      ]).pipe(takeUntil(this._destroy$)).subscribe();
-    }
+  private _registerInstanceSelectEvents(instance: LayoutBase<TemplateInfo>) {
+    const childLayoutWrappers = (instance?.childLayoutWrappers || new QueryList()) as QueryList<LayoutWrapperComponent>;
+    const templateFieldDirectives = (instance?.templateFieldDirectives || new QueryList());
+    merge(...[
+      merge(...childLayoutWrappers.map(c => c.select).filter(l => !!l)),
+      merge(...templateFieldDirectives.map(c => c.select).filter(l => !!l))
+        .pipe(
+          map((e: TemplateFieldSelectEvent) => this.createLayoutWrapperSelectEvent(e)),
+        )
+    ]).pipe(
+      takeUntil(this._destroy$),
+    ).subscribe((e: LayoutWrapperSelectEvent) => this.select.next(e));
   }
 
-  emitSelectEvent(
-    selectedTarget: HTMLElement,
-    selectedTargetType: LayoutWrapperSelectedTargetType = 'template',
-    fieldInfo?: FieldInfo
-  ) {
+  createLayoutWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {
     const event: LayoutWrapperSelectEvent = {
-      selectedTarget,
-      selectedTargetType,
+      selectedTarget: this.wrapperContainer?.nativeElement,
+      selectedTargetType: 'Template',
       wrapper: this,
       componentRef: this.componentRef,
       templateInfo: this.templateInfo,
-      fieldInfo
-    }
-    this.select.next(event);
+      ...(templateFieldSelectEvent || {}),
+    };
+    return event;
   }
 
   setMode(mode: 'preview' | 'edit') {
@@ -105,6 +105,19 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     if (this.componentRef?.instance) {
       this.componentRef.instance.mode = mode;
     }
+  }
+
+  @HostListener('click', ['$event']) click(ev) {
+    ev.stopPropagation();
+    this.select.next(this.createLayoutWrapperSelectEvent());
+  }
+
+  @HostListener('mouseenter') mouseenter() {
+    this.nowHover = true;
+  }
+
+  @HostListener('mouseleave') mouseleave() {
+    this.nowHover = false;
   }
 
 }

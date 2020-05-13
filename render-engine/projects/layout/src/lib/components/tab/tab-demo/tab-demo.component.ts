@@ -1,5 +1,5 @@
 import { Component, OnInit, ComponentFactoryResolver, Inject, AfterViewInit, ViewChildren, ViewContainerRef, QueryList, ComponentRef, ChangeDetectorRef } from '@angular/core';
-import { LayoutBaseComponent } from '../../layout-base/layout-base.component';
+import { LayoutBaseComponent } from '../../../wrapper/layout-base/layout-base.component';
 import { TabTemplateInfo } from '../../../interface/tab-template-info.interface';
 import { TemplateInfo } from '../../../interface/template-info.interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../../injection-token';

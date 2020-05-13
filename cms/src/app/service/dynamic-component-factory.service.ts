@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IconPageComponent, SliderComponent, TabDemoComponent } from 'layout';
+import { IconPageComponent, SliderComponent, TabDemoComponent, FieldsDemoComponent } from 'layout';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,9 @@ export class DynamicComponentFactoryService {
     }
     else if (id === 'Slide') {
       return SliderComponent;
+    }
+    else if (id === 'FieldsDemo') {
+      return FieldsDemoComponent;
     }
   }
 }

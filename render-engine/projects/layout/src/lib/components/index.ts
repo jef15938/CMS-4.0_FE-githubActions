@@ -7,6 +7,6 @@ export * from './tab/tab-frame/tab-frame.component';
 export * from './tab/tab-item/tab-item.component';
 export * from './tab/tab.module';
 
-export * from './layout-base/layout-base.component';
-export * from './layout-base/layout-wrapper/layout-wrapper.component';
-export * from './layout-base/layout-wrapper/layout-wrapper.interface';
+export * from '../wrapper/layout-base/layout-base.component';
+export * from '../wrapper/layout-wrapper/layout-wrapper.component';
+export * from '../wrapper/layout-wrapper/layout-wrapper.interface';

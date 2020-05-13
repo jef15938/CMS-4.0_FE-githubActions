@@ -22,7 +22,7 @@ export class RenderComponent implements OnInit {
   }
 
   onSelect(ev){
-    // console.warn('onSelect() ev = ', ev);
+    console.warn('onSelect() ev = ', ev);
   }
 
 

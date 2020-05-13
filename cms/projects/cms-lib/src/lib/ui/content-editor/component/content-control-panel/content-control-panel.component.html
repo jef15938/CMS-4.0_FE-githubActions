@@ -1,5 +1,23 @@
 <div *ngIf="show" class="cms-content-control-panel">
-  <div>IsTemplate:{{isTemplate}}</div>
+  Select : {{content.selectedTargetType}}
   <hr>
-  <div><pre>{{content.templateInfo|json}}</pre></div>
+  <ng-container [ngSwitch]="content.selectedTargetType">
+    <div *ngSwitchCase="'Template'">
+      <div>
+        Id : {{content.templateInfo.id}}
+        <br>
+        TemplateId : {{content.templateInfo.templateId}}
+        <hr>
+      </div>
+    </div>
+    <div *ngSwitchCase="'Field'">
+      <div>
+        FieldId : {{content.fieldInfo.fieldId}}
+        <br>
+        FieldType : {{content.fieldInfo.fieldType}}
+        <hr>
+      </div>
+    </div>
+  </ng-container>
+
 </div>
