@@ -7,3 +7,7 @@
     background-color: lightgray;
   }
 }
+
+::ng-deep .now-edit {
+  border: 5px solid #71d306 !important;
+}
