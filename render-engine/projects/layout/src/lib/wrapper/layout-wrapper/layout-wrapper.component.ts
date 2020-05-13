@@ -34,12 +34,15 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(COMPONENT_SERVICE_TOKEN) private componentFactory: any,
     private _changeDetectorRef: ChangeDetectorRef,
-  ) { }
+  ) { 
+    this._changeDetectorRef.detach();
+  }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
+    this._changeDetectorRef.reattach();
     this.loadComponent();
   }
 
@@ -50,10 +53,10 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
   }
 
   loadComponent() {
+    this._changeDetectorRef.detectChanges();
     this.host.clear();
     const componentRef = this._createComponentRef();
     this._setInstanceProperties(componentRef?.instance);
-    // console.log('load component:', componentRef);
     this.componentRef = componentRef;
     this._changeDetectorRef.detectChanges();
     this._registerInstanceSelectEvents(componentRef?.instance);
