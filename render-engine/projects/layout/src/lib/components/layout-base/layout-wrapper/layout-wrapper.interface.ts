@@ -4,10 +4,10 @@ import { TemplateInfo } from '../../../interface';
 export interface LayoutWrapper {
   containerDiv: ElementRef;
   setMode(mode: 'preview' | 'edit'): void;
-  setNowEdit(nowEdit: boolean): void;
 }
 
-export interface LayoutWrapperEvent {
+export interface LayoutWrapperSelectEvent {
+  selectedTarget: HTMLElement,
   wrapper: LayoutWrapper;
   componentRef: ComponentRef<any>;
   templateInfo: TemplateInfo;

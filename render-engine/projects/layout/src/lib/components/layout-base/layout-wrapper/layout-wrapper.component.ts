@@ -4,7 +4,7 @@ import { COMPONENT_SERVICE_TOKEN } from '../../../injection-token';
 import { LayoutBase } from '../layout-base.interface';
 import { tap, takeUntil } from 'rxjs/operators'
 import { merge, Subject } from 'rxjs';
-import { LayoutWrapperEvent, LayoutWrapper } from './layout-wrapper.interface';
+import { LayoutWrapperSelectEvent, LayoutWrapper } from './layout-wrapper.interface';
 
 @Component({
   selector: 'layout-wrapper',
@@ -27,7 +27,7 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
 
   componentRef: ComponentRef<LayoutBase<TemplateInfo>>;
 
-  @Output() select = new EventEmitter<LayoutWrapperEvent>();
+  @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
 
   private _destroy$ = new Subject();
 
@@ -51,32 +51,47 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
   }
 
   loadComponent() {
-    const componentClass = this.componentFactory.getComponent(this.templateInfo.templateId);
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
     this.host.clear();
-    const componentRef = this.host.createComponent(componentFactory) as ComponentRef<LayoutBase<TemplateInfo>>;
+    const componentRef = this._createComponentRef();
+    this._setInstanceProperties(componentRef?.instance);
     // console.log('load component:', componentRef);
-    componentRef.instance.templateInfo = this.templateInfo;
-    componentRef.instance.mode = this.mode;
     this.componentRef = componentRef;
-
     this._changeDetectorRef.detectChanges();
-
-    if (this.componentRef.instance.childLayoutWrappers) {
-      const childLayoutWrappers = this.componentRef.instance.childLayoutWrappers as QueryList<LayoutWrapperComponent>;
-      merge(...[
-        merge(...childLayoutWrappers.map(c => c.select).filter(l => !!l)).pipe(tap(e => this.select.next(e as LayoutWrapperEvent))),
-      ]).pipe(takeUntil(this._destroy$)).subscribe();
-    }
-
+    this._registerInstanceEvent(componentRef?.instance);
   }
 
-  getEvent(): LayoutWrapperEvent {
-    return {
+  private _createComponentRef(): ComponentRef<LayoutBase<TemplateInfo>> {
+    const componentClass = this.componentFactory.getComponent(this.templateInfo.templateId);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
+    const componentRef = this.host.createComponent(componentFactory) as ComponentRef<LayoutBase<TemplateInfo>>;
+    return componentRef;
+  }
+
+  private _setInstanceProperties(instance: LayoutBase<TemplateInfo>): void {
+    if (instance) {
+      instance.templateInfo = this.templateInfo;
+      instance.mode = this.mode;
+      instance.parentLayoutWrapper = this;
+    }
+  }
+
+  private _registerInstanceEvent(instance: LayoutBase<TemplateInfo>) {
+    if (instance.childLayoutWrappers) {
+      const childLayoutWrappers = instance.childLayoutWrappers as QueryList<LayoutWrapperComponent>;
+      merge(...[
+        merge(...childLayoutWrappers.map(c => c.select).filter(l => !!l)).pipe(tap(e => this.select.next(e as LayoutWrapperSelectEvent))),
+      ]).pipe(takeUntil(this._destroy$)).subscribe();
+    }
+  }
+
+  emitSelectEvent(selectedTarget){
+    const event: LayoutWrapperSelectEvent = {
+      selectedTarget,
       wrapper: this as any,
       componentRef: this.componentRef,
       templateInfo: this.templateInfo,
     }
+    this.select.next(event);
   }
 
   setMode(mode: 'preview' | 'edit') {
@@ -84,10 +99,6 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     if (this.componentRef?.instance) {
       this.componentRef.instance.mode = mode;
     }
-  }
-
-  setNowEdit(nowEdit: boolean) {
-    this.nowEdit = nowEdit;
   }
 
 }

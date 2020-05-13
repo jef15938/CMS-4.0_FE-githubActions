@@ -39,12 +39,12 @@ export class TabDemoComponent extends LayoutBaseComponent<TabTemplateInfo> imple
   renderComponent(): void {
     console.log('is view init:', this.isViewInit);
     console.log('tab template info:', this.templateInfo);
-    const templateIdList = this.templateInfo.tabList.map(x => x.child.templateId);
+    const templateIdList = this.templateInfo.tabList.map(x => x.children.templateId);
 
     if (templateIdList.length === this.tabContentHostList.length) {
       templateIdList.forEach((id, index) => {
         const component = this.embedView(this.tabContentHostList.toArray()[index], id);
-        (component as ComponentRef<LayoutBaseComponent<TemplateInfo>>).instance.templateInfo = this.templateInfo.tabList[index].child;
+        (component as ComponentRef<LayoutBaseComponent<TemplateInfo>>).instance.templateInfo = this.templateInfo.tabList[index].children;
       });
     }
     else {

@@ -20,7 +20,7 @@ export class RenderService {
         fieldVal: '',
         extensionMap: new Map(),
         tabId: '1-1',
-        child: {
+        children: {
           id: '2',
           templateId: 'IconPage',
           fieldList: [],
@@ -33,7 +33,7 @@ export class RenderService {
         fieldVal: '',
         extensionMap: new Map(),
         tabId: '1-2',
-        child: {
+        children: {
           id: '3',
           templateId: 'Slide',
           fieldList: [],

@@ -6,6 +6,7 @@ import { LayoutWrapperComponent } from '..';
 
 export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit {
 
+  parentLayoutWrapper: LayoutWrapperComponent;
   @ViewChildren(LayoutWrapperComponent) childLayoutWrappers: QueryList<LayoutWrapperComponent>;
 
   private _templateInfo: TInfo;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutWrapperEvent } from 'layout';
+import { LayoutWrapperSelectEvent } from 'layout';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -8,7 +8,7 @@ import { LayoutWrapperEvent } from 'layout';
 })
 export class ContentControlPanelComponent implements OnInit {
 
-  content: LayoutWrapperEvent;
+  content: LayoutWrapperSelectEvent;
   isTemplate = false;
 
   get show() { return !!this.content; }
@@ -18,13 +18,13 @@ export class ContentControlPanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setContent(newContent?: LayoutWrapperEvent, isTemplate = false) {
+  setContent(newContent?: LayoutWrapperSelectEvent, isTemplate = false) {
     const oldContent = this.content;
     if (oldContent) {
-      oldContent.wrapper.setNowEdit(false);
+      oldContent.selectedTarget.classList.remove('now-edit');
     }
     if (newContent) {
-      newContent.wrapper.setNowEdit(true);
+      newContent.selectedTarget.classList.add('now-edit');
     }
     this.content = newContent;
     this.isTemplate = isTemplate;

@@ -72,14 +72,14 @@ export class LayoutControlPanelComponent implements OnInit {
         fieldVal: '',
         extensionMap: new Map(),
         tabId: '1-1',
-        child: this._getIconPage(),
+        children: this._getIconPage(),
       }, {
         fieldId: '1-2',
         fieldType: FieldType.GROUP,
         fieldVal: '',
         extensionMap: new Map(),
         tabId: '1-2',
-        child: this._getSlide(),
+        children: this._getSlide(),
       }],
       toJson: () => ''
     };

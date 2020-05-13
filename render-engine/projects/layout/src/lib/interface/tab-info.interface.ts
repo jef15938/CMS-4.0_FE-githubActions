@@ -3,5 +3,5 @@ import { FieldInfo } from './field-info.interface';
 
 export interface TabInfo extends FieldInfo {
     tabId: string;
-    child: TemplateInfo;
+    children: TemplateInfo;
 }
