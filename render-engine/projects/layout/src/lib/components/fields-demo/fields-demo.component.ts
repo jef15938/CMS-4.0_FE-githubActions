@@ -3,6 +3,7 @@ import { LayoutBaseComponent } from '../../wrapper/layout-base/layout-base.compo
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 import { FieldType } from '../../interface/field-info.interface';
+import { TemplateType } from '../../wrapper/layout-wrapper/layout-wrapper.interface';
 
 @Component({
   selector: 'lib-fields-demo',
@@ -10,7 +11,7 @@ import { FieldType } from '../../interface/field-info.interface';
   styleUrls: ['./fields-demo.component.css']
 })
 export class FieldsDemoComponent extends LayoutBaseComponent<TemplateInfo> implements OnInit {
-  
+  templateType = TemplateType.COMMON;
   FieldType = FieldType;
 
   constructor(

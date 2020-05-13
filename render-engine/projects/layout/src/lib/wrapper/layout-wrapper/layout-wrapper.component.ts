@@ -88,6 +88,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
       wrapper: this,
       componentRef: this.componentRef,
       templateInfo: this.templateInfo,
+      templateType: this.componentRef?.instance?.templateType,
       ...(templateFieldSelectEvent || {}),
     };
     return event;

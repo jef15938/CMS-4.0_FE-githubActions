@@ -3,34 +3,31 @@
   <hr>
   <ng-container [ngSwitch]="content.selectedTargetType">
     <div *ngSwitchCase="LayoutWrapperSelectedTargetType.TEMPLATE">
-      <ng-container *ngIf="getTemplateInfoType(content.templateInfo); let type;">
-        <div>
-          Id : {{content.templateInfo.id}}
-          <br>
-          TemplateId : {{content.templateInfo.templateId}}
-          <br>
-          Type : {{type}}
-          <hr>
+      <div>
+        Id : {{content.templateInfo.id}}
+        <br>
+        TemplateId : {{content.templateInfo.templateId}}
+        <br>
+        Type : {{content.templateType}}
+        <hr>
+      </div>
+      <div [ngSwitch]="content.templateType">
+        <div *ngSwitchCase="TemplateType.COMMON">
+
         </div>
-        <div [ngSwitch]="type">
-          <div *ngSwitchCase="TemplateInfoType.COMMON">
+        <div *ngSwitchCase="TemplateType.TAB">
 
-          </div>
-          <div *ngSwitchCase="TemplateInfoType.TAB">
-
-          </div>
-          <div *ngSwitchCase="TemplateInfoType.GROUP">
-
-          </div>
-          <div *ngSwitchCase="TemplateInfoType.DATA_SOURCE">
-
-          </div>
-          <div *ngSwitchCase="TemplateInfoType.CUSTOMIZE">
-
-          </div>
         </div>
-      </ng-container>
+        <div *ngSwitchCase="TemplateType.GROUP">
 
+        </div>
+        <div *ngSwitchCase="TemplateType.DATA_SOURCE">
+
+        </div>
+        <div *ngSwitchCase="TemplateType.CUSTOMIZE">
+
+        </div>
+      </div>
     </div>
     <div *ngSwitchCase="LayoutWrapperSelectedTargetType.FIELD">
       <div>

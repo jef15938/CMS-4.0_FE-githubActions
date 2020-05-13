@@ -3,6 +3,7 @@ import { LayoutBaseComponent } from '../../../wrapper/layout-base/layout-base.co
 import { TabTemplateInfo } from '../../../interface/tab-template-info.interface';
 import { TemplateInfo } from '../../../interface/template-info.interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../../injection-token';
+import { TemplateType } from '../../../wrapper/layout-wrapper/layout-wrapper.interface';
 
 @Component({
   selector: 'app-tab-demo',
@@ -10,7 +11,8 @@ import { COMPONENT_SERVICE_TOKEN } from '../../../injection-token';
   styleUrls: ['./tab-demo.component.scss'],
 })
 export class TabDemoComponent extends LayoutBaseComponent<TabTemplateInfo> implements OnInit, AfterViewInit {
-
+  templateType = TemplateType.TAB;
+  
   private _tabContentHostList: QueryList<ViewContainerRef>;
 
 

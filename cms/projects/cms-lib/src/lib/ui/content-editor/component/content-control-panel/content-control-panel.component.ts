@@ -1,14 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType } from 'layout';
-import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
-
-enum TemplateInfoType {
-  COMMON = 'TemplateInfo',
-  TAB = 'TabTemplateInfo',
-  DATA_SOURCE = 'DataSourceTemplateInfo',
-  GROUP = 'GroupTemplateInfo',
-  CUSTOMIZE = 'CustomizeTemplateInfo',
-}
+import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType } from 'layout';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -17,7 +8,7 @@ enum TemplateInfoType {
 })
 export class ContentControlPanelComponent implements OnInit {
 
-  TemplateInfoType = TemplateInfoType;
+  TemplateType = TemplateType;
 
   LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
   FieldType = FieldType;
@@ -40,19 +31,6 @@ export class ContentControlPanelComponent implements OnInit {
       newContent.selectedTarget.classList.add('now-edit');
     }
     this.content = newContent;
-  }
-
-  getTemplateInfoType(templateInfo: ContentTemplateInfo): TemplateInfoType {
-    if (templateInfo['tabList']) {
-      return TemplateInfoType.TAB;
-    }
-    if (templateInfo['source']) {
-      return TemplateInfoType.DATA_SOURCE;
-    }
-    if (templateInfo['itemList']) {
-      return TemplateInfoType.GROUP;
-    }
-    return TemplateInfoType.COMMON;
   }
 
 }
