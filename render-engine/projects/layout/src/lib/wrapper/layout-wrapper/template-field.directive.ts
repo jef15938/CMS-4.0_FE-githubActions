@@ -1,40 +1,30 @@
-import { Directive, Input, OnInit, HostListener, ElementRef, Output, EventEmitter, HostBinding } from '@angular/core';
+import { Directive, Input, HostListener, ElementRef, Output, EventEmitter, HostBinding } from '@angular/core';
 import { FieldInfo } from '../../interface/field-info.interface';
 import { TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
+import { LayoutWrapperBase } from './layout-wrapper-base';
 
 @Directive({
   selector: '[libTemplateField]'
 })
-export class TemplateFieldDirective implements OnInit {
+export class TemplateFieldDirective extends LayoutWrapperBase {
 
   @Input('libTemplateField') fieldInfo: FieldInfo;
   @Output() select = new EventEmitter<TemplateFieldSelectEvent>();
 
-  @HostBinding('class.now-hover') private ishovering: boolean;
+  @HostBinding('class.now-hover') nowHover: boolean;
 
   constructor(
     private _elementRef: ElementRef,
-  ) { }
+  ) { super(); }
 
-  ngOnInit(): void {
-
-  }
-
-  @HostListener('click', ['$event']) click(ev) {
-    ev.stopPropagation();
-    this.select.emit({
-      selectedTarget: this._elementRef?.nativeElement,
-      selectedTargetType: LayoutWrapperSelectedTargetType.FIELD,
-      fieldInfo: this.fieldInfo,
-    });
-  }
-
-  @HostListener('mouseenter') mouseenter() {
-    this.ishovering = true;
-  }
-
-  @HostListener('mouseleave') mouseleave() {
-    this.ishovering = false;
+  @HostListener('click') click() {
+    if (this.getMode() === 'edit') {
+      this.select.emit({
+        selectedTarget: this._elementRef?.nativeElement,
+        selectedTargetType: LayoutWrapperSelectedTargetType.FIELD,
+        fieldInfo: this.fieldInfo,
+      });
+    }
   }
 
 }

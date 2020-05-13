@@ -1,40 +1,35 @@
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, ViewChildren, QueryList, ElementRef, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener } from '@angular/core';
 import { TemplateInfo } from '../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 import { LayoutBase } from '../layout-base/layout-base.interface';
 import { takeUntil, map } from 'rxjs/operators'
-import { merge, Subject } from 'rxjs';
+import { merge } from 'rxjs';
 import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
+import { LayoutWrapperBase } from './layout-wrapper-base';
 
 @Component({
   selector: 'layout-wrapper',
   templateUrl: './layout-wrapper.component.html',
   styleUrls: ['./layout-wrapper.component.scss']
 })
-export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewInit, OnDestroy {
+export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutWrapper, OnInit, AfterViewInit {
 
   @Input() templateInfo: TemplateInfo;
-
-  mode: 'preview' | 'edit' = 'preview';
-
-  nowHover = false;
+  @Input() mode: 'preview' | 'edit' = 'preview';
 
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
   @ViewChild('WrapperContainer') wrapperContainer: ElementRef;
-
-  @ViewChildren(LayoutWrapperComponent) children: QueryList<LayoutWrapperComponent>;
 
   componentRef: ComponentRef<LayoutBase<TemplateInfo>>;
 
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
 
-  private _destroy$ = new Subject();
-
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(COMPONENT_SERVICE_TOKEN) private componentFactory: any,
     private _changeDetectorRef: ChangeDetectorRef,
-  ) { 
+  ) {
+    super();
     this._changeDetectorRef.detach();
   }
 
@@ -44,12 +39,7 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
   ngAfterViewInit() {
     this._changeDetectorRef.reattach();
     this.loadComponent();
-  }
-
-  ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.setMode(this.mode || 'preview');
   }
 
   loadComponent() {
@@ -72,7 +62,7 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
   private _setInstanceProperties(instance: LayoutBase<TemplateInfo>): void {
     if (instance) {
       instance.templateInfo = this.templateInfo;
-      instance.mode = this.mode;
+      instance.mode = this.getMode();
       instance.parentLayoutWrapper = this;
     }
   }
@@ -87,7 +77,7 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
           map((e: TemplateFieldSelectEvent) => this.createLayoutWrapperSelectEvent(e)),
         )
     ]).pipe(
-      takeUntil(this._destroy$),
+      takeUntil(this.destroy$),
     ).subscribe((e: LayoutWrapperSelectEvent) => this.select.next(e));
   }
 
@@ -104,23 +94,21 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
   }
 
   setMode(mode: 'preview' | 'edit') {
-    this.mode = mode;
-    if (this.componentRef?.instance) {
-      this.componentRef.instance.mode = mode;
+    super.setMode(mode);
+    const instance = this.componentRef?.instance;
+    if (instance) {
+      instance.mode = mode;
+      const childLayoutWrappers = instance?.childLayoutWrappers || new QueryList();
+      childLayoutWrappers.forEach(c => c.setMode(mode));
+      const templateFieldDirectives = instance?.templateFieldDirectives || new QueryList();
+      templateFieldDirectives.forEach(d => d.setMode(mode))
     }
   }
 
-  @HostListener('click', ['$event']) click(ev) {
-    ev.stopPropagation();
-    this.select.next(this.createLayoutWrapperSelectEvent());
-  }
-
-  @HostListener('mouseenter') mouseenter() {
-    this.nowHover = true;
-  }
-
-  @HostListener('mouseleave') mouseleave() {
-    this.nowHover = false;
+  @HostListener('click') click() {
+    if (this.getMode() === 'edit') {
+      this.select.next(this.createLayoutWrapperSelectEvent());
+    }
   }
 
 }
