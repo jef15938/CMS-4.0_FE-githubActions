@@ -3,12 +3,34 @@
   <hr>
   <ng-container [ngSwitch]="content.selectedTargetType">
     <div *ngSwitchCase="LayoutWrapperSelectedTargetType.TEMPLATE">
-      <div>
-        Id : {{content.templateInfo.id}}
-        <br>
-        TemplateId : {{content.templateInfo.templateId}}
-        <hr>
-      </div>
+      <ng-container *ngIf="getTemplateInfoType(content.templateInfo); let type;">
+        <div>
+          Id : {{content.templateInfo.id}}
+          <br>
+          TemplateId : {{content.templateInfo.templateId}}
+          <br>
+          Type : {{type}}
+          <hr>
+        </div>
+        <div [ngSwitch]="type">
+          <div *ngSwitchCase="TemplateInfoType.COMMON">
+
+          </div>
+          <div *ngSwitchCase="TemplateInfoType.TAB">
+
+          </div>
+          <div *ngSwitchCase="TemplateInfoType.GROUP">
+
+          </div>
+          <div *ngSwitchCase="TemplateInfoType.DATA_SOURCE">
+
+          </div>
+          <div *ngSwitchCase="TemplateInfoType.CUSTOMIZE">
+
+          </div>
+        </div>
+      </ng-container>
+
     </div>
     <div *ngSwitchCase="LayoutWrapperSelectedTargetType.FIELD">
       <div>
@@ -19,11 +41,13 @@
       </div>
       <div [ngSwitch]="content.fieldInfo.fieldType">
         <input *ngSwitchCase="FieldType.TEXT" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
-        <textarea *ngSwitchCase="FieldType.TEXTEREA" [(ngModel)]="content.fieldInfo.fieldVal" rows="10" cols="50" style="width: 100%;"></textarea>
+        <textarea *ngSwitchCase="FieldType.TEXTEREA" [(ngModel)]="content.fieldInfo.fieldVal" rows="10" cols="50"
+          style="width: 100%;"></textarea>
         <input *ngSwitchCase="FieldType.LINK" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
         <input *ngSwitchCase="FieldType.BGIMG" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
         <input *ngSwitchCase="FieldType.IMG" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
-        <textarea *ngSwitchCase="FieldType.HTMLEDITOR" [(ngModel)]="content.fieldInfo.fieldVal" rows="10" cols="50" style="width: 100%;"></textarea>
+        <textarea *ngSwitchCase="FieldType.HTMLEDITOR" [(ngModel)]="content.fieldInfo.fieldVal" rows="10" cols="50"
+          style="width: 100%;"></textarea>
       </div>
     </div>
   </ng-container>

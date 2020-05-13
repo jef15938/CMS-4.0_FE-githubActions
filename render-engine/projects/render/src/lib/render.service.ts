@@ -12,32 +12,32 @@ export class RenderService {
     const tabTemplateInfo: TabTemplateInfo = {
       id: '1',
       templateId: 'Tab',
-      fieldList: [],
-      attributeMap: new Map(),
+      fields: [],
+      attributes: new Map(),
       tabList: [{
         fieldId: '1-1',
         fieldType: FieldType.GROUP,
         fieldVal: '',
-        extensionMap: new Map(),
+        extension: new Map(),
         tabId: '1-1',
         children: {
           id: '2',
           templateId: 'IconPage',
-          fieldList: [],
-          attributeMap: new Map(),
+          fields: [],
+          attributes: new Map(),
           toJson: () => ''
         }
       }, {
         fieldId: '1-2',
         fieldType: FieldType.GROUP,
         fieldVal: '',
-        extensionMap: new Map(),
+        extension: new Map(),
         tabId: '1-2',
         children: {
           id: '3',
           templateId: 'Slide',
-          fieldList: [],
-          attributeMap: new Map(),
+          fields: [],
+          attributes: new Map(),
           toJson: () => ''
         }
       }],
@@ -47,12 +47,12 @@ export class RenderService {
     const fieldsDemoTemplateInfo: TemplateInfo = {
       id: 'fd01',
       templateId: 'FieldsDemo',
-      fieldList: [
+      fields: [
         {
           fieldId: 'f01',
           fieldType: FieldType.TEXT,
           fieldVal: '頁面標題',
-          extensionMap: new Map(),
+          extension: new Map(),
         },
         {
           fieldId: 'f02',
@@ -89,40 +89,40 @@ export class RenderService {
           帝之靈。若無興德之言，則戮允等，以彰其慢。陛下亦宜自課，
           以諮諏善道，察納雅言，深追先帝遺詔，臣不勝受恩感激。
                 今當遠離，臨表涕泣，不知所云。`,
-          extensionMap: new Map(),
+          extension: new Map(),
         },
         {
           fieldId: 'f03',
           fieldType: FieldType.LINK,
           fieldVal: 'https://www.google.com.tw',
-          extensionMap: new Map(),
+          extension: new Map(),
         },
         {
           fieldId: 'f04',
           fieldType: FieldType.BGIMG,
           fieldVal: 'https://garden.decoder.com.tw/demo_cms/assets/img/CMS-login-bg.png',
-          extensionMap: new Map(),
+          extension: new Map(),
         },
         {
           fieldId: 'f05',
           fieldType: FieldType.IMG,
           fieldVal: 'http://www.neux.com.tw/neuximg/neuxLOGO.png',
-          extensionMap: new Map(),
+          extension: new Map(),
         },
         {
           fieldId: 'f06',
           fieldType: FieldType.GROUP,
           fieldVal: '',
-          extensionMap: new Map(),
+          extension: new Map(),
         },
         {
           fieldId: 'f07',
           fieldType: FieldType.HTMLEDITOR,
           fieldVal: '<div style="color:red;border:1px solid black; background-color: white; padding:10px"><span>我的自訂</span><span style="color:black;">01</span><div>',
-          extensionMap: new Map(),
+          extension: new Map(),
         }
       ],
-      attributeMap: new Map(),
+      attributes: new Map(),
       toJson: () => ''
     };
 

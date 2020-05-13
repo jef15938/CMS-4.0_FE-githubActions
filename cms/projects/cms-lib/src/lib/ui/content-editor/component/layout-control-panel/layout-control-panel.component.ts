@@ -64,20 +64,20 @@ export class LayoutControlPanelComponent implements OnInit {
     const tabTemplateInfo: TabTemplateInfo = {
       id: '1',
       templateId: 'Tab',
-      fieldList: [],
-      attributeMap: new Map(),
+      fields: [],
+      attributes: new Map(),
       tabList: [{
         fieldId: '1-1',
         fieldType: FieldType.GROUP,
         fieldVal: '',
-        extensionMap: new Map(),
+        extension: new Map(),
         tabId: '1-1',
         children: this._getIconPage(),
       }, {
         fieldId: '1-2',
         fieldType: FieldType.GROUP,
         fieldVal: '',
-        extensionMap: new Map(),
+        extension: new Map(),
         tabId: '1-2',
         children: this._getSlide(),
       }],
@@ -91,8 +91,8 @@ export class LayoutControlPanelComponent implements OnInit {
     return {
       id: '1',
       templateId: 'Tab',
-      fieldList: [],
-      attributeMap: new Map(),
+      fields: [],
+      attributes: new Map(),
       tabList: [],
       toJson: () => ''
     };
@@ -102,8 +102,8 @@ export class LayoutControlPanelComponent implements OnInit {
     return {
       id: '2',
       templateId: 'IconPage',
-      fieldList: [],
-      attributeMap: new Map(),
+      fields: [],
+      attributes: new Map(),
       toJson: () => ''
     };
   }
@@ -112,8 +112,8 @@ export class LayoutControlPanelComponent implements OnInit {
     return {
       id: '3',
       templateId: 'Slide',
-      fieldList: [],
-      attributeMap: new Map(),
+      fields: [],
+      attributes: new Map(),
       toJson: () => ''
     }
   }

@@ -1,33 +1,33 @@
 <ng-container *ngIf="templateInfo">
-  <div style="padding: 10px;" [style.background]="'url('+templateInfo.fieldList[3].fieldVal+')'"
-    [libTemplateField]="templateInfo.fieldList[3]">
-    <div style="text-align: center;" [libTemplateField]="templateInfo.fieldList[0]">
-      <h1>{{templateInfo.fieldList[0].fieldVal}}</h1>
+  <div style="padding: 10px;" [style.background]="'url('+templateInfo.fields[3].fieldVal+')'"
+    [libTemplateField]="templateInfo.fields[3]">
+    <div style="text-align: center;" [libTemplateField]="templateInfo.fields[0]">
+      <h1>{{templateInfo.fields[0].fieldVal}}</h1>
     </div>
 
     <div style="padding: 10px; height: 350px;">
-      <div style="float: left; padding: 10px; height:300px; width: 300px; max-height: 100%;" [libTemplateField]="templateInfo.fieldList[4]">
-        <img [src]="templateInfo.fieldList[4].fieldVal" style="width: 100%; height: auto;">
+      <div style="float: left; padding: 10px; height:300px; width: 300px; max-height: 100%;" [libTemplateField]="templateInfo.fields[4]">
+        <img [src]="templateInfo.fields[4].fieldVal" style="width: 100%; height: auto; max-height: 100%;">
       </div>
-      <div style="padding: 10px;" [libTemplateField]="templateInfo.fieldList[1]">
-        {{templateInfo.fieldList[1].fieldVal}}
+      <div style="padding: 10px;" [libTemplateField]="templateInfo.fields[1]">
+        {{templateInfo.fields[1].fieldVal}}
       </div>
     </div>
 
     <div style="padding: 10px;">
-      <div style="height:40px; line-height:40px; vertical-align: middle; width: 100%; max-width: 240px; background-color: aquamarine; border-radius: 10px; text-align: center; padding: 2px;" [libTemplateField]="templateInfo.fieldList[2]">拍手</div>
+      <div style="height:40px; line-height:40px; vertical-align: middle; width: 100%; max-width: 240px; background-color: aquamarine; border-radius: 10px; text-align: center; padding: 2px;" [libTemplateField]="templateInfo.fields[2]">拍手</div>
     </div>
 
     <hr>
 
     <div style="padding: 10px;">
       自訂Html
-      <div [innerHTML]="templateInfo.fieldList[6].fieldVal | safeHtml" [libTemplateField]="templateInfo.fieldList[6]"></div>
+      <div [innerHTML]="templateInfo.fields[6].fieldVal | safeHtml" [libTemplateField]="templateInfo.fields[6]"></div>
     </div>
 
     <hr>
 
-    <div *ngFor="let field of templateInfo.fieldList">
+    <div *ngFor="let field of templateInfo.fields">
       <ng-container [ngSwitch]="field.fieldType">
         <div *ngSwitchCase="FieldType.GROUP" [libTemplateField]="field">
           GROUP :
