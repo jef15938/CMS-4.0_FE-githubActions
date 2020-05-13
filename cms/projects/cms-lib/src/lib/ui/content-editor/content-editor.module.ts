@@ -6,10 +6,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
 import { LayoutBaseModule } from 'layout';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     MatIconModule,
     MatExpansionModule,
     LayoutBaseModule,

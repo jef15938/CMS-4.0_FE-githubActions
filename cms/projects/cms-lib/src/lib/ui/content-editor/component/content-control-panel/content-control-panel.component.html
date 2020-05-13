@@ -17,6 +17,11 @@
         FieldType : {{content.fieldInfo.fieldType}}
         <hr>
       </div>
+      <div [ngSwitch]="content.fieldInfo.fieldType">
+        <input *ngSwitchCase="FieldType.TEXT" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
+        <textarea *ngSwitchCase="FieldType.TEXTEREA" [(ngModel)]="content.fieldInfo.fieldVal"
+          style="width: 100%;"></textarea>
+      </div>
     </div>
   </ng-container>
 
