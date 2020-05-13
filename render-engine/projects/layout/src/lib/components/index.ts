@@ -1,7 +1,6 @@
-import { from } from 'rxjs';
-
 export * from './icon-page/icon-page.component';
 export * from './slider/slider.component';
+export * from './fields-demo/fields-demo.component';
 
 export * from './tab/tab-demo/tab-demo.component';
 export * from './tab/tab-frame/tab-frame.component';
