@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, ViewChildren, QueryList, ElementRef, OnDestroy } from '@angular/core';
-import { TemplateInfo } from '../../../interface';
+import { TemplateInfo, FieldInfo } from '../../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../../injection-token';
 import { LayoutBase } from '../layout-base.interface';
 import { tap, takeUntil } from 'rxjs/operators'
 import { merge, Subject } from 'rxjs';
-import { LayoutWrapperSelectEvent, LayoutWrapper } from './layout-wrapper.interface';
+import { LayoutWrapperSelectEvent, LayoutWrapper, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
 
 @Component({
   selector: 'layout-wrapper',
@@ -84,12 +84,18 @@ export class LayoutWrapperComponent implements LayoutWrapper, OnInit, AfterViewI
     }
   }
 
-  emitSelectEvent(selectedTarget){
+  emitSelectEvent(
+    selectedTarget: HTMLElement,
+    selectedTargetType: LayoutWrapperSelectedTargetType = 'template',
+    fieldInfo?: FieldInfo
+  ) {
     const event: LayoutWrapperSelectEvent = {
       selectedTarget,
-      wrapper: this as any,
+      selectedTargetType,
+      wrapper: this,
       componentRef: this.componentRef,
       templateInfo: this.templateInfo,
+      fieldInfo
     }
     this.select.next(event);
   }

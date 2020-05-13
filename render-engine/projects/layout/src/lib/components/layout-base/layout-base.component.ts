@@ -1,7 +1,7 @@
 import { OnInit, Input, AfterViewInit, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
-import { TemplateInfo } from '../../interface';
+import { TemplateInfo } from '../../interface/template-info.interface';
 import { LayoutBase } from './layout-base.interface';
-import { LayoutWrapperComponent } from '..';
+import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.component';
 
 
 export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit {
