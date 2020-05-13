@@ -8,6 +8,6 @@
   }
 }
 
-::ng-deep .now-edit {
+::ng-deep .now-edit, ::ng-deep .now-edit.now-hover {
   border: 5px solid #71d306 !important;
 }
