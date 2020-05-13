@@ -31,6 +31,18 @@
           <img [src]="field.fieldVal" height="100%" width="auto">
         </div>
       </div>
+      <div *ngSwitchCase="FieldType.GROUP" [libTemplateField]="field">
+        GROUP :
+        <div>
+          <pre>{{field|json}}</pre>
+        </div>
+      </div>
+      <div *ngSwitchCase="FieldType.HTMLEDITOR" [libTemplateField]="field">
+        HTMLEDITOR :
+        <div>
+          <pre>{{field|json}}</pre>
+        </div>
+      </div>
       <div *ngSwitchDefault>
         <div>
           <pre>{{field|json}}</pre>
