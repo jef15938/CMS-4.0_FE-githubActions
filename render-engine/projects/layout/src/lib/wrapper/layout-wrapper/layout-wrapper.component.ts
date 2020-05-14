@@ -110,7 +110,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   createLayoutWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {
     const event: LayoutWrapperSelectEvent = {
-      selectedTarget: this._elementRef?.nativeElement,
+      selectedTarget: this.elementRef?.nativeElement,
       selectedTargetType: LayoutWrapperSelectedTargetType.TEMPLATE,
       wrapper: this,
       componentRef: this.componentRef,

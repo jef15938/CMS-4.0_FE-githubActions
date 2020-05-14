@@ -11,7 +11,7 @@ export abstract class LayoutWrapperBase implements OnDestroy {
 
   constructor(
     protected _changeDetectorRef: ChangeDetectorRef,
-    protected _elementRef: ElementRef
+    public elementRef: ElementRef
   ) { }
 
   ngOnDestroy(): void {
@@ -28,13 +28,13 @@ export abstract class LayoutWrapperBase implements OnDestroy {
 
   @HostListener('mouseenter') mouseenter() {
     if (this.mode === 'edit') {
-      this.enter.next(this._elementRef?.nativeElement);
+      this.enter.next(this.elementRef?.nativeElement);
     }
   }
 
   @HostListener('mouseleave') mouseleave() {
     if (this.mode === 'edit') {
-      this.leave.next(this._elementRef?.nativeElement);
+      this.leave.next(this.elementRef?.nativeElement);
     }
   }
 }

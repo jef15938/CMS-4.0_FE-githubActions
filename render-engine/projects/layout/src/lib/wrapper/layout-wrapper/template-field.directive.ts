@@ -14,7 +14,7 @@ export class TemplateFieldDirective extends LayoutWrapperBase {
   @HostListener('click') click() {
     if (this.mode === 'edit') {
       this.select.emit({
-        selectedTarget: this._elementRef?.nativeElement,
+        selectedTarget: this.elementRef?.nativeElement,
         selectedTargetType: LayoutWrapperSelectedTargetType.FIELD,
         fieldInfo: this.fieldInfo,
       });
