@@ -25,5 +25,13 @@ export class RenderComponent implements OnInit {
     console.warn('onSelect() ev = ', ev);
   }
 
+  onEnter(ev){
+    console.warn('onEnter() ev = ', ev);
+  }
+
+  onLeave(ev){
+    console.warn('onLeave() ev = ', ev);
+  }
+
 
 }

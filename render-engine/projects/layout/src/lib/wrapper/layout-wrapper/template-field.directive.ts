@@ -11,16 +11,14 @@ export class TemplateFieldDirective extends LayoutWrapperBase {
   @Input('libTemplateField') fieldInfo: FieldInfo;
   @Output() select = new EventEmitter<TemplateFieldSelectEvent>();
 
-  @HostBinding('class.now-hover') nowHover: boolean;
-
   constructor(
-    private _elementRef: ElementRef,
+    public elementRef: ElementRef,
   ) { super(); }
 
   @HostListener('click') click() {
     if (this.getMode() === 'edit') {
       this.select.emit({
-        selectedTarget: this._elementRef?.nativeElement,
+        selectedTarget: this.elementRef?.nativeElement,
         selectedTargetType: LayoutWrapperSelectedTargetType.FIELD,
         fieldInfo: this.fieldInfo,
       });

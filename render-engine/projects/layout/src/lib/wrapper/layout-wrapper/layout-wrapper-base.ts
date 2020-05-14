@@ -1,4 +1,4 @@
-import { HostListener, OnDestroy } from '@angular/core';
+import { HostListener, OnDestroy, Output, EventEmitter, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 
 export abstract class LayoutWrapperBase implements OnDestroy {
@@ -6,7 +6,9 @@ export abstract class LayoutWrapperBase implements OnDestroy {
   getMode() { return this._mode }
   setMode(mode: 'preview' | 'edit') { this._mode = mode; }
 
-  nowHover = false;
+  @Output() enter = new EventEmitter<HTMLElement>();
+  @Output() leave = new EventEmitter<HTMLElement>();
+  abstract elementRef: ElementRef;
 
   destroy$ = new Subject();
 
@@ -24,13 +26,13 @@ export abstract class LayoutWrapperBase implements OnDestroy {
 
   @HostListener('mouseenter') mouseenter() {
     if (this.getMode() === 'edit') {
-      this.nowHover = true;
+      this.enter.next(this.elementRef?.nativeElement);
     }
   }
 
   @HostListener('mouseleave') mouseleave() {
     if (this.getMode() === 'edit') {
-      this.nowHover = false;
+      this.leave.next(this.elementRef?.nativeElement);
     }
   }
 }

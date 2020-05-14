@@ -8,6 +8,10 @@
   }
 }
 
-::ng-deep .now-edit, ::ng-deep .now-edit.now-hover {
+::ng-deep .now-hover {
+  border: 1px solid #71d306 !important;
+}
+
+::ng-deep .now-edit {
   border: 5px solid #71d306 !important;
 }

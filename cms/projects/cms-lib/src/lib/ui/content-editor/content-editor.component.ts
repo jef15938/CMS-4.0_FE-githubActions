@@ -286,4 +286,12 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
     this._changeDetectorRef.detectChanges();
   }
 
+  onEnter(target: HTMLElement) {
+    target.classList.add('now-hover');
+  }
+
+  onLeave(target: HTMLElement) {
+    target.classList.remove('now-hover');
+  }
+
 }
