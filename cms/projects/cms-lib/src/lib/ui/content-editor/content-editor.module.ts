@@ -7,6 +7,7 @@ import { LayoutControlPanelComponent } from './component/layout-control-panel/la
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
 import { LayoutBaseModule } from 'layout';
 import { FormsModule } from '@angular/forms';
+import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     ContentEditorComponent,
     LayoutControlPanelComponent,
     ContentControlPanelComponent,
+    ContentViewRendererComponent,
   ],
   exports: [
     ContentEditorComponent,

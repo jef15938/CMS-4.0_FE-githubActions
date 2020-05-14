@@ -1,0 +1,14 @@
+<!-- <div class="add-template-btn" [class.active]="layoutControlPanel?.position===0">
+  <button type="button" mat-menu-item (click)="selectAddTemplatePosition($event)">
+    {{layoutControlPanel?.position !== 0?'+':'請選擇版型加入此區塊'}}
+  </button>
+</div> -->
+<div *ngFor="let template of contentInfo.templates; let templateIndex = index">
+  <layout-wrapper [templateInfo]="template" mode="edit" (select)="select.next($event)" (enter)="onEnter($event)"
+    (leave)="onLeave($event)"></layout-wrapper>
+  <!-- <div class="add-template-btn" [class.active]="layoutControlPanel?.position===templateIndex+1">
+    <button type="button" mat-menu-item (click)="selectAddTemplatePosition($event, templateIndex+1)">
+      {{layoutControlPanel?.position !== templateIndex+1?'+':'請選擇版型加入此區塊'}}
+    </button>
+  </div> -->
+</div>

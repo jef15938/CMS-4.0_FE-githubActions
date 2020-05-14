@@ -21,7 +21,9 @@
     [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
     <div class="content-panel" (click)="resetSelected()">
-      <div class="add-template-btn" [class.active]="layoutControlPanel?.position===0">
+      <cms-content-view-renderer [contentInfo]="contentInfoModel"
+        (select)="resetSelected();contentControlPanel?.setContent($event)"></cms-content-view-renderer>
+      <!-- <div class="add-template-btn" [class.active]="layoutControlPanel?.position===0">
         <button type="button" mat-menu-item (click)="selectAddTemplatePosition($event)">
           {{layoutControlPanel?.position !== 0?'+':'請選擇版型加入此區塊'}}
         </button>
@@ -34,7 +36,7 @@
             {{layoutControlPanel?.position !== templateIndex+1?'+':'請選擇版型加入此區塊'}}
           </button>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- 版面控制 -->
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">

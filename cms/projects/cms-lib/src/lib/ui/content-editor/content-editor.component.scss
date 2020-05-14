@@ -24,22 +24,6 @@
       padding: 20px;
       margin: 20px auto;
       width: 90%;
-
-      .add-template-btn {
-        > button {
-          background-color: lightgreen;
-          color: black;
-          width: 100%; 
-          text-align: center;
-        }
-        
-        &:hover, &.active {
-          > button {
-            background-color: darkgreen;
-            color: white;
-          }
-        }
-      }
     }
 
     .layout-control-panel {
