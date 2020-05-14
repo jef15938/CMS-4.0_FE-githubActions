@@ -69,10 +69,6 @@ export class SliderComponent extends LayoutBaseComponent<TemplateInfo> implement
 
   }
 
-  renderComponent(): void {
-    // throw new Error("Method not implemented.");
-  }
-
   public toggleType(): void {
     this.type = (this.type === 'component') ? 'directive' : 'component';
   }

@@ -23,8 +23,4 @@ export class IconPageComponent extends LayoutBaseComponent<TemplateInfo> impleme
   ngOnInit() {
   }
 
-  renderComponent(): void {
-
-  }
-
 }

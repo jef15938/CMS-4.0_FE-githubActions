@@ -25,8 +25,4 @@ export class FieldsDemoComponent extends LayoutBaseComponent<TemplateInfo> imple
   ngOnInit(): void {
   }
 
-  renderComponent(): void {
-    throw new Error("Method not implemented.");
-  }
-
 }

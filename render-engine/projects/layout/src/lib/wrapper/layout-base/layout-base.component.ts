@@ -41,8 +41,6 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
   ngOnInit(): void {
   }
 
-  abstract renderComponent(): void;
-
   ngAfterViewInit(): void {
     this._isViewInit = true;
   }
