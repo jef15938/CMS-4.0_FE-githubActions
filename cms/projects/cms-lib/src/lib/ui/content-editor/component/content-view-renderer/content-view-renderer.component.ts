@@ -118,7 +118,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
     this._nowSelectedTarget = newSelectedTarget;
 
-    this.select.next(ev);
+    this.select.emit(ev);
   }
 
   onEnter(target: HTMLElement) {

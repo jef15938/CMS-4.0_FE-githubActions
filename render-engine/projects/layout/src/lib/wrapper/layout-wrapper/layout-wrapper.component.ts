@@ -135,7 +135,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   @HostListener('click') click() {
     if (this.mode === 'edit') {
-      this.select.next(this.createLayoutWrapperSelectEvent());
+      this.select.emit(this.createLayoutWrapperSelectEvent());
     }
   }
 
