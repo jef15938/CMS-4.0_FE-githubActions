@@ -17,7 +17,9 @@ export abstract class LayoutWrapperBase implements OnDestroy {
   }
 
   @HostListener('click', ['$event']) clickStopPropagation(ev) {
-    ev.stopPropagation();
+    if(this.getMode() === 'edit'){
+      ev.stopPropagation();
+    }
   }
 
   @HostListener('mouseenter') mouseenter() {
