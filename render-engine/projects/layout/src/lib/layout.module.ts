@@ -3,28 +3,26 @@ import { IconPageComponent } from './components/icon-page/icon-page.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { TabModule } from './components/tab/tab.module';
 import { SwiperModule } from 'ngx-swiper-wrapper';
-import { LayoutBaseModule } from './wrapper/layout-base/layout-base.module';
+import { WrapperModule } from './wrapper/wrapper.module';
 import { FieldsDemoComponent } from './components/fields-demo/fields-demo.component';
-import { TemplateFieldDirective } from './wrapper/layout-wrapper/template-field.directive';
 import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 
 @NgModule({
   imports: [
     TabModule,
-    LayoutBaseModule,
+    WrapperModule,
     SwiperModule
   ],
   declarations: [
     IconPageComponent,
     SliderComponent,
     FieldsDemoComponent,
-    TemplateFieldDirective,
     SafeHtmlPipe,
   ],
   exports: [
     IconPageComponent,
     SliderComponent,
-    LayoutBaseModule,
+    WrapperModule,
     TabModule
   ]
 })

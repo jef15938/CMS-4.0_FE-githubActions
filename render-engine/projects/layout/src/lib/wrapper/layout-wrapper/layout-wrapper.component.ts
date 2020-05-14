@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener, HostBinding } from '@angular/core';
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener, HostBinding, OnChanges, SimpleChanges } from '@angular/core';
 import { TemplateInfo } from '../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 import { LayoutBase } from '../layout-base/layout-base.interface';
@@ -12,10 +12,11 @@ import { LayoutWrapperBase } from './layout-wrapper-base';
   templateUrl: './layout-wrapper.component.html',
   styleUrls: ['./layout-wrapper.component.scss']
 })
-export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutWrapper, OnInit, AfterViewInit {
+export class LayoutWrapperComponent extends LayoutWrapperBase implements
+  LayoutWrapper, OnInit, AfterViewInit, OnChanges {
 
   @Input() templateInfo: TemplateInfo;
-  @Input() mode: 'preview' | 'edit' = 'preview';
+  @Input() mode: 'preview' | 'edit' = 'edit';
 
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
 
@@ -26,20 +27,26 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(COMPONENT_SERVICE_TOKEN) private componentFactory: any,
-    private _changeDetectorRef: ChangeDetectorRef,
-    public elementRef: ElementRef,
+    changeDetectorRef: ChangeDetectorRef,
+    elementRef: ElementRef,
   ) {
-    super();
+    super(changeDetectorRef, elementRef);
     this._changeDetectorRef.detach();
   }
 
   ngOnInit(): void {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['mode']) {
+      this.setMode();
+    }
+  }
+
   ngAfterViewInit() {
     this._changeDetectorRef.reattach();
     this.loadComponent();
-    this.setMode(this.mode || 'preview');
+    this.setMode();
   }
 
   loadComponent() {
@@ -63,16 +70,16 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
   private _setInstanceProperties(instance: LayoutBase<TemplateInfo>): void {
     if (instance) {
       instance.templateInfo = this.templateInfo;
-      instance.mode = this.getMode();
+      instance.mode = this.mode;
       instance.parentLayoutWrapper = this;
     }
   }
 
   private _registerInstanceSelectEvents(instance: LayoutBase<TemplateInfo>) {
-    const childLayoutWrappers = (instance?.childLayoutWrappers || new QueryList()) as QueryList<LayoutWrapperComponent>;
+    const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
     const templateFieldDirectives = (instance?.templateFieldDirectives || new QueryList());
     merge(...[
-      merge(...childLayoutWrappers.map(c => c.select).filter(l => !!l)),
+      merge(...templatesContainerComponents.map(c => c.select).filter(l => !!l)),
       merge(...templateFieldDirectives.map(c => c.select).filter(l => !!l))
         .pipe(
           map((e: TemplateFieldSelectEvent) => this.createLayoutWrapperSelectEvent(e)),
@@ -83,18 +90,18 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
   }
 
   private _registerInstanceEnterLeaveEvents(instance: LayoutBase<TemplateInfo>) {
-    const childLayoutWrappers = (instance?.childLayoutWrappers || new QueryList()) as QueryList<LayoutWrapperComponent>;
+    const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
     const templateFieldDirectives = (instance?.templateFieldDirectives || new QueryList());
     // enter
     merge(...[
-      merge(...childLayoutWrappers.map(c => c.enter).filter(l => !!l)),
+      merge(...templatesContainerComponents.map(c => c.enter).filter(l => !!l)),
       merge(...templateFieldDirectives.map(c => c.enter).filter(l => !!l)),
     ]).pipe(
       takeUntil(this.destroy$),
     ).subscribe((e: HTMLElement) => this.enter.next(e));
     // leave
     merge(...[
-      merge(...childLayoutWrappers.map(c => c.leave).filter(l => !!l)),
+      merge(...templatesContainerComponents.map(c => c.leave).filter(l => !!l)),
       merge(...templateFieldDirectives.map(c => c.leave).filter(l => !!l)),
     ]).pipe(
       takeUntil(this.destroy$),
@@ -103,7 +110,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
 
   createLayoutWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {
     const event: LayoutWrapperSelectEvent = {
-      selectedTarget: this.elementRef?.nativeElement,
+      selectedTarget: this._elementRef?.nativeElement,
       selectedTargetType: LayoutWrapperSelectedTargetType.TEMPLATE,
       wrapper: this,
       componentRef: this.componentRef,
@@ -114,20 +121,20 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
     return event;
   }
 
-  setMode(mode: 'preview' | 'edit') {
-    super.setMode(mode);
+  setMode() {
+    const mode = this.mode || 'preview';
     const instance = this.componentRef?.instance;
     if (instance) {
       instance.mode = mode;
-      const childLayoutWrappers = instance?.childLayoutWrappers || new QueryList();
-      childLayoutWrappers.forEach(c => c.setMode(mode));
+      const templatesContainerComponents = instance?.templatesContainerComponents || new QueryList();
+      templatesContainerComponents.forEach(c => c.mode = mode);
       const templateFieldDirectives = instance?.templateFieldDirectives || new QueryList();
-      templateFieldDirectives.forEach(d => d.setMode(mode))
+      templateFieldDirectives.forEach(d => d.mode = mode);
     }
   }
 
   @HostListener('click') click() {
-    if (this.getMode() === 'edit') {
+    if (this.mode === 'edit') {
       this.select.next(this.createLayoutWrapperSelectEvent());
     }
   }

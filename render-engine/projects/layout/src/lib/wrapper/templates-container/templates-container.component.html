@@ -1,0 +1,5 @@
+<ng-container>
+  <layout-wrapper *ngFor="let template of templates; let templateIndex = index" [templateInfo]="template" [mode]="mode"
+    (select)="select.next($event)" (enter)="enter.next($event)" (leave)="leave.next($event)">
+  </layout-wrapper>
+</ng-container>

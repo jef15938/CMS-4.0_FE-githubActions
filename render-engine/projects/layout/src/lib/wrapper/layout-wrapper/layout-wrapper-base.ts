@@ -1,16 +1,18 @@
-import { HostListener, OnDestroy, Output, EventEmitter, ElementRef } from '@angular/core';
+import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 
 export abstract class LayoutWrapperBase implements OnDestroy {
-  private _mode: 'preview' | 'edit' = 'preview';
-  getMode() { return this._mode }
-  setMode(mode: 'preview' | 'edit') { this._mode = mode; }
+  mode: 'preview' | 'edit' = 'preview';
 
   @Output() enter = new EventEmitter<HTMLElement>();
   @Output() leave = new EventEmitter<HTMLElement>();
-  abstract elementRef: ElementRef;
 
   destroy$ = new Subject();
+
+  constructor(
+    protected _changeDetectorRef: ChangeDetectorRef,
+    protected _elementRef: ElementRef
+  ) { }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -19,20 +21,20 @@ export abstract class LayoutWrapperBase implements OnDestroy {
   }
 
   @HostListener('click', ['$event']) clickStopPropagation(ev) {
-    if(this.getMode() === 'edit'){
+    if (this.mode === 'edit') {
       ev.stopPropagation();
     }
   }
 
   @HostListener('mouseenter') mouseenter() {
-    if (this.getMode() === 'edit') {
-      this.enter.next(this.elementRef?.nativeElement);
+    if (this.mode === 'edit') {
+      this.enter.next(this._elementRef?.nativeElement);
     }
   }
 
   @HostListener('mouseleave') mouseleave() {
-    if (this.getMode() === 'edit') {
-      this.leave.next(this.elementRef?.nativeElement);
+    if (this.mode === 'edit') {
+      this.leave.next(this._elementRef?.nativeElement);
     }
   }
 }

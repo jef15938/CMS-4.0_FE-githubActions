@@ -11,7 +11,7 @@ export enum TemplateType {
 }
 
 export interface LayoutWrapper {
-  setMode(mode: 'preview' | 'edit'): void;
+  
 }
 
 export enum LayoutWrapperSelectedTargetType {

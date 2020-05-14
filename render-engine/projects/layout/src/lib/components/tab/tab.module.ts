@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { TabFrameComponent } from './tab-frame/tab-frame.component';
 import { TabItemComponent } from './tab-item/tab-item.component';
 import { TabDemoComponent } from './tab-demo/tab-demo.component';
-import { LayoutBaseModule } from '../../wrapper/layout-base/layout-base.module';
+import { WrapperModule } from '../../wrapper/wrapper.module';
 
 
 @NgModule({
   declarations: [TabFrameComponent, TabItemComponent, TabDemoComponent],
   imports: [
     CommonModule,
-    LayoutBaseModule
+    WrapperModule
   ],
   exports: [
     TabFrameComponent,

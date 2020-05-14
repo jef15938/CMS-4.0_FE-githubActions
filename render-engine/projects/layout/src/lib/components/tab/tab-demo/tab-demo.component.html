@@ -4,8 +4,9 @@
   <app-tab-item [tabTitle]="'頁籤3'">頁籤3的內容拉啦啦啦</app-tab-item> -->
   <app-tab-item *ngFor="let tabInfo of templateInfo.tabList" [tabTitle]="tabInfo.tabId">
     <!-- <ng-container #contentHost></ng-container> -->
-    <div style="padding: 10px;">
+    <templates-container [templates]="tabInfo.children"></templates-container>
+    <!-- <div style="padding: 10px;">
       <layout-wrapper *ngFor="let template of tabInfo.children; let templateIndex = index" [templateInfo]="template"></layout-wrapper>
-    </div>    
+    </div>     -->
   </app-tab-item>
 </app-tab-frame>

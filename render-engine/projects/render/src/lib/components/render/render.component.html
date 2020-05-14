@@ -1,4 +1,4 @@
 <p>
     render works!
 </p>
-<layout-wrapper *ngFor="let info of contentInfo.templateList" mode="preview" [templateInfo]="info" (select)="onSelect($event)" (enter)="onEnter($event)" (leave)="onLeave($event)"></layout-wrapper>
+<templates-container mode="edit" [templates]="contentInfo.templateList" (select)="onSelect($event)" (enter)="onEnter($event)" (leave)="onLeave($event)"></templates-container>

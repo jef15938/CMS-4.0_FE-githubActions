@@ -4,11 +4,12 @@ import { LayoutBase } from './layout-base.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
 import { TemplateFieldDirective } from '../layout-wrapper/template-field.directive';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
+import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
 
 export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit {
 
   parentLayoutWrapper: LayoutWrapperComponent;
-  @ViewChildren(LayoutWrapperComponent) childLayoutWrappers: QueryList<LayoutWrapperComponent>;
+  @ViewChildren(TemplatesContainerComponent) templatesContainerComponents: QueryList<TemplatesContainerComponent>;
 
   @ViewChildren(TemplateFieldDirective) templateFieldDirectives: QueryList<TemplateFieldDirective>;
 
