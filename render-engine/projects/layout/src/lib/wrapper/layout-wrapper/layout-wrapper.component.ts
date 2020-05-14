@@ -17,7 +17,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
   @HostBinding('class.now-hover') nowHover: boolean;
 
   @Input() templateInfo: TemplateInfo;
-  @Input() mode: 'preview' | 'edit' = 'edit';
+  @Input() mode: 'preview' | 'edit' = 'preview';
 
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
 
