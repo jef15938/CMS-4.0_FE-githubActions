@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
-import { TabTemplateInfo, FieldType } from 'layout';
+import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 
 class TemplateInfo {
   templateId: string;
@@ -15,22 +15,18 @@ class TemplateInfo {
 })
 export class LayoutControlPanelComponent implements OnInit {
 
-  @Input() position = -1;
+  get show() { return !!this.selectedBtn }
+
   @Input() mainTemplates: TemplateInfo[] = [];
 
-  @Output() select = new EventEmitter<{ template: ContentTemplateInfo, position: number }>();
+  @Output() templateAdd = new EventEmitter();
 
-  get show() { return this.position > -1; }
+  selectedBtn: AddTemplateButtonComponent;
 
   constructor() { }
 
   ngOnInit(): void {
     this.mainTemplates = [
-      // {
-      //   templateId: 'Mock',
-      //   templateName: 'Mock',
-      //   img: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      // },
       {
         templateId: 'Tab',
         templateName: 'Tab',
@@ -49,50 +45,27 @@ export class LayoutControlPanelComponent implements OnInit {
     ];
   }
 
-  setPosition(position = -1) {
-    this.position = position;
+  setSelected(newSelected?: AddTemplateButtonComponent) {
+    const oldSelected = this.selectedBtn;
+    if (oldSelected) { oldSelected.isSelected = false; }
+    if (newSelected) { newSelected.isSelected = true; }
+    this.selectedBtn = newSelected;
   }
 
   selectTemplate(t: TemplateInfo) {
     const yes = window.confirm(`確定加入${t.templateName}？`);
     if (!yes) { return; }
     const mock = this[`_get${t.templateId}`]();
-    this.select.emit({ template: mock, position: this.position });
+    this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, mock);
+    this.templateAdd.emit();
   }
-
-  // private _getMock() {
-  //   const tabTemplateInfo: TabTemplateInfo = {
-  //     id: '1',
-  //     templateId: 'Tab',
-  //     fields: [],
-  //     attributes: new Map(),
-  //     tabList: [{
-  //       fieldId: '1-1',
-  //       fieldType: FieldType.GROUP,
-  //       fieldVal: '',
-  //       extension: new Map(),
-  //       tabId: '1-1',
-  //       children: this._getIconPage(),
-  //     }, {
-  //       fieldId: '1-2',
-  //       fieldType: FieldType.GROUP,
-  //       fieldVal: '',
-  //       extension: new Map(),
-  //       tabId: '1-2',
-  //       children: this._getSlide(),
-  //     }],
-  //     toJson: () => ''
-  //   };
-
-  //   return tabTemplateInfo;
-  // }
 
   private _getTab() {
     return {
       id: '1',
       templateId: 'Tab',
       fields: [],
-      attributes: new Map(),
+      attributes: {},
       tabList: [],
       toJson: () => ''
     };
@@ -103,7 +76,7 @@ export class LayoutControlPanelComponent implements OnInit {
       id: '2',
       templateId: 'IconPage',
       fields: [],
-      attributes: new Map(),
+      attributes: {},
       toJson: () => ''
     };
   }
@@ -113,7 +86,9 @@ export class LayoutControlPanelComponent implements OnInit {
       id: '3',
       templateId: 'Slide',
       fields: [],
-      attributes: new Map(),
+      attributes: {
+        height: '300px'
+      },
       toJson: () => ''
     }
   }

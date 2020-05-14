@@ -8,6 +8,8 @@ import { TabTemplateInfo, FieldType, TemplateInfo, GroupTemplateInfo } from 'lay
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
 import { AddTemplateAction } from './content-editor.action-class';
+import { AddTemplateButtonComponent } from './component/add-template-button/add-template-button.component';
+import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 
 class ContentInfoModel extends ContentInfo {
   constructor(contentInfo: ContentInfo) {
@@ -26,7 +28,7 @@ class ContentInfoModel extends ContentInfo {
   styleUrls: ['./content-editor.component.scss']
 })
 export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentChecked {
-
+  @ViewChild(ContentViewRendererComponent) contentViewRenderer: ContentViewRendererComponent;
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
   @ViewChild(ContentControlPanelComponent) contentControlPanel: ContentControlPanelComponent;
 
@@ -251,10 +253,9 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
     });
   }
 
-  selectAddTemplatePosition(event, position = 0) {
-    event.stopPropagation();
+  selectAddTemplatePosition(event: AddTemplateButtonComponent) {
     this.resetSelected();
-    this.layoutControlPanel.setPosition(position);
+    this.layoutControlPanel.setSelected(event);
   }
 
   undo() {
@@ -269,10 +270,10 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
 
   resetSelected() {
     if (this.layoutControlPanel) {
-      this.layoutControlPanel.setPosition();
+      this.layoutControlPanel.setSelected();
     }
     if (this.contentControlPanel) {
-      this.contentControlPanel.setContent();
+      this.contentControlPanel.setSelected();
     }
   }
 

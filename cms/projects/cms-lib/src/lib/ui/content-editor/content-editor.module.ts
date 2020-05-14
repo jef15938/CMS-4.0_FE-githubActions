@@ -8,6 +8,7 @@ import { ContentControlPanelComponent } from './component/content-control-panel/
 import { LayoutModule } from 'layout';
 import { FormsModule } from '@angular/forms';
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
+import { AddTemplateButtonComponent } from './component/add-template-button/add-template-button.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ContentViewRendererComponent } from './component/content-view-renderer/
     LayoutControlPanelComponent,
     ContentControlPanelComponent,
     ContentViewRendererComponent,
+    AddTemplateButtonComponent,
   ],
   exports: [
     ContentEditorComponent,

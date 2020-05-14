@@ -22,7 +22,7 @@ export class ContentControlPanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setContent(newContent?: LayoutWrapperSelectEvent) {
+  setSelected(newContent?: LayoutWrapperSelectEvent) {
     const oldContent = this.content;
     if (oldContent) {
       oldContent.selectedTarget.classList.remove('now-edit');
