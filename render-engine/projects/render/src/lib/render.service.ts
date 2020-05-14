@@ -10,36 +10,43 @@ export class RenderService {
 
   getContentInfo(pageId: string): ContentInfo {
     const tabTemplateInfo: TabTemplateInfo = {
-      id: '1',
+      id: 'tp1',
       templateId: 'Tab',
       fields: [],
-      attributes: new Map(),
+      attributes: {},
       tabList: [{
-        fieldId: '1-1',
+        fieldId: 'f1',
         fieldType: FieldType.GROUP,
         fieldVal: '',
-        extension: new Map(),
-        tabId: '1-1',
-        children: {
-          id: '2',
-          templateId: 'IconPage',
-          fields: [],
-          attributes: new Map(),
-          toJson: () => ''
-        }
+        extension: {},
+        tabId: 't1',
+        children: [
+          {
+            id: 'c1',
+            templateId: 'IconPage',
+            fields: [],
+            attributes: {},
+            toJson: () => ''
+          },
+          {
+            id: 'c2',
+            templateId: 'Slide',
+            fields: [],
+            attributes: {
+              height: '300px',
+            },
+            toJson: () => ''
+          }
+        ]
       }, {
-        fieldId: '1-2',
+        fieldId: 'f2',
         fieldType: FieldType.GROUP,
         fieldVal: '',
-        extension: new Map(),
-        tabId: '1-2',
-        children: {
-          id: '3',
-          templateId: 'Slide',
-          fields: [],
-          attributes: new Map(),
-          toJson: () => ''
-        }
+        extension: {},
+        tabId: 't2',
+        children: [
+
+        ]
       }],
       toJson: () => ''
     };
@@ -52,7 +59,7 @@ export class RenderService {
           fieldId: 'f01',
           fieldType: FieldType.TEXT,
           fieldVal: '頁面標題',
-          extension: new Map(),
+          extension: {},
         },
         {
           fieldId: 'f02',
@@ -89,40 +96,40 @@ export class RenderService {
           帝之靈。若無興德之言，則戮允等，以彰其慢。陛下亦宜自課，
           以諮諏善道，察納雅言，深追先帝遺詔，臣不勝受恩感激。
                 今當遠離，臨表涕泣，不知所云。`,
-          extension: new Map(),
+          extension: {},
         },
         {
           fieldId: 'f03',
           fieldType: FieldType.LINK,
           fieldVal: 'https://www.google.com.tw',
-          extension: new Map(),
+          extension: {},
         },
         {
           fieldId: 'f04',
           fieldType: FieldType.BGIMG,
           fieldVal: 'https://garden.decoder.com.tw/demo_cms/assets/img/CMS-login-bg.png',
-          extension: new Map(),
+          extension: {},
         },
         {
           fieldId: 'f05',
           fieldType: FieldType.IMG,
           fieldVal: 'http://www.neux.com.tw/neuximg/neuxLOGO.png',
-          extension: new Map(),
+          extension: {},
         },
         {
           fieldId: 'f06',
           fieldType: FieldType.GROUP,
           fieldVal: '',
-          extension: new Map(),
+          extension: {},
         },
         {
           fieldId: 'f07',
           fieldType: FieldType.HTMLEDITOR,
           fieldVal: '<div style="color:red;border:1px solid black; background-color: white; padding:10px"><span>我的自訂</span><span style="color:black;">01</span><div>',
-          extension: new Map(),
+          extension: {},
         }
       ],
-      attributes: new Map(),
+      attributes: {},
       toJson: () => ''
     };
 

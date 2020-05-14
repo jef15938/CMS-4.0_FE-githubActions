@@ -12,5 +12,5 @@ export interface FieldInfo {
     fieldId: string;
     fieldType: FieldType;
     fieldVal: any;
-    extension: Map<string, string>;
+    extension: { [key: string]: string };
 }

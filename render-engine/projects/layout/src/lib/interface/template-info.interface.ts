@@ -4,6 +4,6 @@ export interface TemplateInfo {
     id: string;
     templateId: string;
     fields: FieldInfo[];
-    attributes: Map<string, string>;
+    attributes: { [key: string]: string };
     toJson(): string;
 };

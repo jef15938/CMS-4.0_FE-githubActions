@@ -1,4 +1,9 @@
 .swiper-container {
+  display: block;
+  position: relative;
+}
+
+.swiper {
     position: absolute;
     top: 0;
     right: 0;

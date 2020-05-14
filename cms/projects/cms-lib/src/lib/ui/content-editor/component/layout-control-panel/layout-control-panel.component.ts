@@ -60,32 +60,32 @@ export class LayoutControlPanelComponent implements OnInit {
     this.select.emit({ template: mock, position: this.position });
   }
 
-  private _getMock() {
-    const tabTemplateInfo: TabTemplateInfo = {
-      id: '1',
-      templateId: 'Tab',
-      fields: [],
-      attributes: new Map(),
-      tabList: [{
-        fieldId: '1-1',
-        fieldType: FieldType.GROUP,
-        fieldVal: '',
-        extension: new Map(),
-        tabId: '1-1',
-        children: this._getIconPage(),
-      }, {
-        fieldId: '1-2',
-        fieldType: FieldType.GROUP,
-        fieldVal: '',
-        extension: new Map(),
-        tabId: '1-2',
-        children: this._getSlide(),
-      }],
-      toJson: () => ''
-    };
+  // private _getMock() {
+  //   const tabTemplateInfo: TabTemplateInfo = {
+  //     id: '1',
+  //     templateId: 'Tab',
+  //     fields: [],
+  //     attributes: new Map(),
+  //     tabList: [{
+  //       fieldId: '1-1',
+  //       fieldType: FieldType.GROUP,
+  //       fieldVal: '',
+  //       extension: new Map(),
+  //       tabId: '1-1',
+  //       children: this._getIconPage(),
+  //     }, {
+  //       fieldId: '1-2',
+  //       fieldType: FieldType.GROUP,
+  //       fieldVal: '',
+  //       extension: new Map(),
+  //       tabId: '1-2',
+  //       children: this._getSlide(),
+  //     }],
+  //     toJson: () => ''
+  //   };
 
-    return tabTemplateInfo;
-  }
+  //   return tabTemplateInfo;
+  // }
 
   private _getTab() {
     return {

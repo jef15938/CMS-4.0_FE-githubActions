@@ -2,9 +2,9 @@ import { Component, OnInit,Input } from '@angular/core';
 @Component({
   selector: 'app-tab-item',
   template: `
-        <p *ngIf="show">
+        <ng-container *ngIf="show">
             <ng-content></ng-content>
-        </p>
+        </ng-container>
     `,
   styleUrls: ['./tab-item.component.scss']
 })

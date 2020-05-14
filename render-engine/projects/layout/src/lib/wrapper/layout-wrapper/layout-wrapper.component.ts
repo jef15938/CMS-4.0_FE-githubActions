@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener, HostBinding } from '@angular/core';
 import { TemplateInfo } from '../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 import { LayoutBase } from '../layout-base/layout-base.interface';
@@ -14,11 +14,12 @@ import { LayoutWrapperBase } from './layout-wrapper-base';
 })
 export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutWrapper, OnInit, AfterViewInit {
 
+  @HostBinding('class.now-hover') nowHover: boolean;
+
   @Input() templateInfo: TemplateInfo;
   @Input() mode: 'preview' | 'edit' = 'edit';
 
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
-  @ViewChild('WrapperContainer') wrapperContainer: ElementRef;
 
   componentRef: ComponentRef<LayoutBase<TemplateInfo>>;
 
@@ -28,6 +29,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
     private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(COMPONENT_SERVICE_TOKEN) private componentFactory: any,
     private _changeDetectorRef: ChangeDetectorRef,
+    private _elementRef: ElementRef
   ) {
     super();
     this._changeDetectorRef.detach();
@@ -83,7 +85,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements LayoutW
 
   createLayoutWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {
     const event: LayoutWrapperSelectEvent = {
-      selectedTarget: this.wrapperContainer?.nativeElement,
+      selectedTarget: this._elementRef?.nativeElement,
       selectedTargetType: LayoutWrapperSelectedTargetType.TEMPLATE,
       wrapper: this,
       componentRef: this.componentRef,

@@ -8,7 +8,7 @@ import { TemplateType } from '../../wrapper/layout-wrapper/layout-wrapper.interf
 @Component({
   selector: 'lib-fields-demo',
   templateUrl: './fields-demo.component.html',
-  styleUrls: ['./fields-demo.component.css']
+  styleUrls: ['./fields-demo.component.scss']
 })
 export class FieldsDemoComponent extends LayoutBaseComponent<TemplateInfo> implements OnInit {
   templateType = TemplateType.COMMON;
