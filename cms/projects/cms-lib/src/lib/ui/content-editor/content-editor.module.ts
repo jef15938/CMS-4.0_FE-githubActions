@@ -9,6 +9,7 @@ import { LayoutModule } from 'layout';
 import { FormsModule } from '@angular/forms';
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { AddTemplateButtonComponent } from './component/add-template-button/add-template-button.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { AddTemplateButtonComponent } from './component/add-template-button/add-
     FormsModule,
     MatIconModule,
     MatExpansionModule,
+    MatMenuModule,
     LayoutModule,
   ],
   declarations: [

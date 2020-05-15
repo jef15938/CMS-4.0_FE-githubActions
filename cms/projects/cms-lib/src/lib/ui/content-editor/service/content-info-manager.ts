@@ -1,17 +1,10 @@
 import { ContentInfo } from '../../../neuxAPI/bean/ContentInfo';
 
 class ContentInfoState {
-
-  private _action: string;
-  get action() { return `action: ${this._action}`; };
-  set action(action: string) { this._action = action };
-
   constructor(
     public snapShot: ContentInfo,
-    action?: string,
-  ) {
-    this._action = action || '';
-  }
+    public action?: string,
+  ) { }
 }
 
 export class ContentInfoManager {

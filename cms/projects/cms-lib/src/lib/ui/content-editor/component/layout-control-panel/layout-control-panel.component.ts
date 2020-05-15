@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 
 class TemplateInfo {
@@ -19,7 +18,7 @@ export class LayoutControlPanelComponent implements OnInit {
 
   @Input() mainTemplates: TemplateInfo[] = [];
 
-  @Output() templateAdd = new EventEmitter();
+  @Output() templateAdd = new EventEmitter<string>(); // templateName
 
   selectedBtn: AddTemplateButtonComponent;
 
@@ -57,7 +56,7 @@ export class LayoutControlPanelComponent implements OnInit {
     if (!yes) { return; }
     const mock = this[`_get${t.templateId}`]();
     this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, mock);
-    this.templateAdd.emit();
+    this.templateAdd.emit(mock.templateId);
   }
 
   private _getTab() {

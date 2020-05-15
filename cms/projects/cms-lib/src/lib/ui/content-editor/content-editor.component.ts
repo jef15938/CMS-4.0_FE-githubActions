@@ -32,8 +32,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
 
   contentInfoManager: ContentInfoManager;
 
-  showActionListPanel = true;
-
   private _saved = true;
 
   private _destroy$ = new Subject();
@@ -92,7 +90,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
     });
   }
 
-  selectAddTemplatePosition(event: AddTemplateButtonComponent) {
+  selectAddTemplateEvent(event: AddTemplateButtonComponent) {
     this.resetSelected();
     this.layoutControlPanel.setSelected(event);
   }

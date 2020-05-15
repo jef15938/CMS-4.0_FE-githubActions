@@ -1,3 +1,10 @@
+<div>
+  <mat-menu #stateMenu="matMenu">
+    <div mat-menu-item [class.current-state]="contentInfoManager?.currentIndex === 0">Init</div>
+    <div mat-menu-item *ngFor="let state of contentInfoManager?.states; let i = index;"
+      [class.current-state]="contentInfoManager?.currentIndex === i+1">{{state.action}}</div>
+  </mat-menu>
+</div>
 <div class="cms-content-editor">
   <!-- 按鈕們 -->
   <div class="btn-panel" (click)="resetSelected()">
@@ -12,6 +19,10 @@
       (click)="resetSelected(); contentInfoManager?.forward(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>redo</mat-icon>
     </button>
+    <button #btnRedo type="button" mat-button alt="state list" #menuTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="stateMenu">
+      <mat-icon>list</mat-icon>
+    </button>
     <button #btnRedo type="button" mat-button alt="clear" (click)="clear()">
       <mat-icon>delete</mat-icon>
     </button>
@@ -25,26 +36,18 @@
     <div class="content-panel" (click)="resetSelected()">
       <cms-content-view-renderer [contentInfo]="contentInfoManager?.contentInfoEditModel"
         (select)="resetSelected();contentControlPanel?.setSelected($event)"
-        (addTemplateBtnClick)="selectAddTemplatePosition($event)">
+        (addTemplateBtnClick)="selectAddTemplateEvent($event)">
       </cms-content-view-renderer>
     </div>
     <!-- 版面控制 -->
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
-      <cms-layout-control-panel (templateAdd)="resetSelected(); contentInfoManager.preserveState('AddTemplate'); setEditorUnsaved(); contentViewRenderer?.checkView();">
+      <cms-layout-control-panel
+        (templateAdd)="resetSelected(); contentInfoManager.preserveState('AddTemplate : '+$event); setEditorUnsaved(); contentViewRenderer?.checkView();">
       </cms-layout-control-panel>
     </div>
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
       <cms-content-control-panel></cms-content-control-panel>
     </div>
-    <!-- Action列表 -->
-    <!-- <div *ngIf="showActionListPanel" class="action-list-panel">
-      <div>Action列表</div>
-      <div *ngFor="let action of actionManager.actions; let i = index">
-        <span [style.color]="action===actionManager.latestAction?'red': ''">{{i}}.</span>
-        <span>{{action.toString()}}</span>
-        <br>
-      </div>
-    </div> -->
   </div>
 </div>
