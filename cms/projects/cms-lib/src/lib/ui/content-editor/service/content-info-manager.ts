@@ -36,6 +36,11 @@ export class ContentInfoManager {
     return new ContentInfoState(JSON.parse(JSON.stringify(this._originState.snapShot)));
   }
 
+  resetState() {
+    const previous = this.currentIndex === 0 ? this._originState : this.states[this.currentIndex - 1];
+    this.currentState.snapShot = JSON.parse(JSON.stringify(previous.snapShot));
+  }
+
   preserveState(action: string = 'Unknow') {
     const nowSnapShot = JSON.parse(JSON.stringify(this.currentState.snapShot));
     this.states.splice(this.currentIndex, this.states.length - this.currentIndex, new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action));

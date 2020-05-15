@@ -8,7 +8,7 @@
 <div class="cms-content-editor">
   <!-- 按鈕們 -->
   <div class="btn-panel" (click)="resetSelected()">
-    <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave">
+    <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave" [disabled]="saved">
       <mat-icon>save</mat-icon>
     </button>
     <button #btnUndo type="button" mat-button alt="undo" [disabled]="!contentInfoManager?.hasPreviousState"
@@ -47,7 +47,7 @@
     </div>
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
-      <cms-content-control-panel></cms-content-control-panel>
+      <cms-content-control-panel [contentInfoManager]="contentInfoManager" (changePreserve)="setEditorUnsaved(); contentViewRenderer?.checkView();"></cms-content-control-panel>
     </div>
   </div>
 </div>

@@ -22,7 +22,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
   // 編輯對象外部提供資料
   @Input() contentInfo: ContentInfo;
   // 可選版面資料
-  @Input() selectableTemplates: TemplateGetResponse; 
+  @Input() selectableTemplates: TemplateGetResponse;
 
   @Input() btnClose = true;
   @Input() btnSave = true;
@@ -32,7 +32,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
 
   contentInfoManager: ContentInfoManager;
 
-  private _saved = true;
+  saved = true;
 
   private _destroy$ = new Subject();
 
@@ -62,11 +62,11 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   setEditorUnsaved() {
-    this._saved = false;
+    this.saved = false;
   }
 
   setEditorSaved() {
-    this._saved = true
+    this.saved = true
   }
 
   clear() {
@@ -74,7 +74,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   close() {
-    if (!this._saved) {
+    if (!this.saved) {
       const yes = window.confirm('有尚未儲存的變更，確定關閉？');
       if (!yes) {
         return;
@@ -96,11 +96,11 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   resetSelected() {
-    if (this.layoutControlPanel) {
-      this.layoutControlPanel.setSelected();
-    }
-    if (this.contentControlPanel) {
-      this.contentControlPanel.setSelected();
+    this.layoutControlPanel?.setSelected();
+    this.contentControlPanel?.setSelected();
+    if (this.contentControlPanel?.hasChange && this.contentInfoManager) {
+      this.contentInfoManager.resetState();
+      this.contentViewRenderer?.checkView();
     }
   }
 

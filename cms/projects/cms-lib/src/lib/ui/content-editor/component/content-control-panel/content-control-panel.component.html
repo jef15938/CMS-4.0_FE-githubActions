@@ -1,17 +1,17 @@
 <div *ngIf="show" class="cms-content-control-panel" style="padding: 0 10px;">
-  Select : {{content.selectedTargetType}}
+  Select : {{selected.selectedTargetType}}
   <hr>
-  <ng-container [ngSwitch]="content.selectedTargetType">
+  <ng-container [ngSwitch]="selected.selectedTargetType">
     <div *ngSwitchCase="LayoutWrapperSelectedTargetType.TEMPLATE">
       <div>
-        Id : {{content.templateInfo.id}}
+        Id : {{selected.templateInfo.id}}
         <br>
-        TemplateId : {{content.templateInfo.templateId}}
+        TemplateId : {{selected.templateInfo.templateId}}
         <br>
-        Type : {{content.templateType}}
+        Type : {{selected.templateType}}
         <hr>
       </div>
-      <div [ngSwitch]="content.templateType">
+      <div [ngSwitch]="selected.templateType">
         <div *ngSwitchCase="TemplateType.COMMON">
 
         </div>
@@ -31,22 +31,27 @@
     </div>
     <div *ngSwitchCase="LayoutWrapperSelectedTargetType.FIELD">
       <div>
-        FieldId : {{content.fieldInfo.fieldId}}
+        FieldId : {{selected.fieldInfo.fieldId}}
         <br>
-        FieldType : {{content.fieldInfo.fieldType}}
+        FieldType : {{selected.fieldInfo.fieldType}}
         <hr>
       </div>
-      <div [ngSwitch]="content.fieldInfo.fieldType">
-        <input *ngSwitchCase="FieldType.TEXT" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
-        <textarea *ngSwitchCase="FieldType.TEXTEREA" [(ngModel)]="content.fieldInfo.fieldVal" rows="10" cols="50"
-          style="width: 100%;"></textarea>
-        <input *ngSwitchCase="FieldType.LINK" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
-        <input *ngSwitchCase="FieldType.BGIMG" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
-        <input *ngSwitchCase="FieldType.IMG" [(ngModel)]="content.fieldInfo.fieldVal" style="width: 100%;">
-        <textarea *ngSwitchCase="FieldType.HTMLEDITOR" [(ngModel)]="content.fieldInfo.fieldVal" rows="10" cols="50"
-          style="width: 100%;"></textarea>
+      <div [ngSwitch]="selected.fieldInfo.fieldType">
+        <input *ngSwitchCase="FieldType.TEXT" [(ngModel)]="selected.fieldInfo.fieldVal" style="width: 100%;"
+          (keydown)="hasChange = true">
+        <textarea *ngSwitchCase="FieldType.TEXTEREA" [(ngModel)]="selected.fieldInfo.fieldVal" rows="10" cols="50"
+          style="width: 100%;" (keydown)="hasChange = true"></textarea>
+        <input *ngSwitchCase="FieldType.LINK" [(ngModel)]="selected.fieldInfo.fieldVal" style="width: 100%;"
+          (keydown)="hasChange = true">
+        <input *ngSwitchCase="FieldType.BGIMG" [(ngModel)]="selected.fieldInfo.fieldVal" style="width: 100%;"
+          (keydown)="hasChange = true">
+        <input *ngSwitchCase="FieldType.IMG" [(ngModel)]="selected.fieldInfo.fieldVal" style="width: 100%;"
+          (keydown)="hasChange = true">
+        <textarea *ngSwitchCase="FieldType.HTMLEDITOR" [(ngModel)]="selected.fieldInfo.fieldVal" rows="10" cols="50"
+          style="width: 100%;" (keydown)="hasChange = true"></textarea>
       </div>
     </div>
   </ng-container>
-
+  <hr>
+  <button type="button" style="width: 100%;" [disabled]="!hasChange" (click)="preserveChanges()">套用變更</button>
 </div>
