@@ -4,10 +4,12 @@
     <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave">
       <mat-icon>save</mat-icon>
     </button>
-    <button #btnUndo type="button" mat-button alt="undo" [disabled]="!actionManager?.canUndo" (click)="undo()">
+    <button #btnUndo type="button" mat-button alt="undo" [disabled]="!contentInfoManager?.hasPreviousState"
+      (click)="resetSelected(); contentInfoManager?.back(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>undo</mat-icon>
     </button>
-    <button #btnRedo type="button" mat-button alt="redo" [disabled]="!actionManager?.canRedo" (click)="redo()">
+    <button #btnRedo type="button" mat-button alt="redo" [disabled]="!contentInfoManager?.hasNextState"
+      (click)="resetSelected(); contentInfoManager?.forward(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>redo</mat-icon>
     </button>
     <button #btnRedo type="button" mat-button alt="clear" (click)="clear()">
@@ -17,18 +19,18 @@
       <mat-icon>clear</mat-icon>
     </button>
   </div>
-  <div class="main-block" *ngIf="contentInfoModel" [class.layout-control]="layoutControlPanel?.show"
-    [class.content-control]="contentControlPanel?.show">
+  <div class="main-block" *ngIf="contentInfoManager?.contentInfoEditModel"
+    [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
     <div class="content-panel" (click)="resetSelected()">
-      <cms-content-view-renderer [contentInfo]="contentInfoModel"
+      <cms-content-view-renderer [contentInfo]="contentInfoManager?.contentInfoEditModel"
         (select)="resetSelected();contentControlPanel?.setSelected($event)"
         (addTemplateBtnClick)="selectAddTemplatePosition($event)">
       </cms-content-view-renderer>
     </div>
     <!-- 版面控制 -->
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
-      <cms-layout-control-panel (templateAdd)="resetSelected();contentViewRenderer?.checkView()">
+      <cms-layout-control-panel (templateAdd)="resetSelected(); contentInfoManager.preserveState('AddTemplate'); setEditorUnsaved(); contentViewRenderer?.checkView();">
       </cms-layout-control-panel>
     </div>
     <!-- 內容編輯 -->

@@ -106,7 +106,10 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
   checkView(){
     this._changeDetectorRef.detectChanges();
-    this._renderAddTemplateButton(this.templatesContainer);
+    // TODO: 優化，有無可以不用setTimeout的方法
+    setTimeout(()=>{
+      this._renderAddTemplateButton(this.templatesContainer);
+    }, 0)
   }
 
   onSelect(ev: LayoutWrapperSelectEvent) {

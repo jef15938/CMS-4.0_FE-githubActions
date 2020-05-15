@@ -2,26 +2,12 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild, A
 import { Subject } from 'rxjs';
 import { ContentEditorSaveEvent } from './content-editor.interface';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
-import { ContentTemplateInfo } from '../../neuxAPI/bean/ContentTemplateInfo';
-import { ActionManager } from './service/action-manager';
-import { TabTemplateInfo, FieldType, TemplateInfo, GroupTemplateInfo } from 'layout';
+import { ContentInfoManager } from './service/content-info-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
-import { AddTemplateAction } from './content-editor.action-class';
 import { AddTemplateButtonComponent } from './component/add-template-button/add-template-button.component';
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
-
-class ContentInfoModel extends ContentInfo {
-  constructor(contentInfo: ContentInfo) {
-    super();
-    if (!contentInfo) {
-      this.templates = [];
-    } else {
-      this.templates = contentInfo.templates;
-    }
-  }
-}
 
 @Component({
   selector: 'cms-content-editor',
@@ -33,10 +19,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
   @ViewChild(ContentControlPanelComponent) contentControlPanel: ContentControlPanelComponent;
 
-  // 編輯對象原始資料
+  // 編輯對象外部提供資料
   @Input() contentInfo: ContentInfo;
-  // 編輯對象當前資料
-  @Input() contentInfoModel: ContentInfoModel;
   // 可選版面資料
   @Input() selectableTemplates: TemplateGetResponse; 
 
@@ -46,7 +30,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
   @Output() editorClose = new EventEmitter<ContentInfo>();
   @Output() editorSave = new EventEmitter<ContentEditorSaveEvent>();
 
-  actionManager: ActionManager;
+  contentInfoManager: ContentInfoManager;
 
   showActionListPanel = true;
 
@@ -70,8 +54,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
 
   private _init() {
     this.resetSelected();
-    this.actionManager = new ActionManager();
-    this.contentInfoModel = new ContentInfoModel(this.contentInfo);
+    this.contentInfoManager = new ContentInfoManager(this.contentInfo);
   }
 
   ngOnDestroy(): void {
@@ -80,16 +63,16 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
     this._destroy$.unsubscribe();
   }
 
-  private _setEditorUnsaved() {
+  setEditorUnsaved() {
     this._saved = false;
   }
 
-  private _setEditorSaved() {
+  setEditorSaved() {
     this._saved = true
   }
 
   clear() {
-    this._setEditorUnsaved();
+    this.setEditorUnsaved();
   }
 
   close() {
@@ -99,29 +82,19 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
         return;
       }
     }
-    this.editorClose.emit(this.contentInfoModel);
+    this.editorClose.emit(this.contentInfoManager.contentInfoEditModel);
   }
 
   save() {
     this.editorSave.emit({
-      contentInfo: this.contentInfoModel,
-      editorSave: this._setEditorSaved.bind(this),
+      contentInfo: this.contentInfoManager.contentInfoEditModel,
+      editorSave: this.setEditorSaved.bind(this),
     });
   }
 
   selectAddTemplatePosition(event: AddTemplateButtonComponent) {
     this.resetSelected();
     this.layoutControlPanel.setSelected(event);
-  }
-
-  undo() {
-    this.actionManager.undo();
-    this._setEditorUnsaved();
-  }
-
-  redo() {
-    this.actionManager.redo();
-    this._setEditorUnsaved();
   }
 
   resetSelected() {
@@ -131,16 +104,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
     if (this.contentControlPanel) {
       this.contentControlPanel.setSelected();
     }
-  }
-
-  onTemplateSelect(event: { template: ContentTemplateInfo, position: number }) {
-    this.actionManager.doAction(new AddTemplateAction({
-      contentInfo: this.contentInfoModel,
-      position: event.position,
-      template: event.template,
-    }));
-    this.resetSelected();
-    this._changeDetectorRef.detectChanges();
   }
 
 }
