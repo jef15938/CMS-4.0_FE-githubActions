@@ -54,7 +54,7 @@ export class ContentControlPanelComponent implements OnInit {
         target.push(`[${LayoutWrapperSelectedTargetType.FIELD}]${this.selected.fieldInfo.fieldId}`);
         break;
     }
-    this.contentInfoManager.preserveState(`${targetType}變更 : ${target.join(' ')}`);
+    this.contentInfoManager.preserveState(`Change ${targetType} : ${target.join(' ')}`);
     // 不關閉的話外面的物件被copy但裡面指向的對象還是舊的，待研究
     this.setSelected();
     this.hasChange = false;
