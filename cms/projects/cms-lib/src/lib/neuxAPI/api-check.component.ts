@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { APIFactory } from '@neux/core';
 
 @Component({
-  selector: 'cms-api-check',
+  selector: 'app-api-check',
   template: `<p>Select API:</p><select (change)="onApiChange($event)">
   <option>Select...</option>
   <option *ngFor="let apiName of apiList" [value]="apiName">{{apiName}}</option>

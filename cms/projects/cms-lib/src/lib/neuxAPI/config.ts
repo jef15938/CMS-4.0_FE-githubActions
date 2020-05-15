@@ -36,6 +36,7 @@ GetFarmDetailInfoByFarmID: `${BASE_URL}\/FarmDetailInfo/{farmID}`,
 GetSite: `${BASE_URL}\/Site`,
 GetGroupMenuByGroupID: `${BASE_URL}\/Group/Menu/{groupID}`,
 GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
+GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
 
 };
 const API_TYPE = {
@@ -74,5 +75,6 @@ GetFarmDetailInfoByFarmID: 'Restful',
 GetSite: 'Restful',
 GetGroupMenuByGroupID: 'Restful',
 GetGroupSiteMapByGroupID: 'Restful',
+GetTemplateByControlID: 'Restful',
 
 };

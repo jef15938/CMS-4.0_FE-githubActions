@@ -1094,11 +1094,44 @@ paths:
         name: groupID
         in: path
         required: true
+  '/Template/{controlID}':
+    get:
+      summary: GetTemplate
+      tags:
+        - Content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Template
+      description: 取得編輯器所需的版型清單
+    parameters:
+      - schema:
+          type: string
+        name: controlID
+        in: path
+        required: true
+        description: 依照這個參數區分這次編輯時可以使用哪些版型，在節點管理中則帶入layout_id，網站管理的話會多一個欄位來控制controlid
 components:
   schemas:
     LoginRequest:
       title: LoginRequest
       type: object
+      x-tags:
+        - Model
       properties:
         username:
           type: string
@@ -1113,8 +1146,6 @@ components:
         - username
         - password
         - validation_code
-      x-tags:
-        - Model
     GenerationHeader:
       title: GenerationHeader
       type: object
@@ -1746,7 +1777,7 @@ components:
     FarmFormInfo:
       title: FarmFormInfo
       type: object
-      description: 'Search & Form共用的物件'
+      description: Search & Form共用的物件
       x-tags:
         - Model
       properties:
@@ -2168,4 +2199,42 @@ components:
               type: boolean
       required:
         - datas
+    TemplateGetResponse:
+      title: TemplateGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        static:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+        tab:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+        dynamic:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+        customize:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+    TemplateInfo:
+      title: TemplateInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        template_id:
+          type: string
+        template_name:
+          type: string
+        template_thumbnail:
+          type: string
+      required:
+        - template_id
+        - template_name
+        - template_thumbnail
   securitySchemes: {}

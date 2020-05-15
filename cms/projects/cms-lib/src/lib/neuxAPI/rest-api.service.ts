@@ -39,6 +39,7 @@ import { GetFarmDetailInfoByFarmIDAPI } from './api/GetFarmDetailInfoByFarmIDAPI
 import { GetSiteAPI } from './api/GetSiteAPI';
 import { GetGroupMenuByGroupIDAPI } from './api/GetGroupMenuByGroupIDAPI';
 import { GetGroupSiteMapByGroupIDAPI } from './api/GetGroupSiteMapByGroupIDAPI';
+import { GetTemplateByControlIDAPI } from './api/GetTemplateByControlIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GalleryCaregoryGetResponse } from './bean/GalleryCaregoryGetResponse';
@@ -58,6 +59,7 @@ import { FarmFormInfo } from './bean/FarmFormInfo';
 import { SiteGetResponse } from './bean/SiteGetResponse';
 import { GroupMenuGetResponse } from './bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
+import { TemplateGetResponse } from './bean/TemplateGetResponse';
 
 
 const APIResponseMap= {
@@ -96,6 +98,7 @@ GetFarmDetailInfoByFarmID: FarmFormInfo,
 GetSite: SiteGetResponse,
 GetGroupMenuByGroupID: GroupMenuGetResponse,
 GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
+GetTemplateByControlID: TemplateGetResponse,
 
 }
 
@@ -147,6 +150,7 @@ this.ApiFactory.registerAPI(new GetFarmDetailInfoByFarmIDAPI());
 this.ApiFactory.registerAPI(new GetSiteAPI());
 this.ApiFactory.registerAPI(new GetGroupMenuByGroupIDAPI());
 this.ApiFactory.registerAPI(new GetGroupSiteMapByGroupIDAPI());
+this.ApiFactory.registerAPI(new GetTemplateByControlIDAPI());
 
     }
 
