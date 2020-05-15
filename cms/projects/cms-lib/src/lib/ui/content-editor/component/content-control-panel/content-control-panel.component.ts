@@ -18,7 +18,7 @@ export class ContentControlPanelComponent implements OnInit {
   LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
   FieldType = FieldType;
 
-  // 決定變更是否回覆
+  // 用來判斷資料是否異動過
   hasChange = false;
 
   selected: LayoutWrapperSelectEvent;
@@ -55,8 +55,6 @@ export class ContentControlPanelComponent implements OnInit {
         break;
     }
     this.contentInfoManager.preserveState(`Change ${targetType} : ${target.join(' ')}`);
-    // 不關閉的話外面的物件被copy但裡面指向的對象還是舊的，待研究
-    this.setSelected();
     this.hasChange = false;
     this.changePreserve.emit();
   }

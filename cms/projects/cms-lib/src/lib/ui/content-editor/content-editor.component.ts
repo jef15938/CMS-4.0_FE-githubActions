@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild, AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ContentEditorSaveEvent } from './content-editor.interface';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
@@ -14,10 +14,12 @@ import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
   templateUrl: './content-editor.component.html',
   styleUrls: ['./content-editor.component.scss']
 })
-export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentChecked {
+export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked {
   @ViewChild(ContentViewRendererComponent) contentViewRenderer: ContentViewRendererComponent;
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
   @ViewChild(ContentControlPanelComponent) contentControlPanel: ContentControlPanelComponent;
+
+  @ViewChild('contentPanel') contentPanelDiv: ElementRef;
 
   // 編輯對象外部提供資料
   @Input() contentInfo: ContentInfo;
@@ -42,6 +44,10 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
 
   }
 
+  ngAfterViewInit(): void {
+    this._addCaptureContentPanelClickEventListener();
+  }
+
   ngOnInit(): void {
     this._init();
   }
@@ -59,6 +65,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
     this._destroy$.next();
     this._destroy$.complete();
     this._destroy$.unsubscribe();
+    this._removeCaptureContentPanelClickEventListener();
   }
 
   setEditorUnsaved() {
@@ -76,9 +83,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
   close() {
     if (!this.saved) {
       const yes = window.confirm('有尚未儲存的變更，確定關閉？');
-      if (!yes) {
-        return;
-      }
+      if (!yes) { return; }
     }
     this.editorClose.emit(this.contentInfoManager.contentInfoEditModel);
   }
@@ -98,9 +103,40 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterContentCh
   resetSelected() {
     this.layoutControlPanel?.setSelected();
     this.contentControlPanel?.setSelected();
+  }
+
+  /**
+   * TODO: 待檢討或優化．
+   * 處理"選取Template/Field，與拷貝物件保存功能衝突"造成的問題．
+   * 利用監聽Capture讓程式能在 "按下" -> "選取Template/Field" 中間階段做事．
+   * ps 1. Angular Dom Event Binding Or fromEvent() 無法監聽 Capture 階段 ?
+   * ps 2. 在listener的function內呼叫ev.stopPropagation()，會讓Click不往下傳給child，造成無法選取．
+   * 
+   * 選取Template/Field後，會將對應元件的資料物件傳回給 ContentControlPanel 做編輯．
+   * 與拷貝物件保存功能會造成衝突：
+   * 1.選取的是舊物件，在 ContentControlPanel 編輯時不會同步反映到 ContentViewRenderer 的畫面上．
+   * 2.在 ContentControlPanel 編輯後，物件拷貝更新了，但是無法觸發畫面重新渲染，造成 ContentViewRenderer 產生 AddTemplateBtn 時異常．
+   * 
+   * @memberof ContentEditorComponent
+   */
+  private _addCaptureContentPanelClickEventListener() {
+    const contentPanelDiv = this.contentPanelDiv?.nativeElement as HTMLDivElement;
+    contentPanelDiv?.addEventListener('click', this._contentPanelClickEventListener, true);
+  }
+
+  private _removeCaptureContentPanelClickEventListener() {
+    const contentPanelDiv = this.contentPanelDiv?.nativeElement as HTMLDivElement;
+    contentPanelDiv?.removeEventListener('click', this._contentPanelClickEventListener, true);
+  }
+
+  private _contentPanelClickEventListener = (ev) => {
     if (this.contentControlPanel?.hasChange && this.contentInfoManager) {
-      this.contentInfoManager.resetState();
+      const yes = window.confirm('選取的Template/Field有尚未儲存的變更，確定放棄？');
+      if (!yes) { ev.stopPropagation(); return; }
+      this.resetSelected();
+      this.contentInfoManager?.resetState();
       this.contentViewRenderer?.checkView();
+      this.contentControlPanel.hasChange = false;
     }
   }
 

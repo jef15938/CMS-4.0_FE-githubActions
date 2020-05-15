@@ -33,7 +33,7 @@
   <div class="main-block" *ngIf="contentInfoManager?.contentInfoEditModel"
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
-    <div class="content-panel" (click)="resetSelected()">
+    <div #contentPanel class="content-panel">
       <cms-content-view-renderer [contentInfo]="contentInfoManager?.contentInfoEditModel"
         (select)="resetSelected();contentControlPanel?.setSelected($event)"
         (addTemplateBtnClick)="selectAddTemplateEvent($event)">
