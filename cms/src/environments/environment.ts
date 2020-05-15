@@ -40,6 +40,7 @@ export const environment = {
     GetSite: `${BASE_URL}\/Site`,
     GetGroupMenuByGroupID: `${BASE_URL}\/Group/Menu/{groupID}`,
     GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
+    GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Mock',
@@ -64,7 +65,7 @@ export const environment = {
     PostUserSiteMapBySiteID: 'Restful',
     PutUserSiteMapByNodeID: 'Restful',
     DeleteUserSiteMapByNodeID: 'Restful',
-    GetContentByContentID: 'Restful',
+    GetContentByContentID: 'Mock',
     PutContentByContentID: 'Restful',
     GetMyAuditingByOrderID: 'Mock',
     GetMyAuditing: 'Mock',
@@ -77,6 +78,7 @@ export const environment = {
     GetSite: 'Mock',
     GetGroupMenuByGroupID: 'Restful',
     GetGroupSiteMapByGroupID: 'Restful',
+    GetTemplateByControlID: 'Mock',
   }
 };
 

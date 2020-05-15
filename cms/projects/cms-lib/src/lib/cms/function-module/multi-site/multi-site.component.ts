@@ -155,7 +155,8 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     this._modalService.openComponent({
       component: SitemapEditContentModalComponent,
       componentInitData: {
-
+        contentID: 'fakeLayoutId',
+        controlID: 'fakeLayoutId',
       },
     }, true).subscribe();
   }
