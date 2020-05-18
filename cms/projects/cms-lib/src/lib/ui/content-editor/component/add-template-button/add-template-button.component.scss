@@ -6,12 +6,13 @@
 
 .add-template-btn {
   text-align: center;
-  background-color: lightgreen;
-  height: 20px;
-  line-height: 20px;
+  background-color: #c5f07b;
+  height: 24px;
+  line-height: 24px;
+  vertical-align: middle;
   color: black;
 
-  &:hover {
+  &.is-selected, &:hover {
     background-color: green;
     color: white;
   }

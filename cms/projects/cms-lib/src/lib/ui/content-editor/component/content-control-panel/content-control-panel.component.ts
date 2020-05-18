@@ -56,7 +56,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    *
    * @memberof ContentControlPanelComponent
    */
-  preserveChanges() {
+  preserveChanges(action?: string) {
     const targetType = this.selected.selectedTargetType;
     let target: string[] = [];
     switch (targetType) {
@@ -68,7 +68,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
         target.push(`[${LayoutWrapperSelectedTargetType.FIELD}]${this.selected.fieldInfo.fieldId}`);
         break;
     }
-    this.manager.stateManager.preserveState(`Change ${targetType} : ${target.join(' ')}`);
+    this.manager.stateManager.preserveState(action || `Change ${targetType} : ${target.join(' ')}`);
     this.changePreserve.emit();
     this.movingTemplate.emit(false);
     this.needCheckView.emit();
@@ -133,8 +133,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     const index = templateInfos.indexOf(selectedTemplateInfo);
     if (index > -1) {
       templateInfos.splice(index, 1);
-      this.hasChange = true;
-      this.needCheckView.emit();
+      this.preserveChanges(`DelTemplate : ${this.selected.templateInfo.templateId}`);
     }
   }
 
