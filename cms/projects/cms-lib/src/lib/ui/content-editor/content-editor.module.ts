@@ -10,6 +10,9 @@ import { FormsModule } from '@angular/forms';
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { AddTemplateButtonComponent } from './component/add-template-button/add-template-button.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { TemplateControlTabComponent } from './component/content-control-panel/control/template/template-control-tab/template-control-tab.component';
+import { MatListModule } from '@angular/material/list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -18,6 +21,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatExpansionModule,
     MatMenuModule,
+    MatListModule,
+    DragDropModule,
     LayoutModule,
   ],
   declarations: [
@@ -26,6 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
     ContentControlPanelComponent,
     ContentViewRendererComponent,
     AddTemplateButtonComponent,
+    TemplateControlTabComponent,
   ],
   exports: [
     ContentEditorComponent,

@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  width: 100%;
+
+  .item-container {
+    width: 100%;
+
+    mat-icon, input {
+      height: 24px;
+      line-height: 24px;
+      vertical-align: middle;
+    }
+
+    mat-icon {
+      width: 24px;
+    }
+
+    input {
+      width: calc(100% - 24px);
+    }
+  }
+}

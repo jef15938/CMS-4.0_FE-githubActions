@@ -9,22 +9,23 @@
       </div>
       <div [ngSwitch]="selected.templateType">
         <div class="btn-group">
-          <button type="button" (click)="templateShowInfo()">
+          <button type="button" mat-button (click)="templateShowInfo()">
             <mat-icon>info</mat-icon>
           </button>
-          <button type="button" (click)="templateMoveUp()" [disabled]="!canTemplateMoveUp">
+          <button type="button" mat-button (click)="templateMoveUp()" [disabled]="!canTemplateMoveUp">
             <mat-icon>keyboard_arrow_up</mat-icon>
           </button>
-          <button type="button" (click)="templateMoveDown()" [disabled]="!canTemplateMoveDown">
+          <button type="button" mat-button (click)="templateMoveDown()" [disabled]="!canTemplateMoveDown">
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
-          <button type="button" (click)="templateDelete()">
+          <button type="button" mat-button (click)="templateDelete()">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
-        <div *ngSwitchCase="TemplateType.TAB">
-
-        </div>
+        <hr>
+        <ng-container *ngSwitchCase="TemplateType.TAB">
+          <cms-template-control-tab [selected]="selected" (change)="hasChange=true;needCheckView.emit();"></cms-template-control-tab>
+        </ng-container>
         <div *ngSwitchCase="TemplateType.GROUP">
 
         </div>
