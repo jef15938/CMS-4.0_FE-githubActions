@@ -5,5 +5,4 @@ export interface TemplateInfo {
     templateId: string;
     fields: FieldInfo[];
     attributes: { [key: string]: string };
-    toJson(): string;
 };

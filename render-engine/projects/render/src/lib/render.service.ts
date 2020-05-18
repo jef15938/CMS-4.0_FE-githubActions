@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ContentInfo, TabTemplateInfo, FieldType, TemplateInfo } from '@layout';
+import { ContentInfo, TabTemplateInfo, FieldType, TemplateInfo, GroupTemplateInfo } from '@layout';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,6 @@ export class RenderService {
             templateId: 'IconPage',
             fields: [],
             attributes: {},
-            toJson: () => ''
           },
           {
             id: 'c2',
@@ -35,7 +34,6 @@ export class RenderService {
             attributes: {
               height: '300px',
             },
-            toJson: () => ''
           }
         ]
       }, {
@@ -48,7 +46,6 @@ export class RenderService {
 
         ]
       }],
-      toJson: () => ''
     };
 
     const fieldsDemoTemplateInfo: TemplateInfo = {
@@ -130,11 +127,60 @@ export class RenderService {
         }
       ],
       attributes: {},
-      toJson: () => ''
     };
+
+    const groupTemplateInfo: GroupTemplateInfo = {
+      id: 'groupTemplateInfo01',
+      templateId: 'Group',
+      fields: [],
+      attributes: {},
+      itemList: [
+        [
+          {
+            fieldId: 't01',
+            fieldType: FieldType.TEXT,
+            fieldVal: '群組1',
+            extension: {},
+          },
+          {
+            fieldId: 'l01',
+            fieldType: FieldType.LINK,
+            fieldVal: 'https://www.google.com.tw',
+            extension: {},
+          },
+          {
+            fieldId: 'i01',
+            fieldType: FieldType.IMG,
+            fieldVal: 'http://www.neux.com.tw/neuximg/neuxLOGO.png',
+            extension: {},
+          }
+        ],
+        [
+          {
+            fieldId: 't02',
+            fieldType: FieldType.TEXT,
+            fieldVal: '群組2',
+            extension: {},
+          },
+          {
+            fieldId: 'l02',
+            fieldType: FieldType.LINK,
+            fieldVal: 'https://www.google.com.tw',
+            extension: {},
+          },
+          {
+            fieldId: 'i02',
+            fieldType: FieldType.IMG,
+            fieldVal: 'http://www.neux.com.tw/neuximg/neuxLOGO.png',
+            extension: {},
+          }
+        ]
+      ]
+    }
 
     const mock: ContentInfo = {
       templateList: [
+        groupTemplateInfo,
         fieldsDemoTemplateInfo,
         tabTemplateInfo
       ],

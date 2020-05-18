@@ -1,0 +1,15 @@
+<h1>Group Template Demo</h1>
+<div style="margin: 10px; padding: 10px; border: 1px solid pink">
+  <div *ngFor="let group of templateInfo.itemList; let i = index;">
+    <div [libTemplateField]="group[0]">
+      標題 : {{group[0].fieldVal}}
+    </div>
+    <div [libTemplateField]="group[1]">
+      連結 : {{group[1].fieldVal}}
+    </div>
+    <div [libTemplateField]="group[2]">
+      圖片 : {{group[2].fieldVal}}
+    </div>
+    <hr *ngIf="i!==templateInfo.itemList.length-1">
+  </div>
+</div>

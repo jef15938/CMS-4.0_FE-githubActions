@@ -6,6 +6,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { WrapperModule } from './wrapper/wrapper.module';
 import { FieldsDemoComponent } from './components/fields-demo/fields-demo.component';
 import { SafeHtmlPipe } from './pipe/safe-html.pipe';
+import { GroupTemplateDemoComponent } from './components/group-template-demo/group-template-demo.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { SafeHtmlPipe } from './pipe/safe-html.pipe';
     SliderComponent,
     FieldsDemoComponent,
     SafeHtmlPipe,
+    GroupTemplateDemoComponent,
   ],
   exports: [
     IconPageComponent,

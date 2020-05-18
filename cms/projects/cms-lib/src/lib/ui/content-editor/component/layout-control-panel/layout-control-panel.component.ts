@@ -72,7 +72,6 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       fields: [],
       attributes: {},
       tabList: [],
-      toJson: () => ''
     };
   }
 
@@ -82,7 +81,6 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       templateId: 'IconPage',
       fields: [],
       attributes: {},
-      toJson: () => ''
     };
   }
 
@@ -94,7 +92,6 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       attributes: {
         height: '300px'
       },
-      toJson: () => ''
     }
   }
 
