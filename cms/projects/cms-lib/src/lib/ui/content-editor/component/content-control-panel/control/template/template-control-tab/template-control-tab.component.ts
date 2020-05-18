@@ -48,5 +48,10 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     this.change.emit();
   }
 
+  removeTab(tab: TabInfo) {
+    this.tabList.splice(this.tabList.indexOf(tab), 1);
+    this.change.emit();
+  }
+
 
 }

@@ -3,6 +3,7 @@
     <div class="item-container">
       <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
       <input [(ngModel)]="tabInfo.tabId">
+      <mat-icon class="pointer" (click)="removeTab(tabInfo)">remove_circle</mat-icon>
     </div>
   </mat-list-item>
   <mat-list-item style="text-align: center;">
