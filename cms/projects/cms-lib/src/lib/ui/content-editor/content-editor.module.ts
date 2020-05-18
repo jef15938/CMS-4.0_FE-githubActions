@@ -13,6 +13,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TemplateControlTabComponent } from './component/content-control-panel/control/template/template-control-tab/template-control-tab.component';
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FieldControlTextComponent } from './component/content-control-panel/control/field/field-control-text/field-control-text.component';
+import { FieldControlTextareaComponent } from './component/content-control-panel/control/field/field-control-textarea/field-control-textarea.component';
+import { FieldControlLinkComponent } from './component/content-control-panel/control/field/field-control-link/field-control-link.component';
+import { FieldControlBgimgComponent } from './component/content-control-panel/control/field/field-control-bgimg/field-control-bgimg.component';
+import { FieldControlImgComponent } from './component/content-control-panel/control/field/field-control-img/field-control-img.component';
+import { FieldControlHtmlEditorComponent } from './component/content-control-panel/control/field/field-control-html-editor/field-control-html-editor.component';
+import { FieldControlGroupComponent } from './component/content-control-panel/control/field/field-control-group/field-control-group.component';
 
 @NgModule({
   imports: [
@@ -32,6 +39,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ContentViewRendererComponent,
     AddTemplateButtonComponent,
     TemplateControlTabComponent,
+    FieldControlTextComponent,
+    FieldControlTextareaComponent,
+    FieldControlLinkComponent,
+    FieldControlBgimgComponent,
+    FieldControlImgComponent,
+    FieldControlHtmlEditorComponent,
+    FieldControlGroupComponent,
   ],
   exports: [
     ContentEditorComponent,

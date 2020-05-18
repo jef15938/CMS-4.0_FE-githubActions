@@ -1,19 +1,15 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo } from 'layout';
+import { ContentControlBase } from '../../_base';
 
 @Component({
   selector: 'cms-template-control-tab',
   templateUrl: './template-control-tab.component.html',
   styleUrls: ['./template-control-tab.component.scss']
 })
-export class TemplateControlTabComponent implements OnInit, OnChanges {
-
-  @Input() selected: LayoutWrapperSelectEvent;
-  @Output() change = new EventEmitter();
+export class TemplateControlTabComponent extends ContentControlBase implements OnInit, OnChanges {
 
   tabList: TabInfo[] = [];
-
-  constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selected'] && changes['selected'].currentValue) {
