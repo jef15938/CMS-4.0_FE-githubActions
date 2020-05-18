@@ -1,22 +1,22 @@
 <div>
   <mat-menu #stateMenu="matMenu">
-    <div mat-menu-item [class.current-state]="contentInfoManager?.currentIndex === 0">Init</div>
-    <div mat-menu-item *ngFor="let state of contentInfoManager?.states; let i = index;"
-      [class.current-state]="contentInfoManager?.currentIndex === i+1">{{state.action}}</div>
+    <div mat-menu-item [class.current-state]="manager?.stateManager?.currentIndex === 0">Init</div>
+    <div mat-menu-item *ngFor="let state of manager?.stateManager?.states; let i = index;"
+      [class.current-state]="manager?.stateManager?.currentIndex === i+1">{{state.action}}</div>
   </mat-menu>
 </div>
-<div class="cms-content-editor">
+<div class="cms-content-editor" (click)="contentPanelClickEventListener($event)">
   <!-- 按鈕們 -->
   <div class="btn-panel" (click)="resetSelected()">
     <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave" [disabled]="saved">
       <mat-icon>save</mat-icon>
     </button>
-    <button #btnUndo type="button" mat-button alt="undo" [disabled]="!contentInfoManager?.hasPreviousState"
-      (click)="resetSelected(); contentInfoManager?.back(); setEditorUnsaved(); contentViewRenderer?.checkView();">
+    <button #btnUndo type="button" mat-button alt="undo" [disabled]="!manager?.stateManager?.hasPreviousState"
+      (click)="resetSelected(); manager?.stateManager?.back(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>undo</mat-icon>
     </button>
-    <button #btnRedo type="button" mat-button alt="redo" [disabled]="!contentInfoManager?.hasNextState"
-      (click)="resetSelected(); contentInfoManager?.forward(); setEditorUnsaved(); contentViewRenderer?.checkView();">
+    <button #btnRedo type="button" mat-button alt="redo" [disabled]="!manager?.stateManager?.hasNextState"
+      (click)="resetSelected(); manager?.stateManager?.forward(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>redo</mat-icon>
     </button>
     <button #btnRedo type="button" mat-button alt="state list" #menuTrigger="matMenuTrigger"
@@ -30,24 +30,25 @@
       <mat-icon>clear</mat-icon>
     </button>
   </div>
-  <div class="main-block" *ngIf="contentInfoManager?.contentInfoEditModel"
+  <div class="main-block" *ngIf="manager?.stateManager?.contentInfoEditModel"
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
-    <div #contentPanel class="content-panel">
-      <cms-content-view-renderer [contentInfo]="contentInfoManager?.contentInfoEditModel"
-        (select)="resetSelected();contentControlPanel?.setSelected($event)"
-        (addTemplateBtnClick)="selectAddTemplateEvent($event)">
+    <div #contentPanel class="content-panel" [class.scale]="isMovingTemplate">
+      <cms-content-view-renderer [contentInfo]="manager?.stateManager?.contentInfoEditModel"
+        (select)="resetSelected();manager.selectedViewElementEvent=$event;"
+        (addTemplateBtnClick)="resetSelected();manager.selectedTemplateAddBtn=$event;">
       </cms-content-view-renderer>
     </div>
     <!-- 版面控制 -->
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
-      <cms-layout-control-panel
-        (templateAdd)="resetSelected(); contentInfoManager.preserveState('AddTemplate : '+$event); setEditorUnsaved(); contentViewRenderer?.checkView();">
+      <cms-layout-control-panel [selectedBtn]="manager.selectedTemplateAddBtn"
+        (templateAdd)="resetSelected(); manager.stateManager.preserveState('AddTemplate : '+$event); setEditorUnsaved(); contentViewRenderer?.checkView();">
       </cms-layout-control-panel>
     </div>
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
-      <cms-content-control-panel [contentInfoManager]="contentInfoManager" (changePreserve)="setEditorUnsaved(); contentViewRenderer?.checkView();"></cms-content-control-panel>
+      <cms-content-control-panel [manager]="manager" [selected]="manager.selectedViewElementEvent" (movingTemplate)="isMovingTemplate=$event;"
+        (changePreserve)="resetSelected();setEditorUnsaved();" (needCheckView)="contentViewRenderer?.checkView();"></cms-content-control-panel>
     </div>
   </div>
 </div>

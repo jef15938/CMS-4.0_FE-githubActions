@@ -1,18 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType } from 'layout';
-import { ContentInfoManager } from '../../service/content-info-manager';
+import { ContentEditorManager } from '../../service/content-editor-manager';
 
 @Component({
   selector: 'cms-content-control-panel',
   templateUrl: './content-control-panel.component.html',
   styleUrls: ['./content-control-panel.component.scss']
 })
-export class ContentControlPanelComponent implements OnInit {
+export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   TemplateType = TemplateType;
 
-  @Input() contentInfoManager: ContentInfoManager;
+  @Input() manager: ContentEditorManager;
+  @Input() selected: LayoutWrapperSelectEvent;
 
+  @Output() needCheckView = new EventEmitter();
+  @Output() movingTemplate = new EventEmitter<boolean>();
   @Output() changePreserve = new EventEmitter();
 
   LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
@@ -21,27 +24,38 @@ export class ContentControlPanelComponent implements OnInit {
   // 用來判斷資料是否異動過
   hasChange = false;
 
-  selected: LayoutWrapperSelectEvent;
-
   get show() { return !!this.selected; }
+  get canTemplateMoveUp() {
+    return this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) > 0;
+  }
+  get canTemplateMoveDown() {
+    return this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) !== this.selected?.wrapper?.parentTemplatesContainer?.templates?.length - 1;
+  }
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  setSelected(newSelected?: LayoutWrapperSelectEvent) {
-    const oldSelected = this.selected;
-    if (oldSelected) {
-      oldSelected.selectedTarget.classList.remove('now-edit');
-    }
-    if (newSelected) {
-      newSelected.selectedTarget.classList.add('now-edit');
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selected']) {
+      const previous = changes['selected'].previousValue as LayoutWrapperSelectEvent;
+      const current = changes['selected'].currentValue as LayoutWrapperSelectEvent;
+      if (previous) {
+        previous.selectedTarget.classList.remove('now-edit');
+      }
+      if (current) {
+        current.selectedTarget.classList.add('now-edit');
+      }
       this.hasChange = false;
     }
-    this.selected = newSelected;
   }
 
+  /**
+   * 套用變更
+   *
+   * @memberof ContentControlPanelComponent
+   */
   preserveChanges() {
     const targetType = this.selected.selectedTargetType;
     let target: string[] = [];
@@ -54,9 +68,74 @@ export class ContentControlPanelComponent implements OnInit {
         target.push(`[${LayoutWrapperSelectedTargetType.FIELD}]${this.selected.fieldInfo.fieldId}`);
         break;
     }
-    this.contentInfoManager.preserveState(`Change ${targetType} : ${target.join(' ')}`);
-    this.hasChange = false;
+    this.manager.stateManager.preserveState(`Change ${targetType} : ${target.join(' ')}`);
     this.changePreserve.emit();
+    this.movingTemplate.emit(false);
+    this.needCheckView.emit();
+    this.hasChange = false;
+  }
+
+  /**
+   * 顯示版型info
+   *
+   * @memberof ContentControlPanelComponent
+   */
+  templateShowInfo() {
+
+  }
+
+  /**
+   * 版型移動上
+   *
+   * @memberof ContentControlPanelComponent
+   */
+  templateMoveUp() {
+    const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
+    const selectedTemplateInfo = this.selected.templateInfo;
+    const index = templateInfos.indexOf(selectedTemplateInfo);
+    if (index > 0) {
+      templateInfos[index] = templateInfos[index - 1];
+      templateInfos[index - 1] = selectedTemplateInfo;
+      this.hasChange = true;
+      this.movingTemplate.emit(true);
+      this.needCheckView.emit();
+      this.selected.selectedTarget.scrollIntoView();
+    }
+  }
+
+  /**
+   * 版型移動下
+   *
+   * @memberof ContentControlPanelComponent
+   */
+  templateMoveDown() {
+    const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
+    const selectedTemplateInfo = this.selected.templateInfo;
+    const index = templateInfos.indexOf(selectedTemplateInfo);
+    if (index !== templateInfos.length - 1) {
+      templateInfos[index] = templateInfos[index + 1];
+      templateInfos[index + 1] = selectedTemplateInfo;
+      this.hasChange = true;
+      this.movingTemplate.emit(true);
+      this.needCheckView.emit();
+      this.selected.selectedTarget.scrollIntoView();
+    }
+  }
+
+  /**
+   * 刪除版型
+   *
+   * @memberof ContentControlPanelComponent
+   */
+  templateDelete() {
+    const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
+    const selectedTemplateInfo = this.selected.templateInfo;
+    const index = templateInfos.indexOf(selectedTemplateInfo);
+    if (index > -1) {
+      templateInfos.splice(index, 1);
+      this.hasChange = true;
+      this.needCheckView.emit();
+    }
   }
 
 }

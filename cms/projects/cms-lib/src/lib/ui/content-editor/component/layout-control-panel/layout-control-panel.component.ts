@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 
 class TemplateInfo {
@@ -12,7 +12,7 @@ class TemplateInfo {
   templateUrl: './layout-control-panel.component.html',
   styleUrls: ['./layout-control-panel.component.scss']
 })
-export class LayoutControlPanelComponent implements OnInit {
+export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
   get show() { return !!this.selectedBtn }
 
@@ -20,7 +20,7 @@ export class LayoutControlPanelComponent implements OnInit {
 
   @Output() templateAdd = new EventEmitter<string>(); // templateName
 
-  selectedBtn: AddTemplateButtonComponent;
+  @Input() selectedBtn: AddTemplateButtonComponent;
 
   constructor() { }
 
@@ -44,11 +44,17 @@ export class LayoutControlPanelComponent implements OnInit {
     ];
   }
 
-  setSelected(newSelected?: AddTemplateButtonComponent) {
-    const oldSelected = this.selectedBtn;
-    if (oldSelected) { oldSelected.isSelected = false; }
-    if (newSelected) { newSelected.isSelected = true; }
-    this.selectedBtn = newSelected;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedBtn']) {
+      const previous = changes['selectedBtn'].previousValue as AddTemplateButtonComponent;
+      const current = changes['selectedBtn'].currentValue as AddTemplateButtonComponent;
+      if (previous) {
+        previous.isSelected = false;
+      }
+      if (current) {
+        current.isSelected = true;
+      }
+    }
   }
 
   selectTemplate(t: TemplateInfo) {

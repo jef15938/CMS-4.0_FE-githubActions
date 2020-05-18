@@ -1,4 +1,4 @@
-<div *ngIf="show" class="cms-layout-control-panel">
+<div *ngIf="show" class="cms-layout-control-panel" (click)="$event.stopPropagation()">
   <h1>新增版面: {{selectedBtn.position}}</h1>
   <hr>
   <mat-accordion>

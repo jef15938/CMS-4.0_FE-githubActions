@@ -1,19 +1,26 @@
-<div *ngIf="show" class="cms-content-control-panel" style="padding: 0 10px;">
-  Select : {{selected.selectedTargetType}}
-  <hr>
+<div *ngIf="show" class="cms-content-control-panel" style="padding: 0 10px;" (click)="$event.stopPropagation()">
   <ng-container [ngSwitch]="selected.selectedTargetType">
     <div *ngSwitchCase="LayoutWrapperSelectedTargetType.TEMPLATE">
       <div>
+        版型 : {{selected.templateInfo.templateId}}
+        <br>
         Id : {{selected.templateInfo.id}}
-        <br>
-        TemplateId : {{selected.templateInfo.templateId}}
-        <br>
-        Type : {{selected.templateType}}
         <hr>
       </div>
       <div [ngSwitch]="selected.templateType">
-        <div *ngSwitchCase="TemplateType.COMMON">
-
+        <div class="btn-group">
+          <button type="button" (click)="templateShowInfo()">
+            <mat-icon>info</mat-icon>
+          </button>
+          <button type="button" (click)="templateMoveUp()" [disabled]="!canTemplateMoveUp">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+          </button>
+          <button type="button" (click)="templateMoveDown()" [disabled]="!canTemplateMoveDown">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+          <button type="button" (click)="templateDelete()">
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
         <div *ngSwitchCase="TemplateType.TAB">
 

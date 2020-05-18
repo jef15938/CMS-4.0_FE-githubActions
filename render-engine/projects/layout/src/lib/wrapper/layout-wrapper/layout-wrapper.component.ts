@@ -20,6 +20,8 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
 
+  parentTemplatesContainer: { templates: TemplateInfo[]; };
+
   componentRef: ComponentRef<LayoutBase<TemplateInfo>>;
 
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();

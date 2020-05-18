@@ -7,8 +7,7 @@ class ContentInfoState {
   ) { }
 }
 
-export class ContentInfoManager {
-
+export class ContentInfoStateManager {
   private _originState: ContentInfoState;
 
   currentIndex = 0;

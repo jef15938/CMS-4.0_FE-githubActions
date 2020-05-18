@@ -2,10 +2,9 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild, A
 import { Subject } from 'rxjs';
 import { ContentEditorSaveEvent } from './content-editor.interface';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
-import { ContentInfoManager } from './service/content-info-manager';
+import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
-import { AddTemplateButtonComponent } from './component/add-template-button/add-template-button.component';
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
 
@@ -32,9 +31,10 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   @Output() editorClose = new EventEmitter<ContentInfo>();
   @Output() editorSave = new EventEmitter<ContentEditorSaveEvent>();
 
-  contentInfoManager: ContentInfoManager;
+  manager: ContentEditorManager;
 
   saved = true;
+  isMovingTemplate = false;
 
   private _destroy$ = new Subject();
 
@@ -45,27 +45,27 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   ngAfterViewInit(): void {
-    this._addCaptureContentPanelClickEventListener();
+    this._registerContentPanelClickCaptureListener('register');
   }
 
   ngOnInit(): void {
-    this._init();
+    this._init(this.contentInfo);
   }
 
   ngAfterContentChecked(): void {
     this._changeDetectorRef.detectChanges();
   }
 
-  private _init() {
+  private _init(contentInfo: ContentInfo) {
     this.resetSelected();
-    this.contentInfoManager = new ContentInfoManager(this.contentInfo);
+    this.manager = new ContentEditorManager(contentInfo);
   }
 
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
     this._destroy$.unsubscribe();
-    this._removeCaptureContentPanelClickEventListener();
+    this._registerContentPanelClickCaptureListener('unregister');
   }
 
   setEditorUnsaved() {
@@ -81,28 +81,26 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   close() {
-    if (!this.saved) {
+    if (!this.saved || this.contentControlPanel?.hasChange) {
       const yes = window.confirm('有尚未儲存的變更，確定關閉？');
       if (!yes) { return; }
     }
-    this.editorClose.emit(this.contentInfoManager.contentInfoEditModel);
+    this.editorClose.emit(this.manager.stateManager.contentInfoEditModel);
   }
 
   save() {
     this.editorSave.emit({
-      contentInfo: this.contentInfoManager.contentInfoEditModel,
+      contentInfo: this.manager.stateManager.contentInfoEditModel,
       editorSave: this.setEditorSaved.bind(this),
     });
   }
 
-  selectAddTemplateEvent(event: AddTemplateButtonComponent) {
-    this.resetSelected();
-    this.layoutControlPanel.setSelected(event);
-  }
-
   resetSelected() {
-    this.layoutControlPanel?.setSelected();
-    this.contentControlPanel?.setSelected();
+    this.isMovingTemplate = false;
+    if (this.manager) {
+      this.manager.selectedTemplateAddBtn = undefined;
+      this.manager.selectedViewElementEvent = undefined;
+    }
   }
 
   /**
@@ -119,24 +117,25 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
    * 
    * @memberof ContentEditorComponent
    */
-  private _addCaptureContentPanelClickEventListener() {
+  private _registerContentPanelClickCaptureListener(action: 'register' | 'unregister') {
     const contentPanelDiv = this.contentPanelDiv?.nativeElement as HTMLDivElement;
-    contentPanelDiv?.addEventListener('click', this._contentPanelClickEventListener, true);
+    switch (action) {
+      case 'register':
+        contentPanelDiv?.addEventListener('click', this.contentPanelClickEventListener, true);
+        break;
+      case 'unregister':
+        contentPanelDiv?.removeEventListener('click', this.contentPanelClickEventListener, true);
+        break;
+    }
   }
 
-  private _removeCaptureContentPanelClickEventListener() {
-    const contentPanelDiv = this.contentPanelDiv?.nativeElement as HTMLDivElement;
-    contentPanelDiv?.removeEventListener('click', this._contentPanelClickEventListener, true);
-  }
-
-  private _contentPanelClickEventListener = (ev) => {
-    if (this.contentControlPanel?.hasChange && this.contentInfoManager) {
+  contentPanelClickEventListener = (ev) => {
+    if (this.contentControlPanel?.hasChange) {
       const yes = window.confirm('選取的Template/Field有尚未儲存的變更，確定放棄？');
       if (!yes) { ev.stopPropagation(); return; }
       this.resetSelected();
-      this.contentInfoManager?.resetState();
-      this.contentViewRenderer?.checkView();
-      this.contentControlPanel.hasChange = false;
+      this.manager.stateManager.resetState();
+      this.contentViewRenderer.checkView();
     }
   }
 

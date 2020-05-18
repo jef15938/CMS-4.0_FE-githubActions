@@ -11,7 +11,7 @@ export enum TemplateType {
 }
 
 export interface LayoutWrapper {
-  
+  parentTemplatesContainer: { templates: TemplateInfo[]; };
 }
 
 export enum LayoutWrapperSelectedTargetType {

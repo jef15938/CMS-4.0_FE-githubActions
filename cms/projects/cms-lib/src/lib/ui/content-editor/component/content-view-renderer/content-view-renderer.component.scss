@@ -6,6 +6,10 @@
   border: 5px solid #71d306 !important;
 }
 
+::ng-deep .cms-content-editor-add-template-btn-container {
+  margin: 30px 0;
+}
+
 .add-template-btn {
   > button {
     background-color: lightgreen;

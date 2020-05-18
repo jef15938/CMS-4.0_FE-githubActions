@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ElementRef, AfterViewChecked } from '@angular/core';
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
 import { LayoutWrapperSelectEvent } from '../layout-wrapper/layout-wrapper.interface';
@@ -9,7 +9,7 @@ import { LayoutWrapperBase } from '../layout-wrapper/layout-wrapper-base';
   templateUrl: './templates-container.component.html',
   styleUrls: ['./templates-container.component.scss']
 })
-export class TemplatesContainerComponent extends LayoutWrapperBase implements OnInit, AfterViewInit {
+export class TemplatesContainerComponent extends LayoutWrapperBase implements OnInit, AfterViewInit, AfterViewChecked {
 
   @Input() mode: 'preview' | 'edit' = 'preview';
   @Input() templates: TemplateInfo[];
@@ -27,6 +27,12 @@ export class TemplatesContainerComponent extends LayoutWrapperBase implements On
   ngAfterViewInit(): void {
     this._changeDetectorRef.detectChanges();
     // console.warn('this.layoutWrapperComponents = ', this.layoutWrapperComponents);
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.layoutWrapperComponents) {
+      this.layoutWrapperComponents.forEach(lw => lw.parentTemplatesContainer = this);
+    }
   }
 
   mouseenter() {
