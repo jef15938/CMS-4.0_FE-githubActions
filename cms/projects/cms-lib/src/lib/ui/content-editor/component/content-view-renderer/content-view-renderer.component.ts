@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ElementRef, ViewChild, ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild, ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef } from '@angular/core';
 import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
-import { LayoutWrapperSelectEvent, TemplatesContainerComponent } from 'layout';
+import { LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperComponent, LayoutWrapperSelectedTargetType } from 'layout';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
 import { EditorMode } from '../../content-editor.interface';
@@ -129,12 +129,24 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     return templatesContainer?.layoutWrapperComponents?.map(lw => lw.componentRef?.instance?.templatesContainerComponents?.map(t => this._renderViewInfo(t)));
   }
 
-  checkView() {
+  checkView(config?: { select: LayoutWrapperComponent }) {
     this._changeDetectorRef.detectChanges();
     // TODO: 優化，有無可以不用setTimeout的方法
     setTimeout(() => {
       this._renderAddTemplateButton(this.templatesContainer);
       this._renderViewInfo(this.templatesContainer);
+      if (config?.select) {
+        const select = config.select
+        const event: LayoutWrapperSelectEvent = {
+          selectedTarget: select.elementRef.nativeElement,
+          selectedTargetType: LayoutWrapperSelectedTargetType.TEMPLATE,
+          wrapper: select,
+          componentRef: select.componentRef,
+          templateType: select.componentRef.instance.templateType,
+          templateInfo: select.componentRef.instance.templateInfo,
+        }
+        this.select.emit(event);
+      }
     }, 0)
   }
 

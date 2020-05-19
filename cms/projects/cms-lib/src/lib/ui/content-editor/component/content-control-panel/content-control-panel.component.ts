@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, Inject } from '@angular/core';
-import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType } from 'layout';
+import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from 'layout';
 import { ContentEditorManager } from '../../service/content-editor-manager';
 import { ContentEditorServiceInjectionToken } from '../../content-editor.injection-token';
 import { IContentEditorService, EditorMode } from '../../content-editor.interface';
@@ -18,7 +18,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   @Input() selected: LayoutWrapperSelectEvent;
 
   @Output() needCheckView = new EventEmitter();
-  @Output() movingTemplate = new EventEmitter<boolean>();
+  @Output() needScale = new EventEmitter<boolean>();
   @Output() changePreserve = new EventEmitter();
 
   LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
@@ -52,7 +52,6 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       if (current) {
         current.selectedTarget.classList.add('now-edit');
       }
-      this.hasChange = false;
     }
   }
 
@@ -74,10 +73,9 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
         break;
     }
     this.manager.stateManager.preserveState(action || `Change ${targetType} : ${target.join(' ')}`);
-    this.changePreserve.emit();
-    this.movingTemplate.emit(false);
-    this.needCheckView.emit();
     this.hasChange = false;
+    this.changePreserve.emit();
+    this.needCheckView.emit();
   }
 
   /**
@@ -86,7 +84,6 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    * @memberof ContentControlPanelComponent
    */
   templateShowInfo() {
-    console.warn('this._contentEditorService = ', this._contentEditorService);
     this._contentEditorService.openEditor({
       contentInfo: { templates: [this.selected.templateInfo] } as ContentInfo,
       mode: EditorMode.INFO,
@@ -107,7 +104,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       templateInfos[index] = templateInfos[index - 1];
       templateInfos[index - 1] = selectedTemplateInfo;
       this.hasChange = true;
-      this.movingTemplate.emit(true);
+      this.needScale.emit(true);
       this.needCheckView.emit();
       this.selected.selectedTarget.scrollIntoView();
     }
@@ -126,7 +123,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       templateInfos[index] = templateInfos[index + 1];
       templateInfos[index + 1] = selectedTemplateInfo;
       this.hasChange = true;
-      this.movingTemplate.emit(true);
+      this.needScale.emit(true);
       this.needCheckView.emit();
       this.selected.selectedTarget.scrollIntoView();
     }
@@ -141,9 +138,17 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
     const index = templateInfos.indexOf(selectedTemplateInfo);
+
     if (index > -1) {
+      // 處理畫面
+      const templatesContainer = this.selected.wrapper.parentTemplatesContainer as TemplatesContainerComponent;
+      const layoutWrapperComponents = Array.from(templatesContainer.layoutWrapperComponents);
+      const nextIndex = (index === templateInfos.length - 1) ? 0 : index + 1;
+      const next = layoutWrapperComponents[nextIndex];
+      // 處理資料
       templateInfos.splice(index, 1);
-      this.preserveChanges(`DelTemplate : ${this.selected.templateInfo.templateId}`);
+      this.hasChange = true;
+      this.needCheckView.emit({ select: next });
     }
   }
 

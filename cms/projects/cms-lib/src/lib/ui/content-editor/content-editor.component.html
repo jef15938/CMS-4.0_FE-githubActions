@@ -5,9 +5,9 @@
       [class.current-state]="manager?.stateManager?.currentIndex === i+1">{{state.action}}</div>
   </mat-menu>
 </div>
-<div class="cms-content-editor" (click)="contentPanelClickEventListener($event)">
+<div class="cms-content-editor">
   <!-- 按鈕們 -->
-  <div class="btn-panel" (click)="resetSelected()" *ngIf="mode===EditorMode.EDIT">
+  <div #contentPanel class="btn-panel" *ngIf="mode===EditorMode.EDIT">
     <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave" [disabled]="saved">
       <mat-icon>save</mat-icon>
     </button>
@@ -33,7 +33,7 @@
   <div class="main-block" *ngIf="manager?.stateManager?.contentInfoEditModel"
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
-    <div #contentPanel class="content-panel" [class.scale]="isMovingTemplate">
+    <div #contentPanel class="content-panel" [class.scale]="isScaleContent">
       <cms-content-view-renderer [contentInfo]="manager?.stateManager?.contentInfoEditModel" [mode]="mode"
         (select)="onViewSelected($event)"
         (addTemplateBtnClick)="resetSelected();manager.selectedTemplateAddBtn=$event;">
@@ -48,8 +48,8 @@
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
       <cms-content-control-panel [manager]="manager" [selected]="manager.selectedViewElementEvent"
-        (movingTemplate)="isMovingTemplate=$event;" (changePreserve)="resetSelected();setEditorUnsaved();"
-        (needCheckView)="contentViewRenderer?.checkView();"></cms-content-control-panel>
+        (needScale)="isScaleContent=$event;" (changePreserve)="resetSelected();setEditorUnsaved();"
+        (needCheckView)="contentViewRenderer?.checkView($event);"></cms-content-control-panel>
     </div>
   </div>
 </div>

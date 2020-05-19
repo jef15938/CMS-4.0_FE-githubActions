@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild, AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild, AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ContentEditorSaveEvent, EditorMode } from './content-editor.interface';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
@@ -20,7 +20,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
   @ViewChild(ContentControlPanelComponent) contentControlPanel: ContentControlPanelComponent;
 
-  @ViewChild('contentPanel') contentPanelDiv: ElementRef;
+  @ViewChildren('contentPanel') contentPanelDivs: QueryList<ElementRef>;
 
   // 使用模式
   @Input() mode: EditorMode = EditorMode.EDIT;
@@ -40,7 +40,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   manager: ContentEditorManager;
 
   saved = true;
-  isMovingTemplate = false;
+  isScaleContent = false;
 
   private _destroy$ = new Subject();
 
@@ -101,8 +101,11 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     });
   }
 
+  cancelScale() {
+    this.isScaleContent = false;
+  }
+
   resetSelected() {
-    this.isMovingTemplate = false;
     if (this.manager) {
       this.manager.selectedTemplateAddBtn = undefined;
       this.manager.selectedViewElementEvent = undefined;
@@ -124,15 +127,17 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
    * @memberof ContentEditorComponent
    */
   private _registerContentPanelClickCaptureListener(action: 'register' | 'unregister') {
-    const contentPanelDiv = this.contentPanelDiv?.nativeElement as HTMLDivElement;
-    switch (action) {
-      case 'register':
-        contentPanelDiv?.addEventListener('click', this.contentPanelClickEventListener, true);
-        break;
-      case 'unregister':
-        contentPanelDiv?.removeEventListener('click', this.contentPanelClickEventListener, true);
-        break;
-    }
+    this.contentPanelDivs?.forEach(contentPanelDiv => {
+      const element = contentPanelDiv?.nativeElement as HTMLDivElement;
+      switch (action) {
+        case 'register':
+          element?.addEventListener('click', this.contentPanelClickEventListener, true);
+          break;
+        case 'unregister':
+          element?.removeEventListener('click', this.contentPanelClickEventListener, true);
+          break;
+      }
+    });
   }
 
   contentPanelClickEventListener = (ev) => {
@@ -140,9 +145,11 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       const yes = window.confirm('選取的Template/Field有尚未儲存的變更，確定放棄？');
       if (!yes) { ev.stopPropagation(); return; }
       this.resetSelected();
+      this.contentControlPanel.hasChange = false;
       this.manager.stateManager.resetState();
       this.contentViewRenderer.checkView();
     }
+    this.cancelScale();
   }
 
   onViewSelected($event) {
