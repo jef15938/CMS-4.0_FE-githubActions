@@ -1,6 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, Inject } from '@angular/core';
 import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType } from 'layout';
 import { ContentEditorManager } from '../../service/content-editor-manager';
+import { ContentEditorServiceInjectionToken } from '../../content-editor.injection-token';
+import { IContentEditorService, EditorMode } from '../../content-editor.interface';
+import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -32,7 +35,9 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     return this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) !== this.selected?.wrapper?.parentTemplatesContainer?.templates?.length - 1;
   }
 
-  constructor() { }
+  constructor(
+    @Inject(ContentEditorServiceInjectionToken) private _contentEditorService: IContentEditorService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -81,7 +86,12 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    * @memberof ContentControlPanelComponent
    */
   templateShowInfo() {
-
+    console.warn('this._contentEditorService = ', this._contentEditorService);
+    this._contentEditorService.openEditor({
+      contentInfo: { templates: [this.selected.templateInfo] } as ContentInfo,
+      mode: EditorMode.INFO,
+      selectableTemplates: {} as any
+    }).subscribe();
   }
 
   /**

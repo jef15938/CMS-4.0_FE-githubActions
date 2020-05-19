@@ -6,6 +6,7 @@ import { CmsUserMenuResolver } from './cms-menu-resolver';
 import { MenuNodeComponent } from './layouts/menu-node.component';
 import { ModalModule } from '../ui/modal/modal.module';
 import { SharedModule } from '../shared/shared.module';
+import { ContentEditorModule } from '../ui/content-editor/content-editor.module';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -23,7 +24,8 @@ const LAYOUTS = [
   ],
   providers: [
     CmsUserMenuResolver,
-    ...(ModalModule.forRoot().providers)
+    ...(ModalModule.forRoot().providers),
+    ...(ContentEditorModule.forRoot().providers),
   ]
 })
 export class CmsModule { }

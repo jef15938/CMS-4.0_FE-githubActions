@@ -7,7 +7,7 @@
 </div>
 <div class="cms-content-editor" (click)="contentPanelClickEventListener($event)">
   <!-- 按鈕們 -->
-  <div class="btn-panel" (click)="resetSelected()">
+  <div class="btn-panel" (click)="resetSelected()" *ngIf="mode===EditorMode.EDIT">
     <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave" [disabled]="saved">
       <mat-icon>save</mat-icon>
     </button>

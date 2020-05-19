@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContentEditorComponent } from './content-editor.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +21,9 @@ import { FieldControlImgComponent } from './component/content-control-panel/cont
 import { FieldControlHtmlEditorComponent } from './component/content-control-panel/control/field/field-control-html-editor/field-control-html-editor.component';
 import { FieldControlGroupComponent } from './component/content-control-panel/control/field/field-control-group/field-control-group.component';
 import { TemplateControlGroupComponent } from './component/content-control-panel/control/template/template-control-group/template-control-group.component';
+import { EditorContainerModalComponent } from './component/editor-container-modal/editor-container-modal.component';
+import { ContentEditorServiceInjectionToken } from './content-editor.injection-token';
+import { ContentEditorService } from './content-editor.service';
 
 @NgModule({
   imports: [
@@ -34,6 +37,7 @@ import { TemplateControlGroupComponent } from './component/content-control-panel
     LayoutModule,
   ],
   declarations: [
+    EditorContainerModalComponent,
     ContentEditorComponent,
     LayoutControlPanelComponent,
     ContentControlPanelComponent,
@@ -51,6 +55,18 @@ import { TemplateControlGroupComponent } from './component/content-control-panel
   ],
   exports: [
     ContentEditorComponent,
-  ]
+  ],
 })
-export class ContentEditorModule { }
+export class ContentEditorModule { 
+  static forRoot(providers = []): ModuleWithProviders {
+    return {
+      ngModule: ContentEditorModule,
+      providers: [
+        {
+          provide: ContentEditorServiceInjectionToken,
+          useClass: ContentEditorService,
+        },
+      ]
+    };
+  }
+}
