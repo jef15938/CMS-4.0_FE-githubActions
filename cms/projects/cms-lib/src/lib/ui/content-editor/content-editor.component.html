@@ -48,7 +48,7 @@
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
       <cms-content-control-panel [manager]="manager" [selected]="manager.selectedViewElementEvent"
-        (needScale)="isScaleContent=$event;" (changePreserve)="resetSelected();setEditorUnsaved();"
+        (needScale)="isScaleContent=$event;" (changePreserve)="setEditorUnsaved();"
         (needCheckView)="contentViewRenderer?.checkView($event);"></cms-content-control-panel>
     </div>
   </div>

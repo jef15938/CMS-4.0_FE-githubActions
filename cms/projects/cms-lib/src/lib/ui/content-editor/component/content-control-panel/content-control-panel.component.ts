@@ -14,6 +14,11 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   TemplateType = TemplateType;
 
+  readonly scrollIntoViewOptions: ScrollIntoViewOptions = {
+    behavior: 'smooth',
+    block: 'nearest'
+  };
+
   @Input() manager: ContentEditorManager;
   @Input() selected: LayoutWrapperSelectEvent;
 
@@ -51,6 +56,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       }
       if (current) {
         current.selectedTarget.classList.add('now-edit');
+        current.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
       }
     }
   }
@@ -106,7 +112,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       this.hasChange = true;
       this.needScale.emit(true);
       this.needCheckView.emit();
-      this.selected.selectedTarget.scrollIntoView();
+      this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
     }
   }
 
@@ -125,7 +131,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       this.hasChange = true;
       this.needScale.emit(true);
       this.needCheckView.emit();
-      this.selected.selectedTarget.scrollIntoView();
+      this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
     }
   }
 
