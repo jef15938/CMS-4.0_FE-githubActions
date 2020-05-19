@@ -98,41 +98,36 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   }
 
   /**
-   * 版型移動上
    *
+   *
+   * @param {('up' | 'down')} direction
+   * @returns
    * @memberof ContentControlPanelComponent
    */
-  templateMoveUp() {
+  templateMove(direction: 'up' | 'down') {
     const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
     const index = templateInfos.indexOf(selectedTemplateInfo);
-    if (index > 0) {
+
+    const up = direction === 'up' && index > 0;
+    const down = direction === 'down' && index !== templateInfos.length - 1;
+
+    if (!(up || down)) { return; }
+
+    if (up) { // 資料與前一個交換位置
       templateInfos[index] = templateInfos[index - 1];
       templateInfos[index - 1] = selectedTemplateInfo;
-      this.hasChange = true;
-      this.needScale.emit(true);
-      this.needCheckView.emit();
-      this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
     }
-  }
 
-  /**
-   * 版型移動下
-   *
-   * @memberof ContentControlPanelComponent
-   */
-  templateMoveDown() {
-    const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
-    const selectedTemplateInfo = this.selected.templateInfo;
-    const index = templateInfos.indexOf(selectedTemplateInfo);
-    if (index !== templateInfos.length - 1) {
+    if (down) { // 資料與後一個交換位置
       templateInfos[index] = templateInfos[index + 1];
       templateInfos[index + 1] = selectedTemplateInfo;
-      this.hasChange = true;
-      this.needScale.emit(true);
-      this.needCheckView.emit();
-      this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
     }
+
+    this.hasChange = true;
+    this.needScale.emit(true);
+    this.needCheckView.emit();
+    this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
   }
 
   /**
