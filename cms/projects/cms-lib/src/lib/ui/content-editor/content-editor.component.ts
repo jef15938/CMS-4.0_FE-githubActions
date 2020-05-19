@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild, AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ContentEditorSaveEvent } from './content-editor.interface';
+import { ContentEditorSaveEvent, EditorMode } from './content-editor.interface';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
@@ -14,14 +14,20 @@ import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
   styleUrls: ['./content-editor.component.scss']
 })
 export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked {
+  EditorMode = EditorMode;
+
   @ViewChild(ContentViewRendererComponent) contentViewRenderer: ContentViewRendererComponent;
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
   @ViewChild(ContentControlPanelComponent) contentControlPanel: ContentControlPanelComponent;
 
   @ViewChild('contentPanel') contentPanelDiv: ElementRef;
 
+  // 使用模式
+  @Input() mode: EditorMode = EditorMode.EDIT;
+
   // 編輯對象外部提供資料
   @Input() contentInfo: ContentInfo;
+
   // 可選版面資料
   @Input() selectableTemplates: TemplateGetResponse;
 
@@ -137,6 +143,12 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       this.manager.stateManager.resetState();
       this.contentViewRenderer.checkView();
     }
+  }
+
+  onViewSelected($event) {
+    if (this.mode !== EditorMode.EDIT) { return; }
+    this.resetSelected();
+    this.manager.selectedViewElementEvent = $event;
   }
 
 }

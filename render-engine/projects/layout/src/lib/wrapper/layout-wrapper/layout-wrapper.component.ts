@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener, HostBinding, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener, OnChanges, SimpleChanges } from '@angular/core';
 import { TemplateInfo } from '../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 import { LayoutBase } from '../layout-base/layout-base.interface';
@@ -49,11 +49,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     this._changeDetectorRef.reattach();
     this.loadComponent();
     this.setMode();
-    (this.elementRef.nativeElement as HTMLElement).setAttribute('info', this._getInfo());
-  }
-
-  private _getInfo(): string {
-    return `版型 : ${this.componentRef.instance.templateInfo.templateId}`;
   }
 
   loadComponent() {

@@ -3,6 +3,7 @@ import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
 import { LayoutWrapperSelectEvent, TemplatesContainerComponent } from 'layout';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
+import { EditorMode } from '../../content-editor.interface';
 
 class AddTemplateBtn {
   constructor(
@@ -17,6 +18,7 @@ class AddTemplateBtn {
   styleUrls: ['./content-view-renderer.component.scss']
 })
 export class ContentViewRendererComponent implements OnInit, AfterViewInit {
+  EditorMode = EditorMode;
 
   @ViewChild(TemplatesContainerComponent) templatesContainer: TemplatesContainerComponent;
 
@@ -24,6 +26,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
   private _addTemplateBtnMap: Map<TemplatesContainerComponent, AddTemplateBtn[]> = new Map();
 
+  @Input() mode: EditorMode = EditorMode.EDIT;
   @Input() contentInfo: ContentInfo;
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
   @Output() addTemplateBtnClick = new EventEmitter<AddTemplateButtonComponent>();
@@ -67,6 +70,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   }
 
   private _renderAddTemplateButton(templatesContainer: TemplatesContainerComponent) {
+    if (this.mode !== EditorMode.EDIT) { return; }
     if (!templatesContainer) { return; }
 
     // 確認Map資料
@@ -104,11 +108,33 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     });
   }
 
-  checkView(){
+  private _renderViewInfo(templatesContainer: TemplatesContainerComponent) {
+    if (!templatesContainer) { return; }
+
+    templatesContainer.layoutWrapperComponents?.forEach((lw) => {
+      if (this.mode !== EditorMode.INFO) { // EDIT or READ
+        (lw?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `版型ID:${lw.templateInfo.templateId}`);
+      }
+
+      lw?.componentRef?.instance?.templateFieldDirectives?.forEach(field => {
+        if (this.mode !== EditorMode.INFO) { // EDIT or READ
+          (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `${field.fieldInfo.fieldType}`);
+        } else {
+          (field?.elementRef?.nativeElement as HTMLElement)?.classList.add('edit-info');
+          (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('edit-info', `${field.fieldInfo.fieldType}:${field.fieldInfo.fieldId}`);
+        }
+      })
+    });
+
+    return templatesContainer?.layoutWrapperComponents?.map(lw => lw.componentRef?.instance?.templatesContainerComponents?.map(t => this._renderViewInfo(t)));
+  }
+
+  checkView() {
     this._changeDetectorRef.detectChanges();
     // TODO: 優化，有無可以不用setTimeout的方法
-    setTimeout(()=>{
+    setTimeout(() => {
       this._renderAddTemplateButton(this.templatesContainer);
+      this._renderViewInfo(this.templatesContainer);
     }, 0)
   }
 
@@ -125,10 +151,12 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   }
 
   onEnter(target: HTMLElement) {
+    if (this.mode === EditorMode.INFO) { return; }
     target.classList.add('now-hover');
   }
 
   onLeave(target: HTMLElement) {
+    if (this.mode === EditorMode.INFO) { return; }
     target.classList.remove('now-hover');
   }
 

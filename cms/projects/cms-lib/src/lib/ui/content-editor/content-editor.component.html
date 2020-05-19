@@ -34,8 +34,8 @@
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
     <div #contentPanel class="content-panel" [class.scale]="isMovingTemplate">
-      <cms-content-view-renderer [contentInfo]="manager?.stateManager?.contentInfoEditModel"
-        (select)="resetSelected();manager.selectedViewElementEvent=$event;"
+      <cms-content-view-renderer [contentInfo]="manager?.stateManager?.contentInfoEditModel" [mode]="mode"
+        (select)="onViewSelected($event)"
         (addTemplateBtnClick)="resetSelected();manager.selectedTemplateAddBtn=$event;">
       </cms-content-view-renderer>
     </div>
@@ -47,8 +47,9 @@
     </div>
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
-      <cms-content-control-panel [manager]="manager" [selected]="manager.selectedViewElementEvent" (movingTemplate)="isMovingTemplate=$event;"
-        (changePreserve)="resetSelected();setEditorUnsaved();" (needCheckView)="contentViewRenderer?.checkView();"></cms-content-control-panel>
+      <cms-content-control-panel [manager]="manager" [selected]="manager.selectedViewElementEvent"
+        (movingTemplate)="isMovingTemplate=$event;" (changePreserve)="resetSelected();setEditorUnsaved();"
+        (needCheckView)="contentViewRenderer?.checkView();"></cms-content-control-panel>
     </div>
   </div>
 </div>

@@ -1,14 +1,39 @@
+.view-container {
+  &.mode-info {
+    padding: 30px;
+  }
+}
+
 ::ng-deep .now-hover {
   border: 1px solid #71d306 !important;
   position: relative;
 
   &::before {
-    content: attr(info);
+    content: attr(hover-info);
     position: absolute;
     top: -30px;
     left: -1px;
     background-color: #71d306 !important;
     border: 1px solid #71d306 !important;
+    color: white !important;
+    height: 24px;
+    line-height: 24px;
+    vertical-align: middle;
+    padding: 2px 4px;
+  }
+}
+
+::ng-deep .edit-info {
+  border: 1px solid red !important;
+  position: relative;
+
+  &::before {
+    content: attr(edit-info);
+    position: absolute;
+    top: -30px;
+    left: -1px;
+    background-color: red !important;
+    border: 1px solid red !important;
     color: white !important;
     height: 24px;
     line-height: 24px;
