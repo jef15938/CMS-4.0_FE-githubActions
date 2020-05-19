@@ -1,2 +1,2 @@
 <textarea [(ngModel)]="selected.fieldInfo.fieldVal" rows="10" cols="50" style="width: 100%;"
-  (keydown)="change.emit()"></textarea>
+  (keydown.enter)="onEnterDown($event, selected.fieldInfo.fieldVal)" (paste)="onPaste($event)" (keydown)="change.emit()"></textarea>
