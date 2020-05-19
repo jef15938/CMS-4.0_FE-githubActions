@@ -1,22 +1,22 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo } from 'layout';
+import { LayoutWrapperSelectEvent, GroupTemplateInfo, FieldInfo } from 'layout';
 import { ContentControlBase } from '../../_base';
 
 @Component({
-  selector: 'cms-template-control-tab',
-  templateUrl: './template-control-tab.component.html',
-  styleUrls: ['./template-control-tab.component.scss']
+  selector: 'cms-template-control-group',
+  templateUrl: './template-control-group.component.html',
+  styleUrls: ['./template-control-group.component.scss']
 })
-export class TemplateControlTabComponent extends ContentControlBase implements OnInit, OnChanges {
+export class TemplateControlGroupComponent extends ContentControlBase implements OnInit, OnChanges {
 
   parseInt = parseInt;
 
-  templateInfo: TabTemplateInfo;
+  templateInfo: GroupTemplateInfo;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selected']) {
       const event = changes['selected'].currentValue as LayoutWrapperSelectEvent;
-      this.templateInfo = event?.templateInfo as TabTemplateInfo;
+      this.templateInfo = event?.templateInfo as GroupTemplateInfo;
     }
   }
 
@@ -27,7 +27,7 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     const beforeIndex = ev.previousIndex;
     const afterIndex = ev.currentIndex;
     if (beforeIndex === afterIndex) { return; }
-    this._arrayMove(this.templateInfo.tabList, beforeIndex, afterIndex);
+    this._arrayMove(this.templateInfo.itemList, beforeIndex, afterIndex);
     this.change.emit();
   }
 
@@ -42,17 +42,13 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     return arr; // for testing
   };
 
-  addTab() {
-    const newTab = {
-      tabId: 'NewTab',
-      children: [],
-    } as TabInfo;
-    this.templateInfo.tabList.push(newTab);
+  copyGroup(group: FieldInfo[]) {
+    this.templateInfo.itemList.push(JSON.parse(JSON.stringify(group)));
     this.change.emit();
   }
 
-  removeTab(tab: TabInfo) {
-    this.templateInfo.tabList.splice(this.templateInfo.tabList.indexOf(tab), 1);
+  removeGroup(group: FieldInfo[]) {
+    this.templateInfo.itemList.splice(this.templateInfo.itemList.indexOf(group), 1);
     this.change.emit();
   }
 

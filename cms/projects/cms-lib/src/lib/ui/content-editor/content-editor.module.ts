@@ -20,6 +20,7 @@ import { FieldControlBgimgComponent } from './component/content-control-panel/co
 import { FieldControlImgComponent } from './component/content-control-panel/control/field/field-control-img/field-control-img.component';
 import { FieldControlHtmlEditorComponent } from './component/content-control-panel/control/field/field-control-html-editor/field-control-html-editor.component';
 import { FieldControlGroupComponent } from './component/content-control-panel/control/field/field-control-group/field-control-group.component';
+import { TemplateControlGroupComponent } from './component/content-control-panel/control/template/template-control-group/template-control-group.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { FieldControlGroupComponent } from './component/content-control-panel/co
     ContentViewRendererComponent,
     AddTemplateButtonComponent,
     TemplateControlTabComponent,
+    TemplateControlGroupComponent,
     FieldControlTextComponent,
     FieldControlTextareaComponent,
     FieldControlLinkComponent,

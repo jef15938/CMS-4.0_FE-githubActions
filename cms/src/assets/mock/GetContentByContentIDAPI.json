@@ -4,7 +4,9 @@
       "id": "groupTemplateInfo01",
       "templateId": "Group",
       "fields": [],
-      "attributes": {},
+      "attributes": {
+        "maxItemCount": "3"
+      },
       "itemList": [
         [
           {
@@ -101,7 +103,9 @@
       "id": "tp1",
       "templateId": "Tab",
       "fields": [],
-      "attributes": {},
+      "attributes": {
+        "maxItemCount": "4"
+      },
       "tabList": [
         {
           "fieldId": "f1",

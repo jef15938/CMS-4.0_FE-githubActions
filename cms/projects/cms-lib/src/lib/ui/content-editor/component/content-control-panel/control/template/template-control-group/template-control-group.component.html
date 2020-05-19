@@ -1,0 +1,24 @@
+<ng-container *ngIf="templateInfo">
+  <div>
+    個數限制 : {{templateInfo.attributes.maxItemCount}}
+  </div>
+  <div>
+    <mat-list cdkDropList (cdkDropListDropped)="onListDropped($event)">
+      <mat-list-item *ngFor="let group of templateInfo.itemList; let i = index;" cdkDrag>
+        <div class="item-container">
+          <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
+          <!-- <input [(ngModel)]="group.tabId"> -->
+          <span>{{i}}</span>
+          <button type="button" mat-button
+            [disabled]="templateInfo.itemList.length>=parseInt(templateInfo.attributes.maxItemCount)"
+            (click)="copyGroup(group)">
+            <mat-icon class="pointer">file_copy</mat-icon>
+          </button>
+          <button type="button" mat-button (click)="removeGroup(group)">
+            <mat-icon class="pointer">remove_circle</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</ng-container>

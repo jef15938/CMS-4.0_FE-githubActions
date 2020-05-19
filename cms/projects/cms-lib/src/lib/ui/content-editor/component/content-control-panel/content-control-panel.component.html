@@ -26,9 +26,9 @@
         <ng-container *ngSwitchCase="TemplateType.TAB">
           <cms-template-control-tab [selected]="selected" (change)="hasChange=true;"></cms-template-control-tab>
         </ng-container>
-        <div *ngSwitchCase="TemplateType.GROUP">
-
-        </div>
+        <ng-container *ngSwitchCase="TemplateType.GROUP">
+          <cms-template-control-group [selected]="selected" (change)="hasChange=true;"></cms-template-control-group>
+        </ng-container>
         <div *ngSwitchCase="TemplateType.DATA_SOURCE">
 
         </div>

@@ -1,16 +1,24 @@
-<mat-list cdkDropList (cdkDropListDropped)="onListDropped($event)">
-  <mat-list-item *ngFor="let tabInfo of tabList" cdkDrag>
-    <div class="item-container">
-      <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
-      <input [(ngModel)]="tabInfo.tabId">
-      <mat-icon class="pointer" (click)="removeTab(tabInfo)">remove_circle</mat-icon>
-    </div>
-  </mat-list-item>
-  <mat-list-item style="text-align: center;">
-    <div class="item-container" style="text-align: center;">
-      <button type="button" mat-button (click)="addTab()">
-        <mat-icon class="pointer">add_circle</mat-icon>
-      </button>
-    </div>
-  </mat-list-item>
-</mat-list>
+<ng-container *ngIf="templateInfo">
+  <div>
+    個數限制 : {{templateInfo.attributes.maxItemCount}}
+  </div>
+  <div>
+    <mat-list cdkDropList (cdkDropListDropped)="onListDropped($event)">
+      <mat-list-item *ngFor="let tabInfo of templateInfo.tabList" cdkDrag>
+        <div class="item-container">
+          <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
+          <input [(ngModel)]="tabInfo.tabId">
+          <mat-icon class="pointer" (click)="removeTab(tabInfo)">remove_circle</mat-icon>
+        </div>
+      </mat-list-item>
+      <mat-list-item style="text-align: center;">
+        <div class="item-container" style="text-align: center;">
+          <button type="button" mat-button (click)="addTab()"
+            [disabled]="templateInfo.tabList.length>=parseInt(templateInfo.attributes.maxItemCount)">
+            <mat-icon class="pointer">add_circle</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</ng-container>

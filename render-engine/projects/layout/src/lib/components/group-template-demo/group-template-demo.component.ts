@@ -10,7 +10,7 @@ import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
   styleUrls: ['./group-template-demo.component.scss']
 })
 export class GroupTemplateDemoComponent extends LayoutBaseComponent<GroupTemplateInfo>  implements OnInit {
-  templateType: TemplateType.GROUP;
+  templateType = TemplateType.GROUP;
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
