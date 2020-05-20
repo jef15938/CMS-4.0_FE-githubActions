@@ -1,1 +1,18 @@
-<input [(ngModel)]="selected.fieldInfo.fieldVal" style="width: 100%;" (keydown)="change.emit()">
+<br>
+<mat-form-field appearance="outline">
+  <mat-label>連結</mat-label>
+  <input matInput [(ngModel)]="selected.fieldInfo.fieldVal" (keydown)="change.emit()">
+</mat-form-field>
+<br>
+<mat-radio-group [(ngModel)]="selected.fieldInfo.extension['isBlank']" (change)="change.emit()">
+  <mat-radio-button [value]="'true'">
+    另開分頁
+  </mat-radio-button>
+  <br>
+  <br>
+  <mat-radio-button [value]="'false'">
+    原頁開啟
+  </mat-radio-button>
+</mat-radio-group>
+<br>
+<br>

@@ -1,5 +1,8 @@
 <div>
   字數限制 : {{maxLength}}
 </div>
-<input type="input" style="width: 100%;" [maxlength]="maxLength" [(ngModel)]="selected.fieldInfo.fieldVal"
-  (keydown)="change.emit()">
+<br>
+<mat-form-field appearance="outline">
+  <mat-label>內文</mat-label>
+  <input matInput [maxlength]="maxLength" [(ngModel)]="selected.fieldInfo.fieldVal" (keydown)="change.emit()">
+</mat-form-field>

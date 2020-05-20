@@ -23,6 +23,7 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
       this.adviceFormat = directive.adviceFormat;
       this.adviceWidth = directive.adviceWidth;
       this.adviceHeight = directive.adviceHeight;
+      selected.fieldInfo.extension = selected.fieldInfo.extension || {};
     }
   }
 

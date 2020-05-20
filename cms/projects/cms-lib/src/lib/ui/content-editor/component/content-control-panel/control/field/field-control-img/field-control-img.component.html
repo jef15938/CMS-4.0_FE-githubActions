@@ -3,4 +3,12 @@
   <br>
   建議格式 : {{adviceFormat}}
 </div>
-<input [(ngModel)]="selected.fieldInfo.fieldVal" style="width: 100%;" (keydown)="change.emit()">
+<br>
+<mat-form-field appearance="outline">
+  <mat-label>圖片連結</mat-label>
+  <input matInput [(ngModel)]="selected.fieldInfo.fieldVal" (keydown)="change.emit()">
+</mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>圖片描述</mat-label>
+  <input matInput [(ngModel)]="selected.fieldInfo.extension['desc']" (keydown)="change.emit()">
+</mat-form-field>

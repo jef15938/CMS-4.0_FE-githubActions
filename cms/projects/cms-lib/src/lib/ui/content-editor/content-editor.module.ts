@@ -26,6 +26,9 @@ import { ContentEditorServiceInjectionToken } from './content-editor.injection-t
 import { ContentEditorService } from './content-editor.service';
 import { TemplateControlDataSourceComponent } from './component/content-control-panel/control/template/template-control-data-source/template-control-data-source.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -36,6 +39,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatMenuModule,
     MatListModule,
     MatSelectModule,
+    MatInputModule,
+    MatRadioModule,
+    MatFormFieldModule,
     DragDropModule,
     LayoutModule,
   ],
