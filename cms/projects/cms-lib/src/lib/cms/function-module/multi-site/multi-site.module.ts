@@ -6,7 +6,6 @@ import { SharedModule } from 'projects/cms-lib/src/lib/shared/shared.module';
 import { MultiSiteNodeComponent } from './component/multi-site-node/multi-site-node.component';
 import { SitemapNodeUpdateComponent } from './component/sitemap-node-update/sitemap-node-update.component';
 import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
-import { SitemapEditContentModalComponent } from './component/sitemap-edit-content-modal/sitemap-edit-content-modal.component';
 import { ContentEditorModule } from '../../../ui/content-editor/content-editor.module';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { ContentEditorModule } from '../../../ui/content-editor/content-editor.m
     MultiSiteNodeComponent,
     SitemapNodeUpdateComponent,
     SitemapNodeCreateModalComponent,
-    SitemapEditContentModalComponent,
   ],
 })
 export class MultiSiteModule { }

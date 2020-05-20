@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Observable, concat, Subject } from 'rxjs';
+import { Observable, concat, Subject, forkJoin } from 'rxjs';
 import { tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { ModalService } from '../../../ui/modal/modal.service';
 import { SitemapService } from '../../../service/sitemap.service';
@@ -10,7 +10,9 @@ import { SiteInfo } from '../../../neuxAPI/bean/SiteInfo';
 import { TreeComponent } from '../../../ui/tree/tree.component';
 import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
 import { SiteMapUpdateInfo } from './multi-site.interface';
-import { SitemapEditContentModalComponent } from './component/sitemap-edit-content-modal/sitemap-edit-content-modal.component';
+import { ContentEditorService } from '../../../ui/content-editor/content-editor.service';
+import { ContentService } from '../../../service/content.service';
+import { EditorMode } from '../../../ui/content-editor/content-editor.interface';
 
 enum EditModeType {
   Site, Node,
@@ -53,6 +55,8 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   constructor(
     private _modalService: ModalService,
     private _sitemapService: SitemapService,
+    private _contentService: ContentService,
+    private _contentEditorService: ContentEditorService,
   ) { }
 
   ngOnInit(): void {
@@ -152,13 +156,17 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   }
 
   test() {
-    this._modalService.openComponent({
-      component: SitemapEditContentModalComponent,
-      componentInitData: {
-        contentID: 'fakeLayoutId',
-        controlID: 'fakeLayoutId',
-      },
-    }, true).subscribe();
+    const layoutId = 'fakeLayoutId';
+    forkJoin([
+      this._contentService.getContentByContentID(layoutId),
+      this._contentService.getTemplateByControlID(layoutId),
+    ]).subscribe(([contentInfo, selectableTemplates]) => {
+      this._contentEditorService.openEditor({
+        contentInfo,
+        selectableTemplates,
+        mode: EditorMode.EDIT,
+      }).subscribe()
+    });
   }
 
 }

@@ -5,7 +5,10 @@ import { NgForm } from '@angular/forms';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
 import { SiteMapUpdateInfo } from '../../multi-site.interface';
 import { ModalService } from 'projects/cms-lib/src/lib/ui/modal/modal.service';
-import { SitemapEditContentModalComponent } from '../sitemap-edit-content-modal/sitemap-edit-content-modal.component';
+import { ContentService } from 'projects/cms-lib/src/lib/service/content.service';
+import { ContentEditorService } from 'projects/cms-lib/src/lib/ui/content-editor/content-editor.service';
+import { forkJoin } from 'rxjs';
+import { EditorMode } from 'projects/cms-lib/src/lib/ui/content-editor/content-editor.interface';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
   constructor(siteMapInfo: SiteMapInfo, parent_id: string, node_orders: string) {
@@ -63,6 +66,8 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   constructor(
     private _modalService: ModalService,
+    private _contentService: ContentService,
+    private _contentEditorService: ContentEditorService,
   ) { }
 
   ngOnInit(): void {
@@ -88,13 +93,17 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     }
   }
 
-  editContent() {
-    this._modalService.openComponent({
-      component: SitemapEditContentModalComponent,
-      componentInitData: {
-
-      },
-    }, true).subscribe();
+  editContent(layoutId: string) {
+    forkJoin([
+      this._contentService.getContentByContentID(layoutId),
+      this._contentService.getTemplateByControlID(layoutId),
+    ]).subscribe(([contentInfo, selectableTemplates]) => {
+      this._contentEditorService.openEditor({
+        contentInfo,
+        selectableTemplates,
+        mode: EditorMode.EDIT,
+      }).subscribe()
+    });
   }
 
   getStartEndTime(timeObj: { start_time: string, end_time: string }): string {

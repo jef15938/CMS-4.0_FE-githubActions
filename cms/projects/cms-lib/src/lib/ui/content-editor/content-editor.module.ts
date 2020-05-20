@@ -54,7 +54,7 @@ import { ContentEditorService } from './content-editor.service';
     FieldControlGroupComponent,
   ],
   exports: [
-    ContentEditorComponent,
+    // ContentEditorComponent,
   ],
 })
 export class ContentEditorModule { 
@@ -62,6 +62,7 @@ export class ContentEditorModule {
     return {
       ngModule: ContentEditorModule,
       providers: [
+        ContentEditorService,
         {
           provide: ContentEditorServiceInjectionToken,
           useClass: ContentEditorService,
