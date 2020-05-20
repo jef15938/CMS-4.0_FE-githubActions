@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IconPageComponent, SliderComponent, TabDemoComponent, FieldsDemoComponent, GroupTemplateDemoComponent } from 'layout';
+import { IconPageComponent, SliderComponent, TabDemoComponent, FieldsDemoComponent, GroupTemplateDemoComponent, DataSourceDemoComponent } from 'layout';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,11 @@ export class DynamicComponentFactoryService {
     else if (id === 'FieldsDemo') {
       return FieldsDemoComponent;
     }
-    else if (id === 'Group') {
+    else if (id === 'GroupDemo') {
       return GroupTemplateDemoComponent;
+    }
+    else if (id === 'DataSourceDemo') {
+      return DataSourceDemoComponent;
     }
   }
 }

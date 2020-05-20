@@ -2,7 +2,9 @@
   <ng-container [ngSwitch]="selected.selectedTargetType">
     <div *ngSwitchCase="LayoutWrapperSelectedTargetType.TEMPLATE">
       <div>
-        版型 : {{selected.templateInfo.templateId}}
+        版型種類 : {{selected.templateType}}
+        <br>
+        版型Id : {{selected.templateInfo.templateId}}
         <br>
         Id : {{selected.templateInfo.id}}
         <hr>

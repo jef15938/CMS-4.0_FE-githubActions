@@ -18,7 +18,6 @@ export class RenderComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentInfo = this.renderService.getContentInfo('test');
-
   }
 
   onSelect(ev){

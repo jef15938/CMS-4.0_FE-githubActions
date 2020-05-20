@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ContentInfo, TabTemplateInfo, FieldType, TemplateInfo, GroupTemplateInfo } from '@layout';
+import { ContentInfo, TabTemplateInfo, FieldType, TemplateInfo, GroupTemplateInfo, DataSourceTemplateInfo } from '@layout';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,9 @@ export class RenderService {
       id: 'tp1',
       templateId: 'Tab',
       fields: [],
-      attributes: {},
+      attributes: {
+        maxItemCount: '3'
+      },
       tabList: [{
         fieldId: 'f1',
         fieldType: FieldType.GROUP,
@@ -131,25 +133,27 @@ export class RenderService {
 
     const groupTemplateInfo: GroupTemplateInfo = {
       id: 'groupTemplateInfo01',
-      templateId: 'Group',
+      templateId: 'GroupDemo',
       fields: [],
-      attributes: {},
+      attributes: {
+        maxItemCount: '3'
+      },
       itemList: [
         [
           {
-            fieldId: 't01',
+            fieldId: 'name',
             fieldType: FieldType.TEXT,
             fieldVal: '群組1',
             extension: {},
           },
           {
-            fieldId: 'l01',
+            fieldId: 'link',
             fieldType: FieldType.LINK,
             fieldVal: 'https://www.google.com.tw',
             extension: {},
           },
           {
-            fieldId: 'i01',
+            fieldId: 'img',
             fieldType: FieldType.IMG,
             fieldVal: 'http://www.neux.com.tw/neuximg/neuxLOGO.png',
             extension: {},
@@ -157,19 +161,19 @@ export class RenderService {
         ],
         [
           {
-            fieldId: 't02',
+            fieldId: 'name',
             fieldType: FieldType.TEXT,
             fieldVal: '群組2',
             extension: {},
           },
           {
-            fieldId: 'l02',
+            fieldId: 'link',
             fieldType: FieldType.LINK,
             fieldVal: 'https://www.google.com.tw',
             extension: {},
           },
           {
-            fieldId: 'i02',
+            fieldId: 'img',
             fieldType: FieldType.IMG,
             fieldVal: 'http://www.neux.com.tw/neuximg/neuxLOGO.png',
             extension: {},
@@ -178,8 +182,17 @@ export class RenderService {
       ]
     }
 
+    const dataSourceTemplateInfo: DataSourceTemplateInfo = {
+      id: 'dataSourceTemplateInfo01',
+      templateId: 'DataSourceDemo',
+      fields: [],
+      attributes: {},
+      source: ''
+    }
+
     const mock: ContentInfo = {
       templateList: [
+        dataSourceTemplateInfo,
         groupTemplateInfo,
         fieldsDemoTemplateInfo,
         tabTemplateInfo

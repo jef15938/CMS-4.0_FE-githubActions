@@ -1,21 +1,16 @@
-import { Component, OnInit, ViewChild, ComponentFactoryResolver, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
-import { LayoutBaseComponent } from '../../wrapper/layout-base/layout-base.component';
-import { TemplateInfo } from '../../interface/template-info.interface';
-import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
-import { TemplateType } from '../../wrapper/layout-wrapper/layout-wrapper.interface';
+import { CommonTemplateBaseComponent } from '../../wrapper/layout-base/common-template-base.component';
 
 @Component({
   selector: 'rdr-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss']
 })
-export class SliderComponent extends LayoutBaseComponent<TemplateInfo> implements OnInit {
-  templateType = TemplateType.COMMON;
-
+export class SliderComponent extends CommonTemplateBaseComponent implements OnInit {
   public show = true;
 
   public slides = [
@@ -56,14 +51,6 @@ export class SliderComponent extends LayoutBaseComponent<TemplateInfo> implement
 
   @ViewChild(SwiperComponent, { static: false }) componentRef?: SwiperComponent;
   @ViewChild(SwiperDirective, { static: false }) directiveRef?: SwiperDirective;
-
-  constructor(
-    componentFactoryResolver: ComponentFactoryResolver,
-    @Inject(COMPONENT_SERVICE_TOKEN) componentFactory: any,
-    changeDetector: ChangeDetectorRef
-  ) {
-    super(componentFactory, componentFactoryResolver, changeDetector);
-  }
 
   ngOnInit() {
 

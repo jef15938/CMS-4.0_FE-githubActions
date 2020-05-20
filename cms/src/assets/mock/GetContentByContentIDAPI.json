@@ -1,8 +1,15 @@
 {
   "templates": [
     {
+      "id": "dataSourceTemplateInfo01",
+      "templateId": "DataSourceDemo",
+      "fields": [],
+      "attributes": {},
+      "source": ""
+    },
+    {
       "id": "groupTemplateInfo01",
-      "templateId": "Group",
+      "templateId": "GroupDemo",
       "fields": [],
       "attributes": {
         "maxItemCount": "3"
@@ -10,19 +17,19 @@
       "itemList": [
         [
           {
-            "fieldId": "t01",
+            "fieldId": "name",
             "fieldType": "TEXT",
             "fieldVal": "群組1",
             "extension": {}
           },
           {
-            "fieldId": "l01",
+            "fieldId": "link",
             "fieldType": "LINK",
             "fieldVal": "https://www.google.com.tw",
             "extension": {}
           },
           {
-            "fieldId": "i01",
+            "fieldId": "img",
             "fieldType": "IMG",
             "fieldVal": "http://www.neux.com.tw/neuximg/neuxLOGO.png",
             "extension": {}
@@ -30,19 +37,19 @@
         ],
         [
           {
-            "fieldId": "t02",
+            "fieldId": "name",
             "fieldType": "TEXT",
             "fieldVal": "群組2",
             "extension": {}
           },
           {
-            "fieldId": "l02",
+            "fieldId": "link",
             "fieldType": "LINK",
             "fieldVal": "https://www.google.com.tw",
             "extension": {}
           },
           {
-            "fieldId": "i02",
+            "fieldId": "img",
             "fieldType": "IMG",
             "fieldVal": "http://www.neux.com.tw/neuximg/neuxLOGO.png",
             "extension": {}

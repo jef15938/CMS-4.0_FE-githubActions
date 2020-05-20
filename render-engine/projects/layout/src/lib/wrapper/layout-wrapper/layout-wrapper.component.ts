@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener, OnChanges, SimpleChanges } from '@angular/core';
 import { TemplateInfo } from '../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
-import { LayoutBase } from '../layout-base/layout-base.interface';
+import { LayoutBase } from '../layout-base/_base.interface';
 import { takeUntil, map } from 'rxjs/operators'
 import { merge } from 'rxjs';
 import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';

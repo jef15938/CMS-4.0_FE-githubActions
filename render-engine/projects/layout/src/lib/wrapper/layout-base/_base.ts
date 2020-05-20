@@ -1,19 +1,22 @@
-import { OnInit, Input, AfterViewInit, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector } from '@angular/core';
 import { TemplateInfo } from '../../interface/template-info.interface';
-import { LayoutBase } from './layout-base.interface';
+import { LayoutBase } from './_base.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
 import { TemplateFieldDirective } from '../layout-wrapper/template-field.directive';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
+import { FieldType } from '../../interface/field-info.interface';
 
 export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit {
 
+  abstract templateType: TemplateType;
+
+  readonly FieldType = FieldType;
+  readonly TemplateType = TemplateType;
+
   parentLayoutWrapper: LayoutWrapperComponent;
   @ViewChildren(TemplatesContainerComponent) templatesContainerComponents: QueryList<TemplatesContainerComponent>;
-
   @ViewChildren(TemplateFieldDirective) templateFieldDirectives: QueryList<TemplateFieldDirective>;
-
-  abstract templateType: TemplateType;
 
   private _templateInfo: TInfo;
   private _isViewInit: boolean = false;
@@ -34,9 +37,7 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
   }
 
   constructor(
-    protected componentFactory: any,
-    protected componentFactoryResolver: ComponentFactoryResolver,
-    protected changeDetector: ChangeDetectorRef
+    protected injector: Injector,
   ) { }
 
   ngOnInit(): void {
@@ -44,14 +45,6 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
 
   ngAfterViewInit(): void {
     this._isViewInit = true;
-  }
-
-  protected embedView(vc: ViewContainerRef, componentID: string): ComponentRef<any> {
-    const componentClass = this.componentFactory.getComponent(componentID);
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
-    vc.clear();
-    const componentRef = vc.createComponent(componentFactory);
-    return componentRef;
   }
 
 }
