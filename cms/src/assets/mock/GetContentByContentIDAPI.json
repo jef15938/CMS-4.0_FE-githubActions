@@ -54,9 +54,7 @@
       "id": "groupTemplateInfo01",
       "templateId": "GroupDemo",
       "fields": [],
-      "attributes": {
-        "maxItemCount": "3"
-      },
+      "attributes": {},
       "itemList": [
         [
           {
@@ -104,9 +102,7 @@
       "id": "tp1",
       "templateId": "Tab",
       "fields": [],
-      "attributes": {
-        "maxItemCount": "4"
-      },
+      "attributes": {},
       "tabList": [
         {
           "fieldId": "f1",

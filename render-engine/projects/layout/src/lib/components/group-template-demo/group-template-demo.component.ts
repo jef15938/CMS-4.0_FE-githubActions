@@ -7,6 +7,7 @@ import { GroupTemplateBaseComponent } from '../../wrapper/layout-base/group-temp
   styleUrls: ['./group-template-demo.component.scss']
 })
 export class GroupTemplateDemoComponent extends GroupTemplateBaseComponent implements OnInit {
+  maxItemCount = 4;
   groupItemDisplayFieldId = 'name';
 
   ngOnInit(): void {

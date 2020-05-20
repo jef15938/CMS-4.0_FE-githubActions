@@ -4,4 +4,12 @@ import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 
 export abstract class TabTemplateBaseComponent extends LayoutBaseComponent<TabTemplateInfo> {
   templateType = TemplateType.TAB;
+  /**
+   * 必填，Tab個數限制
+   *
+   * @abstract
+   * @type {number}
+   * @memberof GroupTemplateBaseComponent
+   */
+  abstract maxItemCount: number ;
 }

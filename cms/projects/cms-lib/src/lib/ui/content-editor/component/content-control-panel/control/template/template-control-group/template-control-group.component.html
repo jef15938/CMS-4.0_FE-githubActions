@@ -1,6 +1,6 @@
 <ng-container *ngIf="templateInfo">
   <div>
-    個數限制 : {{templateInfo.attributes.maxItemCount}}
+    個數限制 : {{maxItemCount}}
   </div>
   <div>
     <mat-list cdkDropList (cdkDropListDropped)="onListDropped($event)">
@@ -10,7 +10,7 @@
           <!-- <input [(ngModel)]="group.tabId"> -->
           <span>{{!groupItemDisplayFieldId?i:findFieldByFieldId(group, groupItemDisplayFieldId)?.fieldVal}}</span>
           <button type="button" mat-button
-            [disabled]="templateInfo.itemList.length>=parseInt(templateInfo.attributes.maxItemCount)"
+            [disabled]="templateInfo.itemList.length>=parseInt(''+maxItemCount)"
             (click)="copyGroup(group)">
             <mat-icon class="pointer">file_copy</mat-icon>
           </button>

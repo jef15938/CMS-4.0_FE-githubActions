@@ -7,7 +7,7 @@ import { TabTemplateBaseComponent } from '../../../wrapper/layout-base/tab-templ
   styleUrls: ['./tab-demo.component.scss'],
 })
 export class TabDemoComponent extends TabTemplateBaseComponent implements OnInit {
-
+  maxItemCount = 3;
   ngOnInit() {
   }
 }

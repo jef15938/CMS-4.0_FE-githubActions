@@ -9,7 +9,15 @@ export abstract class GroupTemplateBaseComponent extends LayoutBaseComponent<Gro
    *
    * @abstract
    * @type {string}
-   * @memberof DataSourceBaseComponent
+   * @memberof GroupTemplateBaseComponent
    */
   abstract groupItemDisplayFieldId: string ;
+  /**
+   * 必填，Group個數限制
+   *
+   * @abstract
+   * @type {number}
+   * @memberof GroupTemplateBaseComponent
+   */
+  abstract maxItemCount: number ;
 }

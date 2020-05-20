@@ -1,6 +1,6 @@
 <ng-container *ngIf="templateInfo">
   <div>
-    個數限制 : {{templateInfo.attributes.maxItemCount}}
+    個數限制 : {{maxItemCount}}
   </div>
   <div>
     <mat-list cdkDropList (cdkDropListDropped)="onListDropped($event)">
@@ -14,7 +14,7 @@
       <mat-list-item style="text-align: center;">
         <div class="item-container" style="text-align: center;">
           <button type="button" mat-button (click)="addTab()"
-            [disabled]="templateInfo.tabList.length>=parseInt(templateInfo.attributes.maxItemCount)">
+            [disabled]="templateInfo.tabList.length>=parseInt(''+maxItemCount)">
             <mat-icon class="pointer">add_circle</mat-icon>
           </button>
         </div>

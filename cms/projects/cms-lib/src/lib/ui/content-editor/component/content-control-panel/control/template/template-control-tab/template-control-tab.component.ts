@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo } from 'layout';
+import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo, TabTemplateBaseComponent } from 'layout';
 import { ContentControlBase } from '../../_base';
 
 @Component({
@@ -11,12 +11,15 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
 
   parseInt = parseInt;
 
+  maxItemCount: number;
   templateInfo: TabTemplateInfo;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selected']) {
       const event = changes['selected'].currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as TabTemplateInfo;
+      const componentInstance = event.componentRef.instance as TabTemplateBaseComponent;
+      this.maxItemCount = componentInstance.maxItemCount;
     }
   }
 

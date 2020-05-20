@@ -13,9 +13,7 @@ export class RenderService {
       id: 'tp1',
       templateId: 'Tab',
       fields: [],
-      attributes: {
-        maxItemCount: '3'
-      },
+      attributes: {},
       tabList: [{
         fieldId: 'f1',
         fieldType: FieldType.GROUP,
@@ -129,9 +127,7 @@ export class RenderService {
       id: 'groupTemplateInfo01',
       templateId: 'GroupDemo',
       fields: [],
-      attributes: {
-        maxItemCount: '3'
-      },
+      attributes: {},
       itemList: [
         [
           {
