@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, 
 import { TemplateInfo } from '../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 import { LayoutBase } from '../layout-base/_base.interface';
-import { takeUntil, map } from 'rxjs/operators'
-import { merge } from 'rxjs';
+import { takeUntil, map, tap } from 'rxjs/operators'
+import { merge, Subscription } from 'rxjs';
 import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
 import { LayoutWrapperBase } from './layout-wrapper-base';
 
@@ -25,6 +25,8 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   componentRef: ComponentRef<LayoutBase<TemplateInfo>>;
 
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
+
+  private _instanceEventSubscription: Subscription;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -48,6 +50,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   ngAfterViewInit() {
     this._changeDetectorRef.reattach();
     this.loadComponent();
+    this.checkEventBinding();
     this.setMode();
   }
 
@@ -58,8 +61,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     this._setInstanceProperties(componentRef?.instance);
     this.componentRef = componentRef;
     this._changeDetectorRef.detectChanges(); // 讓內含的畫面長出，ViewChild/ViewChildren才會更新
-    this._registerInstanceSelectEvents(componentRef?.instance);
-    this._registerInstanceEnterLeaveEvents(componentRef?.instance);
   }
 
   private _createComponentRef(): ComponentRef<LayoutBase<TemplateInfo>> {
@@ -77,37 +78,33 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     }
   }
 
-  private _registerInstanceSelectEvents(instance: LayoutBase<TemplateInfo>) {
-    const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
-    const templateFieldDirectives = (instance?.templateFieldDirectives || new QueryList());
-    merge(...[
-      merge(...templatesContainerComponents.map(c => c.select).filter(l => !!l)),
-      merge(...templateFieldDirectives.map(c => c.select).filter(l => !!l))
-        .pipe(
-          map((e: TemplateFieldSelectEvent) => this.createLayoutWrapperSelectEvent(e)),
-        )
-    ]).pipe(
-      takeUntil(this.destroy$),
-    ).subscribe((e: LayoutWrapperSelectEvent) => this.select.next(e));
+  checkEventBinding() {
+    if (this._instanceEventSubscription) { this._instanceEventSubscription.unsubscribe(); }
+    this._instanceEventSubscription =
+      this._registerInstanceEvents(this.componentRef?.instance).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
-  private _registerInstanceEnterLeaveEvents(instance: LayoutBase<TemplateInfo>) {
+  private _registerInstanceEvents(instance: LayoutBase<TemplateInfo>) {
     const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
     const templateFieldDirectives = (instance?.templateFieldDirectives || new QueryList());
-    // enter
-    merge(...[
-      merge(...templatesContainerComponents.map(c => c.enter).filter(l => !!l)),
-      merge(...templateFieldDirectives.map(c => c.enter).filter(l => !!l)),
-    ]).pipe(
-      takeUntil(this.destroy$),
-    ).subscribe((e: HTMLElement) => this.enter.next(e));
-    // leave
-    merge(...[
-      merge(...templatesContainerComponents.map(c => c.leave).filter(l => !!l)),
-      merge(...templateFieldDirectives.map(c => c.leave).filter(l => !!l)),
-    ]).pipe(
-      takeUntil(this.destroy$),
-    ).subscribe((e: HTMLElement) => this.leave.next(e));
+    return merge(
+      // select
+      merge(
+        merge(...templatesContainerComponents.map(c => c.select).filter(l => !!l)),
+        merge(...templateFieldDirectives.map(c => c.select).filter(l => !!l))
+          .pipe(map((e: TemplateFieldSelectEvent) => this.createLayoutWrapperSelectEvent(e)))
+      ).pipe(tap((e: LayoutWrapperSelectEvent) => this.select.next(e))),
+      // enter
+      merge(
+        merge(...templatesContainerComponents.map(c => c.enter).filter(l => !!l)),
+        merge(...templateFieldDirectives.map(c => c.enter).filter(l => !!l)),
+      ).pipe(tap((e: HTMLElement) => this.enter.next(e))),
+      // leave
+      merge(
+        merge(...templatesContainerComponents.map(c => c.leave).filter(l => !!l)),
+        merge(...templateFieldDirectives.map(c => c.leave).filter(l => !!l)),
+      ).pipe(tap((e: HTMLElement) => this.leave.next(e)))
+    )
   }
 
   createLayoutWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {
