@@ -4,6 +4,7 @@ import { ContentEditorManager } from '../../service/content-editor-manager';
 import { ContentEditorServiceInjectionToken } from '../../content-editor.injection-token';
 import { IContentEditorService, EditorMode } from '../../content-editor.interface';
 import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
+import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -22,7 +23,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   @Input() manager: ContentEditorManager;
   @Input() selected: LayoutWrapperSelectEvent;
 
-  @Output() needCheckView = new EventEmitter();
+  @Output() needCheckView = new EventEmitter<CheckViewConfig>();
   @Output() needScale = new EventEmitter<boolean>();
   @Output() changePreserve = new EventEmitter();
 

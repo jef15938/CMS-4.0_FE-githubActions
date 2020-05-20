@@ -4,6 +4,7 @@ import { LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperCom
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
 import { EditorMode } from '../../content-editor.interface';
+import { CheckViewConfig } from './content-view-renderer.interface';
 
 class AddTemplateBtn {
   constructor(
@@ -129,7 +130,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     return templatesContainer?.layoutWrapperComponents?.map(lw => lw.componentRef?.instance?.templatesContainerComponents?.map(t => this._renderViewInfo(t)));
   }
 
-  checkView(config?: { select: LayoutWrapperComponent }) {
+  checkView(config?: CheckViewConfig) {
     this._changeDetectorRef.detectChanges();
     // TODO: 優化，有無可以不用setTimeout的方法
     setTimeout(() => {
