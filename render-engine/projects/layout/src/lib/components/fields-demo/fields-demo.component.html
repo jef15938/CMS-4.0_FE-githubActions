@@ -22,20 +22,9 @@
 
     <div style="padding: 10px;">
       自訂Html
-      <div [innerHTML]="templateInfo.fields[6].fieldVal | safeHtml" [libTemplateField]="templateInfo.fields[6]"></div>
+      <div [innerHTML]="templateInfo.fields[5].fieldVal | safeHtml" [libTemplateField]="templateInfo.fields[5]"></div>
     </div>
 
     <hr>
-
-    <div *ngFor="let field of templateInfo.fields">
-      <ng-container [ngSwitch]="field.fieldType">
-        <div *ngSwitchCase="FieldType.GROUP" [libTemplateField]="field">
-          GROUP :
-          <div>
-            <pre>{{field|json}}</pre>
-          </div>
-        </div>
-      </ng-container>
-    </div>
   </div>
 </ng-container>

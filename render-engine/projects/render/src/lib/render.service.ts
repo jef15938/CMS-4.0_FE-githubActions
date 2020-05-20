@@ -117,12 +117,6 @@ export class RenderService {
         },
         {
           fieldId: 'f06',
-          fieldType: FieldType.GROUP,
-          fieldVal: '',
-          extension: {},
-        },
-        {
-          fieldId: 'f07',
           fieldType: FieldType.HTMLEDITOR,
           fieldVal: '<div style="color:red;border:1px solid black; background-color: white; padding:10px"><span>我的自訂</span><span style="color:black;">01</span><div>',
           extension: {},
