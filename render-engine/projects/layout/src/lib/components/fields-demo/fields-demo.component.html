@@ -10,8 +10,8 @@
         [libLayoutFieldImg]="templateInfo.fields[4]" [adviceWidth]="160" [adviceHeight]="90" adviceFormat="jpg">
         <img [src]="templateInfo.fields[4].fieldVal" style="width: 100%; height: auto; max-height: 100%;">
       </div>
-      <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo.fields[1]" [maxLength]="-1" [maxLines]="5">
-        {{templateInfo.fields[1].fieldVal}}
+      <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo.fields[1]" [maxLength]="-1" [maxLines]="5"
+        [innerHTML]="templateInfo.fields[1].fieldVal|newLineReplace|safeHtml">
       </div>
     </div>
 

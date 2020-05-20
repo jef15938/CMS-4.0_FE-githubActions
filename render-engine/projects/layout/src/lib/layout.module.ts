@@ -8,6 +8,7 @@ import { FieldsDemoComponent } from './components/fields-demo/fields-demo.compon
 import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 import { GroupTemplateDemoComponent } from './components/group-template-demo/group-template-demo.component';
 import { DataSourceDemoComponent } from './components/data-source-demo/data-source-demo.component';
+import { NewLineReplacePipe } from './pipe/new-line-replace.pipe';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { DataSourceDemoComponent } from './components/data-source-demo/data-sour
     SliderComponent,
     FieldsDemoComponent,
     SafeHtmlPipe,
+    NewLineReplacePipe,
     GroupTemplateDemoComponent,
     DataSourceDemoComponent,
   ],
