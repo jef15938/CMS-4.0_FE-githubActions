@@ -15,7 +15,7 @@
   <button type="button" (click)="fontStyle('insertTable')">插入表格</button>
   <button type="button" (click)="fontStyle('insertVideo')">插入影片</button>
 </div>
-<div #editBlock contenteditable (click)="onClick($event)" id='editor' class="neux-editor" [innerHTML]="content|safeHtml">
+<div #editorBlock contenteditable (click)="onClick($event)" id='editor' class="neux-editor" [innerHTML]="content|safeHtml">
 </div>
 <div id="tool" class="tool" style="display: none;">
   <cms-html-editor-image-toolbar *ngIf="selectComponent == toolbarEnum.IMG"></cms-html-editor-image-toolbar>
