@@ -8,15 +8,15 @@ import { FieldInfo } from '../../../interface/field-info.interface';
 export class LayoutFieldTextareaDirective extends TemplateFieldDirective {
   @Input('libLayoutFieldTextarea') fieldInfo: FieldInfo;
   /**
-     * 長度限制，-1無限制
+     * 長度限制，0無限制
      *
      * @memberof LayoutFieldTextareaDirective
      */
-  @Input('maxLength') maxLength = -1;
+  @Input('maxLength') maxLength = 0;
   /**
-     * 行數限制，-1無限制
+     * 行數限制，0無限制
      *
      * @memberof LayoutFieldTextareaDirective
      */
-  @Input('maxLines') maxLines = -1;
+  @Input('maxLines') maxLines = 0;
 }

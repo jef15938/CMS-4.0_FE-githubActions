@@ -8,9 +8,9 @@ import { FieldInfo } from '../../../interface/field-info.interface';
 export class LayoutFieldTextDirective extends TemplateFieldDirective {
   @Input('libLayoutFieldText') fieldInfo: FieldInfo;
   /**
-   * 長度限制，-1無限制
+   * 長度限制，0無限制
    *
    * @memberof LayoutFieldTextDirective
    */
-  @Input('maxLength') maxLength = -1;
+  @Input('maxLength') maxLength = 0;
 }
