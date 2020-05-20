@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild, ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef } from '@angular/core';
 import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
-import { LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperComponent, LayoutWrapperSelectedTargetType } from 'layout';
+import { LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperComponent, LayoutWrapperSelectedTargetType, LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective, LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective } from 'layout';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
 import { EditorMode } from '../../content-editor.interface';
@@ -122,7 +122,30 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
           (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `${field.fieldInfo.fieldType}`);
         } else {
           (field?.elementRef?.nativeElement as HTMLElement)?.classList.add('edit-info');
-          (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('edit-info', `${field.fieldInfo.fieldType}:${field.fieldInfo.fieldId}`);
+          const infos: string[] = [];
+          if (field instanceof LayoutFieldTextDirective) {
+            infos.push(field.maxLength > 1 ? `字數限制:${field.maxLength}` : '無字數限制');
+          }
+          if (field instanceof LayoutFieldTextareaDirective) {
+            infos.push(field.maxLength > 1 ? `字數限制:${field.maxLength}` : '無字數限制');
+            infos.push(field.maxLines > 1 ? `行數限制:${field.maxLines}` : '無行數限制');
+          }
+          if (field instanceof LayoutFieldLinkDirective) {
+
+          }
+          if (field instanceof LayoutFieldBgimgDirective) {
+            infos.push(`建議尺寸:${field.adviceWidth}x${field.adviceFormat}`);
+            infos.push(`建議格式:${field.adviceFormat}`);
+          }
+          if (field instanceof LayoutFieldImgDirective) {
+            infos.push(`建議尺寸:${field.adviceWidth}x${field.adviceFormat}`);
+            infos.push(`建議格式:${field.adviceFormat}`);
+          }
+          if (field instanceof LayoutFieldHtmlEditorDirective) {
+
+          }
+          const info = infos.length ? infos.join('; ') : '';
+          (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('edit-info', `${field.fieldInfo.fieldType}${info ? ' : ' : ''}${info}`);
         }
       })
     });
