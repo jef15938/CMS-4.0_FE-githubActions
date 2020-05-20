@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, GroupTemplateInfo, FieldInfo } from 'layout';
+import { LayoutWrapperSelectEvent, GroupTemplateInfo, FieldInfo, GroupTemplateDemoComponent } from 'layout';
 import { ContentControlBase } from '../../_base';
 
 @Component({
@@ -12,11 +12,14 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
   parseInt = parseInt;
 
   templateInfo: GroupTemplateInfo;
+  groupItemDisplayFieldId: string;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selected']) {
       const event = changes['selected'].currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as GroupTemplateInfo;
+      const componentInstance = event.componentRef.instance as GroupTemplateDemoComponent;
+      this.groupItemDisplayFieldId = componentInstance.groupItemDisplayFieldId;
     }
   }
 
@@ -50,6 +53,10 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
   removeGroup(group: FieldInfo[]) {
     this.templateInfo.itemList.splice(this.templateInfo.itemList.indexOf(group), 1);
     this.change.emit();
+  }
+
+  findFieldByFieldId(fields: FieldInfo[], field: string) {
+    return fields.find(f => f.fieldId === field);
   }
 
 

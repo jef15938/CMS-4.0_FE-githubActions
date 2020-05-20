@@ -8,7 +8,7 @@
         <div class="item-container">
           <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
           <!-- <input [(ngModel)]="group.tabId"> -->
-          <span>{{i}}</span>
+          <span>{{!groupItemDisplayFieldId?i:findFieldByFieldId(group, groupItemDisplayFieldId)?.fieldVal}}</span>
           <button type="button" mat-button
             [disabled]="templateInfo.itemList.length>=parseInt(templateInfo.attributes.maxItemCount)"
             (click)="copyGroup(group)">
