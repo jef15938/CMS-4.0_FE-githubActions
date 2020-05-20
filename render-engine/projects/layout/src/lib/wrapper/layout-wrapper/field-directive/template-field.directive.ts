@@ -14,6 +14,7 @@ export abstract class TemplateFieldDirective extends LayoutWrapperBase {
         selectedTarget: this.elementRef?.nativeElement,
         selectedTargetType: LayoutWrapperSelectedTargetType.FIELD,
         fieldInfo: this.fieldInfo,
+        fieldDirective: this,
       });
     }
   }

@@ -23,6 +23,7 @@ export interface TemplateFieldSelectEvent {
   selectedTarget: HTMLElement,
   selectedTargetType: LayoutWrapperSelectedTargetType,
   fieldInfo: FieldInfo;
+  fieldDirective: any;
 }
 
 export interface LayoutWrapperSelectEvent {
@@ -33,4 +34,5 @@ export interface LayoutWrapperSelectEvent {
   templateType: TemplateType;
   templateInfo: TemplateInfo;
   fieldInfo?: FieldInfo;
+  fieldDirective?: any;
 }
