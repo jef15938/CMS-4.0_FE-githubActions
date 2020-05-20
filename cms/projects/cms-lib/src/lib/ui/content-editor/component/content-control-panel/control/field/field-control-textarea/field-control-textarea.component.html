@@ -1,2 +1,8 @@
-<textarea [(ngModel)]="selected.fieldInfo.fieldVal" rows="10" cols="50" style="width: 100%;"
-  (keydown.enter)="onEnterDown($event, selected.fieldInfo.fieldVal)" (paste)="onPaste($event)" (keydown)="change.emit()"></textarea>
+<div>
+  字數限制 : {{maxLength}}
+  <br>
+  行數限制 : {{maxLines}}
+</div>
+<textarea [(ngModel)]="selected.fieldInfo.fieldVal" [maxlength]="maxLength" rows="10" cols="50" style="width: 100%;"
+  (keydown.enter)="onEnterDown($event, selected.fieldInfo.fieldVal)" (paste)="onPaste($event)"
+  (keydown)="change.emit()"></textarea>

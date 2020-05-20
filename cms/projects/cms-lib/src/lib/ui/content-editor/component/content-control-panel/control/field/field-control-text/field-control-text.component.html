@@ -1,1 +1,5 @@
-<input type="input" style="width: 100%;" [(ngModel)]="selected.fieldInfo.fieldVal" (keydown)="change.emit()">
+<div>
+  字數限制 : {{maxLength}}
+</div>
+<input type="input" style="width: 100%;" [maxlength]="maxLength" [(ngModel)]="selected.fieldInfo.fieldVal"
+  (keydown)="change.emit()">
