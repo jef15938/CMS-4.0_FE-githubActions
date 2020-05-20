@@ -2,12 +2,18 @@ import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector, OnDest
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { LayoutBase } from './_base.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
-import { TemplateFieldDirective } from '../layout-wrapper/template-field.directive';
+import { TemplateFieldDirective } from '../layout-wrapper/field-directive/template-field.directive';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
 import { FieldType } from '../../interface/field-info.interface';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, merge } from 'rxjs';
+import { LayoutFieldTextDirective } from '../layout-wrapper/field-directive/layout-field-text.directive';
+import { LayoutFieldTextareaDirective } from '../layout-wrapper/field-directive/layout-field-textarea.directive';
+import { LayoutFieldLinkDirective } from '../layout-wrapper/field-directive/layout-field-link.directive';
+import { LayoutFieldBgimgDirective } from '../layout-wrapper/field-directive/layout-field-bgimg.directive';
+import { LayoutFieldImgDirective } from '../layout-wrapper/field-directive/layout-field-img.directive';
+import { LayoutFieldHtmlEditorDirective } from '../layout-wrapper/field-directive/layout-field-html-editor.directive';
 
 export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy {
 
@@ -18,7 +24,23 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
 
   parentLayoutWrapper: LayoutWrapperComponent;
   @ViewChildren(TemplatesContainerComponent) templatesContainerComponents: QueryList<TemplatesContainerComponent>;
-  @ViewChildren(TemplateFieldDirective) templateFieldDirectives: QueryList<TemplateFieldDirective>;
+  get templateFieldDirectives(): TemplateFieldDirective[] {
+    return [
+      ...(this.layoutFieldTextDirectives ? Array.from(this.layoutFieldTextDirectives) : []),
+      ...(this.layoutFieldTextareaDirectives ? Array.from(this.layoutFieldTextareaDirectives) : []),
+      ...(this.layoutFieldLinkDirectives ? Array.from(this.layoutFieldLinkDirectives) : []),
+      ...(this.layoutFieldBgimgDirectives ? Array.from(this.layoutFieldBgimgDirectives) : []),
+      ...(this.layoutFieldImgDirectives ? Array.from(this.layoutFieldImgDirectives) : []),
+      ...(this.layoutFieldHtmlEditorDirectives ? Array.from(this.layoutFieldHtmlEditorDirectives) : []),
+    ];
+  };
+
+  @ViewChildren(LayoutFieldTextDirective) layoutFieldTextDirectives: QueryList<LayoutFieldTextDirective>;
+  @ViewChildren(LayoutFieldTextareaDirective) layoutFieldTextareaDirectives: QueryList<LayoutFieldTextareaDirective>;
+  @ViewChildren(LayoutFieldLinkDirective) layoutFieldLinkDirectives: QueryList<LayoutFieldLinkDirective>;
+  @ViewChildren(LayoutFieldBgimgDirective) layoutFieldBgimgDirectives: QueryList<LayoutFieldBgimgDirective>;
+  @ViewChildren(LayoutFieldImgDirective) layoutFieldImgDirectives: QueryList<LayoutFieldImgDirective>;
+  @ViewChildren(LayoutFieldHtmlEditorDirective) layoutFieldHtmlEditorDirectives: QueryList<LayoutFieldHtmlEditorDirective>;
 
   private _templateInfo: TInfo;
   private _isViewInit: boolean = false;
@@ -52,7 +74,12 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
     this._isViewInit = true;
     merge(
       this.templatesContainerComponents.changes,
-      this.templateFieldDirectives.changes,
+      this.layoutFieldTextDirectives.changes,
+      this.layoutFieldTextareaDirectives.changes,
+      this.layoutFieldLinkDirectives.changes,
+      this.layoutFieldBgimgDirectives.changes,
+      this.layoutFieldImgDirectives.changes,
+      this.layoutFieldHtmlEditorDirectives.changes,
     ).pipe(takeUntil(this.destroy$)).subscribe(_ => {
       this.parentLayoutWrapper.checkEventBinding();
       this.parentLayoutWrapper.setMode();

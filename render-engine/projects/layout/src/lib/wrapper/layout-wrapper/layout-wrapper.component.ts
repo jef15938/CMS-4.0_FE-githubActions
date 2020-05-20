@@ -86,7 +86,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   private _registerInstanceEvents(instance: LayoutBase<TemplateInfo>) {
     const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
-    const templateFieldDirectives = (instance?.templateFieldDirectives || new QueryList());
+    const templateFieldDirectives = (instance?.templateFieldDirectives || []);
     return merge(
       // select
       merge(

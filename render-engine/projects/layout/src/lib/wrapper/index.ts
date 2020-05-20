@@ -7,5 +7,11 @@ export * from './layout-base/tab-template-base.component';
 // wrappers
 export * from './layout-wrapper/layout-wrapper.interface';
 export * from './layout-wrapper/layout-wrapper.component';
-export * from './layout-wrapper/template-field.directive';
 export * from './templates-container/templates-container.component';
+export * from './layout-wrapper/field-directive/template-field.directive';
+export * from './layout-wrapper/field-directive/layout-field-text.directive';
+export * from './layout-wrapper/field-directive/layout-field-textarea.directive';
+export * from './layout-wrapper/field-directive/layout-field-link.directive';
+export * from './layout-wrapper/field-directive/layout-field-bgimg.directive';
+export * from './layout-wrapper/field-directive/layout-field-img.directive';
+export * from './layout-wrapper/field-directive/layout-field-html-editor.directive';
