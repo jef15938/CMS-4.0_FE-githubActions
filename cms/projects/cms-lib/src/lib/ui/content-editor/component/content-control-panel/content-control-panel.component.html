@@ -32,7 +32,8 @@
           <cms-template-control-group [selected]="selected" (change)="hasChange=true;"></cms-template-control-group>
         </ng-container>
         <div *ngSwitchCase="TemplateType.DATA_SOURCE">
-
+          <cms-template-control-data-source [selected]="selected" (change)="hasChange=true;">
+          </cms-template-control-data-source>
         </div>
         <div *ngSwitchCase="TemplateType.CUSTOMIZE">
 

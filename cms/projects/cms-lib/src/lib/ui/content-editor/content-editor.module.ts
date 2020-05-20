@@ -24,6 +24,8 @@ import { TemplateControlGroupComponent } from './component/content-control-panel
 import { EditorContainerModalComponent } from './component/editor-container-modal/editor-container-modal.component';
 import { ContentEditorServiceInjectionToken } from './content-editor.injection-token';
 import { ContentEditorService } from './content-editor.service';
+import { TemplateControlDataSourceComponent } from './component/content-control-panel/control/template/template-control-data-source/template-control-data-source.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -33,6 +35,7 @@ import { ContentEditorService } from './content-editor.service';
     MatExpansionModule,
     MatMenuModule,
     MatListModule,
+    MatSelectModule,
     DragDropModule,
     LayoutModule,
   ],
@@ -52,12 +55,13 @@ import { ContentEditorService } from './content-editor.service';
     FieldControlImgComponent,
     FieldControlHtmlEditorComponent,
     FieldControlGroupComponent,
+    TemplateControlDataSourceComponent,
   ],
   exports: [
     // ContentEditorComponent,
   ],
 })
-export class ContentEditorModule { 
+export class ContentEditorModule {
   static forRoot(providers = []): ModuleWithProviders {
     return {
       ngModule: ContentEditorModule,

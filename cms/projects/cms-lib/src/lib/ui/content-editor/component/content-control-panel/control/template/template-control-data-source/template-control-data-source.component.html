@@ -1,0 +1,11 @@
+<div style="margin-top: 5px;" *ngIf="templateInfo">
+  Source: {{templateInfo?.source}}
+  <mat-form-field appearance="outline">
+    <mat-label>資料來源</mat-label>
+    <mat-select [(ngModel)]="templateInfo.source" (selectionChange)="change.emit()">
+      <mat-option *ngFor="let source of souces" [value]="source.value">
+        {{source.display}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
