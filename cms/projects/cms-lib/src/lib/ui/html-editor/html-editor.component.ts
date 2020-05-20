@@ -10,15 +10,15 @@ export enum Toolbar {
 }
 
 export interface MouseEvent {
-  rowId:     number;
-  colId:     number;
+  rowId: number;
+  colId: number;
 }
 
 export interface SelectObj {
   startCol: number;
-  endCol:   number;
+  endCol: number;
   startRow: number;
-  endRow:   number;
+  endRow: number;
 }
 
 let _this;

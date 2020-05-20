@@ -1,50 +1,46 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
-  <!-- This is the tree node template for leaf nodes -->
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-    <li class="pointer mat-tree-node" [class.selected]="node===selectedNode" (dblclick)="onRowDbClicked($event, node)"
-      (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
-      <span *ngIf="customNodeRenderer">
-        <span cmsTreeNodeCustomWrapper [data]="node"></span>
-      </span>
-      <span *ngIf="!customNodeRenderer">
-        {{node[nodeDisplayField]}}
-      </span>
-      <!-- use a disabled button to provide padding for tree leaf -->
-      <button type="button" class="node-expand-btn" mat-icon-button disabled></button>
-    </li>
-  </mat-tree-node>
-  <!-- This is the tree node template for expandable nodes -->
-  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-    <li class="pointer" (dblclick)="onRowDbClicked($event, node)" (click)="onRowClicked($event, node)"
-      cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
-      <div class="mat-tree-node" [class.selected]="node===selectedNode">
+<div (selectstart)="onSelectstart($event)">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+      <li class="pointer mat-tree-node" [class.selected]="node===selectedNode" (dblclick)="onRowDbClicked($event, node)"
+        (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
         <span *ngIf="customNodeRenderer">
           <span cmsTreeNodeCustomWrapper [data]="node"></span>
         </span>
         <span *ngIf="!customNodeRenderer">
           {{node[nodeDisplayField]}}
         </span>
-        <button type="button" class="node-expand-btn" mat-icon-button
-          [attr.aria-label]="'toggle ' + node[nodeDisplayField]">
-          <mat-icon class="mat-icon-rtl-mirror not-selectable">
-            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-          </mat-icon>
-        </button>
-        <!-- <button type="button" class="node-expand-btn" mat-icon-button matTreeNodeToggle
-          [attr.aria-label]="'toggle ' + node[nodeDisplayField]">
-          <mat-icon class="mat-icon-rtl-mirror">
-            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-          </mat-icon>
-        </button> -->
-      </div>
-      <ul class="tree-children" [class.example-tree-invisible]="!treeControl.isExpanded(node)">
-        <ng-container matTreeNodeOutlet></ng-container>
-      </ul>
-    </li>
-  </mat-nested-tree-node>
-</mat-tree>
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <button type="button" class="node-expand-btn" mat-icon-button disabled></button>
+      </li>
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+      <li class="pointer" (dblclick)="onRowDbClicked($event, node)" (click)="onRowClicked($event, node)"
+        cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
+        <div class="mat-tree-node" [class.selected]="node===selectedNode">
+          <span *ngIf="customNodeRenderer">
+            <span cmsTreeNodeCustomWrapper [data]="node"></span>
+          </span>
+          <span *ngIf="!customNodeRenderer">
+            {{node[nodeDisplayField]}}
+          </span>
+          <button type="button" class="node-expand-btn" mat-icon-button
+            [attr.aria-label]="'toggle ' + node[nodeDisplayField]">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+        </div>
+        <ul class="tree-children" [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+          <ng-container matTreeNodeOutlet></ng-container>
+        </ul>
+      </li>
+    </mat-nested-tree-node>
+  </mat-tree>
 
 
-<!-- Copyright 2019 Google LLC. All Rights Reserved.
-      Use of this source code is governed by an MIT-style license that
-      can be found in the LICENSE file at http://angular.io/license -->
+  <!-- Copyright 2019 Google LLC. All Rights Reserved.
+        Use of this source code is governed by an MIT-style license that
+        can be found in the LICENSE file at http://angular.io/license -->
+</div>

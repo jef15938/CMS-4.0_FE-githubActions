@@ -150,7 +150,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this._selectNode(data);
   }
 
-  @HostListener('document:selectstart', ['$event'])
+  // @HostListener('document:selectstart', ['$event'])
   onSelectstart(event) {
     event.preventDefault();
   }
