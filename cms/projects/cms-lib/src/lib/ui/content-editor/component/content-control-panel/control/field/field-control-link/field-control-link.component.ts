@@ -17,7 +17,7 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
       const selected = changes['selected'].currentValue as TemplateFieldSelectEvent;
       console.warn(selected.fieldInfo);
       selected.fieldInfo.extension = selected.fieldInfo.extension || {};
-      selected.fieldInfo.extension['isBlank'] = selected.fieldInfo.extension['isBlank'] === 'true' ? 'true' : 'false';
+      selected.fieldInfo.extension['isTargetBlank'] = selected.fieldInfo.extension['isTargetBlank'] === 'true' ? 'true' : 'false';
     }
   }
 

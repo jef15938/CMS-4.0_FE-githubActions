@@ -4,7 +4,7 @@
   <input matInput [(ngModel)]="selected.fieldInfo.fieldVal" (keydown)="change.emit()">
 </mat-form-field>
 <br>
-<mat-radio-group [(ngModel)]="selected.fieldInfo.extension['isBlank']" (change)="change.emit()">
+<mat-radio-group [(ngModel)]="selected.fieldInfo.extension['isTargetBlank']" (change)="change.emit()">
   <mat-radio-button [value]="'true'">
     另開分頁
   </mat-radio-button>
