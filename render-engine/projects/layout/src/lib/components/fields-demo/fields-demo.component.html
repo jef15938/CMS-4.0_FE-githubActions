@@ -1,18 +1,18 @@
 <ng-container *ngIf="templateInfo">
-  <div style="padding: 10px;" [libLayoutFieldBgimg]="getFieldByFieldId('bg')" #fieldBgimg="field"
+  <div style="padding: 10px;" [libLayoutFieldBgimg]="templateInfo?.fields | getFieldFromFieldsById:'bg'" #fieldBgimg="field"
     [style.background]="'url('+fieldBgimg.fieldInfo?.fieldVal+')'" [adviceWidth]="500" [adviceHeight]="300"
     adviceFormat="bmp">
-    <div style="text-align: center;" [libLayoutFieldText]="getFieldByFieldId('title')" #fieldText="field" [maxLength]="16">
+    <div style="text-align: center;" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'" #fieldText="field" [maxLength]="16">
       <h1>{{fieldText.fieldInfo?.fieldVal}}</h1>
     </div>
 
     <div style="padding: 10px; height: 350px;">
       <div style="float: left; padding: 10px; height:300px; width: 300px; max-height: 100%;"
-        [libLayoutFieldImg]="getFieldByFieldId('img')" #fieldImg="field" [adviceWidth]="160" [adviceHeight]="90"
+        [libLayoutFieldImg]="templateInfo?.fields | getFieldFromFieldsById:'img'" #fieldImg="field" [adviceWidth]="160" [adviceHeight]="90"
         adviceFormat="jpg">
         <img [alt]="fieldImg.fieldInfo?.extension?.altValue" [src]="fieldImg.fieldInfo?.fieldVal" style="width: 100%; height: auto; max-height: 100%;">
       </div>
-      <div style="padding: 10px;" [libLayoutFieldTextarea]="getFieldByFieldId('article')" #fieldTextarea="field"
+      <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo?.fields | getFieldFromFieldsById:'article'" #fieldTextarea="field"
         [maxLength]="-1" [maxLines]="5" [innerHTML]="fieldTextarea.fieldInfo?.fieldVal | newLineReplace | safeHtml">
       </div>
     </div>
@@ -20,14 +20,14 @@
     <div style="padding: 10px;">
       <div
         style="height:40px; line-height:40px; vertical-align: middle; width: 100%; max-width: 240px; background-color: aquamarine; border-radius: 10px; text-align: center; padding: 2px;"
-        [libLayoutFieldLink]="getFieldByFieldId('clap')">拍手</div>
+        [libLayoutFieldLink]="templateInfo?.fields | getFieldFromFieldsById:'clap'">拍手</div>
     </div>
 
     <hr>
 
     <div style="padding: 10px;">
       自訂Html
-      <div [libLayoutFieldHtmlEditor]="getFieldByFieldId('html')" #fieldHtmlEditor="field"
+      <div [libLayoutFieldHtmlEditor]="templateInfo?.fields | getFieldFromFieldsById:'html'" #fieldHtmlEditor="field"
         [innerHTML]="fieldHtmlEditor.fieldInfo?.fieldVal | safeHtml">
       </div>
     </div>
