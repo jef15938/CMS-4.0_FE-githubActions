@@ -2,13 +2,14 @@
   <h1>Group Template Demo</h1>
   <div style="margin: 10px; padding: 10px; border: 1px solid pink">
     <div *ngFor="let group of templateInfo.itemList; let i = index;">
-      <div [libLayoutFieldText]="group[0]" #fieldText="field" [maxLength]="6">
+      <div [libLayoutFieldText]="getFieldByFieldId('name', group)" #fieldText="field" [maxLength]="6">
         標題 : {{fieldText.fieldInfo.fieldVal}}
       </div>
-      <div [libLayoutFieldLink]="group[1]" #fieldLink="field">
+      <div [libLayoutFieldLink]="getFieldByFieldId('url', group)" #fieldLink="field">
         連結 : {{fieldLink.fieldInfo.fieldVal}}
       </div>
-      <div [libLayoutFieldImg]="group[2]" #fieldImg="field" [adviceWidth]="120" [adviceHeight]="120" adviceFormat="png">
+      <div [libLayoutFieldImg]="getFieldByFieldId('pic', group)" #fieldImg="field" [adviceWidth]="120"
+        [adviceHeight]="120" adviceFormat="png">
         圖片 : {{fieldImg.fieldInfo.fieldVal}}
       </div>
       <hr *ngIf="i!==templateInfo.itemList.length-1">

@@ -5,7 +5,7 @@ import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.compone
 import { TemplateFieldDirective } from '../layout-wrapper/field-directive/template-field.directive';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
-import { FieldType } from '../../interface/field-info.interface';
+import { FieldType, FieldInfo } from '../../interface/field-info.interface';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, merge } from 'rxjs';
 import { LayoutFieldTextDirective } from '../layout-wrapper/field-directive/layout-field-text.directive';
@@ -90,6 +90,19 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
     this.destroy$.next();
     this.destroy$.complete();
     this.destroy$.unsubscribe();
+  }
+
+  /**
+   *
+   *
+   * @param {string} fieldId 
+   * @param {FieldInfo[]} [fields] 不給的話從 this.templateInfo.fields 找
+   * @returns
+   * @memberof LayoutBaseComponent
+   */
+  getFieldByFieldId(fieldId: string, fields?: FieldInfo[]): FieldInfo {
+    fields = fields || this.templateInfo?.fields || [];
+    return fields.find(f => f.fieldId === fieldId);
   }
 
 }
