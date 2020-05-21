@@ -2,12 +2,18 @@ import { Directive, Input } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
 import { FieldInfo } from '../../../interface/field-info.interface';
 
+export interface ImgFieldInfo extends FieldInfo {
+  extension: {
+    altValue: string;
+  }
+}
+
 @Directive({
   selector: '[libLayoutFieldImg][adviceWidth][adviceHeight][adviceFormat]',
   exportAs: 'field',
 })
 export class LayoutFieldImgDirective extends TemplateFieldDirective {
-  @Input('libLayoutFieldImg') fieldInfo: FieldInfo;
+  @Input('libLayoutFieldImg') fieldInfo: ImgFieldInfo;
   /**
    * 建議寬度
    *

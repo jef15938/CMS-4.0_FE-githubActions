@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent } from 'layout';
+import { TemplateFieldSelectEvent, LinkFieldInfo } from 'layout';
 
 @Component({
   selector: 'cms-field-control-link',
@@ -9,15 +9,19 @@ import { TemplateFieldSelectEvent } from 'layout';
 })
 export class FieldControlLinkComponent extends ContentControlBase implements OnInit, OnChanges {
 
+  fieldInfo: LinkFieldInfo;
+
   ngOnInit(): void {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selected']) {
       const selected = changes['selected'].currentValue as TemplateFieldSelectEvent;
-      console.warn(selected.fieldInfo);
-      selected.fieldInfo.extension = selected.fieldInfo.extension || {};
-      selected.fieldInfo.extension['isTargetBlank'] = selected.fieldInfo.extension['isTargetBlank'] === 'true' ? 'true' : 'false';
+      this.fieldInfo = selected.fieldInfo as LinkFieldInfo;
+      this.fieldInfo.extension = this.fieldInfo.extension || {
+        isTargetBlank: 'false'
+      };
+      this.fieldInfo.extension.isTargetBlank = this.fieldInfo.extension.isTargetBlank === 'true' ? 'true' : 'false';
     }
   }
 

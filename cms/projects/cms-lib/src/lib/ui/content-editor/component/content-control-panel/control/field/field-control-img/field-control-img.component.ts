@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldImgDirective } from 'layout';
+import { TemplateFieldSelectEvent, LayoutFieldImgDirective, ImgFieldInfo } from 'layout';
 
 @Component({
   selector: 'cms-field-control-img',
@@ -8,6 +8,8 @@ import { TemplateFieldSelectEvent, LayoutFieldImgDirective } from 'layout';
   styleUrls: ['./field-control-img.component.scss']
 })
 export class FieldControlImgComponent extends ContentControlBase implements OnInit, OnChanges {
+
+  fieldInfo: ImgFieldInfo;
 
   adviceFormat = '';
   adviceWidth = 0;
@@ -23,7 +25,10 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
       this.adviceFormat = directive.adviceFormat;
       this.adviceWidth = directive.adviceWidth;
       this.adviceHeight = directive.adviceHeight;
-      selected.fieldInfo.extension = selected.fieldInfo.extension || {};
+      this.fieldInfo = selected.fieldInfo as ImgFieldInfo;
+      this.fieldInfo.extension = this.fieldInfo.extension || {
+        altValue: ''
+      };
     }
   }
 
