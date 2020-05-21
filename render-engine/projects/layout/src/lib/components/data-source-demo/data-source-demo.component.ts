@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutBaseComponent } from '../../wrapper/layout-base/_base';
-import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
 import { TemplateType } from '../../wrapper/layout-wrapper/layout-wrapper.interface';
+import { DataSourceTemplateBaseComponent } from '../../wrapper/layout-base/data-source-template-base.component';
 
 @Component({
   selector: 'lib-data-source-demo',
   templateUrl: './data-source-demo.component.html',
   styleUrls: ['./data-source-demo.component.css']
 })
-export class DataSourceDemoComponent extends LayoutBaseComponent<DataSourceTemplateInfo> implements OnInit {
-  templateType = TemplateType.DATA_SOURCE;
+export class DataSourceDemoComponent extends DataSourceTemplateBaseComponent implements OnInit {
 
   ngOnInit(): void {
   }
