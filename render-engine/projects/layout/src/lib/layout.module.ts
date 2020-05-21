@@ -10,6 +10,11 @@ import { GroupTemplateDemoComponent } from './components/group-template-demo/gro
 import { DataSourceDemoComponent } from './components/data-source-demo/data-source-demo.component';
 import { NewLineReplacePipe } from './pipe/new-line-replace.pipe';
 
+const PIPES = [
+  SafeHtmlPipe,
+  NewLineReplacePipe,
+];
+
 @NgModule({
   imports: [
     TabModule,
@@ -17,15 +22,15 @@ import { NewLineReplacePipe } from './pipe/new-line-replace.pipe';
     SwiperModule
   ],
   declarations: [
+    ...PIPES,
     IconPageComponent,
     SliderComponent,
     FieldsDemoComponent,
-    SafeHtmlPipe,
-    NewLineReplacePipe,
     GroupTemplateDemoComponent,
     DataSourceDemoComponent,
   ],
   exports: [
+    ...PIPES,
     IconPageComponent,
     SliderComponent,
     WrapperModule,
