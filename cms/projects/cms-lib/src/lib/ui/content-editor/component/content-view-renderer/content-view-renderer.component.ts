@@ -175,6 +175,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   }
 
   onSelect(ev: LayoutWrapperSelectEvent) {
+    if (this.mode !== EditorMode.EDIT) { return; }
     const oldSelectedTarget = this._nowSelectedTarget;
     if (oldSelectedTarget) { oldSelectedTarget.classList.remove('now-edit'); }
 
@@ -187,12 +188,12 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   }
 
   onEnter(target: HTMLElement) {
-    if (this.mode === EditorMode.INFO) { return; }
+    if (this.mode !== EditorMode.EDIT) { return; }
     target.classList.add('now-hover');
   }
 
   onLeave(target: HTMLElement) {
-    if (this.mode === EditorMode.INFO) { return; }
+    if (this.mode !== EditorMode.EDIT) { return; }
     target.classList.remove('now-hover');
   }
 
