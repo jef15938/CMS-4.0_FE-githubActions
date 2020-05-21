@@ -3,7 +3,8 @@ import { TemplateFieldDirective } from './template-field.directive';
 import { FieldInfo } from '../../../interface/field-info.interface';
 
 @Directive({
-  selector: '[libLayoutFieldBgimg][adviceWidth][adviceHeight][adviceFormat]'
+  selector: '[libLayoutFieldBgimg][adviceWidth][adviceHeight][adviceFormat]',
+  exportAs: 'field',
 })
 export class LayoutFieldBgimgDirective extends TemplateFieldDirective {
   @Input('libLayoutFieldBgimg') fieldInfo: FieldInfo;

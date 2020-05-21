@@ -3,7 +3,8 @@ import { TemplateFieldDirective } from './template-field.directive';
 import { FieldInfo } from '../../../interface/field-info.interface';
 
 @Directive({
-  selector: '[libLayoutFieldTextarea][maxLength][maxLines]'
+  selector: '[libLayoutFieldTextarea][maxLength][maxLines]',
+  exportAs: 'field',
 })
 export class LayoutFieldTextareaDirective extends TemplateFieldDirective {
   @Input('libLayoutFieldTextarea') fieldInfo: FieldInfo;

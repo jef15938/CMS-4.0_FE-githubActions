@@ -1,17 +1,19 @@
 <ng-container *ngIf="templateInfo">
-  <div style="padding: 10px;" [style.background]="'url('+templateInfo.fields[3].fieldVal+')'"
-    [libLayoutFieldBgimg]="templateInfo.fields[3]" [adviceWidth]="500" [adviceHeight]="300" adviceFormat="bmp">
-    <div style="text-align: center;" [libLayoutFieldText]="templateInfo.fields[0]" [maxLength]="16">
-      <h1>{{templateInfo.fields[0].fieldVal}}</h1>
+  <div style="padding: 10px;" [libLayoutFieldBgimg]="templateInfo.fields[3]" #fieldBgimg="field"
+    [style.background]="'url('+fieldBgimg.fieldInfo?.fieldVal+')'" [adviceWidth]="500" [adviceHeight]="300"
+    adviceFormat="bmp">
+    <div style="text-align: center;" [libLayoutFieldText]="templateInfo.fields[0]" #fieldText="field" [maxLength]="16">
+      <h1>{{fieldText.fieldInfo?.fieldVal}}</h1>
     </div>
 
     <div style="padding: 10px; height: 350px;">
       <div style="float: left; padding: 10px; height:300px; width: 300px; max-height: 100%;"
-        [libLayoutFieldImg]="templateInfo.fields[4]" [adviceWidth]="160" [adviceHeight]="90" adviceFormat="jpg">
-        <img [src]="templateInfo.fields[4].fieldVal" style="width: 100%; height: auto; max-height: 100%;">
+        [libLayoutFieldImg]="templateInfo.fields[4]" #fieldImg="field" [adviceWidth]="160" [adviceHeight]="90"
+        adviceFormat="jpg">
+        <img [src]="fieldImg.fieldInfo?.fieldVal" style="width: 100%; height: auto; max-height: 100%;">
       </div>
-      <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo.fields[1]" [maxLength]="-1" [maxLines]="5"
-        [innerHTML]="templateInfo.fields[1].fieldVal|newLineReplace|safeHtml">
+      <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo.fields[1]" #fieldTextarea="field"
+        [maxLength]="-1" [maxLines]="5" [innerHTML]="fieldTextarea.fieldInfo?.fieldVal | newLineReplace | safeHtml">
       </div>
     </div>
 
@@ -25,7 +27,8 @@
 
     <div style="padding: 10px;">
       自訂Html
-      <div [innerHTML]="templateInfo.fields[5].fieldVal | safeHtml" [libLayoutFieldHtmlEditor]="templateInfo.fields[5]">
+      <div [libLayoutFieldHtmlEditor]="templateInfo.fields[5]" #fieldHtmlEditor="field"
+        [innerHTML]="fieldHtmlEditor.fieldInfo?.fieldVal | safeHtml">
       </div>
     </div>
 
