@@ -8,3 +8,4 @@ export * from './lib/wrapper';
 export * from './lib/components';
 export * from './lib/interface';
 export * from './lib/injection-token';
+export * from './lib/pipe';
