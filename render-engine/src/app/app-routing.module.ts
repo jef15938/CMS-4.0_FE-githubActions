@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
 import { RenderModule } from '@render';
 
 const routes: Routes = [
   {
-    path: '', component: AppComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () => Promise.resolve(RenderModule)
-      }
-    ]
+    path: 'render',
+    loadChildren: () => Promise.resolve(RenderModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'render'
   }
 ];
 
