@@ -1,26 +1,32 @@
 <ng-container *ngIf="templateInfo">
-  <div style="padding: 10px;" [libLayoutFieldBgimg]="templateInfo?.fields | getFieldFromFieldsById:'bg'" #fieldBgimg="field"
-    [style.background]="'url('+fieldBgimg.fieldInfo?.fieldVal+')'" [adviceWidth]="500" [adviceHeight]="300"
-    adviceFormat="bmp">
-    <div style="text-align: center;" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'" #fieldText="field" [maxLength]="16">
+  <div style="padding: 10px;" [libLayoutFieldBgimg]="templateInfo?.fields | getFieldFromFieldsById:'bg'"
+    #fieldBgimg="field" [style.background]="'url('+fieldBgimg.fieldInfo?.fieldVal+')'" [adviceWidth]="500"
+    [adviceHeight]="300" adviceFormat="bmp">
+    <div style="text-align: center;" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'"
+      #fieldText="field" [maxLength]="16">
       <h1>{{fieldText.fieldInfo?.fieldVal}}</h1>
     </div>
 
     <div style="padding: 10px; height: 350px;">
       <div style="float: left; padding: 10px; height:300px; width: 300px; max-height: 100%;"
-        [libLayoutFieldImg]="templateInfo?.fields | getFieldFromFieldsById:'img'" #fieldImg="field" [adviceWidth]="160" [adviceHeight]="90"
-        adviceFormat="jpg">
-        <img [alt]="fieldImg.fieldInfo?.extension?.altValue" [src]="fieldImg.fieldInfo?.fieldVal" style="width: 100%; height: auto; max-height: 100%;">
+        [libLayoutFieldImg]="templateInfo?.fields | getFieldFromFieldsById:'img'" #fieldImg="field" [adviceWidth]="160"
+        [adviceHeight]="90" adviceFormat="jpg">
+        <img [alt]="fieldImg.fieldInfo?.extension?.altValue" [src]="fieldImg.fieldInfo?.fieldVal"
+          style="width: 100%; height: auto; max-height: 100%;">
       </div>
-      <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo?.fields | getFieldFromFieldsById:'article'" #fieldTextarea="field"
-        [maxLength]="-1" [maxLines]="5" [innerHTML]="fieldTextarea.fieldInfo?.fieldVal | newLineReplace | safeHtml">
+      <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo?.fields | getFieldFromFieldsById:'article'"
+        #fieldTextarea="field" [maxLength]="-1" [maxLines]="5"
+        [innerHTML]="fieldTextarea.fieldInfo?.fieldVal | newLineReplace | safeHtml">
       </div>
     </div>
 
     <div style="padding: 10px;">
       <div
         style="height:40px; line-height:40px; vertical-align: middle; width: 100%; max-width: 240px; background-color: aquamarine; border-radius: 10px; text-align: center; padding: 2px;"
-        [libLayoutFieldLink]="templateInfo?.fields | getFieldFromFieldsById:'clap'">拍手</div>
+        [libLayoutFieldLink]="templateInfo?.fields | getFieldFromFieldsById:'clap'" #fieldLink="field">
+        <a [href]="fieldLink.fieldInfo?.fieldVal"
+          [target]="fieldLink.fieldInfo?.extension?.isTargetBlank==='true'?'_blank':''">拍手</a>
+      </div>
     </div>
 
     <hr>

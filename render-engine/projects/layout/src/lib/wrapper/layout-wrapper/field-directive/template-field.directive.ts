@@ -8,7 +8,7 @@ export abstract class TemplateFieldDirective extends LayoutWrapperBase {
   abstract fieldInfo: FieldInfo;
   @Output() select = new EventEmitter<TemplateFieldSelectEvent>();
 
-  @HostListener('click') click() {
+  @HostListener('click', ['$event']) click(ev) {
     if (this.mode === 'edit') {
       this.select.emit({
         selectedTarget: this.elementRef?.nativeElement,
