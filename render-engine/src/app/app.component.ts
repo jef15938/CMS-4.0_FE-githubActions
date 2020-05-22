@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ViewContainerRef, QueryList } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'rdr-root',
