@@ -14,7 +14,7 @@ class TemplateInfo {
 })
 export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
-  get show() { return !!this.selectedBtn }
+  show = false;
 
   @Input() mainTemplates: TemplateInfo[] = [];
 
@@ -54,6 +54,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       if (current) {
         current.isSelected = true;
       }
+      this.show = !!current;
     }
   }
 

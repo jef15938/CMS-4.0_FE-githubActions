@@ -7,7 +7,7 @@
 </div>
 <div class="cms-content-editor">
   <!-- 按鈕們 -->
-  <div #contentPanel class="btn-panel" *ngIf="mode===EditorMode.EDIT">
+  <div #clickCapturelistenerBlock class="btn-panel" *ngIf="mode===EditorMode.EDIT">
     <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave" [disabled]="saved">
       <mat-icon>save</mat-icon>
     </button>
@@ -33,7 +33,7 @@
   <div class="main-block" *ngIf="manager?.stateManager?.contentInfoEditModel"
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
-    <div #contentPanel class="content-panel" [class.scale]="isScaleContent">
+    <div #clickCapturelistenerBlock class="content-panel" [class.scale]="isScaleContent">
       <cms-content-view-renderer [contentInfo]="manager?.stateManager?.contentInfoEditModel" [mode]="mode"
         (select)="onViewSelected($event)"
         (addTemplateBtnClick)="resetSelected();manager.selectedTemplateAddBtn=$event;">

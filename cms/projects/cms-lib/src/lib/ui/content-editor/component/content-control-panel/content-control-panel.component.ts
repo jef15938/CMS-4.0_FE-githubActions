@@ -33,7 +33,8 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   // 用來判斷資料是否異動過
   hasChange = false;
 
-  get show() { return !!this.selected; }
+  show = false;
+
   get canTemplateMoveUp() {
     return this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) > 0;
   }
@@ -59,6 +60,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
         current.selectedTarget.classList.add('now-edit');
         current.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
       }
+      this.show = !!current;
     }
   }
 

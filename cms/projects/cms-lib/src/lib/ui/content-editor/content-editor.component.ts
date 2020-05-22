@@ -20,7 +20,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
   @ViewChild(ContentControlPanelComponent) contentControlPanel: ContentControlPanelComponent;
 
-  @ViewChildren('contentPanel') contentPanelDivs: QueryList<ElementRef>;
+  @ViewChildren('clickCapturelistenerBlock') clickCapturelistenerBlocks: QueryList<ElementRef>;
 
   // 使用模式
   @Input() mode: EditorMode = EditorMode.EDIT;
@@ -51,7 +51,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   ngAfterViewInit(): void {
-    this._registerContentPanelClickCaptureListener('register');
+    this._registerClickCaptureListener('register');
   }
 
   ngOnInit(): void {
@@ -71,7 +71,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     this._destroy$.next();
     this._destroy$.complete();
     this._destroy$.unsubscribe();
-    this._registerContentPanelClickCaptureListener('unregister');
+    this._registerClickCaptureListener('unregister');
   }
 
   setEditorUnsaved() {
@@ -107,6 +107,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   resetSelected() {
     if (this.manager) {
+      console.warn(2);
       this.manager.selectedTemplateAddBtn = undefined;
       this.manager.selectedViewElementEvent = undefined;
     }
@@ -126,30 +127,35 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
    * 
    * @memberof ContentEditorComponent
    */
-  private _registerContentPanelClickCaptureListener(action: 'register' | 'unregister') {
-    this.contentPanelDivs?.forEach(contentPanelDiv => {
-      const element = contentPanelDiv?.nativeElement as HTMLDivElement;
+  private _registerClickCaptureListener(action: 'register' | 'unregister') {
+    console.warn('this.clickCapturelistenerBlocks = ', this.clickCapturelistenerBlocks);
+    this.clickCapturelistenerBlocks?.forEach(block => {
+      const element = block?.nativeElement as HTMLDivElement;
       switch (action) {
         case 'register':
-          element?.addEventListener('click', this.contentPanelClickEventListener, true);
+          element?.addEventListener('click', this.clickCaptureEventListener, true);
           break;
         case 'unregister':
-          element?.removeEventListener('click', this.contentPanelClickEventListener, true);
+          element?.removeEventListener('click', this.clickCaptureEventListener, true);
           break;
       }
     });
   }
 
-  contentPanelClickEventListener = (ev) => {
+  clickCaptureEventListener = (ev) => {
     if (this.contentControlPanel?.hasChange) {
       const yes = window.confirm('選取的Template/Field有尚未儲存的變更，確定放棄？');
       if (!yes) { ev.stopPropagation(); return; }
+      console.warn(1);
       this.resetSelected();
       this.contentControlPanel.hasChange = false;
       this.manager.stateManager.resetState();
       this.contentViewRenderer.checkView();
+      this.cancelScale();
+    } else {
+      this.resetSelected();
+      this.cancelScale();
     }
-    this.cancelScale();
   }
 
   onViewSelected($event) {
