@@ -10,7 +10,6 @@ export class DynamicComponentFactoryService {
 
 
   getComponent(id: string) {
-    console.warn('id = ', id);
     if (id === 'Tab') {
       return TabDemoComponent;
     }

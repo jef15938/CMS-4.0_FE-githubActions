@@ -106,8 +106,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   resetSelected() {
-    if (this.manager) {
-      console.warn(2);
+    if (this.manager) {      
       this.manager.selectedTemplateAddBtn = undefined;
       this.manager.selectedViewElementEvent = undefined;
     }
@@ -128,7 +127,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
    * @memberof ContentEditorComponent
    */
   private _registerClickCaptureListener(action: 'register' | 'unregister') {
-    console.warn('this.clickCapturelistenerBlocks = ', this.clickCapturelistenerBlocks);
     this.clickCapturelistenerBlocks?.forEach(block => {
       const element = block?.nativeElement as HTMLDivElement;
       switch (action) {
@@ -146,7 +144,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     if (this.contentControlPanel?.hasChange) {
       const yes = window.confirm('選取的Template/Field有尚未儲存的變更，確定放棄？');
       if (!yes) { ev.stopPropagation(); return; }
-      console.warn(1);
       this.resetSelected();
       this.contentControlPanel.hasChange = false;
       this.manager.stateManager.resetState();

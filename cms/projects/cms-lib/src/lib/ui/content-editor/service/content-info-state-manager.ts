@@ -16,13 +16,8 @@ export class ContentInfoStateManager {
   currentState: ContentInfoState;
   get contentInfoEditModel(): ContentInfo { return this.currentState?.snapShot; };
 
-  get hasPreviousState(): boolean {
-    return this.currentIndex > 0;
-  };
-
-  get hasNextState(): boolean {
-    return this.currentIndex > -1 && this.currentIndex !== this.states.length;
-  };
+  hasPreviousState = false;
+  hasNextState = false;
 
   constructor(
     originContentInfo: ContentInfo,
@@ -45,6 +40,7 @@ export class ContentInfoStateManager {
     this.states.splice(this.currentIndex, this.states.length - this.currentIndex, new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action));
     // this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action);
     this.currentIndex++;
+    this._calHasState();
   }
 
   back() {
@@ -52,6 +48,7 @@ export class ContentInfoStateManager {
     const previous = this.currentIndex === 1 ? this._originState : this.states[this.currentIndex - 2];
     this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(previous.snapShot)), previous.action);
     this.currentIndex--;
+    this._calHasState();
   }
 
   forward() {
@@ -59,5 +56,11 @@ export class ContentInfoStateManager {
     const next = this.states[this.currentIndex];
     this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(next.snapShot)), next.action);
     this.currentIndex++;
+    this._calHasState();
+  }
+
+  private _calHasState() {
+    this.hasPreviousState = this.currentIndex > 0;
+    this.hasNextState = this.currentIndex > -1 && this.currentIndex !== this.states.length;
   }
 }

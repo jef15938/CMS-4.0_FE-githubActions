@@ -30,11 +30,11 @@
       <mat-icon>clear</mat-icon>
     </button>
   </div>
-  <div class="main-block" *ngIf="manager?.stateManager?.contentInfoEditModel"
+  <div class="main-block" *ngIf="manager?.stateManager?.currentState?.snapShot"
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
     <div #clickCapturelistenerBlock class="content-panel" [class.scale]="isScaleContent">
-      <cms-content-view-renderer [contentInfo]="manager?.stateManager?.contentInfoEditModel" [mode]="mode"
+      <cms-content-view-renderer [contentInfo]="manager?.stateManager?.currentState?.snapShot" [mode]="mode"
         (select)="onViewSelected($event)"
         (addTemplateBtnClick)="resetSelected();manager.selectedTemplateAddBtn=$event;">
       </cms-content-view-renderer>
