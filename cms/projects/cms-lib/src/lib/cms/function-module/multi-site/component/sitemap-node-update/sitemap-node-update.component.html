@@ -8,9 +8,15 @@
       <button type="button" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canSubmit">送審</button>
     </div>
     <div *ngIf="siteMapUpdateInfo.siteMap.publish_info" style="color: gray;">
-      <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.draft; let obj">後台草稿上下架：{{getStartEndTime(obj)}}</div>
-      <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.pending_published; let obj">等待發布：{{getStartEndTime(obj)}}</div>
-      <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.published; let obj">線上上下架：{{getStartEndTime(obj)}}</div>
+      <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.draft; let obj">
+        後台草稿上下架：{{ obj | getStartEndTime }}
+      </div>
+      <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.pending_published; let obj">
+        等待發布：{{ obj | getStartEndTime }}
+      </div>
+      <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.published; let obj">
+        線上上下架：{{ obj | getStartEndTime }}
+      </div>
     </div>
   </div>
   <div class="page-content-container">

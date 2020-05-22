@@ -106,10 +106,6 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     });
   }
 
-  getStartEndTime(timeObj: { start_time: string, end_time: string }): string {
-    return !timeObj ? '' : [timeObj.start_time || 'unknown', timeObj.end_time || 'unknown'].join(' / ');
-  }
-
   save() {
     this.updated.emit(this.sitemapMaintainModel);
   }
