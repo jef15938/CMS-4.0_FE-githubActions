@@ -35,12 +35,8 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   show = false;
 
-  get canTemplateMoveUp() {
-    return this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) > 0;
-  }
-  get canTemplateMoveDown() {
-    return this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) !== this.selected?.wrapper?.parentTemplatesContainer?.templates?.length - 1;
-  }
+  canTemplateMoveUp = false;
+  canTemplateMoveDown = false;
 
   constructor(
     @Inject(ContentEditorServiceInjectionToken) private _contentEditorService: IContentEditorService,
@@ -59,6 +55,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       if (current) {
         current.selectedTarget.classList.add('now-edit');
         current.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
+        this._calCanTemplateMove();
       }
       this.show = !!current;
     }
@@ -128,6 +125,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     }
 
     this.hasChange = true;
+    this._calCanTemplateMove();
     this.needScale.emit(true);
     this.needCheckView.emit();
     this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
@@ -154,6 +152,11 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       this.hasChange = true;
       this.needCheckView.emit({ select: next });
     }
+  }
+
+  private _calCanTemplateMove() {
+    this.canTemplateMoveUp = this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) > 0;
+    this.canTemplateMoveDown = this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) !== this.selected?.wrapper?.parentTemplatesContainer?.templates?.length - 1;
   }
 
 }
