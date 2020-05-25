@@ -45,6 +45,12 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     if (changes['mode']) {
       this.setMode();
     }
+    if (changes['templateInfo'] && this.componentRef?.instance) {
+      this.componentRef.instance.templateInfo = this.templateInfo;
+      if (this.componentRef?.instance?.ngOnChanges) {
+        this.componentRef.instance.ngOnChanges(changes);
+      }
+    }
   }
 
   ngAfterViewInit() {

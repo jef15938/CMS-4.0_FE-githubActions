@@ -1,4 +1,4 @@
-import { QueryList } from '@angular/core';
+import { QueryList, SimpleChanges } from '@angular/core';
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { LayoutWrapper, TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { TemplateFieldDirective } from '../layout-wrapper/field-directive/template-field.directive';
@@ -11,4 +11,6 @@ export interface LayoutBase<TInfo extends TemplateInfo> {
     templateInfo: TInfo;
     templateType: TemplateType;
     mode: 'preview' | 'edit';
+
+    ngOnChanges(changes: SimpleChanges): void;
 }

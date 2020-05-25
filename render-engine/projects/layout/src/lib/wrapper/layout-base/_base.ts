@@ -1,4 +1,4 @@
-import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector, OnDestroy } from '@angular/core';
+import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { LayoutBase } from './_base.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
@@ -15,7 +15,7 @@ import { LayoutFieldBgimgDirective } from '../layout-wrapper/field-directive/lay
 import { LayoutFieldImgDirective } from '../layout-wrapper/field-directive/layout-field-img.directive';
 import { LayoutFieldHtmlEditorDirective } from '../layout-wrapper/field-directive/layout-field-html-editor.directive';
 
-export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy {
+export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   abstract templateType: TemplateType;
 
@@ -42,23 +42,9 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
   @ViewChildren(LayoutFieldImgDirective) layoutFieldImgDirectives: QueryList<LayoutFieldImgDirective>;
   @ViewChildren(LayoutFieldHtmlEditorDirective) layoutFieldHtmlEditorDirectives: QueryList<LayoutFieldHtmlEditorDirective>;
 
-  private _templateInfo: TInfo;
-  private _isViewInit: boolean = false;
-
-  get isViewInit() {
-    return this._isViewInit;
-  }
-
   @Input() mode: 'preview' | 'edit' = 'preview';
 
-  @Input()
-  public get templateInfo(): TInfo {
-    return this._templateInfo;
-  }
-  public set templateInfo(value: TInfo) {
-    this._templateInfo = value;
-    console.log('set templateInfo:', value);
-  }
+  @Input() templateInfo: TInfo;
 
   protected destroy$ = new Subject();
 
@@ -70,8 +56,11 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
 
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
+
   ngAfterViewInit(): void {
-    this._isViewInit = true;
     merge(
       this.templatesContainerComponents.changes,
       this.layoutFieldTextDirectives.changes,

@@ -1,4 +1,24 @@
-<div style="width: 100%; height: 300px; border: 1px solid purple; text-align: center;">
-    <h1>DataSourceDemo</h1>
-    <div>This is a DataSourceTemplateInfo component </div>
+<div style="width: 100%; border: 1px solid purple; text-align: center;">
+  <h1>DataSourceDemo</h1>
+  <hr>
+  <div style="height: 300px; line-height: 300px; vertical-align: middle; background-color: lightblue;"
+    *ngIf="mode==='edit'">
+    資料呈現區域
+  </div>
+  <div style="height: 300px; background-color: lightgrey; overflow-y: auto;" *ngIf="mode==='preview'">
+    <table style="width: 100%; height: 100%; line-height: 50px; vertical-align: middle;">
+      <tr>
+        <th>No</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Date</th>
+      </tr>
+      <tr *ngFor="let data of sourceData">
+        <td>{{data.id}}</td>
+        <td>{{data.title}}</td>
+        <td>{{data.content}}</td>
+        <td>{{data.date}}</td>
+      </tr>
+    </table>
+  </div>
 </div>

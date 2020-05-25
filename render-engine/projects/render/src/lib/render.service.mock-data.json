@@ -50,7 +50,7 @@
       "templateId": "DataSourceDemo",
       "fields": [],
       "attributes": {},
-      "source": ""
+      "source": "mock_source"
     },
     {
       "id": "groupTemplateInfo01",
