@@ -134,11 +134,11 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
           }
           if (field instanceof LayoutFieldBgimgDirective) {
-            infos.push(`建議尺寸:${field.adviceWidth}x${field.adviceFormat}`);
+            infos.push(`建議尺寸:${field.adviceWidth}x${field.adviceHeight}`);
             infos.push(`建議格式:${field.adviceFormat}`);
           }
           if (field instanceof LayoutFieldImgDirective) {
-            infos.push(`建議尺寸:${field.adviceWidth}x${field.adviceFormat}`);
+            infos.push(`建議尺寸:${field.adviceWidth}x${field.adviceHeight}`);
             infos.push(`建議格式:${field.adviceFormat}`);
           }
           if (field instanceof LayoutFieldHtmlEditorDirective) {
