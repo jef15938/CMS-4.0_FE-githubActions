@@ -20,7 +20,6 @@ import { GetDepartmentByDeptIDAPI } from './api/GetDepartmentByDeptIDAPI';
 import { GetAuditingAPI } from './api/GetAuditingAPI';
 import { PostAuditingByOrderIDAPI } from './api/PostAuditingByOrderIDAPI';
 import { GetLoginInfoAPI } from './api/GetLoginInfoAPI';
-import { GetCMSSiteMapBySiteIDAPI } from './api/GetCMSSiteMapBySiteIDAPI';
 import { GetCMSMenuAPI } from './api/GetCMSMenuAPI';
 import { GetUserSiteMapBySiteIDAPI } from './api/GetUserSiteMapBySiteIDAPI';
 import { PostUserSiteMapBySiteIDAPI } from './api/PostUserSiteMapBySiteIDAPI';
@@ -37,6 +36,8 @@ import { PostFarmFormInfoByFuncIDAPI } from './api/PostFarmFormInfoByFuncIDAPI';
 import { PutFarmFormInfoByFuncIDAPI } from './api/PutFarmFormInfoByFuncIDAPI';
 import { GetFarmDetailInfoByFarmIDAPI } from './api/GetFarmDetailInfoByFarmIDAPI';
 import { GetSiteAPI } from './api/GetSiteAPI';
+import { GetSiteBySiteIDAPI } from './api/GetSiteBySiteIDAPI';
+import { GetSiteBySiteIDAndNodeIDAPI } from './api/GetSiteBySiteIDAndNodeIDAPI';
 import { GetGroupMenuByGroupIDAPI } from './api/GetGroupMenuByGroupIDAPI';
 import { GetGroupSiteMapByGroupIDAPI } from './api/GetGroupSiteMapByGroupIDAPI';
 import { GetTemplateByControlIDAPI } from './api/GetTemplateByControlIDAPI';
@@ -57,6 +58,7 @@ import { FarmInfoGetResponse } from './bean/FarmInfoGetResponse';
 import { FarmTableInfo } from './bean/FarmTableInfo';
 import { FarmFormInfo } from './bean/FarmFormInfo';
 import { SiteGetResponse } from './bean/SiteGetResponse';
+import { SiteMapNodeInfo } from './bean/SiteMapNodeInfo';
 import { GroupMenuGetResponse } from './bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
@@ -79,7 +81,6 @@ GetDepartmentByDeptID: DepartmentDetailInfo,
 GetAuditing: AuditingGetResponse,
 PostAuditingByOrderID: GenerationHeader,
 GetLoginInfo: LoginResponse,
-GetCMSSiteMapBySiteID: SiteMapGetResponse,
 GetCMSMenu: MenuGetResponse,
 GetUserSiteMapBySiteID: SiteMapGetResponse,
 PostUserSiteMapBySiteID: GenerationHeader,
@@ -96,6 +97,8 @@ PostFarmFormInfoByFuncID: GenerationHeader,
 PutFarmFormInfoByFuncID: GenerationHeader,
 GetFarmDetailInfoByFarmID: FarmFormInfo,
 GetSite: SiteGetResponse,
+GetSiteBySiteID: SiteMapGetResponse,
+GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
 GetGroupMenuByGroupID: GroupMenuGetResponse,
 GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
 GetTemplateByControlID: TemplateGetResponse,
@@ -131,7 +134,6 @@ this.ApiFactory.registerAPI(new GetDepartmentByDeptIDAPI());
 this.ApiFactory.registerAPI(new GetAuditingAPI());
 this.ApiFactory.registerAPI(new PostAuditingByOrderIDAPI());
 this.ApiFactory.registerAPI(new GetLoginInfoAPI());
-this.ApiFactory.registerAPI(new GetCMSSiteMapBySiteIDAPI());
 this.ApiFactory.registerAPI(new GetCMSMenuAPI());
 this.ApiFactory.registerAPI(new GetUserSiteMapBySiteIDAPI());
 this.ApiFactory.registerAPI(new PostUserSiteMapBySiteIDAPI());
@@ -148,6 +150,8 @@ this.ApiFactory.registerAPI(new PostFarmFormInfoByFuncIDAPI());
 this.ApiFactory.registerAPI(new PutFarmFormInfoByFuncIDAPI());
 this.ApiFactory.registerAPI(new GetFarmDetailInfoByFarmIDAPI());
 this.ApiFactory.registerAPI(new GetSiteAPI());
+this.ApiFactory.registerAPI(new GetSiteBySiteIDAPI());
+this.ApiFactory.registerAPI(new GetSiteBySiteIDAndNodeIDAPI());
 this.ApiFactory.registerAPI(new GetGroupMenuByGroupIDAPI());
 this.ApiFactory.registerAPI(new GetGroupSiteMapByGroupIDAPI());
 this.ApiFactory.registerAPI(new GetTemplateByControlIDAPI());

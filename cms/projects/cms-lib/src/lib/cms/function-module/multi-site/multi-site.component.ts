@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Observable, concat, Subject, forkJoin } from 'rxjs';
-import { tap, takeUntil, debounceTime } from 'rxjs/operators';
+import { Observable, concat, Subject, forkJoin, of } from 'rxjs';
+import { tap, takeUntil, debounceTime, concatMap } from 'rxjs/operators';
 import { ModalService } from '../../../ui/modal/modal.service';
 import { SitemapService } from '../../../service/sitemap.service';
 import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
@@ -95,7 +95,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     switch (mode) {
       case EditModeType.Node:
         if (!this.selectedSite) { this._modalService.openMessage({ message: '尚未選擇網站' }); return; }
-        this._sitemapService.getUserSiteMap(this.selectedSite.site_id).subscribe(sitemap => {
+        this._sitemapService.getUserSiteMapNodes(this.selectedSite.site_id).subscribe(sitemap => {
           this.sitemaps = sitemap;
           this.editMode = mode;
         });
@@ -138,17 +138,26 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   private _registerSubjects() {
     this._sitemapSelected$.pipe(
-      debounceTime(300),
-      takeUntil(this._destroy$)
-    ).subscribe(selectedSitemap => {
-      const parent = this.sitemapTree.findParent(selectedSitemap);
-      const order = (parent?.children || []).indexOf(selectedSitemap);
-      this.selectedSiteMap = {
-        siteMap: selectedSitemap,
-        parentId: parent?.node_id,
-        nodeOrder: order > -1 ? `${order}` : '',
-      }
-    });
+      takeUntil(this._destroy$),
+      debounceTime(500),
+      concatMap(selectedSitemap => {
+        return (
+          selectedSitemap
+            ? this._sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedSitemap.node_id)
+            : of(undefined)
+        ).pipe(
+          tap(selectedSitemapNode => {
+            const parent = this.sitemapTree.findParent(selectedSitemap);
+            const order = (parent?.children || []).indexOf(selectedSitemap);
+            this.selectedSiteMap = {
+              siteMap: selectedSitemapNode,
+              parentId: parent?.node_id,
+              nodeOrder: order > -1 ? `${order}` : '',
+            }
+          })
+        )
+      }),
+    ).subscribe();
   }
 
   onSiteMapUpdated(ev) {

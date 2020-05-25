@@ -4,9 +4,9 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * GetCMSSiteMap
+ * GetSiteMap
  */
-export class GetCMSSiteMapBySiteIDAPI implements API, MockAPI, RestfulAPI {
+export class GetSiteBySiteIDAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
     
@@ -14,7 +14,7 @@ export class GetCMSSiteMapBySiteIDAPI implements API, MockAPI, RestfulAPI {
     constructor() { }
 
     public getAPIName(): string {
-        return 'GetCMSSiteMapBySiteID';
+        return 'GetSiteBySiteID';
     }
 
     public getRequestData(): APIRequest {
@@ -28,7 +28,7 @@ export class GetCMSSiteMapBySiteIDAPI implements API, MockAPI, RestfulAPI {
     }
 
     public getMockPath(): string {
-        return './assets/mock/GetCMSSiteMapBySiteIDAPI.json';
+        return './assets/mock/GetSiteBySiteIDAPI.json';
     }
 
 }

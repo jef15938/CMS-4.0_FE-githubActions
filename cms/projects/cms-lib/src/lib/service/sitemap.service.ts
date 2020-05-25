@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { SiteGetResponse } from '../neuxAPI/bean/SiteGetResponse';
 import { Observable } from 'rxjs';
 import { SiteInfo } from '../neuxAPI/bean/SiteInfo';
+import { SiteMapNodeInfo } from '../neuxAPI/bean/SiteMapNodeInfo';
+import { SiteMapInfo } from '../neuxAPI/bean/SiteMapInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -95,10 +97,35 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getUserSiteMap(siteID: string) {
-    return this.restAPIService.dispatchRestApi('GetUserSiteMapBySiteID', { siteID }).pipe(
+  getUserSiteMapNodes(siteID: string) {
+    return this.restAPIService.dispatchRestApi('GetSiteBySiteID', { siteID }).pipe(
       map((res: SiteMapGetResponse) => res.datas)
     );
+  }
+
+  /**
+   *
+   * @param {string} siteID
+   * @param {string} nodeID
+   * @returns
+   * @memberof SitemapService
+   */
+  getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeInfo> {
+    return this.getUserSiteMapNodes(siteID).pipe(
+      map(nodes => {
+        return this._findNodeByNodeID(nodes, nodeID);
+      })
+    );
+    // return this.restAPIService.dispatchRestApi('GetSiteBySiteIDAndNodeID', { siteID, nodeID });
+  }
+
+  private _findNodeByNodeID(sources: SiteMapInfo[], nodeID: string): SiteMapNodeInfo {
+    if (!sources?.length || !nodeID) { return null; }
+
+    const node = sources.find(s => s.node_id === nodeID);
+    if (node) { return node as any; }
+
+    return sources.map(s => this._findNodeByNodeID(s.children, nodeID)).find(s => s.node_id === nodeID);
   }
 
   /**

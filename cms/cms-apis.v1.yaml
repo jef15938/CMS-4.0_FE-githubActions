@@ -511,37 +511,6 @@ paths:
           description: Internal Server Error
       operationId: get-LoginInfo
       description: 取得登入者資料
-  '/CMSSiteMap/{siteID}':
-    get:
-      summary: GetCMSSiteMap
-      tags:
-        - SiteMap
-      operationId: get-SiteMap
-      description: 取得全站SiteMap
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SiteMapGetResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorInfo'
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-    parameters:
-      - schema:
-          type: string
-        name: siteID
-        in: path
-        required: true
-        description: 網站代碼
   /CMSMenu:
     get:
       summary: GetCMSAllMenu
@@ -1036,8 +1005,76 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-      operationId: get-Site
+      operationId: get-Sites
       description: 取得多個網站清單
+  '/Site/{siteID}':
+    get:
+      summary: GetSiteMap
+      tags:
+        - SiteMap
+      operationId: get-SiteMap
+      description: 取得全站SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMapGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    parameters:
+      - schema:
+          type: string
+        name: siteID
+        in: path
+        required: true
+        description: 網站代碼
+  '/Site/{siteID}/{nodeID}':
+    get:
+      summary: GetSiteNode
+      tags:
+        - SiteMap
+      operationId: get-SiteNode
+      description: 取得特定site中的特定node資訊
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMapNodeGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    parameters:
+      - schema:
+          type: string
+        name: siteID
+        in: path
+        required: true
+        description: 網站代碼
+      - schema:
+          type: string
+        name: nodeID
+        in: path
+        required: true
+        description: 節點代碼
   '/Group/Menu/{groupID}':
     get:
       summary: GetGroupMenuList
@@ -1523,6 +1560,33 @@ components:
         node_name:
           type: string
           description: 節點名稱
+        canModify:
+          type: boolean
+          description: 是否能修改
+        canSubmit:
+          type: boolean
+          description: 是否能送審
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteMapInfo'
+      required:
+        - node_id
+        - node_name
+        - canModify
+        - canSubmit
+    SiteMapNodeInfo:
+      title: SiteMapInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        node_id:
+          type: string
+          description: 節點流水號
+        node_name:
+          type: string
+          description: 節點名稱
         layout_id:
           type: string
           description: 模版代碼
@@ -1588,10 +1652,6 @@ components:
           type: string
         publish_info:
           $ref: '#/components/schemas/PublishInfo'
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/SiteMapInfo'
       required:
         - node_id
         - node_name
@@ -1651,6 +1711,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SiteMapInfo'
+    SiteMapNodeGetResponse:
+      $ref: '#/components/schemas/SiteMapNodeInfo'
     UserSiteMapPutRequest:
       title: UserSiteMapPutRequest
       type: object

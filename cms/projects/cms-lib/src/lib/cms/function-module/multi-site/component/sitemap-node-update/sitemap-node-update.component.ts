@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter } from '@angular/core';
-import { SiteMapInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/SiteMapInfo';
 import { UserSiteMapPutRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/UserSiteMapPutRequest';
 import { NgForm } from '@angular/forms';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
@@ -9,9 +8,10 @@ import { ContentService } from 'projects/cms-lib/src/lib/service/content.service
 import { ContentEditorService } from 'projects/cms-lib/src/lib/ui/content-editor/content-editor.service';
 import { forkJoin } from 'rxjs';
 import { EditorMode } from 'projects/cms-lib/src/lib/ui/content-editor/content-editor.interface';
+import { SiteMapNodeInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/SiteMapNodeInfo';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
-  constructor(siteMapInfo: SiteMapInfo, parent_id: string, node_orders: string) {
+  constructor(siteMapInfo: SiteMapNodeInfo, parent_id: string, node_orders: string) {
     super();
     this.node_name = siteMapInfo.node_name;
     this.node_orders = node_orders;

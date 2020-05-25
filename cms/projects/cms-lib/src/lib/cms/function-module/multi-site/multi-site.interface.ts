@@ -1,7 +1,7 @@
-import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
+import { SiteMapNodeInfo } from '../../../neuxAPI/bean/SiteMapNodeInfo';
 
 export interface SiteMapUpdateInfo {
-  siteMap: SiteMapInfo;
+  siteMap: SiteMapNodeInfo;
   parentId: string;
   nodeOrder: string;
 }
