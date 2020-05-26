@@ -25,6 +25,19 @@
       "children": []
     },
     {
+      "func_id": "web",
+      "func_name": "網站管理",
+      "component_id ": "web",
+      "children": [
+        {
+          "func_id": "corporate-responsibility",
+          "func_name": "企業社會責任輪播",
+          "component_id": "corporate-responsibility",
+          "children": []
+        }
+      ]
+    },
+    {
       "func_id": "system",
       "func_name": "中央權限管理",
       "component_id ": "system",

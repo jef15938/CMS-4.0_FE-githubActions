@@ -26,6 +26,10 @@ const routes: Routes = [
       {
         path: 'system',
         loadChildren: () => import('./function-module/system/system.module').then(m => m.SystemModule)
+      },
+      {
+        path: 'web',
+        loadChildren: () => import('./function-module/web/web.module').then(m => m.WebModule)
       }
     ]
   },
