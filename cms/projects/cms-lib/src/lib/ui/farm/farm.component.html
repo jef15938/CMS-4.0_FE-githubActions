@@ -18,11 +18,12 @@
       <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
         <mat-tab *ngFor="let category of farm.category" [label]="category.category_name">
           <ng-template matTabContent>
-            <div class="search-info-container">
-              <cms-farm-search-info></cms-farm-search-info>
+            <div class="search-info-container" *ngIf="category.searchInfo">
+              <cms-farm-search-info [searchInfo]="category.searchInfo"></cms-farm-search-info>
             </div>
-            <div class="table-info-container">
-              <cms-farm-table-info></cms-farm-table-info>
+            <hr>
+            <div class="table-info-container" *ngIf="category.tableInfo">
+              <cms-farm-table-info [tableInfo]="category.tableInfo"></cms-farm-table-info>
             </div>
           </ng-template>
         </mat-tab>
