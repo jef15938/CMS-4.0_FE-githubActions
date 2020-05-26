@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CorporateResponsibilityComponent implements OnInit {
 
+  readonly funcId = 'corporate-responsibility';
+
   constructor() { }
 
   ngOnInit(): void {

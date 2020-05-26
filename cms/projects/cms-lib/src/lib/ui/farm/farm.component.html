@@ -1,1 +1,32 @@
-<p>farm works!</p>
+<div [hidden]="!!subComponentRef">
+  <div style="height: 40px; line-height: 40px; vertical-align: middle;">
+    <div style="float: left;">
+      {{topLevel?topLevel + ' > ' : ''}}{{activedCategory?.category_name}}
+    </div>
+    <div style="float: right;" *ngIf="isSub">
+      <button type="button" (click)="destroySelf()">回上層</button>
+    </div>
+  </div>
+  <hr>
+  <ng-container *ngIf="farm">
+    <!-- TODO: 正式程式 isSub 要拿掉，現在是為了展示 -->
+    <div *ngIf="isSub && farm.detailInfo">
+      <cms-farm-detail-info [detailInfo]="farm.detailInfo"></cms-farm-detail-info>
+      <hr>
+    </div>
+    <div>
+      <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
+        <mat-tab *ngFor="let category of farm.category" [label]="category.category_name">
+          <ng-template matTabContent>
+            The First Content
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </ng-container>
+  <hr>
+  <div>
+    <button type="button" (click)="createSub()">Create Sub</button>
+  </div>
+</div>
+<div #subContainer></div>

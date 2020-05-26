@@ -7,6 +7,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detail-info.component';
 
 @NgModule({
   imports: [
@@ -17,9 +19,11 @@ import { MatTableModule } from '@angular/material/table';
     MatCheckboxModule,
     MatRadioModule,
     MatTableModule,
+    MatTabsModule,
   ],
   declarations: [
-    FarmComponent
+    FarmComponent,
+    FarmDetailInfoComponent
   ],
   exports: [
     FarmComponent

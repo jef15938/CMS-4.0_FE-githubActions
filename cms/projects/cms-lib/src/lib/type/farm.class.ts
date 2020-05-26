@@ -1,11 +1,11 @@
-import { FarmInfoGetResponse } from '../../../neuxAPI/bean/FarmInfoGetResponse';
+import { FarmInfoGetResponse } from '../neuxAPI/bean/FarmInfoGetResponse';
 import { IsNotEmpty, ValidateNested } from 'class-validator';
-import { FarmFormInfo } from '../../../neuxAPI/bean/FarmFormInfo';
-import { FarmTableInfo } from '../../../neuxAPI/bean/FarmTableInfo';
+import { FarmFormInfo } from '../neuxAPI/bean/FarmFormInfo';
+import { FarmTableInfo } from '../neuxAPI/bean/FarmTableInfo';
 import { Type } from 'class-transformer';
-import { FarmTableDataInfo } from '../../../neuxAPI/bean/FarmTableDataInfo';
+import { FarmTableDataInfo } from '../neuxAPI/bean/FarmTableDataInfo';
 import { CmsFarmFormColumnDisplayType, CmsFarmTableColumnDisplayType } from './farm.enum';
-import { FarmValidationInfo } from '../../../neuxAPI/bean/FarmValidationInfo';
+import { FarmValidationInfo } from '../neuxAPI/bean/FarmValidationInfo';
 
 export class CmsFarmValidationInfo extends FarmValidationInfo {
   public required: {
@@ -45,39 +45,43 @@ export class CmsFarmTableInfo extends FarmTableInfo {
   public datas: Array<CmsFarmTableDataInfo>;
 }
 
-export class CmsFarmFormInfo extends FarmFormInfo {
-  public columns: {
-    display_text: string; // 欄位顯示名稱
-    display_type: CmsFarmFormColumnDisplayType; // 欄位顯示類型
-    options: {
-      value: string;
-      text: string;
-    }[]; // 選單類內容
-    value: string; // 欄位值
-    max_length: number; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
-    placeholder: string; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
-    column_id: string; // 視為 input 的 name
-    is_readonly: boolean;
-    triggers: {
-      trigger_type: string; // 驅動類型
-      trigger_target: string[]; // 放哪些欄位被連動
-      trigger_setting: { [key: string]: string };
-    }[];
+export class CmsFarmFormColumn {
+  display_text: string; // 欄位顯示名稱
+  display_type: CmsFarmFormColumnDisplayType; // 欄位顯示類型
+  options: {
+    value: string;
+    text: string;
+  }[]; // 選單類內容
+  value: string; // 欄位值
+  max_length: number; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
+  placeholder: string; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
+  column_id: string; // 視為 input 的 name
+  is_readonly: boolean;
+  triggers: {
+    trigger_type: string; // 驅動類型
+    trigger_target: string[]; // 放哪些欄位被連動
+    trigger_setting: { [key: string]: string };
   }[];
+}
+
+export class CmsFarmFormInfo extends FarmFormInfo {
+  public columns: CmsFarmFormColumn[];
 
   @Type(() => CmsFarmValidationInfo)
   @ValidateNested()
   public validation: CmsFarmValidationInfo;
 }
 
+export class CmsFarmInfoCategory {
+  searchInfo: CmsFarmFormInfo;
+  tableInfo: CmsFarmTableInfo;
+  category_name: string;
+  category_id: string;
+}
+
 export class FarmInfo extends FarmInfoGetResponse {
   @IsNotEmpty()
-  public category: {
-    searchInfo: CmsFarmFormInfo;
-    tableInfo: CmsFarmTableInfo;
-    category_name: string;
-    category_id: string;
-  }[];
+  public category: CmsFarmInfoCategory[];
 
   @Type(() => CmsFarmFormInfo)
   @ValidateNested()

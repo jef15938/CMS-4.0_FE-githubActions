@@ -69,7 +69,7 @@ export const environment = {
     PutContentByContentID: 'Restful',
     GetMyAuditingByOrderID: 'Mock',
     GetMyAuditing: 'Mock',
-    GetFarmByFuncID: 'Restful',
+    GetFarmByFuncID: 'Mock',
     GetFarmTableInfoByFuncID: 'Restful',
     GetFarmFormInfoByFuncID: 'Restful',
     PostFarmFormInfoByFuncID: 'Restful',
