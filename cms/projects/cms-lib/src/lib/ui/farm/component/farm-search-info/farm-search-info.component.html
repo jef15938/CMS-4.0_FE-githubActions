@@ -44,9 +44,11 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
+          <!-- FIXME: 目前有問題，開啟下層再回來後 checked 會消失，但 col.value 正確 -->
           <mat-radio-group [(ngModel)]="col.value" [name]="col.column_id" style="width: 100%; display: block;">
             <ng-container *ngFor="let option of col.options; let i=index;">
-              <mat-radio-button [value]="option.value" style="display: inline-block;" [style.marginLeft]="i===0?'0':'15px'">
+              <mat-radio-button [value]="option.value" [checked]="option.value===col.value"
+                style="display: inline-block;" [style.marginLeft]="i===0?'0':'15px'">
                 {{option.text}}
               </mat-radio-button>
             </ng-container>
