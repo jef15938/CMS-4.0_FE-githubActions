@@ -10,7 +10,7 @@
   <hr>
   <ng-container *ngIf="farm">
     <!-- TODO: 正式程式 isSub 要拿掉，現在是為了展示 -->
-    <div *ngIf="isSub && farm.detailInfo">
+    <div class="detail-info-container" *ngIf="isSub && farm.detailInfo">
       <cms-farm-detail-info [detailInfo]="farm.detailInfo"></cms-farm-detail-info>
       <hr>
     </div>
@@ -18,7 +18,12 @@
       <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
         <mat-tab *ngFor="let category of farm.category" [label]="category.category_name">
           <ng-template matTabContent>
-            The First Content
+            <div class="search-info-container">
+              <cms-farm-search-info></cms-farm-search-info>
+            </div>
+            <div class="table-info-container">
+              <cms-farm-table-info></cms-farm-table-info>
+            </div>
           </ng-template>
         </mat-tab>
       </mat-tab-group>

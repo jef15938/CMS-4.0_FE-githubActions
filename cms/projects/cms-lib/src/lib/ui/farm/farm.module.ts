@@ -9,6 +9,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detail-info.component';
+import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
+import { FarmTableInfoComponent } from './component/farm-table-info/farm-table-info.component';
 
 @NgModule({
   imports: [
@@ -23,7 +25,9 @@ import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detai
   ],
   declarations: [
     FarmComponent,
-    FarmDetailInfoComponent
+    FarmDetailInfoComponent,
+    FarmSearchInfoComponent,
+    FarmTableInfoComponent
   ],
   exports: [
     FarmComponent
