@@ -8,6 +8,8 @@ import { ModalModule } from '../ui/modal/modal.module';
 import { SharedModule } from '../shared/shared.module';
 import { ContentEditorModule } from '../ui/content-editor/content-editor.module';
 import { HtmlEditorModule } from '../ui/html-editor/html-editor.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -18,6 +20,8 @@ const LAYOUTS = [
     CommonModule,
     CmsRoutingModule,
     SharedModule,
+    MatSidenavModule,
+    MatToolbarModule,
   ],
   declarations: [
     CmsComponent,

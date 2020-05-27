@@ -1,13 +1,22 @@
-<div class="header">
-  <h1>This is Header</h1>
-</div>
-<div class="sidebar">
-  <ul *ngIf="menus.length">
-    <cms-menu-node *ngFor="let menu of menus" [menu]="menu"></cms-menu-node>
-  </ul>
-</div>
-<div class="content">
-  <div style="position: relative; height: 100%; overflow: auto;">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" opened style="padding: 0 1rem">
+    <ul *ngIf="menus.length">
+      <cms-menu-node *ngFor="let menu of menus" [menu]="menu"></cms-menu-node>
+    </ul>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 64px">
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <span>Header</span>
+          <span class="example-spacer"></span>
+          <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user
+          </mat-icon>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+    <div style="height: calc(100% - 64px); overflow: auto;">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
