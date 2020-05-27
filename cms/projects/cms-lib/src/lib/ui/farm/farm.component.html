@@ -1,4 +1,4 @@
-<div [hidden]="!!subComponentRef">
+<div [hidden]="!!subComponentRef" style="margin-bottom: 100px;">
   <div style="height: 40px; line-height: 40px; vertical-align: middle;">
     <div style="float: left;">
       {{topLevel?topLevel + ' > ' : ''}}{{activedCategory?.category_name}}
@@ -31,9 +31,5 @@
       </mat-tab-group>
     </div>
   </ng-container>
-  <hr>
-  <div>
-    <button type="button" (click)="createSub()">Create Sub</button>
-  </div>
 </div>
 <div #subContainer></div>

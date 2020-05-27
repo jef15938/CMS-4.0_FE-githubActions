@@ -5,6 +5,7 @@ import { tap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
+import { CmsFarmTableDataAction } from '../../type/farm.enum';
 
 @Component({
   selector: 'cms-farm',
@@ -61,8 +62,8 @@ export class FarmComponent implements OnInit, OnDestroy {
     this.activedCategory = this.farm.category[ev.index];
   }
 
-  createSub() {
-    if (!this.activedCategory) { return; }
+  createSub(category: CmsFarmInfoCategory) {
+    if (!category) { return; }
 
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(FarmComponent);
     const viewContainerRef = this.subContainerViewContainerRef;
@@ -70,7 +71,7 @@ export class FarmComponent implements OnInit, OnDestroy {
     const subComponentRef = viewContainerRef.createComponent(componentFactory);
     subComponentRef.instance.isSub = true;
     subComponentRef.instance.funcId = this.funcId;
-    subComponentRef.instance.topLevel = `${this.topLevel ? this.topLevel + ' > ' : ''}${this.activedCategory.category_name}`;
+    subComponentRef.instance.topLevel = `${this.topLevel ? this.topLevel + ' > ' : ''}${category.category_name}`;
     // subComponentRef.instance.categoryId = this.farm?.category.ca
     this.subComponentRef = subComponentRef;
     this.subComponentRef.instance.destroyMe.pipe(
@@ -97,6 +98,12 @@ export class FarmComponent implements OnInit, OnDestroy {
   onTableActionClick(category: CmsFarmInfoCategory, action: FarmTableInfoActionEvent) {
     console.warn('onTableActionClick() category = ', category);
     console.warn('onTableActionClick() action = ', action);
+
+    switch (action.action) {
+      case CmsFarmTableDataAction.DETAIL:
+        this.createSub(category);
+        break;
+    }
   }
 
 }
