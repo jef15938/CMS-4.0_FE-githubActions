@@ -1,14 +1,19 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" opened style="padding: 0 1rem">
-    <ul *ngIf="menus.length">
-      <cms-menu-node *ngFor="let menu of menus" [menu]="menu"></cms-menu-node>
-    </ul>
+  <mat-sidenav mode="side" opened #SideNav>
+    <div class="page-content-container">
+      <ul *ngIf="menus.length">
+        <cms-menu-node *ngFor="let menu of menus" [menu]="menu"></cms-menu-node>
+      </ul>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="header">
       <mat-toolbar color="primary">
         <mat-toolbar-row>
-          <span>Header</span>
+          <button type="button" mat-icon-button (click)="SideNav.toggle()">
+            <mat-icon style="vertical-align: middle;">list</mat-icon>
+          </button>
+          <span style="margin-left: 1rem;">Header</span>
           <span class="example-spacer"></span>
           <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user
           </mat-icon>
