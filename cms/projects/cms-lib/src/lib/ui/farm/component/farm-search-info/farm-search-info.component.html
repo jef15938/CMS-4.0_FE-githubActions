@@ -46,11 +46,11 @@
         <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
           <!-- 
             這兩個用來確保資料跟樣式正確，不然開了下一層後再回來時會有問題
-            [checked]="option.value===col.value" [class.mat-radio-check]="option.value===col.value"
+            [checked]="option.value===col.value" [class.mat-radio-checked]="option.value===col.value"
            -->
           <mat-radio-group [(ngModel)]="col.value" [name]="col.column_id" style="width: 100%; display: block;">
             <ng-container *ngFor="let option of col.options; let i=index;">
-              <mat-radio-button [value]="option.value" [checked]="option.value===col.value" [class.mat-radio-check]="option.value===col.value"
+              <mat-radio-button [value]="option.value" [checked]="option.value===col.value" [class.mat-radio-checked]="option.value===col.value"
                 style="display: inline-block;" [style.marginLeft]="i===0?'0':'15px'">
                 {{option.text}}
               </mat-radio-button>
