@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { GetDisplayColsPipe } from './component/farm-table-info/pipe/get-display-cols.pipe';
 import { GetColDataPipe } from './component/farm-table-info/pipe/get-col-data.pipe';
 import { GetDataActionsPipe } from './component/farm-table-info/pipe/get-data-actions.pipe';
+import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { GetDataActionsPipe } from './component/farm-table-info/pipe/get-data-ac
     FarmTableInfoComponent,
     GetDisplayColsPipe,
     GetColDataPipe,
-    GetDataActionsPipe
+    GetDataActionsPipe,
+    FarmFormInfoComponent
   ],
   exports: [
     FarmComponent

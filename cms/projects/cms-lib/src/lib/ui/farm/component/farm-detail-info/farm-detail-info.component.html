@@ -1,8 +1,1 @@
-<ng-container *ngIf="rows">
-  <div class="column-row" *ngFor="let row of rows">
-    <div class="column-col" *ngFor="let col of row" [style.width]="100/detailInfo.split_size + '%'">
-      <div class="column-label">{{col.display_text}}</div>
-      <div class="column-content">{{col.value}}</div>
-    </div>
-  </div>
-</ng-container>
+<cms-farm-form-info [farmInfo]="detailInfo"></cms-farm-form-info>
