@@ -121,8 +121,11 @@ export class FarmComponent implements OnInit, OnDestroy {
       case CmsFarmTableDataAction.PREVIEW:
         this._openViewDataModal(category, event.rowData);
         break;
+      case CmsFarmTableDataAction.CREATE:
+        this._openModifyDataModal('create', category);
+        break;
       case CmsFarmTableDataAction.MODIFY:
-        this._openModifyDataModal(category, event.rowData);
+        this._openModifyDataModal('edit', category, event.rowData);
         break;
       case CmsFarmTableDataAction.DELETE:
         this._deleteData(category, event.rowData);
@@ -154,9 +157,14 @@ export class FarmComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  private _openModifyDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+  private _openModifyDataModal(action: 'create' | 'edit', category: CmsFarmInfoCategory, rowData?: CmsFarmTableDataInfo) {
+    if (action === 'edit' && !rowData) {
+      alert('資料異常');
+      return;
+    }
+
     const farmFormInfo = category.searchInfo;
-    const title = `修改 : ${rowData.data_id}`;
+    const title = action === 'create' ? '新增' : `修改 : ${rowData.data_id}`;
 
     // TODO: call api : GetFarmDetailInfo
     of(undefined).pipe(

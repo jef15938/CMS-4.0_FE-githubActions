@@ -10,6 +10,8 @@ import { ContentEditorModule } from '../ui/content-editor/content-editor.module'
 import { HtmlEditorModule } from '../ui/html-editor/html-editor.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -22,6 +24,8 @@ const LAYOUTS = [
     SharedModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   declarations: [
     CmsComponent,
