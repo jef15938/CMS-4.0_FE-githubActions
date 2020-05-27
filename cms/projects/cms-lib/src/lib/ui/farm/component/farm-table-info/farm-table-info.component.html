@@ -8,8 +8,9 @@
         </ng-container>
         <ng-container *ngIf="col===ACTION_COLUMN">
           <div *ngIf="tableInfo.can_create" style="text-align: center;">
-            <button type="button" mat-button style="width: 100%;"
-              (click)="onActionClick(CmsFarmTableDataAction.CREATE)"> + </button>
+            <button type="button" mat-icon-button (click)="onActionClick(CmsFarmTableDataAction.CREATE)">
+              <mat-icon>add</mat-icon>
+            </button>
           </div>
         </ng-container>
       </th>
@@ -26,7 +27,25 @@
         </ng-container>
         <ng-container *ngIf="col===ACTION_COLUMN">
           <ng-container *ngFor="let action of (element|getDataActions)">
-            <button type="button" mat-button (click)="onActionClick(action, element)">{{action}}</button>
+            <button type="button" mat-icon-button (click)="onActionClick(action, element)" [ngSwitch]="action">
+              <mat-icon>
+                <ng-container *ngSwitchCase="CmsFarmTableDataAction.MODIFY">
+                  edit
+                </ng-container>
+                <ng-container *ngSwitchCase="CmsFarmTableDataAction.PREVIEW">
+                  visibility
+                </ng-container>
+                <ng-container *ngSwitchCase="CmsFarmTableDataAction.AUDITING">
+                  redo
+                </ng-container>
+                <ng-container *ngSwitchCase="CmsFarmTableDataAction.DETAIL">
+                  more_horiz
+                </ng-container>
+                <ng-container *ngSwitchCase="CmsFarmTableDataAction.DELETE">
+                  delete
+                </ng-container>
+              </mat-icon>
+            </button>
           </ng-container>
         </ng-container>
       </td>

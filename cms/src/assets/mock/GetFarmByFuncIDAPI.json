@@ -124,8 +124,9 @@
                 "value": "資料 1 label",
                 "display_text": "Label欄位",
                 "actions": [
-                  "modify",
                   "preview",
+                  "modify",
+                  "delete",
                   "auditing",
                   "detail"
                 ]
@@ -135,8 +136,9 @@
                 "value": "資料 1 link",
                 "display_text": "Link欄位",
                 "actions": [
-                  "modify",
                   "preview",
+                  "modify",
+                  "delete",
                   "auditing",
                   "detail"
                 ]
