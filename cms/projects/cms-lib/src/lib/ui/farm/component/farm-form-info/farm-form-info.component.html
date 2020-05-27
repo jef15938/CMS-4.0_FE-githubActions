@@ -1,6 +1,6 @@
 <ng-container *ngIf="rows">
   <div class="column-row" *ngFor="let row of rows">
-    <div class="column-col" *ngFor="let col of row" [style.width]="100/farmInfo.split_size + '%'">
+    <div class="column-col" *ngFor="let col of row" [style.width]="100/farmFormInfo.split_size + '%'">
       <ng-container appearance="outline" [ngSwitch]="col.display_type">
 
         <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LABEL">

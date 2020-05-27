@@ -11,20 +11,20 @@ export class FarmFormInfoComponent implements OnInit {
 
   CmsFarmFormColumnDisplayType = CmsFarmFormColumnDisplayType;
 
-  @Input() farmInfo: CmsFarmFormInfo;
+  @Input() farmFormInfo: CmsFarmFormInfo;
 
   rows: CmsFarmFormColumn[][];
 
   constructor() { }
 
   ngOnInit(): void {
-    this.rows = this.createRows(this.farmInfo);
+    this.rows = this.createRows(this.farmFormInfo);
   }
 
-  createRows(farmInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
-    const split_size = farmInfo.split_size;
+  createRows(farmFormInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
+    const split_size = farmFormInfo.split_size;
 
-    let rowCounts = farmInfo.columns.length / split_size;
+    let rowCounts = farmFormInfo.columns.length / split_size;
     const floor = Math.floor(rowCounts);
     rowCounts = rowCounts > floor ? floor + 1 : rowCounts;
 
@@ -32,7 +32,7 @@ export class FarmFormInfoComponent implements OnInit {
     for (let i = 0, l = rowCounts; i < l; ++i) {
       const min = i * split_size;
       const max = min + split_size;
-      const columnsInRow = farmInfo.columns.filter((_, index) => index >= min && index < max);
+      const columnsInRow = farmFormInfo.columns.filter((_, index) => index >= min && index < max);
       rows.push(columnsInRow);
     }
 

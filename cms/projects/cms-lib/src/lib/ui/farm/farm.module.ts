@@ -19,6 +19,8 @@ import { GetDisplayColsPipe } from './component/farm-table-info/pipe/get-display
 import { GetColDataPipe } from './component/farm-table-info/pipe/get-col-data.pipe';
 import { GetDataActionsPipe } from './component/farm-table-info/pipe/get-data-actions.pipe';
 import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
+import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
+import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 
 @NgModule({
   imports: [
@@ -44,7 +46,9 @@ import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info
     GetDisplayColsPipe,
     GetColDataPipe,
     GetDataActionsPipe,
-    FarmFormInfoComponent
+    FarmFormInfoComponent,
+    FarmFormViewDataModalComponent,
+    FarmFormModifyDataModalComponent
   ],
   exports: [
     FarmComponent

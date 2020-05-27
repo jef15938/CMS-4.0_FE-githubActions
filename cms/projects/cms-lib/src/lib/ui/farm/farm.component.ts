@@ -1,11 +1,14 @@
 import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FarmService } from '../../service/farm.service';
-import { FarmInfo, CmsFarmInfoCategory } from '../../type/farm.class';
-import { tap, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo } from '../../type/farm.class';
+import { tap, takeUntil, concatMap } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
 import { CmsFarmTableDataAction } from '../../type/farm.enum';
+import { ModalService } from '../modal/modal.service';
+import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
+import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 
 @Component({
   selector: 'cms-farm',
@@ -33,6 +36,7 @@ export class FarmComponent implements OnInit, OnDestroy {
   constructor(
     private _farmService: FarmService,
     private _componentFactoryResolver: ComponentFactoryResolver,
+    private _modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -95,15 +99,77 @@ export class FarmComponent implements OnInit, OnDestroy {
     this.subComponentRef = undefined;
   }
 
-  onTableActionClick(category: CmsFarmInfoCategory, action: FarmTableInfoActionEvent) {
+  onTableActionClick(category: CmsFarmInfoCategory, event: FarmTableInfoActionEvent) {
     console.warn('onTableActionClick() category = ', category);
-    console.warn('onTableActionClick() action = ', action);
+    console.warn('onTableActionClick() event = ', event);
 
-    switch (action.action) {
+    switch (event.action) {
       case CmsFarmTableDataAction.DETAIL:
         this.createSub(category);
         break;
+      case CmsFarmTableDataAction.PREVIEW:
+        this.openViewDataModal(category, event.rowData);
+        break;
+      case CmsFarmTableDataAction.MODIFY:
+        this.openModifyDataModal(category, event.rowData);
+        break;
+      case CmsFarmTableDataAction.DELETE:
+        this.deleteData(category, event.rowData);
+        break;
+      case CmsFarmTableDataAction.AUDITING:
+        this.auditData(category, event.rowData);
+        break;
     }
+  }
+
+  deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    alert(`Delete : ${rowData.data_id}`);
+  }
+
+  auditData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    alert(`Audit : ${rowData.data_id}`);
+  }
+
+  openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    const farmFormInfo = this.farm.detailInfo;
+    const title = `預覽 : ${rowData.data_id}`;
+
+    // TODO: call api : GetFarmDetailInfo
+    of(undefined).pipe(
+      concatMap(_ => {
+        return this._modalService.openComponent({
+          component: FarmFormViewDataModalComponent,
+          componentInitData: {
+            title,
+            farmFormInfo,
+          },
+          modalSetting: {
+            width: '1440px',
+          }
+        });
+      })
+    ).subscribe();
+  }
+
+  openModifyDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    const farmFormInfo = category.searchInfo;
+    const title = `修改 : ${rowData.data_id}`;
+
+    // TODO: call api : GetFarmDetailInfo
+    of(undefined).pipe(
+      concatMap(_ => {
+        return this._modalService.openComponent({
+          component: FarmFormModifyDataModalComponent,
+          componentInitData: {
+            title,
+            farmFormInfo,
+          },
+          modalSetting: {
+            width: '1440px',
+          }
+        });
+      })
+    ).subscribe();
   }
 
 }
