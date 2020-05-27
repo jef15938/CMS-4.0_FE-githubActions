@@ -1,7 +1,7 @@
 <div [hidden]="!!subComponentRef">
   <div class="page-title-container">
     <h1>
-      {{topLevel?topLevel + ' > ' : ''}}{{activedCategory?.category_name}}
+      <span *ngIf="title">{{title}}</span>{{categoryName ? ' > ' : ''}}{{categoryName||''}}
       <div style="float: right;" *ngIf="isSub">
         <button type="button" mat-button (click)="destroySelf()">回上層</button>
       </div>
@@ -18,7 +18,8 @@
         <mat-tab *ngFor="let category of farm.category" [label]="category.category_name">
           <ng-template matTabContent>
             <div class="search-info-container" *ngIf="category.searchInfo">
-              <cms-farm-search-info [searchInfo]="category.searchInfo"></cms-farm-search-info>
+              <cms-farm-search-info [searchInfo]="category.searchInfo"
+                (needQuery)="onSearchInfoNeedQuery(category, $event)"></cms-farm-search-info>
             </div>
             <hr>
             <div class="table-info-container" *ngIf="category.tableInfo">

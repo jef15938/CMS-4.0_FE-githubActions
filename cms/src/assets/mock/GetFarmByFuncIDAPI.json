@@ -331,11 +331,8 @@
       "category_id": "category-1"
     },
     {
-      "searchInfo": {
-        "split_size": 2,
-        "columns": []
-      },
-      "tableInfo": {},
+      "searchInfo": null,
+      "tableInfo": null,
       "category_name": "Category 2",
       "category_id": "category-2"
     }

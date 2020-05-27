@@ -9,6 +9,7 @@ import { CmsFarmTableDataAction } from '../../type/farm.enum';
 import { ModalService } from '../modal/modal.service';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
+import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
 
 @Component({
   selector: 'cms-farm',
@@ -19,7 +20,8 @@ export class FarmComponent implements OnInit, OnDestroy {
 
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
 
-  @Input() topLevel: string;
+  @Input() title: string;
+  @Input() categoryName: string;
   @Input() funcId: string;
   @Input() categoryId: string;
   @Input() isSub = false;
@@ -58,6 +60,11 @@ export class FarmComponent implements OnInit, OnDestroy {
     )
   }
 
+  private _getCategoryTableInfo(category: CmsFarmInfoCategory) {
+    alert('Get Table Info');
+    return of(undefined);
+  }
+
   destroySelf() {
     this.destroyMe.next();
   }
@@ -66,7 +73,11 @@ export class FarmComponent implements OnInit, OnDestroy {
     this.activedCategory = this.farm.category[ev.index];
   }
 
-  createSub(category: CmsFarmInfoCategory) {
+  onSearchInfoNeedQuery(category: CmsFarmInfoCategory, comp: FarmFormInfoComponent) {
+    this._getCategoryTableInfo(category).subscribe();
+  }
+
+  private _createSub(category: CmsFarmInfoCategory) {
     if (!category) { return; }
 
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(FarmComponent);
@@ -75,16 +86,16 @@ export class FarmComponent implements OnInit, OnDestroy {
     const subComponentRef = viewContainerRef.createComponent(componentFactory);
     subComponentRef.instance.isSub = true;
     subComponentRef.instance.funcId = this.funcId;
-    subComponentRef.instance.topLevel = `${this.topLevel ? this.topLevel + ' > ' : ''}${category.category_name}`;
+    subComponentRef.instance.title = `${this.title ? this.title + ' > ' : ''}${category.category_name}`;
     // subComponentRef.instance.categoryId = this.farm?.category.ca
     this.subComponentRef = subComponentRef;
     this.subComponentRef.instance.destroyMe.pipe(
       takeUntil(this._destroy$),
-      tap(_ => this.destroySub()),
+      tap(_ => this._destroySub()),
     ).subscribe();
   }
 
-  destroySub() {
+  private _destroySub() {
     try {
       this.subComponentRef.instance.destroyMe.unsubscribe();
     } catch (error) {
@@ -105,32 +116,24 @@ export class FarmComponent implements OnInit, OnDestroy {
 
     switch (event.action) {
       case CmsFarmTableDataAction.DETAIL:
-        this.createSub(category);
+        this._createSub(category);
         break;
       case CmsFarmTableDataAction.PREVIEW:
-        this.openViewDataModal(category, event.rowData);
+        this._openViewDataModal(category, event.rowData);
         break;
       case CmsFarmTableDataAction.MODIFY:
-        this.openModifyDataModal(category, event.rowData);
+        this._openModifyDataModal(category, event.rowData);
         break;
       case CmsFarmTableDataAction.DELETE:
-        this.deleteData(category, event.rowData);
+        this._deleteData(category, event.rowData);
         break;
       case CmsFarmTableDataAction.AUDITING:
-        this.auditData(category, event.rowData);
+        this._auditData(category, event.rowData);
         break;
     }
   }
 
-  deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    alert(`Delete : ${rowData.data_id}`);
-  }
-
-  auditData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    alert(`Audit : ${rowData.data_id}`);
-  }
-
-  openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+  private _openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
     const farmFormInfo = this.farm.detailInfo;
     const title = `預覽 : ${rowData.data_id}`;
 
@@ -151,7 +154,7 @@ export class FarmComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  openModifyDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+  private _openModifyDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
     const farmFormInfo = category.searchInfo;
     const title = `修改 : ${rowData.data_id}`;
 
@@ -169,7 +172,21 @@ export class FarmComponent implements OnInit, OnDestroy {
           }
         });
       })
-    ).subscribe();
+    ).subscribe(confirm => {
+      if (confirm) {
+        this._getCategoryTableInfo(category).subscribe();
+      }
+    });
+  }
+
+  private _deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    alert(`Delete : ${rowData.data_id}`);
+    this._getCategoryTableInfo(category).subscribe();
+  }
+
+  private _auditData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    alert(`Audit : ${rowData.data_id}`);
+    this._getCategoryTableInfo(category).subscribe();
   }
 
 }

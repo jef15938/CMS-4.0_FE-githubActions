@@ -21,12 +21,10 @@ export class TemplatesContainerComponent extends LayoutWrapperBase implements On
   @ViewChildren(LayoutWrapperComponent) layoutWrapperComponents: QueryList<LayoutWrapperComponent>;
 
   ngOnInit(): void {
-    // console.warn('this.templates = ', this.templates);
   }
 
   ngAfterViewInit(): void {
     this._changeDetectorRef.detectChanges();
-    // console.warn('this.layoutWrapperComponents = ', this.layoutWrapperComponents);
   }
 
   ngAfterViewChecked(): void {

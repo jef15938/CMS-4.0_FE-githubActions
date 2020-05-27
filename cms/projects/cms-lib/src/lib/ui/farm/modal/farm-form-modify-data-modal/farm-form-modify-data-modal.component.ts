@@ -22,7 +22,8 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
   }
 
   confirm() {
-
+    alert(`修改成功`);
+    this.close(true);
   }
 
 }

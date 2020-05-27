@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CmsFarmFormInfo } from 'projects/cms-lib/src/lib/type/farm.class';
+import { FarmFormInfoComponent } from '../farm-form-info/farm-form-info.component';
 
 @Component({
   selector: 'cms-farm-search-info',
@@ -10,18 +11,18 @@ export class FarmSearchInfoComponent implements OnInit {
 
   @Input() searchInfo: CmsFarmFormInfo;
 
-  @Output() needQuery = new EventEmitter<any>();
+  @Output() needQuery = new EventEmitter<FarmFormInfoComponent>();
 
   constructor() { }
 
   ngOnInit(): void { }
 
-  query() {
-    this.needQuery.emit();
+  query(comp: FarmFormInfoComponent) {
+    this.needQuery.emit(comp);
   }
 
-  clear() {
-    this.needQuery.emit();
+  clear(comp: FarmFormInfoComponent) {
+    this.needQuery.emit(comp);
   }
 
 }
