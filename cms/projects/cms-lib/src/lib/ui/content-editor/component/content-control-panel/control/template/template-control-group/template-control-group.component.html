@@ -8,12 +8,11 @@
         <div class="item-container">
           <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
           <span>{{!groupItemDisplayFieldId?i:findFieldByFieldId(group, groupItemDisplayFieldId)?.fieldVal}}</span>
-          <button type="button" mat-button
-            [disabled]="templateInfo.itemList.length>=parseInt(''+maxItemCount)"
+          <button type="button" mat-icon-button [disabled]="templateInfo.itemList.length>=parseInt(''+maxItemCount)"
             (click)="copyGroup(group)">
             <mat-icon class="pointer">file_copy</mat-icon>
           </button>
-          <button type="button" mat-button (click)="removeGroup(group)">
+          <button type="button" mat-icon-button (click)="removeGroup(group)">
             <mat-icon class="pointer">remove_circle</mat-icon>
           </button>
         </div>

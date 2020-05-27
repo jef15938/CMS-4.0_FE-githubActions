@@ -13,3 +13,23 @@
   left: 0;
   right: 0;
 }
+
+.header {
+  mat-toolbar {
+    height: 40px;
+    min-height: 40px;
+    
+    mat-toolbar-row {
+      height: 40px;
+      color: black;
+      background-color: white;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+      z-index: 99;
+    }
+  }
+}
+
+.content {
+  height: calc(100% - 40px); 
+  overflow: auto;
+}

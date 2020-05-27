@@ -15,29 +15,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 10px;
 }
 
-.header {
-  position: fixed;
-  height: 40px;
-  left: 200px;
-  width: 100%;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
-  z-index: 99;
-}
-
 button, .pointer {
   cursor: pointer;
 }
 
 mat-form-field {
   width: 100%;
-}
-
-.content {
-  position: fixed;
-  height: 100%;
-  margin-left: 200px;
-  margin-top: 40px;
-  width: calc(100% - 200px);
 }
 
 .p-10 {

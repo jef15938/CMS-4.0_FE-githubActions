@@ -11,7 +11,7 @@
           {{node[nodeDisplayField]}}
         </span>
         <!-- use a disabled button to provide padding for tree leaf -->
-        <button type="button" class="node-expand-btn" mat-icon-button disabled></button>
+        <button type="button" mat-icon-button class="node-expand-btn" disabled></button>
       </li>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
@@ -25,7 +25,7 @@
           <span *ngIf="!customNodeRenderer">
             {{node[nodeDisplayField]}}
           </span>
-          <button type="button" class="node-expand-btn" mat-icon-button
+          <button type="button" mat-icon-button class="node-expand-btn"
             [attr.aria-label]="'toggle ' + node[nodeDisplayField]">
             <mat-icon class="mat-icon-rtl-mirror">
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}

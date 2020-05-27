@@ -2,7 +2,11 @@
 <div #SiteBlock [hidden]="editMode===EditModeType.Node" style="height: 100%;">
   <div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer>
     <div class="page-title-container">
-      <h1>網站列表 <button type="button" mat-button (click)="test()">編輯Content(測試)</button></h1>
+      <h1>網站列表
+        <div style="float: right;">
+          <button type="button" mat-button (click)="test()">編輯Content(測試)</button>
+        </div>
+      </h1>
     </div>
     <div class="page-content-container">
       <mat-list>
@@ -16,7 +20,11 @@
   </div>
   <div style="width: 70%; float: right;">
     <div class="page-title-container">
-      <h1>網站設定 <button type="button" mat-button (click)="swichMode(EditModeType.Node)">編輯節點</button></h1>
+      <h1>網站設定
+        <div style="float: right;">
+          <button type="button" mat-button (click)="swichMode(EditModeType.Node)">編輯節點</button>
+        </div>
+      </h1>
     </div>
     <div class="page-content-container" *ngIf="selectedSiteUpdateModel">
       <mat-form-field appearance="outline">
@@ -41,8 +49,10 @@
   <div style="width: 50%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer
     [heightBase]="SiteBlock">
     <div class="page-title-container">
-      <h1>{{selectedSite?.site_name}} <button type="button" mat-button
-          (click)="swichMode(EditModeType.Site)">返回</button>
+      <h1>{{selectedSite?.site_name}}
+        <div style="float: right;">
+          <button type="button" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
+        </div>
       </h1>
     </div>
     <div class="page-content-container">

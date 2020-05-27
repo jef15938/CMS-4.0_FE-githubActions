@@ -11,16 +11,16 @@
       </div>
       <div [ngSwitch]="selected.templateType">
         <div class="btn-group">
-          <button type="button" mat-button (click)="templateShowInfo()">
+          <button type="button" mat-icon-button (click)="templateShowInfo()">
             <mat-icon>info</mat-icon>
           </button>
-          <button type="button" mat-button (click)="templateMove('up')" [disabled]="!canTemplateMoveUp">
+          <button type="button" mat-icon-button (click)="templateMove('up')" [disabled]="!canTemplateMoveUp">
             <mat-icon>keyboard_arrow_up</mat-icon>
           </button>
-          <button type="button" mat-button (click)="templateMove('down')" [disabled]="!canTemplateMoveDown">
+          <button type="button" mat-icon-button (click)="templateMove('down')" [disabled]="!canTemplateMoveDown">
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
-          <button type="button" mat-button (click)="templateDelete()">
+          <button type="button" mat-icon-button (click)="templateDelete()">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
@@ -71,5 +71,5 @@
     </div>
   </ng-container>
   <hr>
-  <button type="button" style="width: 100%;" [disabled]="!hasChange" (click)="preserveChanges()">套用變更</button>
+  <button type="button" mat-button style="width: 100%;" [disabled]="!hasChange" (click)="preserveChanges()">套用變更</button>
 </div>

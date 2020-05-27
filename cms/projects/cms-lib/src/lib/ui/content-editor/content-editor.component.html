@@ -8,25 +8,24 @@
 <div class="cms-content-editor">
   <!-- 按鈕們 -->
   <div #clickCapturelistenerBlock class="btn-panel" *ngIf="mode===EditorMode.EDIT">
-    <button #btnSave type="button" mat-button alt="save" (click)="save()" *ngIf="btnSave" [disabled]="saved">
+    <button type="button" mat-icon-button alt="save" #btnSave (click)="save()" *ngIf="btnSave" [disabled]="saved">
       <mat-icon>save</mat-icon>
     </button>
-    <button #btnUndo type="button" mat-button alt="undo" [disabled]="!manager?.stateManager?.hasPreviousState"
+    <button type="button" mat-icon-button alt="undo" #btnUndo [disabled]="!manager?.stateManager?.hasPreviousState"
       (click)="resetSelected(); manager?.stateManager?.back(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>undo</mat-icon>
     </button>
-    <button #btnRedo type="button" mat-button alt="redo" [disabled]="!manager?.stateManager?.hasNextState"
+    <button type="button" mat-icon-button alt="redo" #btnRedo [disabled]="!manager?.stateManager?.hasNextState"
       (click)="resetSelected(); manager?.stateManager?.forward(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>redo</mat-icon>
     </button>
-    <button #btnRedo type="button" mat-button alt="state list" #menuTrigger="matMenuTrigger"
-      [matMenuTriggerFor]="stateMenu">
+    <button type="button" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="stateMenu">
       <mat-icon>list</mat-icon>
     </button>
-    <button #btnRedo type="button" mat-button alt="clear" (click)="clear()">
+    <button type="button" mat-icon-button alt="clear" #btnClear (click)="clear()">
       <mat-icon>delete</mat-icon>
     </button>
-    <button #btnClose type="button" mat-button alt="close" (click)="close()" *ngIf="btnClose">
+    <button type="button" mat-icon-button alt="close" #btnClose (click)="close()" *ngIf="btnClose">
       <mat-icon>clear</mat-icon>
     </button>
   </div>

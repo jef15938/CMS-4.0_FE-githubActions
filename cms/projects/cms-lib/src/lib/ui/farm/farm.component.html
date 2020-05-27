@@ -1,13 +1,12 @@
 <div [hidden]="!!subComponentRef">
-  <div style="height: 40px; line-height: 40px; vertical-align: middle;">
-    <div style="float: left;">
+  <div class="page-title-container">
+    <h1>
       {{topLevel?topLevel + ' > ' : ''}}{{activedCategory?.category_name}}
-    </div>
-    <div style="float: right;" *ngIf="isSub">
-      <button type="button" (click)="destroySelf()">回上層</button>
-    </div>
+      <div style="float: right;" *ngIf="isSub">
+        <button type="button" mat-button (click)="destroySelf()">回上層</button>
+      </div>
+    </h1>
   </div>
-  <hr>
   <ng-container *ngIf="farm">
     <!-- TODO: 正式程式 isSub 要拿掉，現在是為了展示 -->
     <div class="detail-info-container" *ngIf="isSub && farm.detailInfo">
