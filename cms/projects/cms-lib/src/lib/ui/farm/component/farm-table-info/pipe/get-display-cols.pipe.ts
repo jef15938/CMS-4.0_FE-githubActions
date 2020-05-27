@@ -10,8 +10,8 @@ export class GetDisplayColsPipe implements PipeTransform {
   transform(datas: CmsFarmTableDataInfo[]): string[] {
     const columns = datas && datas[0] ? datas[0].columns : [];
     const displays = columns.map(c => c.display_text);
-    const hasAction = datas.some(data => {
-      return data.columns.some(column => column.actions?.length);
+    const hasAction = datas?.some(data => {
+      return data.columns?.some(column => column.actions?.length);
     });
     if (hasAction) {
       displays.push(ACTION_COLUMN)
