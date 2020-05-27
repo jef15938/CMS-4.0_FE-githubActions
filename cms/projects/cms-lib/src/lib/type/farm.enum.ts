@@ -24,3 +24,11 @@ export enum CmsFarmFormColumnTriggerType {
   READONLYTRIGGER = 'READONLYTRIGGER',
   REQUIREDTRIGGER = 'REQUIREDTRIGGER',
 }
+
+export enum CmsFarmTableDataAction {
+  CREATE = "create",
+  MODIFY = "modify",
+  PREVIEW = "preview",
+  AUDITING = "auditing",
+  DETAIL = "detail"
+}

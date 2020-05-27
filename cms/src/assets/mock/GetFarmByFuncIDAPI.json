@@ -106,7 +106,225 @@
           }
         ]
       },
-      "tableInfo": {},
+      "tableInfo": {
+        "pageInfo": {
+          "page": 1,
+          "totalPageSize": 2,
+          "totalRecSize": 11
+        },
+        "can_create": true,
+        "can_checkbox": true,
+        "datas": [
+          {
+            "data_id": "table-data-1",
+            "is_checked": true,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 1 label",
+                "display_text": "Label欄位",
+                "actions": [
+                  "modify",
+                  "preview",
+                  "auditing",
+                  "detail"
+                ]
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 1 link",
+                "display_text": "Link欄位",
+                "actions": [
+                  "modify",
+                  "preview",
+                  "auditing",
+                  "detail"
+                ]
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-2",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 2 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 2 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-3",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 3 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 3 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-4",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 4 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 4 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-5",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 5 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 5 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-6",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 6 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 6 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-7",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 7 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 7 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-8",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 8 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 8 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-9",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 9 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 9 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-10",
+            "is_checked": false,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 10 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 10 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          },
+          {
+            "data_id": "table-data-11",
+            "is_checked": true,
+            "columns": [
+              {
+                "display_type": "LABEL",
+                "value": "資料 11 label",
+                "display_text": "Label欄位",
+                "actions": []
+              },
+              {
+                "display_type": "LINK",
+                "value": "資料 11 link",
+                "display_text": "Link欄位",
+                "actions": []
+              }
+            ]
+          }
+        ]
+      },
       "category_name": "Category 1",
       "category_id": "category-1"
     },

@@ -4,7 +4,7 @@ import { FarmFormInfo } from '../neuxAPI/bean/FarmFormInfo';
 import { FarmTableInfo } from '../neuxAPI/bean/FarmTableInfo';
 import { Type } from 'class-transformer';
 import { FarmTableDataInfo } from '../neuxAPI/bean/FarmTableDataInfo';
-import { CmsFarmFormColumnDisplayType, CmsFarmTableColumnDisplayType } from './farm.enum';
+import { CmsFarmFormColumnDisplayType, CmsFarmTableColumnDisplayType, CmsFarmTableDataAction } from './farm.enum';
 import { FarmValidationInfo } from '../neuxAPI/bean/FarmValidationInfo';
 
 export class CmsFarmValidationInfo extends FarmValidationInfo {
@@ -30,19 +30,21 @@ export class CmsFarmValidationInfo extends FarmValidationInfo {
   }[];
 }
 
+export class CmsFarmTableDataColumn {
+  display_type: CmsFarmTableColumnDisplayType; // 顯示類型
+  value: string; // 顯示值
+  display_text: string; // 顯示標題
+  actions: CmsFarmTableDataAction[]; // 該筆可以做的操作
+}
+
 export class CmsFarmTableDataInfo extends FarmTableDataInfo {
-  public columns: {
-    display_type: CmsFarmTableColumnDisplayType; // 顯示類型
-    value: string; // 顯示值
-    display_text: string; // 顯示標題
-    actions: string[]; // 該筆可以做的操作
-  }[];
+  public columns: CmsFarmTableDataColumn[];
 }
 
 export class CmsFarmTableInfo extends FarmTableInfo {
   @Type(() => CmsFarmTableDataInfo)
   @ValidateNested()
-  public datas: Array<CmsFarmTableDataInfo>;
+  public datas: CmsFarmTableDataInfo[];
 }
 
 export class CmsFarmFormColumn {

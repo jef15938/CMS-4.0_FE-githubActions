@@ -4,6 +4,7 @@ import { FarmInfo, CmsFarmInfoCategory } from '../../type/farm.class';
 import { tap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
 
 @Component({
   selector: 'cms-farm',
@@ -91,6 +92,11 @@ export class FarmComponent implements OnInit, OnDestroy {
     }
     this.subContainerViewContainerRef.clear();
     this.subComponentRef = undefined;
+  }
+
+  onTableActionClick(category: CmsFarmInfoCategory, action: FarmTableInfoActionEvent) {
+    console.warn('onTableActionClick() category = ', category);
+    console.warn('onTableActionClick() action = ', action);
   }
 
 }

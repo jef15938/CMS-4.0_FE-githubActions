@@ -1,1 +1,38 @@
-<p>farm-table-info works!</p>
+<ng-container *ngIf="tableInfo">
+  <table mat-table [dataSource]="tableInfo.datas" class="mat-elevation-z8" style="width: 100%;">
+
+    <ng-container *ngFor="let col of (tableInfo.datas|getDisplayCols)" [matColumnDef]="col">
+      <th mat-header-cell *matHeaderCellDef cmsResizer>
+        <ng-container *ngIf="col!==ACTION_COLUMN">
+          {{col}}
+        </ng-container>
+        <ng-container *ngIf="col===ACTION_COLUMN">
+          <div *ngIf="tableInfo.can_create" style="text-align: center;">
+            <button type="button" mat-button style="width: 100%;"
+              (click)="onActionClick(CmsFarmTableDataAction.CREATE)"> + </button>
+          </div>
+        </ng-container>
+      </th>
+      <td mat-cell *matCellDef="let element" [class.action-col]="col===ACTION_COLUMN">
+        <ng-container *ngIf="col!==ACTION_COLUMN">
+          <ng-container *ngIf="element|getColData:col; let colData;">
+            <ng-container *ngIf="colData.display_type===CmsFarmTableColumnDisplayType.LABEL">
+              {{colData?.value}}
+            </ng-container>
+            <ng-container *ngIf="colData.display_type!==CmsFarmTableColumnDisplayType.LABEL">
+              <a [href]="colData?.value" target="_blank">{{colData?.value}}</a>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="col===ACTION_COLUMN">
+          <ng-container *ngFor="let action of (element|getDataActions)">
+            <button type="button" mat-button (click)="onActionClick(action, element)">{{action}}</button>
+          </ng-container>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="tableInfo.datas|getDisplayCols"></tr>
+    <tr mat-row *matRowDef="let row; columns:(tableInfo.datas|getDisplayCols);"></tr>
+  </table>
+</ng-container>

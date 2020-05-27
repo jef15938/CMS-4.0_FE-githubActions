@@ -14,6 +14,9 @@ import { FarmSearchInfoComponent } from './component/farm-search-info/farm-searc
 import { FarmTableInfoComponent } from './component/farm-table-info/farm-table-info.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { GetDisplayColsPipe } from './component/farm-table-info/pipe/get-display-cols.pipe';
+import { GetColDataPipe } from './component/farm-table-info/pipe/get-col-data.pipe';
+import { GetDataActionsPipe } from './component/farm-table-info/pipe/get-data-actions.pipe';
 
 @NgModule({
   imports: [
@@ -34,7 +37,10 @@ import { MatNativeDateModule } from '@angular/material/core';
     FarmComponent,
     FarmDetailInfoComponent,
     FarmSearchInfoComponent,
-    FarmTableInfoComponent
+    FarmTableInfoComponent,
+    GetDisplayColsPipe,
+    GetColDataPipe,
+    GetDataActionsPipe
   ],
   exports: [
     FarmComponent
