@@ -49,7 +49,11 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   private _createFormGroup(farmFormInfo: CmsFarmFormInfo): FormGroup {
     const formGroup = new FormGroup({});
     farmFormInfo.columns.forEach((column, index) => {
-      const formControl = new FormControl(column.value);
+      const formControl = new FormControl(
+        column.display_type !== CmsFarmFormColumnDisplayType.DATE
+          ? column.value
+          : this._convertStringToDate(column.value)
+      );
       if (this.useValidation && farmFormInfo.validation) {
         const validatorFns: ValidatorFn[] = [];
         const validation = farmFormInfo.validation;
@@ -104,7 +108,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
             const thisColumnId = column.column_id;
             const isThisColumnStart = thisColumnId === start;
             const oppositeColumnId = isThisColumnStart ? end : start;
-
             if (!(formGroup.controls[start].value < formGroup.controls[end].value)) {
               const range = [
                 '區間必須',
@@ -168,7 +171,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
     const info: CmsFarmFormInfo = JSON.parse(JSON.stringify(this.farmFormInfo));
     info.columns.forEach(col => {
-      col.value = formGroup.controls[col.column_id]?.value;
+      const value = formGroup.controls[col.column_id]?.value;
+      col.value = col.display_type !== CmsFarmFormColumnDisplayType.DATE
+        ? value
+        : this._convertDateToString(value);
     });
 
     if (!this.useValidation) { return of(info); }
@@ -176,6 +182,16 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     if (!formGroup.valid) { return throwError('Form is not valid.') }
 
     return of(info);
+  }
+
+  private _convertDateToString(date: Date) {
+    if (!date) return '';
+    return `${date.getTime() / 1000}`;
+  }
+
+  private _convertStringToDate(str: string) {
+    if (!str) { return null }
+    return new Date(+str * 1000);//1588635072000
   }
 
 }

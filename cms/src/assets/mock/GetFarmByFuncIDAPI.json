@@ -97,7 +97,7 @@
             "display_text": "送審日期",
             "display_type": "DATE",
             "options": [],
-            "value": "2020-05-01",
+            "value": "1589040000",
             "max_length": 0,
             "placeholder": "",
             "column_id": "submit_time",

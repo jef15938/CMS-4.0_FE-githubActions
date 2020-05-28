@@ -6,7 +6,8 @@ import { ValidationErrors } from '@angular/forms';
 })
 export class FarmFormValidationErrorsPipe implements PipeTransform {
 
-  transform(errors: ValidationErrors): unknown {
+  transform(errors: ValidationErrors): string[] {
+    if (errors['matDatepickerParse']) { return ['日期格式不符']; }
     return Object.keys(errors).map(key => errors[key]);
   }
 

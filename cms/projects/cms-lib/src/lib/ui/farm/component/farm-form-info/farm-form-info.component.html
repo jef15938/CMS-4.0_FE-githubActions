@@ -50,6 +50,9 @@
                 (dateChange)="onDateChange(col.column_id)">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="!useValidation && formGroup.controls[col.column_id]?.errors?.matDatepickerParse">
+                <div>日期格式不符</div>
+              </mat-error>
               <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
                 <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">{{err}}
                 </div>
@@ -62,14 +65,10 @@
           </ng-container>
           <!-- RADIO -->
           <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
-            <!-- 
-                用來確保樣式正確，不然開了下一層後再回來時會有問題
-                [class.mat-radio-checked]="option.value===col.value"
-               -->
             <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;">
               <ng-container *ngFor="let option of col.options; let i=index;">
-                <mat-radio-button [value]="option.value" [class.mat-radio-checked]="option.value===col.value"
-                  style="display: inline-block;" [style.marginLeft]="i===0?'0':'15px'">
+                <mat-radio-button [value]="option.value" style="display: inline-block;"
+                  [style.marginLeft]="i===0?'0':'15px'">
                   {{option.text}}
                 </mat-radio-button>
               </ng-container>
