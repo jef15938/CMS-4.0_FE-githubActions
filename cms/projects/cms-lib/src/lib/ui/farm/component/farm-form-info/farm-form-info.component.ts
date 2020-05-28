@@ -4,7 +4,8 @@ import { CmsFarmFormColumnDisplayType } from 'projects/cms-lib/src/lib/type/farm
 import { FarmFormComp } from '../../farm.interface';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
 import { CmsValidator } from 'projects/cms-lib/src/lib/util/validator';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'cms-farm-form-info',
@@ -21,11 +22,17 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   rows: CmsFarmFormColumn[][];
   formGroup: FormGroup;
 
+  columnTrigger = new Subject<CmsFarmFormColumn>();
+
   constructor() { }
 
   ngOnInit(): void {
     this.rows = this._createRows(this.farmFormInfo);
     this.formGroup = this._createFormGroup(this.farmFormInfo);
+
+    this.columnTrigger.pipe(
+      debounceTime(300)
+    ).subscribe(col => this._checkColumnTrigger(col));
   }
 
   private _createRows(farmFormInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
@@ -192,6 +199,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   private _convertStringToDate(str: string) {
     if (!str) { return null }
     return new Date(+str * 1000);//1588635072000
+  }
+
+  private _checkColumnTrigger(column: CmsFarmFormColumn) {
+    const triggers = column?.triggers;
+    if (triggers) {
+      // TODO: 
+
+    }
   }
 
 }

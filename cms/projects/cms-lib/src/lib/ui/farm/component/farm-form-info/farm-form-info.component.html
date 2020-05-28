@@ -8,7 +8,7 @@
             <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
               <mat-label>{{col.display_text}}</mat-label>
               <input matInput [formControlName]="col.column_id" [maxLength]="col.max_length"
-                [placeholder]="col.placeholder">
+                [placeholder]="col.placeholder" (keydown)="columnTrigger.next(col)">
               <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
                 <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">{{err}}
                 </div>
@@ -20,7 +20,7 @@
             <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
               <mat-label>{{col.display_text}}</mat-label>
               <textarea matInput [formControlName]="col.column_id" [maxLength]="col.max_length"
-                [placeholder]="col.placeholder" rows="1"></textarea>
+                [placeholder]="col.placeholder" rows="1" (keydown)="columnTrigger.next(col)"></textarea>
               <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
                 <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">{{err}}
                 </div>
@@ -31,7 +31,7 @@
           <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.SELECT">
             <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
               <mat-label>{{col.display_text}}</mat-label>
-              <mat-select [formControlName]="col.column_id">
+              <mat-select [formControlName]="col.column_id" (selectionChange)="columnTrigger.next(col)">
                 <mat-option *ngFor="let option of col.options" [value]="option.value">
                   {{option.text}}
                 </mat-option>
@@ -47,7 +47,7 @@
             <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
               <mat-label>{{col.display_text}}</mat-label>
               <input matInput [matDatepicker]="picker" [formControlName]="col.column_id"
-                (dateChange)="onDateChange(col.column_id)">
+                (dateChange)="onDateChange(col.column_id); columnTrigger.next(col)">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error *ngIf="!useValidation && formGroup.controls[col.column_id]?.errors?.matDatepickerParse">
@@ -61,11 +61,13 @@
           </ng-container>
           <!-- CHECKBOX -->
           <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CHECKBOX">
-            <mat-checkbox [formControlName]="col.column_id">{{col.display_text}}</mat-checkbox>
+            <mat-checkbox [formControlName]="col.column_id" (change)="columnTrigger.next(col)">{{col.display_text}}
+            </mat-checkbox>
           </ng-container>
           <!-- RADIO -->
           <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
-            <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;">
+            <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;"
+              (change)="columnTrigger.next(col)">
               <ng-container *ngFor="let option of col.options; let i=index;">
                 <mat-radio-button [value]="option.value" style="display: inline-block;"
                   [style.marginLeft]="i===0?'0':'15px'">
