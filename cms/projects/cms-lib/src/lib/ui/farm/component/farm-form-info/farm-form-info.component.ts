@@ -129,11 +129,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   onDateChange(column_id: string) {
-    this._checkRange(column_id);
+    if (this.useValidation) {
+      this._checkRange(column_id);
+    }
   }
 
   private _checkRange(column_id: string) {
-    const ranges = this.farmFormInfo.validation.range.filter(r => column_id === r.start_column || column_id === r.end_column);
+    const ranges = this.farmFormInfo?.validation?.range?.filter(r => column_id === r.start_column || column_id === r.end_column);
     ranges.forEach(r => {
       const start = r.start_column;
       const end = r.end_column;
