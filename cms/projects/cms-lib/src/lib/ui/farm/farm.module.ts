@@ -22,6 +22,7 @@ import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { FarmFormValidationErrorsPipe } from './pipe/farm-form-validation-errors.pipe';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     GetDataActionsPipe,
     FarmFormInfoComponent,
     FarmFormViewDataModalComponent,
-    FarmFormModifyDataModalComponent
+    FarmFormModifyDataModalComponent,
+    FarmFormValidationErrorsPipe
   ],
   exports: [
     FarmComponent

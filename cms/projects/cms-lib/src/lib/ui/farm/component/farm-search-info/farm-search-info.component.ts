@@ -47,6 +47,7 @@ export class FarmSearchInfoComponent implements OnInit, OnDestroy {
   }
 
   clear() {
+    this.farmFormInfoComponent.clearForm();
     this.needQuery.emit();
   }
 

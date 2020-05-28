@@ -33,24 +33,68 @@
       "triggers": []
     },
     {
-      "display_text": "標籤名稱",
+      "display_text": "必填欄位",
       "display_type": "TEXT",
       "options": [],
-      "value": "我的標籤",
+      "value": "這是個必填欄位",
       "max_length": 10,
-      "placeholder": "請輸入標籤名稱",
-      "column_id": "tag_name",
+      "placeholder": "請輸入",
+      "column_id": "col_required",
       "is_readonly": false,
       "triggers": []
     },
     {
-      "display_text": "好多標籤名稱",
+      "display_text": "數字欄位",
+      "display_type": "TEXT",
+      "options": [],
+      "value": "3345678",
+      "max_length": 10,
+      "placeholder": "請輸入",
+      "column_id": "col_number",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "Email",
+      "display_type": "TEXT",
+      "options": [],
+      "value": "aaa@bb.cc",
+      "max_length": 30,
+      "placeholder": "請輸入",
+      "column_id": "col_email",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "TEXTAREA欄位",
       "display_type": "TEXTAREA",
       "options": [],
-      "value": "我的好多標籤",
+      "value": "1234567890",
       "max_length": 100,
-      "placeholder": "請輸入好多標籤名稱",
-      "column_id": "tag_name_many",
+      "placeholder": "請輸入",
+      "column_id": "col_textarea",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "開始日期",
+      "display_type": "DATE",
+      "options": [],
+      "value": "2020-05-05",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "col_start",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "結束日期",
+      "display_type": "DATE",
+      "options": [],
+      "value": "2020-05-10",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "col_end",
       "is_readonly": false,
       "triggers": []
     },
@@ -89,17 +133,32 @@
       "column_id": "ga_data_status",
       "is_readonly": false,
       "triggers": []
-    },
-    {
-      "display_text": "送審日期",
-      "display_type": "DATE",
-      "options": [],
-      "value": "2020-05-01",
-      "max_length": 0,
-      "placeholder": "",
-      "column_id": "submit_time",
-      "is_readonly": false,
-      "triggers": []
     }
-  ]
+  ],
+  "validation": {
+    "required": [
+      {
+        "id": "col_required",
+        "setting": {}
+      }
+    ],
+    "email": [
+      {
+        "id": "col_email",
+        "setting": {}
+      }
+    ],
+    "number": [
+      {
+        "id": "col_number",
+        "setting": {}
+      }
+    ],
+    "range": [
+      {
+        "start_column": "col_start",
+        "end_column": "col_end"
+      }
+    ]
+  }
 }

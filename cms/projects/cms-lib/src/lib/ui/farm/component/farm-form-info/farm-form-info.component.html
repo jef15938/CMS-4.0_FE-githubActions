@@ -1,68 +1,87 @@
-<ng-container *ngIf="rows">
-  <div class="column-row" *ngFor="let row of rows">
-    <div class="column-col" *ngFor="let col of row" [style.width]="100/farmFormInfo.split_size + '%'">
-      <ng-container appearance="outline" [ngSwitch]="col.display_type">
-
-        <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LABEL">
-          <div class="column-label">{{col.display_text}}</div>
-          <div class="column-content">{{col.value}}</div>
+<ng-container *ngIf="rows && formGroup">
+  <form [formGroup]="formGroup">
+    <div class="column-row" *ngFor="let row of rows">
+      <div class="column-col" *ngFor="let col of row" [style.width]="100/farmFormInfo.split_size + '%'">
+        <ng-container [ngSwitch]="col.display_type">
+          <!-- TEXT -->
+          <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXT">
+            <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
+              <mat-label>{{col.display_text}}</mat-label>
+              <input matInput [formControlName]="col.column_id" [maxLength]="col.max_length"
+                [placeholder]="col.placeholder">
+              <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
+                <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">{{err}}
+                </div>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <!-- TEXTAREA -->
+          <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXTAREA">
+            <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
+              <mat-label>{{col.display_text}}</mat-label>
+              <textarea matInput [formControlName]="col.column_id" [maxLength]="col.max_length"
+                [placeholder]="col.placeholder" rows="1"></textarea>
+              <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
+                <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">{{err}}
+                </div>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <!-- SELECT -->
+          <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.SELECT">
+            <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
+              <mat-label>{{col.display_text}}</mat-label>
+              <mat-select [formControlName]="col.column_id">
+                <mat-option *ngFor="let option of col.options" [value]="option.value">
+                  {{option.text}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
+                <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">{{err}}
+                </div>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <!-- DATE -->
+          <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATE">
+            <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
+              <mat-label>{{col.display_text}}</mat-label>
+              <input matInput [matDatepicker]="picker" [formControlName]="col.column_id"
+                (dateChange)="onDateChange(col.column_id)">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
+                <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">{{err}}
+                </div>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <!-- CHECKBOX -->
+          <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CHECKBOX">
+            <mat-checkbox [formControlName]="col.column_id">{{col.display_text}}</mat-checkbox>
+          </ng-container>
+          <!-- RADIO -->
+          <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
+            <!-- 
+                用來確保樣式正確，不然開了下一層後再回來時會有問題
+                [class.mat-radio-checked]="option.value===col.value"
+               -->
+            <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;">
+              <ng-container *ngFor="let option of col.options; let i=index;">
+                <mat-radio-button [value]="option.value" [class.mat-radio-checked]="option.value===col.value"
+                  style="display: inline-block;" [style.marginLeft]="i===0?'0':'15px'">
+                  {{option.text}}
+                </mat-radio-button>
+              </ng-container>
+            </mat-radio-group>
+          </ng-container>
+          <!-- LABEL -->
+          <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LABEL">
+            <div class="column-label">{{col.display_text}}</div>
+            <div class="column-content">{{col.value}}</div>
+          </ng-container>
         </ng-container>
-
-        <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXT">
-          <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
-            <mat-label>{{col.display_text}}</mat-label>
-            <input matInput [(ngModel)]="col.value" [name]="col.column_id" [maxLength]="col.max_length"
-              [placeholder]="col.placeholder">
-          </mat-form-field>
-        </ng-container>
-
-        <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXTAREA">
-          <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
-            <mat-label>{{col.display_text}}</mat-label>
-            <textarea matInput [(ngModel)]="col.value" [name]="col.column_id" [maxLength]="col.max_length"
-              [placeholder]="col.placeholder" rows="1"></textarea>
-          </mat-form-field>
-        </ng-container>
-
-        <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.SELECT">
-          <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
-            <mat-label>{{col.display_text}}</mat-label>
-            <mat-select [(ngModel)]="col.value" [name]="col.column_id">
-              <mat-option *ngFor="let option of col.options" [value]="option.value">
-                {{option.text}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
-
-        <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATE">
-          <mat-form-field appearance="outline" [ngSwitch]="col.display_type">
-            <mat-label>{{col.display_text}}</mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="col.value" [name]="col.column_id">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </ng-container>
-
-        <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CHECKBOX">
-          <mat-checkbox [(ngModel)]="col.value" [name]="col.column_id">{{col.display_text}}</mat-checkbox>
-        </ng-container>
-
-        <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
-          <!-- 
-              用來確保樣式正確，不然開了下一層後再回來時會有問題
-              [class.mat-radio-checked]="option.value===col.value"
-             -->
-          <mat-radio-group [(ngModel)]="col.value" [name]="col.column_id" style="width: 100%; display: block;">
-            <ng-container *ngFor="let option of col.options; let i=index;">
-              <mat-radio-button [value]="option.value" [class.mat-radio-checked]="option.value===col.value"
-                style="display: inline-block;" [style.marginLeft]="i===0?'0':'15px'">
-                {{option.text}}
-              </mat-radio-button>
-            </ng-container>
-          </mat-radio-group>
-        </ng-container>
-      </ng-container>
+      </div>
     </div>
-  </div>
+  </form>
 </ng-container>

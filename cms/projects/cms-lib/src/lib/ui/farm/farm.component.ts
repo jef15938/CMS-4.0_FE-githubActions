@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FarmService } from '../../service/farm.service';
 import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo, CmsFarmFormInfo } from '../../type/farm.class';
-import { tap, takeUntil, concatMap } from 'rxjs/operators';
-import { Subject, of } from 'rxjs';
+import { tap, takeUntil, concatMap, catchError } from 'rxjs/operators';
+import { Subject, of, throwError, never } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
 import { CmsFarmTableDataAction } from '../../type/farm.enum';
@@ -20,7 +20,7 @@ export class FarmComponent implements OnInit, OnDestroy {
 
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
 
-  private _farmFormInfoComponentMap = new Map<CmsFarmInfoCategory, FarmFormComp>();
+  private _searchInfoFormComponentMap = new Map<CmsFarmInfoCategory, FarmFormComp>();
 
   @Input() title: string;
   @Input() categoryName: string;
@@ -63,15 +63,29 @@ export class FarmComponent implements OnInit, OnDestroy {
   }
 
   private _getCategoryTableInfo(category: CmsFarmInfoCategory, page = 1) {
-
-    const farmInfo: CmsFarmFormInfo = this._farmFormInfoComponentMap.get(category)?.getFarmInfo();
-    // TODO: 查詢 table 時帶 search 表單
-    console.warn('farmInfo = ', farmInfo);
-    return this._farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
-      tap(farmTableInfo => {
-        category.tableInfo = farmTableInfo;
-      })
-    );
+    return of(undefined).pipe(
+      concatMap(_ => this._searchInfoFormComponentMap.get(category)?.requestFormInfo() || throwError('No Category in Map.')),
+      concatMap(searchFormInfo => { // TODO: 查詢 table 時帶 search 表單
+        console.warn('searchFormInfo = ', searchFormInfo);
+        return this._farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
+          tap(farmTableInfo => {
+            category.tableInfo = farmTableInfo;
+          })
+        );
+      }),
+      catchError(err => {
+        console.error('err = ', err);
+        return never();
+      }),
+    )
+    // const farmInfo: CmsFarmFormInfo = this._searchInfoFormComponentMap.get(category)?.requestFormInfo();
+    // // TODO: 查詢 table 時帶 search 表單
+    // console.warn('farmInfo = ', farmInfo);
+    // return this._farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
+    //   tap(farmTableInfo => {
+    //     category.tableInfo = farmTableInfo;
+    //   })
+    // );
   }
 
   destroySelf() {
@@ -87,7 +101,7 @@ export class FarmComponent implements OnInit, OnDestroy {
   }
 
   onSearchInfoFarmFormInfoCompEmit(category: CmsFarmInfoCategory, comp: FarmFormComp) {
-    this._farmFormInfoComponentMap.set(category, comp);
+    this._searchInfoFormComponentMap.set(category, comp);
   }
 
   onSearchInfoNeedQuery(category: CmsFarmInfoCategory) {
