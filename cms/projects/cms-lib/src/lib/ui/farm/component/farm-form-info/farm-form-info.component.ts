@@ -1,13 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CmsFarmFormInfo, CmsFarmFormColumn } from 'projects/cms-lib/src/lib/type/farm.class';
 import { CmsFarmFormColumnDisplayType } from 'projects/cms-lib/src/lib/type/farm.enum';
+import { FarmFormComp } from '../../farm.interface';
 
 @Component({
   selector: 'cms-farm-form-info',
   templateUrl: './farm-form-info.component.html',
   styleUrls: ['./farm-form-info.component.scss']
 })
-export class FarmFormInfoComponent implements OnInit {
+export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   CmsFarmFormColumnDisplayType = CmsFarmFormColumnDisplayType;
 
@@ -37,6 +38,10 @@ export class FarmFormInfoComponent implements OnInit {
     }
 
     return rows;
+  }
+
+  getFarmInfo() {
+    return JSON.parse(JSON.stringify(this.farmFormInfo));
   }
 
 }

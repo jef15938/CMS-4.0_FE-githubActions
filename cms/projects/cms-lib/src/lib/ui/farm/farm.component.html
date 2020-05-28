@@ -18,13 +18,15 @@
         <mat-tab *ngFor="let category of farm.category" [label]="category.category_name">
           <ng-template matTabContent>
             <div class="search-info-container" *ngIf="category.searchInfo">
-              <cms-farm-search-info [searchInfo]="category.searchInfo"
-                (needQuery)="onSearchInfoNeedQuery(category, $event)"></cms-farm-search-info>
+              <cms-farm-search-info #FarmSearchComp [searchInfo]="category.searchInfo"
+                (needQuery)="onSearchInfoNeedQuery(category)"
+                (farmFormInfoCompEmit)="onSearchInfoFarmFormInfoCompEmit(category, $event)"></cms-farm-search-info>
             </div>
             <hr>
             <div class="table-info-container" *ngIf="category.tableInfo">
               <cms-farm-table-info [tableInfo]="category.tableInfo" (actionClick)="onTableActionClick(category, $event)"
-                (pageChange)="onTablePageChange(category, $event)"></cms-farm-table-info>
+                (pageChange)="onTablePageChange(category, $event)">
+              </cms-farm-table-info>
             </div>
           </ng-template>
         </mat-tab>

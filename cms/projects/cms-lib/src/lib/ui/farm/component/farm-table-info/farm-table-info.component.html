@@ -1,6 +1,7 @@
 <ng-container *ngIf="tableInfo">
   <ng-container *ngIf="tableInfo.pageInfo; let pageInfo">
     <div>目前頁數:{{pageInfo.page}}</div>
+    <br>
   </ng-container>
   <table mat-table [dataSource]="tableInfo.datas" class="mat-elevation-z8" style="width: 100%;">
 

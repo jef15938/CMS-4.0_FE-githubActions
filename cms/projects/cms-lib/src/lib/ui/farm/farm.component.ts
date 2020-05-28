@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FarmService } from '../../service/farm.service';
-import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo } from '../../type/farm.class';
+import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo, CmsFarmFormInfo } from '../../type/farm.class';
 import { tap, takeUntil, concatMap } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -9,7 +9,7 @@ import { CmsFarmTableDataAction } from '../../type/farm.enum';
 import { ModalService } from '../modal/modal.service';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
-import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
+import { FarmFormComp } from './farm.interface';
 
 @Component({
   selector: 'cms-farm',
@@ -19,6 +19,8 @@ import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info
 export class FarmComponent implements OnInit, OnDestroy {
 
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
+
+  private _farmFormInfoComponentMap = new Map<CmsFarmInfoCategory, FarmFormComp>();
 
   @Input() title: string;
   @Input() categoryName: string;
@@ -61,6 +63,10 @@ export class FarmComponent implements OnInit, OnDestroy {
   }
 
   private _getCategoryTableInfo(category: CmsFarmInfoCategory, page = 1) {
+
+    const farmInfo: CmsFarmFormInfo = this._farmFormInfoComponentMap.get(category)?.getFarmInfo();
+    // TODO: 查詢 table 時帶 search 表單
+    console.warn('farmInfo = ', farmInfo);
     return this._farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
       tap(farmTableInfo => {
         category.tableInfo = farmTableInfo;
@@ -80,7 +86,11 @@ export class FarmComponent implements OnInit, OnDestroy {
     this.activedCategory = this.farm.category[ev.index];
   }
 
-  onSearchInfoNeedQuery(category: CmsFarmInfoCategory, comp: FarmFormInfoComponent) {
+  onSearchInfoFarmFormInfoCompEmit(category: CmsFarmInfoCategory, comp: FarmFormComp) {
+    this._farmFormInfoComponentMap.set(category, comp);
+  }
+
+  onSearchInfoNeedQuery(category: CmsFarmInfoCategory) {
     this._getCategoryTableInfo(category).subscribe();
   }
 
@@ -138,9 +148,6 @@ export class FarmComponent implements OnInit, OnDestroy {
       case CmsFarmTableDataAction.DELETE:
         this._deleteData(category, event.rowData);
         break;
-      case CmsFarmTableDataAction.AUDITING:
-        this._auditData(category, event.rowData);
-        break;
     }
   }
 
@@ -192,11 +199,6 @@ export class FarmComponent implements OnInit, OnDestroy {
 
   private _deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
     alert(`Delete : ${rowData.data_id}`);
-    this._getCategoryTableInfo(category).subscribe();
-  }
-
-  private _auditData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    alert(`Audit : ${rowData.data_id}`);
     this._getCategoryTableInfo(category).subscribe();
   }
 

@@ -1,9 +1,9 @@
 <ng-container *ngIf="searchInfo">
-  <cms-farm-form-info #comp [farmFormInfo]="searchInfo"></cms-farm-form-info>
+  <cms-farm-form-info [farmFormInfo]="searchInfo"></cms-farm-form-info>
   <div class="page-content-container" style="text-align: center;">
     <div class="btn-group">
-      <button type="button" mat-button (click)="clear(comp)">清除</button>
-      <button type="button" mat-button (click)="query(comp)">查詢</button>
+      <button type="button" mat-button (click)="clear()">清除</button>
+      <button type="button" mat-button (click)="query()">查詢</button>
     </div>
   </div>
 </ng-container>
