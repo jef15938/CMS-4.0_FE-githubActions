@@ -60,13 +60,20 @@ export class FarmComponent implements OnInit, OnDestroy {
     )
   }
 
-  private _getCategoryTableInfo(category: CmsFarmInfoCategory) {
-    alert('Get Table Info');
-    return of(undefined);
+  private _getCategoryTableInfo(category: CmsFarmInfoCategory, page = 1) {
+    return this._farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
+      tap(farmTableInfo => {
+        category.tableInfo = farmTableInfo;
+      })
+    );
   }
 
   destroySelf() {
     this.destroyMe.next();
+  }
+
+  onTablePageChange(category: CmsFarmInfoCategory, page: number) {
+    this._getCategoryTableInfo(category, page).subscribe();
   }
 
   onSelectedTabChange(ev: MatTabChangeEvent) {
@@ -83,11 +90,12 @@ export class FarmComponent implements OnInit, OnDestroy {
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(FarmComponent);
     const viewContainerRef = this.subContainerViewContainerRef;
     viewContainerRef.clear();
+    this.subComponentRef = undefined;
+
     const subComponentRef = viewContainerRef.createComponent(componentFactory);
     subComponentRef.instance.isSub = true;
-    subComponentRef.instance.funcId = this.funcId;
-    subComponentRef.instance.title = `${this.title ? this.title + ' > ' : ''}${category.category_name}`;
-    // subComponentRef.instance.categoryId = this.farm?.category.ca
+    subComponentRef.instance.funcId = category.category_id;
+    subComponentRef.instance.title = `${this.title || ''}${this.title ? ' > ' : ''}${category.category_name}`;
     this.subComponentRef = subComponentRef;
     this.subComponentRef.instance.destroyMe.pipe(
       takeUntil(this._destroy$),

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../neuxAPI/rest-api.service';
 import { Observable } from 'rxjs';
-import { FarmInfo } from '../type/farm.class';
+import { FarmInfo, CmsFarmTableInfo } from '../type/farm.class';
 import { ParamsError } from '@neux/core';
 
 @Injectable({
@@ -16,9 +16,9 @@ export class FarmService {
   /**
    *
    *
-   * @param {string} contentID // SiteMapInfo.layout_id
+   * @param {string} funcID // 子層時用子層的category_id
    * @returns
-   * @memberof ContentService
+   * @memberof FarmService
    */
   getFarmByFuncID(funcID: string): Observable<FarmInfo> {
     if (!funcID) {
@@ -26,5 +26,23 @@ export class FarmService {
     }
     return this.restAPIService.dispatchRestApi('GetFarmByFuncID', { funcID });;
   }
-  
+
+  /**
+   *
+   *
+   * @param {string} funcID // 子層時用子層的category_id
+   * @param {number} page
+   * @returns
+   * @memberof FarmService
+   */
+  getFarmTableInfoByFuncID(funcID: string, page: number): Observable<CmsFarmTableInfo> {
+    if (!funcID) {
+      throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'string', funcID);
+    }
+    if (!page) {
+      throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page);
+    }
+    return this.restAPIService.dispatchRestApi('GetFarmTableInfoByFuncID', { funcID });;
+  }
+
 }

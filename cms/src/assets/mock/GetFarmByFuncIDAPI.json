@@ -110,7 +110,7 @@
         "pageInfo": {
           "page": 1,
           "totalPageSize": 2,
-          "totalRecSize": 11
+          "totalRecSize": 15
         },
         "can_create": true,
         "can_checkbox": true,
@@ -302,24 +302,6 @@
               {
                 "display_type": "LINK",
                 "value": "資料 10 link",
-                "display_text": "Link欄位",
-                "actions": []
-              }
-            ]
-          },
-          {
-            "data_id": "table-data-11",
-            "is_checked": true,
-            "columns": [
-              {
-                "display_type": "LABEL",
-                "value": "資料 11 label",
-                "display_text": "Label欄位",
-                "actions": []
-              },
-              {
-                "display_type": "LINK",
-                "value": "資料 11 link",
                 "display_text": "Link欄位",
                 "actions": []
               }

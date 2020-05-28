@@ -17,6 +17,7 @@ export class FarmTableInfoComponent implements OnInit {
   @Input() tableInfo: CmsFarmTableInfo;
 
   @Output() actionClick = new EventEmitter<FarmTableInfoActionEvent>();
+  @Output() pageChange = new EventEmitter<number>();
 
   constructor() { }
 
@@ -25,6 +26,10 @@ export class FarmTableInfoComponent implements OnInit {
 
   onActionClick(action: CmsFarmTableDataAction, rowData?: CmsFarmTableDataInfo) {
     this.actionClick.emit(new FarmTableInfoActionEvent(action, rowData));
+  }
+
+  onPageChanged(event: { pageIndex: number }) {
+    this.pageChange.emit(event.pageIndex + 1);
   }
 
 }

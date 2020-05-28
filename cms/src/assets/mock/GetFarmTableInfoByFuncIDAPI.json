@@ -1,0 +1,113 @@
+{
+  "pageInfo": {
+    "page": 2,
+    "totalPageSize": 2,
+    "totalRecSize": 15
+  },
+  "can_create": true,
+  "can_checkbox": true,
+  "datas": [
+    {
+      "data_id": "table-data-11",
+      "is_checked": true,
+      "columns": [
+        {
+          "display_type": "LABEL",
+          "value": "資料 11 label",
+          "display_text": "Label欄位",
+          "actions": [
+            "preview",
+            "modify",
+            "delete",
+            "auditing",
+            "detail"
+          ]
+        },
+        {
+          "display_type": "LINK",
+          "value": "資料 11 link",
+          "display_text": "Link欄位",
+          "actions": [
+            "preview",
+            "modify",
+            "delete",
+            "auditing",
+            "detail"
+          ]
+        }
+      ]
+    },
+    {
+      "data_id": "table-data-12",
+      "is_checked": false,
+      "columns": [
+        {
+          "display_type": "LABEL",
+          "value": "資料 12 label",
+          "display_text": "Label欄位",
+          "actions": []
+        },
+        {
+          "display_type": "LINK",
+          "value": "資料 12 link",
+          "display_text": "Link欄位",
+          "actions": []
+        }
+      ]
+    },
+    {
+      "data_id": "table-data-13",
+      "is_checked": false,
+      "columns": [
+        {
+          "display_type": "LABEL",
+          "value": "資料 13 label",
+          "display_text": "Label欄位",
+          "actions": []
+        },
+        {
+          "display_type": "LINK",
+          "value": "資料 13 link",
+          "display_text": "Link欄位",
+          "actions": []
+        }
+      ]
+    },
+    {
+      "data_id": "table-data-14",
+      "is_checked": false,
+      "columns": [
+        {
+          "display_type": "LABEL",
+          "value": "資料 14 label",
+          "display_text": "Label欄位",
+          "actions": []
+        },
+        {
+          "display_type": "LINK",
+          "value": "資料 14 link",
+          "display_text": "Link欄位",
+          "actions": []
+        }
+      ]
+    },
+    {
+      "data_id": "table-data-15",
+      "is_checked": false,
+      "columns": [
+        {
+          "display_type": "LABEL",
+          "value": "資料 15 label",
+          "display_text": "Label欄位",
+          "actions": []
+        },
+        {
+          "display_type": "LINK",
+          "value": "資料 15 link",
+          "display_text": "Link欄位",
+          "actions": []
+        }
+      ]
+    }
+  ]
+}

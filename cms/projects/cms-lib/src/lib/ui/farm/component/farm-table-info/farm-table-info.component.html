@@ -1,4 +1,7 @@
 <ng-container *ngIf="tableInfo">
+  <ng-container *ngIf="tableInfo.pageInfo; let pageInfo">
+    <div>目前頁數:{{pageInfo.page}}</div>
+  </ng-container>
   <table mat-table [dataSource]="tableInfo.datas" class="mat-elevation-z8" style="width: 100%;">
 
     <ng-container *ngFor="let col of (tableInfo.datas|getDisplayCols)" [matColumnDef]="col">
@@ -54,4 +57,13 @@
     <tr mat-header-row *matHeaderRowDef="tableInfo.datas|getDisplayCols"></tr>
     <tr mat-row *matRowDef="let row; columns:(tableInfo.datas|getDisplayCols);"></tr>
   </table>
+  <ng-container *ngIf="tableInfo.pageInfo; let pageInfo">
+    <ng-container *ngIf="pageInfo.totalRecSize">
+      <br>
+      <div style="float: right;">總筆數:{{pageInfo.totalRecSize}}</div>
+      <br>
+    </ng-container>
+    <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
+    </mat-paginator>
+  </ng-container>
 </ng-container>

@@ -21,6 +21,7 @@ import { GetDataActionsPipe } from './component/farm-table-info/pipe/get-data-ac
 import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    MatPaginatorModule,
   ],
   declarations: [
     FarmComponent,
