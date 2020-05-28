@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { CmsFarmFormInfo } from 'projects/cms-lib/src/lib/type/farm.class';
 import { FarmFormInfoComponent } from '../farm-form-info/farm-form-info.component';
 import { FarmFormComp } from '../../farm.interface';
@@ -8,7 +8,7 @@ import { FarmFormComp } from '../../farm.interface';
   templateUrl: './farm-search-info.component.html',
   styleUrls: ['./farm-search-info.component.scss']
 })
-export class FarmSearchInfoComponent implements OnInit, OnDestroy {
+export class FarmSearchInfoComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @ViewChild(FarmFormInfoComponent) farmFormInfoComponent: FarmFormInfoComponent;
 
@@ -22,6 +22,7 @@ export class FarmSearchInfoComponent implements OnInit, OnDestroy {
 
   constructor(
     private _elementRef: ElementRef,
+    private _changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +36,10 @@ export class FarmSearchInfoComponent implements OnInit, OnDestroy {
     }, options);
 
     this._intersectionObserver.observe(this._elementRef.nativeElement);
+  }
+
+  ngAfterContentChecked(): void {
+    this._changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy(): void {

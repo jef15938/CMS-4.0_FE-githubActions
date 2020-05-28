@@ -3,5 +3,6 @@
 </div>
 <div class="btn-group">
   <button type="button" mat-button (click)="close()">關閉</button>
-  <button type="button" mat-button (click)="confirm()">儲存</button>
+  <button type="button" mat-button (click)="confirm()"
+    [disabled]="!(farmFormInfoComponent?.formGroup?.valid)">儲存</button>
 </div>
