@@ -156,7 +156,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   requestFormInfo(): Observable<CmsFarmFormInfo> {
     const formGroup = this.formGroup;
-    formGroup.updateValueAndValidity();
+
+    for (let controlName of Object.keys(formGroup.controls)) {
+      const control = formGroup.controls[controlName];
+      control.markAsDirty({ onlySelf: true });
+      control.markAsTouched({ onlySelf: true });
+      control.updateValueAndValidity({ onlySelf: true, emitEvent: false })
+    }
 
     const info: CmsFarmFormInfo = JSON.parse(JSON.stringify(this.farmFormInfo));
     info.columns.forEach(col => {
