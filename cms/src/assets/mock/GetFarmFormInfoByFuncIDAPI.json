@@ -1,0 +1,105 @@
+{
+  "split_size": 2,
+  "columns": [
+    {
+      "display_text": "作為預設",
+      "display_type": "CHECKBOX",
+      "options": [],
+      "value": true,
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "my_checkbox",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "喜歡",
+      "display_type": "RADIO",
+      "options": [
+        {
+          "value": "dog",
+          "text": "狗"
+        },
+        {
+          "value": "cat",
+          "text": "貓"
+        }
+      ],
+      "value": "dog",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "my_radio",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "標籤名稱",
+      "display_type": "TEXT",
+      "options": [],
+      "value": "我的標籤",
+      "max_length": 10,
+      "placeholder": "請輸入標籤名稱",
+      "column_id": "tag_name",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "好多標籤名稱",
+      "display_type": "TEXTAREA",
+      "options": [],
+      "value": "我的好多標籤",
+      "max_length": 100,
+      "placeholder": "請輸入好多標籤名稱",
+      "column_id": "tag_name_many",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "資料狀態",
+      "display_type": "SELECT",
+      "options": [
+        {
+          "value": "waiting",
+          "text": "待上架"
+        },
+        {
+          "value": "reject",
+          "text": "退回"
+        },
+        {
+          "value": "draft",
+          "text": "草稿"
+        },
+        {
+          "value": "verify",
+          "text": "審核中"
+        },
+        {
+          "value": "off",
+          "text": "已下架"
+        },
+        {
+          "value": "on",
+          "text": "已上架"
+        }
+      ],
+      "value": "verify",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "ga_data_status",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "送審日期",
+      "display_type": "DATE",
+      "options": [],
+      "value": "2020-05-01",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "submit_time",
+      "is_readonly": false,
+      "triggers": []
+    }
+  ]
+}

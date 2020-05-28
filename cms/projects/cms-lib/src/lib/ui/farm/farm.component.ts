@@ -145,12 +145,10 @@ export class FarmComponent implements OnInit, OnDestroy {
   }
 
   private _openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    const farmFormInfo = this.farm.detailInfo;
     const title = `預覽 : ${rowData.data_id}`;
-
-    // TODO: call api : GetFarmDetailInfo
     of(undefined).pipe(
-      concatMap(_ => {
+      concatMap(_ => this._farmService.getFarmDetailInfoByFarmID(category.category_id, rowData.data_id)),
+      concatMap(farmFormInfo => {
         return this._modalService.openComponent({
           component: FarmFormViewDataModalComponent,
           componentInitData: {
@@ -170,13 +168,10 @@ export class FarmComponent implements OnInit, OnDestroy {
       alert('資料異常');
       return;
     }
-
-    const farmFormInfo = category.searchInfo;
     const title = action === 'create' ? '新增' : `修改 : ${rowData.data_id}`;
-
-    // TODO: call api : GetFarmDetailInfo
     of(undefined).pipe(
-      concatMap(_ => {
+      concatMap(_ => this._farmService.getFarmFormInfoByFuncID(category.category_id, rowData?.data_id)),
+      concatMap(farmFormInfo => {
         return this._modalService.openComponent({
           component: FarmFormModifyDataModalComponent,
           componentInitData: {
