@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CmsComponent } from './cms.component';
-import { CmsUserMenuResolver } from './cms-menu-resolver';
+import { CmsUserMenuResolver } from './service/cms-menu-resolver';
 
 const routes: Routes = [
   {
@@ -30,6 +30,10 @@ const routes: Routes = [
       {
         path: 'web',
         loadChildren: () => import('./function-module/web/web.module').then(m => m.WebModule)
+      },
+      {
+        path: 'extension',
+        loadChildren: () => import('./function-module/extension/extension.module').then(m => m.ExtensionModule)
       }
     ]
   },

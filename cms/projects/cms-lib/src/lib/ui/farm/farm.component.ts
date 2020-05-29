@@ -78,14 +78,6 @@ export class FarmComponent implements OnInit, OnDestroy {
         return never();
       }),
     )
-    // const farmInfo: CmsFarmFormInfo = this._searchInfoFormComponentMap.get(category)?.requestFormInfo();
-    // // TODO: 查詢 table 時帶 search 表單
-    // console.warn('farmInfo = ', farmInfo);
-    // return this._farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
-    //   tap(farmTableInfo => {
-    //     category.tableInfo = farmTableInfo;
-    //   })
-    // );
   }
 
   destroySelf() {

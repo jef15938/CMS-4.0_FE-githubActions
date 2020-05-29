@@ -20,7 +20,8 @@ export class MenuNodeComponent implements OnInit {
   ngOnInit(): void { }
 
   navigate() {
-    this._router.navigate([this.category, this.menu.func_id]);
+    const routes = this.menu.func_id.split('/');
+    this._router.navigate([this.category, ...routes]);
   }
 
 }
