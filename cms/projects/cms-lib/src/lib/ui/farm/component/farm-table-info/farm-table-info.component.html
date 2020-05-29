@@ -25,7 +25,7 @@
               {{colData?.value}}
             </ng-container>
             <ng-container *ngIf="colData.display_type!==CmsFarmTableColumnDisplayType.LABEL">
-              <a [href]="colData?.value" target="_blank">{{colData?.value}}</a>
+              <a [href]="colData?.value" target="_blank" rel="noreferrer noopener">{{colData?.value}}</a>
             </ng-container>
           </ng-container>
         </ng-container>

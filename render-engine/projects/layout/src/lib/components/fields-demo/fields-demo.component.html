@@ -25,7 +25,7 @@
         style="height:40px; line-height:40px; vertical-align: middle; width: 100%; max-width: 240px; background-color: aquamarine; border-radius: 10px; text-align: center; padding: 2px;"
         [libLayoutFieldLink]="templateInfo?.fields | getFieldFromFieldsById:'clap'" #fieldLink="field">
         <a [href]="fieldLink.fieldInfo?.fieldVal"
-          [target]="fieldLink.fieldInfo?.extension?.isTargetBlank==='true'?'_blank':''">拍手</a>
+          [target]="fieldLink.fieldInfo?.extension?.isTargetBlank==='true'?'_blank':''" rel="noreferrer noopener">拍手</a>
       </div>
     </div>
 
