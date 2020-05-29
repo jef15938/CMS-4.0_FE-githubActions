@@ -30,9 +30,7 @@ export class CmsUserMenuResolver implements Resolve<any> {
             let result = [].concat(cmsMenus);
 
             if (extensionMenus?.length) {
-              extensionMenus.forEach(menu => {
-                menu.func_id = `extension/${menu.func_id}`
-              });
+              this._addExtensionRoute(extensionMenus);
               result = result.concat(extensionMenus);
             }
 
@@ -42,5 +40,15 @@ export class CmsUserMenuResolver implements Resolve<any> {
         )
       })
     );
+  }
+
+  private _addExtensionRoute(menus: MenuInfo[]) {
+    if (!menus?.length) { return; }
+    let children: MenuInfo[] = [];
+    menus.forEach(menu => {
+      menu.func_id = menu.func_id ? `extension/${menu.func_id}` : '';
+      children = children.concat(menu.children || []);
+    });
+    this._addExtensionRoute(children);
   }
 }

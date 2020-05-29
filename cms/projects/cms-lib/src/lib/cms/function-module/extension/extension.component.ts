@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CmsExtensionComponentMappings } from '../../../cms-lib.injection-token';
 import { ICmsExtensionComponentMapping } from '../../../type/extension.type';
 import { CmsUserMenuResolver } from '../../service/cms-menu-resolver';
+import { MenuInfo } from '../../../neuxAPI/bean/MenuInfo';
 
 @Component({
   selector: 'cms-extension',
@@ -56,7 +57,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const menu = menus.find(m => m.func_id === `extension/${this.funcId}`);
+    const menu = this._findMenuByFuncId(this.funcId, menus);
     if (!menu) {
       this.errorMsg = `沒有找到對應的MenuInfo, func_id=[${this.funcId}]`;
       return;
@@ -82,6 +83,12 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(comp);
     const componentRef = vc.createComponent(componentFactory);
     this._componentRef = componentRef;
+  }
+
+  private _findMenuByFuncId(funcId: string, sources: MenuInfo[]): MenuInfo {
+    if (!funcId || !sources?.length) { return; }
+    const menu = sources.find(m => m?.func_id === `extension/${this.funcId}`);
+    return menu || sources.map(s => this._findMenuByFuncId(funcId, s.children)).find(m => m?.func_id === `extension/${this.funcId}`);
   }
 
 }
