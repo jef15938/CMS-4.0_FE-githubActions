@@ -4,12 +4,8 @@ import { TableComponent } from './table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
-import { DirectiveModule } from 'projects/cms-lib/src/lib/directive/directive.module';
+import { DirectiveModule } from './../../directive/directive.module';
 import { GetDisplayColsPipe } from './pipe/get-display-cols.pipe';
-
-const COMPONENTS = [
-  TableComponent
-];
 
 @NgModule({
   imports: [
@@ -19,12 +15,12 @@ const COMPONENTS = [
     DirectiveModule,
   ],
   declarations: [
-    ...COMPONENTS,
+    TableComponent,
     CellRendererWrapperDirective,
     GetDisplayColsPipe,
   ],
   exports: [
-    ...COMPONENTS
+    TableComponent
   ],
 })
 export class TableModule { }

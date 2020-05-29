@@ -6,10 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
 import { DirectiveModule } from '../../directive/directive.module';
 
-const COMPONENTS = [
-  TreeComponent
-];
-
 @NgModule({
   imports: [
     CommonModule,
@@ -18,11 +14,11 @@ const COMPONENTS = [
     DirectiveModule,
   ],
   declarations: [
-    ...COMPONENTS,
+    TreeComponent,
     TreeNodeCustomWrapperDirective
   ],
   exports: [
-    ...COMPONENTS
+    TreeComponent
   ],
 })
 export class TreeModule { }

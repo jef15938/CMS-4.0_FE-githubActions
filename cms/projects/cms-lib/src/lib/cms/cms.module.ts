@@ -38,7 +38,7 @@ const LAYOUTS = [
 export class CmsModule {
   static forRoot(providers = []): ModuleWithProviders {
     return {
-      ngModule: ContentEditorModule,
+      ngModule: CmsModule,
       providers: [
         ...(ModalModule.forRoot().providers),
         ...(ContentEditorModule.forRoot().providers),

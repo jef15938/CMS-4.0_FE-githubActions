@@ -16,10 +16,10 @@
       "dom"
     ],
     "paths": {
-      "cms-lib": [
+      "@cms-lib": [
         "dist/cms-lib/cms-lib",
         "dist/cms-lib"
-      ],
+      ]
     }
   },
   "angularCompilerOptions": {
