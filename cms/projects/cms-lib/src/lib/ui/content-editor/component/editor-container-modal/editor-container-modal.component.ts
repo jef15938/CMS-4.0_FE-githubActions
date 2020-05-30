@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from 'projects/cms-lib/src/lib/ui/modal/custom-modal-base';
-import { ContentEditorSaveEvent, EditorMode } from 'projects/cms-lib/src/lib/ui/content-editor/content-editor.interface';
-import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
-import { TemplateGetResponse } from 'projects/cms-lib/src/lib/neuxAPI/bean/TemplateGetResponse';
+import { CustomModalBase, CustomModalActionButton } from './../../../../ui/modal/custom-modal-base';
+import { ContentEditorSaveEvent, EditorMode } from './../../../../ui/content-editor/content-editor.interface';
+import { ContentInfo } from './../../../../neuxAPI/bean/ContentInfo';
+import { TemplateGetResponse } from './../../../../neuxAPI/bean/TemplateGetResponse';
 
 @Component({
   selector: 'cms-editor-container-modal',

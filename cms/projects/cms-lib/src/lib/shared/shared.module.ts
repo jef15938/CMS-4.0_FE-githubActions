@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-// neux
-import { CoreModule } from '@neux/core';
 // material form
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,11 +14,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+// @neux/core
+import { CoreModule } from '@neux/core';
 // cms-lib
-import { TreeModule } from 'projects/cms-lib/src/lib/ui/tree/tree.module';
-import { ModalModule } from 'projects/cms-lib/src/lib/ui/modal/modal.module';
-import { TableModule } from 'projects/cms-lib/src/lib/ui/table/table.module';
-import { DirectiveModule } from 'projects/cms-lib/src/lib/directive/directive.module';
+import { TreeModule } from './../ui/tree/tree.module';
+import { ModalModule } from './../ui/modal/modal.module';
+import { TableModule } from './../ui/table/table.module';
+import { DirectiveModule } from './../directive/directive.module';
 
 @NgModule({
   declarations: [],
@@ -32,8 +32,6 @@ import { DirectiveModule } from 'projects/cms-lib/src/lib/directive/directive.mo
     CommonModule,
     FormsModule,
     HttpClientModule,
-    // neux
-    CoreModule,
     // material form
     MatFormFieldModule,
     MatInputModule,
@@ -45,6 +43,8 @@ import { DirectiveModule } from 'projects/cms-lib/src/lib/directive/directive.mo
     MatDividerModule,
     MatIconModule,
     MatPaginatorModule,
+    // @neux/core
+    CoreModule,
     // cms-lib
     TreeModule,
     ModalModule,

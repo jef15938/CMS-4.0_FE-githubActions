@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomCellRenderer, CmsTable } from 'projects/cms-lib/src/lib/ui/table/table.interface';
-import { MyAuditingInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/MyAuditingInfo';
+import { CustomCellRenderer, CmsTable } from './../../../../../../ui/table/table.interface';
+import { MyAuditingInfo } from './../../../../../../neuxAPI/bean/MyAuditingInfo';
 
 enum ActionType {
   Detail, PreviewPc, PreviewPadH, PreviewPadV, PreviewMobile

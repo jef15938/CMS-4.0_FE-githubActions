@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
-import { CmsFarmFormInfo } from 'projects/cms-lib/src/lib/type/farm.class';
+import { CmsFarmFormInfo } from './../../../../type/farm.class';
 import { FarmFormInfoComponent } from '../farm-form-info/farm-form-info.component';
 import { FarmFormComp } from '../../farm.interface';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from 'projects/cms-lib/src/lib/ui/modal/custom-modal-base';
+import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
 import { NgModel } from '@angular/forms';
-import { GalleryService } from 'projects/cms-lib/src/lib/service/gallery.service';
+import { GalleryService } from './../../../../../../service/gallery.service';
 
 @Component({
   selector: 'cms-gallery-category-maintain-modal',

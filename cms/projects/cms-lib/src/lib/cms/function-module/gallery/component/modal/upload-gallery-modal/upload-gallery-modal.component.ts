@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from 'projects/cms-lib/src/lib/ui/modal/custom-modal-base';
+import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
 import { Subscription, of } from 'rxjs';
 import { HttpRequest, HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { map, tap, last, catchError } from 'rxjs/operators';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { ColDef } from 'projects/cms-lib/src/lib/ui/table/table.interface';
+import { ColDef } from './../../../../../../ui/table/table.interface';
 
 export class FileUploadModel {
   fileName: string;

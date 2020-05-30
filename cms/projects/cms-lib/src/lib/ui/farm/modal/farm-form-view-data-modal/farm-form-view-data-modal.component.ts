@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal/custom-modal-base';
-import { CmsFarmFormInfo } from 'projects/cms-lib/src/lib/type/farm.class';
+import { CmsFarmFormInfo } from './../../../../type/farm.class';
 
 @Component({
   selector: 'cms-farm-form-view-data-modal',

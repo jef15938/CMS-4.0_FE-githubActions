@@ -1,9 +1,10 @@
-import { ICmsExtensionMenuResolver } from 'projects/cms-lib/src/lib/type/extension.type';
-import { MenuInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/MenuInfo';
+import { ICmsExtensionMenuResolver } from '@cms-lib';
+// import { MenuInfo } from '@cms-lib';
 import { of, Observable } from 'rxjs';
 
+
 export class MenuService implements ICmsExtensionMenuResolver {
-  resolve: () => Observable<MenuInfo[]> = () => {
+  resolve: () => Observable<any[]> = () => {
     return of([
       {
         func_id: "",

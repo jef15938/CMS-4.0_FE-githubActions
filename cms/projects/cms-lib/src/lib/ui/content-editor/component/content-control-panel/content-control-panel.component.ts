@@ -3,7 +3,7 @@ import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, T
 import { ContentEditorManager } from '../../service/content-editor-manager';
 import { ContentEditorServiceInjectionToken } from '../../content-editor.injection-token';
 import { IContentEditorService, EditorMode } from '../../content-editor.interface';
-import { ContentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentInfo';
+import { ContentInfo } from './../../../../neuxAPI/bean/ContentInfo';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 
 @Component({

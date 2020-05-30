@@ -6,6 +6,7 @@ import { EditorContainerModalComponent } from './editor-container-modal/editor-c
 import { TableToolbarComponent } from './components/table-toolbar/table-toolbar.component';
 import { ImageToolbarComponent } from './components/image-toolbar/image-toolbar.component';
 import { PipeModule } from '../../pipe/pipe.module';
+import { HtmlEditorServiceInjectionToken } from './html-editor.injection-token';
 
 @NgModule({
   imports: [
@@ -13,11 +14,14 @@ import { PipeModule } from '../../pipe/pipe.module';
     PipeModule,
   ],
   declarations: [
-    HtmlEditorComponent,
     EditorContainerModalComponent,
+    HtmlEditorComponent,
     TableToolbarComponent,
     ImageToolbarComponent,
   ],
+  exports: [
+    // HtmlEditorComponent
+  ]
 })
 export class HtmlEditorModule {
   static forRoot(providers = []): ModuleWithProviders {
@@ -25,6 +29,10 @@ export class HtmlEditorModule {
       ngModule: HtmlEditorModule,
       providers: [
         HtmlEditorService,
+        {
+          provide: HtmlEditorServiceInjectionToken,
+          useClass: HtmlEditorService,
+        },
       ]
     };
   }

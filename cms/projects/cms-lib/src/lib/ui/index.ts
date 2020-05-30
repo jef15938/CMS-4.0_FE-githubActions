@@ -8,6 +8,7 @@ export * from './farm/farm.interface';
 export * from './farm/farm.component';
 // html-editor
 export * from './html-editor/html-editor.module';
+export * from './html-editor/html-editor.interface';
 export * from './html-editor/html-editor.service';
 // modal
 export * from './modal/modal.module';

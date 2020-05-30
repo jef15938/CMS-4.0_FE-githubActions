@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter } from '@angular/core';
-import { UserSiteMapPutRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/UserSiteMapPutRequest';
+import { UserSiteMapPutRequest } from './../../../../../neuxAPI/bean/UserSiteMapPutRequest';
 import { NgForm } from '@angular/forms';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
 import { SiteMapUpdateInfo } from '../../multi-site.interface';
-import { ModalService } from 'projects/cms-lib/src/lib/ui/modal/modal.service';
-import { ContentService } from 'projects/cms-lib/src/lib/service/content.service';
-import { ContentEditorService } from 'projects/cms-lib/src/lib/ui/content-editor/content-editor.service';
+import { ModalService } from './../../../../../ui/modal/modal.service';
+import { ContentService } from './../../../../../service/content.service';
+import { ContentEditorService } from './../../../../../ui/content-editor/content-editor.service';
 import { forkJoin } from 'rxjs';
-import { EditorMode } from 'projects/cms-lib/src/lib/ui/content-editor/content-editor.interface';
-import { SiteMapNodeInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/SiteMapNodeInfo';
+import { EditorMode } from './../../../../../ui/content-editor/content-editor.interface';
+import { SiteMapNodeInfo } from './../../../../../neuxAPI/bean/SiteMapNodeInfo';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
   constructor(siteMapInfo: SiteMapNodeInfo, parent_id: string, node_orders: string) {

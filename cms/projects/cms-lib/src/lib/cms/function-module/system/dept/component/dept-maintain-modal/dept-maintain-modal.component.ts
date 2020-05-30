@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from 'projects/cms-lib/src/lib/ui/modal/custom-modal-base';
-import { DepartmentService } from 'projects/cms-lib/src/lib/service/department.service';
-import { DepartmentInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/DepartmentInfo';
+import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
+import { DepartmentService } from './../../../../../../service/department.service';
+import { DepartmentInfo } from './../../../../../../neuxAPI/bean/DepartmentInfo';
 import { tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { NgModel } from '@angular/forms';

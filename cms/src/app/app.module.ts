@@ -6,14 +6,12 @@ import { SharedModule } from './shared/shared.module';
 import { ConfigToken, RestHeaderToken } from '@neux/core';
 import { environment } from 'src/environments/environment';
 import { GlobalHeader } from './common/global-header';
-import { CmsLibModule } from 'projects/cms-lib/src/lib/cms-lib.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { COMPONENT_SERVICE_TOKEN } from 'layout';
 import { DynamicComponentFactoryService } from './service/dynamic-component-factory.service';
-import { CmsExtensionMenuResolver, CmsExtensionComponentMappings } from 'projects/cms-lib/src/lib/cms-lib.injection-token';
 import { MenuService } from './service/menu.service';
 import { ExtensionMappings } from './app.extension-mapping';
-import { CmsModule } from 'projects/cms-lib/src/lib/cms/cms.module';
+import { CmsModule, CmsLibModule, CmsExtensionMenuResolver, CmsExtensionComponentMappings } from '@cms-lib';
 
 @NgModule({
   declarations: [

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CmsModule } from '@cms-lib';
 
 const routes: Routes = [
   {
@@ -8,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./../../projects/cms-lib/src/lib/cms/cms.module').then(m => m.CmsModule)
+        loadChildren: () => CmsModule
       }
     ]
   }

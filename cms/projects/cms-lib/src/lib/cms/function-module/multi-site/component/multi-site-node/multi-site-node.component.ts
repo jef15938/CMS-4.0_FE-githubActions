@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/core';
-import { CmsTreeNodeRenderer, CmsTreeNode } from 'projects/cms-lib/src/lib/ui/tree/tree.interface';
+import { CmsTreeNodeRenderer, CmsTreeNode } from './../../../../../ui/tree/tree.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { SiteMapInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/SiteMapInfo';
+import { SiteMapInfo } from './../../../../../neuxAPI/bean/SiteMapInfo';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

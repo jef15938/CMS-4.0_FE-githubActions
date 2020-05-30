@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SystemComponent } from './system.component';
-import { DeptComponent } from './dept/dept.component';
+import { DeptModule } from './dept/dept.module';
 
+const getDeptModule = () => DeptModule;
 
 const routes: Routes = [
   {
@@ -10,7 +11,8 @@ const routes: Routes = [
     children: [
       {
         path: 'dept',
-        loadChildren: () => import('./dept/dept.module').then(m => m.DeptModule)
+        // loadChildren: () => import('./dept/dept.module').then(m => m.DeptModule)
+        loadChildren: getDeptModule
       }
     ]
   },

@@ -1,4 +1,4 @@
-import { ICmsExtensionComponentMapping } from 'projects/cms-lib/src/lib/type/extension.type';
+import { ICmsExtensionComponentMapping } from '@cms-lib';
 import { Test1Component } from './test/test1.component';
 import { Test2Component } from './test/test2.component';
 

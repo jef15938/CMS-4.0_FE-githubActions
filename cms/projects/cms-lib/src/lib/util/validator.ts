@@ -1,4 +1,4 @@
-export abstract class CmsValidator {
+export class CmsValidator {
 
   static hasValue(v) {
     return v || v === 0 ? true : false;

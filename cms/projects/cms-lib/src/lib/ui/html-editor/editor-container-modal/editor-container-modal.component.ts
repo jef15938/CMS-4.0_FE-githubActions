@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from 'projects/cms-lib/src/lib/ui/modal/custom-modal-base';
+import { CustomModalBase, CustomModalActionButton } from './../../modal/custom-modal-base';
 
 @Component({
   selector: 'cms-editor-container-modal',

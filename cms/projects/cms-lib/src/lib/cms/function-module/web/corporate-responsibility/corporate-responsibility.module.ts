@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CorporateResponsibilityRoutingModule } from './corporate-responsibility-routing.module';
 import { CorporateResponsibilityComponent } from './corporate-responsibility.component';
-import { FarmModule } from 'projects/cms-lib/src/lib/ui/farm/farm.module';
+import { FarmModule } from './../../../../ui/farm/farm.module';
 
 
 @NgModule({

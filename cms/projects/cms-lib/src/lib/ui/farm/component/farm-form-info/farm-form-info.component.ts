@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CmsFarmFormInfo, CmsFarmFormColumn } from 'projects/cms-lib/src/lib/type/farm.class';
-import { CmsFarmFormColumnDisplayType } from 'projects/cms-lib/src/lib/type/farm.enum';
+import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../type/farm.class';
+import { CmsFarmFormColumnDisplayType } from './../../../../type/farm.enum';
 import { FarmFormComp } from '../../farm.interface';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
-import { CmsValidator } from 'projects/cms-lib/src/lib/util/validator';
+import { CmsValidator } from './../../../../util/validator';
 import { Observable, throwError, of, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase } from 'projects/cms-lib/src/lib/ui/modal/custom-modal-base';
-import { AuditingSubmitRequest } from 'projects/cms-lib/src/lib/neuxAPI/bean/AuditingSubmitRequest';
+import { CustomModalBase } from './../../../../../../ui/modal/custom-modal-base';
+import { AuditingSubmitRequest } from './../../../../../../neuxAPI/bean/AuditingSubmitRequest';
 
 export enum AuditingApproveStatus {
   Approve = 'APPROVED',

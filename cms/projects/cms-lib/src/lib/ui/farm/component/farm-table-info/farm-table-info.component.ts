@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CmsFarmTableInfo, CmsFarmTableDataInfo } from 'projects/cms-lib/src/lib/type/farm.class';
+import { CmsFarmTableInfo, CmsFarmTableDataInfo } from './../../../../type/farm.class';
 import { ACTION_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type';
-import { CmsFarmTableDataAction, CmsFarmTableColumnDisplayType } from 'projects/cms-lib/src/lib/type/farm.enum';
+import { CmsFarmTableDataAction, CmsFarmTableColumnDisplayType } from './../../../../type/farm.enum';
 
 @Component({
   selector: 'cms-farm-table-info',

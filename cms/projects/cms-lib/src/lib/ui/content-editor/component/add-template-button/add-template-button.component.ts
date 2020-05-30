@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ComponentRef, HostListener, Output, EventEmitter } from '@angular/core';
-import { ContentTemplateInfo } from 'projects/cms-lib/src/lib/neuxAPI/bean/ContentTemplateInfo';
+import { ContentTemplateInfo } from './../../../../neuxAPI/bean/ContentTemplateInfo';
 
 @Component({
   selector: 'cms-add-template-button',

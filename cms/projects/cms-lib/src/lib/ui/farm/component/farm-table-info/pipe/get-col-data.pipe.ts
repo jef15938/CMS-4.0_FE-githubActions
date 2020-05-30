@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CmsFarmTableDataInfo, CmsFarmTableDataColumn } from 'projects/cms-lib/src/lib/type/farm.class';
+import { CmsFarmTableDataInfo, CmsFarmTableDataColumn } from './../../../../../type/farm.class';
 
 @Pipe({
   name: 'getColData'
