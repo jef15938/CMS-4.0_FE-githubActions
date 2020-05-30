@@ -26,7 +26,6 @@
     "@neux/ui": "0.0.25-beta.5",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.1",
-    "layout": "file:../render-engine/dist/layout/layout-0.0.1.tgz",
     "ngx-swiper-wrapper": "^9.0.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
