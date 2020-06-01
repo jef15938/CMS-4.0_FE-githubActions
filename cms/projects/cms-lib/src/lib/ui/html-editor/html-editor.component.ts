@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
+import { IHtmlEditorAction } from './action/action.interface';
+import { HtmlEditorActions } from './action/actions';
+import { SelecitonRangeService } from './service/selection-range-service';
 
 export enum Toolbar {
   /** 圖像 */
@@ -26,7 +29,7 @@ let _this;
 @Component({
   selector: 'cms-html-editor',
   templateUrl: './html-editor.component.html',
-  styleUrls: ['./html-editor.component.scss']
+  styleUrls: ['./html-editor.component.scss'],
 })
 export class HtmlEditorComponent implements OnInit, AfterViewInit {
 
@@ -53,18 +56,37 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit {
   public toolbarEnum = Toolbar;
 
   constructor(
-    private _changeDetectorRef: ChangeDetectorRef
+    public htmlEditorActions: HtmlEditorActions,
+    protected selecitonRangeService: SelecitonRangeService,
+    private _changeDetectorRef: ChangeDetectorRef,
   ) { }
-  
+
   ngOnInit() {
     _this = this;
   }
 
   ngAfterViewInit(): void {
-    this.editorBlock.nativeElement.focus();
+    if (!this.content) {
+      const p = document.createElement('p');
+      p.innerHTML = '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123';
+      this.editorBlock.nativeElement.appendChild(p);
+    }
+  }
+
+  private _isSelectionInEditorBlock(): boolean {
+    const range = this.selecitonRangeService.getRange();
+    if (!range) { return false; }
+    const isInEditorBlock = this.editorBlock.nativeElement.contains(range.commonAncestorContainer);
+    return isInEditorBlock;
+  }
+
+  doAction(action: IHtmlEditorAction) {
+    if (!this._isSelectionInEditorBlock()) { return; }
+    action.do(this.editorBlock.nativeElement);
   }
 
   fontStyle(style: string) {
+    if (!this._isSelectionInEditorBlock()) { return; }
     if (style != 'createLink' && style != 'insertImage' && style != 'insertVideo' && style != 'insertTable') {
       document.execCommand(style);
     } else if (style == 'createLink') {

@@ -7,17 +7,29 @@ import { TableToolbarComponent } from './components/table-toolbar/table-toolbar.
 import { ImageToolbarComponent } from './components/image-toolbar/image-toolbar.component';
 import { PipeModule } from '../../pipe/pipe.module';
 import { HtmlEditorServiceInjectionToken } from './html-editor.injection-token';
+import { HtmlEditorCreateLinkModalComponent } from './modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
     CommonModule,
     PipeModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    FormsModule,
   ],
   declarations: [
     EditorContainerModalComponent,
     HtmlEditorComponent,
     TableToolbarComponent,
     ImageToolbarComponent,
+    HtmlEditorCreateLinkModalComponent,
   ],
   exports: [
     // HtmlEditorComponent
