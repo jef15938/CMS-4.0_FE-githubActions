@@ -17,8 +17,9 @@
     ],
     "paths": {
       "@cms-lib": [
-        "dist/cms-lib/cms-lib",
-        "dist/cms-lib"
+        // "dist/cms-lib/cms-lib",
+        // "dist/cms-lib"
+        "projects/cms-lib/src/public-api"
       ]
     }
   },

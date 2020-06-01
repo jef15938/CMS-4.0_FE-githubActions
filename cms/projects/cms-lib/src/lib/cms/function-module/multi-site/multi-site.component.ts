@@ -13,6 +13,7 @@ import { SiteMapUpdateInfo } from './multi-site.interface';
 import { ContentEditorService } from '../../../ui/content-editor/content-editor.service';
 import { ContentService } from '../../../service/content.service';
 import { EditorMode } from '../../../ui/content-editor/content-editor.interface';
+import { HtmlEditorService } from '../../../ui/html-editor/html-editor.service';
 
 enum EditModeType {
   Site, Node,
@@ -57,6 +58,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     private _sitemapService: SitemapService,
     private _contentService: ContentService,
     private _contentEditorService: ContentEditorService,
+    private _htmlEditorService: HtmlEditorService,
   ) { }
 
   ngOnInit(): void {
@@ -164,7 +166,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     this.swichMode(EditModeType.Node);
   }
 
-  test() {
+  testContentEditor() {
     const layoutId = 'fakeLayoutId';
     forkJoin([
       this._contentService.getContentByContentID(layoutId),
@@ -176,6 +178,13 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
         mode: EditorMode.EDIT,
       }).subscribe()
     });
+  }
+
+  testHtmlEditor(){
+    this._htmlEditorService.openEditor({
+      title: `Html編輯`,
+      content: '123'
+    }).subscribe();
   }
 
 }
