@@ -15,13 +15,12 @@
   <button type="button" mat-button (click)="fontStyle('insertTable')">插入表格</button>
   <button type="button" mat-button (click)="fontStyle('insertVideo')">插入影片</button>
 </div>
-<div #editorBlock contenteditable (click)="onClick($event)" id='editor' class="neux-editor"
-  [innerHTML]="content|safeHtml">
-</div>
-<div id="tool" class="tool" style="display: none;">
-  <cms-html-editor-image-toolbar *ngIf="selectComponent == toolbarEnum.IMG"></cms-html-editor-image-toolbar>
-  <cms-html-editor-table-toolbar *ngIf="selectComponent == toolbarEnum.TABLE" (addRowAbove)="addRowAbove()"
+<div style="position: relative;" (click)="onClick($event)">
+  <div #editorBlock contenteditable id='editor' class="neux-editor" [innerHTML]="content|safeHtml">
+  </div>
+  <cms-html-editor-image-toolbar *ngIf="selectedImg" [selectedImg]="selectedImg"></cms-html-editor-image-toolbar>
+  <!-- <cms-html-editor-table-toolbar *ngIf="selectComponent == toolbarEnum.TABLE" (addRowAbove)="addRowAbove()"
     (addRowBelow)="addRowBelow()" (addColLeftward)="addColLeftward()" (addColRightward)="addColRightward()"
     (mergeTable)="mergeTable()" (unmerge)="unmerge()" (deleteRow)="deleteRow()" (deleteCol)="deleteCol()">
-  </cms-html-editor-table-toolbar>
+  </cms-html-editor-table-toolbar> -->
 </div>

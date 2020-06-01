@@ -1,3 +1,9 @@
-<p>
-  image-toolbar works!
-</p>
+<div *ngIf="selectedImg" class="toolbar-container" [style.height]="selectedImg?.height + 'px'" [style.width]="selectedImg?.width + 'px'">
+  <div class="size-control">
+    <div></div>
+    <div class="top-left"></div>
+    <div class="top-right"></div>
+    <div class="bottom-left"></div>
+    <div class="bottom-right"></div>
+  </div>
+</div>

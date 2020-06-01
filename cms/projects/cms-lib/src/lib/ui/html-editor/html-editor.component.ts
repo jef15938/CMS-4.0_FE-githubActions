@@ -55,6 +55,8 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit {
   selectComponent;
   public toolbarEnum = Toolbar;
 
+  selectedImg: HTMLImageElement;
+
   constructor(
     public htmlEditorActions: HtmlEditorActions,
     protected selecitonRangeService: SelecitonRangeService,
@@ -401,35 +403,40 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit {
   }
 
   onClick(event) {
-    let element = event.target;
-    while (element) {
-      let tagName = element.tagName.toLowerCase();
-      if (tagName == 'figure') {
-        this.clickElement = element;
-        let tool = document.getElementById('tool');
-        this.setToolbar(tool, element);
-        this.selectComponent = this.toolbarEnum.IMG;
-        break;
-      } else if (tagName == 'td') {
-        this.cellIndex = element.cellIndex;
-        element = element.parentNode;
-      } else if (tagName == 'tr') {
-        this.rowIndex = element.rowIndex;
-        element = element.parentNode;
-      } else if (tagName == 'table') {
-        let tool = document.getElementById('tool');
-        this.setToolbar(tool, element);
-        this.selectComponent = this.toolbarEnum.TABLE;
-        this.table = element;
-        break;
-      } else if (tagName == 'html') {
-        document.getElementById('tool').setAttribute('style', `display:none;`)
-        this.selectComponent = null;
-        break;
-      } else {
-        element = element.parentNode;
-      }
+    this.selectedImg = undefined;
+    let element: HTMLElement = event.target;
+    if (element?.tagName?.toLowerCase() === 'img') {
+      this.selectedImg = element as any;
+      return;
     }
+    // while (element) {
+    //   let tagName = element.tagName.toLowerCase();
+    //   if (tagName == 'figure') {
+    //     this.clickElement = element;
+    //     let tool = document.getElementById('tool');
+    //     this.setToolbar(tool, element);
+    //     this.selectComponent = this.toolbarEnum.IMG;
+    //     break;
+    //   } else if (tagName == 'td') {
+    //     this.cellIndex = element.cellIndex;
+    //     element = element.parentNode;
+    //   } else if (tagName == 'tr') {
+    //     this.rowIndex = element.rowIndex;
+    //     element = element.parentNode;
+    //   } else if (tagName == 'table') {
+    //     let tool = document.getElementById('tool');
+    //     this.setToolbar(tool, element);
+    //     this.selectComponent = this.toolbarEnum.TABLE;
+    //     this.table = element;
+    //     break;
+    //   } else if (tagName == 'html') {
+    //     document.getElementById('tool').setAttribute('style', `display:none;`)
+    //     this.selectComponent = null;
+    //     break;
+    //   } else {
+    //     element = element.parentNode;
+    //   }
+    // }
   }
 
   setToolbar(tool, element) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'cms-html-editor-image-toolbar',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImageToolbarComponent implements OnInit {
 
+  @Input() selectedImg: HTMLImageElement;
+
   constructor() { }
 
   ngOnInit() {
+    console.warn('height = ', this.selectedImg.height)
+    console.warn('width = ', this.selectedImg.width)
   }
 
 }
