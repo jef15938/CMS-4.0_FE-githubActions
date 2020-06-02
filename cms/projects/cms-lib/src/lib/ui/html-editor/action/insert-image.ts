@@ -4,7 +4,6 @@ import { HtmlEditorInsertImgModalComponent } from '../modal/html-editor-insert-i
 
 @Injectable({ providedIn: 'root' })
 export class InsertImage extends HtmlEditorAction {
-  commandId = 'insertImage';
 
   do(editorBlock: HTMLDivElement, image?: HTMLImageElement) {
     // https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230
