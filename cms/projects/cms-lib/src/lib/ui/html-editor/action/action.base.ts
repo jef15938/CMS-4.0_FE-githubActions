@@ -5,7 +5,7 @@ import { ModalService } from '../../modal/modal.service';
 
 @Injectable({ providedIn: 'root' })
 export abstract class HtmlEditorAction implements IHtmlEditorAction {
-  abstract do(editorBlock: HTMLDivElement): void;
+  abstract do(editorBlock: HTMLDivElement, ...args): void;
 
   protected modalService: ModalService;
 

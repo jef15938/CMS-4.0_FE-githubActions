@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Bold, Italic, Underline, JustifyCenter, JustifyFull, JustifyLeft, JustifyRight, InsertOrderedList, InsertUnorderedList, Indent, Outdent, CreateLink, InsertImage } from './dom-cmd-action';
+import { Bold, Italic, Underline, JustifyCenter, JustifyFull, JustifyLeft, JustifyRight, InsertOrderedList, InsertUnorderedList, Indent, Outdent, CreateLink } from './dom-cmd-action';
+import { InsertImage } from './insert-image';
 
 @Injectable({ providedIn: 'root' })
 export class HtmlEditorActions {
