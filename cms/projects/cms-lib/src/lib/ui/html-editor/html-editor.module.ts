@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
+import { HtmlEditorInsertImgModalComponent } from './modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { MatRadioModule } from '@angular/material/radio';
     TableToolbarComponent,
     ImageToolbarComponent,
     HtmlEditorCreateLinkModalComponent,
+    HtmlEditorInsertImgModalComponent,
   ],
   exports: [
     // HtmlEditorComponent

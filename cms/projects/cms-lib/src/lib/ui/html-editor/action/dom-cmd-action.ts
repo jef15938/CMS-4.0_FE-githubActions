@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HtmlEditorAction } from "./action.base";
 import { ModalService } from '../../modal/modal.service';
 import { HtmlEditorCreateLinkModalComponent } from '../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
+import { stringify } from 'querystring';
+import { HtmlEditorInsertImgModalComponent } from '../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 
 abstract class DomCmdAction extends HtmlEditorAction {
   abstract commandId: string;
 
-  do(editorBlock: HTMLDivElement): void {
+  do(editorBlock: HTMLDivElement, ...args): void {
     document.execCommand(this.commandId);
   }
 }
@@ -70,11 +72,40 @@ export class Outdent extends DomCmdAction {
 export class InsertImage extends DomCmdAction {
   commandId = 'insertImage';
 
-  do() {
+  do(editorBlock: HTMLDivElement, image?: HTMLImageElement) {
     const range = this.selecitonRangeService.getRange();
     if (!range) { return; }
-    
-    document.execCommand(this.commandId, false, 'https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230');
+
+    this.modalService.openComponent({
+      component: HtmlEditorInsertImgModalComponent,
+      componentInitData: {
+        title: `${image ? '修改' : '加入'}圖片`,
+        src: image?.src || '',
+        alt: image?.alt || '',
+        width: image?.width || null,
+        height: image?.height || null,
+      }
+    }).subscribe((config: { src: string, alt: string, width: number, height: number }) => {
+      this.selecitonRangeService.restoreRange(range);
+      if (!config) { return; }
+
+      if (!image) {
+        const container = range.commonAncestorContainer.parentElement;
+        const img = document.createElement('img');
+        img.src = config.src;
+        img.alt = config.alt || '';
+        img.width = config.width;
+        img.height = config.height;
+        container.appendChild(img);
+        // document.execCommand(this.commandId, false, 'https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230');
+      } else {
+        image.src = config.src;
+        image.alt = config.alt || '';
+        image.width = config.width;
+        image.height = config.height;
+      }
+
+    });
   }
 }
 

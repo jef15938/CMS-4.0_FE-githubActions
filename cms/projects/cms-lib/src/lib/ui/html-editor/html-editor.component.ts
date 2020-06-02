@@ -87,6 +87,14 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit {
     action.do(this.editorBlock.nativeElement);
   }
 
+  insertImg() {
+    if (!this.selectedImg) {
+      this.doAction(this.htmlEditorActions.insertImage);
+    } else {
+      this.htmlEditorActions.insertImage.do(this.editorBlock.nativeElement, this.selectedImg);
+    }
+  }
+
   fontStyle(style: string) {
     if (!this._isSelectionInEditorBlock()) { return; }
     if (style != 'createLink' && style != 'insertImage' && style != 'insertVideo' && style != 'insertTable') {

@@ -11,12 +11,13 @@
   <button type="button" mat-button (click)="doAction(htmlEditorActions.indent)">向內縮排</button>
   <button type="button" mat-button (click)="doAction(htmlEditorActions.outdent)">向外縮排</button>
   <button type="button" mat-button (click)="doAction(htmlEditorActions.createLink)">插入連結</button>
-  <button type="button" mat-button (click)="doAction(htmlEditorActions.insertImage)">插入圖片</button>
+  <button type="button" mat-button (click)="insertImg()">插入圖片</button>
   <button type="button" mat-button (click)="fontStyle('insertTable')">插入表格</button>
   <button type="button" mat-button (click)="fontStyle('insertVideo')">插入影片</button>
 </div>
 <div style="position: relative;" (click)="onClick($event)">
-  <div #editorBlock contenteditable id='editor' class="neux-editor" [innerHTML]="content|safeHtml" style="margin: 10px;">
+  <div #editorBlock contenteditable id='editor' class="neux-editor" [innerHTML]="content|safeHtml"
+    style="margin: 10px;">
   </div>
   <cms-html-editor-image-toolbar *ngIf="selectedImg" [target]="selectedImg"></cms-html-editor-image-toolbar>
   <!-- <cms-html-editor-table-toolbar *ngIf="selectComponent == toolbarEnum.TABLE" (addRowAbove)="addRowAbove()"
