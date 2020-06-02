@@ -67,18 +67,24 @@ export class Outdent extends DomCmdAction {
 }
 
 @Injectable({ providedIn: 'root' })
-export class CreateLink extends DomCmdAction {
-  commandId = 'createLink';
-
-  private _modalService: ModalService
+export class InsertImage extends DomCmdAction {
+  commandId = 'insertImage';
 
   do() {
     const range = this.selecitonRangeService.getRange();
     if (!range) { return; }
+    
+    document.execCommand(this.commandId, false, 'https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230');
+  }
+}
 
-    if (!this._modalService) {
-      this._modalService = this.injector.get(ModalService);
-    }
+@Injectable({ providedIn: 'root' })
+export class CreateLink extends DomCmdAction {
+  commandId = 'createLink';
+
+  do() {
+    const range = this.selecitonRangeService.getRange();
+    if (!range) { return; }
 
     const start = range.startContainer;
     const end = range.endContainer;
@@ -91,7 +97,7 @@ export class CreateLink extends DomCmdAction {
     const isTargetBlank = aTag ? aTag.target === '_blank' : true;
     text = aTag ? aTag.innerText : text;
 
-    this._modalService.openComponent({
+    this.modalService.openComponent({
       component: HtmlEditorCreateLinkModalComponent,
       componentInitData: {
         url, text, isTargetBlank, isSelectionInSameNode, title: aTag ? '修改連結' : '加入連結'

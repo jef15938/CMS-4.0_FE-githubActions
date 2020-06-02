@@ -1,9 +1,9 @@
-<div *ngIf="selectedImg" class="toolbar-container" [style.height]="selectedImg?.height + 'px'" [style.width]="selectedImg?.width + 'px'">
-  <div class="size-control">
-    <div></div>
-    <div class="top-left"></div>
-    <div class="top-right"></div>
-    <div class="bottom-left"></div>
-    <div class="bottom-right"></div>
+<div #Container class="toolbar-container" [style.height]="target?.height + 'px'" [style.width]="target?.width + 'px'"
+  [style.top]="target?.offsetTop + 'px'" [style.left]="target?.offsetLeft + 'px'" (click)="$event.stopPropagation()">
+  <div #SizeControl class="size-control">
+    <div #TopLeft class="top-left"></div>
+    <div #TopRight class="top-right"></div>
+    <div #BottomLeft class="bottom-left"></div>
+    <div #BottomRight class="bottom-right"></div>
   </div>
 </div>
