@@ -20,8 +20,7 @@ export class InsertImage extends HtmlEditorAction {
         height: image?.height || null,
       }
     }).subscribe((config: { src: string, alt: string, width: number, height: number }) => {
-      this.selecitonRangeService.restoreRange(range);
-      if (!config) { return; }
+      if (!config) { this.selecitonRangeService.restoreRange(range); return; }
 
       if (!image) {
         const container = range.commonAncestorContainer.parentElement;

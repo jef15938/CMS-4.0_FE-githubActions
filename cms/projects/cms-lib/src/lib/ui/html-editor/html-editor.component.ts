@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
 import { IHtmlEditorAction } from './action/action.interface';
@@ -650,4 +650,11 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit {
     return str;
   }
 
+  @HostListener('document:keyup', ['$event']) onDel(event: KeyboardEvent) {
+    if (event.key === 'Delete') {
+      if (this.selectedImg && !this.editorBlock.nativeElement.contains(this.selectedImg)) {
+        this.selectedImg = undefined;
+      }
+    }
+  }
 }

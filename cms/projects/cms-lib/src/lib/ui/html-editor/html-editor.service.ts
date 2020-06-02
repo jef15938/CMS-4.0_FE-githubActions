@@ -19,9 +19,9 @@ export class HtmlEditorService {
 
     const modalSetting = {
       id: `html-editor`,
-      width: '80%',
-      maxWidth: '80%',
-      height: '80%',
+      width: '100%',
+      maxWidth: '100%',
+      height: '100%',
     };
 
     return this._modalService.openComponent({

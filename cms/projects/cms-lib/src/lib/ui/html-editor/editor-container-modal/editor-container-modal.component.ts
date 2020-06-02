@@ -18,14 +18,8 @@ export class EditorContainerModalComponent extends CustomModalBase implements On
     this.modalRef.addPanelClass('cms-editor-container-modal');
   }
 
-  close() {
-    // alert('Modal close()');
-    super.close();
-  }
-
-  save(event) {
-    event.editorSave();
-    alert('saved');
+  confirm() {
+    this.close();
   }
 
 }
