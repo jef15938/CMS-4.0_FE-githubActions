@@ -4,9 +4,9 @@ import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
 import { IHtmlEditorAction } from './actions/action.interface';
 import { HtmlEditorActions } from './actions/actions';
 import { SelecitonRangeService } from './service/selection-range-service';
-import { ImgController } from './service/control/img/img-controller.service';
 import { ModalService } from './../modal/modal.service';
 import { IHtmlEditorContext } from './html-editor.interface';
+import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 
 export enum Toolbar {
   /** 圖像 */
@@ -36,7 +36,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   @Input() content = '';
 
   htmlEditorActions: HtmlEditorActions;
-  private _imgController: ImgController;
+  private _mutationObserver: MutationObserver;
 
   selected: HTMLElement;
   selectedChange$ = new Subject<HTMLElement>();
@@ -75,19 +75,73 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   }
 
   ngAfterViewInit(): void {
-    this._imgController = new ImgController(this, this.sizerContainer.nativeElement);
 
     const container = this.editorContainer.nativeElement;
+
     if (!this.content) {
       const p = document.createElement('p');
       p.innerHTML = '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="600" height="315">';
       container.appendChild(p);
+    } else {
+      container.innerHTML = this.content;
     }
+
+    let childNodes = Array.from(container.childNodes) || [];
+    while (childNodes && childNodes.length) {
+
+      childNodes.forEach(node => {
+        HtmlEditorElementControllerFactory.addController(node as HTMLElement, this)?.onAddToEditor(this.editorContainer.nativeElement);
+      });
+
+      childNodes = Array.from(childNodes).map(node => Array.from(node.childNodes))
+        .reduce((accumulator, currentValue) => {
+          return accumulator.concat(currentValue)
+        }, []);
+    }
+
+    const mutationObserver = new MutationObserver((records) => {
+      const editorContainer = this.editorContainer.nativeElement;
+
+      const addedNodes = records.map(r => Array.from(r.addedNodes))
+        .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
+        .filter((node, i, arr) => arr.indexOf(node) === i);
+
+      addedNodes.forEach(addedNode => {
+        HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.onAddToEditor(editorContainer);
+      });
+
+      const removedNodes = records.map(r => Array.from(r.removedNodes))
+        .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
+        .filter((node, i, arr) => arr.indexOf(node) === i);
+
+      removedNodes.forEach(removedNode => {
+        HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.onRemovedFromEditor(editorContainer);
+      });
+
+      const changedNodes = addedNodes.concat(removedNodes).filter((node, i, arr) => arr.indexOf(node) === i);
+
+      if (
+        removedNodes.length && removedNodes.indexOf(this.selected) > -1
+        || changedNodes.some(removedNode => (removedNode as HTMLElement).tagName?.toLowerCase() === 'blockquote')
+      ) {
+        console.warn('  mutationObserver');
+        this._checkSelected();
+      }
+    });
+
+    mutationObserver.observe(container, {
+      attributeOldValue: true,
+      attributes: true,
+      characterData: true,
+      childList: true,
+      subtree: true
+    });
+
+    this._mutationObserver = mutationObserver;
   }
 
   ngOnDestroy(): void {
     this.selectedChange$.unsubscribe();
-    this._imgController.onDestroy();
   }
 
   getSelected(): HTMLElement {
@@ -103,9 +157,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
   doAction(action: IHtmlEditorAction) {
     if (!this._isSelectionInEditorContainer()) { return; }
-    action.do().subscribe(_ => {
-      this._checkSelected();
-    });
+    action.do().subscribe();
   }
 
   fontStyle(style: string) {
@@ -424,59 +476,38 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   }
 
   checkSelected() {
+    console.warn('  checkSelected()');
     this._checkSelected();
   }
 
   private _checkSelected(target: HTMLElement = this.selected) {
+    console.warn('_checkSelected() target = ', target);
     if (
       !target
       || target === this.editorContainer.nativeElement
       || !this.editorContainer.nativeElement.contains(target)
     ) {
+      console.warn(1);
+      HtmlEditorElementControllerFactory.getController(this.selected)?.onUnselected();
       this.selected = undefined;
-      this.selectedChange$.next(this.selected);
+      // this.selectedChange$.next(this.selected);
       return;
     }
 
-    // if (target === this.selected) { return; }
-
-    const tagName = target.tagName.toLocaleLowerCase();
-
-    if (tagName === 'img') {
-      const index = Array.from(target.parentNode.childNodes).indexOf(target);
-      this.selecitonRangeService.setSelectionOnNode(target.parentNode, index, index + 1);
+    if (target !== this.selected) {
+      console.warn(2);
+      HtmlEditorElementControllerFactory.getController(this.selected)?.onUnselected();
     }
-
+    
     this.selected = target;
-    this.selectedChange$.next(this.selected);
-  }
-
-  @HostListener('document:keyup', ['$event']) keyup(ev: KeyboardEvent) {
-    // console.warn('keyup() ev.key = ', ev.key);
-    const directionKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab'];
-    const deleteKeys = ['Backspace', 'Delete'];
-
-    if (deleteKeys.indexOf(ev.key) > -1) {
-      if (this.selected && !this.editorContainer.nativeElement.contains(this.selected)) {
-        this.selected = undefined;
-        this.selectedChange$.next(this.selected);
-        return;
-      }
-    }
-
-    if (directionKeys.indexOf(ev.key) > -1) {
-      const range = this.selecitonRangeService.getRange();
-      let node = range?.commonAncestorContainer;
-      if (node?.nodeType === Node.TEXT_NODE) {
-        node = node.parentNode;
-      }
-      this._checkSelected(node as HTMLElement);
-      return;
-    }
+    console.warn('this.selected = ', this.selected);
+    HtmlEditorElementControllerFactory.getController(this.selected)?.onSelected();
+    // this.selectedChange$.next(this.selected);
   }
 
   onClick(event: MouseEvent) {
     const target = (event.target || event.srcElement) as HTMLElement;
+    console.warn('  onClick()');
     this._checkSelected(target);
 
     // let element = this.selected;

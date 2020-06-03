@@ -1,35 +1,33 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IHtmlEditorContext } from '../../html-editor.interface';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'cms-editor-selected-path',
   templateUrl: './editor-selected-path.component.html',
   styleUrls: ['./editor-selected-path.component.scss']
 })
-export class EditorSelectedPathComponent implements OnInit {
+export class EditorSelectedPathComponent implements OnInit, OnChanges {
 
-  @Input() context: IHtmlEditorContext;
+  @Input() selected: HTMLElement;
 
   paths: HTMLElement[] = [];
 
   constructor() { }
+  ngOnChanges(changes: SimpleChanges): void {
+    const paths: HTMLElement[] = [];
 
-  ngOnInit(): void {
-    this.context.selectedChange$.subscribe((selected: HTMLElement) => {
-      const paths: HTMLElement[] = [];
+    let el = this.selected;
 
-      let el = selected;
-
-      while (el) {
-        if (el && el.classList.contains('neux-editor')) {
-          break;
-        }
-        paths.unshift(el);
-        el = el.parentElement;
+    while (el) {
+      if (el && el.classList.contains('neux-editor')) {
+        break;
       }
+      paths.unshift(el);
+      el = el.parentElement;
+    }
 
-      this.paths = paths;
-    })
+    this.paths = paths;
   }
+
+  ngOnInit(): void { }
 
 }

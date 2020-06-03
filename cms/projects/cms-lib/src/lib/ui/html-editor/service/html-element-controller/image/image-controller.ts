@@ -1,58 +1,92 @@
-import { merge, fromEvent, Subscription, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
-import { IImgController } from './img-controller.interface';
+import { HtmlEditorElementController } from './../_base';
+import { takeUntil, tap, switchMap } from 'rxjs/operators';
+import { merge, fromEvent, Subscription } from 'rxjs';
 
-export class ImgSizeControlService {
+const IS_FAKE = 'IS_FAKE';
 
-  private _img: HTMLImageElement;
+export class HtmlEditorImageController extends HtmlEditorElementController<HTMLImageElement> {
 
-  private _destroy$: Subject<void>;
-  private _imageController: IImgController;
+  private _editorContainer: HTMLDivElement;
+  private _controllers: HTMLDivElement[];
+  private _drag$: Subscription;
 
-  init(imageController: IImgController) {
-    this.onDestroy();
-    this._destroy$ = new Subject();
-    this._imageController = imageController;
+  private _mutationObservers: MutationObserver[];
 
-    this._imageController.imgChange$.pipe(
-      takeUntil(this._destroy$),
-      tap(img => {
-        if (!img) {
-          this._unselectImg();
-        } else {
-          this._selectImg(img);
-        }
-      }),
-    ).subscribe();
+
+  onAddToEditor(editorContainer: HTMLDivElement): void {
+    if (this.el[IS_FAKE]) { return; }
+    console.warn('onAddToEditor', this.el);
+    this.el.style.removeProperty('outline');
+    this._editorContainer = editorContainer;
+    this._registerSizeControl(this.el);
+
+    const observerHandler = (records) => {
+      this._checkControllerPosition(this.el);
+    };
+
+    const imgObserver = new MutationObserver(observerHandler);
+    const imgParentObserver = new MutationObserver(observerHandler);
+
+    imgObserver.observe(this.el, {
+      attributeOldValue: true,
+      attributes: true,
+      attributeFilter: ['width', 'height', 'offsetTop', 'offsetLeft'],
+      characterData: true,
+      childList: true,
+      subtree: true
+    });
+
+    imgParentObserver.observe(this.el.parentElement, {
+      attributeOldValue: true,
+      attributes: true,
+      attributeFilter: ['style'],
+      characterData: true,
+      childList: true,
+      subtree: true
+    });
+
+    this._mutationObservers = [imgObserver, imgParentObserver];
   }
 
-  onDestroy() {
-    this._unselectImg();
-    this._destroy$?.next();
-    this._destroy$?.complete();
-    this._destroy$?.unsubscribe();
-    this._imageController = undefined;
+  onRemovedFromEditor(editorContainer: HTMLDivElement): void {
+    if (this.el[IS_FAKE]) { return; }
+    if (this._editorContainer.contains(this.el)) { return; }
+    console.warn('onRemovedFromEditor', this.el);
+    this._mutationObservers?.forEach(observer => {
+      observer.disconnect();
+    });
+    this._drag$?.unsubscribe();
+    this._unRegisterSizeControl(this.el);
   }
 
-  private _selectImg(img: HTMLImageElement) {
-    if (img !== this._img || !this._img['controllers']) {
-      this._registerSizeControl(img);
-      this._img = img;
-    } else {
-      this._checkControllerPosition(this._img);
-    }
+  onSelected(): void {
+    if (this.el[IS_FAKE]) { return; }
+    this.el.style.setProperty('outline', '3px solid #b4d7ff');
+    this._controllers?.forEach(c => {
+      if (!this._editorContainer.contains(c)) {
+        this._editorContainer.appendChild(c);
+      }
+    });
+    this._checkControllerPosition(this.el);
 
+    const index = Array.from(this.el.parentNode.childNodes).indexOf(this.el);
+    this.context.selecitonRangeService.setSelectionOnNode(this.el.parentNode, index, index + 1);
   }
 
-  private _unselectImg() {
-    if (!this._img) { return; }
-    this._unRegisterSizeControl(this._img);
-    this._img = undefined;
+  onUnselected(): void {
+    if (this.el[IS_FAKE]) { return; }
+    console.warn('onUnselected');
+    this.el.style.removeProperty('outline');
+    this._controllers.forEach(c => {
+      if (this._editorContainer.contains(c)) {
+        this._editorContainer.removeChild(c);
+      }
+    });
   }
 
   private _checkControllerPosition(img: HTMLImageElement) {
-    this._imageController.consoleImgInfo(img);
-    const controllers = img['controllers'];
+    this._consoleImgInfo(img);
+    const controllers = this._controllers || [];
     const topLeft = controllers[0];
     const topRight = controllers[1];
     const bottomLeft = controllers[2];
@@ -64,25 +98,17 @@ export class ImgSizeControlService {
   }
 
   private _unRegisterSizeControl(img: HTMLImageElement) {
-    const drag$ = img['drag$'];
-    if (drag$ && drag$ instanceof Subscription) {
-      drag$.unsubscribe();
-      delete img['drag$'];
-    }
+    this._drag$?.unsubscribe();
 
-    const controllers: HTMLDivElement[] = img['controllers'];
-    if (controllers) {
-      controllers.forEach(c => {
-        if (this._imageController.container.contains(c)) {
-          this._imageController.container.removeChild(c);
-        }
-      });
-      delete img['controllers'];
-    }
+    this._controllers?.forEach(c => {
+      if (this._editorContainer.contains(c)) {
+        this._editorContainer.removeChild(c);
+      }
+    });
   }
 
   private _registerSizeControl(img: HTMLImageElement) {
-    this._imageController.consoleImgInfo(img);
+    this._consoleImgInfo(img);
 
     const topLeft = document.createElement('div');
     const topRight = document.createElement('div');
@@ -93,19 +119,13 @@ export class ImgSizeControlService {
     topRight.style.cursor = bottomLeft.style.cursor = 'nesw-resize';
 
     const controllers = [topLeft, topRight, bottomLeft, bottomRight];
-    img['controllers'] = controllers;
-
-    this._checkControllerPosition(img);
+    this._controllers = controllers;
 
     controllers.forEach(c => {
       c.setAttribute('contenteditable', 'false');
       c.style.backgroundColor = '#b4d7ff';
       c.style.position = 'absolute';
       c.style.width = c.style.height = '10px';
-    });
-
-    controllers.forEach(c => {
-      this._imageController.container.appendChild(c);
     });
 
     const mousedown$ = merge(
@@ -124,6 +144,7 @@ export class ImgSizeControlService {
           const parent = (controller as HTMLElement).parentElement;
 
           const fake: HTMLImageElement = document.createElement('img');
+          fake[IS_FAKE] = true;
           fake.src = img.src;
           fake.height = img.height;
           fake.width = img.width;
@@ -190,9 +211,9 @@ export class ImgSizeControlService {
                 img.height = +height;
                 img.width = +width;
 
-                this._imageController.consoleImgInfo(img);
-                
-                this._imageController.context.checkSelected();
+                this._consoleImgInfo(img);
+
+                this.context.checkSelected();
               })
             ))
           );
@@ -200,6 +221,18 @@ export class ImgSizeControlService {
       )
     ).subscribe();
 
-    img['drag$'] = drag$;
+    this._drag$ = drag$;
   }
+
+  private _consoleImgInfo(img: HTMLImageElement) {
+    // console.warn('img.clientHeight', img.clientHeight);
+    // console.warn('img.clientLeft', img.clientLeft);
+    // console.warn('img.clientTop', img.clientTop);
+    // console.warn('img.clientWidth', img.clientWidth);
+    // console.warn('img.offsetHeight', img.offsetHeight);
+    // console.warn('img.offsetLeft', img.offsetLeft);
+    // console.warn('img.offsetTop', img.offsetTop);
+    // console.warn('img.offsetWidth', img.offsetWidth);
+  }
+
 }
