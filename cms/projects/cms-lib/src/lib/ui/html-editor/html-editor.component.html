@@ -16,10 +16,9 @@
   <button type="button" mat-button (click)="fontStyle('insertVideo')">插入影片</button>
 </div>
 <div style="position: relative;" (click)="onClick($event)">
-  <div #editorBlock contenteditable id='editor' class="neux-editor" [innerHTML]="content|safeHtml"
+  <div #EditorContainer contenteditable id='editor' class="neux-editor" [innerHTML]="content|safeHtml"
     style="margin: 10px;">
   </div>
-  <cms-html-editor-image-toolbar *ngIf="selectedImg" [target]="selectedImg"></cms-html-editor-image-toolbar>
   <!-- <cms-html-editor-table-toolbar *ngIf="selectComponent == toolbarEnum.TABLE" (addRowAbove)="addRowAbove()"
     (addRowBelow)="addRowBelow()" (addColLeftward)="addColLeftward()" (addColRightward)="addColRightward()"
     (mergeTable)="mergeTable()" (unmerge)="unmerge()" (deleteRow)="deleteRow()" (deleteCol)="deleteCol()">

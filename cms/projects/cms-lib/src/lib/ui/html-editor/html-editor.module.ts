@@ -4,7 +4,6 @@ import { HtmlEditorComponent } from './html-editor.component';
 import { HtmlEditorService } from './html-editor.service';
 import { EditorContainerModalComponent } from './editor-container-modal/editor-container-modal.component';
 import { TableToolbarComponent } from './components/table-toolbar/table-toolbar.component';
-import { ImageToolbarComponent } from './components/image-toolbar/image-toolbar.component';
 import { PipeModule } from '../../pipe/pipe.module';
 import { HtmlEditorServiceInjectionToken } from './html-editor.injection-token';
 import { HtmlEditorCreateLinkModalComponent } from './modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
@@ -29,7 +28,6 @@ import { HtmlEditorInsertImgModalComponent } from './modal/html-editor-insert-im
     EditorContainerModalComponent,
     HtmlEditorComponent,
     TableToolbarComponent,
-    ImageToolbarComponent,
     HtmlEditorCreateLinkModalComponent,
     HtmlEditorInsertImgModalComponent,
   ],

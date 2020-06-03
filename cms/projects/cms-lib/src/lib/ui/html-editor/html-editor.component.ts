@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
 import { IHtmlEditorAction } from './action/action.interface';
 import { HtmlEditorActions } from './action/actions';
 import { SelecitonRangeService } from './service/selection-range-service';
+import { ImgController } from './service/control/img/img-controller.service';
 
 export enum Toolbar {
   /** 圖像 */
@@ -31,9 +32,9 @@ let _this;
   templateUrl: './html-editor.component.html',
   styleUrls: ['./html-editor.component.scss'],
 })
-export class HtmlEditorComponent implements OnInit, AfterViewInit {
+export class HtmlEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('editorBlock') editorBlock: ElementRef<HTMLDivElement>;
+  @ViewChild('EditorContainer') editorContainer: ElementRef<HTMLDivElement>;
   @Input() content = '';
 
   private imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
@@ -57,6 +58,8 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit {
 
   selectedImg: HTMLImageElement;
 
+  private _imgController = new ImgController();
+
   constructor(
     public htmlEditorActions: HtmlEditorActions,
     protected selecitonRangeService: SelecitonRangeService,
@@ -68,35 +71,41 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    const container = this.editorContainer.nativeElement;
+    this._imgController.init(container);
     if (!this.content) {
       const p = document.createElement('p');
-      p.innerHTML = '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123';
-      this.editorBlock.nativeElement.appendChild(p);
+      p.innerHTML = '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="1200" height="630">';
+      container.appendChild(p);
     }
   }
 
-  private _isSelectionInEditorBlock(): boolean {
+  ngOnDestroy(): void {
+    this._imgController.onDestroy();
+  }
+
+  private _isSelectionInEditorContainer(): boolean {
     const range = this.selecitonRangeService.getRange();
     if (!range) { return false; }
-    const isInEditorBlock = this.editorBlock.nativeElement.contains(range.commonAncestorContainer);
-    return isInEditorBlock;
+    const isInEditorContainer = this.editorContainer.nativeElement.contains(range.commonAncestorContainer);
+    return isInEditorContainer;
   }
 
   doAction(action: IHtmlEditorAction) {
-    if (!this._isSelectionInEditorBlock()) { return; }
-    action.do(this.editorBlock.nativeElement);
+    if (!this._isSelectionInEditorContainer()) { return; }
+    action.do(this.editorContainer.nativeElement);
   }
 
   insertImg() {
     if (!this.selectedImg) {
       this.doAction(this.htmlEditorActions.insertImage);
     } else {
-      this.htmlEditorActions.insertImage.do(this.editorBlock.nativeElement, this.selectedImg);
+      this.htmlEditorActions.insertImage.do(this.editorContainer.nativeElement, this.selectedImg);
     }
   }
 
   fontStyle(style: string) {
-    if (!this._isSelectionInEditorBlock()) { return; }
+    if (!this._isSelectionInEditorContainer()) { return; }
     if (style != 'createLink' && style != 'insertImage' && style != 'insertVideo' && style != 'insertTable') {
       document.execCommand(style);
     } else if (style == 'createLink') {
@@ -652,7 +661,7 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit {
 
   @HostListener('document:keyup', ['$event']) onDel(event: KeyboardEvent) {
     if (event.key === 'Delete') {
-      if (this.selectedImg && !this.editorBlock.nativeElement.contains(this.selectedImg)) {
+      if (this.selectedImg && !this.editorContainer.nativeElement.contains(this.selectedImg)) {
         this.selectedImg = undefined;
       }
     }
