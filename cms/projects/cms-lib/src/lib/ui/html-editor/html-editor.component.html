@@ -1,4 +1,4 @@
-<div class="btn-group">
+<div class="btn-group" style="border: 1px solid black; padding: 5px; border-bottom: none;">
   <button type="button" mat-button (click)="doAction(htmlEditorActions.bold)">粗體</button>
   <button type="button" mat-button (click)="doAction(htmlEditorActions.italic)">斜體</button>
   <button type="button" mat-button (click)="doAction(htmlEditorActions.underline)">底線</button>
@@ -15,10 +15,13 @@
   <button type="button" mat-button (click)="fontStyle('insertTable')">插入表格</button>
   <button type="button" mat-button (click)="fontStyle('insertVideo')">插入影片</button>
 </div>
-<div style="position: relative;" (click)="onClick($event)">
-  <div #EditorContainer contenteditable id='editor' class="neux-editor" [innerHTML]="content|safeHtml"
-    style="margin: 10px;">
+<div style="border: 1px solid black; padding: 5px; border-bottom: none;">
+  <cms-editor-selected-path [context]="this"></cms-editor-selected-path>
+</div>
+<div style="position: relative; border: 1px solid black;" (click)="onClick($event)">
+  <div #EditorContainer contenteditable id='editor' class="neux-editor" [innerHTML]="content|safeHtml">
   </div>
+  <div #SizerContainer></div>
   <!-- <cms-html-editor-table-toolbar *ngIf="selectComponent == toolbarEnum.TABLE" (addRowAbove)="addRowAbove()"
     (addRowBelow)="addRowBelow()" (addColLeftward)="addColLeftward()" (addColRightward)="addColRightward()"
     (mergeTable)="mergeTable()" (unmerge)="unmerge()" (deleteRow)="deleteRow()" (deleteCol)="deleteCol()">

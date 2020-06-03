@@ -1,9 +1,12 @@
 import { ImgSizeControlService } from './img-size-control.service';
-import { Subject, merge, fromEvent } from 'rxjs';
+import { Subject } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
 import { IImgController } from './img-controller.interface';
+import { IHtmlEditorContext } from '../../../html-editor.interface';
 
-export class ImgController implements IImgController{
+export class ImgController implements IImgController {
+
+  private _context: IHtmlEditorContext;
 
   private _imgSizeControlService: ImgSizeControlService;
 
@@ -13,47 +16,29 @@ export class ImgController implements IImgController{
   imgChange$: Subject<HTMLImageElement>;
   private _destroy$: Subject<void>;
 
-  constructor() {
-    this._imgSizeControlService = new ImgSizeControlService();
-  }
+  constructor() { }
 
-  init(container: HTMLDivElement) {
-    this._container = container;
+  init(context: IHtmlEditorContext, container: HTMLDivElement) {
     this.onDestroy();
+    this._context = context;
+    this._container = container;
     this.imgChange$ = new Subject();
     this._destroy$ = new Subject();
-    this._container = container;
 
-    merge(
-      fromEvent(this._container, 'click').pipe(
-        tap((ev: MouseEvent) => this._onContainerClick(ev))
-      )
-    ).pipe(
-      takeUntil(this._destroy$),
-    ).subscribe();
+    this._imgSizeControlService = new ImgSizeControlService();
     this._imgSizeControlService.init(this._container, this);
-  }
 
-  private _onContainerClick(ev: MouseEvent) {
-    const target = ev.target || ev.srcElement;
-    if (
-      this._img
-      && (
-        !this._container.contains(this._img)
-        || (target !== this._img && target !== this._container)
-      )
-    ) {
-      this._unselectImg();
-    }
+    this._context.selectedChange$.pipe(
+      takeUntil(this._destroy$),
+      tap(selected => {
+        if (!selected || selected.tagName.toLocaleLowerCase() !== 'img') { // 沒選擇或選擇的不是 img
+          this._unselectImg();
+        } else if (selected !== this._img) {
+          this._selectImg(selected as HTMLImageElement);
+        }
+      })
+    ).subscribe();
 
-    if (
-      (target as HTMLElement).tagName.toLocaleLowerCase() !== 'img'
-      || target === this._img
-    ) {
-      return;
-    }
-
-    this._selectImg(target as HTMLImageElement);
   }
 
   private _selectImg(img: HTMLImageElement) {
@@ -70,12 +55,14 @@ export class ImgController implements IImgController{
   }
 
   onDestroy() {
-    this.imgChange$?.unsubscribe();
     this._destroy$?.next();
     this._destroy$?.complete();
     this._destroy$?.unsubscribe();
+    this.imgChange$?.unsubscribe();
+    this._context = undefined;
     this._container = undefined;
-    this._imgSizeControlService.onDestroy();
+    this._imgSizeControlService?.onDestroy();
+    this._imgSizeControlService = undefined;
   }
 
   consoleImgInfo(img: HTMLImageElement) {

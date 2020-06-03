@@ -1,21 +1,17 @@
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
 import { IHtmlEditorAction } from './action/action.interface';
 import { HtmlEditorActions } from './action/actions';
 import { SelecitonRangeService } from './service/selection-range-service';
 import { ImgController } from './service/control/img/img-controller.service';
+import { IHtmlEditorContext } from '..';
 
 export enum Toolbar {
   /** 圖像 */
   IMG = 'figure',
   /** 表格 */
   TABLE = 'table'
-}
-
-export interface MouseEvent {
-  rowId: number;
-  colId: number;
 }
 
 export interface SelectObj {
@@ -32,9 +28,10 @@ let _this;
   templateUrl: './html-editor.component.html',
   styleUrls: ['./html-editor.component.scss'],
 })
-export class HtmlEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('EditorContainer') editorContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('SizerContainer') sizerContainer: ElementRef<HTMLDivElement>;
   @Input() content = '';
 
   private imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
@@ -58,6 +55,8 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectedImg: HTMLImageElement;
 
+  selected: HTMLElement;
+  selectedChange$ = new Subject<HTMLElement>();
   private _imgController = new ImgController();
 
   constructor(
@@ -71,8 +70,9 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this._imgController.init(this, this.sizerContainer.nativeElement);
+
     const container = this.editorContainer.nativeElement;
-    this._imgController.init(container);
     if (!this.content) {
       const p = document.createElement('p');
       p.innerHTML = '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="1200" height="630">';
@@ -81,7 +81,12 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.selectedChange$.unsubscribe();
     this._imgController.onDestroy();
+  }
+
+  getSelected(): HTMLElement {
+    return this.selected;
   }
 
   private _isSelectionInEditorContainer(): boolean {
@@ -329,7 +334,7 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     if (colIndex != undefined && rowIndex != undefined) {
-      return { colId: colIndex, rowId: rowIndex };
+      // return { colId: colIndex, rowId: rowIndex };
     } else {
       return undefined;
     }
@@ -419,13 +424,40 @@ export class HtmlEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     return window.getSelection().getRangeAt(0);
   }
 
-  onClick(event) {
-    this.selectedImg = undefined;
-    let element: HTMLElement = event.target;
-    if (element?.tagName?.toLowerCase() === 'img') {
-      this.selectedImg = element as any;
+  onClick(event: MouseEvent) {
+    const target = (event.target || event.srcElement) as HTMLElement;
+    console.warn('target = ', target);
+
+    if (
+      !target
+      || target === this.editorContainer.nativeElement
+    ) {
+      this.selected = undefined;
+      this.selectedChange$.next(this.selected);
       return;
     }
+
+    if (
+      !this.editorContainer.nativeElement.contains(target)
+      || target === this.selected
+    ) { return; }
+
+    const tagName = target.tagName.toLocaleLowerCase();
+
+    if (tagName === 'img') {
+      const index = Array.from(target.parentNode.childNodes).indexOf(target);
+      this.selecitonRangeService.setSelectionOnNode(target.parentNode, index, index + 1);
+    }
+
+    this.selected = target;
+    this.selectedChange$.next(this.selected);
+
+    // this.selectedImg = undefined;
+    // let element = this.selected;
+    // if (element?.tagName?.toLowerCase() === 'img') {
+    //   this.selectedImg = element as any;
+    //   return;
+    // }
     // while (element) {
     //   let tagName = element.tagName.toLowerCase();
     //   if (tagName == 'figure') {

@@ -1,0 +1,7 @@
+<div class="path-container">
+  Navigation : 
+  <ng-container *ngFor="let path of paths; let i=index;">
+    <span>{{path.tagName}}</span>
+    <span *ngIf="i!==paths.length-1">></span>
+  </ng-container>
+</div>

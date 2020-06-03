@@ -31,10 +31,22 @@ export class SelecitonRangeService {
     }
   }
 
-  setSelectionOnNode(node: Node, index = 0) {
+  clearSelection() {
+    if (window.getSelection) {
+      if (window.getSelection().empty) {  // Chrome
+        window.getSelection().empty();
+      } else if (window.getSelection().removeAllRanges) {  // Firefox
+        window.getSelection().removeAllRanges();
+      }
+    } else if (document['selection']) {  // IE?
+      document['selection'].empty();
+    }
+  }
+
+  setSelectionOnNode(node: Node, start = 0, end = 0) {
     const range = document.createRange();
-    range.setStart(node, index);
-    range.setEnd(node, index);
+    range.setStart(node, start);
+    range.setEnd(node, end);
     this.restoreRange(range);
   }
 }

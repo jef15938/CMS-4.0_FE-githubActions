@@ -90,6 +90,7 @@ export class ImgSizeControlService {
     img['controllers'] = controllers;
 
     controllers.forEach(c => {
+      c.setAttribute('contenteditable', 'false');
       c.style.backgroundColor = '#b4d7ff';
       c.style.position = 'absolute';
       c.style.width = c.style.height = '10px';
@@ -184,7 +185,6 @@ export class ImgSizeControlService {
                 this._imageController.consoleImgInfo(img);
 
                 setControllerPosition();
-                // this._unRegisterSizeControl(img);
               })
             ))
           );

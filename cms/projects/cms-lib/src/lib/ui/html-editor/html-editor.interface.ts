@@ -1,4 +1,9 @@
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+
+export interface IHtmlEditorContext {
+  selectedChange$: Subject<HTMLElement>;
+  getSelected(): HTMLElement;
+}
 
 export interface IHtmlEditorService {
   openEditor(
