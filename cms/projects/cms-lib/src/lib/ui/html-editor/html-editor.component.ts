@@ -38,6 +38,9 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   htmlEditorActions: HtmlEditorActions;
   private _imgController: ImgController;
 
+  selected: HTMLElement;
+  selectedChange$ = new Subject<HTMLElement>();
+
   private imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
   public isShowEdit = false;
   private tagName = '';
@@ -57,10 +60,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   selectComponent;
   public toolbarEnum = Toolbar;
 
-  selectedImg: HTMLImageElement;
 
-  selected: HTMLElement;
-  selectedChange$ = new Subject<HTMLElement>();
 
   constructor(
     public selecitonRangeService: SelecitonRangeService,
@@ -80,7 +80,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     const container = this.editorContainer.nativeElement;
     if (!this.content) {
       const p = document.createElement('p');
-      p.innerHTML = '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="1200" height="630">';
+      p.innerHTML = '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="600" height="315">';
       container.appendChild(p);
     }
   }
@@ -103,7 +103,9 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
   doAction(action: IHtmlEditorAction) {
     if (!this._isSelectionInEditorContainer()) { return; }
-    action.do();
+    action.do().subscribe(_ => {
+      this._checkSelected();
+    });
   }
 
   fontStyle(style: string) {
@@ -421,23 +423,22 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     return window.getSelection().getRangeAt(0);
   }
 
-  onClick(event: MouseEvent) {
-    const target = (event.target || event.srcElement) as HTMLElement;
-    console.warn('target = ', target);
+  checkSelected() {
+    this._checkSelected();
+  }
 
+  private _checkSelected(target: HTMLElement = this.selected) {
     if (
       !target
       || target === this.editorContainer.nativeElement
+      || !this.editorContainer.nativeElement.contains(target)
     ) {
       this.selected = undefined;
       this.selectedChange$.next(this.selected);
       return;
     }
 
-    if (
-      !this.editorContainer.nativeElement.contains(target)
-      || target === this.selected
-    ) { return; }
+    // if (target === this.selected) { return; }
 
     const tagName = target.tagName.toLocaleLowerCase();
 
@@ -448,6 +449,35 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
     this.selected = target;
     this.selectedChange$.next(this.selected);
+  }
+
+  @HostListener('document:keyup', ['$event']) keyup(ev: KeyboardEvent) {
+    // console.warn('keyup() ev.key = ', ev.key);
+    const directionKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab'];
+    const deleteKeys = ['Backspace', 'Delete'];
+
+    if (deleteKeys.indexOf(ev.key) > -1) {
+      if (this.selected && !this.editorContainer.nativeElement.contains(this.selected)) {
+        this.selected = undefined;
+        this.selectedChange$.next(this.selected);
+        return;
+      }
+    }
+
+    if (directionKeys.indexOf(ev.key) > -1) {
+      const range = this.selecitonRangeService.getRange();
+      let node = range?.commonAncestorContainer;
+      if (node?.nodeType === Node.TEXT_NODE) {
+        node = node.parentNode;
+      }
+      this._checkSelected(node as HTMLElement);
+      return;
+    }
+  }
+
+  onClick(event: MouseEvent) {
+    const target = (event.target || event.srcElement) as HTMLElement;
+    this._checkSelected(target);
 
     // let element = this.selected;
     // while (element) {
@@ -681,13 +711,5 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     let str = temp.replace("%;", "");
     str = str / 100;
     return str;
-  }
-
-  @HostListener('document:keyup', ['$event']) onDel(event: KeyboardEvent) {
-    if (event.key === 'Delete') {
-      if (this.selected && !this.editorContainer.nativeElement.contains(this.selected)) {
-        this.selected = undefined;
-      }
-    }
   }
 }

@@ -4,16 +4,14 @@ import { IImgController } from './img-controller.interface';
 
 export class ImgSizeControlService {
 
-  private _container: HTMLDivElement;
   private _img: HTMLImageElement;
 
   private _destroy$: Subject<void>;
   private _imageController: IImgController;
 
-  init(container: HTMLDivElement, imageController: IImgController) {
+  init(imageController: IImgController) {
     this.onDestroy();
     this._destroy$ = new Subject();
-    this._container = container;
     this._imageController = imageController;
 
     this._imageController.imgChange$.pipe(
@@ -33,19 +31,36 @@ export class ImgSizeControlService {
     this._destroy$?.next();
     this._destroy$?.complete();
     this._destroy$?.unsubscribe();
-    this._container = undefined;
     this._imageController = undefined;
   }
 
   private _selectImg(img: HTMLImageElement) {
-    this._registerSizeControl(img);
-    this._img = img;
+    if (img !== this._img || !this._img['controllers']) {
+      this._registerSizeControl(img);
+      this._img = img;
+    } else {
+      this._checkControllerPosition(this._img);
+    }
+
   }
 
   private _unselectImg() {
     if (!this._img) { return; }
     this._unRegisterSizeControl(this._img);
     this._img = undefined;
+  }
+
+  private _checkControllerPosition(img: HTMLImageElement) {
+    this._imageController.consoleImgInfo(img);
+    const controllers = img['controllers'];
+    const topLeft = controllers[0];
+    const topRight = controllers[1];
+    const bottomLeft = controllers[2];
+    const bottomRight = controllers[3];
+    topLeft.style.top = topRight.style.top = `${img.offsetTop}px`;
+    topLeft.style.left = bottomLeft.style.left = `${img.offsetLeft}px`;
+    topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 10}px`;
+    bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 10}px`;
   }
 
   private _unRegisterSizeControl(img: HTMLImageElement) {
@@ -58,8 +73,8 @@ export class ImgSizeControlService {
     const controllers: HTMLDivElement[] = img['controllers'];
     if (controllers) {
       controllers.forEach(c => {
-        if (this._container.contains(c)) {
-          this._container.removeChild(c);
+        if (this._imageController.container.contains(c)) {
+          this._imageController.container.removeChild(c);
         }
       });
       delete img['controllers'];
@@ -77,17 +92,10 @@ export class ImgSizeControlService {
     topLeft.style.cursor = bottomRight.style.cursor = 'nwse-resize';
     topRight.style.cursor = bottomLeft.style.cursor = 'nesw-resize';
 
-    const setControllerPosition = function () {
-      topLeft.style.top = topRight.style.top = `${img.offsetTop - 5}px`;
-      topLeft.style.left = bottomLeft.style.left = `${img.offsetLeft - 5}px`;
-      topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 5}px`;
-      bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 5}px`;
-    }
-
-    setControllerPosition();
-
     const controllers = [topLeft, topRight, bottomLeft, bottomRight];
     img['controllers'] = controllers;
+
+    this._checkControllerPosition(img);
 
     controllers.forEach(c => {
       c.setAttribute('contenteditable', 'false');
@@ -97,7 +105,7 @@ export class ImgSizeControlService {
     });
 
     controllers.forEach(c => {
-      this._container.appendChild(c);
+      this._imageController.container.appendChild(c);
     });
 
     const mousedown$ = merge(
@@ -183,8 +191,8 @@ export class ImgSizeControlService {
                 img.width = +width;
 
                 this._imageController.consoleImgInfo(img);
-
-                setControllerPosition();
+                
+                this._imageController.context.checkSelected();
               })
             ))
           );

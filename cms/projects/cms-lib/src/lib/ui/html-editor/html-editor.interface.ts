@@ -5,6 +5,7 @@ import { ModalService } from './../modal/modal.service';
 export interface IHtmlEditorContext {
   selectedChange$: Subject<HTMLElement>;
   getSelected(): HTMLElement;
+  checkSelected(): void;
   selecitonRangeService: SelecitonRangeService;
   modalService: ModalService;
 }
