@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HtmlEditorAction } from './action.base';
-import { HtmlEditorInsertImgModalComponent } from '../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
+import { HtmlEditorAction } from '../action.base';
+import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 
-@Injectable({ providedIn: 'root' })
 export class InsertImage extends HtmlEditorAction {
 
-  do(editorBlock: HTMLDivElement, image?: HTMLImageElement) {
+  do() {
+    const selected = this.context.getSelected();
+    const image = selected && selected.tagName.toLowerCase() === 'img' ? selected as HTMLImageElement : undefined;
     // https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230
-    const range = this.selecitonRangeService.getRange();
+    const range = this.context.selecitonRangeService.getRange();
     if (!range) { return; }
 
-    this.modalService.openComponent({
+    this.context.modalService.openComponent({
       component: HtmlEditorInsertImgModalComponent,
       componentInitData: {
         title: `${image ? '修改' : '加入'}圖片`,
@@ -20,7 +20,7 @@ export class InsertImage extends HtmlEditorAction {
         height: image?.height || null,
       }
     }).subscribe((config: { src: string, alt: string, width: number, height: number }) => {
-      if (!config) { this.selecitonRangeService.restoreRange(range); return; }
+      if (!config) { this.context.selecitonRangeService.restoreRange(range); return; }
 
       if (!image) {
         const container = range.commonAncestorContainer.parentElement;

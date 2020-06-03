@@ -16,10 +16,7 @@ export class ImgController implements IImgController {
   imgChange$: Subject<HTMLImageElement>;
   private _destroy$: Subject<void>;
 
-  constructor() { }
-
-  init(context: IHtmlEditorContext, container: HTMLDivElement) {
-    this.onDestroy();
+  constructor(context: IHtmlEditorContext, container: HTMLDivElement) {
     this._context = context;
     this._container = container;
     this.imgChange$ = new Subject();
@@ -38,7 +35,6 @@ export class ImgController implements IImgController {
         }
       })
     ).subscribe();
-
   }
 
   private _selectImg(img: HTMLImageElement) {

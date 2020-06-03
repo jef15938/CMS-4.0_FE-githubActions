@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
-import { IHtmlEditorAction } from './action/action.interface';
-import { HtmlEditorActions } from './action/actions';
+import { IHtmlEditorAction } from './actions/action.interface';
+import { HtmlEditorActions } from './actions/actions';
 import { SelecitonRangeService } from './service/selection-range-service';
 import { ImgController } from './service/control/img/img-controller.service';
-import { IHtmlEditorContext } from '..';
+import { ModalService } from './../modal/modal.service';
+import { IHtmlEditorContext } from './html-editor.interface';
 
 export enum Toolbar {
   /** 圖像 */
@@ -34,6 +35,9 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   @ViewChild('SizerContainer') sizerContainer: ElementRef<HTMLDivElement>;
   @Input() content = '';
 
+  htmlEditorActions: HtmlEditorActions;
+  private _imgController: ImgController;
+
   private imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
   public isShowEdit = false;
   private tagName = '';
@@ -57,20 +61,21 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
   selected: HTMLElement;
   selectedChange$ = new Subject<HTMLElement>();
-  private _imgController = new ImgController();
 
   constructor(
-    public htmlEditorActions: HtmlEditorActions,
-    protected selecitonRangeService: SelecitonRangeService,
+    public selecitonRangeService: SelecitonRangeService,
+    public modalService: ModalService,
     private _changeDetectorRef: ChangeDetectorRef,
-  ) { }
+  ) {
+    this.htmlEditorActions = new HtmlEditorActions(this);
+  }
 
   ngOnInit() {
     _this = this;
   }
 
   ngAfterViewInit(): void {
-    this._imgController.init(this, this.sizerContainer.nativeElement);
+    this._imgController = new ImgController(this, this.sizerContainer.nativeElement);
 
     const container = this.editorContainer.nativeElement;
     if (!this.content) {
@@ -98,15 +103,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
   doAction(action: IHtmlEditorAction) {
     if (!this._isSelectionInEditorContainer()) { return; }
-    action.do(this.editorContainer.nativeElement);
-  }
-
-  insertImg() {
-    if (!this.selectedImg) {
-      this.doAction(this.htmlEditorActions.insertImage);
-    } else {
-      this.htmlEditorActions.insertImage.do(this.editorContainer.nativeElement, this.selectedImg);
-    }
+    action.do();
   }
 
   fontStyle(style: string) {
@@ -452,12 +449,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     this.selected = target;
     this.selectedChange$.next(this.selected);
 
-    // this.selectedImg = undefined;
     // let element = this.selected;
-    // if (element?.tagName?.toLowerCase() === 'img') {
-    //   this.selectedImg = element as any;
-    //   return;
-    // }
     // while (element) {
     //   let tagName = element.tagName.toLowerCase();
     //   if (tagName == 'figure') {
@@ -693,8 +685,8 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
   @HostListener('document:keyup', ['$event']) onDel(event: KeyboardEvent) {
     if (event.key === 'Delete') {
-      if (this.selectedImg && !this.editorContainer.nativeElement.contains(this.selectedImg)) {
-        this.selectedImg = undefined;
+      if (this.selected && !this.editorContainer.nativeElement.contains(this.selected)) {
+        this.selected = undefined;
       }
     }
   }
