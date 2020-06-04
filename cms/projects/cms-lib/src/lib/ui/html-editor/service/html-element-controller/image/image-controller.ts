@@ -6,20 +6,23 @@ const IS_FAKE = 'IS_FAKE';
 
 export class HtmlEditorImageController extends HtmlEditorElementController<HTMLImageElement> {
 
-  private _editorContainer: HTMLDivElement;
   private _controllers: HTMLDivElement[];
   private _drag$: Subscription;
 
-  private _mutationObservers: MutationObserver[];
-
+  private _mutationObservers: MutationObserver[] = [];
+  private _subscriptions: Subscription[] = [];
 
   onAddToEditor(editorContainer: HTMLDivElement): void {
     if (this.el[IS_FAKE]) { return; }
     console.warn('onAddToEditor', this.el);
     this.el.style.removeProperty('outline');
-    this._editorContainer = editorContainer;
     this._registerSizeControl(this.el);
 
+    this._observeImgAndParent();
+    this._subscribeContainerClickEvent();
+  }
+
+  private _observeImgAndParent() {
     const observerHandler = (records) => {
       this._checkControllerPosition(this.el);
     };
@@ -45,41 +48,69 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
       subtree: true
     });
 
-    this._mutationObservers = [imgObserver, imgParentObserver];
+    this._mutationObservers.push(imgObserver);
+    this._mutationObservers.push(imgParentObserver);
+  }
+
+  private _subscribeContainerClickEvent() {
+    const subscription = fromEvent(this.context.editorContainer.nativeElement, 'click').subscribe((ev: MouseEvent) => {
+      if (this.context.simpleWysiwygService.isOrContainsNode(this.el, ev.target)) {
+        this.onSelected();
+      } else {
+        this.onUnselected();
+      }
+    });
+
+    this._subscriptions.push(subscription);
   }
 
   onRemovedFromEditor(editorContainer: HTMLDivElement): void {
     if (this.el[IS_FAKE]) { return; }
-    if (this._editorContainer.contains(this.el)) { return; }
+
     console.warn('onRemovedFromEditor', this.el);
+
     this._mutationObservers?.forEach(observer => {
       observer.disconnect();
     });
+    this._mutationObservers = [];
+
+    this._subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    });
+    this._subscriptions = [];
+
     this._drag$?.unsubscribe();
     this._unRegisterSizeControl(this.el);
   }
 
   onSelected(): void {
+    const editorContainer = this.context.editorContainer.nativeElement;
+
     if (this.el[IS_FAKE]) { return; }
     this.el.style.setProperty('outline', '3px solid #b4d7ff');
+    this._checkControllerPosition(this.el);
     this._controllers?.forEach(c => {
-      if (!this._editorContainer.contains(c)) {
-        this._editorContainer.appendChild(c);
+      if (!editorContainer.contains(c)) {
+        editorContainer.appendChild(c);
       }
     });
-    this._checkControllerPosition(this.el);
 
     const index = Array.from(this.el.parentNode.childNodes).indexOf(this.el);
-    this.context.selecitonRangeService.setSelectionOnNode(this.el.parentNode, index, index + 1);
+    this.context.simpleWysiwygService.setSelectionOnNode(this.el.parentNode, index, index + 1);
+
+    const selectedHtml = this.context.simpleWysiwygService.getSelectionHtml(editorContainer);
+    console.warn('selectedHtml = ', selectedHtml);
   }
 
   onUnselected(): void {
     if (this.el[IS_FAKE]) { return; }
     console.warn('onUnselected');
     this.el.style.removeProperty('outline');
+
+    const editorContainer = this.context.editorContainer.nativeElement;
     this._controllers.forEach(c => {
-      if (this._editorContainer.contains(c)) {
-        this._editorContainer.removeChild(c);
+      if (editorContainer.contains(c)) {
+        editorContainer.removeChild(c);
       }
     });
   }
@@ -98,16 +129,21 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
   }
 
   private _unRegisterSizeControl(img: HTMLImageElement) {
+    if (this.el[IS_FAKE]) { return; }
+
     this._drag$?.unsubscribe();
 
+    const editorContainer = this.context.editorContainer.nativeElement;
     this._controllers?.forEach(c => {
-      if (this._editorContainer.contains(c)) {
-        this._editorContainer.removeChild(c);
+      if (editorContainer.contains(c)) {
+        editorContainer.removeChild(c);
       }
     });
   }
 
   private _registerSizeControl(img: HTMLImageElement) {
+    if (this.el[IS_FAKE]) { return; }
+
     this._consoleImgInfo(img);
 
     const topLeft = document.createElement('div');
@@ -140,8 +176,8 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     const drag$ = mousedown$.pipe(
       switchMap(
         (start) => {
-          const controller = start.target || start.srcElement;
-          const parent = (controller as HTMLElement).parentElement;
+          const controller = start.target as HTMLElement;
+          const parent = controller.parentElement;
 
           const fake: HTMLImageElement = document.createElement('img');
           fake[IS_FAKE] = true;
@@ -213,7 +249,8 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
 
                 this._consoleImgInfo(img);
 
-                this.context.checkSelected();
+                const index = Array.from(this.el.parentNode.childNodes).indexOf(this.el);
+                this.context.simpleWysiwygService.setSelectionOnNode(this.el.parentNode, index, index + 1);
               })
             ))
           );

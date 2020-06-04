@@ -1,13 +1,15 @@
 import { Observable, Subject } from 'rxjs';
-import { SelecitonRangeService } from './service/selection-range-service';
 import { ModalService } from './../modal/modal.service';
+import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
+import { ElementRef } from '@angular/core';
 
 export interface IHtmlEditorContext {
+  editorContainer: ElementRef<HTMLDivElement>;
   selectedChange$: Subject<HTMLElement>;
+  simpleWysiwygService: SimpleWysiwygService;
+  modalService: ModalService;
   getSelected(): HTMLElement;
   checkSelected(): void;
-  selecitonRangeService: SelecitonRangeService;
-  modalService: ModalService;
 }
 
 export interface IHtmlEditorService {

@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
 import { IHtmlEditorAction } from './actions/action.interface';
 import { HtmlEditorActions } from './actions/actions';
-import { SelecitonRangeService } from './service/selection-range-service';
 import { ModalService } from './../modal/modal.service';
 import { IHtmlEditorContext } from './html-editor.interface';
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
+import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 
 export enum Toolbar {
   /** 圖像 */
@@ -32,7 +32,6 @@ let _this;
 export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('EditorContainer') editorContainer: ElementRef<HTMLDivElement>;
-  @ViewChild('SizerContainer') sizerContainer: ElementRef<HTMLDivElement>;
   @Input() content = '';
 
   htmlEditorActions: HtmlEditorActions;
@@ -63,7 +62,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
 
   constructor(
-    public selecitonRangeService: SelecitonRangeService,
+    public simpleWysiwygService: SimpleWysiwygService,
     public modalService: ModalService,
     private _changeDetectorRef: ChangeDetectorRef,
   ) {
@@ -78,13 +77,14 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
     const container = this.editorContainer.nativeElement;
 
-    if (!this.content) {
-      const p = document.createElement('p');
-      p.innerHTML = '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="600" height="315">';
-      container.appendChild(p);
-    } else {
-      container.innerHTML = this.content;
-    }
+    const content = this.content
+      || [
+        '<p>',
+        '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="600" height="315">',
+        '</p>'
+      ].join('');
+
+    this.editorContainer.nativeElement.innerHTML = content;
 
     let childNodes = Array.from(container.childNodes) || [];
     while (childNodes && childNodes.length) {
@@ -100,11 +100,13 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     }
 
     const mutationObserver = new MutationObserver((records) => {
+      console.warn('records = ', records);
       const editorContainer = this.editorContainer.nativeElement;
 
       const addedNodes = records.map(r => Array.from(r.addedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
         .filter((node, i, arr) => arr.indexOf(node) === i);
+      console.warn('addedNodes = ', addedNodes);
 
       addedNodes.forEach(addedNode => {
         HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.onAddToEditor(editorContainer);
@@ -113,6 +115,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       const removedNodes = records.map(r => Array.from(r.removedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
         .filter((node, i, arr) => arr.indexOf(node) === i);
+      console.warn('removedNodes = ', addedNodes);
 
       removedNodes.forEach(removedNode => {
         HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.onRemovedFromEditor(editorContainer);
@@ -122,7 +125,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
       if (
         removedNodes.length && removedNodes.indexOf(this.selected) > -1
-        || changedNodes.some(removedNode => (removedNode as HTMLElement).tagName?.toLowerCase() === 'blockquote')
+        || records.some(record => record.type === 'childList')
       ) {
         console.warn('  mutationObserver');
         this._checkSelected();
@@ -148,20 +151,15 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     return this.selected;
   }
 
-  private _isSelectionInEditorContainer(): boolean {
-    const range = this.selecitonRangeService.getRange();
-    if (!range) { return false; }
-    const isInEditorContainer = this.editorContainer.nativeElement.contains(range.commonAncestorContainer);
-    return isInEditorContainer;
-  }
-
   doAction(action: IHtmlEditorAction) {
-    if (!this._isSelectionInEditorContainer()) { return; }
-    action.do().subscribe();
+    if (!this.simpleWysiwygService.selectionInside(this.editorContainer.nativeElement)) { return; }
+    action.do().subscribe(() => {
+
+    });
   }
 
   fontStyle(style: string) {
-    if (!this._isSelectionInEditorContainer()) { return; }
+    if (!this.simpleWysiwygService.selectionInside(this.editorContainer.nativeElement)) { return; }
     if (style != 'createLink' && style != 'insertImage' && style != 'insertVideo' && style != 'insertTable') {
       document.execCommand(style);
     } else if (style == 'createLink') {
@@ -496,17 +494,17 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
     if (target !== this.selected) {
       console.warn(2);
-      HtmlEditorElementControllerFactory.getController(this.selected)?.onUnselected();
+      // HtmlEditorElementControllerFactory.getController(this.selected)?.onUnselected();
     }
-    
+
     this.selected = target;
     console.warn('this.selected = ', this.selected);
-    HtmlEditorElementControllerFactory.getController(this.selected)?.onSelected();
+    // HtmlEditorElementControllerFactory.getController(this.selected)?.onSelected();
     // this.selectedChange$.next(this.selected);
   }
 
   onClick(event: MouseEvent) {
-    const target = (event.target || event.srcElement) as HTMLElement;
+    const target = event.target as HTMLElement;
     console.warn('  onClick()');
     this._checkSelected(target);
 

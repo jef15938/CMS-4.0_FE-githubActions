@@ -7,11 +7,11 @@ export class CreateLink extends DomCmdAction {
   commandId = 'createLink';
 
   do() {
-    const range = this.context.selecitonRangeService.getRange();
+    const savedSelection = this.context.simpleWysiwygService.saveSelection();
     const selected = this.context.getSelected();
     const selectedTagName = selected?.tagName?.toLocaleLowerCase();
 
-    if (!range) { return of(undefined); }
+    if (!savedSelection) { return of(undefined); }
 
     let aTag: HTMLAnchorElement;
 
@@ -19,10 +19,10 @@ export class CreateLink extends DomCmdAction {
       aTag = selected as HTMLAnchorElement;
     }
 
-    const start = range.startContainer;
-    const end = range.endContainer;
+    const start = savedSelection.startContainer;
+    const end = savedSelection.endContainer;
     const isSelectionInSameNode = start === end;
-    let text = range.toString();
+    let text = savedSelection.toString();
 
     const url = aTag ? aTag.href : '';
     const isTargetBlank = aTag ? aTag.target === '_blank' : true;
@@ -35,7 +35,7 @@ export class CreateLink extends DomCmdAction {
       }
     }).pipe(
       tap((config: { url: string, text: string, isTargetBlank: boolean }) => {
-        this.context.selecitonRangeService.restoreRange(range);
+        this.context.simpleWysiwygService.restoreSelection(savedSelection);
         if (!config) { return; }
 
         config.text = config.text || config.url;
@@ -55,7 +55,7 @@ export class CreateLink extends DomCmdAction {
             aTag.appendChild(selected);
             return;
           }
-          
+
           // https://stackoverflow.com/questions/23811132/adding-a-target-blank-with-execcommand-createlink
           try {
             document.execCommand('insertHTML', false, `<a href=${config.url} target=${config.isTargetBlank ? '_blank' : ''}>${config.text}</a>`)
@@ -66,7 +66,7 @@ export class CreateLink extends DomCmdAction {
               aTag.href = config.url;
               aTag.text = config.text;
               aTag.target = config.isTargetBlank ? '_blank' : '';
-              range.insertNode(aTag);
+              savedSelection.insertNode(aTag);
             } catch (insertNodeError) {
               console.error('CreateLink insertNodeError = ', insertNodeError);
             }
