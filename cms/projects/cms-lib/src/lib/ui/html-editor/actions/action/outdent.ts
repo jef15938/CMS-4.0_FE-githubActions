@@ -1,5 +1,22 @@
-import { DomCmdAction } from '../action.base';
+import { HtmlEditorAction } from '../action.base';
+import { of } from 'rxjs';
 
-export class Outdent extends DomCmdAction {
-  commandId = 'outdent';
+export class Outdent extends HtmlEditorAction {
+
+  private readonly _padding = 40;
+
+  do() {
+    const selected = this.context.getSelected();
+    const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer.nativeElement, selected);
+    if (rowRoot) {
+      let padding = 0;
+      const paddingLeft = rowRoot.style.getPropertyValue('padding-left');
+      if (paddingLeft) {
+        padding = +paddingLeft.replace('px', '') - this._padding;
+        if (padding < 0) { padding = 0; }
+      }
+      padding ? rowRoot.style.setProperty('padding-left', `${padding}px`) : rowRoot.style.removeProperty('padding-left');
+    }
+    return of(true);
+  }
 }

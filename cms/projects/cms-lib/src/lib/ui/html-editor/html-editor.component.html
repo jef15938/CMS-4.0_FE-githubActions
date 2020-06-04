@@ -16,7 +16,7 @@
   <button type="button" mat-button (click)="fontStyle('insertVideo')">插入影片</button>
 </div>
 <div style="border: 1px solid black; padding: 5px; border-bottom: none;">
-  <cms-editor-selected-path [selected]="selected"></cms-editor-selected-path>
+  <cms-editor-selected-path [editorContainer]="editorContainer?.nativeElement" [selected]="selected"></cms-editor-selected-path>
 </div>
 <div style="position: relative; border: 1px solid black;" (click)="onClick($event)">
   <div #EditorContainer contenteditable id='editor' class="neux-editor">

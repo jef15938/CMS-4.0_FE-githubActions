@@ -20,6 +20,6 @@ export abstract class DomCmdAction extends HtmlEditorAction {
 
   do(): Observable<any> {
     document.execCommand(this.commandId);
-    return of(undefined);
+    return of(true);
   }
 }

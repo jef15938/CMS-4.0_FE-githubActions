@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
 import { IHtmlEditorAction } from './actions/action.interface';
@@ -38,7 +38,8 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   private _mutationObserver: MutationObserver;
 
   selected: HTMLElement;
-  selectedChange$ = new Subject<HTMLElement>();
+  selectedChecked$ = new Subject<HTMLElement>();
+  actionDone$ = new Subject<HTMLElement>();
 
   private imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
   public isShowEdit = false;
@@ -90,7 +91,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     while (childNodes && childNodes.length) {
 
       childNodes.forEach(node => {
-        HtmlEditorElementControllerFactory.addController(node as HTMLElement, this)?.onAddToEditor(this.editorContainer.nativeElement);
+        HtmlEditorElementControllerFactory.addController(node as HTMLElement, this)?.onAdd(this.editorContainer.nativeElement);
       });
 
       childNodes = Array.from(childNodes).map(node => Array.from(node.childNodes))
@@ -106,29 +107,27 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       const addedNodes = records.map(r => Array.from(r.addedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
         .filter((node, i, arr) => arr.indexOf(node) === i);
-      console.warn('addedNodes = ', addedNodes);
-
-      addedNodes.forEach(addedNode => {
-        HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.onAddToEditor(editorContainer);
-      });
+      console.log('addedNodes = ', addedNodes);
 
       const removedNodes = records.map(r => Array.from(r.removedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
-        .filter((node, i, arr) => arr.indexOf(node) === i);
-      console.warn('removedNodes = ', addedNodes);
+        .filter((node, i, arr) => arr.indexOf(node) === i)
+        .filter(node => addedNodes.indexOf(node) < 0);
+      console.log('removedNodes = ', removedNodes);
 
       removedNodes.forEach(removedNode => {
-        HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.onRemovedFromEditor(editorContainer);
+        HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.onRemove(editorContainer);
       });
 
-      const changedNodes = addedNodes.concat(removedNodes).filter((node, i, arr) => arr.indexOf(node) === i);
+      addedNodes.forEach(addedNode => {
+        HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.onAdd(editorContainer);
+      });
 
       if (
         removedNodes.length && removedNodes.indexOf(this.selected) > -1
         || records.some(record => record.type === 'childList')
       ) {
-        console.warn('  mutationObserver');
-        this._checkSelected();
+        this._checkSelected(this.selected);
       }
     });
 
@@ -141,10 +140,13 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     });
 
     this._mutationObserver = mutationObserver;
+
+    this._changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy(): void {
-    this.selectedChange$.unsubscribe();
+    this.selectedChecked$.unsubscribe();
+    this.actionDone$.unsubscribe();
   }
 
   getSelected(): HTMLElement {
@@ -153,8 +155,11 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
   doAction(action: IHtmlEditorAction) {
     if (!this.simpleWysiwygService.selectionInside(this.editorContainer.nativeElement)) { return; }
-    action.do().subscribe(() => {
-
+    action.do().subscribe(done => {
+      if (done) {
+        this.actionDone$.next();
+        this._checkSelected();
+      }
     });
   }
 
@@ -473,39 +478,18 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     return window.getSelection().getRangeAt(0);
   }
 
-  checkSelected() {
-    console.warn('  checkSelected()');
-    this._checkSelected();
-  }
-
-  private _checkSelected(target: HTMLElement = this.selected) {
-    console.warn('_checkSelected() target = ', target);
-    if (
-      !target
-      || target === this.editorContainer.nativeElement
-      || !this.editorContainer.nativeElement.contains(target)
-    ) {
-      console.warn(1);
-      HtmlEditorElementControllerFactory.getController(this.selected)?.onUnselected();
-      this.selected = undefined;
-      // this.selectedChange$.next(this.selected);
-      return;
+  private _checkSelected(target?: HTMLElement) {
+    if (target && this.editorContainer.nativeElement.contains(target)) {
+      this.selected = target;
+    } else {
+      const selectionHtmlElement = this.simpleWysiwygService.getSelectionHtmlElement(this.editorContainer.nativeElement);
+      this.selected = selectionHtmlElement as HTMLElement;
     }
-
-    if (target !== this.selected) {
-      console.warn(2);
-      // HtmlEditorElementControllerFactory.getController(this.selected)?.onUnselected();
-    }
-
-    this.selected = target;
-    console.warn('this.selected = ', this.selected);
-    // HtmlEditorElementControllerFactory.getController(this.selected)?.onSelected();
-    // this.selectedChange$.next(this.selected);
+    this.selectedChecked$.next();
   }
 
   onClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    console.warn('  onClick()');
     this._checkSelected(target);
 
     // let element = this.selected;
@@ -740,5 +724,9 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     let str = temp.replace("%;", "");
     str = str / 100;
     return str;
+  }
+
+  @HostListener('keyup', ['$event']) onKeyup(ev) {
+    this._checkSelected();
   }
 }

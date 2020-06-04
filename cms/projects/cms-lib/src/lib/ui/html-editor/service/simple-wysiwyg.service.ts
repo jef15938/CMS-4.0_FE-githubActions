@@ -28,26 +28,54 @@ export class SimpleWysiwygService {
     return true;
   };
 
+  getSelectionHtmlElement(containerNode: Node) {
+    if (window.getSelection) {
+      const sel = window.getSelection();
+      if (sel.rangeCount) {
+        const range = sel.getRangeAt(0);
+        let node = range.commonAncestorContainer;
+        if (node.nodeType === Node.TEXT_NODE) {
+          node = node.parentNode;
+        }
+        if (!containerNode.contains(node)) {
+          return null;
+        }
+        return node;
+      }
+    }
+    else if (document['selection']) {
+      // TODO: ie 11
+      // const sel = document['selection'];
+      // if (sel.type == 'Text') {
+      //   const range = sel['createRange']();
+      //   return range.htmlText;
+      // }
+    }
+    return null;
+  }
+
   // http://stackoverflow.com/questions/4652734/return-html-from-a-user-selected-text/4652824#4652824
   getSelectionHtml(containerNode: Node) {
-    if (this.getSelectionCollapsed(containerNode))
+    if (this.getSelectionCollapsed(containerNode)) {
       return null;
+    }
+
     if (window.getSelection) {
-      var sel = window.getSelection();
+      const sel = window.getSelection();
       if (sel.rangeCount) {
-        var container = document.createElement('div'),
+        const container = document.createElement('div'),
           len = sel.rangeCount;
-        for (var i = 0; i < len; ++i) {
-          var contents = sel.getRangeAt(i).cloneContents();
+        for (let i = 0; i < len; ++i) {
+          const contents = sel.getRangeAt(i).cloneContents();
           container.appendChild(contents);
         }
         return container.innerHTML;
       }
     }
     else if (document['selection']) {
-      var sel = document['selection'];
+      const sel = document['selection'];
       if (sel.type == 'Text') {
-        var range = sel['createRange']();
+        const range = sel['createRange']();
         return range.htmlText;
       }
     }
@@ -68,7 +96,7 @@ export class SimpleWysiwygService {
 
   // save/restore selection
   // http://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
-  saveSelection(): Range {
+  getRange(): Range {
     if (window.getSelection) {
       const sel = window.getSelection();
       if (sel.rangeCount > 0)
@@ -81,16 +109,16 @@ export class SimpleWysiwygService {
     return null;
   };
 
-  restoreSelection(savedSel: Range) {
-    if (!savedSel)
+  restoreSelection(range: Range) {
+    if (!range)
       return;
     if (window.getSelection) {
       const sel = window.getSelection();
       sel.removeAllRanges();
-      sel.addRange(savedSel);
+      sel.addRange(range);
     }
     else if (document['selection']) {
-      savedSel['select']();
+      range['select']();
     }
   };
 
@@ -206,5 +234,21 @@ export class SimpleWysiwygService {
     this.execCommand(containerNode, 'insertImage', url, true);
     // this.callUpdates(true); // selection destroyed
     return this;
+  }
+
+  findRowRoot(containerNode: Node, from: HTMLElement) {
+    const possibleTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',];
+    let el = from;
+    while (el) {
+      if (!containerNode.contains(el)) {
+        el = undefined;
+        break;
+      }
+      if (possibleTags.indexOf(el.tagName.toLowerCase()) > -1) {
+        break;
+      }
+      el = el.parentElement;
+    }
+    return el;
   }
 }

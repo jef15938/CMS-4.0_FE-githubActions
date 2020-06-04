@@ -21,6 +21,10 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   constructor() { super(); }
 
   ngOnInit(): void {
+    this.src = this.src || '';
+    this.alt = this.alt || '';
+    this.width = this.width || null;
+    this.height = this.height || null;
   }
 
   checkWidthHeight() {
@@ -33,10 +37,10 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
 
   confirm() {
     this.close({
-      src: this.src,
-      alt: this.alt,
-      width: this.width,
-      height: this.height,
+      src: this.src || '',
+      alt: this.alt || '',
+      width: this.width || null,
+      height: this.height || null,
     })
   }
 

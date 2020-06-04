@@ -5,11 +5,11 @@ import { ElementRef } from '@angular/core';
 
 export interface IHtmlEditorContext {
   editorContainer: ElementRef<HTMLDivElement>;
-  selectedChange$: Subject<HTMLElement>;
+  selectedChecked$: Subject<HTMLElement>;
+  actionDone$: Subject<HTMLElement>;
   simpleWysiwygService: SimpleWysiwygService;
   modalService: ModalService;
   getSelected(): HTMLElement;
-  checkSelected(): void;
 }
 
 export interface IHtmlEditorService {
