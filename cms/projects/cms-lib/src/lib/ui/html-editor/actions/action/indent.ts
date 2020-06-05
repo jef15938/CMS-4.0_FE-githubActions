@@ -6,8 +6,8 @@ export class Indent extends HtmlEditorAction {
   private readonly _padding = 40;
 
   do() {
-    const selected = this.context.getSelected();
-    const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer.nativeElement, selected);
+    const selected = this.context.commonAncestorContainer as HTMLElement;
+    const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer, selected);
     if (rowRoot) {
       let padding = this._padding;
       const paddingLeft = rowRoot.style.getPropertyValue('padding-left');
@@ -16,6 +16,6 @@ export class Indent extends HtmlEditorAction {
       }
       rowRoot.style.setProperty('padding-left', `${padding}px`);
     }
-    return of(true);
+    return of(undefined);
   }
 }

@@ -1,14 +1,16 @@
 import { HtmlEditorAction } from '../action.base';
 import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 export class InsertImage extends HtmlEditorAction {
 
   do() {
-    const editorContainer = this.context.editorContainer.nativeElement;
-    const selected = this.context.getSelected();
-    const image = selected && selected.tagName.toLowerCase() === 'img' ? selected as HTMLImageElement : undefined;
+    const editorContainer = this.context.editorContainer;
+    const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
+    const image = commonAncestorContainer?.tagName.toLowerCase() === 'img'
+      ? commonAncestorContainer as HTMLImageElement
+      : undefined;
     // https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230
     const range = this.context.simpleWysiwygService.getRange();
     if (!image && !range) { return of(undefined); }
@@ -23,7 +25,7 @@ export class InsertImage extends HtmlEditorAction {
         height: image?.height,
       }
     }).pipe(
-      map((config: { src: string, alt: string, width: number, height: number }) => {
+      tap((config: { src: string, alt: string, width: number, height: number }) => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
 
@@ -42,7 +44,7 @@ export class InsertImage extends HtmlEditorAction {
           image.width = config.width;
           image.height = config.height;
         }
-        return true;
+        return;
       })
     );
   }

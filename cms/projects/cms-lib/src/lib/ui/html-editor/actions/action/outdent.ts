@@ -6,8 +6,8 @@ export class Outdent extends HtmlEditorAction {
   private readonly _padding = 40;
 
   do() {
-    const selected = this.context.getSelected();
-    const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer.nativeElement, selected);
+    const selected = this.context.commonAncestorContainer as HTMLElement;
+    const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer, selected);
     if (rowRoot) {
       let padding = 0;
       const paddingLeft = rowRoot.style.getPropertyValue('padding-left');
@@ -17,6 +17,6 @@ export class Outdent extends HtmlEditorAction {
       }
       padding ? rowRoot.style.setProperty('padding-left', `${padding}px`) : rowRoot.style.removeProperty('padding-left');
     }
-    return of(true);
+    return of(undefined);
   }
 }

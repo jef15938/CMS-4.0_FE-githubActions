@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditorSelectedPathComponent } from './editor-selected-path.component';
+import { EditorToolbarComponent } from './editor-toolbar.component';
 
-describe('EditorSelectedPathComponent', () => {
-  let component: EditorSelectedPathComponent;
-  let fixture: ComponentFixture<EditorSelectedPathComponent>;
+describe('EditorToolbarComponent', () => {
+  let component: EditorToolbarComponent;
+  let fixture: ComponentFixture<EditorToolbarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditorSelectedPathComponent ]
+      declarations: [ EditorToolbarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditorSelectedPathComponent);
+    fixture = TestBed.createComponent(EditorToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

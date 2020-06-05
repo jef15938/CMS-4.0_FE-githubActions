@@ -1,28 +1,10 @@
-import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
-import { map, takeUntil, finalize, concatAll, tap } from 'rxjs/operators';
-import { IHtmlEditorAction } from './actions/action.interface';
-import { HtmlEditorActions } from './actions/actions';
+import { takeUntil } from 'rxjs/operators';
 import { ModalService } from './../modal/modal.service';
 import { IHtmlEditorContext } from './html-editor.interface';
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
-
-export enum Toolbar {
-  /** 圖像 */
-  IMG = 'figure',
-  /** 表格 */
-  TABLE = 'table'
-}
-
-export interface SelectObj {
-  startCol: number;
-  endCol: number;
-  startRow: number;
-  endRow: number;
-}
-
-let _this;
 
 @Component({
   selector: 'cms-html-editor',
@@ -31,67 +13,73 @@ let _this;
 })
 export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('EditorContainer') editorContainer: ElementRef<HTMLDivElement>;
   @Input() content = '';
 
-  htmlEditorActions: HtmlEditorActions;
+  @ViewChild('EditorContainer') private _editorContainer: ElementRef<HTMLDivElement>;
+
+  private _simpleWysiwygService: SimpleWysiwygService;
+  private _modalService: ModalService;
+  private _commonAncestorContainer: Node;
+
+  get simpleWysiwygService() { return this._simpleWysiwygService; }
+  get modalService() { return this._modalService; }
+  get editorContainer() { return this._editorContainer?.nativeElement; }
+  get commonAncestorContainer() { return this._commonAncestorContainer; };
+  get isSelectionInsideEditorContainer() { return this.editorContainer && this.simpleWysiwygService.isSelectionInside(this.editorContainer); }
+
   private _mutationObserver: MutationObserver;
 
-  selected: HTMLElement;
-  selectedChecked$ = new Subject<HTMLElement>();
-  actionDone$ = new Subject<HTMLElement>();
-
-  private imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-  public isShowEdit = false;
-  private tagName = '';
-  public clickElement;
-  private table; // for test add cell
-  private cellIndex;
-  private rowIndex;
-  private imgX;
-  private imgY;
-  private initImageWidth = 0.1;
-  private imageWidth;
-  private isMouseDown: boolean = false;
-  private defaultHtml: string = '<div>文字</div>';
-  private tableMouseDown: MouseEvent;
-  private tableMouseUp: MouseEvent;
-  private tableSeleted;
-  selectComponent;
-  public toolbarEnum = Toolbar;
-
-
+  private _destroy$ = new Subject();
 
   constructor(
-    public simpleWysiwygService: SimpleWysiwygService,
-    public modalService: ModalService,
+    simpleWysiwygService: SimpleWysiwygService,
+    modalService: ModalService,
     private _changeDetectorRef: ChangeDetectorRef,
   ) {
-    this.htmlEditorActions = new HtmlEditorActions(this);
+    this._simpleWysiwygService = simpleWysiwygService;
+    this._modalService = modalService;
   }
 
   ngOnInit() {
-    _this = this;
+
   }
 
   ngAfterViewInit(): void {
+    this._initContentAndContainer(this.content, this.editorContainer);
+    this._observeContainer(this.editorContainer);
+    this._subscribeDocumentSelectionChange();
+    this._changeDetectorRef.detectChanges();
+  }
 
-    const container = this.editorContainer.nativeElement;
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+    this._destroy$.unsubscribe();
+    this._mutationObserver?.disconnect();
+  }
 
-    const content = this.content
+  private _initContentAndContainer(content: string, container: HTMLDivElement) {
+    content = content
       || [
         '<p>',
-        '請輸入    <a href="https://www.google.com.tw" target="_blank">谷google歌</a>    123<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="600" height="315">',
+        '請輸入',
+        '<a href="https://www.google.com.tw" target="_blank">',
+        '<span><strong>google</strong></span>谷歌</a>',
+        '  123  ',
+        '<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="400" height="210">',
+        '  456  ',
+        '<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="400" height="210">',
+        '  789  ',
         '</p>'
       ].join('');
 
-    this.editorContainer.nativeElement.innerHTML = content;
+    this.editorContainer.innerHTML = content;
 
     let childNodes = Array.from(container.childNodes) || [];
     while (childNodes && childNodes.length) {
 
       childNodes.forEach(node => {
-        HtmlEditorElementControllerFactory.addController(node as HTMLElement, this)?.onAdd(this.editorContainer.nativeElement);
+        HtmlEditorElementControllerFactory.addController(node as HTMLElement, this)?.addToEditor(this.editorContainer);
       });
 
       childNodes = Array.from(childNodes).map(node => Array.from(node.childNodes))
@@ -99,39 +87,62 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
           return accumulator.concat(currentValue)
         }, []);
     }
+  }
 
+  private _subscribeDocumentSelectionChange() {
+    fromEvent(document, 'selectionchange').pipe(
+      takeUntil(this._destroy$),
+    ).subscribe(_ => {
+      const range = this.simpleWysiwygService.getRange();
+      console.warn('document:selectionchange,  range = ', range);
+      if (!this.editorContainer) { return; }
+      if (!this.isSelectionInsideEditorContainer) { return; }
+      
+      this._commonAncestorContainer = range.commonAncestorContainer;
+    });
+  }
+
+  private _observeContainer(editorContainer: HTMLDivElement) {
     const mutationObserver = new MutationObserver((records) => {
       console.warn('records = ', records);
-      const editorContainer = this.editorContainer.nativeElement;
 
-      const addedNodes = records.map(r => Array.from(r.addedNodes))
+      const allAddedNodes = records.map(r => Array.from(r.addedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
         .filter((node, i, arr) => arr.indexOf(node) === i);
-      console.log('addedNodes = ', addedNodes);
+      console.log('allAddedNodes = ', allAddedNodes);
 
-      const removedNodes = records.map(r => Array.from(r.removedNodes))
+      const allRemovedNodes = records.map(r => Array.from(r.removedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
-        .filter((node, i, arr) => arr.indexOf(node) === i)
-        .filter(node => addedNodes.indexOf(node) < 0);
-      console.log('removedNodes = ', removedNodes);
+        .filter((node, i, arr) => arr.indexOf(node) === i);
+      console.log('allRemovedNodes = ', allRemovedNodes);
 
-      removedNodes.forEach(removedNode => {
-        HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.onRemove(editorContainer);
+      const acturallyAddedNodes = allAddedNodes
+        .filter(node => allRemovedNodes.indexOf(node) < 0)
+        .filter(node => editorContainer.contains(node));
+      console.log('acturallyAddedNodes = ', acturallyAddedNodes);
+
+      const acturallyRemovedNodes = allRemovedNodes
+        .filter(node => allAddedNodes.indexOf(node) < 0)
+        .filter(node => !editorContainer.contains(node));
+      console.log('acturallyRemovedNodes = ', acturallyRemovedNodes);
+
+      const changedNodes = []
+        .concat(allAddedNodes.filter(node => acturallyAddedNodes.indexOf(node) < 0))
+        .concat(allRemovedNodes.filter(node => acturallyRemovedNodes.indexOf(node) < 0))
+        .concat(records.filter(r => r.type !== 'childList').map(r => r.target))
+        .filter((node, i, arr) => arr.indexOf(node) === i);
+      console.log('changedNodes = ', changedNodes);
+
+      acturallyRemovedNodes.forEach(removedNode => {
+        HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.removeFromEditor(editorContainer);
       });
 
-      addedNodes.forEach(addedNode => {
-        HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.onAdd(editorContainer);
+      acturallyAddedNodes.forEach(addedNode => {
+        HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.addToEditor(editorContainer);
       });
-
-      if (
-        removedNodes.length && removedNodes.indexOf(this.selected) > -1
-        || records.some(record => record.type === 'childList')
-      ) {
-        this._checkSelected(this.selected);
-      }
     });
 
-    mutationObserver.observe(container, {
+    mutationObserver.observe(editorContainer, {
       attributeOldValue: true,
       attributes: true,
       characterData: true,
@@ -140,593 +151,23 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     });
 
     this._mutationObserver = mutationObserver;
-
-    this._changeDetectorRef.detectChanges();
   }
 
-  ngOnDestroy(): void {
-    this.selectedChecked$.unsubscribe();
-    this.actionDone$.unsubscribe();
-  }
-
-  getSelected(): HTMLElement {
-    return this.selected;
-  }
-
-  doAction(action: IHtmlEditorAction) {
-    if (!this.simpleWysiwygService.selectionInside(this.editorContainer.nativeElement)) { return; }
-    action.do().subscribe(done => {
-      if (done) {
-        this.actionDone$.next();
-        this._checkSelected();
-      }
-    });
-  }
-
-  fontStyle(style: string) {
-    if (!this.simpleWysiwygService.selectionInside(this.editorContainer.nativeElement)) { return; }
-    if (style != 'createLink' && style != 'insertImage' && style != 'insertVideo' && style != 'insertTable') {
-      document.execCommand(style);
-    } else if (style == 'createLink') {
-      document.execCommand(style, false, 'https://developer.mozilla.org/zh-TW/docs/Web/API/Document/execCommand');
-    } else if (style == 'insertImage') {
-      var range = this.getRange();
-
-      let fig = document.createElement('figure');
-      fig.setAttribute("id", "myFigure");
-
-      let img = document.createElement("img");
-
-      // set img element
-      img.setAttribute("src", this.imageSrc);
-      img.setAttribute("alt", "The Pulpit Rock");
-      img.setAttribute("class", "item-hover");
-      img.setAttribute("draggable", 'false');
-      img.setAttribute("style", "float: left;")
-      // set fig element
-      fig.setAttribute("style", `width: ${this.initImageWidth * 100}%;`);
-      fig.setAttribute("class", "figure-color image-style-side");
-      // fig.setAttribute("contenteditable", "false");
-
-      var tool = document.createElement("div");
-      fig.appendChild(img);
-
-      // TODO modify css
-      let borderDiv = document.createElement('div');
-      let topLeftPort = document.createElement('div');
-      let topRightPort = document.createElement('div');
-      let bottomRightPort = document.createElement('div');
-      let bottomLeftPort = document.createElement('div');
-      borderDiv.append(topLeftPort, topRightPort, bottomLeftPort, bottomRightPort);
-      fig.appendChild(borderDiv);
-
-      // delete whatever is on the range
-      range.deleteContents();
-      // place your span
-      range.insertNode(fig);
-
-      let editor = document.getElementById('editor');
-
-      const mouseUp = fromEvent(editor, 'mouseup');
-      const mouseMove = fromEvent(editor, 'mousemove');
-
-      let mouseDown = fromEvent(fig, 'mousedown')
-        .pipe(
-          map(event => mouseMove.pipe(
-            takeUntil(mouseUp),
-            finalize(() => {
-              this.imgX = null;
-              this.imgY = null;
-              this.imageWidth = this.imgWidthToPoint(fig.getAttribute('style'));
-            })
-          )),
-          concatAll(),
-          map(event => ({ x: event['clientX'], y: event['clientY'] }))
-        )
-        .subscribe(pos => {
-          if (this.imgX && this.imgY) {
-            fig.setAttribute('style', `width: ${((this.imageWidth + (this.imgX - pos.x) / this.imgX)) * 100}%;`)
-          } else {
-            this.imageWidth = this.imgWidthToPoint(fig.getAttribute('style'));
-            this.imgX = pos.x;
-            this.imgY = pos.y;
-          }
-        })
-    } else if (style == 'insertTable') {
-      // try to add table
-      var range = this.getRange();
-      let table = document.createElement('table');
-      table.setAttribute('class', 'item-hover neux-table');
-      table.addEventListener("mousedown", this.onMouseDown);
-      // table.addEventListener("mousemove", this.onMouseMove);
-      table.addEventListener("mouseup", this.onMouseUp);
-      // table.setAttribute('class', 'tg');
-      let row = table.insertRow(0);
-      let cell = row.insertCell(0);
-      this.initCell(cell)
-      cell = row.insertCell(1);
-      this.initCell(cell);
-      row = table.insertRow(1);
-      cell = row.insertCell(0);
-      this.initCell(cell);
-      cell = row.insertCell(1);
-      this.initCell(cell);
-
-      range.insertNode(table)
-
-      this.resizableGrid(table);
-    } else {
-      document.execCommand('insertHTML', false, '<iframe width="560" height="315" src="https://www.youtube.com/embed/FMl7GEaYwAE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+  onClick(ev: MouseEvent) {
+    if (ev.target === this.editorContainer) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      return;
     }
 
-  }
-
-  onMouseDown(event) {
-    let tempEvent = _this.getMouseEvent(event.target)
-    if (tempEvent != undefined) {
-      this.isMouseDown = true;
-      this.tableMouseDown = tempEvent;
+    // console.warn('editorContainer onClick()', ev);
+    const target = ev.target as HTMLElement;
+    const targetName = target.tagName.toLowerCase();
+    if (targetName === 'img') {
+      this.simpleWysiwygService.setSelectionOnNode(target);
+      // const range = this.simpleWysiwygService.getRange();
+      // console.warn('onClick() range = ', range);
+      return;
     }
-    _this.resetSeleted();
-  }
-
-  resizableGrid(table) {
-    var row = table.getElementsByTagName('tr')[0],
-      cols = row ? row.children : undefined;
-    if (!cols) return;
-
-    for (var i = 0; i < cols.length; i++) {
-      let isExist = false;
-      // TODO
-      for (let j = 0; j < cols[i].children.length; j++) {
-        if (cols[i].children[j].id == 'resize') {
-          isExist = true;
-        }
-      }
-      if (isExist) {
-        continue;
-      } else {
-        var div = this.createDiv(cols[i].offsetHeight);
-        cols[i].appendChild(div);
-        cols[i].style.position = 'relative';
-        _this.setListeners(div);
-      }
-    }
-  }
-
-  setListeners(div) {
-    let pageX, curCol, nxtCol, curColWidth, nxtColWidth, tableWidth;
-    let editor = document.getElementById('editor');
-
-    const mouseUp = fromEvent(editor, 'mouseup');
-    const mouseMove = fromEvent(editor, 'mousemove');
-
-    let mouseDown = fromEvent(div, 'mousedown')
-      .pipe(
-        tap(e => {
-          // init 
-          curCol = e['target'].parentElement;
-          nxtCol = curCol.nextElementSibling;
-          pageX = e['pageX'];
-          curColWidth = curCol.offsetWidth;
-          tableWidth = curCol.parentElement.offsetWidth;
-          if (nxtCol) {
-            nxtColWidth = nxtCol.offsetWidth;
-          }
-        }),
-        map(event => mouseMove.pipe(
-          takeUntil(mouseUp),
-          finalize(() => {
-            curCol = undefined;
-            nxtCol = undefined;
-            pageX = undefined;
-            nxtColWidth = undefined;
-            curColWidth = undefined;
-          }))
-        ),
-        concatAll()
-      )
-      .subscribe((e) => {
-        if (curCol) {
-          var diffX = e['pageX'] - pageX;
-          if (nxtCol) {
-            nxtCol.style.width = (nxtColWidth - (diffX)) / tableWidth * 100 + '%';
-          }
-
-          curCol.style.width = (curColWidth + diffX) / tableWidth * 100 + '%';
-        }
-      })
-  }
-
-  resetSeleted() {
-    if (_this.table) {
-      //TODO
-      for (let i = 0; i < _this.table.rows.length; i++) {
-        for (let j = 0; j < _this.table.rows[i].cells.length; j++) {
-          let cell = _this.table.rows[i].cells[j];
-          cell.setAttribute('class', cell.getAttribute('class').replace(' seleted', ''))
-        }
-      }
-    }
-  }
-
-  onMouseUp(event) {
-    if (this.isMouseDown) {
-      this.isMouseDown = false;
-      let tempEvent = _this.getMouseEvent(event.target)
-      if (tempEvent != undefined) {
-        this.tableMouseUp = tempEvent;
-        _this.tableSeleted = _this.getSeleteCell(this.tableMouseDown, this.tableMouseUp);
-        for (let i = _this.tableSeleted.startRow; i <= _this.tableSeleted.endRow; i++) {
-          for (let j = _this.tableSeleted.startCol; j <= _this.tableSeleted.endCol; j++) {
-            let cell = _this.table.rows[i].cells[j];
-            cell.setAttribute('class', cell.getAttribute('class') + ' seleted');
-          }
-        }
-      }
-    }
-  }
-
-  getMouseEvent(element): MouseEvent {
-    let colIndex = undefined;
-    let rowIndex = undefined;
-    while (element) {
-      let tagName = element.tagName.toLowerCase();
-      if (tagName == 'td') {
-        colIndex = element.cellIndex;
-        element = element.parentNode;
-      } else if (tagName == 'tr') {
-        rowIndex = element.rowIndex;
-        element = element.parentNode;
-      } else if (tagName == 'table') {
-        this.table = element;
-        break;
-      } else if (tagName == 'html') {
-        break;
-      } else {
-        element = element.parentNode;
-      }
-    }
-    if (colIndex != undefined && rowIndex != undefined) {
-      // return { colId: colIndex, rowId: rowIndex };
-    } else {
-      return undefined;
-    }
-  }
-
-  getSeleteCell(tableMouseDown, tableMouseUp) {
-    let startCol: number;
-    let endCol: number;
-    let startRow: number;
-    let endRow: number;
-    if (tableMouseDown && tableMouseUp) {
-      let mouseDownSpan = this.getSpans(tableMouseDown.rowId, tableMouseDown.colId);
-      let mouseUpSpan = this.getSpans(tableMouseDown.rowId, tableMouseDown.colId);
-
-      if (tableMouseDown.colId <= tableMouseUp.colId) {
-        startCol = tableMouseDown.colId;
-      } else {
-        startCol = tableMouseUp.colId;
-      }
-      if (tableMouseDown.colId + mouseDownSpan.colSpan <= tableMouseUp.colId + mouseUpSpan.colSpan) {
-        endCol = tableMouseUp.colId + mouseUpSpan.colSpan - 1
-      } else {
-        endCol = tableMouseDown.colId + mouseDownSpan.colSpan - 1
-      }
-
-      if (tableMouseDown.rowId <= tableMouseUp.rowId) {
-        startRow = tableMouseDown.rowId;
-      } else {
-        startRow = tableMouseUp.rowId;
-      }
-      if (tableMouseDown.rowId + mouseDownSpan.rowSpan <= tableMouseUp.rowId + mouseUpSpan.rowSpan) {
-        endRow = tableMouseUp.rowId + mouseUpSpan.rowSpan - 1
-      } else {
-        endRow = tableMouseDown.rowId + mouseDownSpan.rowSpan - 1
-      }
-
-      let maxCol: number = endCol;
-      // let minCol: number = startCol;
-      let maxRow: number = endRow;
-      // let minRow: number = startRow;
-
-      //TODO
-      for (let i = startRow; i <= endRow; i++) {
-        for (let j = startCol; j <= endCol; j++) {
-          if (maxCol < (j + this.getSpans(i, j).colSpan)) {
-            maxCol = (j + this.getSpans(i, j).colSpan) - 1;
-          }
-          if (maxRow < (i + this.getSpans(i, j).rowSpan)) {
-            maxRow = (i + this.getSpans(i, j).rowSpan) - 1;
-          }
-        }
-      }
-
-      return {
-        startCol: startCol,
-        endCol: maxCol,
-        startRow: startRow,
-        endRow: maxRow
-      }
-    } else {
-      return undefined;
-    }
-  }
-
-  getSpans(rowId, colId) {
-    let cell = this.table.rows[rowId].cells[colId];
-    let rowSpan;
-    let colSpan;
-    if (cell != undefined) {
-      rowSpan = cell.getAttribute('rowspan');
-      colSpan = cell.getAttribute('colspan');
-    }
-    if (rowSpan == null) {
-      rowSpan = 1;
-    } else {
-      rowSpan = Number(rowSpan);
-    }
-    if (colSpan == null) {
-      colSpan = 1;
-    } else {
-      colSpan = Number(colSpan);
-    }
-    return { rowSpan: rowSpan, colSpan: colSpan }
-  }
-
-  getRange() {
-    return window.getSelection().getRangeAt(0);
-  }
-
-  private _checkSelected(target?: HTMLElement) {
-    if (target && this.editorContainer.nativeElement.contains(target)) {
-      this.selected = target;
-    } else {
-      const selectionHtmlElement = this.simpleWysiwygService.getSelectionHtmlElement(this.editorContainer.nativeElement);
-      this.selected = selectionHtmlElement as HTMLElement;
-    }
-    this.selectedChecked$.next();
-  }
-
-  onClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    this._checkSelected(target);
-
-    // let element = this.selected;
-    // while (element) {
-    //   let tagName = element.tagName.toLowerCase();
-    //   if (tagName == 'figure') {
-    //     this.clickElement = element;
-    //     let tool = document.getElementById('tool');
-    //     this.setToolbar(tool, element);
-    //     this.selectComponent = this.toolbarEnum.IMG;
-    //     break;
-    //   } else if (tagName == 'td') {
-    //     this.cellIndex = element.cellIndex;
-    //     element = element.parentNode;
-    //   } else if (tagName == 'tr') {
-    //     this.rowIndex = element.rowIndex;
-    //     element = element.parentNode;
-    //   } else if (tagName == 'table') {
-    //     let tool = document.getElementById('tool');
-    //     this.setToolbar(tool, element);
-    //     this.selectComponent = this.toolbarEnum.TABLE;
-    //     this.table = element;
-    //     break;
-    //   } else if (tagName == 'html') {
-    //     document.getElementById('tool').setAttribute('style', `display:none;`)
-    //     this.selectComponent = null;
-    //     break;
-    //   } else {
-    //     element = element.parentNode;
-    //   }
-    // }
-  }
-
-  setToolbar(tool, element) {
-    tool.setAttribute('style', `display:block;`);
-    while (tool.offsetParent === null) {
-      ;
-    }
-    this.setToolbarPosition(tool, element);
-  }
-
-  setToolbarPosition(tool, element) {
-    tool.setAttribute('style', `left:${element.offsetLeft + (element.offsetWidth / 2) - (tool.offsetWidth / 2)}px; top:${element.offsetTop - (tool.offsetHeight)}px; display:block;`);
-    if (!this.isElementInViewport(tool)) {
-      tool.setAttribute('style', `left:${element.offsetLeft + (element.offsetWidth / 2) - (tool.offsetWidth / 2)}px; top:${element.offsetTop + element.offsetHeight}px; display:block;`);
-    }
-  }
-
-
-  isElementInViewport(element) {
-    let rect = element.getBoundingClientRect();
-
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
-    );
-  }
-
-  addRowAbove() {
-    let cellWidth = [];
-    if (this.tableSeleted.startRow == 0) {
-      let cellList = this.table.rows[0].cells;
-
-      for (let i = 0; i < cellList.length; i++) {
-        cellWidth.push(cellList[i].offsetWidth);
-        cellList[i].removeChild(document.getElementById('resize'));
-        cellList[i].removeAttribute('style');
-      }
-    }
-    this.addRow(this.tableSeleted.startRow);
-
-    if (this.tableSeleted.startRow == 0) {
-      this.resetRowWidth(cellWidth);
-      this.resizableGrid(this.table);
-    }
-  }
-
-  addRowBelow() {
-    this.addRow(this.tableSeleted.startRow + 1);
-  }
-
-  addRow(index) {
-    // let row = this.table.insertRow(0);
-    let cells = this.table.rows[this.rowIndex].cells;
-    let row = this.table.insertRow(index);
-    for (let i = 0; i < cells.length; i++) {
-      let cell = row.insertCell(i);
-      this.initCell(cell);
-    }
-    let tool = document.getElementById('tool');
-    this.setToolbarPosition(tool, this.table);
-  }
-
-
-  initCell(cell) {
-    cell.setAttribute('class', 'tg-0pky');
-    cell.setAttribute('colspan', '1');
-    cell.setAttribute('rowspan', '1');
-    cell.innerHTML = this.defaultHtml;
-  }
-
-  deleteRow() {
-    // TODO if startRow == 0 width
-    let cellWidth = [];
-    if (this.tableSeleted.startRow == 0) {
-      let cellList = this.table.rows[0].cells;
-
-      for (let i = 0; i < cellList.length; i++) {
-        cellWidth.push(cellList[i].offsetWidth);
-      }
-    }
-    for (let i = this.tableSeleted.startRow; i <= this.tableSeleted.endRow; i++) {
-      this.table.deleteRow(this.tableSeleted.startRow);
-    }
-    if (this.tableSeleted.startRow == 0) {
-      this.resetRowWidth(cellWidth);
-    }
-    this.resizableGrid(this.table);
-  }
-
-  resetRowWidth(cellWidth) {
-    let cellList = this.table.rows[0].cells;
-    for (let i = 0; i < cellList.length; i++) {
-      cellList[i].style.width = cellWidth[i] / this.table.offsetWidth * 100 + '%';
-    }
-  }
-
-  deleteCol() {
-    for (let i = 0; i < this.table.rows.length; i++) {
-      for (let j = this.tableSeleted.startCol; j <= this.tableSeleted.endCol; j++) {
-        this.table.rows[i].deleteCell(this.tableSeleted.startCol);
-      }
-    }
-    this.resizableGrid(this.table);
-  }
-
-  createDiv(tableHeight) {
-    let div = document.createElement('div');
-    div.contentEditable = 'false';
-    div.id = 'resize';
-    div.style.top = '0';
-    div.style.right = '0';
-    div.style.width = '5px';
-    div.style.position = 'absolute';
-    div.style.cursor = 'col-resize';
-    /* remove backGroundColor later */
-    // div.style.backgroundColor = 'red';
-    div.style.userSelect = 'none';
-    /* table height */
-    div.style.height = tableHeight + 'px';
-    return div;
-  }
-
-  addColLeftward() {
-    this.addCol(this.tableSeleted.startCol, this.tableSeleted.startRow);
-  }
-
-  addColRightward() {
-    this.addCol(this.tableSeleted.startCol + 1, this.tableSeleted.startRow);
-  }
-
-  addCol(colIndex, rowIndex) {
-    console.log('colIndex', colIndex, 'rowIndex', rowIndex)
-    for (var i = 0; i < this.table.rows.length; i++) {
-      let cell = this.table.rows[i].insertCell(colIndex);
-      cell.setAttribute('class', 'tg-0pky');
-      cell.setAttribute('colspan', '1');
-      cell.setAttribute('rowspan', '1');
-      cell.innerHTML = '<div>文字</div>';
-    }
-    this.resizableGrid(this.table);
-  }
-
-  mergeTable() {
-    if (this.tableSeleted) {
-      if (this.tableSeleted.startRow === this.tableSeleted.endRow) {
-        this.mergeCol(this.tableSeleted.startCol, this.tableSeleted.endCol, this.tableSeleted.startRow);
-      } else if (this.tableSeleted.startCol === this.tableSeleted.endCol) {
-        this.mergeRow(this.tableSeleted.startRow, this.tableSeleted.endRow, this.tableSeleted.startCol);
-      } else {
-        for (let i = this.tableSeleted.startRow; i <= this.tableSeleted.endRow; i++) {
-          this.mergeCol(this.tableSeleted.startCol, this.tableSeleted.endCol, i);
-        }
-        for (let i = this.tableSeleted.startCol; i <= this.tableSeleted.endCol; i++) {
-          this.mergeRow(this.tableSeleted.startRow, this.tableSeleted.endRow, i);
-        }
-      }
-    }
-  }
-
-  mergeRow(startRow: number, endRow: number, col: number) {
-    let rowSpan = Number(this.table.rows[startRow].cells[col].getAttribute('rowspan'));
-    for (let index = startRow + 1; index <= endRow; index++) {
-      let cell = this.table.rows[index].cells[col];
-      rowSpan += Number(cell.getAttribute('rowspan'));
-      cell.setAttribute('rowspan', '0');
-      cell.setAttribute('colspan', '0');
-      cell.setAttribute('style', 'display:none;')
-    }
-    this.table.rows[startRow].cells[col].setAttribute('rowspan', rowSpan.toString());
-  }
-
-  mergeCol(startCol: number, endCol: number, row: number) {
-    let colSpan = Number(this.table.rows[row].cells[startCol].getAttribute('colspan'));
-    for (let index = startCol + 1; index <= endCol; index++) {
-      let cell = this.table.rows[row].cells[index];
-      colSpan += Number(cell.getAttribute('colspan'));
-      cell.setAttribute('rowspan', '0');
-      cell.setAttribute('colspan', '0');
-      cell.setAttribute('style', 'display:none;')
-    }
-    this.table.rows[row].cells[startCol].setAttribute('colspan', colSpan.toString());
-  }
-
-  unmerge() {
-    if (this.table) {
-      for (let i = this.tableSeleted.startRow; i <= this.tableSeleted.endRow; i++) {
-        for (let j = this.tableSeleted.startCol; j <= this.tableSeleted.endCol; j++) {
-          let cell = this.table.rows[i].cells[j];
-          cell.setAttribute('style', 'position: relative;')
-          cell.setAttribute('rowspan', '1');
-          cell.setAttribute('colspan', '1');
-        }
-      }
-    }
-  }
-
-  imgWidthToPoint(width) {
-    let temp = width.replace("width: ", "")
-    let str = temp.replace("%;", "");
-    str = str / 100;
-    return str;
-  }
-
-  @HostListener('keyup', ['$event']) onKeyup(ev) {
-    this._checkSelected();
   }
 }

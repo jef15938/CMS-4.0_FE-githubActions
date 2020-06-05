@@ -140,21 +140,24 @@ export class SimpleWysiwygService {
     return false;
   };
 
-  selectionInside(containerNode: Node, force = true) {
+  isSelectionInside(containerNode: Node, force?: boolean) {
     // selection inside editor?
     if (window.getSelection) {
       const sel = window.getSelection();
-      if (this.isOrContainsNode(containerNode, sel.anchorNode) && this.isOrContainsNode(containerNode, sel.focusNode))
+      if (this.isOrContainsNode(containerNode, sel.anchorNode) && this.isOrContainsNode(containerNode, sel.focusNode)) {
         return true;
-      // selection at least partly outside editor
-      if (!force)
+      } else {
         return false;
-      // force selection to editor
-      const range = document.createRange();
-      range.selectNodeContents(containerNode);
-      range.collapse(false);
-      sel.removeAllRanges();
-      sel.addRange(range);
+        // // selection at least partly outside editor
+        // if (!force)
+        //   return false;
+        // // force selection to editor
+        // const range = document.createRange();
+        // range.selectNodeContents(containerNode);
+        // range.collapse(false);
+        // sel.removeAllRanges();
+        // sel.addRange(range);
+      }
     }
     else if (document['selection']) {
       const sel = document['selection'];
@@ -176,15 +179,16 @@ export class SimpleWysiwygService {
         if (rangeContainer.inRange(range))
           return true;
       }
-      // selection at least partly outside editor
-      if (!force)
-        return false;
-      // force selection to editor
-      // http://stackoverflow.com/questions/12243898/how-to-select-all-text-in-contenteditable-div
-      const range = document.body['createTextRange']();
-      range['moveToElementText'](containerNode);
-      range.setEndPoint('StartToEnd', range); // collapse
-      range.select();
+      return false;
+      // // selection at least partly outside editor
+      // if (!force)
+      //   return false;
+      // // force selection to editor
+      // // http://stackoverflow.com/questions/12243898/how-to-select-all-text-in-contenteditable-div
+      // const range = document.body['createTextRange']();
+      // range['moveToElementText'](containerNode);
+      // range.setEndPoint('StartToEnd', range); // collapse
+      // range.select();
     }
     return true;
   };
@@ -192,11 +196,11 @@ export class SimpleWysiwygService {
   // exec command
   // https://developer.mozilla.org/en-US/docs/Web/API/document.execCommand
   // http://www.quirksmode.org/dom/execCommand.html
-  execCommand(containerNode: Node, command: string, param?, force_selection?: boolean) {
+  execCommand(containerNode: Node, command: string, param?) {
     // give selection to contenteditable element
     // this.restoreSelection(containerNode, popup_saved_selection);
 
-    if (!this.selectionInside(containerNode, true)) {// returns 'selection inside editor'
+    if (!this.isSelectionInside(containerNode)) {// returns 'selection inside editor'
       return false;
     }
 
@@ -230,17 +234,17 @@ export class SimpleWysiwygService {
     return false;
   };
 
-  insertImage(containerNode: Node, url: string) {
-    this.execCommand(containerNode, 'insertImage', url, true);
-    // this.callUpdates(true); // selection destroyed
-    return this;
-  }
+  // insertImage(containerNode: Node, url: string) {
+  //   this.execCommand(containerNode, 'insertImage', url, true);
+  //   // this.callUpdates(true); // selection destroyed
+  //   return this;
+  // }
 
   findRowRoot(containerNode: Node, from: HTMLElement) {
-    const possibleTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',];
+    const possibleTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'];
     let el = from;
     while (el) {
-      if (!containerNode.contains(el)) {
+      if (el === containerNode || !containerNode.contains(el)) {
         el = undefined;
         break;
       }

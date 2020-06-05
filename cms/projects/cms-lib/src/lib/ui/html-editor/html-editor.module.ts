@@ -13,7 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { HtmlEditorInsertImgModalComponent } from './modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
-import { EditorSelectedPathComponent } from './components/editor-selected-path/editor-selected-path.component';
+import { EditorPathComponent } from './components/editor-path/editor-path.component';
+import { EditorToolbarComponent } from './components/editor-toolbar/editor-toolbar.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { EditorSelectedPathComponent } from './components/editor-selected-path/e
     TableToolbarComponent,
     HtmlEditorCreateLinkModalComponent,
     HtmlEditorInsertImgModalComponent,
-    EditorSelectedPathComponent,
+    EditorPathComponent,
+    EditorToolbarComponent,
   ],
   exports: [
     // HtmlEditorComponent

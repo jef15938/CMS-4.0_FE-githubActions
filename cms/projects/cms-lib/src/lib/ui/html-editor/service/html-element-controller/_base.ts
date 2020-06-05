@@ -1,37 +1,46 @@
 import { IHtmlEditorContext } from '../../html-editor.interface';
+import { SimpleWysiwygService } from '../simple-wysiwyg.service';
 
 export const HTML_EDITOR_ELEMENT_CONTROLLER = 'CMS_HTML_EDITOR_ELEMENT_CONTROLLER';
 
 export abstract class HtmlEditorElementController<TElement extends HTMLElement> {
 
-  protected abstract onAddToEditor(editorContainer: HTMLDivElement): void;
-  protected abstract onRemovedFromEditor(editorContainer: HTMLDivElement): void;
+  protected abstract onAddToEditor(): void;
+  protected abstract onRemovedFromEditor(): void;
 
+  private _el: TElement;
+  private _context: IHtmlEditorContext;
   private _isInited = false;
+  private _isDeleted = false;
+
+  get el() { return this._el }
+  get context() { return this._context; }
+  get isInited() { return this._isInited; }
+  get isDeleted() { return this._isDeleted; }
+  get elLowerCaseTagName() { return this.el?.tagName?.toLowerCase(); }
 
   constructor(
-    public el: TElement,
-    public context: IHtmlEditorContext,
+    el: TElement,
+    context: IHtmlEditorContext,
   ) {
     el[HTML_EDITOR_ELEMENT_CONTROLLER] = this;
+    this._el = el;
+    this._context = context;
   }
 
-  onAdd(editorContainer: HTMLDivElement) {
-    if (!this._isInited) {
-      this.onAddToEditor(editorContainer);
-      this._isInited = true;
-    }
+  addToEditor(editorContainer: HTMLDivElement) {
+    if (this._isInited || this._isDeleted) { return; }
+    this.onAddToEditor();
+    this._isInited = true;
   }
 
-  onRemove(editorContainer: HTMLDivElement) {
-    if (!editorContainer.contains(this.el)) {
-      this.onRemovedFromEditor(editorContainer);
-    }
-    this._isInited = false;
-  }
-
-  getElLowerCaseTagName() {
-    return this.el?.tagName?.toLowerCase();
+  removeFromEditor(editorContainer: HTMLDivElement) {
+    if (this._isDeleted || !editorContainer.contains(this.el)) { return; }
+    this.onRemovedFromEditor();
+    this._isDeleted = true;
+    this.el[HTML_EDITOR_ELEMENT_CONTROLLER] = undefined;
+    this._el = undefined;
+    this._context = undefined;
   }
 
 }

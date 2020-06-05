@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal/custom-modal-base';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'cms-html-editor-create-link-modal',
@@ -11,22 +12,27 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase implemen
   title = '';
   actions: CustomModalActionButton[];
 
-  @Input() isSelectionInSameNode = true;
-  @Input() url = '';
-  @Input() text = '';
-  @Input() isTargetBlank = true;
+  @Input() aTag: HTMLAnchorElement;
+  @Input() canModifyText: boolean;
+
+  aTagConfig: {
+    href: string;
+    text: string;
+    target: string;
+  };
 
   constructor() { super(); }
 
   ngOnInit(): void {
+    this.aTagConfig = {
+      href: this.aTag.href,
+      text: this.aTag.text,
+      target: this.aTag.target,
+    };
   }
 
   confirm() {
-    this.close({
-      url: this.url,
-      text: this.text,
-      isTargetBlank: this.isTargetBlank,
-    })
+    this.close(this.aTagConfig);
   }
 
 }

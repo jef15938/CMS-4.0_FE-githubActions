@@ -1,38 +1,26 @@
 import { HtmlEditorElementController } from './../_base';
-import { takeUntil, tap, switchMap, delay, takeWhile } from 'rxjs/operators';
-import { merge, fromEvent, Subscription } from 'rxjs';
+import { takeUntil, tap, switchMap } from 'rxjs/operators';
+import { merge, fromEvent, Subscription, Observable } from 'rxjs';
 
 const IS_FAKE = 'IS_FAKE';
 
 export class HtmlEditorImageController extends HtmlEditorElementController<HTMLImageElement> {
 
   private _controllers: HTMLDivElement[];
-  private _drag$: Subscription;
-  private _parent: HTMLElement;
-  private _mutationObservers: MutationObserver[] = [];
   private _subscriptions: Subscription[] = [];
-  private _isSelected = false;
 
-  protected onAddToEditor(editorContainer: HTMLDivElement): void {
+  protected onAddToEditor(): void {
     if (this.el[IS_FAKE]) { return; }
 
-    this._parent = this._findParent();
-    if (!this._parent) { return; }
+    const parent = this._findParent();
+    if (!parent) { return; }
 
-    this.el.style.removeProperty('outline');
     this._registerSizeControl();
-
-    this._observeImgAndParent();
-    this._subscribeContainerEvent();
+    this._subscribeEvents();
   }
 
-  protected onRemovedFromEditor(editorContainer: HTMLDivElement): void {
+  protected onRemovedFromEditor(): void {
     if (this.el[IS_FAKE]) { return; }
-
-    this._mutationObservers?.forEach(observer => {
-      observer.disconnect();
-    });
-    this._mutationObservers = [];
 
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
@@ -42,116 +30,46 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     this._unRegisterSizeControl();
   }
 
-  private _observeImgAndParent() {
+  private _subscribeEvents() {
     if (this.el[IS_FAKE]) { return; }
 
-    const observerHandler = (records) => {
-      this._doCheck();
-    };
+    const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
+      if (!this.context.isSelectionInsideEditorContainer) { return; }
 
-    const imgObserver = new MutationObserver(observerHandler);
-    imgObserver.observe(this.el, {
-      attributeOldValue: true,
-      attributes: true,
-      attributeFilter: ['width', 'height', 'offsetTop', 'offsetLeft'],
-      characterData: true,
-      childList: true,
-      subtree: true
-    });
-    this._mutationObservers.push(imgObserver);
+      const range = this.context.simpleWysiwygService.getRange();
 
-    const parent = this._parent;
-    if (!parent || parent.tagName.toLowerCase() === 'div') {
-      console.error('Image Parent Error', this.el);
-    }
-
-    if (parent) {
-      const imgParentObserver = new MutationObserver(observerHandler);
-      imgParentObserver.observe(parent, {
-        attributeOldValue: true,
-        attributes: true,
-        attributeFilter: ['style'],
-        characterData: true,
-        childList: true,
-        subtree: true
-      });
-      this._mutationObservers.push(imgParentObserver);
-    }
-
-  }
-
-  private _subscribeContainerEvent() {
-    if (this.el[IS_FAKE]) { return; }
-
-    const contextActionDone$ = this.context.actionDone$.pipe(
-      tap(_ => {
-        if (this._isSelected) {
-          setTimeout(_=>{
-            this.el.click();
-          }, 200);
-        }
-      })
-    ).subscribe();
-    this._subscriptions.push(contextActionDone$);
-
-    const click$ = fromEvent(this.context.editorContainer.nativeElement, 'click').subscribe((ev: MouseEvent) => {
-      if (this.context.simpleWysiwygService.isOrContainsNode(this.el, ev.target)) {
+      if (range.commonAncestorContainer === this.el) {
         this._onSelected();
       } else {
         this._onUnselected();
       }
     });
-    this._subscriptions.push(click$);
-
-    const keydown$ = fromEvent(this.context.editorContainer.nativeElement, 'keydown').subscribe((ev: KeyboardEvent) => {
-      if (
-        this._isSelected
-        && this.context.simpleWysiwygService.getSelectionHtmlElement(this.context.editorContainer.nativeElement) !== this.el
-      ) {
-        this._onUnselected();
-      }
-    });
-    this._subscriptions.push(keydown$);
+    this._subscriptions.push(selectionchange$);
   }
 
   private _findParent(): HTMLElement {
-    return this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer.nativeElement, this.el);
+    return this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer, this.el);
   }
 
   private _onSelected(): void {
     if (this.el[IS_FAKE]) { return; }
 
-    this._isSelected = true;
-
     this.el.style.setProperty('outline', '3px solid #b4d7ff');
     this._doCheck();
-
-    const index = Array.from(this.el.parentNode.childNodes).indexOf(this.el);
-    this.context.simpleWysiwygService.setSelectionOnNode(this.el.parentNode, index, index + 1);
   }
 
   private _onUnselected(): void {
     if (this.el[IS_FAKE]) { return; }
-
-    this._isSelected = false;
 
     this.el.style.removeProperty('outline');
     this._doCheck();
   }
 
   private _doCheck() {
-    const img = this.el;
     if (this.el[IS_FAKE]) { return; }
 
-    const editorContainer = this.context.editorContainer.nativeElement;
-
-    const parent = this._findParent();
-    if (parent !== this._parent) {
-      this._parent = parent;
-      this._mutationObservers?.forEach(m => m.disconnect());
-      this._observeImgAndParent();
-    }
-
+    const img = this.el;
+    const editorContainer = this.context.editorContainer;
     const outline = this.el.style.getPropertyValue('outline');
 
     if (!outline) {
@@ -166,10 +84,10 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
       const topRight = controllers[1];
       const bottomLeft = controllers[2];
       const bottomRight = controllers[3];
-      topLeft.style.top = topRight.style.top = `${img.offsetTop}px`;
-      topLeft.style.left = bottomLeft.style.left = `${img.offsetLeft}px`;
-      topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 10}px`;
-      bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 10}px`;
+      topLeft.style.top = topRight.style.top = `${img.offsetTop - 5}px`;
+      topLeft.style.left = bottomLeft.style.left = `${img.offsetLeft - 5}px`;
+      topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 5}px`;
+      bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 5}px`;
       this._controllers?.forEach(c => {
         if (!editorContainer.contains(c)) {
           editorContainer.appendChild(c);
@@ -181,12 +99,10 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
   private _unRegisterSizeControl() {
     if (this.el[IS_FAKE]) { return; }
 
-    this._drag$?.unsubscribe();
-    this._drag$ = undefined;
-
-    const editorContainer = this.context.editorContainer.nativeElement;
+    const editorContainer = this.context.editorContainer;
     this._controllers?.forEach(c => {
       if (editorContainer.contains(c)) {
+        c.removeEventListener('click', this._evPreventDefaultAndStopPropagation);
         editorContainer.removeChild(c);
       }
     });
@@ -213,6 +129,18 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
       c.style.backgroundColor = '#b4d7ff';
       c.style.position = 'absolute';
       c.style.width = c.style.height = '10px';
+      c.addEventListener('click', this._evPreventDefaultAndStopPropagation);
+    });
+
+    const evPreventDefaultAndStopPropagation = (source: Observable<MouseEvent>) => new Observable<MouseEvent>(observer => {
+      return source.subscribe({
+        next: (ev) => {
+          this._evPreventDefaultAndStopPropagation(ev);
+          observer.next(ev);
+        },
+        error(err) { observer.error(err) },
+        complete() { observer.complete() }
+      });
     });
 
     const mousedown$ = merge(
@@ -220,9 +148,11 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
       fromEvent<MouseEvent>(topRight, 'mousedown'),
       fromEvent<MouseEvent>(bottomLeft, 'mousedown'),
       fromEvent<MouseEvent>(bottomRight, 'mousedown'),
-    );
-    const mousemove$ = fromEvent<MouseEvent>(document, 'mousemove');
-    const mouseup$ = fromEvent<MouseEvent>(document, 'mouseup');
+    ).pipe(evPreventDefaultAndStopPropagation);
+
+    const mousemove$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(evPreventDefaultAndStopPropagation);
+
+    const mouseup$ = fromEvent<MouseEvent>(document, 'mouseup').pipe(evPreventDefaultAndStopPropagation);
 
     const drag$ = mousedown$.pipe(
       switchMap(
@@ -259,7 +189,6 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
 
           return mousemove$.pipe(
             tap(move => {
-              move.preventDefault();
               const nowPoint = move;
               const previousPoint = previousMove || start;
               const diffX = nowPoint.clientX - previousPoint.clientX;
@@ -298,16 +227,19 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
                 img.height = +height;
                 img.width = +width;
 
-                const index = Array.from(this.el.parentNode.childNodes).indexOf(this.el);
-                this.context.simpleWysiwygService.setSelectionOnNode(this.el.parentNode, index, index + 1);
+                this.context.simpleWysiwygService.setSelectionOnNode(this.el);
               })
             ))
           );
         }
       )
     ).subscribe();
+    this._subscriptions.push(drag$);
+  }
 
-    this._drag$ = drag$;
+  private _evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 
 }
