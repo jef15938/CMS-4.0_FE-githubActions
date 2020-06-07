@@ -234,11 +234,31 @@ export class SimpleWysiwygService {
     return false;
   };
 
-  // insertImage(containerNode: Node, url: string) {
-  //   this.execCommand(containerNode, 'insertImage', url, true);
-  //   // this.callUpdates(true); // selection destroyed
-  //   return this;
-  // }
+  insertHtml(htmlString: string) {
+    const range = this.getRange();
+    if (!range) { return; }
+
+    const modifiedId = 'to-modify';
+    var div = document.createElement('div');
+    const innerHTML = htmlString.trim();
+    div.innerHTML = innerHTML;
+    const elToAdd = div.firstChild as HTMLElement;
+    elToAdd.id = modifiedId;
+    htmlString = elToAdd.outerHTML;
+
+    document.execCommand("ms-beginUndoUnit");
+
+    var success = document.execCommand('InsertHTML', false, htmlString);
+
+    if (!success) {
+      range.insertNode(elToAdd);
+      document.execCommand("ms-endUndoUnit");
+    }
+
+    var added = document.getElementById(modifiedId);
+    added.removeAttribute('id');
+    return added;
+  }
 
   findRowRoot(containerNode: Node, from: HTMLElement) {
     const possibleTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'];

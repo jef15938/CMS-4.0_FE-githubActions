@@ -1,0 +1,29 @@
+<form #form="ngForm">
+  <div class="page-content-container">
+    <mat-form-field appearance="outline">
+      <mat-label>圖片網址</mat-label>
+      <input matInput [(ngModel)]="src" name="src" required #modelSrc="ngModel"
+        (ngModelChange)="checkWidthHeight()">
+      <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>圖片描述</mat-label>
+      <input matInput [(ngModel)]="alt" name="alt">
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 50%;">
+      <mat-label>寬</mat-label>
+      <input type="number" matInput [(ngModel)]="width" name="width">
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 50%;">
+      <mat-label>高</mat-label>
+      <input type="number" matInput [(ngModel)]="height" name="height">
+    </mat-form-field>
+    <div style="display: none;">
+      <img #Img [src]="src">
+    </div>
+  </div>
+  <div class="btn-group">
+    <button type="button" mat-button (click)="close()">取消</button>
+    <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+  </div>
+</form>

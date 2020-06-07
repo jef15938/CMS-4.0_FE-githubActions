@@ -8,6 +8,7 @@ export class CreateLink extends DomCmdAction {
 
   do() {
     const range = this.context.simpleWysiwygService.getRange();
+
     if (!range) { return of(undefined); }
 
     const existingATag = this._getExistingATag(range);
@@ -37,26 +38,26 @@ export class CreateLink extends DomCmdAction {
         aTagToModify.href = configATag.href;
         aTagToModify.target = configATag.target;
 
-
         if (isCreate) { // 新增
-          if ((range.commonAncestorContainer as HTMLElement).tagName?.toLowerCase() === 'img') {
+          const isCreateOnImg = (range.commonAncestorContainer as HTMLElement).tagName?.toLowerCase() === 'img';
+
+          if (isCreateOnImg) {
             aTagToModify.appendChild(range.commonAncestorContainer);
-            range.insertNode(aTagToModify);
-            this.context.simpleWysiwygService.setSelectionOnNode(aTagToModify, 0, 1);
           } else {
-            const rangeStart = 0;
-            let rangeEnd = 1;
             if (canModifyText) {
               aTagToModify.text = configATag.text || configATag.href;
             } else {
-              const extractContents = range.extractContents();
-              aTagToModify.appendChild(extractContents);
-              rangeEnd = aTagToModify.childNodes.length;
+              const contents = range.cloneContents();
+              aTagToModify.appendChild(contents);
             }
-            range.deleteContents();
-            range.insertNode(aTagToModify);
-            this.context.simpleWysiwygService.setSelectionOnNode(aTagToModify, rangeStart, rangeEnd);
           }
+
+          const modified = this.context.simpleWysiwygService.insertHtml(aTagToModify.outerHTML);
+
+          this.context.simpleWysiwygService.setSelectionOnNode(
+            isCreateOnImg ? modified.getElementsByTagName('img')[0] : modified,
+            0,
+            isCreateOnImg ? 0 : modified.childNodes?.length);
         }
       })
     );
@@ -68,6 +69,7 @@ export class CreateLink extends DomCmdAction {
 
     if (commonAncestorContainerTagName === 'img') { return false; }
     if (range.collapsed) { return true; }
+    return true;
 
     let canModifyText = true;
     let nodesToCheck: Node[] = [];

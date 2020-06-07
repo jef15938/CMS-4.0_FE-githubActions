@@ -15,6 +15,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { HtmlEditorInsertImgModalComponent } from './modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 import { EditorPathComponent } from './components/editor-path/editor-path.component';
 import { EditorToolbarComponent } from './components/editor-toolbar/editor-toolbar.component';
+import { HtmlEditorInsertTableModalComponent } from './modal/html-editor-insert-table-modal/html-editor-insert-table-modal.component';
 
 @NgModule({
   imports: [
@@ -29,11 +30,12 @@ import { EditorToolbarComponent } from './components/editor-toolbar/editor-toolb
   declarations: [
     EditorContainerModalComponent,
     HtmlEditorComponent,
+    EditorPathComponent,
+    EditorToolbarComponent,
     TableToolbarComponent,
     HtmlEditorCreateLinkModalComponent,
     HtmlEditorInsertImgModalComponent,
-    EditorPathComponent,
-    EditorToolbarComponent,
+    HtmlEditorInsertTableModalComponent,
   ],
   exports: [
     // HtmlEditorComponent

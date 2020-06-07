@@ -97,7 +97,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       console.warn('document:selectionchange,  range = ', range);
       if (!this.editorContainer) { return; }
       if (!this.isSelectionInsideEditorContainer) { return; }
-      
+
       this._commonAncestorContainer = range.commonAncestorContainer;
     });
   }
@@ -116,7 +116,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
         .filter((node, i, arr) => arr.indexOf(node) === i);
       console.log('allRemovedNodes = ', allRemovedNodes);
 
-      const acturallyAddedNodes = allAddedNodes
+      let acturallyAddedNodes = allAddedNodes
         .filter(node => allRemovedNodes.indexOf(node) < 0)
         .filter(node => editorContainer.contains(node));
       console.log('acturallyAddedNodes = ', acturallyAddedNodes);
@@ -137,9 +137,16 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
         HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.removeFromEditor(editorContainer);
       });
 
-      acturallyAddedNodes.forEach(addedNode => {
-        HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.addToEditor(editorContainer);
-      });
+      while (acturallyAddedNodes && acturallyAddedNodes.length) {
+        acturallyAddedNodes.forEach(addedNode => {
+          HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.addToEditor(editorContainer);
+        });
+
+        acturallyAddedNodes = acturallyAddedNodes.reduce((a, b) => {
+          return b ? a.concat(Array.from(b.childNodes)) : [];
+        }, []);
+      }
+
     });
 
     mutationObserver.observe(editorContainer, {
