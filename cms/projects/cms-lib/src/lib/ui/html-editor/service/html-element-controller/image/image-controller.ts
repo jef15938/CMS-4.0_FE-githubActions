@@ -1,26 +1,40 @@
 import { HtmlEditorElementController } from './../_base';
 import { takeUntil, tap, switchMap } from 'rxjs/operators';
 import { merge, fromEvent, Subscription, Observable } from 'rxjs';
+import { IHtmlEditorContextMenuItem } from '../../../html-editor.interface';
+import { InsertImage, CreateLink } from '../../../actions/action/_index';
 
 const IS_FAKE = 'IS_FAKE';
 
 export class HtmlEditorImageController extends HtmlEditorElementController<HTMLImageElement> {
 
+  contextMenuItems: IHtmlEditorContextMenuItem[];
+
   private _controllers: HTMLDivElement[];
   private _subscriptions: Subscription[] = [];
+  private _mutationObserver: MutationObserver;
 
   protected onAddToEditor(): void {
     if (this.el[IS_FAKE]) { return; }
 
+    this.contextMenuItems = [
+      { text: '圖片設定', icon: 'edit', action: new InsertImage(this.context) },
+      { text: '連結', icon: 'link', action: new CreateLink(this.context) },
+    ];
+
     const parent = this._findParent();
     if (!parent) { return; }
 
-    this._registerSizeControl();
+    // this._registerSizeControl();
+    // this._observeEditorContainer();
     this._subscribeEvents();
   }
 
   protected onRemovedFromEditor(): void {
     if (this.el[IS_FAKE]) { return; }
+
+    this._mutationObserver?.disconnect();
+    this._mutationObserver = undefined;
 
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
@@ -30,21 +44,41 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     this._unRegisterSizeControl();
   }
 
+  private _observeEditorContainer() {
+    const editorContainer = this.context.editorContainer;
+    const mutationObserver = new MutationObserver((records) => {
+      this._checkSelected();
+    });
+
+    mutationObserver.observe(editorContainer, {
+      attributes: true,
+      characterData: true,
+      childList: true,
+      subtree: true
+    });
+
+    this._mutationObserver = mutationObserver;
+  }
+
   private _subscribeEvents() {
     if (this.el[IS_FAKE]) { return; }
 
     const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
-      if (!this.context.isSelectionInsideEditorContainer) { return; }
-
-      const range = this.context.simpleWysiwygService.getRange();
-
-      if (range.commonAncestorContainer === this.el) {
-        this._onSelected();
-      } else {
-        this._onUnselected();
-      }
+      this._checkSelected();
     });
     this._subscriptions.push(selectionchange$);
+  }
+
+  private _checkSelected() {
+    if (!this.context.isSelectionInsideEditorContainer) { return; }
+
+    const range = this.context.simpleWysiwygService.getRange();
+
+    if (range.commonAncestorContainer === this.el) {
+      this._onSelected();
+    } else {
+      this._onUnselected();
+    }
   }
 
   private _findParent(): HTMLElement {
@@ -55,45 +89,39 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     if (this.el[IS_FAKE]) { return; }
 
     this.el.style.setProperty('outline', '3px solid #b4d7ff');
-    this._doCheck();
+
+    const controllers = this._controllers || [];
+    if (!controllers.length) { return; }
+
+    const editorContainer = this.context.editorContainer;
+    const img = this.el;
+
+    const topLeft = controllers[0];
+    const topRight = controllers[1];
+    const bottomLeft = controllers[2];
+    const bottomRight = controllers[3];
+    topLeft.style.top = topRight.style.top = `${img.offsetTop - 5}px`;
+    topLeft.style.left = bottomLeft.style.left = `${img.offsetLeft - 5}px`;
+    topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 5}px`;
+    bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 5}px`;
+    this._controllers?.forEach(c => {
+      if (!editorContainer.contains(c)) {
+        editorContainer.appendChild(c);
+      }
+    });
   }
 
   private _onUnselected(): void {
     if (this.el[IS_FAKE]) { return; }
 
     this.el.style.removeProperty('outline');
-    this._doCheck();
-  }
 
-  private _doCheck() {
-    if (this.el[IS_FAKE]) { return; }
-
-    const img = this.el;
     const editorContainer = this.context.editorContainer;
-    const outline = this.el.style.getPropertyValue('outline');
-
-    if (!outline) {
-      this._controllers?.forEach(c => {
-        if (editorContainer.contains(c)) {
-          editorContainer.removeChild(c);
-        }
-      });
-    } else {
-      const controllers = this._controllers || [];
-      const topLeft = controllers[0];
-      const topRight = controllers[1];
-      const bottomLeft = controllers[2];
-      const bottomRight = controllers[3];
-      topLeft.style.top = topRight.style.top = `${img.offsetTop - 5}px`;
-      topLeft.style.left = bottomLeft.style.left = `${img.offsetLeft - 5}px`;
-      topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 5}px`;
-      bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 5}px`;
-      this._controllers?.forEach(c => {
-        if (!editorContainer.contains(c)) {
-          editorContainer.appendChild(c);
-        }
-      });
-    }
+    this._controllers?.forEach(c => {
+      if (editorContainer.contains(c)) {
+        editorContainer.removeChild(c);
+      }
+    });
   }
 
   private _unRegisterSizeControl() {

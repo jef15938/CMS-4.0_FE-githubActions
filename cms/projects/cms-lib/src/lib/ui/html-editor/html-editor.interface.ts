@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { ModalService } from './../modal/modal.service';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
+import { IHtmlEditorAction } from './actions/action.interface';
 
 export interface IHtmlEditorContext {
   simpleWysiwygService: SimpleWysiwygService;
@@ -8,6 +9,13 @@ export interface IHtmlEditorContext {
   editorContainer: HTMLDivElement;
   commonAncestorContainer: Node;
   isSelectionInsideEditorContainer: boolean;
+  doAction(action: IHtmlEditorAction): void;
+}
+
+export interface IHtmlEditorContextMenuItem {
+  text: string,
+  icon: string,
+  action: IHtmlEditorAction,
 }
 
 export interface IHtmlEditorService {

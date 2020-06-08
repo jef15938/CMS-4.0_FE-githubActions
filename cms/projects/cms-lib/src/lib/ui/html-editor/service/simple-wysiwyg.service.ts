@@ -268,11 +268,32 @@ export class SimpleWysiwygService {
         el = undefined;
         break;
       }
-      if (possibleTags.indexOf(el.tagName.toLowerCase()) > -1) {
+      if (possibleTags.indexOf(el.tagName?.toLowerCase()) > -1) {
         break;
       }
       el = el.parentElement;
     }
     return el;
+  }
+
+  findTagFromTargetToContainer(editorContainer: HTMLDivElement, target: HTMLElement, tag: string): HTMLElement {
+    tag = tag?.toLowerCase();
+    
+    const targetName = target.tagName?.toLowerCase();
+    if (targetName === tag) { return target; }
+    let el = target.parentElement;
+    let result: HTMLElement;
+    while (!!el) {
+      if (el === editorContainer) {
+        break;
+      }
+      const elTagName = el.tagName?.toLowerCase();
+      if (elTagName === tag) {
+        result = el;
+        break;
+      }
+      el = el.parentElement;
+    }
+    return result;
   }
 }

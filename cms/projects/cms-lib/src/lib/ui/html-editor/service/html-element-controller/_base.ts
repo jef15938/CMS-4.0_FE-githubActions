@@ -1,5 +1,4 @@
-import { IHtmlEditorContext } from '../../html-editor.interface';
-import { SimpleWysiwygService } from '../simple-wysiwyg.service';
+import { IHtmlEditorContext, IHtmlEditorContextMenuItem } from '../../html-editor.interface';
 
 export const HTML_EDITOR_ELEMENT_CONTROLLER = 'CMS_HTML_EDITOR_ELEMENT_CONTROLLER';
 
@@ -7,6 +6,7 @@ export abstract class HtmlEditorElementController<TElement extends HTMLElement> 
 
   protected abstract onAddToEditor(): void;
   protected abstract onRemovedFromEditor(): void;
+  abstract contextMenuItems: IHtmlEditorContextMenuItem[];
 
   private _el: TElement;
   private _context: IHtmlEditorContext;

@@ -1,7 +1,8 @@
 import { HtmlEditorElementController, HTML_EDITOR_ELEMENT_CONTROLLER } from './_base';
 import { HtmlEditorImageController } from './image/image-controller';
-import { IHtmlEditorContext } from '../../html-editor.interface';
+import { IHtmlEditorContext, IHtmlEditorContextMenuItem } from '../../html-editor.interface';
 import { HtmlEditorTableController } from './table/table-controller';
+import { IHtmlEditorAction } from '../../actions/action.interface';
 
 export class HtmlEditorElementControllerFactory {
   static addController(el: HTMLElement, context: IHtmlEditorContext): HtmlEditorElementController<HTMLElement> {
@@ -28,5 +29,10 @@ export class HtmlEditorElementControllerFactory {
 
   static getController(el: HTMLElement): HtmlEditorElementController<HTMLElement> {
     return el ? el[HTML_EDITOR_ELEMENT_CONTROLLER] : undefined;
+  }
+
+  static getContextMenuItems(el: HTMLElement): IHtmlEditorContextMenuItem[] {
+    const controller = HtmlEditorElementControllerFactory.getController(el);
+    return controller?.contextMenuItems || [];
   }
 }

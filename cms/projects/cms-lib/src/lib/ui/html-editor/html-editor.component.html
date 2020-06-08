@@ -4,8 +4,22 @@
 <div class="neux-noselect" style="border: 1px solid black; padding: 5px; border-bottom: none;">
   <cms-editor-path [context]="this"></cms-editor-path>
 </div>
-<div style="position: relative; border: 1px solid black;" (click)="onClick($event)">
-  <div #EditorContainer contenteditable id='editor' class="neux-editor">
+<div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+  [style.top]="contextMenuPosition.y" #MenuTrigger="matMenuTrigger" [matMenuTriggerFor]="EditorMenu">
+</div>
+<mat-menu #EditorMenu="matMenu">
+  <button type="button" mat-menu-item *ngFor="let item of contextMenuItems" (click)="doAction(item.action)">
+    <mat-icon>{{item.icon}}</mat-icon>
+    {{item.text}}
+  </button>
+  <button type="button" mat-menu-item>
+    <mat-icon>reply</mat-icon>
+    取消
+  </button>
+</mat-menu>
+<div style="position: relative; border: 1px solid black;">
+  <div #EditorContainer contenteditable id='editor' class="neux-editor" cmsRightClickHandler (click)="onClick($event)"
+    (rightClick)="onRightClick($event)">
   </div>
   <!-- <cms-html-editor-table-toolbar *ngIf="selectComponent == toolbarEnum.TABLE" (addRowAbove)="addRowAbove()"
     (addRowBelow)="addRowBelow()" (addColLeftward)="addColLeftward()" (addColRightward)="addColRightward()"

@@ -2,9 +2,11 @@ import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, 
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ModalService } from './../modal/modal.service';
-import { IHtmlEditorContext } from './html-editor.interface';
+import { IHtmlEditorContext, IHtmlEditorContextMenuItem } from './html-editor.interface';
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
+import { IHtmlEditorAction } from './actions/action.interface';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'cms-html-editor',
@@ -16,6 +18,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   @Input() content = '';
 
   @ViewChild('EditorContainer') private _editorContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('MenuTrigger') private _editorMenu: MatMenuTrigger;
 
   private _simpleWysiwygService: SimpleWysiwygService;
   private _modalService: ModalService;
@@ -28,6 +31,9 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   get isSelectionInsideEditorContainer() { return this.editorContainer && this.simpleWysiwygService.isSelectionInside(this.editorContainer); }
 
   private _mutationObserver: MutationObserver;
+
+  contextMenuPosition = { x: '0px', y: '0px' };
+  contextMenuItems: IHtmlEditorContextMenuItem[] = [];
 
   private _destroy$ = new Subject();
 
@@ -161,18 +167,61 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   }
 
   onClick(ev: MouseEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
     if (ev.target === this.editorContainer) {
-      ev.stopPropagation();
-      ev.preventDefault();
       return;
     }
 
     const target = ev.target as HTMLElement;
-    const targetName = target.tagName.toLowerCase();
 
-    if (targetName === 'img') {
-      this.simpleWysiwygService.setSelectionOnNode(target);
+    const img = this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img');
+    if (img) {
+      this.simpleWysiwygService.setSelectionOnNode(img);
       return;
     }
+  }
+
+  onRightClick(ev: MouseEvent) {
+    const target = ev.target as HTMLElement;
+
+    const img = this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img');
+    if (img) {
+      this._openRightClickMenu(ev, img);
+      return;
+    }
+
+    const table = this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table');
+    if (table) {
+      this._openRightClickMenu(ev, table);
+      return;
+    }
+  }
+
+  private _openRightClickMenu(ev: MouseEvent, target: HTMLElement) {
+    this.simpleWysiwygService.setSelectionOnNode(ev.target as Node);
+    const range = this.simpleWysiwygService.getRange();
+    this.contextMenuPosition.x = ev.clientX + 'px';
+    this.contextMenuPosition.y = ev.clientY + 'px';
+    this._editorMenu.menuData = { 'range': range };
+    this._editorMenu.menu.focusFirstItem('mouse');
+    const subscription = this._editorMenu.onMenuClose.subscribe(_ => {
+      subscription.unsubscribe();
+      if (!this.simpleWysiwygService.isSelectionInside(this.editorContainer)) {
+        this.simpleWysiwygService.restoreSelection(this._editorMenu.menuData['range']);
+      }
+    });
+    this.contextMenuItems = HtmlEditorElementControllerFactory.getContextMenuItems(target as HTMLElement);
+    this._editorMenu.openMenu();
+  }
+
+  doAction(action: IHtmlEditorAction) {
+    if (!action) { return; }
+    if (!this.isSelectionInsideEditorContainer) { return; }
+
+    action.do().subscribe(_ => {
+
+    });
   }
 }

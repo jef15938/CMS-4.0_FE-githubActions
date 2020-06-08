@@ -16,7 +16,7 @@ export class RightClickHandlerDirective {
   onRightClick(event) {
     if (this.stopPropagation) { event.stopPropagation(); }
     if (this.preventDefault) { event.preventDefault(); }
-    this.rightClick.emit(undefined);
+    this.rightClick.emit(event);
   }
 
 }

@@ -16,15 +16,21 @@ import { HtmlEditorInsertImgModalComponent } from './modal/html-editor-insert-im
 import { EditorPathComponent } from './components/editor-path/editor-path.component';
 import { EditorToolbarComponent } from './components/editor-toolbar/editor-toolbar.component';
 import { HtmlEditorInsertTableModalComponent } from './modal/html-editor-insert-table-modal/html-editor-insert-table-modal.component';
+import { DirectiveModule } from '../../directive/directive.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
     CommonModule,
     PipeModule,
+    DirectiveModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    MatMenuModule,
+    MatIconModule,
     FormsModule,
   ],
   declarations: [

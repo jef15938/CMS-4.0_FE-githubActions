@@ -9,7 +9,7 @@ export class InsertTable extends HtmlEditorAction {
     const range = this.context.simpleWysiwygService.getRange();
     if (!range) { return of(undefined); }
 
-    const existingTable = this._findExistingTable();
+    const existingTable = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, range.commonAncestorContainer as HTMLElement, 'table');
     if (existingTable) {
       return this.context.modalService.openMessage({
         message: '表格內無法插入表格',
@@ -28,11 +28,12 @@ export class InsertTable extends HtmlEditorAction {
         table.setAttribute('style', 'width: 99% !important;');
         table.classList.add('neux-table');
 
-        for (let i = 0; i < config.rows; ++i) {
+        for (let row = 0; row < config.rows; ++row) {
           const tr = document.createElement('tr');
-          for (let j = 0; j < config.cols; ++j) {
+          for (let col = 0; col < config.cols; ++col) {
             const td = document.createElement('td');
-            td.innerHTML = '<div>文字</div>';
+            // td.innerHTML = '<div>文字</div>';
+            td.innerHTML = '文字';
             td.setAttribute('class', 'tg-0pky');
             td.setAttribute('colspan', '1');
             td.setAttribute('rowspan', '1');
@@ -41,8 +42,13 @@ export class InsertTable extends HtmlEditorAction {
           table.appendChild(tr);
         }
 
-        const target = this.context.simpleWysiwygService.insertHtml(table.outerHTML);
-        this.context.simpleWysiwygService.setSelectionOnNode(target);
+        const addedTable = this.context.simpleWysiwygService.insertHtml(table.outerHTML) as HTMLTableElement;
+        this.context.simpleWysiwygService.setSelectionOnNode(addedTable);
+
+        const tds = addedTable.querySelectorAll('td');
+        tds.forEach(td => {
+          td.setAttribute('style', `width: ${addedTable.clientWidth / config.cols}px;`)
+        })
       })
     );
   }
