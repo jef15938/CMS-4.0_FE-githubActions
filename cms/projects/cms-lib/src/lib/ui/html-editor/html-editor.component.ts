@@ -167,13 +167,11 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       return;
     }
 
-    // console.warn('editorContainer onClick()', ev);
     const target = ev.target as HTMLElement;
     const targetName = target.tagName.toLowerCase();
+
     if (targetName === 'img') {
       this.simpleWysiwygService.setSelectionOnNode(target);
-      // const range = this.simpleWysiwygService.getRange();
-      // console.warn('onClick() range = ', range);
       return;
     }
   }

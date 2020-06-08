@@ -25,7 +25,7 @@ export class InsertTable extends HtmlEditorAction {
         if (!config) { return; }
 
         const table = document.createElement('table');
-        table.setAttribute('style', 'width: 99% !important; margin-left: auto; margin-right: auto;');
+        table.setAttribute('style', 'width: 99% !important;');
         table.classList.add('neux-table');
 
         for (let i = 0; i < config.rows; ++i) {

@@ -1,6 +1,7 @@
 import { HtmlEditorElementController, HTML_EDITOR_ELEMENT_CONTROLLER } from './_base';
 import { HtmlEditorImageController } from './image/image-controller';
 import { IHtmlEditorContext } from '../../html-editor.interface';
+import { HtmlEditorTableController } from './table/table-controller';
 
 export class HtmlEditorElementControllerFactory {
   static addController(el: HTMLElement, context: IHtmlEditorContext): HtmlEditorElementController<HTMLElement> {
@@ -12,6 +13,9 @@ export class HtmlEditorElementControllerFactory {
       switch (tagName) {
         case 'img':
           controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorImageController(el as HTMLImageElement, context);
+          break;
+        case 'table':
+          controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorTableController(el as HTMLTableElement, context);
           break;
       }
 
