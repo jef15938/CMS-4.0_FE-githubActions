@@ -6,46 +6,64 @@ import { HtmlEditorInsertTableModalComponent } from '../../modal/html-editor-ins
 export class InsertTable extends HtmlEditorAction {
 
   do() {
-    const editorContainer = this.context.editorContainer;
-    const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
-    const image = commonAncestorContainer?.tagName.toLowerCase() === 'img'
-      ? commonAncestorContainer as HTMLTableElement
-      : undefined;
-    // https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230
     const range = this.context.simpleWysiwygService.getRange();
-    if (!image && !range) { return of(undefined); }
+    if (!range) { return of(undefined); }
+
+    const existingTable = this._findExistingTable();
+    if (existingTable) {
+      return this.context.modalService.openMessage({
+        message: '表格內無法插入表格',
+        title: '插入表格錯誤'
+      });
+    }
 
     return this.context.modalService.openComponent({
       component: HtmlEditorInsertTableModalComponent,
-      componentInitData: {
-        title: `${image ? '修改' : '加入'}圖片`,
-        // src: image?.src,
-        // alt: image?.alt,
-        // width: image?.width,
-        // height: image?.height,
-      }
     }).pipe(
-      tap((config: { src: string, alt: string, width: number, height: number }) => {
+      tap((config: { src: string, alt: string, rows: number, cols: number }) => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
 
-        if (!image) {
-          this.context.simpleWysiwygService.execCommand(editorContainer, 'insertImage', config.src);
-          const range = this.context.simpleWysiwygService.getRange();
-          const imgElement = range.commonAncestorContainer.childNodes[range.startOffset - 1] as HTMLImageElement;
-          if (imgElement && imgElement.tagName.toLowerCase() === 'img') {
-            imgElement.height = config.height;
-            imgElement.width = config.width;
-            imgElement.alt = config.alt;
+        const table = document.createElement('table');
+        table.setAttribute('style', 'width: 99% !important; margin-left: auto; margin-right: auto;');
+        table.classList.add('neux-table');
+
+        for (let i = 0; i < config.rows; ++i) {
+          const tr = document.createElement('tr');
+          for (let j = 0; j < config.cols; ++j) {
+            const td = document.createElement('td');
+            td.innerHTML = '<div>文字</div>';
+            td.setAttribute('class', 'tg-0pky');
+            td.setAttribute('colspan', '1');
+            td.setAttribute('rowspan', '1');
+            tr.appendChild(td);
           }
-        } else {
-          // image.src = config.src;
-          // image.alt = config.alt;
-          // image.width = config.width;
-          // image.height = config.height;
+          table.appendChild(tr);
         }
-        return;
+
+        const target = this.context.simpleWysiwygService.insertHtml(table.outerHTML);
+        this.context.simpleWysiwygService.setSelectionOnNode(target);
       })
     );
+  }
+
+  private _findExistingTable(): HTMLTableElement {
+    const range = this.context.simpleWysiwygService.getRange();
+    const commonAncestorContainer = range.commonAncestorContainer as HTMLElement;
+    const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLowerCase();
+    const tableTagNames = ['td', 'th', 'tr', 'table', 'tbody', 'thead', 'tfoot']
+    if (commonAncestorContainer && tableTagNames.indexOf(commonAncestorContainerTagName) > -1) {
+      let el = commonAncestorContainer;
+      while (el) {
+        const tagName = el.tagName?.toLowerCase();
+        if (tagName === 'table') {
+          break;
+        } else {
+          el = el.parentElement;
+        }
+      }
+      return el as HTMLTableElement;
+    }
+    return null;
   }
 }

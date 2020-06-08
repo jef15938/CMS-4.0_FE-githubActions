@@ -6,6 +6,7 @@ import {
   Indent, Outdent,
   CreateLink, InsertImage,
 } from './action/_index';
+import { InsertTable } from './action/insert-table';
 
 export class HtmlEditorActions {
   private _context: IHtmlEditorContext;
@@ -23,6 +24,7 @@ export class HtmlEditorActions {
   outdent: Outdent;
   createLink: CreateLink;
   insertImage: InsertImage;
+  insertTable: InsertTable;
 
   constructor(
     context: IHtmlEditorContext,
@@ -42,5 +44,6 @@ export class HtmlEditorActions {
     this.outdent = new Outdent(context);
     this.createLink = new CreateLink(context);
     this.insertImage = new InsertImage(context);
+    this.insertTable = new InsertTable(context);
   }
 }

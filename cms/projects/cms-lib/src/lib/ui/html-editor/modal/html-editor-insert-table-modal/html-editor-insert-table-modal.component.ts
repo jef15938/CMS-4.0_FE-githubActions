@@ -10,37 +10,23 @@ export class HtmlEditorInsertTableModalComponent extends CustomModalBase impleme
 
   @ViewChild('Table') table: ElementRef<HTMLTableElement>;
 
-  title = '';
+  title = '表格設定';
   actions: CustomModalActionButton[];
 
-  @Input() src = '';
-  @Input() alt = '';
-  @Input() width: number = null;
-  @Input() height: number = null;
+  @Input() rows: number = null;
+  @Input() cols: number = null;
 
   constructor() { super(); }
 
   ngOnInit(): void {
-    this.src = this.src || '';
-    this.alt = this.alt || '';
-    this.width = this.width || null;
-    this.height = this.height || null;
-  }
-
-  checkWidthHeight() {
-    setTimeout(() => {
-      const table = this.table.nativeElement;
-      // this.width = table.width;
-      // this.height = table.height;
-    }, 250)
+    this.rows = this.rows || 2;
+    this.cols = this.cols || 2;
   }
 
   confirm() {
     this.close({
-      src: this.src || '',
-      alt: this.alt || '',
-      width: this.width || null,
-      height: this.height || null,
+      rows: this.rows || null,
+      cols: this.cols || null,
     })
   }
 

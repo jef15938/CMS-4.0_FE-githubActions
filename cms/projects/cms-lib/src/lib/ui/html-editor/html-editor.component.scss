@@ -8,7 +8,9 @@
                         supported by Chrome, Edge, Opera and Firefox */
 }
 
-.neux-editor{
+.neux-editor {
+
+  margin: 10px;
 
   ::ng-deep img::-moz-selection { /* Code for Firefox */
     color: transparent !important;
@@ -25,42 +27,44 @@
   height: 95%;
 
   ::ng-deep .neux-table  {
-      border-collapse:collapse;
-      border-spacing:0;
-      width: 100%;
+    border-collapse:collapse;
+    border-spacing:0;
+    width: 100%;
+    margin: 10px;
+    padding: 30px 0 20px 0;
+
+    td {
+      font-family:Arial, sans-serif;
+      font-size:14px;
+      padding:10px 5px;
+      border-style:solid;
+      border-width:1px;
+      overflow:hidden;
+      word-break:normal;
+      border-color:black;
+    }
+
+    th {
+      font-family:Arial, sans-serif;
+      font-size:14px;
+      font-weight:normal;
+      padding:10px 5px;
+      border-style:solid;
+      border-width:1px;
+      overflow:hidden;
+      word-break:normal;
+      border-color:black;
+    }
+
+    .tg-0pky{
+      border-color:inherit;
+      text-align:left;
+      vertical-align:top
+    } 
   
-      td {
-          font-family:Arial, sans-serif;
-          font-size:14px;
-          padding:10px 5px;
-          border-style:solid;
-          border-width:1px;
-          overflow:hidden;
-          word-break:normal;
-          border-color:black;
-      }
-  
-      th {
-          font-family:Arial, sans-serif;
-          font-size:14px;
-          font-weight:normal;
-          padding:10px 5px;
-          border-style:solid;
-          border-width:1px;
-          overflow:hidden;
-          word-break:normal;
-          border-color:black;
-      }
-  
-      .tg-0pky{
-          border-color:inherit;
-          text-align:left;
-          vertical-align:top
-      }
-  
-      .seleted {
-          background-color: silver;
-      }
+    .seleted {
+        background-color: silver;
+    }
   }
 
   .figure-color {
