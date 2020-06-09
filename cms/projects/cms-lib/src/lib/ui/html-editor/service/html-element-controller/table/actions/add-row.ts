@@ -17,39 +17,39 @@ export class AddRow extends HtmlEditorAction {
   }
 
   do(): Observable<any> {
+    if (!this._controller.selectedRows.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準列' }); }
+
     const table = this._controller.el;
-    const range = this.context.simpleWysiwygService.getRange();
-    const row = this.context.simpleWysiwygService.findTagFromTargetToContainer(
-      table,
-      range.commonAncestorContainer as HTMLElement,
-      'tr'
-    );
-    if (row) {
-      const newRow = document.createElement('tr');
+    const rowParent = this._controller.selectedRows.map(row => row.parentElement)[0];
+    const rowParentChildren = Array.from(rowParent.childNodes);
+    const rowIndexes = this._controller.selectedRows.map(row => rowParentChildren.indexOf(row));
+    const baseRowIndex = this._position === 'before' ? Math.min(...rowIndexes) : Math.max(...rowIndexes);
+    const baseRow = rowParentChildren[baseRowIndex];
 
-      const cols = this._controller.getSetting().cols;
-      for (let col = 0; col < cols; ++col) {
-        const td = document.createElement('td');
-        // td.innerHTML = '<div>文字</div>';
-        td.innerHTML = '文字';
-        td.setAttribute('class', 'tg-0pky');
-        td.setAttribute('colspan', '1');
-        td.setAttribute('rowspan', '1');
-        newRow.appendChild(td);
-      }
-
-      if (this._position === 'before') {
-        row.parentNode.insertBefore(newRow, row);
-      } else {
-        const next = row.nextSibling;
-        if (next) {
-          row.parentNode.insertBefore(newRow, next);
-        } else {
-          row.parentNode.appendChild(newRow);
-        }
-      }
-      this.context.simpleWysiwygService.setSelectionOnNode(table);
+    const newRow = document.createElement('tr');
+    const cols = this._controller.getSetting().cols;
+    for (let col = 0; col < cols; ++col) {
+      const td = document.createElement('td');
+      // td.innerHTML = '<div>文字</div>';
+      td.innerHTML = '文字';
+      td.setAttribute('class', 'tg-0pky');
+      td.setAttribute('colspan', '1');
+      td.setAttribute('rowspan', '1');
+      newRow.appendChild(td);
     }
+
+    if (this._position === 'before') {
+      rowParent.insertBefore(newRow, baseRow);
+    } else {
+      const next = baseRow.nextSibling;
+      if (next) {
+        rowParent.insertBefore(newRow, next);
+      } else {
+        rowParent.appendChild(newRow);
+      }
+    }
+
+    this._controller.checkTableState();
     return of(undefined);
   }
 }

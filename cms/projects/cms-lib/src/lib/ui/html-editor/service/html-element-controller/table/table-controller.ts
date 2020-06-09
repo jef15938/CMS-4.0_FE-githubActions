@@ -11,6 +11,9 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
   contextMenuItems: IHtmlEditorContextMenuItem[];
 
+  selectedCols: HTMLTableDataCellElement[] = [];
+  selectedRows: HTMLTableRowElement[] = [];
+
   private _tableSetting: ITableSetting;
   private _subscriptions: Subscription[] = [];
 
@@ -56,7 +59,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
       const range = this.context.simpleWysiwygService.getRange();
 
-      if (this.el.contains(range?.startContainer)) {
+      if (this.el.contains(range?.commonAncestorContainer)) {
         this._onSelected();
       } else {
         this._onUnselected();
@@ -118,16 +121,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       }
     }
 
-    const getSelectedCells = () => {
-      table.querySelectorAll("td").forEach(td => {
-        // if ($(this).hasClass('selected')) {
-        //   var col = $(this).parent().children().index($(this));
-        //   var row = $(this).parent().parent().children().index($(this).parent());
-        //   console.log('Row: ' + row + ', Column: ' + col);
-        // }
-      });
-    }
-
     const removeAllSelected = () => {
       table.querySelectorAll(".selected").forEach(td => {
         td.classList.remove("selected");
@@ -174,7 +167,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
             tap(end => {
               // console.warn('end = ', end);
               disableDocumentMoveEvent?.unsubscribe();
-              getSelectedCells();
+              this.checkTableState();
             })
           ))
         )
@@ -188,10 +181,20 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this._selectCellSubscription?.unsubscribe();
     const tds = Array.from(this.el.querySelectorAll('.selected')) as HTMLElement[];
     tds.forEach(td => td.classList.remove('selected'));
+    this.checkTableState();
   }
 
   private _onSelected(): void {
     this.el.style.setProperty('outline', '3px solid #b4d7ff');
+    if (!this.selectedCols.length) {
+      const range = this.context.simpleWysiwygService.getRange();
+      const td = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, range.commonAncestorContainer as HTMLElement, 'td') as HTMLTableDataCellElement;
+      if (td) {
+        td.classList.add('selected');
+        this.selectedCols.push(td);
+      }
+    }
+    this.checkTableState();
     this._subscribeCellSelection();
   }
 
@@ -203,6 +206,22 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   private _evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
+  }
+
+  checkTableState() {
+    this.selectedCols = Array.from(this.el.querySelectorAll("td.selected"));
+    this.selectedRows = this.selectedCols.map(col => col.parentElement).filter((row, i, arr) => arr.indexOf(row) === i) as HTMLTableRowElement[];
+
+    let trs = Array.from(this.el.querySelectorAll('tr'));
+    trs.forEach(tr => {
+      if (!tr.childElementCount) {
+        tr.parentNode.removeChild(tr);
+      }
+    });
+    trs = Array.from(this.el.querySelectorAll('tr'));
+    if (!trs.length) {
+      this.el.parentNode.removeChild(this.el);
+    }
   }
 
 }

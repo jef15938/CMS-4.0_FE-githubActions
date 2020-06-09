@@ -13,17 +13,13 @@ export class DeleteRow extends HtmlEditorAction {
   }
 
   do(): Observable<any> {
-    const table = this._controller.el;
-    const range = this.context.simpleWysiwygService.getRange();
-    const row = this.context.simpleWysiwygService.findTagFromTargetToContainer(
-      table,
-      range.commonAncestorContainer as HTMLElement,
-      'tr'
-    );
-    if (row) {
+    if (!this._controller.selectedRows.length) { return this.context.modalService.openMessage({ message: '沒有選擇的列' }) }
+
+    this._controller.selectedRows.forEach(row => {
       row.parentNode.removeChild(row);
-      this.context.simpleWysiwygService.setSelectionOnNode(table);
-    }
+    });
+
+    this._controller.checkTableState();
     return of(undefined);
   }
 }

@@ -13,35 +13,22 @@ export class DeleteCol extends HtmlEditorAction {
   }
 
   do(): Observable<any> {
-    const table = this._controller.el;
-    const range = this.context.simpleWysiwygService.getRange();
-    const deletedCol = this.context.simpleWysiwygService.findTagFromTargetToContainer(
-      table,
-      range.commonAncestorContainer as HTMLElement,
-      'td'
-    ) as HTMLTableDataCellElement;
-    if (deletedCol) {
+    const selectedCols = this._controller.selectedCols;
+    if (!selectedCols.length) { return this.context.modalService.openMessage({ message: '沒有選擇的欄' }) }
 
-      const row = deletedCol.parentNode as HTMLTableRowElement;
-      const adjustCol = (deletedCol.previousSibling || deletedCol.nextSibling) as HTMLTableDataCellElement;
-
+    selectedCols.forEach(col => {
+      const row = col.parentElement;
+      const adjustCol = (col.previousSibling || col.nextSibling) as HTMLTableDataCellElement;
       if (adjustCol) {
-        adjustCol.colSpan += deletedCol.colSpan;
-        const deletedColwidth = +(deletedCol.style.getPropertyValue('width')?.replace('px', ''));
+        adjustCol.colSpan += col.colSpan;
+        const colwidth = +(col.style.getPropertyValue('width')?.replace('px', ''));
         const adjustColWidth = +(adjustCol.style.getPropertyValue('width')?.replace('px', ''));
-        adjustCol.setAttribute('style', `width: ${adjustColWidth + deletedColwidth}px`)
+        adjustCol.setAttribute('style', `width: ${adjustColWidth + colwidth}px`)
       }
+      row.removeChild(col);
+    });
 
-      row.removeChild(deletedCol);
-      if (!adjustCol) {
-        row.parentNode.removeChild(row);
-      }
-
-      if (!table.querySelectorAll('tr').length) {
-        table.parentNode.removeChild(table);
-      }
-      this.context.simpleWysiwygService.setSelectionOnNode(table);
-    }
+    this._controller.checkTableState();
     return of(undefined);
   }
 }
