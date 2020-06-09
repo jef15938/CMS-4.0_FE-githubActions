@@ -108,9 +108,12 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       }
 
       for (var i = rowStart; i <= rowEnd; i++) {
-        var rowCells = table.querySelectorAll("tr")[i].querySelectorAll("td");
+        const trs = table.querySelectorAll("tr");
+        const row = trs[i];
+        var rowCells = row.querySelectorAll("td");
         for (var j = cellStart; j <= cellEnd; j++) {
-          rowCells[j].classList.add("selected");
+          const cell = rowCells[j];
+          cell?.classList.add("selected");
         }
       }
     }
