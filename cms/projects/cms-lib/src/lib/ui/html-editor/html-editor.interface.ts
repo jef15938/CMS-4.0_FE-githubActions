@@ -15,7 +15,8 @@ export interface IHtmlEditorContext {
 export interface IHtmlEditorContextMenuItem {
   text: string,
   icon: string,
-  action: IHtmlEditorAction,
+  action?: IHtmlEditorAction,
+  children?: IHtmlEditorContextMenuItem[]
 }
 
 export interface IHtmlEditorService {

@@ -18,10 +18,18 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
   protected onAddToEditor(): void {
     this.contextMenuItems = [
-      { text: '上方列', icon: 'add', action: new AddRow(this.context, this, 'before') },
-      { text: '下方列', icon: 'add', action: new AddRow(this.context, this, 'after') },
-      { text: '刪除列', icon: 'delete', action: new DeleteRow(this.context, this) },
-      { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
+      {
+        text: '列', icon: 'add', children: [
+          { text: '上方列', icon: 'add', action: new AddRow(this.context, this, 'before') },
+          { text: '下方列', icon: 'add', action: new AddRow(this.context, this, 'after') },
+          { text: '刪除列', icon: 'delete', action: new DeleteRow(this.context, this) },
+        ]
+      },
+      {
+        text: '欄', icon: 'add', children: [
+          { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
+        ]
+      },
     ];
     const cols = this.el.querySelectorAll('tr')[0].querySelectorAll('td').length;
     this._tableSetting = { cols };
