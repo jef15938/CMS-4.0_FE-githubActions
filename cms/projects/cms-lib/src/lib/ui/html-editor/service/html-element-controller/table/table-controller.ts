@@ -9,7 +9,21 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements ITableController {
 
-  contextMenuItems: IHtmlEditorContextMenuItem[];
+  private _contextMenuItems: IHtmlEditorContextMenuItem[];
+  get contextMenuItems(): IHtmlEditorContextMenuItem[] {
+    const menuItems: IHtmlEditorContextMenuItem[] = [].concat(this._contextMenuItems);
+    if (!menuItems?.length) { return; }
+
+    setTimeout(_ => {
+      const rowItem = menuItems[0];
+      rowItem.disabled = !this.selectedRows.length;
+
+      const colItem = menuItems[1];
+      colItem.disabled = !this.selectedCols.length;
+    }, 100)
+
+    return menuItems;
+  };
 
   selectedCols: HTMLTableDataCellElement[] = [];
   selectedRows: HTMLTableRowElement[] = [];
@@ -20,18 +34,29 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   private _selectCellSubscription: Subscription;
 
   protected onAddToEditor(): void {
-    this.contextMenuItems = [
+    this._contextMenuItems = [
       {
-        text: '列', icon: 'add', children: [
+        text: '列', children: [
           { text: '上方列', icon: 'add', action: new AddRow(this.context, this, 'before') },
           { text: '下方列', icon: 'add', action: new AddRow(this.context, this, 'after') },
           { text: '刪除列', icon: 'delete', action: new DeleteRow(this.context, this) },
         ]
       },
       {
-        text: '欄', icon: 'add', children: [
+        text: '欄', children: [
           { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
         ]
+      },
+      {
+        text: '合併', action: new DeleteCol(this.context, this),
+      },
+      {
+        text: '分割', children: [
+          { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
+        ]
+      },
+      {
+        text: '刪除表格', action: new DeleteCol(this.context, this),
       },
     ];
     const cols = this.el.querySelectorAll('tr')[0].querySelectorAll('td').length;
@@ -45,7 +70,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       subscription.unsubscribe();
     });
     this._subscriptions = [];
-    this.contextMenuItems = undefined;
+    this._contextMenuItems = undefined;
     this._unsubscribeCellSelection();
   }
 
