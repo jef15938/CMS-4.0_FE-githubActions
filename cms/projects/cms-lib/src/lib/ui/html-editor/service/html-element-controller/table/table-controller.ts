@@ -6,6 +6,9 @@ import { AddRow } from './actions/add-row';
 import { ITableController, ITableSetting } from './table-controller.interface';
 import { DeleteCol } from './actions/delete-col';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Merge } from './actions/merge';
+import { Split } from './actions/split';
+import { DeleteTable } from './actions/delete-table';
 
 export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements ITableController {
 
@@ -20,6 +23,24 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
       const colItem = menuItems[1];
       colItem.disabled = !this.selectedCols.length;
+
+      const mergeItem = menuItems[2];
+      mergeItem.disabled = !this.selectedCols.length || this.selectedCols.length < 2;
+      if (!mergeItem.disabled) {
+        const spanCountInRows = this.selectedRows
+          .map(row => Array.from(row.childNodes).filter((col: HTMLTableDataCellElement) => this.selectedCols.indexOf(col) > -1).reduce((a, b: HTMLTableDataCellElement) => a + b.colSpan, 0));
+        mergeItem.disabled = !(spanCountInRows.every(colCount => colCount === spanCountInRows[0]));
+      }
+
+      const splitItem = menuItems[3];
+      splitItem.disabled = this.selectedCols.length !== 1 || (this.selectedCols[0].colSpan < 2 && this.selectedCols[0].rowSpan < 2);
+      if (!splitItem.disabled) {
+        const col = this.selectedCols[0];
+        const horizontal = splitItem.children[0];
+        horizontal.disabled = col.rowSpan <= 1;
+        const verticle = splitItem.children[1];
+        verticle.disabled = col.colSpan <= 1;
+      }
     }, 100)
 
     return menuItems;
@@ -48,15 +69,16 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         ]
       },
       {
-        text: '合併', action: new DeleteCol(this.context, this),
+        text: '合併', action: new Merge(this.context, this),
       },
       {
         text: '分割', children: [
-          { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
+          { text: '水平分割', icon: 'delete', action: new Split(this.context, this, 'horizontal') },
+          { text: '垂直分割', icon: 'delete', action: new Split(this.context, this, 'verticle') },
         ]
       },
       {
-        text: '刪除表格', action: new DeleteCol(this.context, this),
+        text: '刪除表格', action: new DeleteTable(this.context, this),
       },
     ];
     const cols = this.el.querySelectorAll('tr')[0].querySelectorAll('td').length;
@@ -109,40 +131,79 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     });
 
     const table = this.el;
-    let startRowIndex = null;
-    let startCellIndex = null;
+    let startCell: HTMLTableDataCellElement;
 
-    const selectTo = (cell) => {
-      var row = cell.parentNode as HTMLElement;
-      var cellIndex = (Array.from(row.childNodes) as HTMLElement[]).indexOf(cell);
-      var rowIndex = (Array.from(row.parentNode.childNodes) as HTMLElement[]).indexOf(row);
-
-      var rowStart, rowEnd, cellStart, cellEnd;
-
-      if (rowIndex < startRowIndex) {
-        rowStart = rowIndex;
-        rowEnd = startRowIndex;
-      } else {
-        rowStart = startRowIndex;
-        rowEnd = rowIndex;
+    const affectedByRowSpanCellCount = function (cell: HTMLTableDataCellElement): number {
+      let affectedCount = 0;
+      const cellParentIndex = (Array.from(cell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(cell.parentNode as HTMLElement);
+      const cellIndex = (Array.from(cell.parentNode.childNodes) as HTMLElement[]).indexOf(cell);
+      const previousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+      const checkStart = cellIndex + previousColSpanOffset;
+      let previousTr = cell.parentNode.previousSibling as HTMLTableRowElement;
+      while (previousTr) {
+        const trs = Array.from(previousTr.parentNode.childNodes) as HTMLTableRowElement[];
+        const trIndex = trs.indexOf(previousTr);
+        Array.from(previousTr.childNodes).forEach((td: HTMLTableDataCellElement, tdIndex) => {
+          if (td.rowSpan <= 1) { return; }
+          if ((td.rowSpan - 1) + trIndex < cellParentIndex) {
+            return;
+          }
+          const tdPreviousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+          if (
+            tdIndex + tdPreviousColSpanOffset <= checkStart
+          ) {
+            affectedCount += 1 + (td.colSpan - 1);
+          }
+        });
+        previousTr = previousTr.previousSibling as HTMLTableRowElement;
       }
+      return affectedCount;
+    }
 
-      if (cellIndex < startCellIndex) {
-        cellStart = cellIndex;
-        cellEnd = startCellIndex;
-      } else {
-        cellStart = startCellIndex;
-        cellEnd = cellIndex;
-      }
+    const selectTo = (currentCell: HTMLTableDataCellElement) => {
+      const startCellRowIndex = (Array.from(startCell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(startCell.parentNode as HTMLElement);
+      const startCellColIndex = (Array.from(startCell.parentNode.childNodes) as HTMLElement[]).indexOf(startCell);
 
-      for (var i = rowStart; i <= rowEnd; i++) {
-        const trs = table.querySelectorAll("tr");
+      const currentCellRowIndex = (Array.from(currentCell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(currentCell.parentNode as HTMLElement);
+      const currentCellColIndex = (Array.from(currentCell.parentNode.childNodes) as HTMLElement[]).indexOf(currentCell);
+
+      let rowStart = startCellRowIndex <= currentCellRowIndex ? startCellRowIndex : currentCellRowIndex;
+      let rowEnd = startCellRowIndex >= currentCellRowIndex ? startCellRowIndex : currentCellRowIndex;
+
+      const startCellPreviousColSpanOffset = Array.from(startCell.parentNode.childNodes).slice(0, startCellColIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+      const currentCellPreviousColSpanOffset = Array.from(currentCell.parentNode.childNodes).slice(0, currentCellColIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+      // console.error('startCellPreviousColSpanOffset = ', startCellPreviousColSpanOffset);
+      // console.error('currentCellPreviousColSpanOffset = ', currentCellPreviousColSpanOffset);
+      const startCellColStart = startCellColIndex + startCellPreviousColSpanOffset;
+      const currentCellColStart = currentCellColIndex + currentCellPreviousColSpanOffset;
+      // console.error('startCellColStart = ', startCellColStart);
+      // console.error('currentCellColStart = ', currentCellColStart);
+      const startCellColEnd = startCellColStart + startCell.colSpan - 1;
+      const currentCellColEnd = currentCellColStart + currentCell.colSpan - 1;
+      // console.error('startCellColEnd = ', startCellColEnd);
+      // console.error('currentCellColEnd = ', currentCellColEnd);
+      const colStart = startCellColStart <= currentCellColStart ? startCellColStart : currentCellColStart;
+      const colEnd = startCellColEnd >= currentCellColEnd ? startCellColEnd : currentCellColEnd;
+      // console.error('colStart = ', colStart);
+      // console.error('colEnd = ', colEnd);
+      const trs = Array.from(this.el.querySelectorAll('tr'));
+      for (let i = rowStart; i <= rowEnd; ++i) {
         const row = trs[i];
-        var rowCells = row.querySelectorAll("td");
-        for (var j = cellStart; j <= cellEnd; j++) {
-          const cell = rowCells[j];
-          cell?.classList.add("selected");
-        }
+        const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
+
+        cells.forEach((cell, cellIndex) => {
+          const affectedByRowSpanCount = affectedByRowSpanCellCount(cell);
+          const cellPreviousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+          const cellColStart = cellIndex + cellPreviousColSpanOffset + affectedByRowSpanCount;
+          const cellColEnd = cellColStart + cell.colSpan - 1;
+          // console.error(cell, 'affectedByRowSpanCount = ', affectedByRowSpanCount);
+          // console.warn('cellPreviousColSpanOffset = ', cellPreviousColSpanOffset);
+          // console.warn('cellColStart = ', cellColStart);
+          // console.warn('cellColEnd = ', cellColEnd);
+          if (cellColStart >= colStart && cellColEnd <= colEnd) {
+            cell?.classList.add("selected");
+          }
+        });
       }
     }
 
@@ -176,17 +237,15 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         // console.warn('start = ', start);
         removeAllSelected();
 
-        let cell = event.target as HTMLElement;
-        if (cell.tagName?.toLowerCase() === 'div') { cell = cell.parentNode as HTMLElement }
-        cell.classList.add("selected");
-        const row = cell.parentNode as HTMLElement;
-        startCellIndex = Array.from(row.childNodes).indexOf(cell);
-        startRowIndex = (Array.from(row.parentNode.childNodes) as HTMLElement[]).indexOf(row);
+        const cell = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, start.target as HTMLElement, 'td') as HTMLTableDataCellElement;
+        cell?.classList.add("selected");
+        startCell = cell;
+
         return mouseover$.pipe(
           tap(over => {
             // console.warn('over = ', over);
             removeAllSelected();
-            selectTo(over.target);
+            selectTo(this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, over.target as HTMLElement, 'td') as HTMLTableDataCellElement);
           }),
           takeUntil(mouseup$.pipe(
             tap(end => {
