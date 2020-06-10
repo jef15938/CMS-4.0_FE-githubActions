@@ -2,8 +2,19 @@ import { HtmlEditorAction } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertTableModalComponent } from '../../modal/html-editor-insert-table-modal/html-editor-insert-table-modal.component';
+import { TableControllerService } from '../../service/html-element-controller/table/table-controller-service';
+import { IHtmlEditorContext } from '../../html-editor.interface';
 
 export class InsertTable extends HtmlEditorAction {
+
+  private _tableControllerService: TableControllerService;
+
+  constructor(
+    context: IHtmlEditorContext,
+  ) {
+    super(context);
+    this._tableControllerService = new TableControllerService();
+  }
 
   do() {
     const range = this.context.simpleWysiwygService.getRange();
@@ -31,12 +42,7 @@ export class InsertTable extends HtmlEditorAction {
         for (let row = 0; row < config.rows; ++row) {
           const tr = document.createElement('tr');
           for (let col = 0; col < config.cols; ++col) {
-            const td = document.createElement('td');
-            // td.innerHTML = '<div>文字</div>';
-            td.innerHTML = '文字';
-            td.setAttribute('class', 'tg-0pky');
-            td.setAttribute('colspan', '1');
-            td.setAttribute('rowspan', '1');
+            const td = this._tableControllerService.createCell();
             tr.appendChild(td);
           }
           table.appendChild(tr);

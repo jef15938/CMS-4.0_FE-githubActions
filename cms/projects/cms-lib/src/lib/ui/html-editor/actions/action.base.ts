@@ -11,7 +11,7 @@ export abstract class HtmlEditorAction implements IHtmlEditorAction {
   abstract do(): Observable<any>;
 
   constructor(
-    context: IHtmlEditorContext
+    context: IHtmlEditorContext,
   ) {
     this._context = context;
   }

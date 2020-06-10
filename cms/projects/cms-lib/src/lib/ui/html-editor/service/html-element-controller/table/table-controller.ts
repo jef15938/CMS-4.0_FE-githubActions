@@ -11,6 +11,7 @@ import { Split } from './actions/split';
 import { DeleteTable } from './actions/delete-table';
 import { TableControllerService } from './table-controller-service';
 import { MarkCol } from './actions/mark-col';
+import { AddCol } from './actions/add-col';
 
 export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements ITableController {
 
@@ -61,6 +62,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   private _tableSetting: ITableSetting;
   private _subscriptions: Subscription[] = [];
 
+  get tableControllerService(): TableControllerService { return this._tableControllerService };
   private _tableControllerService: TableControllerService;
 
   private _selectCellSubscription: Subscription;
@@ -85,6 +87,8 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       {
         text: '欄', children: [
           { text: '標記/取消', action: new MarkCol(this.context, this) },
+          { text: '左方欄', icon: 'add', action: new AddCol(this.context, this, 'left') },
+          { text: '右方欄', icon: 'add', action: new AddCol(this.context, this, 'right') },
           { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
         ]
       },
@@ -154,22 +158,15 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     let startCell: HTMLTableDataCellElement;
 
     const selectTo = (currentCell: HTMLTableDataCellElement) => {
-      const startCellStartEnd = this._tableControllerService.getCellStartEnd(startCell);
-      const currentCellStartEnd = this._tableControllerService.getCellStartEnd(currentCell);
-
-      const rowStart = startCellStartEnd.rowStart <= currentCellStartEnd.rowStart ? startCellStartEnd.rowStart : currentCellStartEnd.rowStart;
-      const rowEnd = startCellStartEnd.rowEnd >= currentCellStartEnd.rowEnd ? startCellStartEnd.rowEnd : currentCellStartEnd.rowEnd;
-      const colStart = startCellStartEnd.colStart <= currentCellStartEnd.colStart ? startCellStartEnd.colStart : currentCellStartEnd.colStart;
-      const colEnd = startCellStartEnd.colEnd >= currentCellStartEnd.colEnd ? startCellStartEnd.colEnd : currentCellStartEnd.colEnd;
-
+      const selectedColsStartEnd = this._tableControllerService.getStartEndByStartAndEnd(startCell, currentCell);
       const trs = Array.from(this.el.querySelectorAll('tr'));
-      for (let i = rowStart; i <= rowEnd; ++i) {
+      for (let i = selectedColsStartEnd.rowStart; i <= selectedColsStartEnd.rowEnd; ++i) {
         const row = trs[i];
         const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
 
-        cells.forEach((cell, cellIndex) => {
+        cells.forEach((cell) => {
           const cellColStartEnd = this._tableControllerService.getCellStartEnd(cell);
-          if (cellColStartEnd.colStart >= colStart && cellColStartEnd.colEnd <= colEnd) {
+          if (cellColStartEnd.colStart >= selectedColsStartEnd.colStart && cellColStartEnd.colEnd <= selectedColsStartEnd.colEnd) {
             cell?.classList.add("selected");
           }
         });

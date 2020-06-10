@@ -29,12 +29,7 @@ export class AddRow extends HtmlEditorAction {
     const newRow = document.createElement('tr');
     const cols = this._controller.getSetting().cols;
     for (let col = 0; col < cols; ++col) {
-      const td = document.createElement('td');
-      // td.innerHTML = '<div>文字</div>';
-      td.innerHTML = '文字';
-      td.setAttribute('class', 'tg-0pky');
-      td.setAttribute('colspan', '1');
-      td.setAttribute('rowspan', '1');
+      const td = this._controller.tableControllerService.createCell();
       newRow.appendChild(td);
     }
 
