@@ -1,14 +1,14 @@
 import { HtmlEditorAction } from '../action.base';
-import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { HtmlEditorInsertVideoModalComponent } from '../../modal/html-editor-insert-video-modal/html-editor-insert-video-modal.component';
 
-export class InsertImage extends HtmlEditorAction {
+export class InsertVideo extends HtmlEditorAction {
 
   do() {
     const editorContainer = this.context.editorContainer;
     const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
-    const image = commonAncestorContainer?.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frame_id')
+    const image = commonAncestorContainer?.tagName?.toLowerCase() === 'img' && commonAncestorContainer.getAttribute('frame_id')
       ? commonAncestorContainer as HTMLImageElement
       : undefined;
     // https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230
@@ -16,16 +16,14 @@ export class InsertImage extends HtmlEditorAction {
     if (!image && !range) { return of(undefined); }
 
     return this.context.modalService.openComponent({
-      component: HtmlEditorInsertImgModalComponent,
+      component: HtmlEditorInsertVideoModalComponent,
       componentInitData: {
-        title: `${image ? '修改' : '加入'}圖片`,
+        title: `${image ? '修改' : '加入'}影片`,
         src: image?.src,
-        alt: image?.alt,
-        width: image?.width,
-        height: image?.height,
+        frame_id: image?.getAttribute('frame_id')
       }
     }).pipe(
-      tap((config: { src: string, alt: string, width: number, height: number }) => {
+      tap((config: { src: string, frame_id: string }) => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
 
@@ -34,15 +32,14 @@ export class InsertImage extends HtmlEditorAction {
           const range = this.context.simpleWysiwygService.getRange();
           const imgElement = range.commonAncestorContainer.childNodes[range.startOffset - 1] as HTMLImageElement;
           if (imgElement && imgElement.tagName.toLowerCase() === 'img') {
-            imgElement.height = config.height;
-            imgElement.width = config.width;
-            imgElement.alt = config.alt;
+            imgElement.setAttribute('frame_id', config.frame_id);
+            imgElement.src = config.src;
+            imgElement.style.width = '100%';
+            imgElement.style.height = 'auto';
           }
         } else {
+          image.setAttribute('frame_id', config.frame_id);
           image.src = config.src;
-          image.alt = config.alt;
-          image.width = config.width;
-          image.height = config.height;
         }
         return;
       })

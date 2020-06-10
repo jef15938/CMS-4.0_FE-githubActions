@@ -7,6 +7,7 @@ import {
   CreateLink, InsertImage,
 } from './action/_index';
 import { InsertTable } from './action/insert-table';
+import { InsertVideo } from './action/insert-video';
 
 export class HtmlEditorActions {
   private _context: IHtmlEditorContext;
@@ -25,6 +26,7 @@ export class HtmlEditorActions {
   createLink: CreateLink;
   insertImage: InsertImage;
   insertTable: InsertTable;
+  insertVideo: InsertVideo;
 
   constructor(
     context: IHtmlEditorContext,
@@ -45,5 +47,6 @@ export class HtmlEditorActions {
     this.createLink = new CreateLink(context);
     this.insertImage = new InsertImage(context);
     this.insertTable = new InsertTable(context);
+    this.insertVideo = new InsertVideo(context);
   }
 }

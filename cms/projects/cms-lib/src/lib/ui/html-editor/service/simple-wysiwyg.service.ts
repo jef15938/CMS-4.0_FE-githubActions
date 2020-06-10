@@ -236,6 +236,7 @@ export class SimpleWysiwygService {
 
   insertHtml(htmlString: string) {
     const range = this.getRange();
+    
     if (!range) { return; }
 
     const modifiedId = 'to-modify';
@@ -245,7 +246,6 @@ export class SimpleWysiwygService {
     const elToAdd = div.firstChild as HTMLElement;
     elToAdd.id = modifiedId;
     htmlString = elToAdd.outerHTML;
-
     document.execCommand("ms-beginUndoUnit");
 
     var success = document.execCommand('InsertHTML', false, htmlString);
@@ -256,7 +256,10 @@ export class SimpleWysiwygService {
     }
 
     var added = document.getElementById(modifiedId);
-    added.removeAttribute('id');
+
+    if (added) {
+      added.removeAttribute('id');
+    }
     return added;
   }
 
@@ -278,7 +281,7 @@ export class SimpleWysiwygService {
 
   findTagFromTargetToContainer(editorContainer: HTMLDivElement, target: HTMLElement, tag: string): HTMLElement {
     tag = tag?.toLowerCase();
-    
+
     const targetName = target.tagName?.toLowerCase();
     if (targetName === tag) { return target; }
     let el = target.parentElement;

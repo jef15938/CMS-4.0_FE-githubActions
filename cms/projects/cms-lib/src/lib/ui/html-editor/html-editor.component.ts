@@ -176,9 +176,11 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
     const target = ev.target as HTMLElement;
 
-    const img = this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img');
-    if (img) {
-      this.simpleWysiwygService.setSelectionOnNode(img);
+    const special =
+      this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe');
+    if (special) {
+      this.simpleWysiwygService.setSelectionOnNode(special);
       return;
     }
   }
@@ -186,20 +188,20 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   onRightClick(ev: MouseEvent) {
     const target = ev.target as HTMLElement;
 
-    const img = this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img');
-    if (img) {
-      this._openRightClickMenu(ev, img);
-      return;
-    }
+    const special =
+      this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
 
-    const table = this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table');
-    if (table) {
-      this._openRightClickMenu(ev, table);
+    if (special) {
+      this._openRightClickMenu(ev, special);
       return;
     }
   }
 
   private _openRightClickMenu(ev: MouseEvent, target: HTMLElement) {
+    const contextMenuItems = HtmlEditorElementControllerFactory.getContextMenuItems(target as HTMLElement);
+    if (!contextMenuItems?.length) { return; }
     this.simpleWysiwygService.setSelectionOnNode(ev.target as Node);
     const range = this.simpleWysiwygService.getRange();
     this.contextMenuPosition.x = ev.clientX + 'px';
@@ -212,7 +214,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
         this.simpleWysiwygService.restoreSelection(this._editorMenu.menuData['range']);
       }
     });
-    this.contextMenuItems = HtmlEditorElementControllerFactory.getContextMenuItems(target as HTMLElement);
+    this.contextMenuItems = contextMenuItems;
     this._editorMenu.openMenu();
   }
 

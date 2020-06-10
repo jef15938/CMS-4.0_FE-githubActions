@@ -2,7 +2,7 @@ import { HtmlEditorElementController, HTML_EDITOR_ELEMENT_CONTROLLER } from './_
 import { HtmlEditorImageController } from './image/image-controller';
 import { IHtmlEditorContext, IHtmlEditorContextMenuItem } from '../../html-editor.interface';
 import { HtmlEditorTableController } from './table/table-controller';
-import { IHtmlEditorAction } from '../../actions/action.interface';
+import { HtmlEditorVideoController } from './video/video-controller';
 
 export class HtmlEditorElementControllerFactory {
   static addController(el: HTMLElement, context: IHtmlEditorContext): HtmlEditorElementController<HTMLElement> {
@@ -13,7 +13,11 @@ export class HtmlEditorElementControllerFactory {
 
       switch (tagName) {
         case 'img':
-          controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorImageController(el as HTMLImageElement, context);
+          if(el.getAttribute('frame_id')){
+            controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorVideoController(el as HTMLImageElement, context);
+          } else {
+            controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorImageController(el as HTMLImageElement, context);
+          }
           break;
         case 'table':
           controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorTableController(el as HTMLTableElement, context);
