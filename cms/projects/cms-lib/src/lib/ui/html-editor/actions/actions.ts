@@ -8,7 +8,8 @@ import {
 } from './action/_index';
 import { InsertTable } from './action/insert-table';
 import { InsertVideo } from './action/insert-video';
-import { HighLight } from './action/high-light';
+import { Highlight } from './action/highlight';
+import { Unhighlight } from './action/unhighlight';
 
 export class HtmlEditorActions {
   private _context: IHtmlEditorContext;
@@ -28,7 +29,8 @@ export class HtmlEditorActions {
   insertImage: InsertImage;
   insertTable: InsertTable;
   insertVideo: InsertVideo;
-  highLight: HighLight;
+  highlight: Highlight;
+  unhighlight: Unhighlight;
 
   constructor(
     context: IHtmlEditorContext,
@@ -50,6 +52,7 @@ export class HtmlEditorActions {
     this.insertImage = new InsertImage(context);
     this.insertTable = new InsertTable(context);
     this.insertVideo = new InsertVideo(context);
-    this.highLight = new HighLight(context);
+    this.highlight = new Highlight(context);
+    this.unhighlight = new Unhighlight(context);
   }
 }

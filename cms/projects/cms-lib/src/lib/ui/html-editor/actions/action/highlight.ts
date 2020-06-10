@@ -2,14 +2,14 @@ import { HtmlEditorAction } from '../action.base';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-export class HighLight extends HtmlEditorAction {
+export class Highlight extends HtmlEditorAction {
 
   do(): Observable<any> {
     document.execCommand("foreColor", false, '#0000ff');
 
     const container = this.context.editorContainer.cloneNode(true) as HTMLDivElement;
 
-    if (Array.from(container.querySelectorAll('font[color="#0000ff"] .editor_img')).length > 0) {
+    if (Array.from(container.querySelectorAll('font[color="#0000ff"] img')).length > 0) {
       return this.context.modalService.openMessage({ message: '標記文字不可包含圖片' })
         .pipe(tap(_ => document.execCommand("undo")));
     } else if (
