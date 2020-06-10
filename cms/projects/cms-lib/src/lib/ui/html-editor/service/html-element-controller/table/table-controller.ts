@@ -133,7 +133,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     const table = this.el;
     let startCell: HTMLTableDataCellElement;
 
-    const affectedByRowSpanCellCount = function (cell: HTMLTableDataCellElement): number {
+    const getAffectedByRowSpanCellCount = function (cell: HTMLTableDataCellElement): number {
       let affectedCount = 0;
       const cellParentIndex = (Array.from(cell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(cell.parentNode as HTMLElement);
       const cellIndex = (Array.from(cell.parentNode.childNodes) as HTMLElement[]).indexOf(cell);
@@ -160,47 +160,38 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       return affectedCount;
     }
 
+    const getCellStartEnd = (cell: HTMLTableDataCellElement) => {
+      const row = cell.parentElement as HTMLTableRowElement;
+      const trs = Array.from(row.parentNode.childNodes) as HTMLTableRowElement[];
+      const rowIndex = trs.indexOf(row);
+      const tds = Array.from(row.childNodes) as HTMLTableDataCellElement[];
+      const cellIndex = tds.indexOf(cell);
+      const colSpanOffser = Array.from(tds).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+      const affectedByRowSpanCount = getAffectedByRowSpanCellCount(cell);
+      const rowStart = rowIndex;
+      const rowEnd = rowStart + (cell.rowSpan - 1);
+      const colStart = cellIndex + colSpanOffser + affectedByRowSpanCount;
+      const colEnd = colStart + (cell.colSpan - 1);
+      return { rowStart, rowEnd, colStart, colEnd };
+    }
+
     const selectTo = (currentCell: HTMLTableDataCellElement) => {
-      const startCellRowIndex = (Array.from(startCell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(startCell.parentNode as HTMLElement);
-      const startCellColIndex = (Array.from(startCell.parentNode.childNodes) as HTMLElement[]).indexOf(startCell);
+      const startCellStartEnd = getCellStartEnd(startCell);
+      const currentCellStartEnd = getCellStartEnd(currentCell);
 
-      const currentCellRowIndex = (Array.from(currentCell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(currentCell.parentNode as HTMLElement);
-      const currentCellColIndex = (Array.from(currentCell.parentNode.childNodes) as HTMLElement[]).indexOf(currentCell);
+      const rowStart = startCellStartEnd.rowStart <= currentCellStartEnd.rowStart ? startCellStartEnd.rowStart : currentCellStartEnd.rowStart;
+      const rowEnd = startCellStartEnd.rowEnd >= currentCellStartEnd.rowEnd ? startCellStartEnd.rowEnd : currentCellStartEnd.rowEnd;
+      const colStart = startCellStartEnd.colStart <= currentCellStartEnd.colStart ? startCellStartEnd.colStart : currentCellStartEnd.colStart;
+      const colEnd = startCellStartEnd.colEnd >= currentCellStartEnd.colEnd ? startCellStartEnd.colEnd : currentCellStartEnd.colEnd;
 
-      let rowStart = startCellRowIndex <= currentCellRowIndex ? startCellRowIndex : currentCellRowIndex;
-      let rowEnd = startCellRowIndex >= currentCellRowIndex ? startCellRowIndex : currentCellRowIndex;
-
-      const startCellPreviousColSpanOffset = Array.from(startCell.parentNode.childNodes).slice(0, startCellColIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-      const currentCellPreviousColSpanOffset = Array.from(currentCell.parentNode.childNodes).slice(0, currentCellColIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-      // console.error('startCellPreviousColSpanOffset = ', startCellPreviousColSpanOffset);
-      // console.error('currentCellPreviousColSpanOffset = ', currentCellPreviousColSpanOffset);
-      const startCellColStart = startCellColIndex + startCellPreviousColSpanOffset;
-      const currentCellColStart = currentCellColIndex + currentCellPreviousColSpanOffset;
-      // console.error('startCellColStart = ', startCellColStart);
-      // console.error('currentCellColStart = ', currentCellColStart);
-      const startCellColEnd = startCellColStart + startCell.colSpan - 1;
-      const currentCellColEnd = currentCellColStart + currentCell.colSpan - 1;
-      // console.error('startCellColEnd = ', startCellColEnd);
-      // console.error('currentCellColEnd = ', currentCellColEnd);
-      const colStart = startCellColStart <= currentCellColStart ? startCellColStart : currentCellColStart;
-      const colEnd = startCellColEnd >= currentCellColEnd ? startCellColEnd : currentCellColEnd;
-      // console.error('colStart = ', colStart);
-      // console.error('colEnd = ', colEnd);
       const trs = Array.from(this.el.querySelectorAll('tr'));
       for (let i = rowStart; i <= rowEnd; ++i) {
         const row = trs[i];
         const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
 
         cells.forEach((cell, cellIndex) => {
-          const affectedByRowSpanCount = affectedByRowSpanCellCount(cell);
-          const cellPreviousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-          const cellColStart = cellIndex + cellPreviousColSpanOffset + affectedByRowSpanCount;
-          const cellColEnd = cellColStart + cell.colSpan - 1;
-          // console.error(cell, 'affectedByRowSpanCount = ', affectedByRowSpanCount);
-          // console.warn('cellPreviousColSpanOffset = ', cellPreviousColSpanOffset);
-          // console.warn('cellColStart = ', cellColStart);
-          // console.warn('cellColEnd = ', cellColEnd);
-          if (cellColStart >= colStart && cellColEnd <= colEnd) {
+          const cellColStartEnd = getCellStartEnd(cell);
+          if (cellColStartEnd.colStart >= colStart && cellColStartEnd.colEnd <= colEnd) {
             cell?.classList.add("selected");
           }
         });
@@ -229,7 +220,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
     const drag$ = mousedown$.pipe(
       tap(_ => {
-        disableDocumentMoveEvent = fromEvent<MouseEvent>(document, 'mousemove').pipe(evPreventDefaultAndStopPropagation).subscribe();
+        // disableDocumentMoveEvent = fromEvent<MouseEvent>(document, 'mousemove').pipe(evPreventDefaultAndStopPropagation).subscribe();
       }),
       switchMap(start => {
         if (start.button === 2) { return of(undefined); } // right click
