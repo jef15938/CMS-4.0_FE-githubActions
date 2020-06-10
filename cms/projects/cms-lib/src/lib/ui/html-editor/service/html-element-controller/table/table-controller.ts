@@ -219,15 +219,24 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     const drag$ = mousedown$.pipe(
       switchMap(start => {
         // console.warn('start = ', start);
-        if (start.button === 2) { return of(undefined); } // right click
-        removeAllSelected();
         const cell = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, start.target as HTMLElement, 'td') as HTMLTableDataCellElement;
-        cell?.classList.add("selected");
-        startCell = cell;
+        if (!cell) { return undefined; }
+        if (start.button === 2) { return of(undefined); } // right click
+        if (!(start.ctrlKey || start.metaKey)) {
+          removeAllSelected();
+        } // 多選
 
-        if (!(start.ctrlKey || start.metaKey)) { return of(undefined); } // right click
+        if (!cell.classList.contains('selected')) {
+          cell.classList.add("selected");
+        } else {
+          cell.classList.remove("selected");
+        }
+
+        if (!(start.shiftKey)) { return of(undefined); } // 拖拉多選
         start.stopPropagation();
         start.preventDefault();
+
+        startCell = cell;
 
         return mouseover$.pipe(
           tap(over => {
