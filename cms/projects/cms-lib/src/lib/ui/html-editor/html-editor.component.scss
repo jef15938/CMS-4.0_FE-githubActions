@@ -42,6 +42,10 @@
       word-break:normal;
       border-color:black;
     }
+    
+    td.highlightTD {
+      background-color: rgba(212, 75, 22, 0.5);
+    }
 
     td.selected {
       background-color: lightblue;

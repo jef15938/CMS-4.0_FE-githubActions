@@ -10,6 +10,7 @@ import { Merge } from './actions/merge';
 import { Split } from './actions/split';
 import { DeleteTable } from './actions/delete-table';
 import { TableControllerService } from './table-controller-service';
+import { MarkCol } from './actions/mark-col';
 
 export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements ITableController {
 
@@ -83,6 +84,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       },
       {
         text: '欄', children: [
+          { text: '標記/取消', action: new MarkCol(this.context, this) },
           { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
         ]
       },

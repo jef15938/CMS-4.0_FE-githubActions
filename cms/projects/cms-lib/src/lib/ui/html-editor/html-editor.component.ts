@@ -228,6 +228,17 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   }
 
   getContent() {
-    return (this.editorContainer.cloneNode(true) as HTMLElement).innerHTML;
+    const container = this.editorContainer.cloneNode(true) as HTMLElement;
+    let nodes = [container];
+    while (nodes && nodes.length) {
+      nodes.forEach(node => {
+        node.classList?.remove('selected');
+        node.style?.removeProperty('outline');
+      })
+      nodes = nodes.reduce((a, b) => {
+        return a.concat(Array.from(b.childNodes || []))
+      }, []);
+    }
+    return container.innerHTML;
   }
 }
