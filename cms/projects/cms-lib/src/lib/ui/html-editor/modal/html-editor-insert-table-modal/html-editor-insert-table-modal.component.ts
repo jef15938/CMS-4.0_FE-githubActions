@@ -19,8 +19,8 @@ export class HtmlEditorInsertTableModalComponent extends CustomModalBase impleme
   constructor() { super(); }
 
   ngOnInit(): void {
-    this.rows = this.rows || 2;
-    this.cols = this.cols || 2;
+    this.rows = this.rows || 8;
+    this.cols = this.cols || 8;
   }
 
   confirm() {
