@@ -28,19 +28,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       colItem.disabled = !this.selectedCols.length;
 
       const mergeItem = menuItems[2];
-      mergeItem.disabled = !this.selectedCols.length || this.selectedCols.length < 2;
-      if (!mergeItem.disabled) { // 行要連續
-        if (this.selectedRows.length > 1 && !this.selectedRows.every((row, rowIndex, arr) => {
-          if (rowIndex !== 0) {
-            const previousSelectedRow = arr[rowIndex - 1];
-            const previousRow = row.previousSibling as HTMLTableRowElement;
-            return previousSelectedRow === previousRow;
-          };
-          return true;
-        })) {
-          mergeItem.disabled = true;
-        }
-      }
+      mergeItem.disabled = this.selectedCols.length < 2;
 
       const splitItem = menuItems[3];
       splitItem.disabled = this.selectedCols.length !== 1 || (this.selectedCols[0].colSpan < 2 && this.selectedCols[0].rowSpan < 2);
@@ -219,7 +207,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         start.stopPropagation();
         start.preventDefault();
 
-        
+
 
         return mouseover$.pipe(
           tap(over => {
@@ -287,7 +275,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       this.el.parentNode.removeChild(this.el);
     }
 
-    if(scanTable){
+    if (scanTable) {
       this._scanTable(this.el);
     }
   }
