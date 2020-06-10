@@ -1,7 +1,7 @@
 import { HtmlEditorAction } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { IHtmlEditorContext } from '../../../../html-editor.interface';
-import { ITableController } from '../table-controller.interface';
+import { ITableController, ITableCell } from '../table-controller.interface';
 
 export class DeleteCol extends HtmlEditorAction {
 
@@ -15,42 +15,43 @@ export class DeleteCol extends HtmlEditorAction {
   do(): Observable<any> {
     const selectedCols = this._controller.selectedCols;
     if (!selectedCols.length) { return this.context.modalService.openMessage({ message: '沒有選擇的欄' }) }
-    // if (selectedCols.some(col => col.rowSpan > 1 || col.colSpan > 1)) { return this.context.modalService.openMessage({ message: '選擇的欄包括不可刪除的合併欄位' }) }
 
-    selectedCols.forEach(col => {
-      const row = col.parentElement as HTMLTableRowElement;
-      const trs = Array.from(row.parentNode.childNodes) as HTMLTableRowElement[];
-      const rowIndex = trs.indexOf(row);
-      const tds = Array.from(row.childNodes) as HTMLTableDataCellElement[];
-      const colIndex = tds.indexOf(col);
-      const adjustCol = (col.previousSibling || col.nextSibling) as HTMLTableDataCellElement;
+    const rangeStartEnd = this._controller.tableControllerService.getStartEndBySelectedCols(this._controller.selectedCols);
 
-      if (adjustCol) {
-        this._adjustTd(adjustCol, col);
-      }
-      if (col.rowSpan > 1) {
-        const rowStart = rowIndex + 1;
-        const rowEnd = rowIndex + col.rowSpan;
-        for (let i = rowStart; i < rowEnd; ++i) {
-          const tr = trs[i];
-          const childs = Array.from(tr.childNodes) as HTMLTableDataCellElement[];
-          const td = childs[colIndex - 1] || childs[colIndex] || childs[colIndex + 1];
-          if (td) {
-            this._adjustTd(td, col);
+    const colsToDelete: ITableCell[] = [];
+    const minusMap = new Map<ITableCell, number>();
+
+    const rows = Array.from(this._controller.el.querySelectorAll('tr')) as HTMLTableRowElement[];
+    rows.forEach(row => {
+      const cols = Array.from(row.childNodes) as ITableCell[];
+      cols.forEach(col => {
+        const startEnd = this._controller.tableControllerService.getCellStartEnd(col);
+        if (startEnd.colStart >= rangeStartEnd.colStart && startEnd.colEnd <= rangeStartEnd.colEnd) {
+          colsToDelete.push(col);
+        } else {
+          if (col.colSpan > 1) {
+            const startEnd = this._controller.tableControllerService.getCellStartEnd(col);
+            if (rangeStartEnd.colStart > startEnd.colStart && rangeStartEnd.colStart < startEnd.colEnd && rangeStartEnd.colEnd >= startEnd.colEnd) {
+              minusMap.set(col, startEnd.colEnd - rangeStartEnd.colStart);
+            }
+            if (rangeStartEnd.colStart <= startEnd.colStart && rangeStartEnd.colEnd > startEnd.colStart && rangeStartEnd.colEnd < startEnd.colEnd) {
+              minusMap.set(col, rangeStartEnd.colEnd - startEnd.colStart);
+            }
           }
         }
-      }
-      row.removeChild(col);
+      })
+    });
+
+    colsToDelete.forEach(col => {
+      col.parentNode.removeChild(col);
+    });
+
+    minusMap.forEach((count, col) => {
+      col.colSpan -= count;
     });
 
     this._controller.checkTableState();
     return of(undefined);
   }
 
-  private _adjustTd(target: HTMLTableDataCellElement, from: HTMLTableDataCellElement) {
-    target.colSpan += from.colSpan;
-    const colwidth = +(from.style.getPropertyValue('width')?.replace('px', ''));
-    const targetWidth = +(target.style.getPropertyValue('width')?.replace('px', ''));
-    target.setAttribute('style', `width: ${targetWidth + colwidth}px`);
-  }
 }
