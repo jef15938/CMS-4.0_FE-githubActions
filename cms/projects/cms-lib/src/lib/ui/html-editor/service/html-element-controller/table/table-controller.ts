@@ -208,7 +208,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
     const mousedown$: Observable<MouseEvent> = merge(
       ...tds.map(td => fromEvent(td, 'mousedown'))
-    ).pipe(evPreventDefaultAndStopPropagation);
+    ) as Observable<any>;
 
     const mouseover$: Observable<MouseEvent> = merge(
       ...tds.map(td => fromEvent(td, 'mouseover'))
@@ -216,21 +216,18 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
     const mouseup$ = fromEvent<MouseEvent>(document, 'mouseup').pipe(evPreventDefaultAndStopPropagation);
 
-    let disableDocumentMoveEvent: Subscription;
-
     const drag$ = mousedown$.pipe(
-      tap(_ => {
-        // disableDocumentMoveEvent = fromEvent<MouseEvent>(document, 'mousemove').pipe(evPreventDefaultAndStopPropagation).subscribe();
-      }),
       switchMap(start => {
-        if (start.button === 2) { return of(undefined); } // right click
-
         // console.warn('start = ', start);
+        if (start.button === 2) { return of(undefined); } // right click
         removeAllSelected();
-
         const cell = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, start.target as HTMLElement, 'td') as HTMLTableDataCellElement;
         cell?.classList.add("selected");
         startCell = cell;
+
+        if (!(start.ctrlKey || start.metaKey)) { return of(undefined); } // right click
+        start.stopPropagation();
+        start.preventDefault();
 
         return mouseover$.pipe(
           tap(over => {
@@ -241,7 +238,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
           takeUntil(mouseup$.pipe(
             tap(end => {
               // console.warn('end = ', end);
-              disableDocumentMoveEvent?.unsubscribe();
               this.checkTableState();
             })
           ))
