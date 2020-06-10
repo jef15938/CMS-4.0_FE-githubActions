@@ -15,10 +15,8 @@ export class Merge extends HtmlEditorAction {
   do(): Observable<any> {
     if (this._controller.selectedCols.length < 2) { return this.context.modalService.openMessage({ message: '請選擇要合併的複數欄' }); }
 
-    const colCountInRows = this._controller.selectedRows
-      .map(row => Array.from(row.childNodes).filter((col: HTMLTableDataCellElement) => this._controller.selectedCols.indexOf(col) > -1).reduce((a, b: HTMLTableDataCellElement) => a + b.colSpan, 0));
-    if (!(colCountInRows.every(colCount => colCount === colCountInRows[0]))) {
-      return this.context.modalService.openMessage({ message: '欲合併的欄位不正確' });
+    if (this._controller.selectedCols.some(col => col.rowSpan > 1 || col.colSpan > 1)) { // 不可含已合併
+      return this.context.modalService.openMessage({ message: '欲合併的欄位不可含有已合併的欄位' });
     }
 
     const colsInRows = this._controller.selectedRows

@@ -1,6 +1,6 @@
 import { HtmlEditorElementController } from './../_base';
 import { fromEvent, Subscription, merge, Observable, of, concat } from 'rxjs';
-import { IHtmlEditorContextMenuItem } from '../../../html-editor.interface';
+import { IHtmlEditorContextMenuItem, IHtmlEditorContext } from '../../../html-editor.interface';
 import { DeleteRow } from './actions/delete-row';
 import { AddRow } from './actions/add-row';
 import { ITableController, ITableSetting } from './table-controller.interface';
@@ -9,6 +9,7 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Merge } from './actions/merge';
 import { Split } from './actions/split';
 import { DeleteTable } from './actions/delete-table';
+import { TableControllerService } from './table-controller-service';
 
 export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements ITableController {
 
@@ -26,10 +27,17 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
       const mergeItem = menuItems[2];
       mergeItem.disabled = !this.selectedCols.length || this.selectedCols.length < 2;
-      if (!mergeItem.disabled) {
-        const spanCountInRows = this.selectedRows
-          .map(row => Array.from(row.childNodes).filter((col: HTMLTableDataCellElement) => this.selectedCols.indexOf(col) > -1).reduce((a, b: HTMLTableDataCellElement) => a + b.colSpan, 0));
-        mergeItem.disabled = !(spanCountInRows.every(colCount => colCount === spanCountInRows[0]));
+      if (!mergeItem.disabled) { // 行要連續
+        if (this.selectedRows.length > 1 && !this.selectedRows.every((row, rowIndex, arr) => {
+          if (rowIndex !== 0) {
+            const previousSelectedRow = arr[rowIndex - 1];
+            const previousRow = row.previousSibling as HTMLTableRowElement;
+            return previousSelectedRow === previousRow;
+          };
+          return true;
+        })) {
+          mergeItem.disabled = true;
+        }
       }
 
       const splitItem = menuItems[3];
@@ -52,7 +60,17 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   private _tableSetting: ITableSetting;
   private _subscriptions: Subscription[] = [];
 
+  private _tableControllerService: TableControllerService;
+
   private _selectCellSubscription: Subscription;
+
+  constructor(
+    el: HTMLTableElement,
+    context: IHtmlEditorContext,
+  ) {
+    super(el, context);
+    this._tableControllerService = new TableControllerService();
+  }
 
   protected onAddToEditor(): void {
     this._contextMenuItems = [
@@ -133,51 +151,9 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     const table = this.el;
     let startCell: HTMLTableDataCellElement;
 
-    const getAffectedByRowSpanCellCount = function (cell: HTMLTableDataCellElement): number {
-      let affectedCount = 0;
-      const cellParentIndex = (Array.from(cell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(cell.parentNode as HTMLElement);
-      const cellIndex = (Array.from(cell.parentNode.childNodes) as HTMLElement[]).indexOf(cell);
-      const previousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-      const checkStart = cellIndex + previousColSpanOffset;
-      let previousTr = cell.parentNode.previousSibling as HTMLTableRowElement;
-      while (previousTr) {
-        const trs = Array.from(previousTr.parentNode.childNodes) as HTMLTableRowElement[];
-        const trIndex = trs.indexOf(previousTr);
-        Array.from(previousTr.childNodes).forEach((td: HTMLTableDataCellElement, tdIndex) => {
-          if (td.rowSpan <= 1) { return; }
-          if ((td.rowSpan - 1) + trIndex < cellParentIndex) {
-            return;
-          }
-          const tdPreviousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-          if (
-            tdIndex + tdPreviousColSpanOffset <= checkStart
-          ) {
-            affectedCount += 1 + (td.colSpan - 1);
-          }
-        });
-        previousTr = previousTr.previousSibling as HTMLTableRowElement;
-      }
-      return affectedCount;
-    }
-
-    const getCellStartEnd = (cell: HTMLTableDataCellElement) => {
-      const row = cell.parentElement as HTMLTableRowElement;
-      const trs = Array.from(row.parentNode.childNodes) as HTMLTableRowElement[];
-      const rowIndex = trs.indexOf(row);
-      const tds = Array.from(row.childNodes) as HTMLTableDataCellElement[];
-      const cellIndex = tds.indexOf(cell);
-      const colSpanOffser = Array.from(tds).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-      const affectedByRowSpanCount = getAffectedByRowSpanCellCount(cell);
-      const rowStart = rowIndex;
-      const rowEnd = rowStart + (cell.rowSpan - 1);
-      const colStart = cellIndex + colSpanOffser + affectedByRowSpanCount;
-      const colEnd = colStart + (cell.colSpan - 1);
-      return { rowStart, rowEnd, colStart, colEnd };
-    }
-
     const selectTo = (currentCell: HTMLTableDataCellElement) => {
-      const startCellStartEnd = getCellStartEnd(startCell);
-      const currentCellStartEnd = getCellStartEnd(currentCell);
+      const startCellStartEnd = this._tableControllerService.getCellStartEnd(startCell);
+      const currentCellStartEnd = this._tableControllerService.getCellStartEnd(currentCell);
 
       const rowStart = startCellStartEnd.rowStart <= currentCellStartEnd.rowStart ? startCellStartEnd.rowStart : currentCellStartEnd.rowStart;
       const rowEnd = startCellStartEnd.rowEnd >= currentCellStartEnd.rowEnd ? startCellStartEnd.rowEnd : currentCellStartEnd.rowEnd;
@@ -190,7 +166,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
 
         cells.forEach((cell, cellIndex) => {
-          const cellColStartEnd = getCellStartEnd(cell);
+          const cellColStartEnd = this._tableControllerService.getCellStartEnd(cell);
           if (cellColStartEnd.colStart >= colStart && cellColStartEnd.colEnd <= colEnd) {
             cell?.classList.add("selected");
           }
