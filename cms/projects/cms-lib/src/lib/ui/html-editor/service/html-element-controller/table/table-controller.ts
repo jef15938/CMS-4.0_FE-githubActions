@@ -3,7 +3,7 @@ import { fromEvent, Subscription, merge, Observable, of, concat } from 'rxjs';
 import { IHtmlEditorContextMenuItem, IHtmlEditorContext } from '../../../html-editor.interface';
 import { DeleteRow } from './actions/delete-row';
 import { AddRow } from './actions/add-row';
-import { ITableController, ITableSetting } from './table-controller.interface';
+import { ITableController, ITableSetting, ITableCell } from './table-controller.interface';
 import { DeleteCol } from './actions/delete-col';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Merge } from './actions/merge';
@@ -107,6 +107,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     ];
     const cols = this.el.querySelectorAll('tr')[0].querySelectorAll('td').length;
     this._tableSetting = { cols };
+    this.checkTableState();
     this._subscribeEvents();
     this._subscribeCellSelection();
   }
@@ -158,15 +159,20 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     let startCell: HTMLTableDataCellElement;
 
     const selectTo = (currentCell: HTMLTableDataCellElement) => {
-      const selectedColsStartEnd = this._tableControllerService.getStartEndByStartAndEnd(startCell, currentCell);
+      const selectedColsStartEnd = this._tableControllerService.getStartEndByStartCellAndEndCell(startCell, currentCell);
       const trs = Array.from(this.el.querySelectorAll('tr'));
-      for (let i = selectedColsStartEnd.rowStart; i <= selectedColsStartEnd.rowEnd; ++i) {
+      for (let i = 0; i < trs.length; ++i) {
         const row = trs[i];
         const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
 
-        cells.forEach((cell) => {
-          const cellColStartEnd = this._tableControllerService.getCellStartEnd(cell);
-          if (cellColStartEnd.colStart >= selectedColsStartEnd.colStart && cellColStartEnd.colEnd <= selectedColsStartEnd.colEnd) {
+        cells.forEach((cell: ITableCell) => {
+          const startEnd = this._tableControllerService.getCellStartEnd(cell);
+          if (
+            startEnd.rowStart >= selectedColsStartEnd.rowStart
+            && startEnd.rowEnd <= selectedColsStartEnd.rowEnd
+            && startEnd.colStart >= selectedColsStartEnd.colStart
+            && startEnd.colEnd <= selectedColsStartEnd.colEnd
+          ) {
             cell?.classList.add("selected");
           }
         });
@@ -207,11 +213,13 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
           cell.classList.remove("selected");
         }
 
+        startCell = cell;
+
         if (!(start.shiftKey)) { return of(undefined); } // 拖拉多選
         start.stopPropagation();
         start.preventDefault();
 
-        startCell = cell;
+        
 
         return mouseover$.pipe(
           tap(over => {
@@ -222,7 +230,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
           takeUntil(mouseup$.pipe(
             tap(end => {
               // console.warn('end = ', end);
-              this.checkTableState();
+              this.checkTableState(false);
             })
           ))
         )
@@ -256,6 +264,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   private _onUnselected(): void {
     this.el.style.removeProperty('outline');
     this._unsubscribeCellSelection();
+    this.checkTableState();
   }
 
   private _evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
@@ -263,7 +272,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     ev.stopPropagation();
   }
 
-  checkTableState() {
+  checkTableState(scanTable = true) {
     this.selectedCols = Array.from(this.el.querySelectorAll("td.selected"));
     this.selectedRows = this.selectedCols.map(col => col.parentElement).filter((row, i, arr) => arr.indexOf(row) === i) as HTMLTableRowElement[];
 
@@ -277,6 +286,33 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     if (!trs.length) {
       this.el.parentNode.removeChild(this.el);
     }
+
+    if(scanTable){
+      this._scanTable(this.el);
+    }
   }
+
+  private _scanTable(table) {
+    var m = [];
+    for (var y = 0; y < table.rows.length; y++) {
+      var row = table.rows[y];
+      for (var x = 0; x < row.cells.length; x++) {
+        var cell = row.cells[x], xx = x, tx, ty;
+        for (; m[y] && m[y][xx]; ++xx);                        // skip already occupied cells in current row
+        for (tx = xx; tx < xx + cell.colSpan; ++tx)            // mark matrix elements occupied by current cell with true
+        {
+          for (ty = y; ty < y + cell.rowSpan; ++ty) {
+            if (!m[ty]) m[ty] = [];                    // fill missing rows
+            m[ty][tx] = true;
+          }
+        }
+        // do here whatever you want with
+        // xx: the horizontal offset of the cell
+        // y: the vertical offset of the cell
+        var pos = { top: y, left: xx };
+        cell['cellPos'] = pos;
+      }
+    }
+  };
 
 }

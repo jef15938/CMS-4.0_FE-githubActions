@@ -1,3 +1,5 @@
+import { ITableCell } from './table-controller.interface';
+
 export class TableControllerService {
 
   createCell(innerHTML = '文字') {
@@ -81,71 +83,60 @@ export class TableControllerService {
   //   return affectedCount;
   // }
 
+  // getCellStartEnd(cell: HTMLTableDataCellElement) {
+  //   const row = cell.parentElement as HTMLTableRowElement;
+  //   const trs = Array.from(row.parentNode.childNodes) as HTMLTableRowElement[];
+  //   const rowIndex = trs.indexOf(row);
+  //   const tds = Array.from(row.childNodes) as HTMLTableDataCellElement[];
+  //   const cellIndex = tds.indexOf(cell);
+  //   const colSpanOffser = Array.from(tds).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+  //   const affectedByRowSpanCount = this.getAffectedByRowSpanCellCount(cell);
+  //   const rowStart = rowIndex;
+  //   const rowEnd = rowStart + (cell.rowSpan - 1);
+  //   const colStart = cellIndex + colSpanOffser + affectedByRowSpanCount;
+  //   // const colStart = cellIndex + colSpanOffser + affectedByRowSpanCount.colOffset + affectedByRowSpanCount.colOffset;
+  //   const colEnd = colStart + (cell.colSpan - 1);
+  //   return { rowStart, rowEnd, colStart, colEnd };
+  // }
+
   getCellStartEnd(cell: HTMLTableDataCellElement) {
-    const row = cell.parentElement as HTMLTableRowElement;
-    const trs = Array.from(row.parentNode.childNodes) as HTMLTableRowElement[];
-    const rowIndex = trs.indexOf(row);
-    const tds = Array.from(row.childNodes) as HTMLTableDataCellElement[];
-    const cellIndex = tds.indexOf(cell);
-    const colSpanOffser = Array.from(tds).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-    const affectedByRowSpanCount = this.getAffectedByRowSpanCellCount(cell);
-    const rowStart = rowIndex;
-    const rowEnd = rowStart + (cell.rowSpan - 1);
-    const colStart = cellIndex + colSpanOffser + affectedByRowSpanCount;
-    // const colStart = cellIndex + colSpanOffser + affectedByRowSpanCount.colOffset + affectedByRowSpanCount.colOffset;
-    const colEnd = colStart + (cell.colSpan - 1);
-    return { rowStart, rowEnd, colStart, colEnd };
+    const pos = (cell as ITableCell).cellPos;
+    const rowStart = pos.top;
+    const rowEnd = rowStart + cell.rowSpan;
+    const colStart = pos.left;
+    const colEnd = colStart + cell.colSpan;
+
+    const startEnd = { rowStart, rowEnd, colStart, colEnd };
+    return startEnd;
   }
 
-  getStartEndByStartAndEnd(start: HTMLTableDataCellElement, end: HTMLTableDataCellElement) {
-    const startCellStartEnd = this.getCellStartEnd(start);
-    const endCellStartEnd = this.getCellStartEnd(end);
+  getStartEndByStartCellAndEndCell(start: HTMLTableDataCellElement, end: HTMLTableDataCellElement) {
+    const startPos = (start as ITableCell).cellPos;
+    const endPos = (end as ITableCell).cellPos;
 
-    const rowStart = startCellStartEnd.rowStart <= endCellStartEnd.rowStart ? startCellStartEnd.rowStart : endCellStartEnd.rowStart;
-    const rowEnd = startCellStartEnd.rowEnd >= endCellStartEnd.rowEnd ? startCellStartEnd.rowEnd : endCellStartEnd.rowEnd;
-    const colStart = startCellStartEnd.colStart <= endCellStartEnd.colStart ? startCellStartEnd.colStart : endCellStartEnd.colStart;
-    const colEnd = startCellStartEnd.colEnd >= endCellStartEnd.colEnd ? startCellStartEnd.colEnd : endCellStartEnd.colEnd;
+    const startRowStart = startPos.top;
+    const startRowEnd = startRowStart + start.rowSpan;
+    const startColStart = startPos.left;
+    const startColEnd = startColStart + start.colSpan;
+
+    const endRowStart = endPos.top;
+    const endRowEnd = endRowStart + end.rowSpan;
+    const endColStart = endPos.left;
+    const endColEnd = endColStart + end.colSpan;
+
+    const rowStart = Math.min(startRowStart, endRowStart);
+    const rowEnd = Math.max(startRowEnd, endRowEnd);
+    const colStart = Math.min(startColStart, endColStart);
+    const colEnd = Math.max(startColEnd, endColEnd);
 
     const startEnd = { rowStart, rowEnd, colStart, colEnd };
     return startEnd;
   }
 
   getStartEndBySelectedCols(selectedCols: HTMLTableDataCellElement[]) {
-    let colStart: number = null;
-    let colEnd: number = null;
-    let rowStart: number = null;
-    let rowEnd: number = null;
-
-    selectedCols.forEach(col => {
-      const colStartEnd = this.getCellStartEnd(col);
-
-      if (colStart === null) {
-        colStart = colStartEnd.colStart;
-      } else {
-        colStart = colStart < colStartEnd.colStart ? colStart : colStartEnd.colStart;
-      }
-
-      if (colEnd === null) {
-        colEnd = colStartEnd.colEnd;
-      } else {
-        colEnd = colEnd > colStartEnd.colEnd ? colEnd : colStartEnd.colEnd;
-      }
-
-      if (rowStart === null) {
-        rowStart = colStartEnd.rowStart;
-      } else {
-        rowStart = rowStart < colStartEnd.rowStart ? rowStart : colStartEnd.rowStart;
-      }
-
-      if (rowEnd === null) {
-        rowEnd = colStartEnd.rowEnd;
-      } else {
-        rowEnd = rowEnd > colStartEnd.rowEnd ? rowEnd : colStartEnd.rowEnd;
-      }
-
-    });
-
-    const startEnd = { rowStart, rowEnd, colStart, colEnd };
-    return startEnd;
+    const start = selectedCols[0];
+    const end = selectedCols[selectedCols.length - 1];
+    return this.getStartEndByStartCellAndEndCell(start, end);
   }
+  
 }

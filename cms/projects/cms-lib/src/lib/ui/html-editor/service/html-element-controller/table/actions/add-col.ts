@@ -1,8 +1,7 @@
 import { HtmlEditorAction } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { IHtmlEditorContext } from '../../../../html-editor.interface';
-import { ITableController } from '../table-controller.interface';
-import { TableControllerService } from '../table-controller-service';
+import { ITableController, ITableCell } from '../table-controller.interface';
 
 export class AddCol extends HtmlEditorAction {
 
@@ -18,94 +17,121 @@ export class AddCol extends HtmlEditorAction {
   }
 
   do(): Observable<any> {
-    // if (!this._controller.selectedCols.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準欄' }); }
+    if (!this._controller.selectedCols.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準欄' }); }
 
-    // const selectedColsStartEnd = this._controller.tableControllerService.getStartEndBySelectedCols(this._controller.selectedCols);
+    const rangeStartEnd = this._controller.tableControllerService.getStartEndBySelectedCols(this._controller.selectedCols);
+    // console.warn('rangeStartEnd = ', rangeStartEnd);
 
-    // const trs = Array.from(this._controller.el.querySelectorAll('tr')) as HTMLTableRowElement[];
+    let index = rangeStartEnd.colStart;
+    if (this._position === 'right') {
+      index = rangeStartEnd.colEnd;
+    }
 
-    // const map = new Map<HTMLTableRowElement, HTMLTableDataCellElement>();
+    const trArr = Array.from(this._controller.el.querySelectorAll('tr')) as HTMLTableRowElement[];
+    let cols = 0;
+    const rows = trArr.length;
 
-    // for (let i = 0, l = trs.length; i < l; ++i) {
-    //   const row = trs[i];
-    //   const tds = Array.from(row.childNodes) as HTMLTableDataCellElement[];
-    //   if (this._position === 'left') {
-    //     let insertBeforeIndex = selectedColsStartEnd.colStart;
-    //     let insertBefore = tds[insertBeforeIndex];
-    //     const affected = this._controller.tableControllerService.getAffectedByRowSpanCellCount(insertBefore, { checkFromRowStart: true });
-    //     const previousColSpanOffset = Array.from(insertBefore.parentNode.childNodes).slice(0, insertBeforeIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-    //     console.error('insertBeforeIndex = ', insertBeforeIndex, insertBefore);
-    //     insertBeforeIndex = insertBeforeIndex - (affected.rowOffset + affected.colOffset) - previousColSpanOffset;
-    //     insertBefore = tds[insertBeforeIndex];
-    //     console.error('    insertBeforeIndex = ', insertBeforeIndex, insertBefore);
-    //     map.set(row, insertBefore);
-    //   } else {
-    //     let insertBeforeIndex = selectedColsStartEnd.colEnd + 1;
-    //     let insertBefore = tds[insertBeforeIndex];
-    //     console.error('insertBeforeIndex = ', insertBeforeIndex, insertBefore);
+    const row0Tds = Array.from(trArr[0].childNodes) as ITableCell[];
+    row0Tds.forEach(td => {
+      cols += td.colSpan;
+    });
+    cols += 1;
 
-    //     // while (!insertBefore) {
-    //     //   insertBeforeIndex--;
-    //     //   insertBefore = tds[insertBeforeIndex];
-    //     // }
-    //     // console.error('    insertBeforeIndex = ', insertBeforeIndex, insertBefore);
-        
-    //     const affected = this._controller.tableControllerService.getAffectedByRowSpanCellCount(insertBefore, { checkFromRowStart: true });
-    //     const previousColSpanOffset = Array.from(insertBefore.parentNode.childNodes).slice(0, insertBeforeIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-    //     console.error(insertBefore, affected, previousColSpanOffset);
-    //     insertBeforeIndex -= previousColSpanOffset;
-    //     if (affected.rowOffset) {
-    //       insertBeforeIndex -= affected.colOffset;
-    //     }
-    //     insertBefore = tds[insertBeforeIndex];
-    //     console.error('        insertBeforeIndex = ', insertBeforeIndex, insertBefore);
+    var checkArr = [];
+    for (let tmp_x = 0; tmp_x < rows; tmp_x++) {
+      const tmp_arr = [];
+      for (let tmp_y = 0; tmp_y < cols; tmp_y++) {
+        tmp_arr.push(false);
+      }
+      checkArr.push(tmp_arr);
+    }
 
-    //     map.set(row, insertBefore);
-    //   }
-    // }
+    for (let j = 0; j < trArr.length; j++) {
+      const element = trArr[j];
+      const tds = Array.from(element.childNodes) as ITableCell[];
+      let tmpTD: ITableCell;
+      for (let i = 0; i < tds.length; i++) {
+        tmpTD = tds[i];
+        const startEnd = this._controller.tableControllerService.getCellStartEnd(tmpTD);
+        var start = startEnd.colStart;
+        var stop = startEnd.colEnd - 1;
+        if (index >= start && index <= stop) {
+          if (tmpTD.colSpan > 1) {
+            tmpTD.colSpan = tmpTD.colSpan + 1;
+          } else {
+            const newCell = this._controller.tableControllerService.createCell('new');
+            const insertBefore = tmpTD.nextElementSibling;
+            if (insertBefore) {
+              tmpTD.parentNode.insertBefore(newCell, tmpTD);
+            } else {
+              tmpTD.parentNode.appendChild(newCell);
+            }
+            break;
+          }
+        }
 
-    // map.forEach((insertBefore, row) => {
-    //   const newCell = this._controller.tableControllerService.createCell('new');
-    //   if (insertBefore) {
-    //     row.insertBefore(newCell, insertBefore);
-    //   } else {
-    //     if (this._position === 'left') {
-    //       row.insertBefore(newCell, row.firstChild);
-    //     } else {
-    //       row.appendChild(newCell);
-    //     }
-    //   }
-    // });
+      }
+    }
 
-    // const table = this._controller.el;
-    // const rowParent = this._controller.selectedRows.map(row => row.parentElement)[0];
-    // const rowParentChildren = Array.from(rowParent.childNodes);
-    // const rowIndexes = this._controller.selectedRows.map(row => rowParentChildren.indexOf(row));
-    // const baseRowIndex = this._position === 'before' ? Math.min(...rowIndexes) : Math.max(...rowIndexes);
-    // const baseRow = rowParentChildren[baseRowIndex];
+    // console.log('checkArr = ', checkArr);
 
-    // const newRow = document.createElement('tr');
-    // const cols = this._controller.getSetting().cols;
-    // for (let col = 0; col < cols; ++col) {
-    //   const td = document.createElement('td');
-    //   // td.innerHTML = '<div>文字</div>';
-    //   td.innerHTML = '文字';
-    //   td.setAttribute('class', 'tg-0pky');
-    //   td.setAttribute('colspan', '1');
-    //   td.setAttribute('rowspan', '1');
-    //   newRow.appendChild(td);
-    // }
+    this._controller.checkTableState();
 
-    // if (this._position === 'before') {
-    //   rowParent.insertBefore(newRow, baseRow);
-    // } else {
-    //   const next = baseRow.nextSibling;
-    //   if (next) {
-    //     rowParent.insertBefore(newRow, next);
-    //   } else {
-    //     rowParent.appendChild(newRow);
-    //   }
-    // }
+    trArr.forEach((tr, i) => {
+      const tds = Array.from(tr.childNodes) as ITableCell[];
+      tds.forEach((td, j) => {
+        const pos = td.cellPos;
+        // console.warn(td, pos);
+        var left = pos.left;
+        var top = pos.top;
+        var colSpan = td.colSpan - 1;
+        var rowSpan = td.rowSpan - 1;
+        for (var x = left; x <= (left + colSpan); x++) {
+          for (var y = top; y <= (top + rowSpan); y++) {
+            checkArr[y][x] = true;
+          }
+        }
+      })
+    })
+    // console.log('checkArr = ', checkArr);
+    checkArr.forEach((row, i) => {
+      var num = 0;
+      row.forEach((td, j) => {
+        if (!td)
+          num++;
+      })
+      if (num > 0) {
+        var target_row = trArr[i];
+        const tds = Array.from(target_row.childNodes) as ITableCell[];
+        // console.log('target_row = ', target_row);
+        for (var i = 0; i < tds.length; i++) {
+          const tmpTD = tds[i];
+          const startEnd = this._controller.tableControllerService.getCellStartEnd(tmpTD);
+          var start = startEnd.colStart;
+          var stop = startEnd.colEnd - 1;
+          if (index <= start || (i == tds.length - 1 && index >= stop)) {
+
+            if (tmpTD.colSpan > 1) {
+              tmpTD.colSpan = tmpTD.colSpan + 1;
+            } else {
+              const newCell = this._controller.tableControllerService.createCell('new');
+              if (index == start || index >= stop) {
+                const insertBefore = tmpTD.nextElementSibling;
+                if (insertBefore) {
+                  tmpTD.parentNode.insertBefore(newCell, tmpTD);
+                } else {
+                  tmpTD.parentNode.appendChild(newCell);
+                }
+              } else {
+                tmpTD.parentNode.insertBefore(newCell, tmpTD);
+              }
+            }
+            break;
+          }
+        }
+      }
+
+    })
 
     this._controller.checkTableState();
     return of(undefined);
