@@ -80,7 +80,11 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       ].join('');
 
     this.editorContainer.innerHTML = content;
+    this.checkInnerHtml();
+  }
 
+  checkInnerHtml(): void {
+    const container = this.editorContainer;
     let childNodes = Array.from(container.childNodes) || [];
     while (childNodes && childNodes.length) {
 

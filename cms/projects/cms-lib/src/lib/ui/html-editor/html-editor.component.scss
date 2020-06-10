@@ -26,6 +26,16 @@
 
   height: 95%;
 
+  ::ng-deep .highlight {
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    text-align: left;
+    color: #d0021b;
+  }
+
   ::ng-deep .neux-table  {
     border-collapse:collapse;
     border-spacing:0;

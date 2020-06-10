@@ -10,6 +10,7 @@ export interface IHtmlEditorContext {
   commonAncestorContainer: Node;
   isSelectionInsideEditorContainer: boolean;
   doAction(action: IHtmlEditorAction): void;
+  checkInnerHtml(): void;
 }
 
 export interface IHtmlEditorContextMenuItem {
