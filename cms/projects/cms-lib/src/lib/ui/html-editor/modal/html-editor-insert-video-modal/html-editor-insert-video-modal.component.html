@@ -12,6 +12,6 @@
   </div>
   <div class="btn-group">
     <button type="button" mat-button (click)="close()">取消</button>
-    <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid || isValidSrc">儲存</button>
+    <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid || !isValidSrc">儲存</button>
   </div>
 </form>

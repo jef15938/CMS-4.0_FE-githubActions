@@ -180,11 +180,15 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     });
   }
 
-  testHtmlEditor(){
+  testHtmlEditor() {
     this._htmlEditorService.openEditor({
       title: `Html編輯`,
       content: ''
-    }).subscribe();
+    }).subscribe(content => {
+      if (content) {
+        console.warn('content = ', content);
+      }
+    });
   }
 
 }

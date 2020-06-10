@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from './../../modal/custom-modal-base';
+import { HtmlEditorComponent } from '../html-editor.component';
 
 @Component({
   selector: 'cms-editor-container-modal',
@@ -7,6 +8,9 @@ import { CustomModalBase, CustomModalActionButton } from './../../modal/custom-m
   styleUrls: ['./editor-container-modal.component.scss']
 })
 export class EditorContainerModalComponent extends CustomModalBase implements OnInit {
+
+  @ViewChild(HtmlEditorComponent) htmlEditorComponent: HtmlEditorComponent;
+
   @Input() title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 
@@ -15,11 +19,12 @@ export class EditorContainerModalComponent extends CustomModalBase implements On
   constructor() { super(); }
 
   ngOnInit(): void {
-    this.modalRef.addPanelClass('cms-editor-container-modal');
+    this.modalRef.addPanelClass('cms-html-editor-container-modal');
   }
 
   confirm() {
-    this.close();
+    const content = this.htmlEditorComponent.getContent();
+    this.close(content);
   }
 
 }

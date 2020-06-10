@@ -39,7 +39,8 @@ export class CreateLink extends DomCmdAction {
         aTagToModify.target = configATag.target;
 
         if (isCreate) { // 新增
-          const isCreateOnImg = (range.commonAncestorContainer as HTMLElement).tagName?.toLowerCase() === 'img';
+          const commonAncestorContainer = range.commonAncestorContainer as HTMLElement;
+          const isCreateOnImg = commonAncestorContainer.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frame_id');
 
           if (isCreateOnImg) {
             aTagToModify.appendChild(range.commonAncestorContainer);
@@ -67,52 +68,9 @@ export class CreateLink extends DomCmdAction {
     const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
     const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLocaleLowerCase();
 
-    if (commonAncestorContainerTagName === 'img') { return false; }
+    if (commonAncestorContainerTagName === 'img' && !commonAncestorContainer.getAttribute('frame_id')) { return false; }
     if (range.collapsed) { return true; }
     return true;
-
-    let canModifyText = true;
-    let nodesToCheck: Node[] = [];
-    if (range.startContainer === range.endContainer) {
-      nodesToCheck.push(range.startContainer);
-    } else {
-      const children = Array.from(range.commonAncestorContainer.childNodes);
-
-      let start = children.indexOf(range.startContainer as HTMLElement);
-
-      let startTarget = range.startContainer;
-      while (start < 0) {
-        start = children.indexOf(startTarget.parentElement);
-        startTarget = startTarget.parentElement;
-      }
-
-      let end = children.indexOf(range.endContainer as HTMLElement);
-      let endTarget = range.endContainer;
-      while (end < 0) {
-        end = children.indexOf(endTarget.parentElement);
-        endTarget = endTarget.parentElement;
-      }
-      end += 1;
-
-      nodesToCheck = children.slice(start, end);
-    }
-
-    while (nodesToCheck.length) {
-      if (
-        nodesToCheck.some(n => {
-          const tagName = (n as HTMLElement).tagName?.toLowerCase();
-          return tagName === 'img';
-        })
-      ) {
-        canModifyText = false;
-        break;
-      }
-      nodesToCheck = nodesToCheck.reduce((a, b) => {
-        return a.concat(Array.from(b.childNodes))
-      }, [] as Node[]);
-    };
-
-    return canModifyText;
   }
 
   private _getExistingATag(range: Range): HTMLAnchorElement {

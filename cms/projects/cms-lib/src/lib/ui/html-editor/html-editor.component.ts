@@ -226,4 +226,8 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
     });
   }
+
+  getContent() {
+    return (this.editorContainer.cloneNode(true) as HTMLElement).innerHTML;
+  }
 }

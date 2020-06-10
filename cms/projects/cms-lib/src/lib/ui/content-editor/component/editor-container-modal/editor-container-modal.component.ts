@@ -22,7 +22,7 @@ export class EditorContainerModalComponent extends CustomModalBase implements On
   constructor() { super(); }
 
   ngOnInit(): void {
-    this.modalRef.addPanelClass('cms-editor-container-modal');
+    this.modalRef.addPanelClass('cms-content-editor-container-modal');
   }
 
   close() {
