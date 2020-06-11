@@ -1,10 +1,18 @@
-<div style="border: 1px solid black; padding: 5px; border-bottom: none;">
-  <div class="btn-group">
-    <button type="button" mat-button (click)="close()">取消</button>
-    <button type="button" mat-button (click)="confirm()">確定</button>
-  </div>
+<mat-menu #Menu="matMenu">
+  <button type="button" mat-menu-item (click)="showInfo()">Show Info</button>
+  <button type="button" mat-menu-item (click)="close()">取消並關閉</button>
+  <button type="button" mat-menu-item (click)="confirm()">裁切並關閉</button>
+</mat-menu>
+
+<div style="padding: 5px; border-bottom: 1px solid black;" *ngIf="cropperWrapper?.cropper">
+  <button type="button" mat-button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="Menu">Cropper</button>
+  <cms-cropper-menu-edit [cropper]="cropperWrapper.cropper"></cms-cropper-menu-edit>
+  <cms-cropper-menu-setting [cropper]="cropperWrapper.cropper"></cms-cropper-menu-setting>
 </div>
 <ng-container *ngIf="imgUrl">
-  <angular-cropper #Cropper [cropperOptions]="cropperOption" [imageUrl]="imgUrl | safeResource" (imageLoaded)="onImageLoaded($event)">
-  </angular-cropper>
+  <div style="margin: 20px">
+    <angular-cropper #Cropper [cropperOptions]="cropperOption" [imageUrl]="imgUrl | safeResource"
+      (imageLoaded)="onImageLoaded($event)">
+    </angular-cropper>
+  </div>
 </ng-container>

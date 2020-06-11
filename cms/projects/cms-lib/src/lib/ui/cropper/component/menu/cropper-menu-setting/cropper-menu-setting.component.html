@@ -1,0 +1,74 @@
+<ng-container *ngIf="options">
+  <button mat-button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="Menu">設定</button>
+  <mat-menu #Menu="matMenu">
+    <button type="button" mat-menu-item [matMenuTriggerFor]="DragMode">拖曳模式</button>
+    <button type="button" mat-menu-item [matMenuTriggerFor]="AspectRatio">選取比例</button>
+    <!-- <button type="button" mat-menu-item [matMenuTriggerFor]="Toggle">Toggle</button> -->
+  </mat-menu>
+
+  <mat-menu #DragMode="matMenu">
+    <mat-checkbox class="mat-menu-item" [checked]="options.dragMode==='crop'"
+      (click)="stopEvent($event);setDragMode('crop');">
+      裁剪
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="options.dragMode==='move'"
+      (click)="stopEvent($event);setDragMode('move');">
+      移動
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="options.dragMode==='none'"
+      (click)="stopEvent($event);setDragMode('none');">
+      無
+    </mat-checkbox>
+  </mat-menu>
+
+  <mat-menu #AspectRatio="matMenu">
+    <mat-checkbox class="mat-menu-item" [checked]="aspectRatioMode==='free'"
+      (click)="stopEvent($event);aspectRatio('free');">
+      任意
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="aspectRatioMode==='16:9'"
+      (click)="stopEvent($event);aspectRatio('16:9');">
+      16:9
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="aspectRatioMode==='4:3'"
+      (click)="stopEvent($event);aspectRatio('4:3');">
+      4:3
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="aspectRatioMode==='3:2'"
+      (click)="stopEvent($event);aspectRatio('3:2');">
+      3:2
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="aspectRatioMode==='1:1'"
+      (click)="stopEvent($event);aspectRatio('1:1');">
+      1:1
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="aspectRatioMode==='2:3'"
+      (click)="stopEvent($event);aspectRatio('2:3');">
+      2:3
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="aspectRatioMode==='3:4'"
+      (click)="stopEvent($event);aspectRatio('3:4');">
+      3:4
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="aspectRatioMode==='9:16'"
+      (click)="stopEvent($event);aspectRatio('9:16');">
+      9:16
+    </mat-checkbox>
+  </mat-menu>
+
+  <mat-menu #Toggle="matMenu">
+    <mat-checkbox class="mat-menu-item" [checked]="options.movable" (click)="stopEvent($event);toggle('movable')">
+      movable
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="options.scalable" (click)="stopEvent($event);toggle('scalable')">
+      scalable
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="options.rotatable" (click)="stopEvent($event);toggle('rotatable')">
+      rotatable
+    </mat-checkbox>
+    <mat-checkbox class="mat-menu-item" [checked]="options.zoomable" (click)="stopEvent($event);toggle('zoomable')">
+      zoomable
+    </mat-checkbox>
+  </mat-menu>
+
+</ng-container>

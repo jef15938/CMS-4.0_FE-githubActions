@@ -1,9 +1,9 @@
 // https://github.com/fengyuanchen/cropperjs#options
 export interface ICropperOption {
   /** Define the view mode of the cropper. */
-  viewMode?: 0 | 1 | 2; // 0
+  viewMode?: Cropper.ViewMode; // 0
   /** Define the dragging mode of the cropper. */
-  dragMode?: 'crop' | 'move' | 'none'; // 'crop'
+  dragMode?: Cropper.DragMode; // 'crop'
   /** Define the initial aspect ratio of the crop box. By default, it is the same as the aspect ratio of the canvas (image wrapper). */
   initialAspectRatio?: number; // NaN
   /** Define the fixed aspect ratio of the crop box. By default, the crop box is free ratio. */

@@ -11,6 +11,7 @@ import { ModalService } from '../../../ui/modal/modal.service';
 import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery-category-maintain-modal/gallery-category-maintain-modal.component';
 import { TreeComponent } from '../../../ui/tree/tree.component';
 import { UploadGalleryModalComponent } from './component/modal/upload-gallery-modal/upload-gallery-modal.component';
+import { CropperService } from '../../../ui/cropper/cropper.service';
 
 @Component({
   selector: 'cms-gallery',
@@ -55,9 +56,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject();
   private _categorySelected$ = new Subject<GalleryCategoryInfo>();
 
+  private _url = 'https://i.kym-cdn.com/photos/images/newsfeed/001/430/765/8aa.png';
+
   constructor(
     private _galleryService: GalleryService,
     private _modalService: ModalService,
+    private _cropperService: CropperService,
   ) { }
 
   ngOnInit(): void {
@@ -157,6 +161,17 @@ export class GalleryComponent implements OnInit, OnDestroy {
   onPageChanged(event: { pageIndex: number }) {
     this.galleryPageInfo.page = event.pageIndex + 1;
     this._getGallery().subscribe();
+  }
+
+  testCropper() {
+    this._cropperService.openEditor(this._url).subscribe((dataUrl: string) => {
+      // if (!dataUrl) { return; }
+      // const blob = this._dataURItoBlob(dataUrl);
+      // const newFile = this._mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
+      // console.warn('file = ', file);
+      // console.warn('newFile = ', newFile);
+      // this.files.splice(this.files.indexOf(file), 1, newFile);
+    });
   }
 
 }
