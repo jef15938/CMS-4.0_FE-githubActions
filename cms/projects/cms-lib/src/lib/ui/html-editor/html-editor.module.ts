@@ -20,6 +20,7 @@ import { DirectiveModule } from '../../directive/directive.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { HtmlEditorInsertVideoModalComponent } from './modal/html-editor-insert-video-modal/html-editor-insert-video-modal.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { HtmlEditorInsertVideoModalComponent } from './modal/html-editor-insert-
     MatRadioModule,
     MatMenuModule,
     MatIconModule,
+    MatButtonModule,
     FormsModule,
   ],
   declarations: [

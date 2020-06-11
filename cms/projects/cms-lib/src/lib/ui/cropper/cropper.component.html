@@ -4,7 +4,7 @@
   <button type="button" mat-menu-item (click)="confirm()">裁切並關閉</button>
 </mat-menu>
 
-<div style="padding: 5px; border-bottom: 1px solid black;" *ngIf="cropperWrapper?.cropper">
+<div style="border-bottom: 1px solid black;" *ngIf="cropperWrapper?.cropper">
   <button type="button" mat-button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="Menu">Cropper</button>
   <cms-cropper-menu-edit [cropper]="cropperWrapper.cropper"></cms-cropper-menu-edit>
   <cms-cropper-menu-setting [cropper]="cropperWrapper.cropper"></cms-cropper-menu-setting>
