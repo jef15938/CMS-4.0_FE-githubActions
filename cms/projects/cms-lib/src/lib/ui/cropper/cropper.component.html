@@ -1,0 +1,10 @@
+<div style="border: 1px solid black; padding: 5px; border-bottom: none;">
+  <div class="btn-group">
+    <button type="button" mat-button (click)="close()">取消</button>
+    <button type="button" mat-button (click)="confirm()">確定</button>
+  </div>
+</div>
+<ng-container *ngIf="imgUrl">
+  <angular-cropper #Cropper [cropperOptions]="cropperOption" [imageUrl]="imgUrl | safeResource" (imageLoaded)="onImageLoaded($event)">
+  </angular-cropper>
+</ng-container>

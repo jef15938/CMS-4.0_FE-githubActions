@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
 import { Subscription, of } from 'rxjs';
 import { HttpRequest, HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { map, tap, last, catchError } from 'rxjs/operators';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ColDef } from './../../../../../../ui/table/table.interface';
+import { CropperService } from './../../../../../../ui/cropper/cropper.service';
 
 export class FileUploadModel {
   fileName: string;
@@ -71,31 +72,35 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   ];
 
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _cropperService: CropperService,
   ) { super(); }
 
   ngOnInit() {
     this.updateSize('1280px');
   }
 
+  private _mapFileToFileUploadModel(file: File): FileUploadModel {
+    return {
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type,
+      data: file,
+      state: 'in',
+      inProgress: false,
+      progress: 0,
+      canRetry: false,
+      canCancel: true
+    };
+  }
+
   addFiles() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = fileUpload.onchange || (() => {
       this.files = this.files.concat(
-        Array.from(fileUpload.files).map(file => {
-          return {
-            fileName: file.name,
-            fileSize: file.size,
-            fileType: file.type,
-            data: file,
-            state: 'in',
-            inProgress: false,
-            progress: 0,
-            canRetry: false,
-            canCancel: true
-          }
-        })
+        Array.from(fileUpload.files).map(file => this._mapFileToFileUploadModel(file))
       );
+      console.warn('this.files = ', this.files);
     });
     fileUpload.click();
   }
@@ -109,6 +114,27 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       file.sub.unsubscribe();
     }
     this.removeFileFromArray(file);
+  }
+
+  cropFile(file: FileUploadModel) {
+    if (file) {
+      const reader = new FileReader();
+      // 轉換成 DataURL
+      reader.readAsDataURL(file.data);
+
+      reader.onload = () => {
+        // 將圖片 src 替換為 DataURL
+        const url = reader.result as string;
+        this._cropperService.openEditor(url).subscribe((dataUrl: string) => {
+          if (!dataUrl) { return; }
+          const blob = this._dataURItoBlob(dataUrl);
+          const newFile = this._mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
+          console.warn('file = ', file);
+          console.warn('newFile = ', newFile);
+          this.files.splice(this.files.indexOf(file), 1, newFile);
+        });
+      }
+    }
   }
 
   retryFile(file: FileUploadModel) {
@@ -168,6 +194,27 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     if (index > -1) {
       this.files.splice(index, 1);
     }
+  }
+
+  private _dataURItoBlob(dataURI: string): Blob {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    let byteString: string;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
+      byteString = atob(dataURI.split(',')[1]);
+    } else {
+      byteString = unescape(dataURI.split(',')[1]);
+    }
+
+    // separate out the mime component
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    const ia = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], { type: mimeString });
   }
 
 }

@@ -7,6 +7,7 @@ import { GalleryCategoryNodeComponent } from './component/node/gallery-category-
 import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery-category-maintain-modal/gallery-category-maintain-modal.component';
 import { UploadGalleryModalComponent } from './component/modal/upload-gallery-modal/upload-gallery-modal.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CropperModule } from '../../../ui/cropper/cropper.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     GalleryRoutingModule,
     SharedModule,
     MatProgressBarModule,
+    CropperModule,
   ],
   declarations: [
     GalleryComponent,
