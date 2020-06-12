@@ -1,7 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const BASE_URL = 'http://localhost:4010';
+const BASE_URL = 'https://cms.decoder.com.tw';
 export const environment = {
   production: false,
   API_URL: {
@@ -44,8 +44,8 @@ export const environment = {
     GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
   },
   API_TYPE: {
-    GetGalleryByCategoryID: 'Mock',
-    GetGalleryCategory: 'Mock',
+    GetGalleryByCategoryID: 'Restful',
+    GetGalleryCategory: 'Restful',
     PostGalleryCategory: 'Restful',
     PostLogin: 'Restful',
     GetDepartment: 'Mock',
@@ -75,9 +75,9 @@ export const environment = {
     PostFarmFormInfoByFuncID: 'Restful',
     PutFarmFormInfoByFuncID: 'Restful',
     GetFarmDetailInfoByFarmID: 'Mock',
-    GetSite: 'Mock',
+    GetSite: 'Restful',
     GetSiteBySiteID: 'Mock',
-    GetSiteBySiteIDAndNodeID: 'Mock',
+    GetSiteBySiteIDAndNodeID: 'Restful',
     GetGroupMenuByGroupID: 'Restful',
     GetGroupSiteMapByGroupID: 'Restful',
     GetTemplateByControlID: 'Mock',

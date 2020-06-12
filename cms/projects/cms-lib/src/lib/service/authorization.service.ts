@@ -26,15 +26,15 @@ export class AuthorizationService {
   login(username: string, password: string, validation_code: number) {
     if (!username) { throw new ParamsError('username', 'login', 'string', username); }
     if (!password) { throw new ParamsError('password', 'login', 'string', password); }
-    if (!validation_code) { throw new ParamsError('validation_code', 'login', 'string', validation_code); }
+    if (!validation_code) { throw new ParamsError('validation_code', 'login', 'number', validation_code); }
 
-    const params: LoginRequest = {
+    const requestBody: LoginRequest = {
       username,
       password,
       validation_code
     };
 
-    return this.respAPIService.dispatchRestApi('PostLogin', params);
+    return this.respAPIService.dispatchRestApi('PostLogin', { requestBody });
   }
 
   /**

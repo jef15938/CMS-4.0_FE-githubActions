@@ -10,6 +10,7 @@ import { SystemModule } from './function-module/system/system.module';
 import { WebModule } from './function-module/web/web.module';
 import { ExtensionModule } from './function-module/extension/extension.module';
 import { LoginModule } from './login/login.module';
+import { CmsAuthGuard } from './service/cms-auth-guard';
 
 const getMultiSiteModule = () => MultiSiteModule;
 const getMyAuditingModule = () => MyAuditingModule;
@@ -22,7 +23,7 @@ const getLoginModule = () => LoginModule;
 
 const routes: Routes = [
   {
-    path: '', component: CmsComponent, resolve: { menus: CmsUserMenuResolver },
+    path: '', component: CmsComponent, resolve: { menus: CmsUserMenuResolver }, canActivate: [CmsAuthGuard],
     children: [
       {
         path: 'multi-site',
