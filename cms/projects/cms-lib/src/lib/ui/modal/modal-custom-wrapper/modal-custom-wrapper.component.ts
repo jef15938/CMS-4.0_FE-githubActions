@@ -28,6 +28,7 @@ export class ModalCustomWrapperComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.renderCustom();
+    this._changeDetectorRef.detectChanges();
   }
 
   renderCustom() {
@@ -43,7 +44,6 @@ export class ModalCustomWrapperComponent implements OnInit, AfterViewInit {
     }
     instance.modalRef = this._modalRef;
     this.instance = instance;
-    this._changeDetectorRef.detectChanges();
   }
 
   getInstanceTitle(): string {
