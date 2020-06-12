@@ -6,6 +6,7 @@ import { map, tap, last, catchError } from 'rxjs/operators';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ColDef } from './../../../../../../ui/table/table.interface';
 import { CropperService } from './../../../../../../ui/cropper/cropper.service';
+import { GalleryService } from './../../../../../../service/gallery.service';
 
 export class FileUploadModel {
   fileName: string;
@@ -74,6 +75,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   constructor(
     private _http: HttpClient,
     private _cropperService: CropperService,
+    private _galleryService: GalleryService,
   ) { super(); }
 
   ngOnInit() {
@@ -215,6 +217,15 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     }
 
     return new Blob([ia], { type: mimeString });
+  }
+
+  upload() {
+    if (!this.files.length) {
+      alert('沒有檔案');
+      return;
+    }
+    const file = this.files[0];
+    this._galleryService.createGallery(file.data, this.categoryId).subscribe();
   }
 
 }

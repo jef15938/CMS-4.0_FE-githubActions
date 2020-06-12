@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { RestApiService } from '../neuxAPI/rest-api.service';
 import { ParamsError } from '@neux/core';
 import { GalleryGetResponse } from '../neuxAPI/bean/GalleryGetResponse';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { GalleryCategoryInfo } from '../neuxAPI/bean/GalleryCategoryInfo';
-import { map } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { GalleryCaregoryGetResponse } from '../neuxAPI/bean/GalleryCaregoryGetResponse';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ import { GalleryCaregoryGetResponse } from '../neuxAPI/bean/GalleryCaregoryGetRe
 export class GalleryService {
 
   constructor(
-    private respAPIService: RestApiService
+    private respAPIService: RestApiService,
+    private _httpClient: HttpClient,
   ) { }
 
   /**
@@ -93,6 +95,22 @@ export class GalleryService {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
     return this.respAPIService.dispatchRestApi('PutGalleryCategoryByCategoryID', { categoryID });
+  }
+
+  createGallery(fileToUpload: File, categoryID: string) {
+    const headers = null;
+    const url = `https://cms.decoder.com.tw/Gallery/${categoryID}`;
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    formData.append('description', 'description');
+    return this._httpClient
+      .post(url, formData, { headers: headers }).pipe(
+        tap(res => console.log('upload response = ', res)),
+        catchError((e) => {
+          console.error('error = ', e)
+          return throwError(e);
+        }),
+      );
   }
 
 
