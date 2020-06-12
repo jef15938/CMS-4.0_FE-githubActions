@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
 import { Subscription, of } from 'rxjs';
 import { HttpRequest, HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
@@ -34,7 +34,7 @@ export class FileUploadModel {
     ])
   ]
 })
-export class UploadGalleryModalComponent extends CustomModalBase implements OnInit {
+export class UploadGalleryModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
   title: string | (() => string);
   actions: CustomModalActionButton[];
 
@@ -77,6 +77,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     private _http: HttpClient,
     private _cropperService: CropperService,
     private _galleryService: GalleryService,
+    private _changeDetectorRef: ChangeDetectorRef,
   ) { super(); }
 
   ngOnInit() {
@@ -87,6 +88,10 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     } else if (this.galleryId) {
       this.title = `修改檔案：${this.galleryId}`;
     }
+  }
+
+  ngAfterViewInit(): void {
+    this._changeDetectorRef.detectChanges();
   }
 
   private _mapFileToFileUploadModel(file: File): FileUploadModel {
