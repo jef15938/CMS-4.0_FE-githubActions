@@ -15,6 +15,8 @@ export class ModalCustomWrapperComponent implements OnInit, AfterViewInit {
 
   instance: CustomModalBase;
 
+  instanceTitle = '';
+
   constructor(
     @Inject(MAT_DIALOG_DATA) private _config: ModalOpenComponentConfig<any>,
     private _modalRef: MatDialogRef<ModalCustomWrapperComponent>,
@@ -44,6 +46,9 @@ export class ModalCustomWrapperComponent implements OnInit, AfterViewInit {
     }
     instance.modalRef = this._modalRef;
     this.instance = instance;
+    setTimeout(() => {
+      this.instanceTitle = this.getInstanceTitle();
+    }, 0.5);
   }
 
   getInstanceTitle(): string {
