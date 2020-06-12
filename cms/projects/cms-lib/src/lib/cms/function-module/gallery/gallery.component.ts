@@ -12,6 +12,8 @@ import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery
 import { TreeComponent } from '../../../ui/tree/tree.component';
 import { UploadGalleryModalComponent } from './component/modal/upload-gallery-modal/upload-gallery-modal.component';
 import { CropperService } from '../../../ui/cropper/cropper.service';
+import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from './component/cell/gallery-action-cell/gallery-action-cell.component';
+import { AuthorizationService } from '../../../service/authorization.service';
 
 @Component({
   selector: 'cms-gallery',
@@ -45,12 +47,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
       field: 'file_type',
       title: '類型',
     },
-    // {
-    //   colId: 'action',
-    //   field: 'action',
-    //   title: '操作',
-    //   cellRenderer: AuditingActionCellComponent,
-    // }
+    {
+      colId: 'action',
+      field: 'action',
+      title: '操作',
+      cellRenderer: GalleryActionCellComponent,
+    }
   ];
 
   private _destroy$ = new Subject();
@@ -60,6 +62,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   constructor(
     private _galleryService: GalleryService,
+    private _authorizationService: AuthorizationService,
     private _modalService: ModalService,
     private _cropperService: CropperService,
   ) { }
@@ -114,7 +117,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         categoryID: action === 'Update' ? category.category_id : undefined,
         category_name: action === 'Update' ? category.category_name : undefined,
         parent_id: action === 'Update' ? this.tree.findParent(category)?.category_id : category.category_id,
-        assign_dept_id: null
+        assign_dept_id: this._authorizationService.getCurrentLoginInfo().dept_id
       }
     })
   }
@@ -125,6 +128,15 @@ export class GalleryComponent implements OnInit, OnDestroy {
       componentInitData: {
         category_name: category.category_name,
         categoryId: category.category_id,
+      }
+    });
+  }
+
+  private _updateGallery(galleryId: number) {
+    return this._modalService.openComponent({
+      component: UploadGalleryModalComponent,
+      componentInitData: {
+        galleryId,
       }
     });
   }
@@ -151,7 +163,18 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   onTableCustomEvent(event) {
-    console.warn('onTableCustomEvent()', event);
+    if (event instanceof GalleryActionCellCustomEvent) {
+      let action: Observable<any>;
+      switch (event.action) {
+        case event.ActionType.Edit:
+          action = this._updateGallery(event.data.gallery_id);
+          break;
+        case event.ActionType.Delete:
+          action = this._galleryService.deleteGallery(event.data.gallery_id);
+          break;
+      }
+      action ? action.subscribe() : null;
+    }
   }
 
   onNodeSelected(event: { node: GalleryCategoryInfo }) {

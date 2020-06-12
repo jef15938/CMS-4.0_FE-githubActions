@@ -6,7 +6,7 @@ import { GalleryService } from './../../../../../../service/gallery.service';
 @Component({
   selector: 'cms-gallery-category-maintain-modal',
   templateUrl: './gallery-category-maintain-modal.component.html',
-  styleUrls: ['./gallery-category-maintain-modal.component.css']
+  styleUrls: ['./gallery-category-maintain-modal.component.scss']
 })
 export class GalleryCategoryMaintainModalComponent extends CustomModalBase implements OnInit {
 
@@ -31,10 +31,11 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   }
 
   private _save() {
+    console.warn('this.action = ', this.action)
     return (
       this.action === 'Create'
         ? this._galleryService.createGalleryCategory(this.category_name, this.assign_dept_id, this.parent_id)
-        : this._galleryService.putGalleryCategoryByCategoryID(this.categoryID)
+        : this._galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.category_name, this.assign_dept_id, this.parent_id)
     );
   }
 

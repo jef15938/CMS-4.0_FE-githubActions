@@ -8,6 +8,7 @@ import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery
 import { UploadGalleryModalComponent } from './component/modal/upload-gallery-modal/upload-gallery-modal.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CropperModule } from '../../../ui/cropper/cropper.module';
+import { GalleryActionCellComponent } from './component/cell/gallery-action-cell/gallery-action-cell.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { CropperModule } from '../../../ui/cropper/cropper.module';
     GalleryCategoryNodeComponent,
     GalleryCategoryMaintainModalComponent,
     UploadGalleryModalComponent,
+    GalleryActionCellComponent,
   ],
 })
 export class GalleryModule { }

@@ -4,6 +4,8 @@ import { ParamsError } from '@neux/core';
 import { LoginRequest } from '../neuxAPI/bean/LoginRequest';
 import { LoginInfo } from '../neuxAPI/bean/LoginInfo';
 import { Observable } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
+import { LoginResponse } from '../neuxAPI/bean/LoginResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +56,17 @@ export class AuthorizationService {
    * @memberof AuthorizationService
    */
   getLoginInfo(): Observable<LoginInfo> {
-    return this.respAPIService.dispatchRestApi('GetLoginInfo', {});
+    return this.respAPIService.dispatchRestApi('GetLoginInfo', {}).pipe(
+      map((loginResponse: LoginResponse) => {
+        localStorage.setItem('loginInfo', JSON.stringify(loginResponse.loginInfo));
+        return loginResponse.loginInfo;
+      }),
+    );
+  }
+
+  getCurrentLoginInfo(): LoginInfo {
+    let loginInfo: any = localStorage.getItem('loginInfo');
+    loginInfo = loginInfo ? JSON.parse(loginInfo) : null;
+    return loginInfo;
   }
 }

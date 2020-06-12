@@ -35,11 +35,12 @@ export class FileUploadModel {
   ]
 })
 export class UploadGalleryModalComponent extends CustomModalBase implements OnInit {
-  title: string | (() => string) = () => `上傳檔案：${this.category_name}`;
+  title: string | (() => string);
   actions: CustomModalActionButton[];
 
   @Input() category_name: string;
   @Input() categoryId: string;
+  @Input() galleryId: number;
 
   param = 'file';
   target = 'https://file.io';
@@ -80,6 +81,12 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   ngOnInit() {
     this.updateSize('1280px');
+
+    if (this.categoryId && this.category_name) {
+      this.title = `上傳檔案：${this.category_name}`;
+    } else if (this.galleryId) {
+      this.title = `修改檔案：${this.galleryId}`;
+    }
   }
 
   private _mapFileToFileUploadModel(file: File): FileUploadModel {
@@ -225,7 +232,13 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       return;
     }
     const file = this.files[0];
-    this._galleryService.createGallery(file.data, this.categoryId).subscribe();
+
+    if (this.categoryId && this.category_name) { // 新增
+      this._galleryService.createGallery(file.data, this.categoryId).subscribe();
+    } else if (this.galleryId) { // 修改
+      this._galleryService.updateGallery(file.data, this.galleryId).subscribe();
+    }
+
   }
 
 }

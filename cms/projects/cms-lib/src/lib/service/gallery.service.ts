@@ -31,16 +31,16 @@ export class GalleryService {
     if (!categoryName) { throw new ParamsError('categoryName', 'createGalleryCategory', 'string', categoryName); }
     if (!assignDeptId) { throw new ParamsError('assignDeptId', 'createGalleryCategory', 'string', assignDeptId); }
 
-    const params: { [k: string]: any } = {
+    const requestBody: { [k: string]: any } = {
       category_name: categoryName,
       assign_dept_id: assignDeptId,
     };
 
     if (parentId) {
-      params.parent_id = parentId;
+      requestBody.parent_id = parentId;
     }
 
-    return this.respAPIService.dispatchRestApi('PostGalleryCategory', params);
+    return this.respAPIService.dispatchRestApi('PostGalleryCategory', { requestBody });
   }
 
   /**
@@ -54,7 +54,13 @@ export class GalleryService {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
-    return this.respAPIService.dispatchRestApi('DeleteGalleryCategoryByCategoryID', { categoryID });
+
+    return this._httpClient.delete(`https://cms.decoder.com.tw/GalleryCategory/${categoryID}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+    // return this.respAPIService.dispatchRestApi('DeleteGalleryCategoryByCategoryID', { categoryID });
   }
 
   /**
@@ -90,11 +96,45 @@ export class GalleryService {
    * @returns
    * @memberof GalleryService
    */
-  putGalleryCategoryByCategoryID(categoryID: string) {
+  putGalleryCategoryByCategoryID(categoryID: string, categoryName: string, assignDeptId: string, parentId?: string) {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
-    return this.respAPIService.dispatchRestApi('PutGalleryCategoryByCategoryID', { categoryID });
+
+    const requestBody: { [k: string]: any } = {
+      category_name: categoryName,
+      assign_dept_id: assignDeptId,
+    };
+
+    if (parentId) {
+      requestBody.parent_id = parentId;
+    }
+
+    return this.respAPIService.dispatchRestApi('PutGalleryCategoryByCategoryID', { categoryID, requestBody });
+  }
+
+  updateGallery(fileToUpload: File, galleryID: number) {
+    const headers = null;
+    const url = `https://cms.decoder.com.tw/Gallery/${galleryID}`;
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    formData.append('description', 'description');
+    return this._httpClient
+      .put(url, formData, { headers: headers }).pipe(
+        tap(res => console.log('updateGallery response = ', res)),
+        catchError((e) => {
+          console.error('error = ', e)
+          return throwError(e);
+        }),
+      );
+  }
+
+  deleteGallery(galleryID: number) {
+    return this._httpClient.delete(`https://cms.decoder.com.tw/Gallery/${galleryID}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
   }
 
   createGallery(fileToUpload: File, categoryID: string) {
