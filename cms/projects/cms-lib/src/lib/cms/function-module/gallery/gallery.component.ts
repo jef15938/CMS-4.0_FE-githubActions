@@ -11,7 +11,6 @@ import { ModalService } from '../../../ui/modal/modal.service';
 import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery-category-maintain-modal/gallery-category-maintain-modal.component';
 import { TreeComponent } from '../../../ui/tree/tree.component';
 import { UploadGalleryModalComponent } from './component/modal/upload-gallery-modal/upload-gallery-modal.component';
-import { CropperService } from '../../../ui/cropper/cropper.service';
 import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from './component/cell/gallery-action-cell/gallery-action-cell.component';
 import { AuthorizationService } from '../../../service/authorization.service';
 
@@ -58,13 +57,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   private categorySelected$ = new Subject<GalleryCategoryInfo>();
 
-  private url = 'https://i.kym-cdn.com/photos/images/newsfeed/001/430/765/8aa.png';
-
   constructor(
     private galleryService: GalleryService,
     private authorizationService: AuthorizationService,
     private modalService: ModalService,
-    private cropperService: CropperService,
   ) { }
 
   ngOnInit(): void {
