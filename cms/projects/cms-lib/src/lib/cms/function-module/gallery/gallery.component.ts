@@ -193,20 +193,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged(event: { pageIndex: number }) {
-    console.warn('event = ', event);
     this.galleryPageInfo.page = event.pageIndex + 1;
     this.getGallery().subscribe();
-  }
-
-  testCropper() {
-    this.cropperService.openEditor(this.url).subscribe((dataUrl: string) => {
-      // if (!dataUrl) { return; }
-      // const blob = this.dataURItoBlob(dataUrl);
-      // const newFile = this.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
-      // console.warn('file = ', file);
-      // console.warn('newFile = ', newFile);
-      // this.files.splice(this.files.indexOf(file), 1, newFile);
-    });
   }
 
 }
