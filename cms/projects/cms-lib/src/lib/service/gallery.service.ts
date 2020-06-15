@@ -54,13 +54,7 @@ export class GalleryService {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
-
-    return this.httpClient.delete(`https://cms.decoder.com.tw/GalleryCategory/${categoryID}`, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    });
-    // return this.respAPIService.dispatchRestApi('DeleteGalleryCategoryByCategoryID', { categoryID });
+    return this.respAPIService.dispatchRestApi('DeleteGalleryCategoryByCategoryID', { categoryID });
   }
 
   /**
