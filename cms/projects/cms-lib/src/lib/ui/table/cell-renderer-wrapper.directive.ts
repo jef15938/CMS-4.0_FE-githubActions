@@ -11,15 +11,15 @@ export class CellRendererWrapperDirective {
   @Input() customRenderer: Type<any>;
 
   constructor(
-    private _componentFactoryResolver: ComponentFactoryResolver,
-    private _viewContainerRef: ViewContainerRef
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef
   ) { }
 
   render() {
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(this.customRenderer);
-    this._viewContainerRef.clear();
-    const componentRef = this._viewContainerRef.createComponent(componentFactory);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.customRenderer);
+    this.viewContainerRef.clear();
+    const componentRef = this.viewContainerRef.createComponent(componentFactory);
     const instance = componentRef.instance as CustomCellRenderer;
     if (instance.compInit && typeof (instance.compInit) === 'function') {
       instance.compInit({

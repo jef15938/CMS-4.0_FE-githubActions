@@ -17,7 +17,7 @@ export class EditorContainerModalComponent extends CustomModalBase implements On
   @Input() mode: EditorMode = EditorMode.EDIT;
   @Input() selectableTemplates: TemplateGetResponse;
 
-  private _contentSaved = true;
+  private contentSaved = true;
 
   constructor() { super(); }
 

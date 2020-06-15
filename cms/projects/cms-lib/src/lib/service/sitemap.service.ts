@@ -117,13 +117,13 @@ export class SitemapService {
     );
   }
 
-  private _findNodeByNodeID(sources: SiteMapInfo[], nodeID: string): SiteMapNodeInfo {
+  private findNodeByNodeID(sources: SiteMapInfo[], nodeID: string): SiteMapNodeInfo {
     if (!sources?.length || !nodeID) { return null; }
 
     const node = sources.find(s => s.node_id === nodeID);
     if (node) { return node as any; }
 
-    return sources.map(s => this._findNodeByNodeID(s.children, nodeID)).find(s => s.node_id === nodeID);
+    return sources.map(s => this.findNodeByNodeID(s.children, nodeID)).find(s => s.node_id === nodeID);
   }
 
   /**

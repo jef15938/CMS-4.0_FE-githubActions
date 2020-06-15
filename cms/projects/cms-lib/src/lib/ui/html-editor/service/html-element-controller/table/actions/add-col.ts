@@ -5,29 +5,29 @@ import { ITableController, ITableCell } from '../table-controller.interface';
 
 export class AddCol extends HtmlEditorAction {
 
-  private _position: 'left' | 'right';
+  private position: 'left' | 'right';
 
   constructor(
     context: IHtmlEditorContext,
-    private _controller: ITableController,
+    private controller: ITableController,
     position: 'left' | 'right',
   ) {
     super(context);
-    this._position = position;
+    this.position = position;
   }
 
   do(): Observable<any> {
-    if (!this._controller.selectedCols.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準欄' }); }
+    if (!this.controller.selectedCols.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準欄' }); }
 
-    const rangeStartEnd = this._controller.tableControllerService.getStartEndBySelectedCols(this._controller.selectedCols);
+    const rangeStartEnd = this.controller.tableControllerService.getStartEndBySelectedCols(this.controller.selectedCols);
     // console.warn('rangeStartEnd = ', rangeStartEnd);
 
     let index = rangeStartEnd.colStart;
-    if (this._position === 'right') {
+    if (this.position === 'right') {
       index = rangeStartEnd.colEnd;
     }
 
-    const trArr = Array.from(this._controller.el.querySelectorAll('tr')) as HTMLTableRowElement[];
+    const trArr = Array.from(this.controller.el.querySelectorAll('tr')) as HTMLTableRowElement[];
     let cols = 0;
     const rows = trArr.length;
 
@@ -52,14 +52,14 @@ export class AddCol extends HtmlEditorAction {
       let tmpTD: ITableCell;
       for (let i = 0; i < tds.length; i++) {
         tmpTD = tds[i];
-        const startEnd = this._controller.tableControllerService.getCellStartEnd(tmpTD);
+        const startEnd = this.controller.tableControllerService.getCellStartEnd(tmpTD);
         var start = startEnd.colStart;
         var stop = startEnd.colEnd - 1;
         if (index >= start && index <= stop) {
           if (tmpTD.colSpan > 1) {
             tmpTD.colSpan = tmpTD.colSpan + 1;
           } else {
-            const newCell = this._controller.tableControllerService.createCell('new');
+            const newCell = this.controller.tableControllerService.createCell('new');
             const insertBefore = tmpTD.nextElementSibling;
             if (insertBefore) {
               tmpTD.parentNode.insertBefore(newCell, tmpTD);
@@ -75,7 +75,7 @@ export class AddCol extends HtmlEditorAction {
 
     // console.log('checkArr = ', checkArr);
 
-    this._controller.checkTableState();
+    this.controller.checkTableState();
 
     trArr.forEach((tr, i) => {
       const tds = Array.from(tr.childNodes) as ITableCell[];
@@ -106,7 +106,7 @@ export class AddCol extends HtmlEditorAction {
         // console.log('target_row = ', target_row);
         for (var i = 0; i < tds.length; i++) {
           const tmpTD = tds[i];
-          const startEnd = this._controller.tableControllerService.getCellStartEnd(tmpTD);
+          const startEnd = this.controller.tableControllerService.getCellStartEnd(tmpTD);
           var start = startEnd.colStart;
           var stop = startEnd.colEnd - 1;
           if (index <= start || (i == tds.length - 1 && index >= stop)) {
@@ -114,7 +114,7 @@ export class AddCol extends HtmlEditorAction {
             if (tmpTD.colSpan > 1) {
               tmpTD.colSpan = tmpTD.colSpan + 1;
             } else {
-              const newCell = this._controller.tableControllerService.createCell('new');
+              const newCell = this.controller.tableControllerService.createCell('new');
               if (index == start || index >= stop) {
                 const insertBefore = tmpTD.nextElementSibling;
                 if (insertBefore) {
@@ -133,7 +133,7 @@ export class AddCol extends HtmlEditorAction {
 
     })
 
-    this._controller.checkTableState();
+    this.controller.checkTableState();
     return of(undefined);
   }
 }

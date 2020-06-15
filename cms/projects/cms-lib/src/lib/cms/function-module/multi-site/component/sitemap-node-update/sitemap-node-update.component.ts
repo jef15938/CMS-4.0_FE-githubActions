@@ -65,9 +65,9 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   ];
 
   constructor(
-    private _modalService: ModalService,
-    private _contentService: ContentService,
-    private _contentEditorService: ContentEditorService,
+    private modalService: ModalService,
+    private contentService: ContentService,
+    private contentEditorService: ContentEditorService,
   ) { }
 
   ngOnInit(): void {
@@ -95,10 +95,10 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   editContent(layoutId: string) {
     forkJoin([
-      this._contentService.getContentByContentID(layoutId),
-      this._contentService.getTemplateByControlID(layoutId),
+      this.contentService.getContentByContentID(layoutId),
+      this.contentService.getTemplateByControlID(layoutId),
     ]).subscribe(([contentInfo, selectableTemplates]) => {
-      this._contentEditorService.openEditor({
+      this.contentEditorService.openEditor({
         contentInfo,
         selectableTemplates,
         mode: EditorMode.EDIT,

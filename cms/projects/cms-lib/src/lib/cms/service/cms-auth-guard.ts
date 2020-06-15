@@ -10,16 +10,16 @@ import { Injectable } from '@angular/core';
 export class CmsAuthGuard implements CanActivate {
 
   constructor(
-    private _authService: AuthorizationService
+    private authService: AuthorizationService
   ) {
 
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    return this._authService.getLoginInfo().pipe(
+    return this.authService.getLoginInfo().pipe(
       catchError(err => {
-        return this._authService.login('admin', 'admin1234', 1).pipe(
-          concatMap(_ => this._authService.getLoginInfo()),
+        return this.authService.login('admin', 'admin1234', 1).pipe(
+          concatMap(_ => this.authService.getLoginInfo()),
           catchError(err => {
             console.error('login err = ');
             return of(true);

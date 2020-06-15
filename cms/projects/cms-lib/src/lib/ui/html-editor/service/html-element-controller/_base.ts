@@ -8,15 +8,10 @@ export abstract class HtmlEditorElementController<TElement extends HTMLElement> 
   protected abstract onRemovedFromEditor(): void;
   abstract contextMenuItems: IHtmlEditorContextMenuItem[];
 
-  private _el: TElement;
-  private _context: IHtmlEditorContext;
-  private _isInited = false;
-  private _isDeleted = false;
-
-  get el() { return this._el }
-  get context() { return this._context; }
-  get isInited() { return this._isInited; }
-  get isDeleted() { return this._isDeleted; }
+  public el: TElement;
+  public context: IHtmlEditorContext;
+  public isInited = false;
+  public isDeleted = false;
   get elLowerCaseTagName() { return this.el?.tagName?.toLowerCase(); }
 
   constructor(
@@ -24,23 +19,23 @@ export abstract class HtmlEditorElementController<TElement extends HTMLElement> 
     context: IHtmlEditorContext,
   ) {
     el[HTML_EDITOR_ELEMENT_CONTROLLER] = this;
-    this._el = el;
-    this._context = context;
+    this.el = el;
+    this.context = context;
   }
 
   addToEditor(editorContainer: HTMLDivElement) {
-    if (this._isInited || this._isDeleted) { return; }
+    if (this.isInited || this.isDeleted) { return; }
     this.onAddToEditor();
-    this._isInited = true;
+    this.isInited = true;
   }
 
   removeFromEditor(editorContainer: HTMLDivElement) {
-    if (this._isDeleted || !editorContainer.contains(this.el)) { return; }
+    if (this.isDeleted || !editorContainer.contains(this.el)) { return; }
     this.onRemovedFromEditor();
-    this._isDeleted = true;
+    this.isDeleted = true;
     this.el[HTML_EDITOR_ELEMENT_CONTROLLER] = undefined;
-    this._el = undefined;
-    this._context = undefined;
+    this.el = undefined;
+    this.context = undefined;
   }
 
 }

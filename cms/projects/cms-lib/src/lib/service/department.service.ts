@@ -84,11 +84,11 @@ export class DepartmentService {
       throw new ParamsError('deptID', 'getDepartmentByID', 'string', deptID);
     }
     return this.getAllDepartment().pipe(
-      map(depts => this._getDeptFromAllById(deptID, depts))
+      map(depts => this.getDeptFromAllById(deptID, depts))
     );
   }
 
-  private _getDeptFromAllById(id: string, all: DepartmentInfo[]): DepartmentInfo {
+  private getDeptFromAllById(id: string, all: DepartmentInfo[]): DepartmentInfo {
     if (!all || !all.length) {
       return null;
     }
@@ -96,7 +96,7 @@ export class DepartmentService {
     if (dept)
       return dept;
     else
-      return all.map(d => this._getDeptFromAllById(id, d.children)).find(x => x !== null);
+      return all.map(d => this.getDeptFromAllById(id, d.children)).find(x => x !== null);
   }
 
   /**

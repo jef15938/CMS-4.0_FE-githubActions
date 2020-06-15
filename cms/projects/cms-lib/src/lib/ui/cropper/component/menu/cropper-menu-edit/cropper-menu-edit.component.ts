@@ -18,10 +18,10 @@ export class CropperMenuEditComponent implements OnInit {
   }
 
   stopEvent(ev: MouseEvent) {
-    this._evPreventDefaultAndStopPropagation(ev);
+    this.evPreventDefaultAndStopPropagation(ev);
   }
 
-  private _evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
+  private evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
   }

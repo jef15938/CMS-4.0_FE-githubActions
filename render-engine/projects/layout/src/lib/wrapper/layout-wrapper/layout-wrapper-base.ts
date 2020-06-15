@@ -10,7 +10,7 @@ export abstract class LayoutWrapperBase implements OnDestroy {
   destroy$ = new Subject();
 
   constructor(
-    protected _changeDetectorRef: ChangeDetectorRef,
+    protected changeDetectorRef: ChangeDetectorRef,
     public elementRef: ElementRef
   ) { }
 

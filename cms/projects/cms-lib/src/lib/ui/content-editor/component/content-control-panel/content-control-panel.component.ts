@@ -39,7 +39,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   canTemplateMoveDown = false;
 
   constructor(
-    @Inject(ContentEditorServiceInjectionToken) private _contentEditorService: IContentEditorService,
+    @Inject(ContentEditorServiceInjectionToken) private contentEditorService: IContentEditorService,
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +55,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       if (current) {
         current.selectedTarget.classList.add('now-edit');
         current.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
-        this._calCanTemplateMove();
+        this.calCanTemplateMove();
       }
       this.show = !!current;
     }
@@ -90,7 +90,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    * @memberof ContentControlPanelComponent
    */
   templateShowInfo() {
-    this._contentEditorService.openEditor({
+    this.contentEditorService.openEditor({
       contentInfo: { templates: [this.selected.templateInfo] } as ContentInfo,
       mode: EditorMode.INFO,
       selectableTemplates: {} as any
@@ -125,7 +125,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     }
 
     this.hasChange = true;
-    this._calCanTemplateMove();
+    this.calCanTemplateMove();
     this.needScale.emit(true);
     this.needCheckView.emit();
     this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
@@ -154,7 +154,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     }
   }
 
-  private _calCanTemplateMove() {
+  private calCanTemplateMove() {
     this.canTemplateMoveUp = this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) > 0;
     this.canTemplateMoveDown = this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) !== this.selected?.wrapper?.parentTemplatesContainer?.templates?.length - 1;
   }

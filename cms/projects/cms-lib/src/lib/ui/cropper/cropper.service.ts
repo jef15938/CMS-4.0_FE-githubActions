@@ -9,7 +9,7 @@ import { CropperComponent } from './cropper.component';
 export class CropperService {
 
   constructor(
-    private _modalService: ModalService,
+    private modalService: ModalService,
   ) { }
 
   openEditor(imgUrl: string, title?: string): Observable<any> {
@@ -21,7 +21,7 @@ export class CropperService {
       height: '100%',
     };
 
-    return this._modalService.openComponent({
+    return this.modalService.openComponent({
       component: CropperComponent,
       componentInitData: { imgUrl, title },
       modalSetting

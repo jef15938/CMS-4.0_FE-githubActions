@@ -15,7 +15,7 @@ export class GalleryService {
 
   constructor(
     private respAPIService: RestApiService,
-    private _httpClient: HttpClient,
+    private httpClient: HttpClient,
   ) { }
 
   /**
@@ -55,7 +55,7 @@ export class GalleryService {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
 
-    return this._httpClient.delete(`https://cms.decoder.com.tw/GalleryCategory/${categoryID}`, {
+    return this.httpClient.delete(`https://cms.decoder.com.tw/GalleryCategory/${categoryID}`, {
       headers: {
         'content-type': 'application/json'
       }
@@ -119,7 +119,7 @@ export class GalleryService {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     formData.append('description', 'description');
-    return this._httpClient
+    return this.httpClient
       .put(url, formData, { headers: headers }).pipe(
         tap(res => console.log('updateGallery response = ', res)),
         catchError((e) => {
@@ -130,7 +130,7 @@ export class GalleryService {
   }
 
   deleteGallery(galleryID: number) {
-    return this._httpClient.delete(`https://cms.decoder.com.tw/Gallery/${galleryID}`, {
+    return this.httpClient.delete(`https://cms.decoder.com.tw/Gallery/${galleryID}`, {
       headers: {
         'content-type': 'application/json'
       }
@@ -143,7 +143,7 @@ export class GalleryService {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     formData.append('description', 'description');
-    return this._httpClient
+    return this.httpClient
       .post(url, formData, { headers: headers }).pipe(
         tap(res => console.log('upload response = ', res)),
         catchError((e) => {

@@ -17,21 +17,21 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
   funcId = '';
   errorMsg = '';
 
-  private _componentRef: ComponentRef<any>;
+  private componentRef: ComponentRef<any>;
 
-  private _afterViewInit = false;
+  private afterViewInit = false;
 
   constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _componentFactoryResolver: ComponentFactoryResolver,
-    private _cmsUserMenuResolver: CmsUserMenuResolver,
-    @Inject(CmsExtensionComponentMappings) private _cmsExtensionComponentMappings: ICmsExtensionComponentMapping<any>[],
+    private activatedRoute: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private cmsUserMenuResolver: CmsUserMenuResolver,
+    @Inject(CmsExtensionComponentMappings) private cmsExtensionComponentMappings: ICmsExtensionComponentMapping<any>[],
   ) {
-    this._activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
       this.funcId = params['funcId'];
-      if (this._afterViewInit) {
-        this._initState();
+      if (this.afterViewInit) {
+        this.initState();
       }
     });
   }
@@ -41,29 +41,29 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this._afterViewInit = true;
-    this._initState();
-    this._changeDetectorRef.detectChanges();
+    this.afterViewInit = true;
+    this.initState();
+    this.changeDetectorRef.detectChanges();
   }
 
-  private _initState() {
+  private initState() {
     this.errorMsg = '';
     this.vc.clear();
-    this._componentRef?.destroy();
+    this.componentRef?.destroy();
 
-    const menus = this._cmsUserMenuResolver.getMenus();
+    const menus = this.cmsUserMenuResolver.getMenus();
     if (!menus?.length) {
       this.errorMsg = `系統異常 : 沒有Menu資料`;
       return;
     }
 
-    const menu = this._findMenuByFuncId(this.funcId, menus);
+    const menu = this.findMenuByFuncId(this.funcId, menus);
     if (!menu) {
       this.errorMsg = `沒有找到對應的MenuInfo, func_id=[${this.funcId}]`;
       return;
     }
 
-    const mapping = this._cmsExtensionComponentMappings.find(m => m.component_id === menu.component_id);
+    const mapping = this.cmsExtensionComponentMappings.find(m => m.component_id === menu.component_id);
     if (!mapping) {
       this.errorMsg = `沒有找到對應的元件設定, func_id=[${this.funcId}]`;
       return;
@@ -75,20 +75,20 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this._render(comp, this.vc);
+    this.render(comp, this.vc);
   }
 
-  private _render(comp, vc: ViewContainerRef) {
+  private render(comp, vc: ViewContainerRef) {
     if (!comp) { return; }
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(comp);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(comp);
     const componentRef = vc.createComponent(componentFactory);
-    this._componentRef = componentRef;
+    this.componentRef = componentRef;
   }
 
-  private _findMenuByFuncId(funcId: string, sources: MenuInfo[]): MenuInfo {
+  private findMenuByFuncId(funcId: string, sources: MenuInfo[]): MenuInfo {
     if (!funcId || !sources?.length) { return; }
     const menu = sources.find(m => m?.func_id === `extension/${this.funcId}`);
-    return menu || sources.map(s => this._findMenuByFuncId(funcId, s.children)).find(m => m?.func_id === `extension/${this.funcId}`);
+    return menu || sources.map(s => this.findMenuByFuncId(funcId, s.children)).find(m => m?.func_id === `extension/${this.funcId}`);
   }
 
 }

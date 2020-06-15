@@ -11,7 +11,7 @@ import { HtmlEditorServiceInjectionToken } from './../../../../../../../ui/html-
 export class FieldControlHtmlEditorComponent extends ContentControlBase implements OnInit {
 
   constructor(
-    @Inject(HtmlEditorServiceInjectionToken) private _htmlEditorService: IHtmlEditorService,
+    @Inject(HtmlEditorServiceInjectionToken) private htmlEditorService: IHtmlEditorService,
   ) {
     super();
   }
@@ -20,7 +20,7 @@ export class FieldControlHtmlEditorComponent extends ContentControlBase implemen
   }
 
   openEditor() {
-    this._htmlEditorService.openEditor({
+    this.htmlEditorService.openEditor({
       title: `Html編輯 : ${this.selected.fieldInfo.fieldId}`,
       content: this.selected.fieldInfo.fieldVal
     }).subscribe(content => {

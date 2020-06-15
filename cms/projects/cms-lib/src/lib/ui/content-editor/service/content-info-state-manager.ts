@@ -8,7 +8,7 @@ class ContentInfoState {
 }
 
 export class ContentInfoStateManager {
-  private _originState: ContentInfoState;
+  private originState: ContentInfoState;
 
   currentIndex = 0;
   states: ContentInfoState[] = [];
@@ -22,16 +22,16 @@ export class ContentInfoStateManager {
   constructor(
     originContentInfo: ContentInfo,
   ) {
-    this._originState = new ContentInfoState(JSON.parse(JSON.stringify(originContentInfo)), 'origin');
-    this.currentState = this._getInitState();
+    this.originState = new ContentInfoState(JSON.parse(JSON.stringify(originContentInfo)), 'origin');
+    this.currentState = this.getInitState();
   }
 
-  private _getInitState() {
-    return new ContentInfoState(JSON.parse(JSON.stringify(this._originState.snapShot)));
+  private getInitState() {
+    return new ContentInfoState(JSON.parse(JSON.stringify(this.originState.snapShot)));
   }
 
   resetState() {
-    const previous = this.currentIndex === 0 ? this._originState : this.states[this.currentIndex - 1];
+    const previous = this.currentIndex === 0 ? this.originState : this.states[this.currentIndex - 1];
     this.currentState.snapShot = JSON.parse(JSON.stringify(previous.snapShot));
   }
 
@@ -40,15 +40,15 @@ export class ContentInfoStateManager {
     this.states.splice(this.currentIndex, this.states.length - this.currentIndex, new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action));
     // this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action);
     this.currentIndex++;
-    this._calHasState();
+    this.calHasState();
   }
 
   back() {
     if (!this.hasPreviousState) { return; }
-    const previous = this.currentIndex === 1 ? this._originState : this.states[this.currentIndex - 2];
+    const previous = this.currentIndex === 1 ? this.originState : this.states[this.currentIndex - 2];
     this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(previous.snapShot)), previous.action);
     this.currentIndex--;
-    this._calHasState();
+    this.calHasState();
   }
 
   forward() {
@@ -56,10 +56,10 @@ export class ContentInfoStateManager {
     const next = this.states[this.currentIndex];
     this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(next.snapShot)), next.action);
     this.currentIndex++;
-    this._calHasState();
+    this.calHasState();
   }
 
-  private _calHasState() {
+  private calHasState() {
     this.hasPreviousState = this.currentIndex > 0;
     this.hasNextState = this.currentIndex > -1 && this.currentIndex !== this.states.length;
   }

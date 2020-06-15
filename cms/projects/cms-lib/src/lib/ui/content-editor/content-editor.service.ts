@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class ContentEditorService implements IContentEditorService {
 
   constructor(
-    private _modalService: ModalService,
+    private modalService: ModalService,
   ) {
 
   }
@@ -27,7 +27,7 @@ export class ContentEditorService implements IContentEditorService {
       modalSetting.height = '90%';
     }
 
-    return this._modalService.openComponent({
+    return this.modalService.openComponent({
       component: EditorContainerModalComponent,
       componentInitData: {
         contentInfo: config.contentInfo,

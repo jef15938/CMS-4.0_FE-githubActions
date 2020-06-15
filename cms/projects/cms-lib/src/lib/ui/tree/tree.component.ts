@@ -26,7 +26,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Input() defaultExpandLevel = 0; // 預設展開層數：-1=全展開
 
   selectedNode: TData;
-  private _selectedNodeEmitter = new Subject();
+  private selectedNodeEmitter = new Subject();
 
   @Input() customNodeRenderer; // 客制的節點Template
 
@@ -36,11 +36,11 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   rightClickedNode = new Subject<TData>();
 
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor(
-    private _componentFactoryResolver: ComponentFactoryResolver,
-    private _changeDetectorRef: ChangeDetectorRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
 
   }
@@ -48,30 +48,30 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   ngOnInit(): void {
     this.treeControl = new NestedTreeControl<TData>(node => node[this.nodeChildrenEntryField]);
     this.dataSource = new MatTreeNestedDataSource<TData>();
-    this._setDataSource(this.nodeDatas);
+    this.setDataSource(this.nodeDatas);
 
-    this._selectedNodeEmitter.pipe(
-      takeUntil(this._destroy$),
+    this.selectedNodeEmitter.pipe(
+      takeUntil(this.destroy$),
     ).subscribe(_ => {
       this.nodeSelect.emit({ node: this.selectedNode });
     });
   }
 
   ngAfterViewInit(): void {
-    this._init();
+    this.init();
   }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.dataSource && changes['nodeDatas']) {
-      this._setDataSource(changes['nodeDatas'].currentValue);
-      this._init();
+      this.setDataSource(changes['nodeDatas'].currentValue);
+      this.init();
     }
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
   @HostListener('contextmenu', ['$event'])
@@ -79,17 +79,17 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     event.preventDefault();
   }
 
-  private _init() {
+  private init() {
     this.selectedNode = undefined;
-    this._renderCustom();
-    this._expandLevel(this.defaultExpandLevel);
+    this.renderCustom();
+    this.expandLevel(this.defaultExpandLevel);
     this.afterRender.emit(this);
   }
 
-  private _renderCustom() {
+  private renderCustom() {
     if (!this.customNodeRenderer) { return }
-    this._changeDetectorRef.detectChanges();
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(this.customNodeRenderer);
+    this.changeDetectorRef.detectChanges();
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.customNodeRenderer);
     this.customRenderWrappers.forEach(wrapper => {
       wrapper.viewContainerRef.clear();
       const componentRef = wrapper.viewContainerRef.createComponent(componentFactory);
@@ -102,10 +102,10 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
         });
       }
     });
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
-  private _expandLevel(level: number) {
+  private expandLevel(level: number) {
     if (!this.dataSource.data) { return; }
     if (!level) { return; }
     // 展開全部
@@ -124,7 +124,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     }
   }
 
-  private _setDataSource(data: TData[]) {
+  private setDataSource(data: TData[]) {
     this.dataSource.data = data;
     this.treeControl.dataNodes = data;
   }
@@ -132,22 +132,18 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   hasChild = (_: number, node: TData) => !!node[this.nodeChildrenEntryField] && node[this.nodeChildrenEntryField].length > 0;
 
   selectNode(node: TData) {
-    this._selectNode(node);
-  }
-
-  private _selectNode(node: TData) {
     this.selectedNode = node;
-    this._selectedNodeEmitter.next();
+    this.selectedNodeEmitter.next();
   }
 
   onRowRightClicked(node: TData) {
     this.rightClickedNode.next(node);
-    this._selectNode(node);
+    this.selectNode(node);
   }
 
   onRowClicked($event, data: TData) {
     $event.stopPropagation();
-    this._selectNode(data);
+    this.selectNode(data);
   }
 
   // @HostListener('document:selectstart', ['$event'])
@@ -165,16 +161,12 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.customEvent.next(event);
   }
 
-  private _findParent(node: TData, sources: TData[] = this.treeControl.dataNodes || []): TData {
+  findParent(node: TData, sources: TData[] = this.treeControl.dataNodes || []): TData {
     if (!sources.length) { return null; }
     if (sources.indexOf(node) > -1) { return null; } // 第一層無parent
     const finder: (d: TData) => boolean = (d: TData) => (d[this.nodeChildrenEntryField] || []).indexOf(node) > -1;
     const parent = sources.find(finder);
-    return parent || sources.map(s => this._findParent(node, s[this.nodeChildrenEntryField])).find(finder);
-  }
-
-  findParent(node: TData, sources?: TData[]): TData {
-    return this._findParent(node, sources);
+    return parent || sources.map(s => this.findParent(node, s[this.nodeChildrenEntryField])).find(finder);
   }
 
 }

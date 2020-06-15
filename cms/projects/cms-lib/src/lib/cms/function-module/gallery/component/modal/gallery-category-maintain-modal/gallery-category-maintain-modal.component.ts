@@ -21,7 +21,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   @Input() assign_dept_id: string;
 
   constructor(
-    private _galleryService: GalleryService,
+    private galleryService: GalleryService,
   ) {
     super();
   }
@@ -30,17 +30,17 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
 
   }
 
-  private _save() {
+  private save() {
     console.warn('this.action = ', this.action)
     return (
       this.action === 'Create'
-        ? this._galleryService.createGalleryCategory(this.category_name, this.assign_dept_id, this.parent_id)
-        : this._galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.category_name, this.assign_dept_id, this.parent_id)
+        ? this.galleryService.createGalleryCategory(this.category_name, this.assign_dept_id, this.parent_id)
+        : this.galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.category_name, this.assign_dept_id, this.parent_id)
     );
   }
 
   confirm() {
-    this._save().subscribe(_ => {
+    this.save().subscribe(_ => {
       this.close('Success');
     });
   }

@@ -17,33 +17,30 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
   @Input() content = '';
 
-  @ViewChild('EditorContainer') private _editorContainer: ElementRef<HTMLDivElement>;
-  @ViewChild('MenuTrigger') private _editorMenu: MatMenuTrigger;
+  @ViewChild('EditorContainer') private editorContainerElRef: ElementRef<HTMLDivElement>;
+  @ViewChild('MenuTrigger') private editorMenu: MatMenuTrigger;
 
-  private _simpleWysiwygService: SimpleWysiwygService;
-  private _modalService: ModalService;
-  private _commonAncestorContainer: Node;
+  simpleWysiwygService: SimpleWysiwygService;
+  modalService: ModalService;
+  commonAncestorContainer: Node;
 
-  get simpleWysiwygService() { return this._simpleWysiwygService; }
-  get modalService() { return this._modalService; }
-  get editorContainer() { return this._editorContainer?.nativeElement; }
-  get commonAncestorContainer() { return this._commonAncestorContainer; };
+  get editorContainer() { return this.editorContainerElRef?.nativeElement; }
   get isSelectionInsideEditorContainer() { return this.editorContainer && this.simpleWysiwygService.isSelectionInside(this.editorContainer); }
 
-  private _mutationObserver: MutationObserver;
+  private mutationObserver: MutationObserver;
 
   contextMenuPosition = { x: '0px', y: '0px' };
   contextMenuItems: IHtmlEditorContextMenuItem[] = [];
 
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor(
     simpleWysiwygService: SimpleWysiwygService,
     modalService: ModalService,
-    private _changeDetectorRef: ChangeDetectorRef,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
-    this._simpleWysiwygService = simpleWysiwygService;
-    this._modalService = modalService;
+    this.simpleWysiwygService = simpleWysiwygService;
+    this.modalService = modalService;
   }
 
   ngOnInit() {
@@ -51,20 +48,20 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   }
 
   ngAfterViewInit(): void {
-    this._initContentAndContainer(this.content, this.editorContainer);
-    this._observeContainer(this.editorContainer);
-    this._subscribeDocumentSelectionChange();
-    this._changeDetectorRef.detectChanges();
+    this.initContentAndContainer(this.content, this.editorContainer);
+    this.observeContainer(this.editorContainer);
+    this.subscribeDocumentSelectionChange();
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
-    this._mutationObserver?.disconnect();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
+    this.mutationObserver?.disconnect();
   }
 
-  private _initContentAndContainer(content: string, container: HTMLDivElement) {
+  private initContentAndContainer(content: string, container: HTMLDivElement) {
     content = content
       || [
         '<p>',
@@ -99,20 +96,20 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     }
   }
 
-  private _subscribeDocumentSelectionChange() {
+  private subscribeDocumentSelectionChange() {
     fromEvent(document, 'selectionchange').pipe(
-      takeUntil(this._destroy$),
+      takeUntil(this.destroy$),
     ).subscribe(_ => {
       const range = this.simpleWysiwygService.getRange();
       console.warn('document:selectionchange,  range = ', range);
       if (!this.editorContainer) { return; }
       if (!this.isSelectionInsideEditorContainer) { return; }
 
-      this._commonAncestorContainer = range.commonAncestorContainer;
+      this.commonAncestorContainer = range.commonAncestorContainer;
     });
   }
 
-  private _observeContainer(editorContainer: HTMLDivElement) {
+  private observeContainer(editorContainer: HTMLDivElement) {
     const mutationObserver = new MutationObserver((records) => {
       console.warn('records = ', records);
 
@@ -167,7 +164,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       subtree: true
     });
 
-    this._mutationObserver = mutationObserver;
+    this.mutationObserver = mutationObserver;
   }
 
   onClick(ev: MouseEvent) {
@@ -198,28 +195,28 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
 
     if (special) {
-      this._openRightClickMenu(ev, special);
+      this.openRightClickMenu(ev, special);
       return;
     }
   }
 
-  private _openRightClickMenu(ev: MouseEvent, target: HTMLElement) {
+  private openRightClickMenu(ev: MouseEvent, target: HTMLElement) {
     const contextMenuItems = HtmlEditorElementControllerFactory.getContextMenuItems(target as HTMLElement);
     if (!contextMenuItems?.length) { return; }
     this.simpleWysiwygService.setSelectionOnNode(ev.target as Node);
     const range = this.simpleWysiwygService.getRange();
     this.contextMenuPosition.x = ev.clientX + 'px';
     this.contextMenuPosition.y = ev.clientY + 'px';
-    this._editorMenu.menuData = { 'range': range };
-    this._editorMenu.menu.focusFirstItem('mouse');
-    const subscription = this._editorMenu.onMenuClose.subscribe(_ => {
+    this.editorMenu.menuData = { 'range': range };
+    this.editorMenu.menu.focusFirstItem('mouse');
+    const subscription = this.editorMenu.onMenuClose.subscribe(_ => {
       subscription.unsubscribe();
       if (!this.simpleWysiwygService.isSelectionInside(this.editorContainer)) {
-        this.simpleWysiwygService.restoreSelection(this._editorMenu.menuData['range']);
+        this.simpleWysiwygService.restoreSelection(this.editorMenu.menuData['range']);
       }
     });
     this.contextMenuItems = contextMenuItems;
-    this._editorMenu.openMenu();
+    this.editorMenu.openMenu();
   }
 
   doAction(action: IHtmlEditorAction) {

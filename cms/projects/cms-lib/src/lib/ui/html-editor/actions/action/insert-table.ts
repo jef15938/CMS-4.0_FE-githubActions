@@ -7,13 +7,13 @@ import { IHtmlEditorContext } from '../../html-editor.interface';
 
 export class InsertTable extends HtmlEditorAction {
 
-  private _tableControllerService: TableControllerService;
+  private tableControllerService: TableControllerService;
 
   constructor(
     context: IHtmlEditorContext,
   ) {
     super(context);
-    this._tableControllerService = new TableControllerService();
+    this.tableControllerService = new TableControllerService();
   }
 
   do() {
@@ -42,7 +42,7 @@ export class InsertTable extends HtmlEditorAction {
         for (let row = 0; row < config.rows; ++row) {
           const tr = document.createElement('tr');
           for (let col = 0; col < config.cols; ++col) {
-            const td = this._tableControllerService.createCell();
+            const td = this.tableControllerService.createCell();
             tr.appendChild(td);
           }
           table.appendChild(tr);
@@ -59,7 +59,7 @@ export class InsertTable extends HtmlEditorAction {
     );
   }
 
-  private _findExistingTable(): HTMLTableElement {
+  private findExistingTable(): HTMLTableElement {
     const range = this.context.simpleWysiwygService.getRange();
     const commonAncestorContainer = range.commonAncestorContainer as HTMLElement;
     const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLowerCase();

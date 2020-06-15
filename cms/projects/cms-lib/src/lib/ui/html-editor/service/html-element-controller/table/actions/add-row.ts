@@ -5,35 +5,35 @@ import { ITableController } from '../table-controller.interface';
 
 export class AddRow extends HtmlEditorAction {
 
-  private _position: 'before' | 'after';
+  private position: 'before' | 'after';
 
   constructor(
     context: IHtmlEditorContext,
-    private _controller: ITableController,
+    private controller: ITableController,
     position: 'before' | 'after',
   ) {
     super(context);
-    this._position = position;
+    this.position = position;
   }
 
   do(): Observable<any> {
-    if (!this._controller.selectedRows.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準列' }); }
+    if (!this.controller.selectedRows.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準列' }); }
 
-    const table = this._controller.el;
-    const rowParent = this._controller.selectedRows.map(row => row.parentElement)[0];
+    const table = this.controller.el;
+    const rowParent = this.controller.selectedRows.map(row => row.parentElement)[0];
     const rowParentChildren = Array.from(rowParent.childNodes);
-    const rowIndexes = this._controller.selectedRows.map(row => rowParentChildren.indexOf(row));
-    const baseRowIndex = this._position === 'before' ? Math.min(...rowIndexes) : Math.max(...rowIndexes);
+    const rowIndexes = this.controller.selectedRows.map(row => rowParentChildren.indexOf(row));
+    const baseRowIndex = this.position === 'before' ? Math.min(...rowIndexes) : Math.max(...rowIndexes);
     const baseRow = rowParentChildren[baseRowIndex];
 
     const newRow = document.createElement('tr');
-    const cols = this._controller.getSetting().cols;
+    const cols = this.controller.getSetting().cols;
     for (let col = 0; col < cols; ++col) {
-      const td = this._controller.tableControllerService.createCell();
+      const td = this.controller.tableControllerService.createCell();
       newRow.appendChild(td);
     }
 
-    if (this._position === 'before') {
+    if (this.position === 'before') {
       rowParent.insertBefore(newRow, baseRow);
     } else {
       const next = baseRow.nextSibling;
@@ -44,7 +44,7 @@ export class AddRow extends HtmlEditorAction {
       }
     }
 
-    this._controller.checkTableState();
+    this.controller.checkTableState();
     return of(undefined);
   }
 }

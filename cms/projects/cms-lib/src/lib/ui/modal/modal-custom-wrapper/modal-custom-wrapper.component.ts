@@ -18,10 +18,10 @@ export class ModalCustomWrapperComponent implements OnInit, AfterViewInit {
   instanceTitle = '';
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private _config: ModalOpenComponentConfig<any>,
-    private _modalRef: MatDialogRef<ModalCustomWrapperComponent>,
-    private _componentFactoryResolver: ComponentFactoryResolver,
-    private _changeDetectorRef: ChangeDetectorRef,
+    @Inject(MAT_DIALOG_DATA) private config: ModalOpenComponentConfig<any>,
+    private modalRef: MatDialogRef<ModalCustomWrapperComponent>,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -30,21 +30,21 @@ export class ModalCustomWrapperComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.renderCustom();
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   renderCustom() {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(this._config.component as any);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.config.component as any);
     const wrapper = this.customRenderWrapper;
     wrapper.viewContainerRef.clear();
     const componentRef = wrapper.viewContainerRef.createComponent(componentFactory);
     const instance = componentRef.instance as CustomModalBase;
-    if (this._config.componentInitData) {
-      for (let k of Object.keys(this._config.componentInitData)) {
-        instance[k] = this._config.componentInitData[k];
+    if (this.config.componentInitData) {
+      for (let k of Object.keys(this.config.componentInitData)) {
+        instance[k] = this.config.componentInitData[k];
       }
     }
-    instance.modalRef = this._modalRef;
+    instance.modalRef = this.modalRef;
     this.instance = instance;
     setTimeout(() => {
       this.instanceTitle = this.getInstanceTitle();

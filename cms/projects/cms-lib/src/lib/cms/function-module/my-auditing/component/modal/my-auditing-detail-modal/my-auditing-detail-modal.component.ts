@@ -57,14 +57,14 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
   ];
 
   constructor(
-    private _auditingService: AuditingService,
+    private auditingService: AuditingService,
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.updateSize('1280px');
-    this._auditingService.getMyAuditingDetail(this.orderId).pipe(
+    this.auditingService.getMyAuditingDetail(this.orderId).pipe(
       tap(myAuditingDetail => this.myAuditingDetail = myAuditingDetail)
     ).subscribe();
   }

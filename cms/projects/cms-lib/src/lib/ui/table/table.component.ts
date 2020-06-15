@@ -17,27 +17,27 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
   @Output() customEvent = new EventEmitter<{ $event: any, data: TData }>();
 
   constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
+    private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
-    this._render();
+    this.render();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.colDefs || changes.dataSource) {
-      this._render();
+      this.render();
     }
   }
 
-  private _render() {
+  private render() {
     if (!this.customRenderWrappers) { return; }
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
     this.customRenderWrappers.forEach(wrapper => wrapper.render());
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   getDisplayedColumns() {

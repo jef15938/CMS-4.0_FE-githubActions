@@ -24,7 +24,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   dept: DepartmentInfo;
 
   constructor(
-    private _departmentService: DepartmentService
+    private departmentService: DepartmentService
   ) {
     super();
   }
@@ -37,22 +37,22 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
     return (
       this.action === 'Create'
         ? of(new DepartmentInfo())
-        : this._departmentService.getDepartmentByID(this.deptId)
+        : this.departmentService.getDepartmentByID(this.deptId)
     ).pipe(
       tap(dept => this.dept = dept)
     );
   }
 
-  private _save() {
+  private save() {
     return (
       this.action === 'Create'
-        ? this._departmentService.createDepartment(this.dept.dept_id, this.dept.dept_name, this.parentId)
-        : this._departmentService.updateDepartment(this.dept.dept_id, this.dept.dept_name, this.parentId)
+        ? this.departmentService.createDepartment(this.dept.dept_id, this.dept.dept_name, this.parentId)
+        : this.departmentService.updateDepartment(this.dept.dept_id, this.dept.dept_name, this.parentId)
     );
   }
 
   confirm() {
-    this._save().subscribe(_ => {
+    this.save().subscribe(_ => {
       this.close('Confirm');
     });
   }

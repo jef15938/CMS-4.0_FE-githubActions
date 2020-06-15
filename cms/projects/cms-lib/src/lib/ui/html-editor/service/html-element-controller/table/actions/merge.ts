@@ -7,23 +7,23 @@ export class Merge extends HtmlEditorAction {
 
   constructor(
     context: IHtmlEditorContext,
-    private _controller: ITableController,
+    private controller: ITableController,
   ) {
     super(context);
   }
 
   do(): Observable<any> {
-    let selectedCols = this._controller.selectedCols;
+    let selectedCols = this.controller.selectedCols;
     if (selectedCols.length < 2) { return this.context.modalService.openMessage({ message: '請選擇至少兩欄' }) }
 
     const hasConsecutiveCol = selectedCols.some(col => selectedCols.indexOf(col.previousElementSibling as HTMLTableDataCellElement) > -1);
 
-    const selectedRows = this._controller.selectedRows;
+    const selectedRows = this.controller.selectedRows;
     const hasConsecutiveRow = selectedRows.some(row => selectedRows.indexOf(row.previousElementSibling as HTMLTableRowElement) > -1);
 
     if (!hasConsecutiveCol && !hasConsecutiveRow) { return this.context.modalService.openMessage({ message: '沒有可合併的欄位' }) }
 
-    const table = this._controller.el;
+    const table = this.controller.el;
     selectedCols.forEach(col => {
       if (!table.contains(col)) { return; }
       const previous = col.previousElementSibling as HTMLTableDataCellElement;
@@ -41,10 +41,10 @@ export class Merge extends HtmlEditorAction {
     selectedCols = selectedCols.filter(col => table.contains(col));
     selectedCols.forEach((col) => {
       if (!table.contains(col)) { return; }
-      const startEnd = this._controller.tableControllerService.getCellStartEnd(col);
+      const startEnd = this.controller.tableControllerService.getCellStartEnd(col);
 
       const previous = selectedCols.find((c: ITableCell) => {
-        const previousStartEnd = this._controller.tableControllerService.getCellStartEnd(c);
+        const previousStartEnd = this.controller.tableControllerService.getCellStartEnd(c);
         if (
           col === c
           || previousStartEnd.colStart !== startEnd.colStart
@@ -61,7 +61,7 @@ export class Merge extends HtmlEditorAction {
 
     });
 
-    this._controller.checkTableState();
+    this.controller.checkTableState();
     return of(undefined);
   }
 

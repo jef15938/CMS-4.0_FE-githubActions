@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class HtmlEditorService {
 
   constructor(
-    private _modalService: ModalService,
+    private modalService: ModalService,
   ) { }
 
   openEditor(
@@ -24,7 +24,7 @@ export class HtmlEditorService {
       height: '100%',
     };
 
-    return this._modalService.openComponent({
+    return this.modalService.openComponent({
       component: EditorContainerModalComponent,
       componentInitData: { content, title },
       modalSetting

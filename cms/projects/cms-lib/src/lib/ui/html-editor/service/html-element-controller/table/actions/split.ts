@@ -5,24 +5,24 @@ import { ITableController } from '../table-controller.interface';
 
 export class Split extends HtmlEditorAction {
 
-  private _orientation: 'horizontal' | 'verticle';
+  private orientation: 'horizontal' | 'verticle';
 
   constructor(
     context: IHtmlEditorContext,
-    private _controller: ITableController,
+    private controller: ITableController,
     orientation: 'horizontal' | 'verticle',
   ) {
     super(context);
-    this._orientation = orientation;
+    this.orientation = orientation;
   }
 
   do(): Observable<any> {
-    if (!this._controller.selectedCols.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準列' }); }
+    if (!this.controller.selectedCols.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準列' }); }
 
-    const cell = this._controller.selectedCols[0];
+    const cell = this.controller.selectedCols[0];
     const row = cell.parentNode as HTMLTableRowElement;
 
-    if (this._orientation === 'horizontal') {
+    if (this.orientation === 'horizontal') {
       const totalRowSpan = cell.rowSpan;
       const oldRowSpan = Math.round(totalRowSpan / 2);
       const newRowSpan = totalRowSpan - oldRowSpan;
@@ -67,7 +67,7 @@ export class Split extends HtmlEditorAction {
       row.insertBefore(newCell, cell);
     }
 
-    this._controller.checkTableState();
+    this.controller.checkTableState();
     return of(undefined);
   }
 }

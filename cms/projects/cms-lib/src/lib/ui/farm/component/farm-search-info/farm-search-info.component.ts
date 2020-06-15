@@ -18,11 +18,11 @@ export class FarmSearchInfoComponent implements OnInit, AfterContentChecked, OnD
 
   @Output() needQuery = new EventEmitter<void>();
 
-  private _intersectionObserver: IntersectionObserver;
+  private intersectionObserver: IntersectionObserver;
 
   constructor(
-    private _elementRef: ElementRef,
-    private _changeDetectorRef: ChangeDetectorRef,
+    private elementRef: ElementRef,
+    private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -31,20 +31,20 @@ export class FarmSearchInfoComponent implements OnInit, AfterContentChecked, OnD
       threshold: 1.0
     }
 
-    this._intersectionObserver = new IntersectionObserver((entries, observer) => {
+    this.intersectionObserver = new IntersectionObserver((entries, observer) => {
       this.farmFormInfoCompEmit.emit(this.farmFormInfoComponent);
     }, options);
 
-    this._intersectionObserver.observe(this._elementRef.nativeElement);
+    this.intersectionObserver.observe(this.elementRef.nativeElement);
   }
 
   ngAfterContentChecked(): void {
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy(): void {
-    this._intersectionObserver.unobserve(this._elementRef.nativeElement);
-    this._intersectionObserver.disconnect();
+    this.intersectionObserver.unobserve(this.elementRef.nativeElement);
+    this.intersectionObserver.disconnect();
   }
 
   query() {

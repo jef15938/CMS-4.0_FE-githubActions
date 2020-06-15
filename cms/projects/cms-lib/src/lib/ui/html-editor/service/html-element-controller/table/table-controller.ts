@@ -15,9 +15,9 @@ import { AddCol } from './actions/add-col';
 
 export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements ITableController {
 
-  private _contextMenuItems: IHtmlEditorContextMenuItem[];
+  private contextMenuItemsTemp: IHtmlEditorContextMenuItem[];
   get contextMenuItems(): IHtmlEditorContextMenuItem[] {
-    const menuItems: IHtmlEditorContextMenuItem[] = [].concat(this._contextMenuItems);
+    const menuItems: IHtmlEditorContextMenuItem[] = [].concat(this.contextMenuItemsTemp);
     if (!menuItems?.length) { return; }
 
     setTimeout(_ => {
@@ -47,24 +47,23 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   selectedCols: HTMLTableDataCellElement[] = [];
   selectedRows: HTMLTableRowElement[] = [];
 
-  private _tableSetting: ITableSetting;
-  private _subscriptions: Subscription[] = [];
+  private tableSetting: ITableSetting;
+  private subscriptions: Subscription[] = [];
 
-  get tableControllerService(): TableControllerService { return this._tableControllerService };
-  private _tableControllerService: TableControllerService;
+  tableControllerService: TableControllerService;
 
-  private _selectCellSubscription: Subscription;
+  private selectCellSubscription: Subscription;
 
   constructor(
     el: HTMLTableElement,
     context: IHtmlEditorContext,
   ) {
     super(el, context);
-    this._tableControllerService = new TableControllerService();
+    this.tableControllerService = new TableControllerService();
   }
 
   protected onAddToEditor(): void {
-    this._contextMenuItems = [
+    this.contextMenuItemsTemp = [
       {
         text: '列', children: [
           { text: '上方列', icon: 'add', action: new AddRow(this.context, this, 'before') },
@@ -94,48 +93,48 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       },
     ];
     const cols = this.el.querySelectorAll('tr')[0].querySelectorAll('td').length;
-    this._tableSetting = { cols };
+    this.tableSetting = { cols };
     this.checkTableState();
-    this._subscribeEvents();
-    this._subscribeCellSelection();
+    this.subscribeEvents();
+    this.subscribeCellSelection();
   }
 
   protected onRemovedFromEditor(): void {
-    this._subscriptions.forEach(subscription => {
+    this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
-    this._subscriptions = [];
-    this._contextMenuItems = undefined;
-    this._unsubscribeCellSelection();
+    this.subscriptions = [];
+    this.contextMenuItemsTemp = undefined;
+    this.unsubscribeCellSelection();
   }
 
   getSetting(): ITableSetting {
-    return this._tableSetting;
+    return this.tableSetting;
   }
 
-  private _subscribeEvents() {
+  private subscribeEvents() {
     const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
       if (!this.context.isSelectionInsideEditorContainer) { return; }
 
       const range = this.context.simpleWysiwygService.getRange();
 
       if (this.el.contains(range?.commonAncestorContainer)) {
-        this._onSelected();
+        this.onSelected();
       } else {
-        this._onUnselected();
+        this.onUnselected();
       }
     });
-    this._subscriptions.push(selectionchange$);
+    this.subscriptions.push(selectionchange$);
   }
 
 
-  private _subscribeCellSelection() {
-    this._selectCellSubscription?.unsubscribe();
+  private subscribeCellSelection() {
+    this.selectCellSubscription?.unsubscribe();
 
     const evPreventDefaultAndStopPropagation = (source: Observable<MouseEvent>) => new Observable<MouseEvent>(observer => {
       return source.subscribe({
         next: (ev) => {
-          this._evPreventDefaultAndStopPropagation(ev);
+          this.evPreventDefaultAndStopPropagation(ev);
           observer.next(ev);
         },
         error(err) { observer.error(err) },
@@ -147,14 +146,14 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     let startCell: HTMLTableDataCellElement;
 
     const selectTo = (currentCell: HTMLTableDataCellElement) => {
-      const selectedColsStartEnd = this._tableControllerService.getStartEndByStartCellAndEndCell(startCell, currentCell);
+      const selectedColsStartEnd = this.tableControllerService.getStartEndByStartCellAndEndCell(startCell, currentCell);
       const trs = Array.from(this.el.querySelectorAll('tr'));
       for (let i = 0; i < trs.length; ++i) {
         const row = trs[i];
         const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
 
         cells.forEach((cell: ITableCell) => {
-          const startEnd = this._tableControllerService.getCellStartEnd(cell);
+          const startEnd = this.tableControllerService.getCellStartEnd(cell);
           if (
             startEnd.rowStart >= selectedColsStartEnd.rowStart
             && startEnd.rowEnd <= selectedColsStartEnd.rowEnd
@@ -225,17 +224,17 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       })
     )
 
-    this._selectCellSubscription = drag$.subscribe();
+    this.selectCellSubscription = drag$.subscribe();
   }
 
-  private _unsubscribeCellSelection() {
-    this._selectCellSubscription?.unsubscribe();
+  private unsubscribeCellSelection() {
+    this.selectCellSubscription?.unsubscribe();
     const tds = Array.from(this.el.querySelectorAll('.selected')) as HTMLElement[];
     tds.forEach(td => td.classList.remove('selected'));
     this.checkTableState();
   }
 
-  private _onSelected(): void {
+  private onSelected(): void {
     this.el.style.setProperty('outline', '3px solid #b4d7ff');
     if (!this.selectedCols.length) {
       const range = this.context.simpleWysiwygService.getRange();
@@ -246,16 +245,16 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       }
     }
     this.checkTableState();
-    this._subscribeCellSelection();
+    this.subscribeCellSelection();
   }
 
-  private _onUnselected(): void {
+  private onUnselected(): void {
     this.el.style.removeProperty('outline');
-    this._unsubscribeCellSelection();
+    this.unsubscribeCellSelection();
     this.checkTableState();
   }
 
-  private _evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
+  private evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
   }
@@ -276,11 +275,11 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     }
 
     if (scanTable) {
-      this._scanTable(this.el);
+      this.scanTable(this.el);
     }
   }
 
-  private _scanTable(table) {
+  private scanTable(table) {
     var m = [];
     for (var y = 0; y < table.rows.length; y++) {
       var row = table.rows[y];

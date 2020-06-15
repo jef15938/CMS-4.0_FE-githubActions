@@ -7,30 +7,30 @@ export class DeleteCol extends HtmlEditorAction {
 
   constructor(
     context: IHtmlEditorContext,
-    private _controller: ITableController,
+    private controller: ITableController,
   ) {
     super(context);
   }
 
   do(): Observable<any> {
-    const selectedCols = this._controller.selectedCols;
+    const selectedCols = this.controller.selectedCols;
     if (!selectedCols.length) { return this.context.modalService.openMessage({ message: '沒有選擇的欄' }) }
 
-    const rangeStartEnd = this._controller.tableControllerService.getStartEndBySelectedCols(this._controller.selectedCols);
+    const rangeStartEnd = this.controller.tableControllerService.getStartEndBySelectedCols(this.controller.selectedCols);
 
     const colsToDelete: ITableCell[] = [];
     const minusMap = new Map<ITableCell, number>();
 
-    const rows = Array.from(this._controller.el.querySelectorAll('tr')) as HTMLTableRowElement[];
+    const rows = Array.from(this.controller.el.querySelectorAll('tr')) as HTMLTableRowElement[];
     rows.forEach(row => {
       const cols = Array.from(row.childNodes) as ITableCell[];
       cols.forEach(col => {
-        const startEnd = this._controller.tableControllerService.getCellStartEnd(col);
+        const startEnd = this.controller.tableControllerService.getCellStartEnd(col);
         if (startEnd.colStart >= rangeStartEnd.colStart && startEnd.colEnd <= rangeStartEnd.colEnd) {
           colsToDelete.push(col);
         } else {
           if (col.colSpan > 1) {
-            const startEnd = this._controller.tableControllerService.getCellStartEnd(col);
+            const startEnd = this.controller.tableControllerService.getCellStartEnd(col);
             if (rangeStartEnd.colStart > startEnd.colStart && rangeStartEnd.colStart < startEnd.colEnd && rangeStartEnd.colEnd >= startEnd.colEnd) {
               minusMap.set(col, startEnd.colEnd - rangeStartEnd.colStart);
             }
@@ -50,7 +50,7 @@ export class DeleteCol extends HtmlEditorAction {
       col.colSpan -= count;
     });
 
-    this._controller.checkTableState();
+    this.controller.checkTableState();
     return of(undefined);
   }
 

@@ -30,7 +30,7 @@ export class GalleryCategoryNodeComponent implements CmsTreeNodeRenderer<Gallery
 
   node: CmsTreeNode<GalleryCategoryInfo>;
 
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor() { }
 
@@ -41,7 +41,7 @@ export class GalleryCategoryNodeComponent implements CmsTreeNodeRenderer<Gallery
 
   ngOnInit(): void {
     this.node.tree.rightClickedNode
-      .pipe(takeUntil(this._destroy$))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         if (data === this.node.data) {
           this.trigger.openMenu();
@@ -50,9 +50,9 @@ export class GalleryCategoryNodeComponent implements CmsTreeNodeRenderer<Gallery
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
   @HostListener('contextmenu', ['$event'])

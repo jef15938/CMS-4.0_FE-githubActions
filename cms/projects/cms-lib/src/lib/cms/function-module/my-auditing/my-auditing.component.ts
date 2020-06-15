@@ -54,22 +54,22 @@ export class MyAuditingComponent implements OnInit {
   ];
 
   constructor(
-    private _auditingService: AuditingService,
-    private _modalService: ModalService,
+    private auditingService: AuditingService,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
-    this._init().subscribe();
+    this.init().subscribe();
   }
 
-  private _init(): Observable<any> {
+  private init(): Observable<any> {
     return concat(
-      this._getMyAuditings(),
+      this.getMyAuditings(),
     )
   }
 
-  private _getMyAuditings(): Observable<MyAuditingInfo[]> {
-    return this._auditingService.getMyAuditingList(this.pageInfo?.page).pipe(
+  private getMyAuditings(): Observable<MyAuditingInfo[]> {
+    return this.auditingService.getMyAuditingList(this.pageInfo?.page).pipe(
       tap(res => {
         this.pageInfo = res.pageInfo;
         this.myAuditings = res.datas;
@@ -82,7 +82,7 @@ export class MyAuditingComponent implements OnInit {
     if (event instanceof MyAuditingActionCellCustomEvent) {
       switch (event.action) {
         case event.ActionType.Detail:
-          this._modalService.openComponent({
+          this.modalService.openComponent({
             component: MyAuditingDetailModalComponent,
             componentInitData: {
               orderId: event.data.order_id
@@ -103,7 +103,7 @@ export class MyAuditingComponent implements OnInit {
 
   onPageChanged(event: { pageIndex: number }) {
     this.pageInfo.page = event.pageIndex + 1;
-    this._init().subscribe();
+    this.init().subscribe();
   }
 
 }

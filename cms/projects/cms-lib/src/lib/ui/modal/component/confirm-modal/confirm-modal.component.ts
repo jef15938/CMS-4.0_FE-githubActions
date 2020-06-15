@@ -15,7 +15,7 @@ export class ConfirmModalComponent extends CustomModalBase implements OnInit {
     },
     {
       text: '確認',
-      onClick: () => this._confirm(),
+      onClick: () => this.confirm(),
     }
   ];
 
@@ -26,7 +26,7 @@ export class ConfirmModalComponent extends CustomModalBase implements OnInit {
   ngOnInit(): void {
   }
 
-  private _confirm() {
+  private confirm() {
     this.close(true);
   }
 

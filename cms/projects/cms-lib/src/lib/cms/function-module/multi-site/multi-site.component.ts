@@ -49,37 +49,37 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   selectedSiteMap: SiteMapUpdateInfo;
   customNodeRenderer = MultiSiteNodeComponent;
-  private _sitemapSelected$ = new Subject<SiteMapInfo>();
+  private sitemapSelected$ = new Subject<SiteMapInfo>();
 
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor(
-    private _modalService: ModalService,
-    private _sitemapService: SitemapService,
-    private _contentService: ContentService,
-    private _contentEditorService: ContentEditorService,
-    private _htmlEditorService: HtmlEditorService,
+    private modalService: ModalService,
+    private sitemapService: SitemapService,
+    private contentService: ContentService,
+    private contentEditorService: ContentEditorService,
+    private htmlEditorService: HtmlEditorService,
   ) { }
 
   ngOnInit(): void {
-    this._registerSubjects();
-    this._init().subscribe();
+    this.registerSubjects();
+    this.init().subscribe();
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
-  private _init(): Observable<any> {
+  private init(): Observable<any> {
     return concat(
-      this._getSites(),
+      this.getSites(),
     )
   }
 
-  private _getSites(): Observable<SiteInfo[]> {
-    return this._sitemapService.getSiteList().pipe(
+  private getSites(): Observable<SiteInfo[]> {
+    return this.sitemapService.getSiteList().pipe(
       tap(sites => this.sites = sites),
       tap(_ => this.selectSite(this.sites[0])),
     );
@@ -96,8 +96,8 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     this.selectedSiteMap = undefined;
     switch (mode) {
       case EditModeType.Node:
-        if (!this.selectedSite) { this._modalService.openMessage({ message: '尚未選擇網站' }); return; }
-        this._sitemapService.getUserSiteMapNodes(this.selectedSite.site_id).subscribe(sitemap => {
+        if (!this.selectedSite) { this.modalService.openMessage({ message: '尚未選擇網站' }); return; }
+        this.sitemapService.getUserSiteMapNodes(this.selectedSite.site_id).subscribe(sitemap => {
           this.sitemaps = sitemap;
           this.editMode = mode;
         });
@@ -109,7 +109,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   }
 
   onNodeSelected(event: { node: SiteMapInfo }) {
-    this._sitemapSelected$.next(event.node);
+    this.sitemapSelected$.next(event.node);
   }
 
   afterTreeRender(tree: CmsTree<SiteMapInfo>) {
@@ -121,7 +121,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     if (event instanceof MultiSiteNodeCustomEvent) {
       switch (event.action) {
         case event.ActionType.Create:
-          this._modalService.openComponent({
+          this.modalService.openComponent({
             component: SitemapNodeCreateModalComponent,
             componentInitData: {
               parent_id: event.data.node_id
@@ -138,14 +138,14 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _registerSubjects() {
-    this._sitemapSelected$.pipe(
-      takeUntil(this._destroy$),
+  private registerSubjects() {
+    this.sitemapSelected$.pipe(
+      takeUntil(this.destroy$),
       debounceTime(500),
       concatMap(selectedSitemap => {
         return (
           selectedSitemap
-            ? this._sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedSitemap.node_id)
+            ? this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedSitemap.node_id)
             : of(undefined)
         ).pipe(
           tap(selectedSitemapNode => {
@@ -169,10 +169,10 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   testContentEditor() {
     const layoutId = 'fakeLayoutId';
     forkJoin([
-      this._contentService.getContentByContentID(layoutId),
-      this._contentService.getTemplateByControlID(layoutId),
+      this.contentService.getContentByContentID(layoutId),
+      this.contentService.getTemplateByControlID(layoutId),
     ]).subscribe(([contentInfo, selectableTemplates]) => {
-      this._contentEditorService.openEditor({
+      this.contentEditorService.openEditor({
         contentInfo,
         selectableTemplates,
         mode: EditorMode.EDIT,
@@ -181,7 +181,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   }
 
   testHtmlEditor() {
-    this._htmlEditorService.openEditor({
+    this.htmlEditorService.openEditor({
       title: `Html編輯`,
       content: ''
     }).subscribe(content => {

@@ -59,22 +59,22 @@ export class AuditingComponent implements OnInit {
   ];
 
   constructor(
-    private _auditingService: AuditingService,
-    private _modalService: ModalService,
+    private auditingService: AuditingService,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
-    this._init().subscribe();
+    this.init().subscribe();
   }
 
-  private _init(): Observable<any> {
+  private init(): Observable<any> {
     return concat(
-      this._getMyAuditings(),
+      this.getMyAuditings(),
     )
   }
 
-  private _getMyAuditings(): Observable<AuditingInfo[]> {
-    return this._auditingService.getAuditingListForManager(this.pageInfo?.page).pipe(
+  private getMyAuditings(): Observable<AuditingInfo[]> {
+    return this.auditingService.getAuditingListForManager(this.pageInfo?.page).pipe(
       tap(res => {
         this.pageInfo = res.pageInfo;
         this.auditings = res.datas;
@@ -95,7 +95,7 @@ export class AuditingComponent implements OnInit {
             status = AuditingApproveStatus.Reject;
             break;
         }
-        this._modalService.openComponent({
+        this.modalService.openComponent({
           component: ApproveAuditingModalComponent,
           componentInitData: {
             batch: false,
@@ -119,7 +119,7 @@ export class AuditingComponent implements OnInit {
 
   onPageChanged(event: { pageIndex: number }) {
     this.pageInfo.page = event.pageIndex + 1;
-    this._init().subscribe();
+    this.init().subscribe();
   }
 
 }

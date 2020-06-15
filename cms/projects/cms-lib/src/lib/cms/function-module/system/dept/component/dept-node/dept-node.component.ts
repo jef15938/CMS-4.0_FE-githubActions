@@ -29,7 +29,7 @@ export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, O
 
   node: CmsTreeNode<DepartmentInfo>;
 
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor() { }
 
@@ -40,7 +40,7 @@ export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, O
 
   ngOnInit(): void {
     this.node.tree.rightClickedNode
-      .pipe(takeUntil(this._destroy$))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         if (data === this.node.data) {
           this.trigger.openMenu();
@@ -49,9 +49,9 @@ export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, O
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
   onActionClicked(action: ActionType) {

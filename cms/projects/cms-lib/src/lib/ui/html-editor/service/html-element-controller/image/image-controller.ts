@@ -10,9 +10,9 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
 
   contextMenuItems: IHtmlEditorContextMenuItem[];
 
-  private _controllers: HTMLDivElement[];
-  private _subscriptions: Subscription[] = [];
-  private _mutationObserver: MutationObserver;
+  private controllers: HTMLDivElement[];
+  private subscriptions: Subscription[] = [];
+  private mutationObserver: MutationObserver;
 
   protected onAddToEditor(): void {
     if (this.el[IS_FAKE]) { return; }
@@ -22,32 +22,32 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
       { text: '連結', icon: 'link', action: new CreateLink(this.context) },
     ];
 
-    const parent = this._findParent();
+    const parent = this.findParent();
     if (!parent) { return; }
 
-    // this._registerSizeControl();
-    // this._observeEditorContainer();
-    this._subscribeEvents();
+    // this.registerSizeControl();
+    // this.observeEditorContainer();
+    this.subscribeEvents();
   }
 
   protected onRemovedFromEditor(): void {
     if (this.el[IS_FAKE]) { return; }
 
-    this._mutationObserver?.disconnect();
-    this._mutationObserver = undefined;
+    this.mutationObserver?.disconnect();
+    this.mutationObserver = undefined;
 
-    this._subscriptions.forEach(subscription => {
+    this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
-    this._subscriptions = [];
+    this.subscriptions = [];
 
-    this._unRegisterSizeControl();
+    this.unRegisterSizeControl();
   }
 
-  private _observeEditorContainer() {
+  private observeEditorContainer() {
     const editorContainer = this.context.editorContainer;
     const mutationObserver = new MutationObserver((records) => {
-      this._checkSelected();
+      this.checkSelected();
     });
 
     mutationObserver.observe(editorContainer, {
@@ -57,40 +57,40 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
       subtree: true
     });
 
-    this._mutationObserver = mutationObserver;
+    this.mutationObserver = mutationObserver;
   }
 
-  private _subscribeEvents() {
+  private subscribeEvents() {
     if (this.el[IS_FAKE]) { return; }
 
     const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
-      this._checkSelected();
+      this.checkSelected();
     });
-    this._subscriptions.push(selectionchange$);
+    this.subscriptions.push(selectionchange$);
   }
 
-  private _checkSelected() {
+  private checkSelected() {
     if (!this.context.isSelectionInsideEditorContainer) { return; }
 
     const range = this.context.simpleWysiwygService.getRange();
 
     if (range.commonAncestorContainer === this.el) {
-      this._onSelected();
+      this.onSelected();
     } else {
-      this._onUnselected();
+      this.onUnselected();
     }
   }
 
-  private _findParent(): HTMLElement {
+  private findParent(): HTMLElement {
     return this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer, this.el);
   }
 
-  private _onSelected(): void {
+  private onSelected(): void {
     if (this.el[IS_FAKE]) { return; }
 
     this.el.style.setProperty('outline', '3px solid #b4d7ff');
 
-    const controllers = this._controllers || [];
+    const controllers = this.controllers || [];
     if (!controllers.length) { return; }
 
     const editorContainer = this.context.editorContainer;
@@ -104,40 +104,40 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     topLeft.style.left = bottomLeft.style.left = `${img.offsetLeft - 5}px`;
     topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 5}px`;
     bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 5}px`;
-    this._controllers?.forEach(c => {
+    this.controllers?.forEach(c => {
       if (!editorContainer.contains(c)) {
         editorContainer.appendChild(c);
       }
     });
   }
 
-  private _onUnselected(): void {
+  private onUnselected(): void {
     if (this.el[IS_FAKE]) { return; }
 
     this.el.style.removeProperty('outline');
 
     const editorContainer = this.context.editorContainer;
-    this._controllers?.forEach(c => {
+    this.controllers?.forEach(c => {
       if (editorContainer.contains(c)) {
         editorContainer.removeChild(c);
       }
     });
   }
 
-  private _unRegisterSizeControl() {
+  private unRegisterSizeControl() {
     if (this.el[IS_FAKE]) { return; }
 
     const editorContainer = this.context.editorContainer;
-    this._controllers?.forEach(c => {
+    this.controllers?.forEach(c => {
       if (editorContainer.contains(c)) {
-        c.removeEventListener('click', this._evPreventDefaultAndStopPropagation);
+        c.removeEventListener('click', this.evPreventDefaultAndStopPropagation);
         editorContainer.removeChild(c);
       }
     });
-    this._controllers = [];
+    this.controllers = [];
   }
 
-  private _registerSizeControl() {
+  private registerSizeControl() {
     if (this.el[IS_FAKE]) { return; }
 
     const img = this.el;
@@ -150,20 +150,20 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     topRight.style.cursor = bottomLeft.style.cursor = 'nesw-resize';
 
     const controllers = [topLeft, topRight, bottomLeft, bottomRight];
-    this._controllers = controllers;
+    this.controllers = controllers;
 
     controllers.forEach((c, i) => {
       c.setAttribute('contenteditable', 'false');
       c.style.backgroundColor = '#b4d7ff';
       c.style.position = 'absolute';
       c.style.width = c.style.height = '10px';
-      c.addEventListener('click', this._evPreventDefaultAndStopPropagation);
+      c.addEventListener('click', this.evPreventDefaultAndStopPropagation);
     });
 
     const evPreventDefaultAndStopPropagation = (source: Observable<MouseEvent>) => new Observable<MouseEvent>(observer => {
       return source.subscribe({
         next: (ev) => {
-          this._evPreventDefaultAndStopPropagation(ev);
+          this.evPreventDefaultAndStopPropagation(ev);
           observer.next(ev);
         },
         error(err) { observer.error(err) },
@@ -262,10 +262,10 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
         }
       )
     ).subscribe();
-    this._subscriptions.push(drag$);
+    this.subscriptions.push(drag$);
   }
 
-  private _evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
+  private evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
   }

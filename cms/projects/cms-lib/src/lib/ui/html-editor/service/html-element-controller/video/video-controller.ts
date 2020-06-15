@@ -7,55 +7,55 @@ export class HtmlEditorVideoController extends HtmlEditorElementController<HTMLI
 
   contextMenuItems: IHtmlEditorContextMenuItem[];
 
-  private _subscriptions: Subscription[] = [];
-  private _mutationObserver: MutationObserver;
+  private subscriptions: Subscription[] = [];
+  private mutationObserver: MutationObserver;
 
   protected onAddToEditor(): void {
     this.contextMenuItems = [
       { text: '影片設定', icon: 'edit', action: new InsertVideo(this.context) },
     ];
 
-    this._subscribeEvents();
+    this.subscribeEvents();
   }
 
   protected onRemovedFromEditor(): void {
-    this._mutationObserver?.disconnect();
-    this._mutationObserver = undefined;
+    this.mutationObserver?.disconnect();
+    this.mutationObserver = undefined;
 
-    this._subscriptions.forEach(subscription => {
+    this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
-    this._subscriptions = [];
+    this.subscriptions = [];
   }
 
-  private _subscribeEvents() {
+  private subscribeEvents() {
     const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
-      this._checkSelected();
+      this.checkSelected();
     });
-    this._subscriptions.push(selectionchange$);
+    this.subscriptions.push(selectionchange$);
   }
 
-  private _checkSelected() {
+  private checkSelected() {
     if (!this.context.isSelectionInsideEditorContainer) { return; }
 
     const range = this.context.simpleWysiwygService.getRange();
 
     if (range.commonAncestorContainer === this.el) {
-      this._onSelected();
+      this.onSelected();
     } else {
-      this._onUnselected();
+      this.onUnselected();
     }
   }
 
-  private _onSelected(): void {
+  private onSelected(): void {
     this.el.style.setProperty('outline', '3px solid #b4d7ff');
   }
 
-  private _onUnselected(): void {
+  private onUnselected(): void {
     this.el.style.removeProperty('outline');
   }
 
-  private _evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
+  private evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
   }

@@ -11,14 +11,14 @@ class SiteMapCreateModel extends UserSiteMapPostRequest {
     this.parent_id = parent_id;
   }
 
-  private _clearLink() {
+  private clearLink() {
     this.url = undefined;
     this.url_blank = undefined;
     this.url_link_node_id = undefined;
     this.url_type = undefined;
   }
 
-  private _clearContent() {
+  private clearContent() {
     this.layout_id = undefined;
     this.content_path = undefined;
     this.meta_description = undefined;
@@ -31,14 +31,14 @@ class SiteMapCreateModel extends UserSiteMapPostRequest {
   checkFieldsByNodeType() {
     switch (this.node_type) {
       case SiteMapNodeType.None:
-        this._clearLink();
-        this._clearContent();
+        this.clearLink();
+        this.clearContent();
         break;
       case SiteMapNodeType.Url:
-        this._clearContent();
+        this.clearContent();
         break;
       case SiteMapNodeType.Content:
-        this._clearLink();
+        this.clearLink();
         break;
     }
   }

@@ -7,13 +7,13 @@ export class DeleteTable extends HtmlEditorAction {
 
   constructor(
     context: IHtmlEditorContext,
-    private _controller: ITableController,
+    private controller: ITableController,
   ) {
     super(context);
   }
 
   do(): Observable<any> {
-    this._controller.el.parentNode.removeChild(this._controller.el);
+    this.controller.el.parentNode.removeChild(this.controller.el);
     this.context.simpleWysiwygService.setSelectionOnNode(this.context.editorContainer);
     return of(undefined);
   }

@@ -7,19 +7,19 @@ export class DeleteRow extends HtmlEditorAction {
 
   constructor(
     context: IHtmlEditorContext,
-    private _controller: ITableController,
+    private controller: ITableController,
   ) {
     super(context);
   }
 
   do(): Observable<any> {
-    if (!this._controller.selectedRows.length) { return this.context.modalService.openMessage({ message: '沒有選擇的列' }) }
+    if (!this.controller.selectedRows.length) { return this.context.modalService.openMessage({ message: '沒有選擇的列' }) }
 
-    this._controller.selectedRows.forEach(row => {
+    this.controller.selectedRows.forEach(row => {
       row.parentNode.removeChild(row);
     });
 
-    this._controller.checkTableState();
+    this.controller.checkTableState();
     return of(undefined);
   }
 }

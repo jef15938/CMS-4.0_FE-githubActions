@@ -15,14 +15,14 @@ export class RenderComponent implements OnInit {
   contentInfo: ContentInfo;
 
   constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _renderService: RenderService,
+    private activatedRoute: ActivatedRoute,
+    private renderService: RenderService,
   ) { }
 
   ngOnInit(): void {
-    this._activatedRoute.params.pipe(
+    this.activatedRoute.params.pipe(
       concatMap(params =>
-        this._renderService.getContentInfo(params['contentId']).pipe(
+        this.renderService.getContentInfo(params['contentId']).pipe(
           tap(contentInfo => this.contentInfo = contentInfo),
         )
       )

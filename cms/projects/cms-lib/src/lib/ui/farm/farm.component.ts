@@ -20,7 +20,7 @@ export class FarmComponent implements OnInit, OnDestroy {
 
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
 
-  private _searchInfoFormComponentMap = new Map<CmsFarmInfoCategory, FarmFormComp>();
+  private searchInfoFormComponentMap = new Map<CmsFarmInfoCategory, FarmFormComp>();
 
   @Input() title: string;
   @Input() categoryName: string;
@@ -35,26 +35,26 @@ export class FarmComponent implements OnInit, OnDestroy {
   subComponentRef: ComponentRef<FarmComponent>;
 
   destroyMe = new Subject();
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor(
-    private _farmService: FarmService,
-    private _componentFactoryResolver: ComponentFactoryResolver,
-    private _modalService: ModalService,
+    private farmService: FarmService,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
-    this._getFarm().subscribe();
+    this.getFarm().subscribe();
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
-  private _getFarm() {
-    return this._farmService.getFarmByFuncID(this.funcId).pipe(
+  private getFarm() {
+    return this.farmService.getFarmByFuncID(this.funcId).pipe(
       tap(farm => {
         this.farm = farm;
         this.activedCategory = this.farm?.category[0];
@@ -62,12 +62,12 @@ export class FarmComponent implements OnInit, OnDestroy {
     )
   }
 
-  private _getCategoryTableInfo(category: CmsFarmInfoCategory, page = 1) {
+  private getCategoryTableInfo(category: CmsFarmInfoCategory, page = 1) {
     return of(undefined).pipe(
-      concatMap(_ => this._searchInfoFormComponentMap.get(category)?.requestFormInfo() || throwError('No Category in Map.')),
+      concatMap(_ => this.searchInfoFormComponentMap.get(category)?.requestFormInfo() || throwError('No Category in Map.')),
       concatMap(searchFormInfo => { // TODO: 查詢 table 時帶 search 表單
         console.warn('searchFormInfo = ', searchFormInfo);
-        return this._farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
+        return this.farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
           tap(farmTableInfo => {
             category.tableInfo = farmTableInfo;
           })
@@ -85,7 +85,7 @@ export class FarmComponent implements OnInit, OnDestroy {
   }
 
   onTablePageChange(category: CmsFarmInfoCategory, page: number) {
-    this._getCategoryTableInfo(category, page).subscribe();
+    this.getCategoryTableInfo(category, page).subscribe();
   }
 
   onSelectedTabChange(ev: MatTabChangeEvent) {
@@ -93,17 +93,17 @@ export class FarmComponent implements OnInit, OnDestroy {
   }
 
   onSearchInfoFarmFormInfoCompEmit(category: CmsFarmInfoCategory, comp: FarmFormComp) {
-    this._searchInfoFormComponentMap.set(category, comp);
+    this.searchInfoFormComponentMap.set(category, comp);
   }
 
   onSearchInfoNeedQuery(category: CmsFarmInfoCategory) {
-    this._getCategoryTableInfo(category).subscribe();
+    this.getCategoryTableInfo(category).subscribe();
   }
 
-  private _createSub(category: CmsFarmInfoCategory) {
+  private createSub(category: CmsFarmInfoCategory) {
     if (!category) { return; }
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(FarmComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmComponent);
     const viewContainerRef = this.subContainerViewContainerRef;
     viewContainerRef.clear();
     this.subComponentRef = undefined;
@@ -114,12 +114,12 @@ export class FarmComponent implements OnInit, OnDestroy {
     subComponentRef.instance.title = `${this.title || ''}${this.title ? ' > ' : ''}${category.category_name}`;
     this.subComponentRef = subComponentRef;
     this.subComponentRef.instance.destroyMe.pipe(
-      takeUntil(this._destroy$),
-      tap(_ => this._destroySub()),
+      takeUntil(this.destroy$),
+      tap(_ => this.destroySub()),
     ).subscribe();
   }
 
-  private _destroySub() {
+  private destroySub() {
     try {
       this.subComponentRef.instance.destroyMe.unsubscribe();
     } catch (error) {
@@ -140,29 +140,29 @@ export class FarmComponent implements OnInit, OnDestroy {
 
     switch (event.action) {
       case CmsFarmTableDataAction.DETAIL:
-        this._createSub(category);
+        this.createSub(category);
         break;
       case CmsFarmTableDataAction.PREVIEW:
-        this._openViewDataModal(category, event.rowData);
+        this.openViewDataModal(category, event.rowData);
         break;
       case CmsFarmTableDataAction.CREATE:
-        this._openModifyDataModal('create', category);
+        this.openModifyDataModal('create', category);
         break;
       case CmsFarmTableDataAction.MODIFY:
-        this._openModifyDataModal('edit', category, event.rowData);
+        this.openModifyDataModal('edit', category, event.rowData);
         break;
       case CmsFarmTableDataAction.DELETE:
-        this._deleteData(category, event.rowData);
+        this.deleteData(category, event.rowData);
         break;
     }
   }
 
-  private _openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+  private openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
     const title = `預覽 : ${rowData.data_id}`;
     of(undefined).pipe(
-      concatMap(_ => this._farmService.getFarmDetailInfoByFarmID(category.category_id, rowData.data_id)),
+      concatMap(_ => this.farmService.getFarmDetailInfoByFarmID(category.category_id, rowData.data_id)),
       concatMap(farmFormInfo => {
-        return this._modalService.openComponent({
+        return this.modalService.openComponent({
           component: FarmFormViewDataModalComponent,
           componentInitData: {
             title,
@@ -176,16 +176,16 @@ export class FarmComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  private _openModifyDataModal(action: 'create' | 'edit', category: CmsFarmInfoCategory, rowData?: CmsFarmTableDataInfo) {
+  private openModifyDataModal(action: 'create' | 'edit', category: CmsFarmInfoCategory, rowData?: CmsFarmTableDataInfo) {
     if (action === 'edit' && !rowData) {
       alert('資料異常');
       return;
     }
     const title = action === 'create' ? '新增' : `修改 : ${rowData.data_id}`;
     of(undefined).pipe(
-      concatMap(_ => this._farmService.getFarmFormInfoByFuncID(category.category_id, rowData?.data_id)),
+      concatMap(_ => this.farmService.getFarmFormInfoByFuncID(category.category_id, rowData?.data_id)),
       concatMap(farmFormInfo => {
-        return this._modalService.openComponent({
+        return this.modalService.openComponent({
           component: FarmFormModifyDataModalComponent,
           componentInitData: {
             title,
@@ -198,14 +198,14 @@ export class FarmComponent implements OnInit, OnDestroy {
       })
     ).subscribe(confirm => {
       if (confirm) {
-        this._getCategoryTableInfo(category).subscribe();
+        this.getCategoryTableInfo(category).subscribe();
       }
     });
   }
 
-  private _deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+  private deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
     alert(`Delete : ${rowData.data_id}`);
-    this._getCategoryTableInfo(category).subscribe();
+    this.getCategoryTableInfo(category).subscribe();
   }
 
 }

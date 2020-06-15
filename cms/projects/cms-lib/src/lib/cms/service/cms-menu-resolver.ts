@@ -10,31 +10,31 @@ import { MenuInfo } from '../../neuxAPI/bean/MenuInfo';
 @Injectable()
 export class CmsUserMenuResolver implements Resolve<any> {
 
-  private _menus: MenuInfo[] = [];
+  private menus: MenuInfo[] = [];
 
   constructor(
-    private _menuService: MenuService,
-    @Inject(CmsExtensionMenuResolver) private _cmsExtensionMenuProvidor: ICmsExtensionMenuResolver,
+    private menuService: MenuService,
+    @Inject(CmsExtensionMenuResolver) private cmsExtensionMenuProvidor: ICmsExtensionMenuResolver,
   ) { }
 
   getMenus() {
-    return this._menus || [];
+    return this.menus || [];
   }
 
   resolve(route: ActivatedRouteSnapshot) {
-    return this._menuService.getUserMenu().pipe(
+    return this.menuService.getUserMenu().pipe(
       concatMap(cmsMenus => {
-        if (!this._cmsExtensionMenuProvidor) { return of(cmsMenus); }
-        return this._cmsExtensionMenuProvidor.resolve().pipe(
+        if (!this.cmsExtensionMenuProvidor) { return of(cmsMenus); }
+        return this.cmsExtensionMenuProvidor.resolve().pipe(
           map(extensionMenus => {
             let result = [].concat(cmsMenus);
 
             if (extensionMenus?.length) {
-              this._addExtensionRoute(extensionMenus);
+              this.addExtensionRoute(extensionMenus);
               result = result.concat(extensionMenus);
             }
 
-            this._menus = JSON.parse(JSON.stringify(result));
+            this.menus = JSON.parse(JSON.stringify(result));
             return result;
           })
         )
@@ -42,13 +42,13 @@ export class CmsUserMenuResolver implements Resolve<any> {
     );
   }
 
-  private _addExtensionRoute(menus: MenuInfo[]) {
+  private addExtensionRoute(menus: MenuInfo[]) {
     if (!menus?.length) { return; }
     let children: MenuInfo[] = [];
     menus.forEach(menu => {
       menu.func_id = menu.func_id ? `extension/${menu.func_id}` : '';
       children = children.concat(menu.children || []);
     });
-    this._addExtensionRoute(children);
+    this.addExtensionRoute(children);
   }
 }

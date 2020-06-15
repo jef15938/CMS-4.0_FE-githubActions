@@ -4,16 +4,14 @@ import { Observable, of } from 'rxjs';
 
 export abstract class HtmlEditorAction implements IHtmlEditorAction {
 
-  private _context: IHtmlEditorContext;
-
-  protected get context() { return this._context; };
+  protected context: IHtmlEditorContext;
 
   abstract do(): Observable<any>;
 
   constructor(
     context: IHtmlEditorContext,
   ) {
-    this._context = context;
+    this.context = context;
   }
 }
 

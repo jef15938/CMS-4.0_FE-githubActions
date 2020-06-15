@@ -20,7 +20,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
   @Input() farmFormInfo: CmsFarmFormInfo;
 
   constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
     super();
   }
@@ -29,7 +29,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
   }
 
   ngAfterContentChecked(): void {
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   confirm() {

@@ -14,7 +14,7 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
   actions: CustomModalActionButton[];
 
   @ViewChild(CropperWrapper) cropperWrapper: CropperWrapper;
-  private get _cropper() { return this.cropperWrapper.cropper; }
+  private get cropper() { return this.cropperWrapper.cropper; }
 
   @Input() imgUrl = '';
 
@@ -27,7 +27,7 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
   };
 
   constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
     super();
   }
@@ -37,7 +37,7 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
   }
 
   ngAfterViewInit(): void {
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   onImageLoaded(ev) {
@@ -45,21 +45,21 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
   }
 
   confirm() {
-    this._cropper.crop();
-    const dataUrl = this._cropper.getCroppedCanvas().toDataURL();
-    this._cropper.destroy();
+    this.cropper.crop();
+    const dataUrl = this.cropper.getCroppedCanvas().toDataURL();
+    this.cropper.destroy();
     this.close(dataUrl);
   }
 
   showInfo() {
     console.log('--------------------------------------');
     console.warn('this.cropperWrapper = ', this.cropperWrapper);
-    console.warn('this._cropper = ', this._cropper);
-    console.warn('getData() = ', this._cropper.getData());
-    console.warn('getImageData() = ', this._cropper.getImageData());
-    console.warn('getCanvasData() = ', this._cropper.getCanvasData());
-    console.warn('getContainerData() = ', this._cropper.getContainerData());
-    console.warn('getCropBoxData() = ', this._cropper.getCropBoxData());
+    console.warn('this.cropper = ', this.cropper);
+    console.warn('getData() = ', this.cropper.getData());
+    console.warn('getImageData() = ', this.cropper.getImageData());
+    console.warn('getCanvasData() = ', this.cropper.getCanvasData());
+    console.warn('getContainerData() = ', this.cropper.getContainerData());
+    console.warn('getCropBoxData() = ', this.cropper.getCropBoxData());
   }
 
 }

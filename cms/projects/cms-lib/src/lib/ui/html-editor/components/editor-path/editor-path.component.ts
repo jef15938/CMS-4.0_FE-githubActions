@@ -14,26 +14,26 @@ export class EditorPathComponent implements OnInit, OnDestroy {
 
   paths: HTMLElement[] = [];
 
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor() { }
 
   ngOnInit(): void {
     fromEvent(document, 'selectionchange').pipe(
-      takeUntil(this._destroy$),
+      takeUntil(this.destroy$),
       debounceTime(200),
     ).subscribe(_ => {
-      this._checkPath(this.context?.commonAncestorContainer as HTMLElement);
+      this.checkPath(this.context?.commonAncestorContainer as HTMLElement);
     });
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
-  private _checkPath(target: HTMLElement): void {
+  private checkPath(target: HTMLElement): void {
 
     const paths: HTMLElement[] = [];
 

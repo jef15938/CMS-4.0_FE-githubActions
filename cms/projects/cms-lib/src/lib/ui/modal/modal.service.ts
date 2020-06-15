@@ -10,7 +10,7 @@ import { MessageModalComponent } from './component/message-modal/message-modal.c
 export class ModalService {
 
   constructor(
-    private _matDialog: MatDialog,
+    private matDialog: MatDialog,
   ) {
 
   }
@@ -34,7 +34,7 @@ export class ModalService {
     // https://material.angular.io/components/modal/overview
 
     modalConfig.data = config;
-    const modalModal = this._matDialog.open(ModalCustomWrapperComponent, modalConfig);
+    const modalModal = this.matDialog.open(ModalCustomWrapperComponent, modalConfig);
     return modalModal.afterClosed();
   }
 

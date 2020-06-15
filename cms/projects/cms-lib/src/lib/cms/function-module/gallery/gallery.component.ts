@@ -55,50 +55,50 @@ export class GalleryComponent implements OnInit, OnDestroy {
     }
   ];
 
-  private _destroy$ = new Subject();
-  private _categorySelected$ = new Subject<GalleryCategoryInfo>();
+  private destroy$ = new Subject();
+  private categorySelected$ = new Subject<GalleryCategoryInfo>();
 
-  private _url = 'https://i.kym-cdn.com/photos/images/newsfeed/001/430/765/8aa.png';
+  private url = 'https://i.kym-cdn.com/photos/images/newsfeed/001/430/765/8aa.png';
 
   constructor(
-    private _galleryService: GalleryService,
-    private _authorizationService: AuthorizationService,
-    private _modalService: ModalService,
-    private _cropperService: CropperService,
+    private galleryService: GalleryService,
+    private authorizationService: AuthorizationService,
+    private modalService: ModalService,
+    private cropperService: CropperService,
   ) { }
 
   ngOnInit(): void {
-    this._init().subscribe();
+    this.init().subscribe();
 
-    this._categorySelected$.pipe(
+    this.categorySelected$.pipe(
       debounceTime(300),
-      takeUntil(this._destroy$),
+      takeUntil(this.destroy$),
       tap(selectedCategory => this.selectedCategory = selectedCategory),
-      concatMap(_ => this._getGallery()),
+      concatMap(_ => this.getGallery()),
     ).subscribe()
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
-  private _init() {
+  private init() {
     return concat(
-      this._getCategories()
+      this.getCategories()
     )
   }
 
-  private _getCategories() {
-    return this._galleryService.getGalleryCategory().pipe(
+  private getCategories() {
+    return this.galleryService.getGalleryCategory().pipe(
       tap(categories => this.categories = categories)
     );
   }
 
-  private _getGallery() {
+  private getGallery() {
     if (!this.selectedCategory?.category_id) { return of(undefined); }
-    return this._galleryService.getGalleryByCategoryID(
+    return this.galleryService.getGalleryByCategoryID(
       this.selectedCategory.category_id,
       this.galleryPageInfo?.page
     ).pipe(
@@ -109,21 +109,21 @@ export class GalleryComponent implements OnInit, OnDestroy {
     )
   }
 
-  private _maintainCategory(action: 'Create' | 'Update', category: GalleryCategoryInfo) {
-    return this._modalService.openComponent({
+  private maintainCategory(action: 'Create' | 'Update', category: GalleryCategoryInfo) {
+    return this.modalService.openComponent({
       component: GalleryCategoryMaintainModalComponent,
       componentInitData: {
         action,
         categoryID: action === 'Update' ? category.category_id : undefined,
         category_name: action === 'Update' ? category.category_name : undefined,
         parent_id: action === 'Update' ? this.tree.findParent(category)?.category_id : category.category_id,
-        assign_dept_id: this._authorizationService.getCurrentLoginInfo().dept_id
+        assign_dept_id: this.authorizationService.getCurrentLoginInfo().dept_id
       }
     })
   }
 
-  private _uploadFileToCategory(category: GalleryCategoryInfo) {
-    return this._modalService.openComponent({
+  private uploadFileToCategory(category: GalleryCategoryInfo) {
+    return this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
         category_name: category.category_name,
@@ -132,8 +132,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _updateGallery(galleryId: number) {
-    return this._modalService.openComponent({
+  private updateGallery(galleryId: number) {
+    return this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
         galleryId,
@@ -146,16 +146,16 @@ export class GalleryComponent implements OnInit, OnDestroy {
       let action: Observable<any>;
       switch (event.action) {
         case event.ActionType.Upload:
-          action = this._uploadFileToCategory(event.data);
+          action = this.uploadFileToCategory(event.data);
           break;
         case event.ActionType.Create:
-          action = this._maintainCategory('Create', event.data);
+          action = this.maintainCategory('Create', event.data);
           break;
         case event.ActionType.Edit:
-          action = this._maintainCategory('Update', event.data);
+          action = this.maintainCategory('Update', event.data);
           break;
         case event.ActionType.Delete:
-          action = this._galleryService.deleteGalleryCategory(event.data.category_id);
+          action = this.galleryService.deleteGalleryCategory(event.data.category_id);
           break;
       }
       action ? action.subscribe() : null;
@@ -167,10 +167,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
       let action: Observable<any>;
       switch (event.action) {
         case event.ActionType.Edit:
-          action = this._updateGallery(event.data.gallery_id);
+          action = this.updateGallery(event.data.gallery_id);
           break;
         case event.ActionType.Delete:
-          action = this._galleryService.deleteGallery(event.data.gallery_id);
+          action = this.galleryService.deleteGallery(event.data.gallery_id);
           break;
       }
       action ? action.subscribe() : null;
@@ -178,19 +178,19 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   onNodeSelected(event: { node: GalleryCategoryInfo }) {
-    this._categorySelected$.next(event?.node);
+    this.categorySelected$.next(event?.node);
   }
 
   onPageChanged(event: { pageIndex: number }) {
     this.galleryPageInfo.page = event.pageIndex + 1;
-    this._getGallery().subscribe();
+    this.getGallery().subscribe();
   }
 
   testCropper() {
-    this._cropperService.openEditor(this._url).subscribe((dataUrl: string) => {
+    this.cropperService.openEditor(this.url).subscribe((dataUrl: string) => {
       // if (!dataUrl) { return; }
-      // const blob = this._dataURItoBlob(dataUrl);
-      // const newFile = this._mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
+      // const blob = this.dataURItoBlob(dataUrl);
+      // const newFile = this.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
       // console.warn('file = ', file);
       // console.warn('newFile = ', newFile);
       // this.files.splice(this.files.indexOf(file), 1, newFile);

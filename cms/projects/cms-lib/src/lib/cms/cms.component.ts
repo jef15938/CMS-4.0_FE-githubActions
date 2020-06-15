@@ -11,11 +11,11 @@ export class CmsComponent implements OnInit {
   menus = [];
 
   constructor(
-    private _route: ActivatedRoute
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.menus = this._route.snapshot.data['menus'];
+    this.menus = this.route.snapshot.data['menus'];
   }
 
 }

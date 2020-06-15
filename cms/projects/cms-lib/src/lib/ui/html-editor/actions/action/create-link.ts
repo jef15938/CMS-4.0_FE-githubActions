@@ -11,11 +11,11 @@ export class CreateLink extends DomCmdAction {
 
     if (!range) { return of(undefined); }
 
-    const existingATag = this._getExistingATag(range);
+    const existingATag = this.getExistingATag(range);
     // console.warn('existingATag = ', existingATag);
     const isCreate = !existingATag;
     // console.warn('isCreate = ', isCreate);
-    const canModifyText = this._canModifyText(range);
+    const canModifyText = this.canModifyText(range);
     // console.warn('canModifyText = ', canModifyText);
     const aTagToModify = isCreate ? document.createElement('a') : existingATag;
 
@@ -64,7 +64,7 @@ export class CreateLink extends DomCmdAction {
     );
   }
 
-  private _canModifyText(range: Range): boolean {
+  private canModifyText(range: Range): boolean {
     const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
     const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLocaleLowerCase();
 
@@ -73,7 +73,7 @@ export class CreateLink extends DomCmdAction {
     return true;
   }
 
-  private _getExistingATag(range: Range): HTMLAnchorElement {
+  private getExistingATag(range: Range): HTMLAnchorElement {
     const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
     const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLocaleLowerCase();
 

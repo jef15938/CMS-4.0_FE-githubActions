@@ -26,7 +26,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
 
-  private _instanceEventSubscription: Subscription;
+  private instanceEventSubscription: Subscription;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -35,7 +35,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     elementRef: ElementRef,
   ) {
     super(changeDetectorRef, elementRef);
-    this._changeDetectorRef.detach();
+    this.changeDetectorRef.detach();
   }
 
   ngOnInit(): void {
@@ -54,29 +54,29 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   ngAfterViewInit() {
-    this._changeDetectorRef.reattach();
+    this.changeDetectorRef.reattach();
     this.loadComponent();
     this.checkEventBinding();
     this.setMode();
   }
 
   loadComponent() {
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
     this.host.clear();
-    const componentRef = this._createComponentRef();
-    this._setInstanceProperties(componentRef?.instance);
+    const componentRef = this.createComponentRef();
+    this.setInstanceProperties(componentRef?.instance);
     this.componentRef = componentRef;
-    this._changeDetectorRef.detectChanges(); // 讓內含的畫面長出，ViewChild/ViewChildren才會更新
+    this.changeDetectorRef.detectChanges(); // 讓內含的畫面長出，ViewChild/ViewChildren才會更新
   }
 
-  private _createComponentRef(): ComponentRef<LayoutBase<TemplateInfo>> {
+  private createComponentRef(): ComponentRef<LayoutBase<TemplateInfo>> {
     const componentClass = this.componentFactory.getComponent(this.templateInfo.templateId);
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
     const componentRef = this.host.createComponent(componentFactory) as ComponentRef<LayoutBase<TemplateInfo>>;
     return componentRef;
   }
 
-  private _setInstanceProperties(instance: LayoutBase<TemplateInfo>): void {
+  private setInstanceProperties(instance: LayoutBase<TemplateInfo>): void {
     if (instance) {
       instance.templateInfo = this.templateInfo;
       instance.mode = this.mode;
@@ -85,12 +85,12 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   checkEventBinding() {
-    if (this._instanceEventSubscription) { this._instanceEventSubscription.unsubscribe(); }
-    this._instanceEventSubscription =
-      this._registerInstanceEvents(this.componentRef?.instance).pipe(takeUntil(this.destroy$)).subscribe();
+    if (this.instanceEventSubscription) { this.instanceEventSubscription.unsubscribe(); }
+    this.instanceEventSubscription =
+      this.registerInstanceEvents(this.componentRef?.instance).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
-  private _registerInstanceEvents(instance: LayoutBase<TemplateInfo>) {
+  private registerInstanceEvents(instance: LayoutBase<TemplateInfo>) {
     const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
     const templateFieldDirectives = (instance?.templateFieldDirectives || []);
     return merge(

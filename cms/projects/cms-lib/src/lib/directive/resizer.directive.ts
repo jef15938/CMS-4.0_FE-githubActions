@@ -9,32 +9,32 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
 
   @Input() heightBase: HTMLElement;
 
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
-  private _mouseDown: Observable<Event>;
-  private _mouseMove: Observable<Event>;
-  private _mouseUp: Observable<Event>;
+  private mouseDown: Observable<Event>;
+  private mouseMove: Observable<Event>;
+  private mouseUp: Observable<Event>;
 
-  private _params: { curCol, nxtCol, pageX, curColWidth, nxtColWidth };
+  private params: { curCol, nxtCol, pageX, curColWidth, nxtColWidth };
 
   constructor(
-    private _viewContainerRef: ViewContainerRef,
+    private viewContainerRef: ViewContainerRef,
   ) {
 
   }
 
   ngAfterViewInit(): void {
-    const element = this._viewContainerRef.element.nativeElement as HTMLElement;
-    const resizer = this._createDiv(this.heightBase ? this.heightBase.offsetHeight : element.offsetHeight);
+    const element = this.viewContainerRef.element.nativeElement as HTMLElement;
+    const resizer = this.createDiv(this.heightBase ? this.heightBase.offsetHeight : element.offsetHeight);
 
     element.appendChild(resizer);
     element.style.position = 'relative';
 
-    this._mouseDown = fromEvent(resizer, 'mousedown').pipe(takeUntil(this._destroy$));
-    this._mouseMove = fromEvent(document, 'mousemove').pipe(takeUntil(this._destroy$));
-    this._mouseUp = fromEvent(document, 'mouseup').pipe(takeUntil(this._destroy$));
+    this.mouseDown = fromEvent(resizer, 'mousedown').pipe(takeUntil(this.destroy$));
+    this.mouseMove = fromEvent(document, 'mousemove').pipe(takeUntil(this.destroy$));
+    this.mouseUp = fromEvent(document, 'mouseup').pipe(takeUntil(this.destroy$));
 
-    this._mouseDown.subscribe(e => {
+    this.mouseDown.subscribe(e => {
       const curCol = e.target['parentElement'];
       const nxtCol = curCol.nextElementSibling;
       const pageX = e['pageX'];
@@ -43,12 +43,12 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
       const params = {
         curCol, nxtCol, pageX, curColWidth, nxtColWidth
       };
-      this._params = params;
+      this.params = params;
     });
 
-    this._mouseMove.subscribe(e => {
-      if (this._params) {
-        const params = this._params;
+    this.mouseMove.subscribe(e => {
+      if (this.params) {
+        const params = this.params;
         const diffX = e['pageX'] - params.pageX;
         if (params.nxtCol && params.nxtColWidth) {
           params.nxtCol.style.width = (params.nxtColWidth - (diffX)) + 'px';
@@ -57,18 +57,18 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
       }
     });
 
-    this._mouseUp.subscribe(e => {
-      this._params = null;
+    this.mouseUp.subscribe(e => {
+      this.params = null;
     });
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
-  private _createDiv(height: number) {
+  private createDiv(height: number) {
     const div = document.createElement('div');
     div.className = 'cms-resizer';
     div.style.position = 'absolute';

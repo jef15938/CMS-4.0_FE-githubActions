@@ -42,36 +42,36 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   saved = true;
   isScaleContent = false;
 
-  private _destroy$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
 
   }
 
   ngAfterViewInit(): void {
-    this._registerClickCaptureListener('register');
+    this.registerClickCaptureListener('register');
   }
 
   ngOnInit(): void {
-    this._init(this.contentInfo);
+    this.init(this.contentInfo);
   }
 
   ngAfterContentChecked(): void {
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
-  private _init(contentInfo: ContentInfo) {
+  private init(contentInfo: ContentInfo) {
     this.resetSelected();
     this.manager = new ContentEditorManager(contentInfo);
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._destroy$.unsubscribe();
-    this._registerClickCaptureListener('unregister');
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
+    this.registerClickCaptureListener('unregister');
   }
 
   setEditorUnsaved() {
@@ -126,7 +126,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
    * 
    * @memberof ContentEditorComponent
    */
-  private _registerClickCaptureListener(action: 'register' | 'unregister') {
+  private registerClickCaptureListener(action: 'register' | 'unregister') {
     this.clickCapturelistenerBlocks?.forEach(block => {
       const element = block?.nativeElement as HTMLDivElement;
       switch (action) {

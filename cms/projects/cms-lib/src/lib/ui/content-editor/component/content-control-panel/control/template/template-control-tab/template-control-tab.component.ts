@@ -30,11 +30,11 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     const beforeIndex = ev.previousIndex;
     const afterIndex = ev.currentIndex;
     if (beforeIndex === afterIndex) { return; }
-    this._arrayMove(this.templateInfo.tabList, beforeIndex, afterIndex);
+    this.arrayMove(this.templateInfo.tabList, beforeIndex, afterIndex);
     this.change.emit();
   }
 
-  private _arrayMove(arr: any[], beforeIndex: number, afterIndex: number) {
+  private arrayMove(arr: any[], beforeIndex: number, afterIndex: number) {
     if (afterIndex >= arr.length) {
       var k = afterIndex - arr.length + 1;
       while (k--) {

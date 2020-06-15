@@ -12,7 +12,7 @@ import { Highlight } from './action/highlight';
 import { Unhighlight } from './action/unhighlight';
 
 export class HtmlEditorActions {
-  private _context: IHtmlEditorContext;
+  private context: IHtmlEditorContext;
 
   bold: Bold;
   italic: Italic;
@@ -35,7 +35,7 @@ export class HtmlEditorActions {
   constructor(
     context: IHtmlEditorContext,
   ) {
-    this._context = context;
+    this.context = context;
 
     this.bold = new Bold(context);
     this.italic = new Italic(context);

@@ -74,10 +74,10 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   ];
 
   constructor(
-    private _http: HttpClient,
-    private _cropperService: CropperService,
-    private _galleryService: GalleryService,
-    private _changeDetectorRef: ChangeDetectorRef,
+    private http: HttpClient,
+    private cropperService: CropperService,
+    private galleryService: GalleryService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) { super(); }
 
   ngOnInit() {
@@ -91,10 +91,10 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   ngAfterViewInit(): void {
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
-  private _mapFileToFileUploadModel(file: File): FileUploadModel {
+  private mapFileToFileUploadModel(file: File): FileUploadModel {
     return {
       fileName: file.name,
       fileSize: file.size,
@@ -112,7 +112,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = fileUpload.onchange || (() => {
       this.files = this.files.concat(
-        Array.from(fileUpload.files).map(file => this._mapFileToFileUploadModel(file))
+        Array.from(fileUpload.files).map(file => this.mapFileToFileUploadModel(file))
       );
       console.warn('this.files = ', this.files);
     });
@@ -139,10 +139,10 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       reader.onload = () => {
         // 將圖片 src 替換為 DataURL
         const url = reader.result as string;
-        this._cropperService.openEditor(url).subscribe((dataUrl: string) => {
+        this.cropperService.openEditor(url).subscribe((dataUrl: string) => {
           if (!dataUrl) { return; }
-          const blob = this._dataURItoBlob(dataUrl);
-          const newFile = this._mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
+          const blob = this.dataURItoBlob(dataUrl);
+          const newFile = this.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
           console.warn('file = ', file);
           console.warn('newFile = ', newFile);
           this.files.splice(this.files.indexOf(file), 1, newFile);
@@ -167,7 +167,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     });
 
     file.inProgress = true;
-    file.sub = this._http.request(req).pipe(
+    file.sub = this.http.request(req).pipe(
       map(event => {
         switch (event.type) {
           case HttpEventType.UploadProgress:
@@ -210,7 +210,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     }
   }
 
-  private _dataURItoBlob(dataURI: string): Blob {
+  private dataURItoBlob(dataURI: string): Blob {
     // convert base64/URLEncoded data component to raw binary data held in a string
     let byteString: string;
     if (dataURI.split(',')[0].indexOf('base64') >= 0) {
@@ -239,9 +239,9 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     const file = this.files[0];
 
     if (this.categoryId && this.category_name) { // 新增
-      this._galleryService.createGallery(file.data, this.categoryId).subscribe();
+      this.galleryService.createGallery(file.data, this.categoryId).subscribe();
     } else if (this.galleryId) { // 修改
-      this._galleryService.updateGallery(file.data, this.galleryId).subscribe();
+      this.galleryService.updateGallery(file.data, this.galleryId).subscribe();
     }
 
   }

@@ -66,7 +66,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     this.templateAdd.emit(mock.templateId);
   }
 
-  private _getTab() {
+  private getTab() {
     return {
       id: '1',
       templateId: 'Tab',
@@ -76,7 +76,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     };
   }
 
-  private _getIconPage() {
+  private getIconPage() {
     return {
       id: '2',
       templateId: 'IconPage',
@@ -85,7 +85,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     };
   }
 
-  private _getSlide() {
+  private getSlide() {
     return {
       id: '3',
       templateId: 'Slide',

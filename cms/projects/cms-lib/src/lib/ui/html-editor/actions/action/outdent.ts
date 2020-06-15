@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 
 export class Outdent extends HtmlEditorAction {
 
-  private readonly _padding = 40;
+  private readonly padding = 40;
 
   do() {
     const selected = this.context.commonAncestorContainer as HTMLElement;
@@ -12,7 +12,7 @@ export class Outdent extends HtmlEditorAction {
       let padding = 0;
       const paddingLeft = rowRoot.style.getPropertyValue('padding-left');
       if (paddingLeft) {
-        padding = +paddingLeft.replace('px', '') - this._padding;
+        padding = +paddingLeft.replace('px', '') - this.padding;
         if (padding < 0) { padding = 0; }
       }
       padding ? rowRoot.style.setProperty('padding-left', `${padding}px`) : rowRoot.style.removeProperty('padding-left');

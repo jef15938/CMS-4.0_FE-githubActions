@@ -25,7 +25,7 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
   isValidSrc = true;
 
   constructor(
-    private _modalService: ModalService,
+    private modalService: ModalService,
   ) { super(); }
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
 
   confirm() {
     const src = this.checkSrc();
-    if (!src) { this._modalService.openMessage({ message: 'Youtube 網址錯誤' }); return; }
+    if (!src) { this.modalService.openMessage({ message: 'Youtube 網址錯誤' }); return; }
     this.close({
       src: src,
       frame_id: this.frame_id || '',

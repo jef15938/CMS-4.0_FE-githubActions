@@ -27,15 +27,15 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.rows = this._createRows(this.farmFormInfo);
-    this.formGroup = this._createFormGroup(this.farmFormInfo);
+    this.rows = this.createRows(this.farmFormInfo);
+    this.formGroup = this.createFormGroup(this.farmFormInfo);
 
     this.columnTrigger.pipe(
       debounceTime(300)
-    ).subscribe(col => this._checkColumnTrigger(col));
+    ).subscribe(col => this.checkColumnTrigger(col));
   }
 
-  private _createRows(farmFormInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
+  private createRows(farmFormInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
     const split_size = farmFormInfo.split_size;
 
     let rowCounts = farmFormInfo.columns.length / split_size;
@@ -53,13 +53,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     return rows;
   }
 
-  private _createFormGroup(farmFormInfo: CmsFarmFormInfo): FormGroup {
+  private createFormGroup(farmFormInfo: CmsFarmFormInfo): FormGroup {
     const formGroup = new FormGroup({});
     farmFormInfo.columns.forEach((column, index) => {
       const formControl = new FormControl(
         column.display_type !== CmsFarmFormColumnDisplayType.DATE
           ? column.value
-          : this._convertStringToDate(column.value)
+          : this.convertStringToDate(column.value)
       );
       if (this.useValidation && farmFormInfo.validation) {
         const validatorFns: ValidatorFn[] = [];
@@ -140,11 +140,11 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   onDateChange(column_id: string) {
     if (this.useValidation) {
-      this._checkRange(column_id);
+      this.checkRange(column_id);
     }
   }
 
-  private _checkRange(column_id: string) {
+  private checkRange(column_id: string) {
     const ranges = this.farmFormInfo?.validation?.range?.filter(r => column_id === r.start_column || column_id === r.end_column);
     ranges.forEach(r => {
       const start = r.start_column;
@@ -181,7 +181,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       const value = formGroup.controls[col.column_id]?.value;
       col.value = col.display_type !== CmsFarmFormColumnDisplayType.DATE
         ? value
-        : this._convertDateToString(value);
+        : this.convertDateToString(value);
     });
 
     if (!this.useValidation) { return of(info); }
@@ -191,17 +191,17 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     return of(info);
   }
 
-  private _convertDateToString(date: Date) {
+  private convertDateToString(date: Date) {
     if (!date) return '';
     return `${date.getTime() / 1000}`;
   }
 
-  private _convertStringToDate(str: string) {
+  private convertStringToDate(str: string) {
     if (!str) { return null }
     return new Date(+str * 1000);//1588635072000
   }
 
-  private _checkColumnTrigger(column: CmsFarmFormColumn) {
+  private checkColumnTrigger(column: CmsFarmFormColumn) {
     const triggers = column?.triggers;
     if (triggers) {
       // TODO: 

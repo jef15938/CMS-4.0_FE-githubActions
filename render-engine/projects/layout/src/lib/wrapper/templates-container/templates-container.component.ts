@@ -24,7 +24,7 @@ export class TemplatesContainerComponent extends LayoutWrapperBase implements On
   }
 
   ngAfterViewInit(): void {
-    this._changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   ngAfterViewChecked(): void {

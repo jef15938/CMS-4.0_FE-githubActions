@@ -3,13 +3,13 @@ import { of } from 'rxjs';
 
 export class Indent extends HtmlEditorAction {
 
-  private readonly _padding = 40;
+  private readonly padding = 40;
 
   do() {
     const selected = this.context.commonAncestorContainer as HTMLElement;
     const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer, selected);
     if (rowRoot) {
-      let padding = this._padding;
+      let padding = this.padding;
       const paddingLeft = rowRoot.style.getPropertyValue('padding-left');
       if (paddingLeft) {
         padding += +paddingLeft.replace('px', '');

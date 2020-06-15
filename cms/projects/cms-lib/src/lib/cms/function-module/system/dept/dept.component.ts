@@ -20,22 +20,22 @@ export class DeptComponent implements OnInit {
   depts: DepartmentInfo[] = [];
 
   constructor(
-    private _departmentService: DepartmentService,
-    private _modalService: ModalService,
+    private departmentService: DepartmentService,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
-    this._initPage().subscribe();
+    this.initPage().subscribe();
   }
 
-  private _initPage(): Observable<any> {
+  private initPage(): Observable<any> {
     return concat(
-      this._getDepts(),
+      this.getDepts(),
     )
   }
 
-  private _getDepts() {
-    return this._departmentService.getAllDepartment().pipe(
+  private getDepts() {
+    return this.departmentService.getAllDepartment().pipe(
       tap(depts => this.depts = depts),
     )
   }
@@ -58,7 +58,7 @@ export class DeptComponent implements OnInit {
       }
       this.openModal(action, event.data).subscribe(res => {
         if (res) {
-          this._initPage().subscribe();
+          this.initPage().subscribe();
         }
       });
     }
@@ -66,7 +66,7 @@ export class DeptComponent implements OnInit {
 
   openModal(action: 'Create' | 'Update', selectedDept: DepartmentInfo) {
     const parent = this.findParentDept(selectedDept);
-    return this._modalService.openComponent({
+    return this.modalService.openComponent({
       component: DeptMaintainModalComponent,
       componentInitData: {
         action,

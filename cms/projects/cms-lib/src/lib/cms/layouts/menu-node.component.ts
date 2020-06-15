@@ -13,15 +13,15 @@ export class MenuNodeComponent implements OnInit {
   @Input() category = '';
 
   constructor(
-    private _router: Router,
-    private _route: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void { }
 
   navigate() {
     const routes = this.menu.func_id.split('/');
-    this._router.navigate([this.category, ...routes]);
+    this.router.navigate([this.category, ...routes]);
   }
 
 }
