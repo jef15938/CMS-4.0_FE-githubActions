@@ -45,9 +45,13 @@
   }
 
   ::ng-deep .neux-table  {
+
+    &.selected {
+      outline: 3px solid #b4d7ff;
+    }
+
     border-collapse:collapse;
     border-spacing:0;
-    width: 100%;
     margin: 10px;
 
     td {

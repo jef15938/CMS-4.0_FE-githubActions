@@ -25,7 +25,7 @@ export interface IHtmlEditorContextMenuItem {
 export interface IHtmlEditorContextMenuItem {
   type?: 'select';
   defaultValue?: any;
-  selectionOptions?: { text: string, value: any }[];
+  selectionOptions?: { text: string, value: any, disabled?: boolean }[];
   selectionChange?: (ev: { source: MatSelect, value: any }) => void;
 }
 

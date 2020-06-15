@@ -39,6 +39,20 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         const verticle = splitItem.children[1];
         verticle.disabled = col.colSpan <= 1;
       }
+
+      const styleItem = menuItems[4];
+      const style = this.getTableStyle();
+      styleItem.defaultValue = style;
+      const styleItemSingleOption = menuItems[4].selectionOptions[2];
+      styleItemSingleOption.disabled = false;
+      if (style !== TableStyle.SINGLE) {
+        const tds = Array.from(this.el.querySelectorAll('tbody > tr > td')) as HTMLTableDataCellElement[];
+        const hasMergedCol = tds.some(td => td.colSpan > 1 || td.rowSpan > 1);
+        if (hasMergedCol) {
+          styleItemSingleOption.disabled = true;
+        }
+      }
+
     }, 100)
 
     return menuItems;
@@ -96,7 +110,9 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
           { text: '單筆顯示', value: TableStyle.SINGLE },
         ],
         selectionChange: (ev) => {
-          console.warn(this, ev);
+          this.el.setAttribute(TABLE_STYLE_ATTR, ev.value);
+          this.tableControllerService.checkTableColsWidth(this.el);
+          this.registerColResizer();
         }
       },
       {
@@ -117,7 +133,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.unsubscribeCellSelection();
   }
 
-  private getTableStyle() {
+  private getTableStyle(): TableStyle {
     const style = this.el.getAttribute(TABLE_STYLE_ATTR);
     switch (style) {
       case TableStyle.PERCENT:
@@ -135,7 +151,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       if (!this.context.isSelectionInsideEditorContainer) { return; }
 
       const range = this.context.simpleWysiwygService.getRange();
-
+      console.warn('range = ', range);
       if (this.el.contains(range?.commonAncestorContainer)) {
         this.onSelected();
       } else {
@@ -224,8 +240,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         start.stopPropagation();
         start.preventDefault();
 
-
-
         return mouseover$.pipe(
           tap(over => {
             // console.warn('over = ', over);
@@ -253,7 +267,8 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   }
 
   private onSelected(): void {
-    this.el.style.setProperty('outline', '3px solid #b4d7ff');
+    console.warn('onSelected()');
+    this.el.classList.add('selected');
     if (!this.selectedCols.length) {
       const range = this.context.simpleWysiwygService.getRange();
       const td = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, range.commonAncestorContainer as HTMLElement, 'td') as HTMLTableDataCellElement;
@@ -268,7 +283,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   }
 
   private onUnselected(): void {
-    this.el.style.removeProperty('outline');
+    this.el.classList.remove('selected');
     this.unsubscribeCellSelection();
     this.checkTableState();
     this.unregisterColResizer();
@@ -314,7 +329,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       div.style.setProperty('cursor', 'ew-resize');
       div.style.setProperty('position', 'absolute');
       div.style.setProperty('top', '0');
-      div.style.setProperty('left', `${baseTd.offsetLeft + this.tableControllerService.getColWidthFromStyle(baseTd) - 20}px`);
+      div.style.setProperty('left', `${baseTd.offsetLeft + baseTd.offsetWidth - 20}px`);
       div.style.setProperty('width', '10px');
       div.style.setProperty('height', `${this.el.clientHeight}px`);
       // div.style.setProperty('background', 'pink');
@@ -329,8 +344,15 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
             this.evPreventDefaultAndStopPropagation(start);
             div.style.borderLeft = 'dashed lightgray 1px';
             const resizerOffsetLeft = div.offsetLeft;
-            const baseTdWidth = this.tableControllerService.getColWidthFromStyle(baseTd);
-            const nextTdWidth = this.tableControllerService.getColWidthFromStyle(nextTd);
+
+            const tableWidth = this.tableControllerService.getWidthFromStyle(this.el);
+            // console.warn('tableWidth = ', tableWidth);
+            const baseTdWidth = this.tableControllerService.getWidthFromStyle(baseTd);
+            const nextTdWidth = this.tableControllerService.getWidthFromStyle(nextTd);
+
+            const styleAttr = this.el.getAttribute(TABLE_STYLE_ATTR);
+            // console.warn('styleAttr = ', styleAttr);
+            // console.warn('styleAttr === TableStyle.SCROLL = ', styleAttr === TableStyle.SCROLL);
 
             let previousMove: MouseEvent;
             return move$.pipe(
@@ -344,18 +366,30 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
                 const bWidth = baseTdWidth + diffX;
                 const nWidth = nextTdWidth - diffX;
-                if (bWidth <= 100 || nWidth <= 100) { return; }
+
+                if (styleAttr !== TableStyle.SCROLL) {
+                  if (bWidth <= 100 || nWidth <= 100) { return; }
+                }
 
                 div.style.setProperty('left', `${resizerOffsetLeft + diffX}px`);
+
                 baseTd.style.setProperty('width', `${bWidth}px`);
-                nextTd.style.setProperty('width', `${nWidth}px`);
-                this.tableControllerService.checkTableColsWidth(this.el);
+
+                if (styleAttr === TableStyle.SCROLL) {
+                  const tWidth = tableWidth + diffX;
+                  this.el.removeAttribute('style');
+                  this.el.setAttribute('style', `min-width: ${tWidth}px; width: ${tWidth}px;`);
+                } else {
+                  nextTd.style.setProperty('width', `${nWidth}px`);
+                  this.tableControllerService.checkTableColsWidth(this.el);
+                }
               }),
               takeUntil(end$.pipe(
                 tap((end: MouseEvent) => {
                   this.evPreventDefaultAndStopPropagation(end);
                   div.style.removeProperty('border-left');
-                  this.tableControllerService.checkTableColsWidth(this.el);
+                  this.tableControllerService.checkTBodyTdsWidth(this.el);
+                  this.registerColResizer();
                 })
               ))
             );

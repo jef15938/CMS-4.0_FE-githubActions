@@ -13,8 +13,10 @@
     <ng-container *ngIf="item.type==='select'">
       <mat-form-field appearance="outline">
         <mat-label>{{item.text}}</mat-label>
-        <mat-select (click)="evPreventDefaultAndStopPropagation($event)" (selectionChange)="item.selectionChange($event); MenuTrigger.closeMenu();" [value]="item.defaultValue">
-          <mat-option *ngFor="let option of item.selectionOptions" [value]="option.value">{{option.text}}</mat-option>
+        <mat-select (click)="evPreventDefaultAndStopPropagation($event)"
+          (selectionChange)="item.selectionChange($event); MenuTrigger.closeMenu();" [value]="item.defaultValue">
+          <mat-option *ngFor="let option of item.selectionOptions" [value]="option.value" [disabled]="option.disabled">
+            {{option.text}}</mat-option>
         </mat-select>
       </mat-form-field>
     </ng-container>

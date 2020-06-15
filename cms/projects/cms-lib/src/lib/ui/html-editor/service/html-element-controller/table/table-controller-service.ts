@@ -2,6 +2,7 @@ import { ITableCell } from './table-controller.interface';
 
 export interface ITableSetting {
   cols: number;
+  style: TableStyle;
 }
 
 export const TABLE_STYLE_ATTR = 'ga-table-style';
@@ -61,11 +62,23 @@ export class TableControllerService {
 
   getTableSetting(table: HTMLTableElement): ITableSetting {
     const cols = table.querySelectorAll('thead > tr > td').length;
-    const tableSetting = { cols };
+
+    const styleAttr = table.getAttribute(TABLE_STYLE_ATTR);
+    let style = TableStyle.PERCENT;
+    switch (styleAttr) {
+      case TableStyle.SCROLL:
+        style = TableStyle.SCROLL;
+        break;
+      case TableStyle.SINGLE:
+        style = TableStyle.SINGLE;
+        break;
+    }
+
+    const tableSetting = { cols, style };
     return tableSetting;
   }
 
-  getColWidthFromStyle(col: HTMLTableDataCellElement) {
+  getWidthFromStyle(col: HTMLElement) {
     return +(col.style.getPropertyValue('width').replace('px', ''));
   }
 
@@ -74,16 +87,24 @@ export class TableControllerService {
     this.checkTBodyTdsWidth(table);
   }
 
-  private checkTHeadTdsWidth(table: HTMLTableElement) {
+  checkTHeadTdsWidth(table: HTMLTableElement) {
     const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as ITableCell[];
-    if (!this.getColWidthFromStyle(baseTds[0])) {
+    if (!this.getWidthFromStyle(baseTds[0])) {
       baseTds.forEach(baseTd => {
         baseTd.style.setProperty('width', `${table.clientWidth / baseTds.length}px`);
       });
     }
+    const styleAttr = table.getAttribute(TABLE_STYLE_ATTR);
+    table.removeAttribute('style');
+
+    if (styleAttr !== TableStyle.SCROLL) {
+      table.setAttribute('style', 'width:99% !important;');
+    } else {
+      table.setAttribute('style', `min-width: ${table.clientWidth}px; width: ${table.clientWidth}px;`);
+    }
   }
 
-  private checkTBodyTdsWidth(table: HTMLTableElement) {
+  checkTBodyTdsWidth(table: HTMLTableElement) {
     const tds = Array.from(table.querySelectorAll('tbody > tr > td')) as ITableCell[];
     tds.forEach(td => {
       const startEnd = this.getCellStartEnd(td);
@@ -97,7 +118,7 @@ export class TableControllerService {
         const baseStartEnd = this.getCellStartEnd(baseTd);
         return baseStartEnd.colStart === colStart || baseStartEnd.colEnd === colEnd;
       });
-    const width = baseTds.map(baseTd => this.getColWidthFromStyle(baseTd))
+    const width = baseTds.map(baseTd => this.getWidthFromStyle(baseTd))
       .reduce((a, b) => a + b, 0);
     return width;
   }
