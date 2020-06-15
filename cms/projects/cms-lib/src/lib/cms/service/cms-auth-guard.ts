@@ -1,5 +1,5 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthorizationService } from '../../service/authorization.service';
 import { catchError, map, concatMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -19,7 +19,11 @@ export class CmsAuthGuard implements CanActivate {
     return this._authService.getLoginInfo().pipe(
       catchError(err => {
         return this._authService.login('admin', 'admin1234', 1).pipe(
-          concatMap(_ => this._authService.getLoginInfo())
+          concatMap(_ => this._authService.getLoginInfo()),
+          catchError(err => {
+            console.error('login err = ');
+            return of(true);
+          }),
         );
       }),
       map(_ => true)

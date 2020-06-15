@@ -111,12 +111,10 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeInfo> {
-    return this.getUserSiteMapNodes(siteID).pipe(
-      map(nodes => {
-        return this._findNodeByNodeID(nodes, nodeID);
-      })
+    return this.restAPIService.dispatchRestApi('GetSiteBySiteIDAndNodeID', { siteID, nodeID }).pipe(
+      // TOFIX: 目前 api: GetSiteNode 的 response 結構多一層
+      map(x => x.siteMapNodeInfo)
     );
-    // return this.restAPIService.dispatchRestApi('GetSiteBySiteIDAndNodeID', { siteID, nodeID });
   }
 
   private _findNodeByNodeID(sources: SiteMapInfo[], nodeID: string): SiteMapNodeInfo {

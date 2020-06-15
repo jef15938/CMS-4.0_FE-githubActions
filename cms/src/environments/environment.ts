@@ -61,7 +61,7 @@ export const environment = {
     PostAuditingByOrderID: 'Restful',
     GetLoginInfo: 'Restful',
     GetCMSMenu: 'Restful',
-    GetUserSiteMapBySiteID: 'Mock',
+    GetUserSiteMapBySiteID: 'Restful',
     PostUserSiteMapBySiteID: 'Restful',
     PutUserSiteMapByNodeID: 'Restful',
     DeleteUserSiteMapByNodeID: 'Restful',
