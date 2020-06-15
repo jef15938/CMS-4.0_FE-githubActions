@@ -4,34 +4,31 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * GetFarmDetailInfo
+ * DeleteGallery
  */
-export class GetFarmDetailInfoByFarmIDAPI implements API, MockAPI, RestfulAPI {
+export class DeleteGalleryByGalleryIDAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
-    public dataID: string;
-
+    
 
     constructor() { }
 
     public getAPIName(): string {
-        return 'GetFarmDetailInfoByFarmID';
+        return 'DeleteGalleryByGalleryID';
     }
 
     public getRequestData(): APIRequest {
         let queryParams = new HttpParams();
         let requestData = new APIRequest();
-        queryParams = queryParams.set('dataID', 
-                      StringUtils.coerceStringProperty(this.dataID));
-
-        requestData.type = 'GET';
+        
+        requestData.type = 'DELETE';
         requestData.params = queryParams;
         requestData.url = this.url;
         return requestData;
     }
 
     public getMockPath(): string {
-        return './assets/mock/GetFarmDetailInfoByFarmIDAPI.json';
+        return './assets/mock/DeleteGalleryByGalleryIDAPI.json';
     }
 
 }

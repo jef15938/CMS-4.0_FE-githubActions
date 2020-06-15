@@ -7,6 +7,7 @@ export class GenerationHeader {
 
 @IsNotEmpty()
 public success: boolean;
+public identity: string;
 
 
 }

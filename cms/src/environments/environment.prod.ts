@@ -1,4 +1,4 @@
-const BASE_URL = 'http://cms.decoder.com.tw';
+const BASE_URL = 'https://cms.decoder.com.tw';
 
 export const environment = {
   production: true,
@@ -33,13 +33,14 @@ export const environment = {
     GetFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
     PostFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
     PutFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
-    GetFarmDetailInfoByFarmID: `${BASE_URL}\/FarmDetailInfo/{farmID}`,
+    GetFarmDetailInfoByFuncID: `${BASE_URL}\/FarmDetailInfo/{funcID}`,
     GetSite: `${BASE_URL}\/Site`,
     GetSiteBySiteID: `${BASE_URL}\/Site/{siteID}`,
     GetSiteBySiteIDAndNodeID: `${BASE_URL}\/Site/{siteID}/{nodeID}`,
     GetGroupMenuByGroupID: `${BASE_URL}\/Group/Menu/{groupID}`,
     GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
     GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
+    DeleteGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -72,12 +73,13 @@ export const environment = {
     GetFarmFormInfoByFuncID: 'Restful',
     PostFarmFormInfoByFuncID: 'Restful',
     PutFarmFormInfoByFuncID: 'Restful',
-    GetFarmDetailInfoByFarmID: 'Restful',
+    GetFarmDetailInfoByFuncID: 'Restful',
     GetSite: 'Restful',
     GetSiteBySiteID: 'Restful',
     GetSiteBySiteIDAndNodeID: 'Restful',
     GetGroupMenuByGroupID: 'Restful',
     GetGroupSiteMapByGroupID: 'Restful',
     GetTemplateByControlID: 'Restful',
+    DeleteGalleryByGalleryID: 'Restful',
   }
 };

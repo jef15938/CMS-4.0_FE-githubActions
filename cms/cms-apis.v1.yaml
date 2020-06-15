@@ -676,6 +676,12 @@ paths:
           description: Internal Server Error
       operationId: get-Content
       description: 取得該頁面的Content JSON
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: version
+          description: 版本，不給則取最新的
     put:
       summary: UpdateContent
       operationId: put-Content
@@ -868,7 +874,6 @@ paths:
             type: string
           in: query
           name: dataID
-          required: true
           description: 帶入TableDataInfo.data_id
     parameters:
       - schema:
@@ -945,7 +950,7 @@ paths:
           name: content-type
           required: true
           description: multipart/form-data
-  '/FarmDetailInfo/{farmID}':
+  '/FarmDetailInfo/{funcID}':
     get:
       summary: GetFarmDetailInfo
       tags:
@@ -979,7 +984,7 @@ paths:
     parameters:
       - schema:
           type: string
-        name: farmID
+        name: funcID
         in: path
         required: true
         description: 功能代碼
@@ -1162,6 +1167,31 @@ paths:
         in: path
         required: true
         description: 依照這個參數區分這次編輯時可以使用哪些版型，在節點管理中則帶入layout_id，網站管理的話會多一個欄位來控制controlid
+  '/Gallery/{galleryID}':
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+    delete:
+      summary: DeleteGallery
+      operationId: delete-Gallery-galleryID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      tags:
+        - Gallery
 components:
   schemas:
     LoginRequest:
@@ -1192,6 +1222,11 @@ components:
         success:
           description: 成功或失敗
           type: boolean
+        identity:
+          type: string
+          description: >-
+            若為新增或修改，回傳資料pk，經過base64編碼組合，ex編碼前:node=1\u0026version=2，會回傳bm9kZT0xJnZlcnNpb249Mg==
+          example: bm9kZT0xJnZlcnNpb249Mg==
       required:
         - success
     LoginResponse:
@@ -1921,6 +1956,8 @@ components:
       title: FarmTriggerInfo
       type: object
       description: 控制表單連動物件
+      x-tags:
+        - Model
       properties:
         trigger_type:
           type: string
@@ -1950,11 +1987,12 @@ components:
 
             當Trigger_Type時會放：
             trigger_id = xxx
+          properties:
+            '':
+              type: string
       required:
         - trigger_type
         - trigger_target
-      x-tags:
-        - Model
     FarmValidationInfo:
       title: FarmValidationInfo
       type: object
@@ -2094,6 +2132,7 @@ components:
       type: object
       x-tags:
         - Model
+      description: ''
       properties:
         category:
           type: array
@@ -2118,7 +2157,6 @@ components:
           $ref: '#/components/schemas/FarmFormInfo'
       required:
         - category
-      description: ''
     ContentInfo:
       title: ContentInfo
       type: object

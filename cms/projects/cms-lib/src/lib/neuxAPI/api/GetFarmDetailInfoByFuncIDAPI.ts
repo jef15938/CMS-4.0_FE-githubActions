@@ -4,25 +4,25 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * GetContent
+ * GetFarmDetailInfo
  */
-export class GetContentByContentIDAPI implements API, MockAPI, RestfulAPI {
+export class GetFarmDetailInfoByFuncIDAPI implements API, MockAPI, RestfulAPI {
 
     public url:string;
-    public version: number;
+    public dataID: string;
 
 
     constructor() { }
 
     public getAPIName(): string {
-        return 'GetContentByContentID';
+        return 'GetFarmDetailInfoByFuncID';
     }
 
     public getRequestData(): APIRequest {
         let queryParams = new HttpParams();
         let requestData = new APIRequest();
-        queryParams = queryParams.set('version', 
-                      StringUtils.coerceStringProperty(this.version));
+        queryParams = queryParams.set('dataID', 
+                      StringUtils.coerceStringProperty(this.dataID));
 
         requestData.type = 'GET';
         requestData.params = queryParams;
@@ -31,7 +31,7 @@ export class GetContentByContentIDAPI implements API, MockAPI, RestfulAPI {
     }
 
     public getMockPath(): string {
-        return './assets/mock/GetContentByContentIDAPI.json';
+        return './assets/mock/GetFarmDetailInfoByFuncIDAPI.json';
     }
 
 }

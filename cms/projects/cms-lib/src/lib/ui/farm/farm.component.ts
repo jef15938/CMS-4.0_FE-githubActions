@@ -160,7 +160,7 @@ export class FarmComponent implements OnInit, OnDestroy {
   private openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
     const title = `預覽 : ${rowData.data_id}`;
     of(undefined).pipe(
-      concatMap(_ => this.farmService.getFarmDetailInfoByFarmID(category.category_id, rowData.data_id)),
+      concatMap(_ => this.farmService.getFarmDetailInfoByFuncID(category.category_id, rowData.data_id)),
       concatMap(farmFormInfo => {
         return this.modalService.openComponent({
           component: FarmFormViewDataModalComponent,

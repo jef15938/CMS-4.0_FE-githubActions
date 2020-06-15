@@ -34,13 +34,14 @@ import { GetFarmTableInfoByFuncIDAPI } from './api/GetFarmTableInfoByFuncIDAPI';
 import { GetFarmFormInfoByFuncIDAPI } from './api/GetFarmFormInfoByFuncIDAPI';
 import { PostFarmFormInfoByFuncIDAPI } from './api/PostFarmFormInfoByFuncIDAPI';
 import { PutFarmFormInfoByFuncIDAPI } from './api/PutFarmFormInfoByFuncIDAPI';
-import { GetFarmDetailInfoByFarmIDAPI } from './api/GetFarmDetailInfoByFarmIDAPI';
+import { GetFarmDetailInfoByFuncIDAPI } from './api/GetFarmDetailInfoByFuncIDAPI';
 import { GetSiteAPI } from './api/GetSiteAPI';
 import { GetSiteBySiteIDAPI } from './api/GetSiteBySiteIDAPI';
 import { GetSiteBySiteIDAndNodeIDAPI } from './api/GetSiteBySiteIDAndNodeIDAPI';
 import { GetGroupMenuByGroupIDAPI } from './api/GetGroupMenuByGroupIDAPI';
 import { GetGroupSiteMapByGroupIDAPI } from './api/GetGroupSiteMapByGroupIDAPI';
 import { GetTemplateByControlIDAPI } from './api/GetTemplateByControlIDAPI';
+import { DeleteGalleryByGalleryIDAPI } from './api/DeleteGalleryByGalleryIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GalleryCaregoryGetResponse } from './bean/GalleryCaregoryGetResponse';
@@ -95,13 +96,14 @@ GetFarmTableInfoByFuncID: FarmTableInfo,
 GetFarmFormInfoByFuncID: FarmFormInfo,
 PostFarmFormInfoByFuncID: GenerationHeader,
 PutFarmFormInfoByFuncID: GenerationHeader,
-GetFarmDetailInfoByFarmID: FarmFormInfo,
+GetFarmDetailInfoByFuncID: FarmFormInfo,
 GetSite: SiteGetResponse,
 GetSiteBySiteID: SiteMapGetResponse,
 GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
 GetGroupMenuByGroupID: GroupMenuGetResponse,
 GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
 GetTemplateByControlID: TemplateGetResponse,
+DeleteGalleryByGalleryID: GenerationHeader,
 
 }
 
@@ -148,13 +150,14 @@ this.ApiFactory.registerAPI(new GetFarmTableInfoByFuncIDAPI());
 this.ApiFactory.registerAPI(new GetFarmFormInfoByFuncIDAPI());
 this.ApiFactory.registerAPI(new PostFarmFormInfoByFuncIDAPI());
 this.ApiFactory.registerAPI(new PutFarmFormInfoByFuncIDAPI());
-this.ApiFactory.registerAPI(new GetFarmDetailInfoByFarmIDAPI());
+this.ApiFactory.registerAPI(new GetFarmDetailInfoByFuncIDAPI());
 this.ApiFactory.registerAPI(new GetSiteAPI());
 this.ApiFactory.registerAPI(new GetSiteBySiteIDAPI());
 this.ApiFactory.registerAPI(new GetSiteBySiteIDAndNodeIDAPI());
 this.ApiFactory.registerAPI(new GetGroupMenuByGroupIDAPI());
 this.ApiFactory.registerAPI(new GetGroupSiteMapByGroupIDAPI());
 this.ApiFactory.registerAPI(new GetTemplateByControlIDAPI());
+this.ApiFactory.registerAPI(new DeleteGalleryByGalleryIDAPI());
 
     }
 
