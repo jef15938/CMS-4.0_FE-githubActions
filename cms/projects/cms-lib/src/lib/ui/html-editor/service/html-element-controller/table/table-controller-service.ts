@@ -95,12 +95,15 @@ export class TableControllerService {
       });
     }
     const styleAttr = table.getAttribute(TABLE_STYLE_ATTR);
-    table.removeAttribute('style');
 
     if (styleAttr !== TableStyle.SCROLL) {
       table.setAttribute('style', 'width:99% !important;');
     } else {
-      table.setAttribute('style', `min-width: ${table.clientWidth}px; width: ${table.clientWidth}px;`);
+      const currentWidth = this.getWidthFromStyle(table);
+      const style = table.getAttribute('style');
+      if (!style || style === 'width:99% !important;') {
+        table.setAttribute('style', `min-width: ${table.clientWidth}px; width: ${table.clientWidth}px;`);
+      }
     }
   }
 

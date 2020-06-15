@@ -151,7 +151,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       if (!this.context.isSelectionInsideEditorContainer) { return; }
 
       const range = this.context.simpleWysiwygService.getRange();
-      console.warn('range = ', range);
       if (this.el.contains(range?.commonAncestorContainer)) {
         this.onSelected();
       } else {
@@ -267,7 +266,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   }
 
   private onSelected(): void {
-    console.warn('onSelected()');
     this.el.classList.add('selected');
     if (!this.selectedCols.length) {
       const range = this.context.simpleWysiwygService.getRange();
