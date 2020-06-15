@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { ModalService } from './../modal/modal.service';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { IHtmlEditorAction } from './actions/action.interface';
+import { MatSelect } from '@angular/material/select';
 
 export interface IHtmlEditorContext {
   simpleWysiwygService: SimpleWysiwygService;
@@ -19,6 +20,13 @@ export interface IHtmlEditorContextMenuItem {
   action?: IHtmlEditorAction,
   children?: IHtmlEditorContextMenuItem[]
   disabled?: boolean;
+}
+
+export interface IHtmlEditorContextMenuItem {
+  type?: 'select';
+  defaultValue?: any;
+  selectionOptions?: { text: string, value: any }[];
+  selectionChange?: (ev: { source: MatSelect, value: any }) => void;
 }
 
 export interface IHtmlEditorService {

@@ -101,7 +101,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       takeUntil(this.destroy$),
     ).subscribe(_ => {
       const range = this.simpleWysiwygService.getRange();
-      console.warn('document:selectionchange,  range = ', range);
+      // console.warn('document:selectionchange,  range = ', range);
       if (!this.editorContainer) { return; }
       if (!this.isSelectionInsideEditorContainer) { return; }
 
@@ -111,34 +111,34 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
   private observeContainer(editorContainer: HTMLDivElement) {
     const mutationObserver = new MutationObserver((records) => {
-      console.warn('records = ', records);
+      // console.warn('records = ', records);
 
       const allAddedNodes = records.map(r => Array.from(r.addedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
         .filter((node, i, arr) => arr.indexOf(node) === i);
-      console.log('allAddedNodes = ', allAddedNodes);
+      // console.log('allAddedNodes = ', allAddedNodes);
 
       const allRemovedNodes = records.map(r => Array.from(r.removedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
         .filter((node, i, arr) => arr.indexOf(node) === i);
-      console.log('allRemovedNodes = ', allRemovedNodes);
+      // console.log('allRemovedNodes = ', allRemovedNodes);
 
       let acturallyAddedNodes = allAddedNodes
         .filter(node => allRemovedNodes.indexOf(node) < 0)
         .filter(node => editorContainer.contains(node));
-      console.log('acturallyAddedNodes = ', acturallyAddedNodes);
+      // console.log('acturallyAddedNodes = ', acturallyAddedNodes);
 
       const acturallyRemovedNodes = allRemovedNodes
         .filter(node => allAddedNodes.indexOf(node) < 0)
         .filter(node => !editorContainer.contains(node));
-      console.log('acturallyRemovedNodes = ', acturallyRemovedNodes);
+      // console.log('acturallyRemovedNodes = ', acturallyRemovedNodes);
 
       const changedNodes = []
         .concat(allAddedNodes.filter(node => acturallyAddedNodes.indexOf(node) < 0))
         .concat(allRemovedNodes.filter(node => acturallyRemovedNodes.indexOf(node) < 0))
         .concat(records.filter(r => r.type !== 'childList').map(r => r.target))
         .filter((node, i, arr) => arr.indexOf(node) === i);
-      console.log('changedNodes = ', changedNodes);
+      // console.log('changedNodes = ', changedNodes);
 
       acturallyRemovedNodes.forEach(removedNode => {
         HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.removeFromEditor(editorContainer);
@@ -165,6 +165,11 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     });
 
     this.mutationObserver = mutationObserver;
+  }
+
+  evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 
   onClick(ev: MouseEvent) {

@@ -27,7 +27,7 @@ export class AddRow extends HtmlEditorAction {
     const baseRow = rowParentChildren[baseRowIndex];
 
     const newRow = document.createElement('tr');
-    const cols = this.controller.getSetting().cols;
+    const cols = this.controller.tableControllerService.getTableSetting(table).cols;
     for (let col = 0; col < cols; ++col) {
       const td = this.controller.tableControllerService.createCell();
       newRow.appendChild(td);

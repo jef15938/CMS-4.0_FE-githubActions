@@ -1,32 +1,43 @@
 <div class="neux-noselect" style="border-top: 1px solid black;">
   <cms-editor-toolbar [context]="this"></cms-editor-toolbar>
 </div>
-<div class="neux-noselect" style="border: 1px solid black; padding: 5px; border-bottom: none; border-right: none; border-left: none;">
+<div class="neux-noselect"
+  style="border: 1px solid black; padding: 5px; border-bottom: none; border-right: none; border-left: none;">
   <cms-editor-path [context]="this"></cms-editor-path>
 </div>
 <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
   [style.top]="contextMenuPosition.y" #MenuTrigger="matMenuTrigger" [matMenuTriggerFor]="EditorMenu">
 </div>
-<mat-menu #EditorMenu="matMenu">
+<mat-menu #EditorMenu="matMenu" class="editor-menu">
   <ng-container *ngFor="let item of contextMenuItems">
-    <ng-container *ngIf="!item.children?.length">
-      <button type="button" mat-menu-item [disabled]="item.disabled" (click)="doAction(item.action)">
-        <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
-        {{item.text}}
-      </button>
+    <ng-container *ngIf="item.type==='select'">
+      <mat-form-field appearance="outline">
+        <mat-label>{{item.text}}</mat-label>
+        <mat-select (click)="evPreventDefaultAndStopPropagation($event)" (selectionChange)="item.selectionChange($event); MenuTrigger.closeMenu();" [value]="item.defaultValue">
+          <mat-option *ngFor="let option of item.selectionOptions" [value]="option.value">{{option.text}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </ng-container>
-    <ng-container *ngIf="item.children?.length">
-      <button type="button" mat-menu-item [matMenuTriggerFor]="SubMenu" [disabled]="item.disabled">
-        <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
-        {{item.text}}
-      </button>
-      <mat-menu #SubMenu="matMenu">
-        <button type="button" mat-menu-item *ngFor="let child of item.children" [disabled]="child.disabled"
-          (click)="doAction(child.action)">
-          <mat-icon *ngIf="child.icon">{{child.icon}}</mat-icon>
-          {{child.text}}
+    <ng-container *ngIf="item.type!=='select'">
+      <ng-container *ngIf="!item.children?.length">
+        <button type="button" mat-menu-item [disabled]="item.disabled" (click)="doAction(item.action)">
+          <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+          {{item.text}}
         </button>
-      </mat-menu>
+      </ng-container>
+      <ng-container *ngIf="item.children?.length">
+        <button type="button" mat-menu-item [matMenuTriggerFor]="SubMenu" [disabled]="item.disabled">
+          <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+          {{item.text}}
+        </button>
+        <mat-menu #SubMenu="matMenu">
+          <button type="button" mat-menu-item *ngFor="let child of item.children" [disabled]="child.disabled"
+            (click)="doAction(child.action)">
+            <mat-icon *ngIf="child.icon">{{child.icon}}</mat-icon>
+            {{child.text}}
+          </button>
+        </mat-menu>
+      </ng-container>
     </ng-container>
   </ng-container>
   <button type="button" mat-menu-item>

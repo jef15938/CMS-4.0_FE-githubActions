@@ -1,3 +1,11 @@
+::ng-deep .editor-menu {
+  mat-form-field {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+}
+
 .neux-noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

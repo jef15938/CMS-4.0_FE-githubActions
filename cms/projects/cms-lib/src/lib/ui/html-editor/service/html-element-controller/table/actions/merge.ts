@@ -13,10 +13,10 @@ export class Merge extends HtmlEditorAction {
   }
 
   do(): Observable<any> {
-    let selectedCols = this.controller.selectedCols;
+    let selectedCols = this.controller.selectedCols as ITableCell[];
     if (selectedCols.length < 2) { return this.context.modalService.openMessage({ message: '請選擇至少兩欄' }) }
 
-    const hasConsecutiveCol = selectedCols.some(col => selectedCols.indexOf(col.previousElementSibling as HTMLTableDataCellElement) > -1);
+    const hasConsecutiveCol = selectedCols.some(col => selectedCols.indexOf(col.previousElementSibling as ITableCell) > -1);
 
     const selectedRows = this.controller.selectedRows;
     const hasConsecutiveRow = selectedRows.some(row => selectedRows.indexOf(row.previousElementSibling as HTMLTableRowElement) > -1);
@@ -26,7 +26,7 @@ export class Merge extends HtmlEditorAction {
     const table = this.controller.el;
     selectedCols.forEach(col => {
       if (!table.contains(col)) { return; }
-      const previous = col.previousElementSibling as HTMLTableDataCellElement;
+      const previous = col.previousElementSibling as ITableCell;
       if (
         previous
         && selectedCols.indexOf(previous) > -1

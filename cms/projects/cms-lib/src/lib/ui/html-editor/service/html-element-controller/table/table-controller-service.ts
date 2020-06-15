@@ -1,15 +1,105 @@
 import { ITableCell } from './table-controller.interface';
 
+export interface ITableSetting {
+  cols: number;
+}
+
+export const TABLE_STYLE_ATTR = 'ga-table-style';
+export enum TableStyle {
+  PERCENT = 'percent',
+  SCROLL = 'scroll',
+  SINGLE = 'single',
+};
+
 export class TableControllerService {
 
-  createCell(innerHTML = '文字') {
+  createCell(innerHTML?: string) {
     const td = document.createElement('td');
     // td.innerHTML = '<div>文字</div>';
-    td.innerHTML = innerHTML;
+    td.innerHTML = (innerHTML === null || innerHTML === undefined) ? '文字' : innerHTML;
     td.setAttribute('class', 'tg-0pky');
     td.setAttribute('colspan', '1');
     td.setAttribute('rowspan', '1');
     return td;
+  }
+
+  createTable(config: { src: string, alt: string, rows: number, cols: number }) {
+    const table = document.createElement('table');
+
+    table.classList.add('neux-table');
+    table.setAttribute(TABLE_STYLE_ATTR, TableStyle.PERCENT);
+    table.setAttribute('style', 'width: 99% !important;');
+
+    const tHead = document.createElement('thead');
+    table.appendChild(tHead);
+
+    const trInTHead = document.createElement('tr');
+    for (let col = 0; col < config.cols; ++col) {
+      const td = this.createCell('');
+      td.style.setProperty('height', '0');
+      td.style.setProperty('padding', '0');
+      td.style.setProperty('margin', '0');
+      td.style.setProperty('font-size', '0');
+      td.style.setProperty('line-height', '0');
+      // td.style.setProperty('border', 'none');
+      td.style.setProperty('overflow', 'hidden');
+
+      trInTHead.appendChild(td);
+    }
+    tHead.appendChild(trInTHead);
+
+    for (let row = 0; row < config.rows; ++row) {
+      const tr = document.createElement('tr');
+      for (let col = 0; col < config.cols; ++col) {
+        const td = this.createCell();
+        tr.appendChild(td);
+      }
+      table.appendChild(tr);
+    }
+    return table;
+  }
+
+  getTableSetting(table: HTMLTableElement): ITableSetting {
+    const cols = table.querySelectorAll('thead > tr > td').length;
+    const tableSetting = { cols };
+    return tableSetting;
+  }
+
+  getColWidthFromStyle(col: HTMLTableDataCellElement) {
+    return +(col.style.getPropertyValue('width').replace('px', ''));
+  }
+
+  checkTableColsWidth(table: HTMLTableElement) {
+    this.checkTHeadTdsWidth(table);
+    this.checkTBodyTdsWidth(table);
+  }
+
+  private checkTHeadTdsWidth(table: HTMLTableElement) {
+    const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as ITableCell[];
+    if (!this.getColWidthFromStyle(baseTds[0])) {
+      baseTds.forEach(baseTd => {
+        baseTd.style.setProperty('width', `${table.clientWidth / baseTds.length}px`);
+      });
+    }
+  }
+
+  private checkTBodyTdsWidth(table: HTMLTableElement) {
+    const tds = Array.from(table.querySelectorAll('tbody > tr > td')) as ITableCell[];
+    tds.forEach(td => {
+      const startEnd = this.getCellStartEnd(td);
+      td.setAttribute('style', `width: ${this.getColWidthByColStartEnd(table, startEnd.colStart, startEnd.colEnd)}px;`)
+    });
+  }
+
+  private getColWidthByColStartEnd(table: HTMLTableElement, colStart: number, colEnd: number) {
+    const baseTds = (Array.from(table.querySelectorAll('thead > tr > td')) as ITableCell[])
+      .filter(baseTd => {
+        const baseStartEnd = this.getCellStartEnd(baseTd);
+        return baseStartEnd.colStart === colStart || baseStartEnd.colEnd === colEnd;
+      });
+    const width = baseTds.map(baseTd => this.getColWidthFromStyle(baseTd))
+      .reduce((a, b) => a + b, 0);
+    return width;
   }
 
   getAffectedByRowSpanCellCount(cell: HTMLTableDataCellElement): number {
@@ -39,68 +129,8 @@ export class TableControllerService {
     return affectedCount;
   }
 
-  // getAffectedByRowSpanCellCount(
-  //   cell: HTMLTableDataCellElement,
-  //   config?: {
-  //     checkFromRowStart?: boolean,
-  //   }
-  // ): { colOffset: number, rowOffset: number } {
-
-  //   const cellParentIndex = (Array.from(cell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(cell.parentNode as HTMLElement);
-  //   const cellIndex = (Array.from(cell.parentNode.childNodes) as HTMLElement[]).indexOf(cell);
-  //   const previousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-  //   const checkStart = cellIndex + previousColSpanOffset;
-  //   let previousTr = cell.parentNode.previousSibling as HTMLTableRowElement;
-
-  //   let rowOffset = 0;
-  //   let colOffset = 0;
-  //   while (previousTr) {
-  //     const trs = Array.from(previousTr.parentNode.childNodes) as HTMLTableRowElement[];
-  //     const trIndex = trs.indexOf(previousTr);
-  //     const tds = Array.from(previousTr.childNodes);
-  //     tds.forEach((td: HTMLTableDataCellElement, tdIndex) => {
-  //       // console.warn('td = ', td);
-  //       if (td === cell) { return; }
-  //       if (td.rowSpan <= 1) { return; }
-  //       if ((td.rowSpan - 1) + trIndex < cellParentIndex) {
-  //         return;
-  //       }
-  //       const tdPreviousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-
-  //       if (!config?.checkFromRowStart && tdIndex + tdPreviousColSpanOffset > checkStart) {
-  //         return;
-  //       }
-
-  //       const rOffset = 1;
-  //       rowOffset += rOffset;
-  //       const cOffset = td.colSpan - 1;
-  //       colOffset += cOffset;
-  //     });
-  //     previousTr = previousTr.previousSibling as HTMLTableRowElement;
-  //   }
-  //   const affectedCount = { colOffset, rowOffset };
-  //   console.warn('  affectedCount = ', affectedCount);
-  //   return affectedCount;
-  // }
-
-  // getCellStartEnd(cell: HTMLTableDataCellElement) {
-  //   const row = cell.parentElement as HTMLTableRowElement;
-  //   const trs = Array.from(row.parentNode.childNodes) as HTMLTableRowElement[];
-  //   const rowIndex = trs.indexOf(row);
-  //   const tds = Array.from(row.childNodes) as HTMLTableDataCellElement[];
-  //   const cellIndex = tds.indexOf(cell);
-  //   const colSpanOffser = Array.from(tds).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
-  //   const affectedByRowSpanCount = this.getAffectedByRowSpanCellCount(cell);
-  //   const rowStart = rowIndex;
-  //   const rowEnd = rowStart + (cell.rowSpan - 1);
-  //   const colStart = cellIndex + colSpanOffser + affectedByRowSpanCount;
-  //   // const colStart = cellIndex + colSpanOffser + affectedByRowSpanCount.colOffset + affectedByRowSpanCount.colOffset;
-  //   const colEnd = colStart + (cell.colSpan - 1);
-  //   return { rowStart, rowEnd, colStart, colEnd };
-  // }
-
-  getCellStartEnd(cell: HTMLTableDataCellElement) {
-    const pos = (cell as ITableCell).cellPos;
+  getCellStartEnd(cell: ITableCell) {
+    const pos = cell.cellPos;
     const rowStart = pos.top;
     const rowEnd = rowStart + cell.rowSpan;
     const colStart = pos.left;
@@ -138,5 +168,5 @@ export class TableControllerService {
     const end = selectedCols[selectedCols.length - 1];
     return this.getStartEndByStartCellAndEndCell(start, end);
   }
-  
+
 }

@@ -34,27 +34,9 @@ export class InsertTable extends HtmlEditorAction {
       tap((config: { src: string, alt: string, rows: number, cols: number }) => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
-
-        const table = document.createElement('table');
-        table.setAttribute('style', 'width: 99% !important;');
-        table.classList.add('neux-table');
-
-        for (let row = 0; row < config.rows; ++row) {
-          const tr = document.createElement('tr');
-          for (let col = 0; col < config.cols; ++col) {
-            const td = this.tableControllerService.createCell();
-            tr.appendChild(td);
-          }
-          table.appendChild(tr);
-        }
-
+        const table = this.tableControllerService.createTable(config);
         const addedTable = this.context.simpleWysiwygService.insertHtml(table.outerHTML) as HTMLTableElement;
         this.context.simpleWysiwygService.setSelectionOnNode(addedTable);
-
-        const tds = addedTable.querySelectorAll('td');
-        tds.forEach(td => {
-          td.setAttribute('style', `width: ${addedTable.clientWidth / config.cols}px;`)
-        })
       })
     );
   }

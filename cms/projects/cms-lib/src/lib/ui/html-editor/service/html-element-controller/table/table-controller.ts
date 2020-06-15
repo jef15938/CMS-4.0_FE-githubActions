@@ -1,15 +1,15 @@
 import { HtmlEditorElementController } from './../_base';
-import { fromEvent, Subscription, merge, Observable, of, concat } from 'rxjs';
+import { fromEvent, Subscription, merge, Observable, of, from } from 'rxjs';
 import { IHtmlEditorContextMenuItem, IHtmlEditorContext } from '../../../html-editor.interface';
 import { DeleteRow } from './actions/delete-row';
 import { AddRow } from './actions/add-row';
-import { ITableController, ITableSetting, ITableCell } from './table-controller.interface';
+import { ITableController, ITableCell } from './table-controller.interface';
 import { DeleteCol } from './actions/delete-col';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil, tap, throttleTime } from 'rxjs/operators';
 import { Merge } from './actions/merge';
 import { Split } from './actions/split';
 import { DeleteTable } from './actions/delete-table';
-import { TableControllerService } from './table-controller-service';
+import { TableControllerService, TABLE_STYLE_ATTR, TableStyle } from './table-controller-service';
 import { MarkCol } from './actions/mark-col';
 import { AddCol } from './actions/add-col';
 
@@ -47,7 +47,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   selectedCols: HTMLTableDataCellElement[] = [];
   selectedRows: HTMLTableRowElement[] = [];
 
-  private tableSetting: ITableSetting;
   private subscriptions: Subscription[] = [];
 
   tableControllerService: TableControllerService;
@@ -89,11 +88,21 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         ]
       },
       {
+        text: '表格樣式', type: 'select',
+        defaultValue: this.getTableStyle(),
+        selectionOptions: [
+          { text: '滿版縮放', value: TableStyle.PERCENT },
+          { text: 'Scroll', value: TableStyle.SCROLL },
+          { text: '單筆顯示', value: TableStyle.SINGLE },
+        ],
+        selectionChange: (ev) => {
+          console.warn(this, ev);
+        }
+      },
+      {
         text: '刪除表格', action: new DeleteTable(this.context, this),
       },
     ];
-    const cols = this.el.querySelectorAll('tr')[0].querySelectorAll('td').length;
-    this.tableSetting = { cols };
     this.checkTableState();
     this.subscribeEvents();
     this.subscribeCellSelection();
@@ -108,8 +117,17 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.unsubscribeCellSelection();
   }
 
-  getSetting(): ITableSetting {
-    return this.tableSetting;
+  private getTableStyle() {
+    const style = this.el.getAttribute(TABLE_STYLE_ATTR);
+    switch (style) {
+      case TableStyle.PERCENT:
+        break;
+      case TableStyle.SCROLL:
+        break;
+      case TableStyle.SINGLE:
+        break;
+    }
+    return null;
   }
 
   private subscribeEvents() {
@@ -246,17 +264,123 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     }
     this.checkTableState();
     this.subscribeCellSelection();
+    this.registerColResizer();
   }
 
   private onUnselected(): void {
     this.el.style.removeProperty('outline');
     this.unsubscribeCellSelection();
     this.checkTableState();
+    this.unregisterColResizer();
   }
 
   private evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
+  }
+
+  private registerColResizer() {
+    const baseTds = Array.from(this.el.querySelectorAll('thead > tr > td')) as ITableCell[];
+    if (baseTds[0].style.getPropertyValue('position') !== 'relative') {
+      baseTds.forEach(baseTd => {
+        baseTd.style.setProperty('position', 'relative');
+      });
+    }
+
+    this.unregisterColResizer();
+
+    const container = document.createElement('div');
+    container.classList.add('col-resizer-container');
+    container.style.setProperty('position', 'relative');
+    container.style.setProperty('height', '0');
+
+    baseTds.forEach((baseTd, i) => {
+      const nextTd = baseTd.nextElementSibling as HTMLTableDataCellElement;
+      if (i === baseTds.length - 1) { return; }
+      // console.log(baseTd, '--------------------------------------');
+      // console.warn('baseTd.clientHeight = ', baseTd.clientHeight);
+      // console.warn('baseTd.clientLeft = ', baseTd.clientLeft);
+      // console.warn('baseTd.clientTop = ', baseTd.clientTop);
+      // console.warn('baseTd.clientWidth = ', baseTd.clientWidth);
+      // console.warn('baseTd.offsetHeight = ', baseTd.offsetHeight);
+      // console.warn('baseTd.offsetLeft = ', baseTd.offsetLeft);
+      // console.warn('baseTd.offsetTop = ', baseTd.offsetTop);
+      // console.warn('baseTd.offsetWidth = ', baseTd.offsetWidth);
+      // console.warn('baseTd.width = ', baseTd.width);
+      // console.warn('baseTd.height = ', baseTd.height);
+
+      const div = document.createElement('div');
+      div.classList.add('col-resizer');
+      div.style.setProperty('cursor', 'ew-resize');
+      div.style.setProperty('position', 'absolute');
+      div.style.setProperty('top', '0');
+      div.style.setProperty('left', `${baseTd.offsetLeft + this.tableControllerService.getColWidthFromStyle(baseTd) - 20}px`);
+      div.style.setProperty('width', '10px');
+      div.style.setProperty('height', `${this.el.clientHeight}px`);
+      // div.style.setProperty('background', 'pink');
+
+      const start$ = fromEvent(div, 'mousedown');
+      const move$ = fromEvent(document, 'mousemove');
+      const end$ = fromEvent(document, 'mouseup');
+
+      const drag$ = start$.pipe(
+        switchMap(
+          (start: MouseEvent) => {
+            this.evPreventDefaultAndStopPropagation(start);
+            div.style.borderLeft = 'dashed lightgray 1px';
+            const resizerOffsetLeft = div.offsetLeft;
+            const baseTdWidth = this.tableControllerService.getColWidthFromStyle(baseTd);
+            const nextTdWidth = this.tableControllerService.getColWidthFromStyle(nextTd);
+
+            let previousMove: MouseEvent;
+            return move$.pipe(
+              throttleTime(12),
+              tap((move: MouseEvent) => {
+                this.evPreventDefaultAndStopPropagation(move);
+                const nowPoint = move;
+                const previousPoint = previousMove || start;
+
+                const diffX = nowPoint.clientX - previousPoint.clientX;
+
+                const bWidth = baseTdWidth + diffX;
+                const nWidth = nextTdWidth - diffX;
+                if (bWidth <= 100 || nWidth <= 100) { return; }
+
+                div.style.setProperty('left', `${resizerOffsetLeft + diffX}px`);
+                baseTd.style.setProperty('width', `${bWidth}px`);
+                nextTd.style.setProperty('width', `${nWidth}px`);
+                this.tableControllerService.checkTableColsWidth(this.el);
+              }),
+              takeUntil(end$.pipe(
+                tap((end: MouseEvent) => {
+                  this.evPreventDefaultAndStopPropagation(end);
+                  div.style.removeProperty('border-left');
+                  this.tableControllerService.checkTableColsWidth(this.el);
+                })
+              ))
+            );
+          }
+        )
+      ).subscribe();
+
+      div['drag$'] = drag$;
+      container.appendChild(div);
+    });
+
+    this.el.parentNode.insertBefore(container, this.el);
+  }
+
+  private unregisterColResizer() {
+    const containers = Array.from(this.context.editorContainer.querySelectorAll('.col-resizer-container')) as HTMLElement[];
+    containers.forEach(container => {
+      const resizers = Array.from(container.children) as HTMLElement[];
+      resizers.forEach(resizer => {
+        const drag$ = resizer['drag$'] as Subscription;
+        drag$?.unsubscribe();
+        resizer.parentNode.removeChild(resizer);
+      });
+      container.parentNode.removeChild(container)
+    });
   }
 
   checkTableState(scanTable = true) {
@@ -277,6 +401,8 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     if (scanTable) {
       this.scanTable(this.el);
     }
+
+    this.tableControllerService.checkTableColsWidth(this.el);
   }
 
   private scanTable(table) {
