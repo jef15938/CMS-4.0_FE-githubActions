@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
-import { Subscription, of } from 'rxjs';
+import { Subscription, of, Observable } from 'rxjs';
 import { HttpRequest, HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { map, tap, last, catchError } from 'rxjs/operators';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -237,13 +237,20 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       return;
     }
     const file = this.files[0];
-
+    let action: Observable<any>;
     if (this.categoryId && this.category_name) { // 新增
-      this.galleryService.createGallery(file.data, this.categoryId).subscribe();
+      action = this.galleryService.createGallery(file.data, this.categoryId);
     } else if (this.galleryId) { // 修改
-      this.galleryService.updateGallery(file.data, this.galleryId).subscribe();
+      action = this.galleryService.updateGallery(file.data, this.galleryId);
     }
-
+    if (action) {
+      action.subscribe((result: { success: boolean }) => {
+        if(!result.success){
+          alert('操作失敗');
+        }
+        this.close(true)
+      });
+    }
   }
 
 }

@@ -18,7 +18,7 @@ import { AuthorizationService } from '../../../service/authorization.service';
 @Component({
   selector: 'cms-gallery',
   templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.css']
+  styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent implements OnInit, OnDestroy {
 
@@ -86,8 +86,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   private init() {
     return concat(
-      this.getCategories()
-    )
+      this.getCategories(),
+      this.getGallery(),
+    );
   }
 
   private getCategories() {
@@ -97,7 +98,13 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   private getGallery() {
-    if (!this.selectedCategory?.category_id) { return of(undefined); }
+
+    if (!this.selectedCategory?.category_id) {
+      this.galleryPageInfo = undefined;
+      this.galleryDatas = undefined;
+      return of(undefined);
+    };
+
     return this.galleryService.getGalleryByCategoryID(
       this.selectedCategory.category_id,
       this.galleryPageInfo?.page
@@ -158,7 +165,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
           action = this.galleryService.deleteGalleryCategory(event.data.category_id);
           break;
       }
-      action ? action.subscribe() : null;
+      action ? action.pipe(
+        concatMap(_ => this.init()),
+      ).subscribe() : null;
     }
   }
 
@@ -173,7 +182,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
           action = this.galleryService.deleteGallery(event.data.gallery_id);
           break;
       }
-      action ? action.subscribe() : null;
+      action ? action.pipe(
+        concatMap(_ => this.getGallery()),
+      ).subscribe() : null;
     }
   }
 
@@ -182,6 +193,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged(event: { pageIndex: number }) {
+    console.warn('event = ', event);
     this.galleryPageInfo.page = event.pageIndex + 1;
     this.getGallery().subscribe();
   }
