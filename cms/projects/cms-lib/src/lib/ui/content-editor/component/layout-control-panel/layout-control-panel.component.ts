@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
+import { TemplateGetResponse } from './../../../../neuxAPI/bean/TemplateGetResponse';
 
 class TemplateInfo {
   templateId: string;
@@ -16,7 +17,10 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
   show = false;
 
-  @Input() mainTemplates: TemplateInfo[] = [];
+  // 可選版面資料
+  @Input() selectableTemplates: TemplateGetResponse;
+
+  mainTemplates: TemplateInfo[] = [];
 
   @Output() templateAdd = new EventEmitter<string>(); // templateName
 

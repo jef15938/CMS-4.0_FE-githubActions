@@ -19,7 +19,8 @@
       (click)="resetSelected(); manager?.stateManager?.forward(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>redo</mat-icon>
     </button>
-    <button type="button" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="stateMenu">
+    <button type="button" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="stateMenu">
       <mat-icon>list</mat-icon>
     </button>
     <button type="button" mat-icon-button alt="clear" #btnClear (click)="clear()">
@@ -41,6 +42,7 @@
     <!-- 版面控制 -->
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
       <cms-layout-control-panel [selectedBtn]="manager.selectedTemplateAddBtn"
+        [selectableTemplates]="selectableTemplates"
         (templateAdd)="resetSelected(); manager.stateManager.preserveState('AddTemplate : '+$event); setEditorUnsaved(); contentViewRenderer?.checkView();">
       </cms-layout-control-panel>
     </div>

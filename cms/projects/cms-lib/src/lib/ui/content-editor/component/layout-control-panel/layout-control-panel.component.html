@@ -1,11 +1,75 @@
 <div *ngIf="show" class="cms-layout-control-panel" (click)="$event.stopPropagation()">
   <h1>新增版面</h1>
   <hr>
-  <mat-accordion>
+  <mat-accordion *ngIf="selectableTemplates">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          固定版型
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let template of selectableTemplates.static" class="template-container"
+        (click)="selectTemplate(template)">
+        <div>
+          {{template.template_name}}
+        </div>
+        <div class="img-container">
+          <img [src]="template.template_thumbnail">
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          頁籤版型
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let template of selectableTemplates.tab" class="template-container"
+        (click)="selectTemplate(template)">
+        <div>
+          {{template.template_name}}
+        </div>
+        <div class="img-container">
+          <img [src]="template.template_thumbnail">
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          動態版型
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let template of selectableTemplates.dynamic" class="template-container"
+        (click)="selectTemplate(template)">
+        <div>
+          {{template.template_name}}
+        </div>
+        <div class="img-container">
+          <img [src]="template.template_thumbnail">
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          客制版型
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let template of selectableTemplates.customize" class="template-container"
+        (click)="selectTemplate(template)">
+        <div>
+          {{template.template_name}}
+        </div>
+        <div class="img-container">
+          <img [src]="template.template_thumbnail">
+        </div>
+      </div>
+    </mat-expansion-panel>
     <mat-expansion-panel *ngIf="mainTemplates.length">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          主題版型
+          DEMO版型
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div *ngFor="let template of mainTemplates" class="template-container" (click)="selectTemplate(template)">
