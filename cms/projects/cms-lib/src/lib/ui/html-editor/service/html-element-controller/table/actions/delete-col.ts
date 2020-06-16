@@ -51,6 +51,7 @@ export class DeleteCol extends HtmlEditorAction {
     });
 
     this.controller.checkTableState();
+    this.controller.tableControllerService.registerColResizer(this.context.editorContainer, this.controller.el);
     return of(undefined);
   }
 

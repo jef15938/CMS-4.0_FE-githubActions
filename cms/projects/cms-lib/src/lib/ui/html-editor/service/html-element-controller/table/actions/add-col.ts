@@ -115,6 +115,7 @@ export class AddCol extends HtmlEditorAction {
               tmpTD.colSpan = tmpTD.colSpan + 1;
             } else {
               const newCell = this.controller.tableControllerService.createCell('new');
+              newCell.style.setProperty('width','70px');
               if (index == start || index >= stop) {
                 const insertBefore = tmpTD.nextElementSibling;
                 if (insertBefore) {
@@ -134,6 +135,7 @@ export class AddCol extends HtmlEditorAction {
     })
 
     this.controller.checkTableState();
+    this.controller.tableControllerService.registerColResizer(this.context.editorContainer, this.controller.el);
     return of(undefined);
   }
 }
