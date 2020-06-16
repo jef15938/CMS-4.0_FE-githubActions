@@ -81,7 +81,7 @@ export const environment = {
     GetSiteBySiteIDAndNodeID: 'Restful',
     GetGroupMenuByGroupID: 'Restful',
     GetGroupSiteMapByGroupID: 'Restful',
-    GetTemplateByControlID: 'Mock',
+    GetTemplateByControlID: 'Restful',
     DeleteGalleryByGalleryID: 'Restful',
   }
 };

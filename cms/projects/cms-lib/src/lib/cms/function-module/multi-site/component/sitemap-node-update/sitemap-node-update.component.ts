@@ -34,7 +34,7 @@ class SiteMapUpdateModel extends UserSiteMapPutRequest {
 @Component({
   selector: 'cms-sitemap-node-update',
   templateUrl: './sitemap-node-update.component.html',
-  styleUrls: ['./sitemap-node-update.component.css']
+  styleUrls: ['./sitemap-node-update.component.scss']
 })
 export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 

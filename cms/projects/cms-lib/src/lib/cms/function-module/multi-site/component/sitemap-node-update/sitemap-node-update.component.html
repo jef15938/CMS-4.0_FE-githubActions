@@ -81,6 +81,12 @@
         <!-- CONTENT -->
         <ng-container *ngSwitchCase="NodeType.Content">
           <mat-form-field appearance="outline">
+            <mat-label>節點連結路徑</mat-label>
+            <input matInput [(ngModel)]="sitemapMaintainModel.content_path" name="content_path" required
+              #modelMetaTitle="ngModel">
+            <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+          </mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Meta描述</mat-label>
             <input matInput [(ngModel)]="sitemapMaintainModel.meta_description" name="meta_description">
           </mat-form-field>
