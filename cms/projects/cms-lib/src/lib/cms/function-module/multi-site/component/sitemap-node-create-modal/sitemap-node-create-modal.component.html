@@ -7,6 +7,13 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
+      <mat-label>Meta標題</mat-label>
+      <input matInput [(ngModel)]="sitemapMaintainModel.meta_title" name="meta_title" required
+        #modelMetaTitle="ngModel">
+      <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
       <mat-label>節點類型</mat-label>
       <mat-select [(ngModel)]="sitemapMaintainModel.node_type" name="node_type"
         (selectionChange)="sitemapMaintainModel.checkFieldsByNodeType()">
@@ -15,6 +22,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
     <ng-container [ngSwitch]="sitemapMaintainModel.node_type">
       <!-- URL -->
       <ng-container *ngSwitchCase="NodeType.Url">
@@ -55,14 +63,8 @@
       <!-- CONTENT -->
       <ng-container *ngSwitchCase="NodeType.Content">
         <mat-form-field appearance="outline">
-          <mat-label>網址名稱</mat-label>
+          <mat-label>節點連結路徑</mat-label>
           <input matInput [(ngModel)]="sitemapMaintainModel.content_path" name="content_path" required
-            #modelMetaTitle="ngModel">
-          <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Meta標題</mat-label>
-          <input matInput [(ngModel)]="sitemapMaintainModel.meta_title" name="meta_title" required
             #modelMetaTitle="ngModel">
           <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
         </mat-form-field>

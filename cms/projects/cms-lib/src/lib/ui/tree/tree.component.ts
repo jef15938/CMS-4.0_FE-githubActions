@@ -164,9 +164,11 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   findParent(node: TData, sources: TData[] = this.treeControl.dataNodes || []): TData {
     if (!sources.length) { return null; }
     if (sources.indexOf(node) > -1) { return null; } // 第一層無parent
-    const finder: (d: TData) => boolean = (d: TData) => (d[this.nodeChildrenEntryField] || []).indexOf(node) > -1;
+    const finder: (d: TData) => boolean = (d: TData) => {
+      return (d ? d[this.nodeChildrenEntryField] : []).indexOf(node) > -1
+    };
     const parent = sources.find(finder);
-    return parent || sources.map(s => this.findParent(node, s[this.nodeChildrenEntryField])).find(finder);
+    return parent || sources.map(s => this.findParent(node, s ? s[this.nodeChildrenEntryField] : [])).find(finder);
   }
 
 }

@@ -57,3 +57,7 @@ mat-form-field {
 .cms-sitemap-edit-content-modal mat-dialog-container {
   padding: 0 !important;
 }
+
+.cdk-overlay-pane {
+  overflow: auto;
+}

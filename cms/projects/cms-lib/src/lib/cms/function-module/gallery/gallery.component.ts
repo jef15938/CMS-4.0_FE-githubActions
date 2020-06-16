@@ -162,7 +162,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
           break;
       }
       action ? action.pipe(
-        concatMap(_ => this.init()),
+        concatMap(res => res ? this.init() : null),
       ).subscribe() : null;
     }
   }
@@ -179,7 +179,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
           break;
       }
       action ? action.pipe(
-        concatMap(_ => this.getGallery()),
+        concatMap(res => res ? this.getGallery() : null),
       ).subscribe() : null;
     }
   }

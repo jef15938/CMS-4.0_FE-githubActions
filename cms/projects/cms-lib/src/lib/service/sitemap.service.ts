@@ -48,21 +48,20 @@ export class SitemapService {
   ) {
     if (!siteID) { throw new ParamsError('siteID', 'createSiteNode', 'string', siteID); }
     if (!nodeName) { throw new ParamsError('nodeName', 'createSiteNode', 'string', nodeName); }
-    if (!metaTitle) { throw new ParamsError('metaTitle', 'createSiteNode', 'string', metaTitle); }
+    // if (!metaTitle) { throw new ParamsError('metaTitle', 'createSiteNode', 'string', metaTitle); }
 
-    const params: { [k: string]: any } = {
-      siteID,
+    const requestBody: { [k: string]: any } = {
       node_name: nodeName,
       meta_title: metaTitle,
     };
 
     if (optional) {
       for (let key of Object.keys(optional)) {
-        params[key] = optional[key];
+        requestBody[key] = optional[key];
       }
     }
 
-    return this.restAPIService.dispatchRestApi('PostUserSiteMapBySiteID', params);
+    return this.restAPIService.dispatchRestApi('PostUserSiteMapBySiteID', { siteID, requestBody });
   }
 
   /**
@@ -157,18 +156,20 @@ export class SitemapService {
 
     const params: { [k: string]: any } = {
       nodeID,
-      node_name: nodeName,
-      node_orders: nodeOrders,
-      meta_title: metaTitle,
+      requestBody: {
+        node_name: nodeName,
+        node_orders: nodeOrders,
+        meta_title: metaTitle,
+      }
     };
 
     if (optional) {
       for (let key of Object.keys(optional)) {
-        params[key] = optional[key];
+        params.requestBody[key] = optional[key];
       }
     }
 
-    return this.restAPIService.dispatchRestApi('PostUserSiteMapBySiteID', params);
+    return this.restAPIService.dispatchRestApi('PutUserSiteMapByNodeID', params);
   }
 
   /**

@@ -119,22 +119,25 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   onCustomEvent(event: MultiSiteNodeCustomEvent) {
     if (event instanceof MultiSiteNodeCustomEvent) {
+      let action: Observable<any>
       switch (event.action) {
         case event.ActionType.Create:
-          this.modalService.openComponent({
+          action = this.modalService.openComponent({
             component: SitemapNodeCreateModalComponent,
             componentInitData: {
+              siteId: this.selectedSite.site_id,
               parent_id: event.data.node_id
-            }
-          }).subscribe(res => {
-            if (res) {
-              this.swichMode(EditModeType.Node);
             }
           });
           break;
         case event.ActionType.Delete:
+          action = this.sitemapService.deleteUserSiteMap(event.data.node_id);
           break;
       }
+
+      action ? action
+        .pipe(tap(res => res ? this.swichMode(EditModeType.Node) : null))
+        .subscribe() : null;
     }
   }
 

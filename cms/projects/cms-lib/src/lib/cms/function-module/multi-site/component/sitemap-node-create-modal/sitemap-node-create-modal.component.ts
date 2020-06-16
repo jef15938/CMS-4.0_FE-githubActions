@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from './../../../../../ui/modal/custom-modal-base';
 import { UserSiteMapPostRequest } from './../../../../../neuxAPI/bean/UserSiteMapPostRequest';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
+import { SitemapService } from './../../../../../service/sitemap.service';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
-  node_type = SiteMapNodeType.None;
+  node_type = null;
 
   constructor(parent_id: string) {
     super();
@@ -26,11 +27,9 @@ class SiteMapCreateModel extends UserSiteMapPostRequest {
     this.meta_keyword = undefined;
   }
 
-  check
-
   checkFieldsByNodeType() {
     switch (this.node_type) {
-      case SiteMapNodeType.None:
+      case null:
         this.clearLink();
         this.clearContent();
         break;
@@ -47,7 +46,7 @@ class SiteMapCreateModel extends UserSiteMapPostRequest {
 @Component({
   selector: 'cms-sitemap-node-create-modal',
   templateUrl: './sitemap-node-create-modal.component.html',
-  styleUrls: ['./sitemap-node-create-modal.component.css']
+  styleUrls: ['./sitemap-node-create-modal.component.scss']
 })
 export class SitemapNodeCreateModalComponent extends CustomModalBase implements OnInit {
   title = '新增節點';
@@ -56,6 +55,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   NodeType = SiteMapNodeType;
   UrlType = SiteMapUrlType;
 
+  @Input() siteId: string;
   @Input() parent_id: string;
 
   sitemapMaintainModel: SiteMapCreateModel;
@@ -71,19 +71,28 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   ];
 
   nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
-    { value: SiteMapNodeType.None, name: '無' },
+    { value: null, name: '無' },
     { value: SiteMapNodeType.Url, name: '連結' },
     { value: SiteMapNodeType.Content, name: '頁面' },
   ];
 
-  constructor() { super(); }
+  constructor(
+    private siteMapService: SitemapService,
+  ) { super(); }
 
   ngOnInit(): void {
     this.sitemapMaintainModel = new SiteMapCreateModel(this.parent_id);
   }
 
   confirm() {
-    this.close('Created');
+    this.siteMapService.createSiteNode(
+      this.siteId,
+      this.sitemapMaintainModel.node_name,
+      this.sitemapMaintainModel.meta_title,
+      this.sitemapMaintainModel
+    ).subscribe(_ => {
+      this.close('Created');
+    });
   }
 
 }

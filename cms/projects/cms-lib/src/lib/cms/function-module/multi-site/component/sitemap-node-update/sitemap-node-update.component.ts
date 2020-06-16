@@ -9,6 +9,7 @@ import { ContentEditorService } from './../../../../../ui/content-editor/content
 import { forkJoin } from 'rxjs';
 import { EditorMode } from './../../../../../ui/content-editor/content-editor.interface';
 import { SiteMapNodeInfo } from './../../../../../neuxAPI/bean/SiteMapNodeInfo';
+import { SitemapService } from './../../../../../service/sitemap.service';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
   constructor(siteMapInfo: SiteMapNodeInfo, parent_id: string, node_orders: string) {
@@ -59,7 +60,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   ];
 
   nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
-    { value: SiteMapNodeType.None, name: '無' },
+    { value: null, name: '無' },
     { value: SiteMapNodeType.Url, name: '連結' },
     { value: SiteMapNodeType.Content, name: '頁面' },
   ];
@@ -68,6 +69,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     private modalService: ModalService,
     private contentService: ContentService,
     private contentEditorService: ContentEditorService,
+    private sitemapService: SitemapService,
   ) { }
 
   ngOnInit(): void {
@@ -107,7 +109,15 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   }
 
   save() {
-    this.updated.emit(this.sitemapMaintainModel);
+    this.sitemapService.updateSiteNode(
+      this.siteMapUpdateInfo.siteMap.node_id,
+      this.sitemapMaintainModel.node_name,
+      this.sitemapMaintainModel.node_orders,
+      this.sitemapMaintainModel.meta_title,
+      this.sitemapMaintainModel
+    ).subscribe(_ => {
+      this.updated.emit(this.sitemapMaintainModel);
+    });
   }
 
 }
