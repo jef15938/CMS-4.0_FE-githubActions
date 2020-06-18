@@ -1,0 +1,35 @@
+.reply-btn-group {
+  margin: 10px 0;
+  button {
+    line-height: 36px;
+    height: 36px;
+  }
+
+  button:not(:first-child) {
+    margin-left: 10px;
+  }
+}
+
+.rich-content-list {
+  padding: 0;
+  margin: 0;
+  height: 180px;
+  max-height: 180px;
+  overflow: auto;
+
+  mat-list-item {
+    height: 36px;
+    line-height: 36px;
+    font-size: 16px;
+
+    span {
+      margin-left: 16px;
+    }
+
+    mat-icon {
+      height: 24px;
+      width: 24px;
+      vertical-align: middle;
+    }
+  }
+}

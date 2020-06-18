@@ -10,7 +10,7 @@ export enum AuditingApproveStatus {
 @Component({
   selector: 'cms-approve-auditing-modal',
   templateUrl: './approve-auditing-modal.component.html',
-  styleUrls: ['./approve-auditing-modal.component.css']
+  styleUrls: ['./approve-auditing-modal.component.scss']
 })
 export class ApproveAuditingModalComponent extends CustomModalBase implements OnInit {
 

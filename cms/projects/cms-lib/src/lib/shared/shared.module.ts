@@ -14,6 +14,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 // @neux/core
 import { CoreModule } from '@neux/core';
 // cms-lib
@@ -43,6 +45,8 @@ import { DirectiveModule } from './../directive/directive.module';
     MatDividerModule,
     MatIconModule,
     MatPaginatorModule,
+    MatButtonModule,
+    DragDropModule,
     // @neux/core
     CoreModule,
     // cms-lib

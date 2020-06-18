@@ -11,6 +11,7 @@ import { WebModule } from './function-module/web/web.module';
 import { ExtensionModule } from './function-module/extension/extension.module';
 import { LoginModule } from './login/login.module';
 import { CmsAuthGuard } from './service/cms-auth-guard';
+import { ChatbotModule } from './function-module/chatbot/chatbot.module';
 
 const getMultiSiteModule = () => MultiSiteModule;
 const getMyAuditingModule = () => MyAuditingModule;
@@ -18,6 +19,7 @@ const getGalleryModule = () => GalleryModule;
 const getAuditingModule = () => AuditingModule;
 const getSystemModule = () => SystemModule;
 const getWebModule = () => WebModule;
+const getChatbotModule = () => ChatbotModule;
 const getExtensionModule = () => ExtensionModule;
 const getLoginModule = () => LoginModule;
 
@@ -54,6 +56,11 @@ const routes: Routes = [
         path: 'web',
         // loadChildren: () => import('./function-module/web/web.module').then(m => m.WebModule)
         loadChildren: getWebModule
+      },
+      {
+        path: 'chatbot',
+        // loadChildren: () => import('./function-module/chatbot/chatbot.module').then(m => m.ChatbotModule)
+        loadChildren: getChatbotModule
       },
       {
         path: 'extension',

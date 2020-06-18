@@ -12,7 +12,7 @@ import { ApproveAuditingModalComponent, AuditingApproveStatus } from './componen
 @Component({
   selector: 'cms-auditing',
   templateUrl: './auditing.component.html',
-  styleUrls: ['./auditing.component.css']
+  styleUrls: ['./auditing.component.scss']
 })
 export class AuditingComponent implements OnInit {
 

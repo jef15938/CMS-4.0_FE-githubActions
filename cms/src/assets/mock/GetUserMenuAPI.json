@@ -38,6 +38,25 @@
       ]
     },
     {
+      "func_id": "chatbot",
+      "func_name": "智慧助手",
+      "component_id ": "chatbot",
+      "children": [
+        {
+          "func_id": "item",
+          "func_name": "項目設定",
+          "component_id": "item",
+          "children": []
+        },
+        {
+          "func_id": "reply",
+          "func_name": "回覆設定",
+          "component_id": "reply",
+          "children": []
+        }
+      ]
+    },
+    {
       "func_id": "system",
       "func_name": "中央權限管理",
       "component_id ": "system",

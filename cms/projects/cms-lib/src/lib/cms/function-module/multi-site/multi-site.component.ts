@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Observable, concat, Subject, forkJoin, of } from 'rxjs';
-import { tap, takeUntil, debounceTime, concatMap } from 'rxjs/operators';
+import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
 import { ModalService } from '../../../ui/modal/modal.service';
 import { SitemapService } from '../../../service/sitemap.service';
 import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
@@ -131,7 +131,9 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
           });
           break;
         case event.ActionType.Delete:
-          action = this.sitemapService.deleteUserSiteMap(event.data.node_id);
+          action = this.sitemapService.deleteUserSiteMap(event.data.node_id).pipe(
+            map(_ => 'Deleted')
+          );
           break;
       }
 

@@ -9,7 +9,7 @@ import { NgModel } from '@angular/forms';
 @Component({
   selector: 'cms-dept-maintain-modal',
   templateUrl: './dept-maintain-modal.component.html',
-  styleUrls: ['./dept-maintain-modal.component.css']
+  styleUrls: ['./dept-maintain-modal.component.scss']
 })
 export class DeptMaintainModalComponent extends CustomModalBase implements OnInit {
 

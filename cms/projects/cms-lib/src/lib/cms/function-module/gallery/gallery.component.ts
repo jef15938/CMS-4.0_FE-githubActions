@@ -3,7 +3,7 @@ import { GalleryCategoryInfo } from '../../../neuxAPI/bean/GalleryCategoryInfo';
 import { GalleryService } from '../../../service/gallery.service';
 import { GalleryCategoryNodeComponent, GalleryCategoryNodeCustomEvent } from './component/node/gallery-category-node/gallery-category-node.component';
 import { concat, Subject, of, Observable } from 'rxjs';
-import { tap, takeUntil, debounceTime, concatMap } from 'rxjs/operators';
+import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
 import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
 import { GalleryInfo } from '../../../neuxAPI/bean/GalleryInfo';
 import { ColDef } from '../../../ui/table/table.interface';
@@ -158,11 +158,13 @@ export class GalleryComponent implements OnInit, OnDestroy {
           action = this.maintainCategory('Update', event.data);
           break;
         case event.ActionType.Delete:
-          action = this.galleryService.deleteGalleryCategory(event.data.category_id);
+          action = this.galleryService.deleteGalleryCategory(event.data.category_id).pipe(
+            map(_ => 'Deleted')
+          );
           break;
       }
       action ? action.pipe(
-        concatMap(res => res ? this.init() : null),
+        concatMap(res => res ? this.init() : of(undefined)),
       ).subscribe() : null;
     }
   }
@@ -175,7 +177,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
           action = this.updateGallery(event.data.gallery_id);
           break;
         case event.ActionType.Delete:
-          action = this.galleryService.deleteGallery(event.data.gallery_id);
+          action = this.galleryService.deleteGallery(event.data.gallery_id).pipe(
+            map(_ => 'Deleted')
+          );
           break;
       }
       action ? action.pipe(
