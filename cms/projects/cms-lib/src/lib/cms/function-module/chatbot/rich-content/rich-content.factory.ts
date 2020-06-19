@@ -1,4 +1,5 @@
-import { RichContent } from './rich-content.type';
+import { RichContent } from '../../../service/dialog-flow.service';
+
 
 export class ContentFactory {
 

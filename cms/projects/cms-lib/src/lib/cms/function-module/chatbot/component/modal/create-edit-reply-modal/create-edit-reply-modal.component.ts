@@ -4,8 +4,9 @@ import { ChatbotService } from '../../../chatbot.service';
 import { of } from 'rxjs';
 import { ChatbotReply } from '../../../chatbot.model';
 import { tap, map } from 'rxjs/operators';
-import { RichContent, RichContentType } from '../../../rich-content/rich-content.type';
+
 import { ContentFactory } from '../../../rich-content/rich-content.factory';
+import { RichContentType, RichContent, DialogFlowMessengerService } from './../../../../../service/dialog-flow.service';
 
 class ReplyModel {
   id: number;
@@ -93,7 +94,8 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
   replyModel: ReplyModel;
 
   constructor(
-    private chatbotService: ChatbotService
+    private chatbotService: ChatbotService,
+    private dialogFlowMessengerService: DialogFlowMessengerService,
   ) {
     super();
   }
@@ -132,25 +134,15 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
   preview() {
     const reply = Factory.modelToReply(this.replyModel);
     console.warn('preview() reply = ', reply);
-    let dfMessenger: {
-      renderCustomText(message: string): void;
-      renderCustomCard(richContents: RichContent[]);
-      showMinChat(): void;
-      showChat_(): void;
-      hideChat_(): void;
-    };
-    dfMessenger = document.querySelector('df-messenger') as any;
-    if (dfMessenger) {
-      dfMessenger.showChat_();
-      dfMessenger.renderCustomText('--------  回覆預覽開始  --------');
-      if (this.replyModel?.textContent) {
-        dfMessenger.renderCustomText(this.replyModel.textContent);
-      }
-      if (this.replyModel?.richContents?.length) {
-        dfMessenger.renderCustomCard(this.replyModel.richContents);
-      }
-      dfMessenger.renderCustomText('--------  回覆預覽結束  --------');
+    this.dialogFlowMessengerService.showChat();
+    this.dialogFlowMessengerService.renderCustomText('--------  回覆預覽開始  --------');
+    if (this.replyModel?.textContent) {
+      this.dialogFlowMessengerService.renderCustomText(this.replyModel.textContent);
     }
+    if (this.replyModel?.richContents?.length) {
+      this.dialogFlowMessengerService.renderCustomCard(this.replyModel.richContents);
+    }
+    this.dialogFlowMessengerService.renderCustomText('--------  回覆預覽結束  --------');
   }
 
   addRichContent() {

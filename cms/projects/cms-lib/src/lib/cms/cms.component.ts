@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DialogFlowMessengerService } from './service/dialog-flow.service';
 
 @Component({
   selector: 'cms-cms',
@@ -11,7 +12,8 @@ export class CmsComponent implements OnInit {
   menus = [];
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialogFlowMessengerService: DialogFlowMessengerService,
   ) { }
 
   ngOnInit(): void {

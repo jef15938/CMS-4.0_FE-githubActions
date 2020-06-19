@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Cms</title>
@@ -9,14 +10,18 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
-    df-messenger { position: fixed; z-index: 9999;}
+    df-messenger {
+      position: fixed;
+      z-index: 9999;
+    }
   </style>
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
 </head>
+
 <body class="mat-typography">
-  <cms-root></cms-root>
-  
   <df-messenger intent="WELCOME" chat-title="NewAgent" agent-id="d1b5ebdf-5729-46d2-b2d1-bd3615af61f7"
-      language-code="zh-tw"></df-messenger>
+    language-code="zh-tw"></df-messenger>
+  <cms-root></cms-root>
 </body>
+
 </html>

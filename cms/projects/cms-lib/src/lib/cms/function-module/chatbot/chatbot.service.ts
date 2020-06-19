@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ChatbotItem, ChatbotReply } from './chatbot.model';
 import { of, Observable, throwError } from 'rxjs';
 
+const DEMO_REPLY_CONTENT = '[{"text":{"text":["哈哈哈"]}},{"payload":{"richContent":[[{"type":"info","title":"Info item title","subtitle":"Info item subtitle","image":{"src":{"rawUrl":"https://www.apple.com/v/apple-events/home/e/images/overview/meta/og__fodnljjkwl6y.png?201910110233"}},"actionLink":"https://www.google.com.tw"},{"type":"description","title":"Description title","text":["This is text line 1.","This is text line 2."]},{"type":"image","rawUrl":"https://www.apple.com/v/apple-events/home/e/images/overview/meta/og__fodnljjkwl6y.png?201910110233","accessibilityText":"My logo"},{"type":"button","icon":{"type":"chevron_right","color":"#FF9800"},"text":"Button text","event":{"name":"ExecFuncEvent","languageCode":"zh-tw","parameters":{}}},{"type":"list","title":"List item 1 title","subtitle":"List item 1 subtitle","event":{"name":"ExecFuncEvent","languageCode":"zh-tw","parameters":{"list":1}}},{"type":"list","title":"List item 2 title","subtitle":"List item 2 subtitle","event":{"name":"ExecFuncEvent","languageCode":"zh-tw","parameters":{"list":2}}},{"type":"chips","options":[{"text":"Chip 1","image":{"src":{"rawUrl":"https://www.apple.com/v/apple-events/home/e/images/overview/meta/og__fodnljjkwl6y.png?201910110233"}},"link":"https://www.google.com.tw"},{"text":"Chip 2","image":{"src":{"rawUrl":"https://www.apple.com/v/apple-events/home/e/images/overview/meta/og__fodnljjkwl6y.png?201910110233"}},"link":"https://www.google.com.tw"}]},{"type":"accordion","title":"Accordion title","subtitle":"Accordion subtitle","image":{"src":{"rawUrl":"https://www.apple.com/v/apple-events/home/e/images/overview/meta/og__fodnljjkwl6y.png?201910110233"}},"text":"Accordion text"}]]}}]';
+
 const ITEMS: ChatbotItem[] = [
   {
     value: '項目-保險產品',
@@ -14,7 +16,7 @@ const REPLIES: ChatbotReply[] = [
   {
     id: 1,
     name: '回覆-保險產品',
-    content: '[{"text":{"text":["哈哈哈"]}},{"payload":{"richContent":[[{"type":"info","title":"Info item title","subtitle":"Info item subtitle","image":{"src":{"rawUrl":"https://www.apple.com/v/apple-events/home/e/images/overview/meta/og__fodnljjkwl6y.png?201910110233"}},"actionLink":"https://www.google.com.tw"},{"type":"image","rawUrl":"https://www.apple.com/v/apple-events/home/e/images/overview/meta/og__fodnljjkwl6y.png?201910110233","accessibilityText":"My logo"},{"type":"button","icon":{"type":"chevron_right","color":"#FF9800"},"text":"Button text","link":"https://www.google.com.tw","event":{"name":"","languageCode":"","parameters":{}}},{"type":"chips","options":[{"text":"Chip 1","image":{"src":{"rawUrl":"https://example.com/images/logo.png"}},"link":"https://example.com"},{"text":"Chip 2","image":{"src":{"rawUrl":"https://example.com/images/logo.png"}},"link":"https://example.com"}]}]]}}]',
+    content: DEMO_REPLY_CONTENT
   },
 ];
 
@@ -22,6 +24,10 @@ const REPLIES: ChatbotReply[] = [
   providedIn: 'root'
 })
 export class ChatbotService {
+
+  getDemoReplyContent(): string {
+    return DEMO_REPLY_CONTENT;
+  }
 
   getItems(): Observable<ChatbotItem[]> {
     const items = ITEMS.map(item => JSON.parse(JSON.stringify(item)));

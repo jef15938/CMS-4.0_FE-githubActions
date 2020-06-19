@@ -22,10 +22,13 @@
             <mat-list-item class="rich-content-list-item" cdkDrag>
               <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
               <span [ngSwitch]="richContent.type">
-                <ng-container *ngSwitchCase="RichContentType.BUTTON">按鈕</ng-container>
-                <ng-container *ngSwitchCase="RichContentType.CHIPS">建議項目</ng-container>
-                <ng-container *ngSwitchCase="RichContentType.IMAGE">圖片</ng-container>
                 <ng-container *ngSwitchCase="RichContentType.INFO">資訊</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.DESCRIPTION">描述</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.IMAGE">圖片</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.BUTTON">按鈕</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.LIST">清單</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.ACCORDION">折疊</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.CHIPS">建議項目</ng-container>
               </span>
               <button type="button" mat-icon-button color="warn" (click)="removeRichContent(richContent)">
                 <mat-icon>delete</mat-icon>
