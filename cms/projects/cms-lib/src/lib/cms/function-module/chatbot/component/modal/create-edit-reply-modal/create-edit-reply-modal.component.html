@@ -30,10 +30,10 @@
           <button type="button" mat-raised-button color="primary" #menuTrigger="matMenuTrigger"
             [matMenuTriggerFor]="createContentMenu">新增</button>
         </div>
-        <mat-list class="rich-content-list" id="rich-content-list" cdkDropList
+        <mat-list class="content-list" cdkDropList
           (cdkDropListDropped)="onListDropped($event)">
           <ng-container *ngFor="let richContent of replyModel.richContents">
-            <mat-list-item class="rich-content-list-item" cdkDrag>
+            <mat-list-item cdkDrag>
               <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
               <span [ngSwitch]="richContent.type">
                 <ng-container *ngSwitchCase="RichContentType.INFO">資訊</ng-container>

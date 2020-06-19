@@ -1,4 +1,5 @@
 import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
+import { ModalService } from './../../../../../../ui/modal/modal.service';
 import { RichContent, DialogFlowMessengerService } from './../../../../../service/dialog-flow.service';
 import { OnInit } from '@angular/core';
 
@@ -12,6 +13,7 @@ export abstract class RichContentModalComponent<TContent extends RichContent> ex
   abstract createNewModel(): TContent;
 
   constructor(
+    protected modalService: ModalService,
     protected dialogFlowMessengerService: DialogFlowMessengerService,
   ) { super(); }
 

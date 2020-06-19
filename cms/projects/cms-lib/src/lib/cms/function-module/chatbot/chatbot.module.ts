@@ -17,6 +17,7 @@ import { ButtonContentModalComponent } from './component/modal/rich-content/butt
 import { ListContentModalComponent } from './component/modal/rich-content/list-content-modal/list-content-modal.component';
 import { AccordionContentModalComponent } from './component/modal/rich-content/accordion-content-modal/accordion-content-modal.component';
 import { ChipsContentModalComponent } from './component/modal/rich-content/chips-content-modal/chips-content-modal.component';
+import { ChipOptionCreateEditModalComponent } from './component/modal/rich-content/chip-option-create-edit-modal/chip-option-create-edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ChipsContentModalComponent } from './component/modal/rich-content/chips
     ListContentModalComponent,
     AccordionContentModalComponent,
     ChipsContentModalComponent,
+    ChipOptionCreateEditModalComponent,
   ],
   imports: [
     CommonModule,

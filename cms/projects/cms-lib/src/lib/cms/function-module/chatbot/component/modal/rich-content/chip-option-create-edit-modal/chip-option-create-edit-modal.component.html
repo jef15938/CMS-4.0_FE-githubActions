@@ -1,0 +1,22 @@
+<ng-container *ngIf="optionModel">
+  <form #form="ngForm">
+    <div class="page-content-container">
+      <mat-form-field appearance="outline">
+        <mat-label>文字</mat-label>
+        <input matInput [(ngModel)]="optionModel.text" name="text" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>圖片連結</mat-label>
+        <input matInput [(ngModel)]="optionModel.image.src.rawUrl" name="rawUrl">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>外部連結</mat-label>
+        <input matInput [(ngModel)]="optionModel.link" name="actionLink" required>
+      </mat-form-field>
+    </div>
+    <div class="btn-group">
+      <button type="button" mat-button (click)="close()">取消</button>
+      <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+</ng-container>

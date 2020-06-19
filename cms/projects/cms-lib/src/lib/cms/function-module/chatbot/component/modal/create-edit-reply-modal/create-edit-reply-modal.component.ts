@@ -206,9 +206,9 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
       case RichContentType.ACCORDION:
         component = AccordionContentModalComponent;
         break;
-      // case RichContentType.CHIPS:
-      //   component = ChipsContentModalComponent;
-      //   break;
+      case RichContentType.CHIPS:
+        component = ChipsContentModalComponent;
+        break;
     }
     return component ? this.modalService.openComponent({
       component,
