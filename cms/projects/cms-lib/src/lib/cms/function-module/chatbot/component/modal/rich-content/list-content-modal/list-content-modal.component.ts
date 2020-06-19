@@ -26,7 +26,7 @@ interface Func {
 })
 export class ListContentModalComponent extends RichContentModalComponent<ListContent> implements OnInit {
 
-  title = '按鈕';
+  title = '清單';
 
   isEvent = false;
 
@@ -108,6 +108,7 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
         languageCode: 'zh-tw',
         parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
       }
+      this.contentModel.event.parameters.funcParams = this.selectedFunc.funcParams;
     } else {
       this.selectedFunc = null;
       delete this.contentModel.event;
@@ -123,6 +124,7 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
       languageCode: 'zh-tw',
       parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
     }
+    this.contentModel.event.parameters.funcParams = this.selectedFunc.funcParams;
   }
 
   confirm() {

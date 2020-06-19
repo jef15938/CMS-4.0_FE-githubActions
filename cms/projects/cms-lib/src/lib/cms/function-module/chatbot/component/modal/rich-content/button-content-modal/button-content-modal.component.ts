@@ -56,6 +56,10 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
     return {
       type: RichContentType.BUTTON,
       text: '',
+      icon: {
+        type: '',
+        color: '',
+      }
     }
   }
 
@@ -128,6 +132,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
           languageCode: 'zh-tw',
           parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
         }
+        this.contentModel.event.parameters.funcParams = this.selectedFunc.funcParams;
         this.isLink = false;
         delete this.contentModel.link;
       } else {
@@ -146,6 +151,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
       languageCode: 'zh-tw',
       parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
     }
+    this.contentModel.event.parameters.funcParams = this.selectedFunc.funcParams;
   }
 
   confirm() {
