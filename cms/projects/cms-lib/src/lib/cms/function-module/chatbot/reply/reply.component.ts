@@ -76,7 +76,7 @@ export class ReplyComponent implements OnInit {
       component: CreateEditReplyModalComponent,
       componentInitData: {
         action: 'Create',
-      }
+      },
     }).pipe(
       concatMap(res => {
         return res ? this.getReplies() : of(undefined)

@@ -1,0 +1,29 @@
+<ng-container *ngIf="contentModel">
+  <form #form="ngForm">
+    <div class="btn-group">
+      <button type="button" mat-button (click)="preview()" style="float: right;">預覽</button>
+    </div>
+    <div class="page-content-container">
+      <mat-form-field appearance="outline">
+        <mat-label>標題</mat-label>
+        <input matInput [(ngModel)]="contentModel.title" name="title" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>次標題</mat-label>
+        <input matInput [(ngModel)]="contentModel.subtitle" name="subtitle">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>圖片連結</mat-label>
+        <input matInput [(ngModel)]="contentModel.image.src.rawUrl" name="rawUrl">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>網址連結</mat-label>
+        <input matInput [(ngModel)]="contentModel.actionLink" name="actionLink">
+      </mat-form-field>
+    </div>
+    <div class="btn-group">
+      <button type="button" mat-button (click)="close()">取消</button>
+      <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+</ng-container>

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { SafeResourcePipe } from './safe-resource.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
+import { ObjectKeysPipe } from './object-keys.pipe';
 
 const PIPES = [
   SafeHtmlPipe,
   SafeResourcePipe,
   SafeUrlPipe,
+  ObjectKeysPipe,
 ];
 
 @NgModule({
@@ -15,7 +17,7 @@ const PIPES = [
     CommonModule
   ],
   declarations: [
-    ...PIPES
+    ...PIPES,
   ],
   exports: [
     ...PIPES

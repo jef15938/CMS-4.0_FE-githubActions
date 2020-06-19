@@ -1,0 +1,39 @@
+<ng-container *ngIf="contentModel">
+  <form #form="ngForm">
+    <div class="btn-group">
+      <button type="button" mat-button (click)="preview()" style="float: right;">預覽</button>
+    </div>
+    <div class="page-content-container">
+      <mat-form-field appearance="outline">
+        <mat-label>標題</mat-label>
+        <input matInput [(ngModel)]="contentModel.title" name="title" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>次標題</mat-label>
+        <input matInput [(ngModel)]="contentModel.subtitle" name="subtitle">
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="isEvent" (change)="onIsEventChange()" [ngModelOptions]="{standalone: true}">執行功能
+      </mat-checkbox>
+      <ng-container *ngIf="isEvent&&selectedFunc">
+        <mat-form-field appearance="outline">
+          <mat-label>功能</mat-label>
+          <mat-select [(ngModel)]="selectedFunc.funcId" name="funcId" (selectionChange)="onFuncSelectionChange()">
+            <mat-option *ngFor="let function of functions" [value]="function.funcId">
+              {{function.funcName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <ng-container *ngFor="let key of (selectedFunc.funcParams|objectKeys)">
+          <mat-form-field appearance="outline">
+            <mat-label>{{key}}</mat-label>
+            <input matInput [(ngModel)]="selectedFunc.funcParams[key]" [name]="'key-'+key" required>
+          </mat-form-field>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="btn-group">
+      <button type="button" mat-button (click)="close()">取消</button>
+      <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+</ng-container>

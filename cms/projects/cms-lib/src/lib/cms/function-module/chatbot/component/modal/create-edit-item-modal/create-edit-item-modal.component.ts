@@ -72,7 +72,7 @@ export class CreateEditItemModalComponent extends CustomModalBase implements OnI
     this.synonym = '';
   }
 
-  removeSynonym(synonym) {
+  removeSynonym(synonym: string) {
     synonym = (synonym || '').trim();
     if (!synonym) { return; }
     const index = this.item.synonyms.indexOf(synonym);

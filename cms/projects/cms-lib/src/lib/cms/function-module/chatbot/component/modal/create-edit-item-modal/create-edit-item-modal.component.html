@@ -24,7 +24,7 @@
         </div>
         <mat-list class="synonym-list" id="synonym-list">
           <ng-container *ngFor="let synonym of item.synonyms">
-            <mat-list-item class="synonym-list-item">
+            <mat-list-item>
               {{synonym}}
               <button type="button" mat-icon-button color="warn" (click)="removeSynonym(synonym)">
                 <mat-icon>delete</mat-icon>

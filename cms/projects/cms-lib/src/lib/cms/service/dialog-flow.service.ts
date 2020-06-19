@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { fromEvent, merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 export interface DialogFlowEvent {
   languageCode: string;
@@ -36,7 +37,9 @@ interface DialogFlowMessenger extends HTMLElement {
 export class DialogFlowMessengerService {
   private dfMessenger: DialogFlowMessenger;
 
-  constructor() {
+  constructor(
+    private router: Router,
+  ) {
     this.registerMessenger();
   }
 
@@ -67,10 +70,24 @@ export class DialogFlowMessengerService {
 
           console.log('DialogFlow event received, event = ', eventContent);
           if (eventContent.name !== 'ExecCmsFuncEvent') {
-            alert(`[功能測試] ${eventContent.name}`);
+            alert(`[功能測試] ${eventContent.name} : ${eventContent.parameters ? JSON.stringify(eventContent.parameters) : ''}`);
           } else {
             // TODO: handle event
-            alert('執行CMS功能');
+            const funcId = eventContent.parameters?.funcId;
+            switch (funcId) {
+              case 'test':
+                alert('CMS 執行功能測試');
+                break;
+              case 'routing':
+                const path: string = eventContent.parameters.funcParams?.url;
+                if (!path) { alert('執行路由功能失敗(無路由url)'); }
+                const notValid = ['http', '//', '.'];
+                const isValid = notValid.every(words => path.indexOf(words) < 0);
+                if (!isValid) { alert(`執行路由功能失敗(無效路由) : ${path}`); }
+                const pathFragments = path.split('/');
+                this.router.navigate(pathFragments);
+                break;
+            }
           }
         })
       ).subscribe();
@@ -95,6 +112,43 @@ export class DialogFlowMessengerService {
   renderCustomCard(richContents: RichContent[]) {
     if (!this.hasMessenger()) { return; }
     this.dfMessenger.renderCustomCard(richContents);
+  }
+
+  parseRichContent(contentString: string): { textContent: string, richContents: RichContent[] } {
+    const content = {
+      textContent: '',
+      richContents: [],
+    } as { textContent: string, richContents: RichContent[] };
+
+    if (content) {
+      try {
+        let parsed: any[] = JSON.parse(contentString);
+
+        try {
+          const textItem = parsed.find(item => !!item.text) as { text: { text: string[] } };
+          if (textItem?.text?.text) {
+            content.textContent = textItem.text.text[0] || '';
+          }
+        } catch (error) {
+
+        }
+
+        try {
+          const payloadItem = parsed.find(item => !!item.payload) as { payload: { richContent: (RichContent[])[] } }
+          if (payloadItem?.payload?.richContent) {
+            const richContents = payloadItem.payload.richContent[0];
+            if (richContents) {
+              content.richContents = richContents;
+            }
+          }
+        } catch (error) {
+
+        }
+      } catch (error) {
+
+      }
+    }
+    return content;
   }
 
 }

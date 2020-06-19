@@ -1,12 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
 import { ChatbotService } from '../../../chatbot.service';
 import { of } from 'rxjs';
 import { ChatbotReply } from '../../../chatbot.model';
 import { tap, map } from 'rxjs/operators';
-
-import { ContentFactory } from '../../../rich-content/rich-content.factory';
 import { RichContentType, RichContent, DialogFlowMessengerService } from './../../../../../service/dialog-flow.service';
+import { ModalService } from './../../../../../../ui/modal/modal.service';
+import { InfoContentModalComponent } from '../rich-content/info-content-modal/info-content-modal.component';
+import { DescriptionContentModalComponent } from '../rich-content/description-content-modal/description-content-modal.component';
+import { ImageContentModalComponent } from '../rich-content/image-content-modal/image-content-modal.component';
+import { ButtonContentModalComponent } from '../rich-content/button-content-modal/button-content-modal.component';
+import { ListContentModalComponent } from '../rich-content/list-content-modal/list-content-modal.component';
+import { AccordionContentModalComponent } from '../rich-content/accordion-content-modal/accordion-content-modal.component';
+import { ChipsContentModalComponent } from '../rich-content/chips-content-modal/chips-content-modal.component';
+import { RichContentModalComponent } from '../rich-content/rich-content-modal-base';
 
 class ReplyModel {
   id: number;
@@ -16,8 +23,8 @@ class ReplyModel {
   textContent: string;
   richContents: RichContent[];
 
-  initContent(contentString: string) {
-    const content = ContentFactory.parseContent(contentString)
+  initContent(contentString: string, dialogFlowMessengerService: DialogFlowMessengerService) {
+    const content = dialogFlowMessengerService.parseRichContent(contentString)
     this.textContent = content.textContent;
     this.richContents = content.richContents;
   }
@@ -58,11 +65,11 @@ class Factory {
     return reply;
   }
 
-  static replyToModel(reply: ChatbotReply): ReplyModel {
+  static replyToModel(reply: ChatbotReply, dialogFlowMessengerService: DialogFlowMessengerService): ReplyModel {
     const model = new ReplyModel();
     model.id = reply.id;
     model.name = reply.name;
-    model.initContent(reply.content);
+    model.initContent(reply.content, dialogFlowMessengerService);
     return model;
   }
 
@@ -95,6 +102,7 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
 
   constructor(
     private chatbotService: ChatbotService,
+    private modalService: ModalService,
     private dialogFlowMessengerService: DialogFlowMessengerService,
   ) {
     super();
@@ -110,7 +118,7 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
         ? of(Factory.createNewReply())
         : this.chatbotService.getReplyById(this.replyId)
     ).pipe(
-      map(reply => Factory.replyToModel(reply)),
+      map(reply => Factory.replyToModel(reply, this.dialogFlowMessengerService)),
       tap(replyModel => this.replyModel = replyModel),
     );
   }
@@ -132,29 +140,23 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
   }
 
   preview() {
-    const reply = Factory.modelToReply(this.replyModel);
-    console.warn('preview() reply = ', reply);
     this.dialogFlowMessengerService.showChat();
-    this.dialogFlowMessengerService.renderCustomText('--------  回覆預覽開始  --------');
+    this.dialogFlowMessengerService.renderCustomText('--------  預覽回覆開始  --------');
     if (this.replyModel?.textContent) {
       this.dialogFlowMessengerService.renderCustomText(this.replyModel.textContent);
     }
     if (this.replyModel?.richContents?.length) {
       this.dialogFlowMessengerService.renderCustomCard(this.replyModel.richContents);
     }
-    this.dialogFlowMessengerService.renderCustomText('--------  回覆預覽結束  --------');
+    this.dialogFlowMessengerService.renderCustomText('--------  預覽回覆結束  --------');
   }
 
-  addRichContent() {
-    // const synonym = (this.synonym || '').trim();
-    // if (!synonym) { return; }
-    // if (this.item.synonyms.indexOf(synonym) < 0) {
-    //   this.item.synonyms.unshift(synonym);
-    //   document.getElementById('synonym-list').scrollTo(0, 0);
-    // } else {
-    //   alert('已有同樣的同義祠');
-    // }
-    // this.synonym = '';
+  addRichContent(type: RichContentType) {
+    this.createEditContent(type).subscribe();
+  }
+
+  editRichContent(richContent: RichContent) {
+    this.createEditContent(richContent.type, richContent).subscribe();
   }
 
   removeRichContent(richContent: RichContent) {
@@ -181,6 +183,50 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
     const afterIndex = ev.currentIndex;
     if (beforeIndex === afterIndex) { return; }
     this.arrayMove(this.replyModel.richContents, beforeIndex, afterIndex);
+  }
+
+  private createEditContent(type: RichContentType, content?: RichContent) {
+    let component: Type<RichContentModalComponent<any>>;
+    switch (type) {
+      case RichContentType.INFO:
+        component = InfoContentModalComponent;
+        break;
+      case RichContentType.DESCRIPTION:
+        component = DescriptionContentModalComponent;
+        break;
+      case RichContentType.IMAGE:
+        component = ImageContentModalComponent;
+        break;
+      case RichContentType.BUTTON:
+        component = ButtonContentModalComponent;
+        break;
+      case RichContentType.LIST:
+        component = ListContentModalComponent;
+        break;
+      case RichContentType.ACCORDION:
+        component = AccordionContentModalComponent;
+        break;
+      // case RichContentType.CHIPS:
+      //   component = ChipsContentModalComponent;
+      //   break;
+    }
+    return component ? this.modalService.openComponent({
+      component,
+      componentInitData: {
+        content
+      },
+    }).pipe(
+      tap((res: RichContent) => {
+        if (res) {
+          const index = this.replyModel.richContents.indexOf(content);
+          if (index < 0) { // add
+            this.replyModel.richContents.push(res);
+          } else { // edit
+            this.replyModel.richContents.splice(index, 1, res);
+          }
+        }
+      })
+    ) : of(undefined);
   }
 
 }

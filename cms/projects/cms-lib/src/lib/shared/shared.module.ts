@@ -23,6 +23,7 @@ import { TreeModule } from './../ui/tree/tree.module';
 import { ModalModule } from './../ui/modal/modal.module';
 import { TableModule } from './../ui/table/table.module';
 import { DirectiveModule } from './../directive/directive.module';
+import { PipeModule } from '../pipe/pipe.module';
 
 @NgModule({
   declarations: [],
@@ -53,7 +54,8 @@ import { DirectiveModule } from './../directive/directive.module';
     TreeModule,
     ModalModule,
     TableModule,
-    DirectiveModule
+    DirectiveModule,
+    PipeModule
   ]
 })
 export class SharedModule { }

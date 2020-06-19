@@ -6,6 +6,8 @@ import { CustomModalBase } from './custom-modal-base';
 import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.component';
 import { MessageModalComponent } from './component/message-modal/message-modal.component';
 
+let modalId = 0;
+
 @Injectable()
 export class ModalService {
 
@@ -23,7 +25,7 @@ export class ModalService {
     // The user can't close the modal by clicking outside its body
     // modalConfig.disableClose = true;
 
-    modalConfig.id = config.modalSetting?.id || 'modal-component';
+    modalConfig.id = config.modalSetting?.id || `cms-modal-${++modalId}`;
     modalConfig.width = fullScreen ? '100%' : config.modalSetting?.width || '600px';
     modalConfig.height = fullScreen ? '100%' : config.modalSetting?.height || modalConfig.height;
     modalConfig.minWidth = fullScreen ? '100%' : config.modalSetting?.minWidth || modalConfig.minWidth;
