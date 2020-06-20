@@ -1,16 +1,16 @@
-import { HtmlEditorAction } from '../action.base';
+import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertTableModalComponent } from '../../modal/html-editor-insert-table-modal/html-editor-insert-table-modal.component';
 import { TableControllerService } from '../../service/html-element-controller/table/table-controller-service';
-import { IHtmlEditorContext } from '../../html-editor.interface';
+import { HtmlEditorContext } from '../../html-editor.interface';
 
-export class InsertTable extends HtmlEditorAction {
+export class InsertTable extends HtmlEditorActionBase {
 
   private tableControllerService: TableControllerService;
 
   constructor(
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
   ) {
     super(context);
     this.tableControllerService = new TableControllerService();
@@ -20,7 +20,11 @@ export class InsertTable extends HtmlEditorAction {
     const range = this.context.simpleWysiwygService.getRange();
     if (!range) { return of(undefined); }
 
-    const existingTable = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, range.commonAncestorContainer as HTMLElement, 'table');
+    const existingTable = this.context.simpleWysiwygService.findTagFromTargetToContainer(
+      this.context.editorContainer,
+      range.commonAncestorContainer as HTMLElement, 'table'
+    );
+
     if (existingTable) {
       return this.context.modalService.openMessage({
         message: '表格內無法插入表格',
@@ -45,7 +49,7 @@ export class InsertTable extends HtmlEditorAction {
     const range = this.context.simpleWysiwygService.getRange();
     const commonAncestorContainer = range.commonAncestorContainer as HTMLElement;
     const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLowerCase();
-    const tableTagNames = ['td', 'th', 'tr', 'table', 'tbody', 'thead', 'tfoot']
+    const tableTagNames = ['td', 'th', 'tr', 'table', 'tbody', 'thead', 'tfoot'];
     if (commonAncestorContainer && tableTagNames.indexOf(commonAncestorContainerTagName) > -1) {
       let el = commonAncestorContainer;
       while (el) {

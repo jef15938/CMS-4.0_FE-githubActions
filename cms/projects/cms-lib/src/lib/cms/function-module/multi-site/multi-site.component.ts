@@ -22,7 +22,7 @@ enum EditModeType {
 class SiteInfoUpdateModel extends SiteInfo {
   constructor(siteInfo: SiteInfo) {
     super();
-    for (let k of Object.keys(siteInfo)) {
+    for (const k of Object.keys(siteInfo)) {
       this[k] = siteInfo[k];
     }
   }
@@ -75,7 +75,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   private init(): Observable<any> {
     return concat(
       this.getSites(),
-    )
+    );
   }
 
   private getSites(): Observable<SiteInfo[]> {
@@ -119,14 +119,14 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   onCustomEvent(event: MultiSiteNodeCustomEvent) {
     if (event instanceof MultiSiteNodeCustomEvent) {
-      let action: Observable<any>
+      let action: Observable<any>;
       switch (event.action) {
         case event.ActionType.Create:
           action = this.modalService.openComponent({
             component: SitemapNodeCreateModalComponent,
             componentInitData: {
               siteId: this.selectedSite.site_id,
-              parent_id: event.data.node_id
+              parentId: event.data.node_id
             }
           });
           break;
@@ -137,9 +137,9 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
           break;
       }
 
-      action ? action
-        .pipe(tap(res => res ? this.swichMode(EditModeType.Node) : null))
-        .subscribe() : null;
+      if (action) {
+        action.pipe(tap(res => res ? this.swichMode(EditModeType.Node) : null)).subscribe();
+      }
     }
   }
 
@@ -160,9 +160,9 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
               siteMap: selectedSitemapNode,
               parentId: parent?.node_id,
               nodeOrder: order > -1 ? `${order}` : '',
-            }
+            };
           })
-        )
+        );
       }),
     ).subscribe();
   }
@@ -181,7 +181,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
         contentInfo,
         selectableTemplates,
         mode: EditorMode.EDIT,
-      }).subscribe()
+      }).subscribe();
     });
   }
 

@@ -1,7 +1,7 @@
-import { HtmlEditorAction } from '../action.base';
+import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
 
-export class Outdent extends HtmlEditorAction {
+export class Outdent extends HtmlEditorActionBase {
 
   private readonly padding = 40;
 

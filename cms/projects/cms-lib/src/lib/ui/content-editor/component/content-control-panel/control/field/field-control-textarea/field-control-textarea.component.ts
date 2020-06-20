@@ -16,8 +16,8 @@ export class FieldControlTextareaComponent extends ContentControlBase implements
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selected']) {
-      const selected = changes['selected'].currentValue as TemplateFieldSelectEvent;
+    if (changes.selected) {
+      const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
       const directive = selected.fieldDirective as LayoutFieldTextareaDirective;
       this.maxLength = directive.maxLength > 0 ? directive.maxLength : 0;
       this.maxLines = directive.maxLines > 0 ? directive.maxLines : 0;
@@ -42,7 +42,7 @@ export class FieldControlTextareaComponent extends ContentControlBase implements
         alert(`行數最多允許${this.maxLines}行，多餘行數將被合併至最後一行`);
         const overLimitLines = lines.splice(this.maxLines - 1, lines.length - this.maxLines + 1);
         lines.push(overLimitLines.join(''));
-        this.selected.fieldInfo.fieldVal = lines.join("\n");
+        this.selected.fieldInfo.fieldVal = lines.join('\n');
       }
     }, 0);
     this.change.emit();

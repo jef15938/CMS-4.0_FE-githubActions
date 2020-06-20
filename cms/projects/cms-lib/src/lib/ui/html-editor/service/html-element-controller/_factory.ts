@@ -1,11 +1,11 @@
 import { HtmlEditorElementController, HTML_EDITOR_ELEMENT_CONTROLLER } from './_base';
 import { HtmlEditorImageController } from './image/image-controller';
-import { IHtmlEditorContext, IHtmlEditorContextMenuItem } from '../../html-editor.interface';
+import { HtmlEditorContext, HtmlEditorContextMenuItem } from '../../html-editor.interface';
 import { HtmlEditorTableController } from './table/table-controller';
 import { HtmlEditorVideoController } from './video/video-controller';
 
 export class HtmlEditorElementControllerFactory {
-  static addController(el: HTMLElement, context: IHtmlEditorContext): HtmlEditorElementController<HTMLElement> {
+  static addController(el: HTMLElement, context: HtmlEditorContext): HtmlEditorElementController<HTMLElement> {
     if (el?.nodeType === Node.ELEMENT_NODE) {
       const tagName = el.tagName?.toLowerCase();
 
@@ -13,14 +13,20 @@ export class HtmlEditorElementControllerFactory {
 
       switch (tagName) {
         case 'img':
-          if(el.getAttribute('frame_id')){
-            controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorVideoController(el as HTMLImageElement, context);
+          if (el.getAttribute('frame_id')) {
+            controller =
+              HtmlEditorElementControllerFactory.getController(el)
+              || new HtmlEditorVideoController(el as HTMLImageElement, context);
           } else {
-            controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorImageController(el as HTMLImageElement, context);
+            controller =
+              HtmlEditorElementControllerFactory.getController(el)
+              || new HtmlEditorImageController(el as HTMLImageElement, context);
           }
           break;
         case 'table':
-          controller = HtmlEditorElementControllerFactory.getController(el) || new HtmlEditorTableController(el as HTMLTableElement, context);
+          controller =
+            HtmlEditorElementControllerFactory.getController(el)
+            || new HtmlEditorTableController(el as HTMLTableElement, context);
           break;
       }
 
@@ -35,7 +41,7 @@ export class HtmlEditorElementControllerFactory {
     return el ? el[HTML_EDITOR_ELEMENT_CONTROLLER] : undefined;
   }
 
-  static getContextMenuItems(el: HTMLElement): IHtmlEditorContextMenuItem[] {
+  static getContextMenuItems(el: HTMLElement): HtmlEditorContextMenuItem[] {
     const controller = HtmlEditorElementControllerFactory.getController(el);
     return controller?.contextMenuItems || [];
   }

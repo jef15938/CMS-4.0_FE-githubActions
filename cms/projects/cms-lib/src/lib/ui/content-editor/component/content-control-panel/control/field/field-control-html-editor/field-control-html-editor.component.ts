@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { IHtmlEditorService } from './../../../../../../../ui/html-editor/html-editor.interface';
+import { HtmlEditorServiceInterface } from './../../../../../../../ui/html-editor/html-editor.interface';
 import { HtmlEditorServiceInjectionToken } from './../../../../../../../ui/html-editor/html-editor.injection-token';
 
 @Component({
@@ -11,7 +11,7 @@ import { HtmlEditorServiceInjectionToken } from './../../../../../../../ui/html-
 export class FieldControlHtmlEditorComponent extends ContentControlBase implements OnInit {
 
   constructor(
-    @Inject(HtmlEditorServiceInjectionToken) private htmlEditorService: IHtmlEditorService,
+    @Inject(HtmlEditorServiceInjectionToken) private htmlEditorService: HtmlEditorServiceInterface,
   ) {
     super();
   }

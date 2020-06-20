@@ -43,7 +43,7 @@ export class ItemComponent implements OnInit {
   private init(): Observable<any> {
     return concat(
       this.getItems(),
-    )
+    );
   }
 
   private getItems(): Observable<ChatbotItem[]> {
@@ -65,9 +65,12 @@ export class ItemComponent implements OnInit {
           );
           break;
       }
-      action ? action.pipe(
-        concatMap(res => res ? this.getItems() : of(undefined)),
-      ).subscribe() : null;
+
+      if (action) {
+        action.pipe(
+          concatMap(res => res ? this.getItems() : of(undefined)),
+        ).subscribe();
+      }
     }
   }
 
@@ -79,7 +82,7 @@ export class ItemComponent implements OnInit {
       }
     }).pipe(
       concatMap(res => {
-        return res ? this.getItems() : of(undefined)
+        return res ? this.getItems() : of(undefined);
       }),
     ).subscribe();
   }

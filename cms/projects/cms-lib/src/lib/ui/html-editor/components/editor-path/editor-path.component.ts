@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { IHtmlEditorContext } from '../../html-editor.interface';
+import { HtmlEditorContext } from '../../html-editor.interface';
 
 @Component({
   selector: 'cms-editor-path',
@@ -10,7 +10,7 @@ import { IHtmlEditorContext } from '../../html-editor.interface';
 })
 export class EditorPathComponent implements OnInit, OnDestroy {
 
-  @Input() context: IHtmlEditorContext;
+  @Input() context: HtmlEditorContext;
 
   paths: HTMLElement[] = [];
 

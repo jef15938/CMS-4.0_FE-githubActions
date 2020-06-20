@@ -1,9 +1,9 @@
-import { HtmlEditorAction } from '../action.base';
+import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertVideoModalComponent } from '../../modal/html-editor-insert-video-modal/html-editor-insert-video-modal.component';
 
-export class InsertVideo extends HtmlEditorAction {
+export class InsertVideo extends HtmlEditorActionBase {
 
   do() {
     const editorContainer = this.context.editorContainer;
@@ -29,8 +29,8 @@ export class InsertVideo extends HtmlEditorAction {
 
         if (!image) {
           this.context.simpleWysiwygService.execCommand(editorContainer, 'insertImage', config.src);
-          const range = this.context.simpleWysiwygService.getRange();
-          const imgElement = range.commonAncestorContainer.childNodes[range.startOffset - 1] as HTMLImageElement;
+          const nowRange = this.context.simpleWysiwygService.getRange();
+          const imgElement = nowRange.commonAncestorContainer.childNodes[nowRange.startOffset - 1] as HTMLImageElement;
           if (imgElement && imgElement.tagName.toLowerCase() === 'img') {
             imgElement.setAttribute('frame_id', config.frame_id);
             imgElement.src = config.src;

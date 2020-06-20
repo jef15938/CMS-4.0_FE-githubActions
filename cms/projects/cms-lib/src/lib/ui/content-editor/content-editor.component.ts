@@ -1,4 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild, AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import {
+  Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild,
+  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { ContentEditorSaveEvent, EditorMode } from './content-editor.interface';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
@@ -79,7 +82,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   setEditorSaved() {
-    this.saved = true
+    this.saved = true;
   }
 
   clear() {
@@ -106,7 +109,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   resetSelected() {
-    if (this.manager) {      
+    if (this.manager) {
       this.manager.selectedTemplateAddBtn = undefined;
       this.manager.selectedViewElementEvent = undefined;
     }
@@ -118,13 +121,12 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
    * 利用監聽Capture讓程式能在 "按下" -> "選取Template/Field" 中間階段做事．
    * ps 1. Angular Dom Event Binding Or fromEvent() 無法監聽 Capture 階段 ?
    * ps 2. 在listener的function內呼叫ev.stopPropagation()，會讓Click不往下傳給child，造成無法選取．
-   * 
+   *
    * 選取Template/Field後，會將對應元件的資料物件傳回給 ContentControlPanel 做編輯．
    * 與拷貝物件保存功能會造成衝突：
    * 1.選取的是舊物件，在 ContentControlPanel 編輯時不會同步反映到 ContentViewRenderer 的畫面上．
    * 2.在 ContentControlPanel 編輯後，物件拷貝更新了，但是無法觸發畫面重新渲染，造成 ContentViewRenderer 產生 AddTemplateBtn 時異常．
-   * 
-   * @memberof ContentEditorComponent
+   *
    */
   private registerClickCaptureListener(action: 'register' | 'unregister') {
     this.clickCapturelistenerBlocks?.forEach(block => {

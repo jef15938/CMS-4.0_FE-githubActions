@@ -13,3 +13,4 @@ export enum SiteMapUrlBlankType {
   Yes = 'Y',
   No = 'N',
 }
+

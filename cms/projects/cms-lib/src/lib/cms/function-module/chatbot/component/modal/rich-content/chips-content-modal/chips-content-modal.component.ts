@@ -10,13 +10,13 @@ interface ChipOption {
     src: {
       rawUrl: string;
     }
-  },
+  };
   link: string;
 }
 
 interface ChipsContent extends RichContent {
   type: RichContentType.CHIPS;
-  options: ChipOption[]
+  options: ChipOption[];
 }
 
 @Component({
@@ -32,19 +32,19 @@ export class ChipsContentModalComponent extends RichContentModalComponent<ChipsC
     return {
       type: RichContentType.CHIPS,
       options: [],
-    }
+    };
   }
 
   private arrayMove(arr: any[], beforeIndex: number, afterIndex: number) {
     if (afterIndex >= arr.length) {
-      var k = afterIndex - arr.length + 1;
+      let k = afterIndex - arr.length + 1;
       while (k--) {
         arr.push(undefined);
       }
     }
     arr.splice(afterIndex, 0, arr.splice(beforeIndex, 1)[0]);
     return arr; // for testing
-  };
+  }
 
   onListDropped(ev: { currentIndex: number, previousIndex: number }): void {
     const beforeIndex = ev.previousIndex;

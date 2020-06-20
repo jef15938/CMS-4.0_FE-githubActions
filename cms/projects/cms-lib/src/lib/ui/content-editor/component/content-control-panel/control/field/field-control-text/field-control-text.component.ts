@@ -15,8 +15,8 @@ export class FieldControlTextComponent extends ContentControlBase implements OnI
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selected']) {
-      const selected = changes['selected'].currentValue as TemplateFieldSelectEvent;
+    if (changes.selected) {
+      const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
       const directive = selected.fieldDirective as LayoutFieldTextDirective;
       this.maxLength = directive.maxLength > 0 ? directive.maxLength : 0;
     }

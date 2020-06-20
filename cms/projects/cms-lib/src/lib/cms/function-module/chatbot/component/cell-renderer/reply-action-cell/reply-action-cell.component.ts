@@ -23,7 +23,7 @@ export class ReplyActionCellComponent implements CustomCellRenderer, OnInit {
 
   ActionType = ActionType;
 
-  config: { data: ChatbotReply, table: CmsTable }
+  config: { data: ChatbotReply, table: CmsTable };
 
   constructor() { }
 
@@ -32,7 +32,7 @@ export class ReplyActionCellComponent implements CustomCellRenderer, OnInit {
 
   compInit(config: { data: any, table: CmsTable }) {
     this.config = config;
-  };
+  }
 
   onAction(action: ActionType) {
     this.config.table.triggerCustomEvent(new ReplyActionCellCustomEvent(action, this.config.data));

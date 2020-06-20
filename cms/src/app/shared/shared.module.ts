@@ -5,7 +5,6 @@ import { UiModule } from '@neux/ui';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '@neux/core';
 
-
 @NgModule({
   declarations: [],
   imports: [

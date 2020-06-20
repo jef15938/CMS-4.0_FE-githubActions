@@ -95,7 +95,7 @@ export class DialogFlowMessengerService {
   }
 
   private hasMessenger() {
-    this.registerMessenger;
+    this.registerMessenger();
     return !!this.dfMessenger;
   }
 
@@ -122,7 +122,7 @@ export class DialogFlowMessengerService {
 
     if (content) {
       try {
-        let parsed: any[] = JSON.parse(contentString);
+        const parsed: any[] = JSON.parse(contentString);
 
         try {
           const textItem = parsed.find(item => !!item.text) as { text: { text: string[] } };
@@ -134,7 +134,7 @@ export class DialogFlowMessengerService {
         }
 
         try {
-          const payloadItem = parsed.find(item => !!item.payload) as { payload: { richContent: (RichContent[])[] } }
+          const payloadItem = parsed.find(item => !!item.payload) as { payload: { richContent: (RichContent[])[] } };
           if (payloadItem?.payload?.richContent) {
             const richContents = payloadItem.payload.richContent[0];
             if (richContents) {

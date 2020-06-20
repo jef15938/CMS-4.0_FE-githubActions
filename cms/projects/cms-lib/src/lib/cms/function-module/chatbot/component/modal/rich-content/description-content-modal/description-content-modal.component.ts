@@ -24,7 +24,7 @@ export class DescriptionContentModalComponent extends RichContentModalComponent<
       type: RichContentType.DESCRIPTION,
       title: '',
       text: [],
-    }
+    };
   }
 
   addText() {

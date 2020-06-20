@@ -14,6 +14,7 @@ export class CropperMenuEditComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // tslint:disable-next-line: no-string-literal
     this.options = this.cropper['options'];
   }
 

@@ -17,7 +17,4 @@ export class ContentEditorManager {
     this.stateManager = new ContentInfoStateManager(originContentInfo);
   }
 
-  moveTemplateUp(templateInfo: ContentTemplateInfo) {
-    
-  }
 }

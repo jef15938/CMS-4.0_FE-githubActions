@@ -4,7 +4,7 @@ import { CustomModalActionButton, CustomModalBase } from '../../custom-modal-bas
 @Component({
   selector: 'cms-message-modal',
   templateUrl: './message-modal.component.html',
-  styleUrls: ['./message-modal.component.css']
+  styleUrls: ['./message-modal.component.scss']
 })
 export class MessageModalComponent extends CustomModalBase implements OnInit {
   title: string | (() => string) = '';
@@ -17,7 +17,7 @@ export class MessageModalComponent extends CustomModalBase implements OnInit {
 
   message = '';
 
-  constructor() { super() }
+  constructor() { super(); }
 
   ngOnInit(): void {
   }

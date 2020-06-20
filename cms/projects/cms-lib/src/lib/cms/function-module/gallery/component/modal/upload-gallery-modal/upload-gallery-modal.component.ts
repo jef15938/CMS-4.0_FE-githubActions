@@ -38,7 +38,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   title: string | (() => string);
   actions: CustomModalActionButton[];
 
-  @Input() category_name: string;
+  @Input() categoryName: string;
   @Input() categoryId: string;
   @Input() galleryId: number;
 
@@ -83,8 +83,8 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   ngOnInit() {
     this.updateSize('1280px');
 
-    if (this.categoryId && this.category_name) {
-      this.title = `上傳檔案：${this.category_name}`;
+    if (this.categoryId && this.categoryName) {
+      this.title = `上傳檔案：${this.categoryName}`;
     } else if (this.galleryId) {
       this.title = `修改檔案：${this.galleryId}`;
     }
@@ -147,7 +147,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
           console.warn('newFile = ', newFile);
           this.files.splice(this.files.indexOf(file), 1, newFile);
         });
-      }
+      };
     }
   }
 
@@ -238,17 +238,17 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     }
     const file = this.files[0];
     let action: Observable<any>;
-    if (this.categoryId && this.category_name) { // 新增
+    if (this.categoryId && this.categoryName) { // 新增
       action = this.galleryService.createGallery(file.data, this.categoryId);
     } else if (this.galleryId) { // 修改
       action = this.galleryService.updateGallery(file.data, this.galleryId);
     }
     if (action) {
       action.subscribe((result: { success: boolean }) => {
-        if(!result.success){
+        if (!result.success) {
           alert('操作失敗');
         }
-        this.close(true)
+        this.close(true);
       });
     }
   }

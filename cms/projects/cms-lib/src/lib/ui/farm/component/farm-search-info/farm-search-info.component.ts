@@ -26,10 +26,10 @@ export class FarmSearchInfoComponent implements OnInit, AfterContentChecked, OnD
   ) { }
 
   ngOnInit(): void {
-    let options = {
+    const options = {
       rootMargin: '0px',
       threshold: 1.0
-    }
+    };
 
     this.intersectionObserver = new IntersectionObserver((entries, observer) => {
       this.farmFormInfoCompEmit.emit(this.farmFormInfoComponent);

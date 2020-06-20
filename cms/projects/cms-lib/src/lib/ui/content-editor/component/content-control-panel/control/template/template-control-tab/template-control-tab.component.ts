@@ -15,8 +15,8 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
   templateInfo: TabTemplateInfo;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selected']) {
-      const event = changes['selected'].currentValue as LayoutWrapperSelectEvent;
+    if (changes.selected) {
+      const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as TabTemplateInfo;
       const componentInstance = event.componentRef.instance as TabTemplateBaseComponent;
       this.maxItemCount = componentInstance.maxItemCount;
@@ -36,14 +36,14 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
 
   private arrayMove(arr: any[], beforeIndex: number, afterIndex: number) {
     if (afterIndex >= arr.length) {
-      var k = afterIndex - arr.length + 1;
+      let k = afterIndex - arr.length + 1;
       while (k--) {
         arr.push(undefined);
       }
     }
     arr.splice(afterIndex, 0, arr.splice(beforeIndex, 1)[0]);
     return arr; // for testing
-  };
+  }
 
   addTab() {
     const newTab = {

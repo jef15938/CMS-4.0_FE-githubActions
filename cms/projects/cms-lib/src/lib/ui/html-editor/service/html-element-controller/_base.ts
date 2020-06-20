@@ -1,22 +1,24 @@
-import { IHtmlEditorContext, IHtmlEditorContextMenuItem } from '../../html-editor.interface';
+import { HtmlEditorContext, HtmlEditorContextMenuItem } from '../../html-editor.interface';
 
 export const HTML_EDITOR_ELEMENT_CONTROLLER = 'CMS_HTML_EDITOR_ELEMENT_CONTROLLER';
 
 export abstract class HtmlEditorElementController<TElement extends HTMLElement> {
 
-  protected abstract onAddToEditor(): void;
-  protected abstract onRemovedFromEditor(): void;
-  abstract contextMenuItems: IHtmlEditorContextMenuItem[];
+  abstract contextMenuItems: HtmlEditorContextMenuItem[];
 
   public el: TElement;
-  public context: IHtmlEditorContext;
+  public context: HtmlEditorContext;
   public isInited = false;
   public isDeleted = false;
+
+  protected abstract onAddToEditor(): void;
+  protected abstract onRemovedFromEditor(): void;
+
   get elLowerCaseTagName() { return this.el?.tagName?.toLowerCase(); }
 
   constructor(
     el: TElement,
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
   ) {
     el[HTML_EDITOR_ELEMENT_CONTROLLER] = this;
     this.el = el;

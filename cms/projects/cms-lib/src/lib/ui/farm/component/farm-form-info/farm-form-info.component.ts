@@ -71,7 +71,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
             if (!CmsValidator.hasValue(control.value)) {
               return {
                 required: '必填欄位'
-              }
+              };
             }
             return null;
           });
@@ -93,13 +93,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
           });
         }
         // number
-        const number = validation.number?.find(col => col.id === column.column_id);
-        if (number) {
+        const num = validation.number?.find(col => col.id === column.column_id);
+        if (num) {
           validatorFns.push((control: AbstractControl) => {
             if (!CmsValidator.isNumber(control.value)) {
               return {
                 number: '必須是數字'
-              }
+              };
             }
             return null;
           });
@@ -108,7 +108,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
         const ranges = validation.range?.filter(r => column.column_id === r.start_column || column.column_id === r.end_column) || [];
         ranges.forEach(r => {
           validatorFns.push((control: AbstractControl) => {
-            if (!control.value) { return { range: "區間必須有值" }; }
+            if (!control.value) { return { range: '區間必須有值' }; }
 
             const start = r.start_column;
             const end = r.end_column;
@@ -138,18 +138,18 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     return formGroup;
   }
 
-  onDateChange(column_id: string) {
+  onDateChange(columnId: string) {
     if (this.useValidation) {
-      this.checkRange(column_id);
+      this.checkRange(columnId);
     }
   }
 
-  private checkRange(column_id: string) {
-    const ranges = this.farmFormInfo?.validation?.range?.filter(r => column_id === r.start_column || column_id === r.end_column);
+  private checkRange(columnId: string) {
+    const ranges = this.farmFormInfo?.validation?.range?.filter(r => columnId === r.start_column || columnId === r.end_column);
     ranges.forEach(r => {
       const start = r.start_column;
       const end = r.end_column;
-      const thisColumnId = column_id;
+      const thisColumnId = columnId;
       const isThisColumnStart = thisColumnId === start;
       const oppositeColumnId = isThisColumnStart ? end : start;
       const oppositeColumnFormControl = this.formGroup.controls[oppositeColumnId];
@@ -162,18 +162,18 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   clearForm() {
-    // TODO: 清除時怎麼帶預設值 ? 
+    // TODO: 清除時怎麼帶預設值 ?
     this.formGroup.reset();
   }
 
   requestFormInfo(): Observable<CmsFarmFormInfo> {
     const formGroup = this.formGroup;
 
-    for (let controlName of Object.keys(formGroup.controls)) {
+    for (const controlName of Object.keys(formGroup.controls)) {
       const control = formGroup.controls[controlName];
       control.markAsDirty({ onlySelf: true });
       control.markAsTouched({ onlySelf: true });
-      control.updateValueAndValidity({ onlySelf: true, emitEvent: false })
+      control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
     }
 
     const info: CmsFarmFormInfo = JSON.parse(JSON.stringify(this.farmFormInfo));
@@ -186,25 +186,25 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
     if (!this.useValidation) { return of(info); }
 
-    if (!formGroup.valid) { return throwError('Form is not valid.') }
+    if (!formGroup.valid) { return throwError('Form is not valid.'); }
 
     return of(info);
   }
 
   private convertDateToString(date: Date) {
-    if (!date) return '';
+    if (!date) { return ''; }
     return `${date.getTime() / 1000}`;
   }
 
   private convertStringToDate(str: string) {
-    if (!str) { return null }
-    return new Date(+str * 1000);//1588635072000
+    if (!str) { return null; }
+    return new Date(+str * 1000); // 1588635072000
   }
 
   private checkColumnTrigger(column: CmsFarmFormColumn) {
     const triggers = column?.triggers;
     if (triggers) {
-      // TODO: 
+      // TODO:
 
     }
   }

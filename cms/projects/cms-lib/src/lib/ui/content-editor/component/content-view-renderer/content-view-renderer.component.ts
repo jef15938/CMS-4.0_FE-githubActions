@@ -1,6 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild, ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild,
+  ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef
+} from '@angular/core';
 import { ContentInfo } from './../../../../neuxAPI/bean/ContentInfo';
-import { LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperSelectedTargetType, LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective, LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective } from 'layout';
+import {
+  LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperSelectedTargetType,
+  LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective,
+  LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective
+} from 'layout';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { ContentTemplateInfo } from './../../../../neuxAPI/bean/ContentTemplateInfo';
 import { EditorMode } from '../../content-editor.interface';
@@ -29,6 +36,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
   @Input() mode: EditorMode = EditorMode.EDIT;
   @Input() contentInfo: ContentInfo;
+  // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
   @Output() addTemplateBtnClick = new EventEmitter<AddTemplateButtonComponent>();
 
@@ -91,9 +99,9 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
     // 產生
     templatesContainer.layoutWrapperComponents.forEach((lw, i) => {
-      const container = this.createBtnContainer();
-      templatesContainerNativeElement.insertBefore(container, lw.elementRef.nativeElement);
-      this.createBtn(btns, container, templatesContainer.templates, i);
+      const btnContainer = this.createBtnContainer();
+      templatesContainerNativeElement.insertBefore(btnContainer, lw.elementRef.nativeElement);
+      this.createBtn(btns, btnContainer, templatesContainer.templates, i);
     });
 
     // 產生最後一個
@@ -147,10 +155,12 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
           const info = infos.length ? infos.join('; ') : '';
           (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('edit-info', `${field.fieldInfo.fieldType}${info ? ' : ' : ''}${info}`);
         }
-      })
+      });
     });
 
-    return templatesContainer?.layoutWrapperComponents?.map(lw => lw.componentRef?.instance?.templatesContainerComponents?.map(t => this.renderViewInfo(t)));
+    return templatesContainer?.layoutWrapperComponents?.map(
+      lw => lw.componentRef?.instance?.templatesContainerComponents?.map(t => this.renderViewInfo(t))
+    );
   }
 
   checkView(config?: CheckViewConfig) {
@@ -160,7 +170,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
       this.renderAddTemplateButton(this.templatesContainer);
       this.renderViewInfo(this.templatesContainer);
       if (config?.select) {
-        const select = config.select
+        const select = config.select;
         const event: LayoutWrapperSelectEvent = {
           selectedTarget: select.elementRef.nativeElement,
           selectedTargetType: LayoutWrapperSelectedTargetType.TEMPLATE,
@@ -168,10 +178,10 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
           componentRef: select.componentRef,
           templateType: select.componentRef.instance.templateType,
           templateInfo: select.componentRef.instance.templateInfo,
-        }
+        };
         this.select.emit(event);
       }
-    }, 0)
+    }, 0);
   }
 
   onSelect(ev: LayoutWrapperSelectEvent) {

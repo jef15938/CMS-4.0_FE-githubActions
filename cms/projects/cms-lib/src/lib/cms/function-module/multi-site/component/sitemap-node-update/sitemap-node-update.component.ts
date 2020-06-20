@@ -12,11 +12,11 @@ import { SiteMapNodeInfo } from './../../../../../neuxAPI/bean/SiteMapNodeInfo';
 import { SitemapService } from './../../../../../service/sitemap.service';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
-  constructor(siteMapInfo: SiteMapNodeInfo, parent_id: string, node_orders: string) {
+  constructor(siteMapInfo: SiteMapNodeInfo, parentId: string, nodeOrders: string) {
     super();
     this.node_name = siteMapInfo.node_name;
-    this.node_orders = node_orders;
-    this.parent_id = parent_id;
+    this.node_orders = nodeOrders;
+    this.parent_id = parentId;
     // URL
     this.url = siteMapInfo.url;
     this.url_blank = siteMapInfo.url_blank;
@@ -80,12 +80,12 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['siteMapUpdateInfo']) {
-      const info: SiteMapUpdateInfo = changes['siteMapUpdateInfo'].currentValue;
+    if (changes.siteMapUpdateInfo) {
+      const info: SiteMapUpdateInfo = changes.siteMapUpdateInfo.currentValue;
       if (info?.siteMap) {
         this.sitemapMaintainModel = new SiteMapUpdateModel(info.siteMap, info.parentId, info.nodeOrder);
         if (this.form) {
-          for (let controlName of Object.keys(this.form.controls)) {
+          for (const controlName of Object.keys(this.form.controls)) {
             const c = this.form.controls[controlName];
             c.markAsUntouched();
             c.markAsPristine();
@@ -104,7 +104,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
         contentInfo,
         selectableTemplates,
         mode: EditorMode.EDIT,
-      }).subscribe()
+      }).subscribe();
     });
   }
 

@@ -12,7 +12,7 @@ import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
 @Component({
   selector: 'cms-my-auditing',
   templateUrl: './my-auditing.component.html',
-  styleUrls: ['./my-auditing.component.css']
+  styleUrls: ['./my-auditing.component.scss']
 })
 export class MyAuditingComponent implements OnInit {
 
@@ -65,7 +65,7 @@ export class MyAuditingComponent implements OnInit {
   private init(): Observable<any> {
     return concat(
       this.getMyAuditings(),
-    )
+    );
   }
 
   private getMyAuditings(): Observable<MyAuditingInfo[]> {

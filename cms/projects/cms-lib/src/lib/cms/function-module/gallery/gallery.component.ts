@@ -21,7 +21,7 @@ import { AuthorizationService } from '../../../service/authorization.service';
 })
 export class GalleryComponent implements OnInit, OnDestroy {
 
-  @ViewChild(TreeComponent) tree: TreeComponent<GalleryCategoryInfo>
+  @ViewChild(TreeComponent) tree: TreeComponent<GalleryCategoryInfo>;
 
   customNodeRenderer = GalleryCategoryNodeComponent;
 
@@ -71,7 +71,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
       tap(selectedCategory => this.selectedCategory = selectedCategory),
       concatMap(_ => this.getGallery()),
-    ).subscribe()
+    ).subscribe();
   }
 
   ngOnDestroy(): void {
@@ -99,7 +99,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.galleryPageInfo = undefined;
       this.galleryDatas = undefined;
       return of(undefined);
-    };
+    }
 
     return this.galleryService.getGalleryByCategoryID(
       this.selectedCategory.category_id,
@@ -109,7 +109,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.galleryPageInfo = res.pageInfo;
         this.galleryDatas = res.datas;
       })
-    )
+    );
   }
 
   private maintainCategory(action: 'Create' | 'Update', category: GalleryCategoryInfo) {
@@ -118,18 +118,18 @@ export class GalleryComponent implements OnInit, OnDestroy {
       componentInitData: {
         action,
         categoryID: action === 'Update' ? category.category_id : undefined,
-        category_name: action === 'Update' ? category.category_name : undefined,
-        parent_id: action === 'Update' ? this.tree.findParent(category)?.category_id : category.category_id,
-        assign_dept_id: this.authorizationService.getCurrentLoginInfo().dept_id
+        categoryName: action === 'Update' ? category.category_name : undefined,
+        parentId: action === 'Update' ? this.tree.findParent(category)?.category_id : category.category_id,
+        assignDeptId: this.authorizationService.getCurrentLoginInfo().dept_id
       }
-    })
+    });
   }
 
   private uploadFileToCategory(category: GalleryCategoryInfo) {
     return this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
-        category_name: category.category_name,
+        categoryName: category.category_name,
         categoryId: category.category_id,
       }
     });
@@ -163,9 +163,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
           );
           break;
       }
-      action ? action.pipe(
-        concatMap(res => res ? this.init() : of(undefined)),
-      ).subscribe() : null;
+
+      if (action) {
+        action.pipe(
+          concatMap(res => res ? this.init() : of(undefined)),
+        ).subscribe();
+      }
     }
   }
 
@@ -182,9 +185,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
           );
           break;
       }
-      action ? action.pipe(
-        concatMap(res => res ? this.getGallery() : null),
-      ).subscribe() : null;
+
+      if (action) {
+        action.pipe(
+          concatMap(res => res ? this.getGallery() : of(undefined)),
+        ).subscribe();
+      }
     }
   }
 

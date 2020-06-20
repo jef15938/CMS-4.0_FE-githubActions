@@ -1,12 +1,12 @@
-import { HtmlEditorAction } from '../../../../actions/action.base';
+import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
-import { IHtmlEditorContext } from '../../../../html-editor.interface';
+import { HtmlEditorContext } from '../../../../html-editor.interface';
 import { ITableController, ITableCell } from '../table-controller.interface';
 
-export class Merge extends HtmlEditorAction {
+export class Merge extends HtmlEditorActionBase {
 
   constructor(
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
     private controller: ITableController,
   ) {
     super(context);
@@ -14,14 +14,14 @@ export class Merge extends HtmlEditorAction {
 
   do(): Observable<any> {
     let selectedCols = this.controller.selectedCols as ITableCell[];
-    if (selectedCols.length < 2) { return this.context.modalService.openMessage({ message: '請選擇至少兩欄' }) }
+    if (selectedCols.length < 2) { return this.context.modalService.openMessage({ message: '請選擇至少兩欄' }); }
 
     const hasConsecutiveCol = selectedCols.some(col => selectedCols.indexOf(col.previousElementSibling as ITableCell) > -1);
 
     const selectedRows = this.controller.selectedRows;
     const hasConsecutiveRow = selectedRows.some(row => selectedRows.indexOf(row.previousElementSibling as HTMLTableRowElement) > -1);
 
-    if (!hasConsecutiveCol && !hasConsecutiveRow) { return this.context.modalService.openMessage({ message: '沒有可合併的欄位' }) }
+    if (!hasConsecutiveCol && !hasConsecutiveRow) { return this.context.modalService.openMessage({ message: '沒有可合併的欄位' }); }
 
     const table = this.controller.el;
     selectedCols.forEach(col => {
@@ -52,7 +52,7 @@ export class Merge extends HtmlEditorAction {
           || previousStartEnd.rowEnd !== startEnd.rowStart
         ) { return false; }
         return true;
-      })
+      });
 
       if (previous) {
         previous.rowSpan += col.rowSpan;

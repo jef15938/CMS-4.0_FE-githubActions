@@ -43,7 +43,7 @@ export class ReplyComponent implements OnInit {
   private init(): Observable<any> {
     return concat(
       this.getReplies(),
-    )
+    );
   }
 
   private getReplies(): Observable<ChatbotReply[]> {
@@ -65,9 +65,12 @@ export class ReplyComponent implements OnInit {
           );
           break;
       }
-      action ? action.pipe(
-        concatMap(res => res ? this.getReplies() : of(undefined)),
-      ).subscribe() : null;
+
+      if (action) {
+        action.pipe(
+          concatMap(res => res ? this.getReplies() : of(undefined)),
+        ).subscribe();
+      }
     }
   }
 
@@ -79,7 +82,7 @@ export class ReplyComponent implements OnInit {
       },
     }).pipe(
       concatMap(res => {
-        return res ? this.getReplies() : of(undefined)
+        return res ? this.getReplies() : of(undefined);
       }),
     ).subscribe();
   }

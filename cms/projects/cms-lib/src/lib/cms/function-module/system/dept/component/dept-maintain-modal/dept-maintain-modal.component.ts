@@ -13,7 +13,6 @@ import { NgModel } from '@angular/forms';
 })
 export class DeptMaintainModalComponent extends CustomModalBase implements OnInit {
 
-  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}部門`;
   actions: CustomModalActionButton[] = [];
 
   action: 'Create' | 'Update' = 'Create';
@@ -22,6 +21,8 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   parentId: string;
 
   dept: DepartmentInfo;
+
+  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}部門`;
 
   constructor(
     private departmentService: DepartmentService
@@ -58,7 +59,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   }
 
   getErrorMessage(model: NgModel) {
-    if (model.hasError('required')) return 'Required';
+    if (model.hasError('required')) { return 'Required'; }
   }
 
 }

@@ -10,7 +10,6 @@ import { TemplateGetResponse } from './../../../../neuxAPI/bean/TemplateGetRespo
   styleUrls: ['./editor-container-modal.component.scss']
 })
 export class EditorContainerModalComponent extends CustomModalBase implements OnInit {
-  title: string | (() => string) = () => this.mode === EditorMode.INFO ? '版型規範' : '';
   actions: CustomModalActionButton[];
 
   @Input() contentInfo: ContentInfo;
@@ -18,6 +17,8 @@ export class EditorContainerModalComponent extends CustomModalBase implements On
   @Input() selectableTemplates: TemplateGetResponse;
 
   private contentSaved = true;
+
+  title: string | (() => string) = () => this.mode === EditorMode.INFO ? '版型規範' : '';
 
   constructor() { super(); }
 

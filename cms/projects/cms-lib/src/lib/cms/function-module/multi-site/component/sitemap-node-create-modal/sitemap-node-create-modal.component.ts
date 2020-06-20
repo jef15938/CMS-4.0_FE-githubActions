@@ -5,11 +5,11 @@ import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../mult
 import { SitemapService } from './../../../../../service/sitemap.service';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
-  node_type = null;
+  nodeType = null;
 
-  constructor(parent_id: string) {
+  constructor(parentId: string) {
     super();
-    this.parent_id = parent_id;
+    this.parent_id = parentId;
   }
 
   private clearLink() {
@@ -28,7 +28,7 @@ class SiteMapCreateModel extends UserSiteMapPostRequest {
   }
 
   checkFieldsByNodeType() {
-    switch (this.node_type) {
+    switch (this.nodeType) {
       case null:
         this.clearLink();
         this.clearContent();
@@ -56,7 +56,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   UrlType = SiteMapUrlType;
 
   @Input() siteId: string;
-  @Input() parent_id: string;
+  @Input() parentId: string;
 
   sitemapMaintainModel: SiteMapCreateModel;
 
@@ -81,7 +81,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   ) { super(); }
 
   ngOnInit(): void {
-    this.sitemapMaintainModel = new SiteMapCreateModel(this.parent_id);
+    this.sitemapMaintainModel = new SiteMapCreateModel(this.parentId);
   }
 
   confirm() {

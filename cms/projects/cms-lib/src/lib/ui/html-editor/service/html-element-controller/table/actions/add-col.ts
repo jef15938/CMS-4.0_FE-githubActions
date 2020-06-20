@@ -1,14 +1,14 @@
-import { HtmlEditorAction } from '../../../../actions/action.base';
+import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
-import { IHtmlEditorContext } from '../../../../html-editor.interface';
+import { HtmlEditorContext } from '../../../../html-editor.interface';
 import { ITableController, ITableCell } from '../table-controller.interface';
 
-export class AddCol extends HtmlEditorAction {
+export class AddCol extends HtmlEditorActionBase {
 
   private position: 'left' | 'right';
 
   constructor(
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
     private controller: ITableController,
     position: 'left' | 'right',
   ) {
@@ -37,24 +37,26 @@ export class AddCol extends HtmlEditorAction {
     });
     cols += 1;
 
-    var checkArr = [];
-    for (let tmp_x = 0; tmp_x < rows; tmp_x++) {
-      const tmp_arr = [];
-      for (let tmp_y = 0; tmp_y < cols; tmp_y++) {
-        tmp_arr.push(false);
+    const checkArr = [];
+    for (let tmpX = 0; tmpX < rows; tmpX++) {
+      const tmpArr = [];
+      for (let tmpY = 0; tmpY < cols; tmpY++) {
+        tmpArr.push(false);
       }
-      checkArr.push(tmp_arr);
+      checkArr.push(tmpArr);
     }
 
+    // tslint:disable-next-line: prefer-for-of
     for (let j = 0; j < trArr.length; j++) {
       const element = trArr[j];
       const tds = Array.from(element.childNodes) as ITableCell[];
       let tmpTD: ITableCell;
+      // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < tds.length; i++) {
         tmpTD = tds[i];
         const startEnd = this.controller.tableControllerService.getCellStartEnd(tmpTD);
-        var start = startEnd.colStart;
-        var stop = startEnd.colEnd - 1;
+        const start = startEnd.colStart;
+        const stop = startEnd.colEnd - 1;
         if (index >= start && index <= stop) {
           if (tmpTD.colSpan > 1) {
             tmpTD.colSpan = tmpTD.colSpan + 1;
@@ -77,46 +79,46 @@ export class AddCol extends HtmlEditorAction {
 
     this.controller.checkTableState();
 
-    trArr.forEach((tr, i) => {
+    trArr.forEach((tr) => {
       const tds = Array.from(tr.childNodes) as ITableCell[];
-      tds.forEach((td, j) => {
+      tds.forEach((td) => {
         const pos = td.cellPos;
         // console.warn(td, pos);
-        var left = pos.left;
-        var top = pos.top;
-        var colSpan = td.colSpan - 1;
-        var rowSpan = td.rowSpan - 1;
-        for (var x = left; x <= (left + colSpan); x++) {
-          for (var y = top; y <= (top + rowSpan); y++) {
+        const left = pos.left;
+        const top = pos.top;
+        const colSpan = td.colSpan - 1;
+        const rowSpan = td.rowSpan - 1;
+        for (let x = left; x <= (left + colSpan); x++) {
+          for (let y = top; y <= (top + rowSpan); y++) {
             checkArr[y][x] = true;
           }
         }
-      })
-    })
+      });
+    });
     // console.log('checkArr = ', checkArr);
     checkArr.forEach((row, i) => {
-      var num = 0;
-      row.forEach((td, j) => {
-        if (!td)
-          num++;
-      })
+      let num = 0;
+      row.forEach((td) => {
+        if (!td) { num++; }
+      });
       if (num > 0) {
-        var target_row = trArr[i];
-        const tds = Array.from(target_row.childNodes) as ITableCell[];
-        // console.log('target_row = ', target_row);
-        for (var i = 0; i < tds.length; i++) {
-          const tmpTD = tds[i];
+        const targetRow = trArr[i];
+        const tds = Array.from(targetRow.childNodes) as ITableCell[];
+        // console.log('targetRow = ', targetRow);
+        // tslint:disable-next-line: prefer-for-of
+        for (let j = 0; j < tds.length; j++) {
+          const tmpTD = tds[j];
           const startEnd = this.controller.tableControllerService.getCellStartEnd(tmpTD);
-          var start = startEnd.colStart;
-          var stop = startEnd.colEnd - 1;
-          if (index <= start || (i == tds.length - 1 && index >= stop)) {
+          const start = startEnd.colStart;
+          const stop = startEnd.colEnd - 1;
+          if (index <= start || (j === tds.length - 1 && index >= stop)) {
 
             if (tmpTD.colSpan > 1) {
               tmpTD.colSpan = tmpTD.colSpan + 1;
             } else {
               const newCell = this.controller.tableControllerService.createCell('new');
-              newCell.style.setProperty('width','70px');
-              if (index == start || index >= stop) {
+              newCell.style.setProperty('width', '70px');
+              if (index === start || index >= stop) {
                 const insertBefore = tmpTD.nextElementSibling;
                 if (insertBefore) {
                   tmpTD.parentNode.insertBefore(newCell, tmpTD);
@@ -132,7 +134,7 @@ export class AddCol extends HtmlEditorAction {
         }
       }
 
-    })
+    });
 
     this.controller.checkTableState();
     this.controller.tableControllerService.registerColResizer(this.context.editorContainer, this.controller.el);

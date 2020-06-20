@@ -8,8 +8,11 @@ export interface ICropperOption {
   initialAspectRatio?: number; // NaN
   /** Define the fixed aspect ratio of the crop box. By default, the crop box is free ratio. */
   aspectRatio?: number; // NaN
-  /** The previous cropped data if you had stored, will be passed to setData method automatically when initialized. Only available when the autoCrop option is set to true. */
-  data?: Object; // null
+  /**
+   * The previous cropped data if you had stored, will be passed to setData method automatically when initialized.
+   * Only available when the autoCrop option is set to true.
+   */
+  data?: any; // null
   /** Add extra elements (containers) for preview. */
   preview?: Element | Element[] | NodeList | ''; // ''
   /** Re-render the cropper when resizing the window. */
@@ -67,15 +70,15 @@ export interface ICropperOption {
   /** The minimum height of the crop box. */
   minCropBoxHeight?: number; // 0
   /** A shortcut of the ready event. */
-  ready?: Function; // null
+  ready?: () => any; // null
   /** A shortcut of the cropstart event. */
-  cropstart?: Function; // null
+  cropstart?: () => any; // null
   /** A shortcut of the cropmove event. */
-  cropmove?: Function; // null
+  cropmove?: () => any; // null
   /** A shortcut of the cropend event. */
-  cropend?: Function; // null
+  cropend?: () => any; // null
   /** A shortcut of the crop event. */
-  crop?: Function; // null
+  crop?: () => any; // null
   /** A shortcut of the zoom event. */
-  zoom?: Function; // null
+  zoom?: () => any; // null
 }

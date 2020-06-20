@@ -17,7 +17,7 @@ import { WithCredentialsInterceptor } from './interceptor/cms-http-interceptor';
 
 const LAYOUTS = [
   MenuNodeComponent,
-]
+];
 
 @NgModule({
   imports: [

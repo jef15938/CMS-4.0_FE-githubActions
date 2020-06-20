@@ -17,7 +17,7 @@ export class CmsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.menus = this.route.snapshot.data['menus'];
+    this.menus = this.route.snapshot.data.menus;
   }
 
 }

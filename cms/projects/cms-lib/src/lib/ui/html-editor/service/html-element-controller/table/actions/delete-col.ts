@@ -1,12 +1,12 @@
-import { HtmlEditorAction } from '../../../../actions/action.base';
+import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
-import { IHtmlEditorContext } from '../../../../html-editor.interface';
+import { HtmlEditorContext } from '../../../../html-editor.interface';
 import { ITableController, ITableCell } from '../table-controller.interface';
 
-export class DeleteCol extends HtmlEditorAction {
+export class DeleteCol extends HtmlEditorActionBase {
 
   constructor(
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
     private controller: ITableController,
   ) {
     super(context);
@@ -14,7 +14,7 @@ export class DeleteCol extends HtmlEditorAction {
 
   do(): Observable<any> {
     const selectedCols = this.controller.selectedCols;
-    if (!selectedCols.length) { return this.context.modalService.openMessage({ message: '沒有選擇的欄' }) }
+    if (!selectedCols.length) { return this.context.modalService.openMessage({ message: '沒有選擇的欄' }); }
 
     const rangeStartEnd = this.controller.tableControllerService.getStartEndBySelectedCols(this.controller.selectedCols);
 
@@ -30,16 +30,23 @@ export class DeleteCol extends HtmlEditorAction {
           colsToDelete.push(col);
         } else {
           if (col.colSpan > 1) {
-            const startEnd = this.controller.tableControllerService.getCellStartEnd(col);
-            if (rangeStartEnd.colStart > startEnd.colStart && rangeStartEnd.colStart < startEnd.colEnd && rangeStartEnd.colEnd >= startEnd.colEnd) {
+            if (
+              rangeStartEnd.colStart > startEnd.colStart
+              && rangeStartEnd.colStart < startEnd.colEnd
+              && rangeStartEnd.colEnd >= startEnd.colEnd
+            ) {
               minusMap.set(col, startEnd.colEnd - rangeStartEnd.colStart);
             }
-            if (rangeStartEnd.colStart <= startEnd.colStart && rangeStartEnd.colEnd > startEnd.colStart && rangeStartEnd.colEnd < startEnd.colEnd) {
+            if (
+              rangeStartEnd.colStart <= startEnd.colStart
+              && rangeStartEnd.colEnd > startEnd.colStart
+              && rangeStartEnd.colEnd < startEnd.colEnd
+            ) {
               minusMap.set(col, rangeStartEnd.colEnd - startEnd.colStart);
             }
           }
         }
-      })
+      });
     });
 
     colsToDelete.forEach(col => {

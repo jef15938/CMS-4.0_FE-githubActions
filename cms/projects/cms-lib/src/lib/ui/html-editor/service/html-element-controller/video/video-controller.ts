@@ -1,11 +1,11 @@
 import { HtmlEditorElementController } from '../_base';
 import { fromEvent, Subscription } from 'rxjs';
-import { IHtmlEditorContextMenuItem } from '../../../html-editor.interface';
+import { HtmlEditorContextMenuItem } from '../../../html-editor.interface';
 import { InsertVideo } from '../../../actions/action/insert-video';
 
 export class HtmlEditorVideoController extends HtmlEditorElementController<HTMLImageElement> {
 
-  contextMenuItems: IHtmlEditorContextMenuItem[];
+  contextMenuItems: HtmlEditorContextMenuItem[];
 
   private subscriptions: Subscription[] = [];
   private mutationObserver: MutationObserver;
@@ -53,11 +53,6 @@ export class HtmlEditorVideoController extends HtmlEditorElementController<HTMLI
 
   private onUnselected(): void {
     this.el.style.removeProperty('outline');
-  }
-
-  private evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {
-    ev.preventDefault();
-    ev.stopPropagation();
   }
 
 }

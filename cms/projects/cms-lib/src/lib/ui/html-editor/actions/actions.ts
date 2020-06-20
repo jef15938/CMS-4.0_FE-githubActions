@@ -1,4 +1,4 @@
-import { IHtmlEditorContext } from '../html-editor.interface';
+import { HtmlEditorContext } from '../html-editor.interface';
 import {
   Bold, Italic, Underline,
   JustifyCenter, JustifyFull, JustifyLeft, JustifyRight,
@@ -12,7 +12,7 @@ import { Highlight } from './action/highlight';
 import { Unhighlight } from './action/unhighlight';
 
 export class HtmlEditorActions {
-  private context: IHtmlEditorContext;
+  private context: HtmlEditorContext;
 
   bold: Bold;
   italic: Italic;
@@ -33,7 +33,7 @@ export class HtmlEditorActions {
   unhighlight: Unhighlight;
 
   constructor(
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
   ) {
     this.context = context;
 

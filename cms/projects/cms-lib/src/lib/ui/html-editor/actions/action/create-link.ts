@@ -40,7 +40,8 @@ export class CreateLink extends DomCmdAction {
 
         if (isCreate) { // 新增
           const commonAncestorContainer = range.commonAncestorContainer as HTMLElement;
-          const isCreateOnImg = commonAncestorContainer.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frame_id');
+          const isCreateOnImg =
+            commonAncestorContainer.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frame_id');
 
           if (isCreateOnImg) {
             aTagToModify.appendChild(range.commonAncestorContainer);

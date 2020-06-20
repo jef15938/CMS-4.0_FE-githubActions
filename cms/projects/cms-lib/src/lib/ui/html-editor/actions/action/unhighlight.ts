@@ -1,17 +1,17 @@
-import { HtmlEditorAction } from '../action.base';
+import { HtmlEditorActionBase } from '../action.base';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-export class Unhighlight extends HtmlEditorAction {
+export class Unhighlight extends HtmlEditorActionBase {
 
   do(): Observable<any> {
-    document.execCommand("foreColor", false, '#ffff00');
+    document.execCommand('foreColor', false, '#ffff00');
 
     const container = this.context.editorContainer.cloneNode(true) as HTMLDivElement;
 
     if (Array.from(container.querySelectorAll('font[color="#ffff00"] img')).length > 0) {
       return this.context.modalService.openMessage({ message: 'unhighlight不可包含圖片' })
-        .pipe(tap(_ => document.execCommand("undo")));
+        .pipe(tap(_ => document.execCommand('undo')));
     } else {
       const elements = Array.from(container.querySelectorAll('font[color="#ffff00"]'));
       elements.forEach((el: HTMLElement) => {
@@ -36,7 +36,7 @@ export class Unhighlight extends HtmlEditorAction {
           }
         }
         el.parentNode.removeChild(el);
-      })
+      });
 
       const highlights = Array.from(container.querySelectorAll('.highlight'));
       highlights.forEach(el => {

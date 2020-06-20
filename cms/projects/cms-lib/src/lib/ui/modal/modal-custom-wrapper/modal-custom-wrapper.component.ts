@@ -40,7 +40,7 @@ export class ModalCustomWrapperComponent implements OnInit, AfterViewInit {
     const componentRef = wrapper.viewContainerRef.createComponent(componentFactory);
     const instance = componentRef.instance as CustomModalBase;
     if (this.config.componentInitData) {
-      for (let k of Object.keys(this.config.componentInitData)) {
+      for (const k of Object.keys(this.config.componentInitData)) {
         instance[k] = this.config.componentInitData[k];
       }
     }

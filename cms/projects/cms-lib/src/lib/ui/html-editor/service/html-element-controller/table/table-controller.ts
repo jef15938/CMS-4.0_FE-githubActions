@@ -1,11 +1,11 @@
 import { HtmlEditorElementController } from './../_base';
-import { fromEvent, Subscription, merge, Observable, of, from } from 'rxjs';
-import { IHtmlEditorContextMenuItem, IHtmlEditorContext } from '../../../html-editor.interface';
+import { fromEvent, Subscription, merge, Observable, of } from 'rxjs';
+import { HtmlEditorContextMenuItem, HtmlEditorContext } from '../../../html-editor.interface';
 import { DeleteRow } from './actions/delete-row';
 import { AddRow } from './actions/add-row';
 import { ITableController, ITableCell } from './table-controller.interface';
 import { DeleteCol } from './actions/delete-col';
-import { switchMap, takeUntil, tap, throttleTime } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Merge } from './actions/merge';
 import { Split } from './actions/split';
 import { DeleteTable } from './actions/delete-table';
@@ -15,9 +15,9 @@ import { AddCol } from './actions/add-col';
 
 export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements ITableController {
 
-  private contextMenuItemsTemp: IHtmlEditorContextMenuItem[];
-  get contextMenuItems(): IHtmlEditorContextMenuItem[] {
-    const menuItems: IHtmlEditorContextMenuItem[] = [].concat(this.contextMenuItemsTemp);
+  private contextMenuItemsTemp: HtmlEditorContextMenuItem[];
+  get contextMenuItems(): HtmlEditorContextMenuItem[] {
+    const menuItems: HtmlEditorContextMenuItem[] = [].concat(this.contextMenuItemsTemp);
     if (!menuItems?.length) { return; }
 
     setTimeout(_ => {
@@ -53,10 +53,10 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         }
       }
 
-    }, 100)
+    }, 100);
 
     return menuItems;
-  };
+  }
 
   selectedCols: HTMLTableDataCellElement[] = [];
   selectedRows: HTMLTableRowElement[] = [];
@@ -69,7 +69,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
   constructor(
     el: HTMLTableElement,
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
   ) {
     super(el, context);
     this.tableControllerService = new TableControllerService();
@@ -170,8 +170,8 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
           this.evPreventDefaultAndStopPropagation(ev);
           observer.next(ev);
         },
-        error(err) { observer.error(err) },
-        complete() { observer.complete() }
+        error(err) { observer.error(err); },
+        complete() { observer.complete(); },
       });
     });
 
@@ -181,6 +181,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     const selectTo = (currentCell: HTMLTableDataCellElement) => {
       const selectedColsStartEnd = this.tableControllerService.getStartEndByStartCellAndEndCell(startCell, currentCell);
       const trs = Array.from(this.el.querySelectorAll('tr'));
+      // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < trs.length; ++i) {
         const row = trs[i];
         const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
@@ -193,15 +194,15 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
             && startEnd.colStart >= selectedColsStartEnd.colStart
             && startEnd.colEnd <= selectedColsStartEnd.colEnd
           ) {
-            cell?.classList.add("selected");
+            cell?.classList.add('selected');
           }
         });
       }
-    }
+    };
 
     const removeAllSelected = () => {
-      table.querySelectorAll(".selected").forEach(td => {
-        td.classList.remove("selected");
+      table.querySelectorAll('.selected').forEach(td => {
+        td.classList.remove('selected');
       });
     };
 
@@ -219,8 +220,10 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
     const drag$ = mousedown$.pipe(
       switchMap(start => {
-        // console.warn('start = ', start);
-        const cell = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, start.target as HTMLElement, 'td') as HTMLTableDataCellElement;
+        const cell = this.context.simpleWysiwygService.findTagFromTargetToContainer(
+          this.context.editorContainer, start.target as HTMLElement, 'td'
+        ) as HTMLTableDataCellElement;
+
         if (!cell) { return undefined; }
         if (start.button === 2) { return of(undefined); } // right click
         if (!(start.ctrlKey || start.metaKey)) {
@@ -228,9 +231,9 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         } // 多選
 
         if (!cell.classList.contains('selected')) {
-          cell.classList.add("selected");
+          cell.classList.add('selected');
         } else {
-          cell.classList.remove("selected");
+          cell.classList.remove('selected');
         }
 
         startCell = cell;
@@ -243,7 +246,10 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
           tap(over => {
             // console.warn('over = ', over);
             removeAllSelected();
-            selectTo(this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, over.target as HTMLElement, 'td') as HTMLTableDataCellElement);
+            selectTo(
+              this.context.simpleWysiwygService
+                .findTagFromTargetToContainer(this.context.editorContainer, over.target as HTMLElement, 'td') as HTMLTableDataCellElement
+            );
           }),
           takeUntil(mouseup$.pipe(
             tap(end => {
@@ -251,9 +257,9 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
               this.checkTableState(false);
             })
           ))
-        )
+        );
       })
-    )
+    );
 
     this.selectCellSubscription = drag$.subscribe();
   }
@@ -269,7 +275,9 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.el.classList.add('selected');
     if (!this.selectedCols.length) {
       const range = this.context.simpleWysiwygService.getRange();
-      const td = this.context.simpleWysiwygService.findTagFromTargetToContainer(this.context.editorContainer, range.commonAncestorContainer as HTMLElement, 'td') as HTMLTableDataCellElement;
+      const td = this.context.simpleWysiwygService.findTagFromTargetToContainer(
+        this.context.editorContainer, range.commonAncestorContainer as HTMLElement, 'td'
+      ) as HTMLTableDataCellElement;
       if (td) {
         td.classList.add('selected');
         this.selectedCols.push(td);
@@ -293,8 +301,10 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   }
 
   checkTableState(scanTable = true) {
-    this.selectedCols = Array.from(this.el.querySelectorAll("td.selected"));
-    this.selectedRows = this.selectedCols.map(col => col.parentElement).filter((row, i, arr) => arr.indexOf(row) === i) as HTMLTableRowElement[];
+    this.selectedCols = Array.from(this.el.querySelectorAll('td.selected'));
+    this.selectedRows = this.selectedCols
+      .map(col => col.parentElement)
+      .filter((row, i, arr) => arr.indexOf(row) === i) as HTMLTableRowElement[];
 
     let trs = Array.from(this.el.querySelectorAll('tr'));
     trs.forEach(tr => {
@@ -320,26 +330,29 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   }
 
   private scanTable(table) {
-    var m = [];
-    for (var y = 0; y < table.rows.length; y++) {
-      var row = table.rows[y];
-      for (var x = 0; x < row.cells.length; x++) {
-        var cell = row.cells[x], xx = x, tx, ty;
-        for (; m[y] && m[y][xx]; ++xx);                        // skip already occupied cells in current row
-        for (tx = xx; tx < xx + cell.colSpan; ++tx)            // mark matrix elements occupied by current cell with true
+    const m = [];
+    for (let y = 0; y < table.rows.length; y++) {
+      const row = table.rows[y];
+      for (let x = 0; x < row.cells.length; x++) {
+        const cell = row.cells[x];
+        let xx = x;
+        let tx;
+        let ty;
+        for (; m[y] && m[y][xx]; ++xx) { } // skip already occupied cells in current row
+        for (tx = xx; tx < xx + cell.colSpan; ++tx) // mark matrix elements occupied by current cell with true
         {
           for (ty = y; ty < y + cell.rowSpan; ++ty) {
-            if (!m[ty]) m[ty] = [];                    // fill missing rows
+            if (!m[ty]) { m[ty] = []; } // fill missing rows
             m[ty][tx] = true;
           }
         }
         // do here whatever you want with
         // xx: the horizontal offset of the cell
         // y: the vertical offset of the cell
-        var pos = { top: y, left: xx };
-        cell['cellPos'] = pos;
+        const pos = { top: y, left: xx };
+        cell.cellPos = pos;
       }
     }
-  };
+  }
 
 }

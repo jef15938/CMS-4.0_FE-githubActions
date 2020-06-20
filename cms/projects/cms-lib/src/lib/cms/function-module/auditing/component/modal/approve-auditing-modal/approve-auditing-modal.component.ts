@@ -16,19 +16,19 @@ export class ApproveAuditingModalComponent extends CustomModalBase implements On
 
   AuditingApproveStatus = AuditingApproveStatus;
 
-  title: string | (() => string) =
-    () => [
-      '審核',
-      this.batch ? '批次' : '',
-      this.status === AuditingApproveStatus.Approve ? '通過' : this.status === AuditingApproveStatus.Reject ? '退回' : ''
-    ].join('');
-
   actions;
 
   batch = false;
   status: AuditingApproveStatus;
 
   approveRequest: AuditingSubmitRequest = new AuditingSubmitRequest();
+
+  title: string | (() => string) =
+    () => [
+      '審核',
+      this.batch ? '批次' : '',
+      this.status === AuditingApproveStatus.Approve ? '通過' : this.status === AuditingApproveStatus.Reject ? '退回' : ''
+    ].join('')
 
   constructor() { super(); }
 

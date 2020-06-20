@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter, ComponentFactoryResolver, AfterViewInit, ViewChildren, QueryList, ChangeDetectorRef, HostListener, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, Input, OnChanges, Output, EventEmitter,
+  ComponentFactoryResolver, AfterViewInit, ViewChildren, QueryList, ChangeDetectorRef, HostListener, OnDestroy, SimpleChanges
+} from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
@@ -21,7 +24,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Input() context: any;
 
   @Input() nodeDisplayField = 'name'; // 顯示欄位
-  @Input() nodeChildrenEntryField = 'children'; //children的進入口欄位
+  @Input() nodeChildrenEntryField = 'children'; // children的進入口欄位
   @Input() nodeDatas: TData[] = []; // 樹資料
   @Input() defaultExpandLevel = 0; // 預設展開層數：-1=全展開
 
@@ -61,9 +64,9 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.init();
   }
 
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    if (this.dataSource && changes['nodeDatas']) {
-      this.setDataSource(changes['nodeDatas'].currentValue);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.dataSource && changes.nodeDatas) {
+      this.setDataSource(changes.nodeDatas.currentValue);
       this.init();
     }
   }
@@ -87,7 +90,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   private renderCustom() {
-    if (!this.customNodeRenderer) { return }
+    if (!this.customNodeRenderer) { return; }
     this.changeDetectorRef.detectChanges();
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.customNodeRenderer);
     this.customRenderWrappers.forEach(wrapper => {
@@ -165,7 +168,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     if (!sources.length) { return null; }
     if (sources.indexOf(node) > -1) { return null; } // 第一層無parent
     const finder: (d: TData) => boolean = (d: TData) => {
-      return (d ? d[this.nodeChildrenEntryField] : []).indexOf(node) > -1
+      return (d ? d[this.nodeChildrenEntryField] : []).indexOf(node) > -1;
     };
     const parent = sources.find(finder);
     return parent || sources.map(s => this.findParent(node, s ? s[this.nodeChildrenEntryField] : [])).find(finder);

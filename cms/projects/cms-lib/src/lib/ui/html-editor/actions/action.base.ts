@@ -1,21 +1,21 @@
-import { IHtmlEditorAction } from './action.interface';
-import { IHtmlEditorContext } from '../html-editor.interface';
+import { HtmlEditorAction } from './action.interface';
+import { HtmlEditorContext } from '../html-editor.interface';
 import { Observable, of } from 'rxjs';
 
-export abstract class HtmlEditorAction implements IHtmlEditorAction {
+export abstract class HtmlEditorActionBase implements HtmlEditorAction {
 
-  protected context: IHtmlEditorContext;
+  protected context: HtmlEditorContext;
 
   abstract do(): Observable<any>;
 
   constructor(
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
   ) {
     this.context = context;
   }
 }
 
-export abstract class DomCmdAction extends HtmlEditorAction {
+export abstract class DomCmdAction extends HtmlEditorActionBase {
   abstract commandId: string;
 
   do(): Observable<any> {

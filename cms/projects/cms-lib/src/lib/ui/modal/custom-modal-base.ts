@@ -25,3 +25,4 @@ export abstract class CustomModalBase {
     this.modalRef.close(result);
   }
 }
+

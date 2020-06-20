@@ -13,7 +13,7 @@ export interface IContentEditorServiceConfig {
 }
 
 export interface IContentEditorService {
-  openEditor(config: IContentEditorServiceConfig): Observable<any>
+  openEditor(config: IContentEditorServiceConfig): Observable<any>;
 }
 
 export class ContentEditorSaveEvent {

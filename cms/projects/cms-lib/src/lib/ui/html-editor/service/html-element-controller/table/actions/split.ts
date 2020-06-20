@@ -1,14 +1,14 @@
-import { HtmlEditorAction } from '../../../../actions/action.base';
+import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
-import { IHtmlEditorContext } from '../../../../html-editor.interface';
+import { HtmlEditorContext } from '../../../../html-editor.interface';
 import { ITableController } from '../table-controller.interface';
 
-export class Split extends HtmlEditorAction {
+export class Split extends HtmlEditorActionBase {
 
   private orientation: 'horizontal' | 'verticle';
 
   constructor(
-    context: IHtmlEditorContext,
+    context: HtmlEditorContext,
     private controller: ITableController,
     orientation: 'horizontal' | 'verticle',
   ) {

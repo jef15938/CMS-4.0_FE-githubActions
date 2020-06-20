@@ -49,9 +49,9 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectedBtn']) {
-      const previous = changes['selectedBtn'].previousValue as AddTemplateButtonComponent;
-      const current = changes['selectedBtn'].currentValue as AddTemplateButtonComponent;
+    if (changes.selectedBtn) {
+      const previous = changes.selectedBtn.previousValue as AddTemplateButtonComponent;
+      const current = changes.selectedBtn.currentValue as AddTemplateButtonComponent;
       if (previous) {
         previous.isSelected = false;
       }
@@ -97,7 +97,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       attributes: {
         height: '300px'
       },
-    }
+    };
   }
 
 }

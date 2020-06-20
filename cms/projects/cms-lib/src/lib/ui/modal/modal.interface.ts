@@ -2,8 +2,8 @@ import { ViewContainerRef, Type, TemplateRef } from '@angular/core';
 import { CustomModalBase } from './custom-modal-base';
 
 export interface ModalOpenComponentConfig<TComponent extends CustomModalBase> {
-  component: Type<TComponent> | TemplateRef<TComponent>,
-  componentInitData?: Partial<TComponent>,
+  component: Type<TComponent> | TemplateRef<TComponent>;
+  componentInitData?: Partial<TComponent>;
   modalSetting?: {
     /**
      * Where the attached component should live in Angular's *logical* component tree.
@@ -26,5 +26,5 @@ export interface ModalOpenComponentConfig<TComponent extends CustomModalBase> {
     maxWidth?: number | string;
     /** Max-height of the modal. If a number is provided, assumes pixel units. */
     maxHeight?: number | string;
-  }
+  };
 }

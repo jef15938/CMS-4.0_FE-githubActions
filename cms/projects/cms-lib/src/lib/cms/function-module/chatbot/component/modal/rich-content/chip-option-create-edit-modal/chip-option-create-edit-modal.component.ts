@@ -7,7 +7,7 @@ interface ChipOption {
     src: {
       rawUrl: string;
     }
-  },
+  };
   link: string;
 }
 
@@ -18,7 +18,7 @@ interface ChipOption {
 })
 export class ChipOptionCreateEditModalComponent extends CustomModalBase implements OnInit {
 
-  title: string = '建議項目';
+  title = '建議項目';
   actions: CustomModalActionButton[] = [];
 
   option: ChipOption;
@@ -40,7 +40,7 @@ export class ChipOptionCreateEditModalComponent extends CustomModalBase implemen
           }
         },
         link: '',
-      }
+      };
     }
   }
 

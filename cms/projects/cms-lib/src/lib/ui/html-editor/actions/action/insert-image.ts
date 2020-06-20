@@ -1,9 +1,9 @@
-import { HtmlEditorAction } from '../action.base';
+import { HtmlEditorActionBase } from '../action.base';
 import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-export class InsertImage extends HtmlEditorAction {
+export class InsertImage extends HtmlEditorActionBase {
 
   do() {
     const editorContainer = this.context.editorContainer;
@@ -31,8 +31,8 @@ export class InsertImage extends HtmlEditorAction {
 
         if (!image) {
           this.context.simpleWysiwygService.execCommand(editorContainer, 'insertImage', config.src);
-          const range = this.context.simpleWysiwygService.getRange();
-          const imgElement = range.commonAncestorContainer.childNodes[range.startOffset - 1] as HTMLImageElement;
+          const nowRange = this.context.simpleWysiwygService.getRange();
+          const imgElement = nowRange.commonAncestorContainer.childNodes[nowRange.startOffset - 1] as HTMLImageElement;
           if (imgElement && imgElement.tagName.toLowerCase() === 'img') {
             imgElement.height = config.height;
             imgElement.width = config.width;

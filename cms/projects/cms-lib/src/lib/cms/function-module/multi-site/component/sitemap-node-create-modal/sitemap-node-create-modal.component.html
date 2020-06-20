@@ -15,7 +15,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>節點類型</mat-label>
-      <mat-select [(ngModel)]="sitemapMaintainModel.node_type" name="node_type"
+      <mat-select [(ngModel)]="sitemapMaintainModel.nodeType" name="nodeType"
         (selectionChange)="sitemapMaintainModel.checkFieldsByNodeType()">
         <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
           {{option.name}}
@@ -23,7 +23,7 @@
       </mat-select>
     </mat-form-field>
 
-    <ng-container [ngSwitch]="sitemapMaintainModel.node_type">
+    <ng-container [ngSwitch]="sitemapMaintainModel.nodeType">
       <!-- URL -->
       <ng-container *ngSwitchCase="NodeType.Url">
         <mat-form-field appearance="outline">

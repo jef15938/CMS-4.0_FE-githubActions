@@ -17,8 +17,8 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
   groupItemDisplayFieldId: string;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selected']) {
-      const event = changes['selected'].currentValue as LayoutWrapperSelectEvent;
+    if (changes.selected) {
+      const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as GroupTemplateInfo;
       const componentInstance = event.componentRef.instance as GroupTemplateBaseComponent;
       this.groupItemDisplayFieldId = componentInstance.groupItemDisplayFieldId;
@@ -39,14 +39,14 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
 
   private arrayMove(arr: any[], beforeIndex: number, afterIndex: number) {
     if (afterIndex >= arr.length) {
-      var k = afterIndex - arr.length + 1;
+      let k = afterIndex - arr.length + 1;
       while (k--) {
         arr.push(undefined);
       }
     }
     arr.splice(afterIndex, 0, arr.splice(beforeIndex, 1)[0]);
     return arr; // for testing
-  };
+  }
 
   copyGroup(group: FieldInfo[]) {
     this.templateInfo.itemList.push(JSON.parse(JSON.stringify(group)));

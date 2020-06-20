@@ -23,7 +23,7 @@ export class AuditingActionCellComponent implements CustomCellRenderer, OnInit {
 
   ActionType = ActionType;
 
-  config: { data: AuditingInfo, table: CmsTable }
+  config: { data: AuditingInfo, table: CmsTable };
 
   constructor() { }
 
@@ -32,7 +32,7 @@ export class AuditingActionCellComponent implements CustomCellRenderer, OnInit {
 
   compInit(config: { data: any, table: CmsTable }) {
     this.config = config;
-  };
+  }
 
   onAction(action: ActionType) {
     this.config.table.triggerCustomEvent(new AuditingActionCellCustomEvent(action, this.config.data));

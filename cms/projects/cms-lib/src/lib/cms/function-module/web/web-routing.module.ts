@@ -11,7 +11,8 @@ const routes: Routes = [
     children: [
       {
         path: 'corporate-responsibility',
-        // loadChildren: () => import('./corporate-responsibility/corporate-responsibility.module').then(m => m.CorporateResponsibilityModule)
+        // loadChildren: () => import('./corporate-responsibility/corporate-responsibility.module')
+        // .then(m => m.CorporateResponsibilityModule)
         loadChildren: getCorporateResponsibilityModule
       }
     ]

@@ -24,7 +24,7 @@ class ReplyModel {
   richContents: RichContent[];
 
   initContent(contentString: string, dialogFlowMessengerService: DialogFlowMessengerService) {
-    const content = dialogFlowMessengerService.parseRichContent(contentString)
+    const content = dialogFlowMessengerService.parseRichContent(contentString);
     this.textContent = content.textContent;
     this.richContents = content.richContents;
   }
@@ -60,7 +60,7 @@ class Factory {
   static createNewReply() {
     const reply = new ChatbotReply();
     reply.id = 0;
-    reply.name = ''
+    reply.name = '';
     reply.content = '';
     return reply;
   }
@@ -89,7 +89,6 @@ class Factory {
 })
 export class CreateEditReplyModalComponent extends CustomModalBase implements OnInit {
 
-  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}回覆`;
   actions: CustomModalActionButton[] = [];
 
   RichContentType = RichContentType;
@@ -99,6 +98,8 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
   replyId: number;
 
   replyModel: ReplyModel;
+
+  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}回覆`;
 
   constructor(
     private chatbotService: ChatbotService,
@@ -169,14 +170,14 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
 
   private arrayMove(arr: any[], beforeIndex: number, afterIndex: number) {
     if (afterIndex >= arr.length) {
-      var k = afterIndex - arr.length + 1;
+      let k = afterIndex - arr.length + 1;
       while (k--) {
         arr.push(undefined);
       }
     }
     arr.splice(afterIndex, 0, arr.splice(beforeIndex, 1)[0]);
     return arr; // for testing
-  };
+  }
 
   onListDropped(ev: { currentIndex: number, previousIndex: number }): void {
     const beforeIndex = ev.previousIndex;

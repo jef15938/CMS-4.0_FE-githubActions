@@ -37,7 +37,7 @@ export class CmsUserMenuResolver implements Resolve<any> {
             this.menus = JSON.parse(JSON.stringify(result));
             return result;
           })
-        )
+        );
       })
     );
   }

@@ -8,7 +8,7 @@ import { ColDef } from './../../../../../../ui/table/table.interface';
 @Component({
   selector: 'cms-my-auditing-detail-modal',
   templateUrl: './my-auditing-detail-modal.component.html',
-  styleUrls: ['./my-auditing-detail-modal.component.css']
+  styleUrls: ['./my-auditing-detail-modal.component.scss']
 })
 export class MyAuditingDetailModalComponent extends CustomModalBase implements OnInit {
   title = '審核紀錄';

@@ -14,7 +14,7 @@ export class GetDisplayColsPipe implements PipeTransform {
       return data.columns?.some(column => column.actions?.length);
     });
     if (hasAction) {
-      displays.push(ACTION_COLUMN)
+      displays.push(ACTION_COLUMN);
     }
     return displays;
   }

@@ -10,7 +10,7 @@ interface AccordionContent extends RichContent {
     src: {
       rawUrl: string;
     }
-  },
+  };
   text: string;
 }
 
@@ -34,7 +34,7 @@ export class AccordionContentModalComponent extends RichContentModalComponent<Ac
         }
       },
       text: '',
-    }
+    };
   }
 
 }

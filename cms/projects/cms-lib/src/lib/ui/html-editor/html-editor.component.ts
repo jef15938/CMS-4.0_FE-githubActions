@@ -2,10 +2,10 @@ import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, 
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ModalService } from './../modal/modal.service';
-import { IHtmlEditorContext, IHtmlEditorContextMenuItem } from './html-editor.interface';
+import { HtmlEditorContext, HtmlEditorContextMenuItem } from './html-editor.interface';
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
-import { IHtmlEditorAction } from './actions/action.interface';
+import { HtmlEditorAction } from './actions/action.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
@@ -13,7 +13,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
   templateUrl: './html-editor.component.html',
   styleUrls: ['./html-editor.component.scss'],
 })
-export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterViewInit, OnDestroy {
+export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterViewInit, OnDestroy {
 
   @Input() content = '';
 
@@ -25,12 +25,14 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
   commonAncestorContainer: Node;
 
   get editorContainer() { return this.editorContainerElRef?.nativeElement; }
-  get isSelectionInsideEditorContainer() { return this.editorContainer && this.simpleWysiwygService.isSelectionInside(this.editorContainer); }
+  get isSelectionInsideEditorContainer() {
+    return this.editorContainer && this.simpleWysiwygService.isSelectionInside(this.editorContainer);
+  }
 
   private mutationObserver: MutationObserver;
 
   contextMenuPosition = { x: '0px', y: '0px' };
-  contextMenuItems: IHtmlEditorContextMenuItem[] = [];
+  contextMenuItems: HtmlEditorContextMenuItem[] = [];
 
   private destroy$ = new Subject();
 
@@ -91,7 +93,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
 
       childNodes = Array.from(childNodes).map(node => Array.from(node.childNodes))
         .reduce((accumulator, currentValue) => {
-          return accumulator.concat(currentValue)
+          return accumulator.concat(currentValue);
         }, []);
     }
   }
@@ -198,6 +200,7 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
+      ;
 
     if (special) {
       this.openRightClickMenu(ev, special);
@@ -212,19 +215,19 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
     const range = this.simpleWysiwygService.getRange();
     this.contextMenuPosition.x = ev.clientX + 'px';
     this.contextMenuPosition.y = ev.clientY + 'px';
-    this.editorMenu.menuData = { 'range': range };
+    this.editorMenu.menuData = { range };
     this.editorMenu.menu.focusFirstItem('mouse');
-    const subscription = this.editorMenu.onMenuClose.subscribe(_ => {
+    const subscription = this.editorMenu.menuClosed.subscribe(_ => {
       subscription.unsubscribe();
       if (!this.simpleWysiwygService.isSelectionInside(this.editorContainer)) {
-        this.simpleWysiwygService.restoreSelection(this.editorMenu.menuData['range']);
+        this.simpleWysiwygService.restoreSelection(this.editorMenu.menuData.range);
       }
     });
     this.contextMenuItems = contextMenuItems;
     this.editorMenu.openMenu();
   }
 
-  doAction(action: IHtmlEditorAction) {
+  doAction(action: HtmlEditorAction) {
     if (!action) { return; }
     if (!this.isSelectionInsideEditorContainer) { return; }
 
@@ -240,9 +243,9 @@ export class HtmlEditorComponent implements IHtmlEditorContext, OnInit, AfterVie
       nodes.forEach(node => {
         node.classList?.remove('selected');
         node.style?.removeProperty('outline');
-      })
+      });
       nodes = nodes.reduce((a, b) => {
-        return a.concat(Array.from(b.childNodes || []))
+        return a.concat(Array.from(b.childNodes || []));
       }, []);
     }
     return container.innerHTML;

@@ -8,5 +8,5 @@ export interface ICmsExtensionMenuResolver {
 
 export interface ICmsExtensionComponentMapping<TComponent> {
   component_id: string;
-  component: Type<TComponent> | TemplateRef<TComponent>
+  component: Type<TComponent> | TemplateRef<TComponent>;
 }

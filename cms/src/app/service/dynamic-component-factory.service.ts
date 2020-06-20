@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IconPageComponent, SliderComponent, TabDemoComponent, FieldsDemoComponent, GroupTemplateDemoComponent, DataSourceDemoComponent } from 'layout';
+import {
+  IconPageComponent, SliderComponent, TabDemoComponent, FieldsDemoComponent, GroupTemplateDemoComponent, DataSourceDemoComponent
+} from 'layout';
 
 @Injectable({
   providedIn: 'root'

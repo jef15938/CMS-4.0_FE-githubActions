@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
 
-export interface IHtmlEditorAction {
+export interface HtmlEditorAction {
   do(): Observable<any>;
 }

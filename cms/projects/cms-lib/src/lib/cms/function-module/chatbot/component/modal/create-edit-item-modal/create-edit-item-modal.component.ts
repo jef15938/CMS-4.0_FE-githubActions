@@ -12,7 +12,6 @@ import { tap } from 'rxjs/operators';
 })
 export class CreateEditItemModalComponent extends CustomModalBase implements OnInit {
 
-  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}項目`;
   actions: CustomModalActionButton[] = [];
 
   action: 'Create' | 'Update' = 'Create';
@@ -24,6 +23,8 @@ export class CreateEditItemModalComponent extends CustomModalBase implements OnI
   replies: ChatbotReply[] = [];
 
   synonym = '';
+
+  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}項目`;
 
   constructor(
     private chatbotService: ChatbotService

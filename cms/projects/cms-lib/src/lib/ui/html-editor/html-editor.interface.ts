@@ -1,36 +1,36 @@
 import { Observable } from 'rxjs';
 import { ModalService } from './../modal/modal.service';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
-import { IHtmlEditorAction } from './actions/action.interface';
+import { HtmlEditorAction } from './actions/action.interface';
 import { MatSelect } from '@angular/material/select';
 
-export interface IHtmlEditorContext {
+export interface HtmlEditorContext {
   simpleWysiwygService: SimpleWysiwygService;
   modalService: ModalService;
   editorContainer: HTMLDivElement;
   commonAncestorContainer: Node;
   isSelectionInsideEditorContainer: boolean;
-  doAction(action: IHtmlEditorAction): void;
+  doAction(action: HtmlEditorAction): void;
   checkInnerHtml(): void;
 }
 
-export interface IHtmlEditorContextMenuItem {
-  text: string,
-  icon?: string,
-  action?: IHtmlEditorAction,
-  children?: IHtmlEditorContextMenuItem[]
+export interface HtmlEditorContextMenuItem {
+  text: string;
+  icon?: string;
+  action?: HtmlEditorAction;
+  children?: HtmlEditorContextMenuItem[];
   disabled?: boolean;
 }
 
-export interface IHtmlEditorContextMenuItem {
+export interface HtmlEditorContextMenuItem {
   type?: 'select';
   defaultValue?: any;
   selectionOptions?: { text: string, value: any, disabled?: boolean }[];
   selectionChange?: (ev: { source: MatSelect, value: any }) => void;
 }
 
-export interface IHtmlEditorService {
+export interface HtmlEditorServiceInterface {
   openEditor(
     config?: { title?: string, content?: string, }
-  ): Observable<any>
+  ): Observable<any>;
 }

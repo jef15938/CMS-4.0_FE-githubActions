@@ -23,7 +23,7 @@ export class GalleryActionCellComponent implements CustomCellRenderer, OnInit {
 
   ActionType = ActionType;
 
-  config: { data: GalleryInfo, table: CmsTable }
+  config: { data: GalleryInfo, table: CmsTable };
 
   constructor() { }
 
@@ -32,7 +32,7 @@ export class GalleryActionCellComponent implements CustomCellRenderer, OnInit {
 
   compInit(config: { data: GalleryInfo, table: CmsTable }) {
     this.config = config;
-  };
+  }
 
   onAction(action: ActionType) {
     this.config.table.triggerCustomEvent(new GalleryActionCellCustomEvent(action, this.config.data));

@@ -17,8 +17,8 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selected']) {
-      const selected = changes['selected'].currentValue as TemplateFieldSelectEvent;
+    if (changes.selected) {
+      const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
       const directive = selected.fieldDirective as LayoutFieldBgimgDirective;
       this.adviceFormat = directive.adviceFormat;
       this.adviceWidth = directive.adviceWidth;

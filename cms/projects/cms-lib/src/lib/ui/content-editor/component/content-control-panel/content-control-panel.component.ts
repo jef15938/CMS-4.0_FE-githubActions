@@ -46,9 +46,9 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selected']) {
-      const previous = changes['selected'].previousValue as LayoutWrapperSelectEvent;
-      const current = changes['selected'].currentValue as LayoutWrapperSelectEvent;
+    if (changes.selected) {
+      const previous = changes.selected.previousValue as LayoutWrapperSelectEvent;
+      const current = changes.selected.currentValue as LayoutWrapperSelectEvent;
       if (previous) {
         previous.selectedTarget.classList.remove('now-edit');
       }
@@ -63,12 +63,10 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   /**
    * 套用變更
-   *
-   * @memberof ContentControlPanelComponent
    */
   preserveChanges(action?: string) {
     const targetType = this.selected.selectedTargetType;
-    let target: string[] = [];
+    const target: string[] = [];
     switch (targetType) {
       case LayoutWrapperSelectedTargetType.TEMPLATE:
         target.push(`[${LayoutWrapperSelectedTargetType.TEMPLATE}]${this.selected.templateInfo.id}`);
@@ -86,8 +84,6 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   /**
    * 顯示版型info
-   *
-   * @memberof ContentControlPanelComponent
    */
   templateShowInfo() {
     this.contentEditorService.openEditor({
@@ -97,13 +93,6 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     }).subscribe();
   }
 
-  /**
-   *
-   *
-   * @param {('up' | 'down')} direction
-   * @returns
-   * @memberof ContentControlPanelComponent
-   */
   templateMove(direction: 'up' | 'down') {
     const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
@@ -131,11 +120,6 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
   }
 
-  /**
-   * 刪除版型
-   *
-   * @memberof ContentControlPanelComponent
-   */
   templateDelete() {
     const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
@@ -156,7 +140,9 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   private calCanTemplateMove() {
     this.canTemplateMoveUp = this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) > 0;
-    this.canTemplateMoveDown = this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo) !== this.selected?.wrapper?.parentTemplatesContainer?.templates?.length - 1;
+    this.canTemplateMoveDown =
+      this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo)
+      !== this.selected?.wrapper?.parentTemplatesContainer?.templates?.length - 1;
   }
 
 }

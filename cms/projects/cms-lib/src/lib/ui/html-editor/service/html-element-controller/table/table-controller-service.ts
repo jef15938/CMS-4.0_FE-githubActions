@@ -12,7 +12,7 @@ export enum TableStyle {
   PERCENT = 'percent',
   SCROLL = 'scroll',
   SINGLE = 'single',
-};
+}
 
 export class TableControllerService {
 
@@ -146,7 +146,9 @@ export class TableControllerService {
     let affectedCount = 0;
     const cellParentIndex = (Array.from(cell.parentNode.parentNode.childNodes) as HTMLElement[]).indexOf(cell.parentNode as HTMLElement);
     const cellIndex = (Array.from(cell.parentNode.childNodes) as HTMLElement[]).indexOf(cell);
-    const previousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+    const previousColSpanOffset = Array.from(cell.parentNode.childNodes)
+      .slice(0, cellIndex)
+      .reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
     const checkStart = cellIndex + previousColSpanOffset;
     let previousTr = cell.parentNode.previousSibling as HTMLTableRowElement;
     while (previousTr) {
@@ -157,7 +159,9 @@ export class TableControllerService {
         if ((td.rowSpan - 1) + trIndex < cellParentIndex) {
           return;
         }
-        const tdPreviousColSpanOffset = Array.from(cell.parentNode.childNodes).slice(0, cellIndex).reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
+        const tdPreviousColSpanOffset = Array.from(cell.parentNode.childNodes)
+          .slice(0, cellIndex).
+          reduce((a, b: HTMLTableDataCellElement) => a + (b.colSpan - 1), 0);
         if (
           tdIndex + tdPreviousColSpanOffset <= checkStart
         ) {
@@ -251,7 +255,7 @@ export class TableControllerService {
       div.style.setProperty('left', `${baseTd.offsetLeft + baseTd.offsetWidth}px`);
       div.style.setProperty('width', '10px');
       div.style.setProperty('height', `${table.clientHeight}px`);
-      div.style.setProperty('background', 'pink');
+      // div.style.setProperty('background', 'pink');
 
       const start$ = fromEvent(div, 'mousedown');
       const move$ = fromEvent(document, 'mousemove');
@@ -276,15 +280,13 @@ export class TableControllerService {
             // console.warn('styleAttr = ', styleAttr);
             // console.warn('styleAttr === TableStyle.SCROLL = ', styleAttr === TableStyle.SCROLL);
 
-            let previousMove: MouseEvent;
             return move$.pipe(
               throttleTime(12),
               tap((move: MouseEvent) => {
                 this.evPreventDefaultAndStopPropagation(move);
                 const nowPoint = move;
-                const previousPoint = previousMove || start;
 
-                const diffX = nowPoint.clientX - previousPoint.clientX;
+                const diffX = nowPoint.clientX - start.clientX;
 
                 const bWidth = baseTdWidth + diffX;
                 const nWidth = nextTdWidth - diffX;
@@ -311,6 +313,7 @@ export class TableControllerService {
                   nextTd.style.setProperty('width', `${nWidth}px`);
                   this.checkTableColsWidth(table, true);
                 }
+
               }),
               takeUntil(end$.pipe(
                 tap((end: MouseEvent) => {
@@ -325,6 +328,7 @@ export class TableControllerService {
         )
       ).subscribe();
 
+      // tslint:disable-next-line: no-string-literal
       div['drag$'] = drag$;
       container.appendChild(div);
     });
@@ -337,11 +341,12 @@ export class TableControllerService {
     containers.forEach(container => {
       const resizers = Array.from(container.children) as HTMLElement[];
       resizers.forEach(resizer => {
+        // tslint:disable-next-line: no-string-literal
         const drag$ = resizer['drag$'] as Subscription;
         drag$?.unsubscribe();
         resizer.parentNode.removeChild(resizer);
       });
-      container.parentNode.removeChild(container)
+      container.parentNode.removeChild(container);
     });
   }
 

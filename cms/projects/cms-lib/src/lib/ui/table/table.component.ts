@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter, HostListener } from '@angular/core';
+import {
+  Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter
+} from '@angular/core';
 import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
 import { ColDef } from './table.interface';
 

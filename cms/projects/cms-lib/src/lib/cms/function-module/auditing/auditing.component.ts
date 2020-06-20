@@ -70,7 +70,7 @@ export class AuditingComponent implements OnInit {
   private init(): Observable<any> {
     return concat(
       this.getMyAuditings(),
-    )
+    );
   }
 
   private getMyAuditings(): Observable<AuditingInfo[]> {

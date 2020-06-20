@@ -22,7 +22,7 @@ export class ImageContentModalComponent extends RichContentModalComponent<ImageC
       type: RichContentType.IMAGE,
       rawUrl: '',
       accessibilityText: '',
-    }
+    };
   }
 
 }

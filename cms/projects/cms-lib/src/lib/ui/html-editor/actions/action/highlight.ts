@@ -1,17 +1,17 @@
-import { HtmlEditorAction } from '../action.base';
+import { HtmlEditorActionBase } from '../action.base';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-export class Highlight extends HtmlEditorAction {
+export class Highlight extends HtmlEditorActionBase {
 
   do(): Observable<any> {
-    document.execCommand("foreColor", false, '#0000ff');
+    document.execCommand('foreColor', false, '#0000ff');
 
     const container = this.context.editorContainer.cloneNode(true) as HTMLDivElement;
 
     if (Array.from(container.querySelectorAll('font[color="#0000ff"] img')).length > 0) {
       return this.context.modalService.openMessage({ message: '標記文字不可包含圖片' })
-        .pipe(tap(_ => document.execCommand("undo")));
+        .pipe(tap(_ => document.execCommand('undo')));
     } else if (
       Array.from(container.querySelectorAll('font[color="#0000ff"] b,font[color="#0000ff"] i,font[color="#0000ff"] u,font[color="#0000ff"] strong,font[color="#0000ff"] em')).length > 0
       || Array.from(container.querySelectorAll('font[color="#0000ff"]'))
@@ -22,9 +22,8 @@ export class Highlight extends HtmlEditorAction {
           return targets.indexOf(el.tagName.toLowerCase()) > -1;
         }).length > 0
     ) {
-      ;
       return this.context.modalService.openMessage({ message: '標記文字不可包含粗體、斜體或底線' })
-        .pipe(tap(_ => document.execCommand("undo")));
+        .pipe(tap(_ => document.execCommand('undo')));
     } else {
       const elements = Array.from(container.querySelectorAll('font[color="#0000ff"]'));
       elements.forEach((el: HTMLElement) => {
@@ -33,7 +32,7 @@ export class Highlight extends HtmlEditorAction {
         span.innerHTML = el.innerHTML;
         el.parentNode.insertBefore(span, el);
         el.parentNode.removeChild(el);
-      })
+      });
       this.context.editorContainer.innerHTML = container.innerHTML;
       this.context.checkInnerHtml();
       return of(undefined);

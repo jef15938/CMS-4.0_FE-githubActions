@@ -2,7 +2,7 @@
   <div class="page-content-container">
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="category_name" name="category_name" required #modelName="ngModel">
+      <input matInput [(ngModel)]="categoryName" name="categoryName" required #modelName="ngModel">
       <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error>
     </mat-form-field>
   </div>

@@ -4,7 +4,7 @@ import { CustomModalBase, CustomModalActionButton } from '../../custom-modal-bas
 @Component({
   selector: 'cms-confirm-modal',
   templateUrl: './confirm-modal.component.html',
-  styleUrls: ['./confirm-modal.component.css']
+  styleUrls: ['./confirm-modal.component.scss']
 })
 export class ConfirmModalComponent extends CustomModalBase implements OnInit {
   title: string | (() => string) = '';
@@ -21,7 +21,7 @@ export class ConfirmModalComponent extends CustomModalBase implements OnInit {
 
   message = '確認?';
 
-  constructor() { super() }
+  constructor() { super(); }
 
   ngOnInit(): void {
   }

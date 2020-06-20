@@ -10,7 +10,7 @@ interface InfoContent extends RichContent {
     src: {
       rawUrl: string;
     }
-  },
+  };
   actionLink: string;
 }
 
@@ -34,7 +34,7 @@ export class InfoContentModalComponent extends RichContentModalComponent<InfoCon
         }
       },
       actionLink: '',
-    }
+    };
   }
 
 }

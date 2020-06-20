@@ -14,7 +14,7 @@ export class ContentInfoStateManager {
   states: ContentInfoState[] = [];
 
   currentState: ContentInfoState;
-  get contentInfoEditModel(): ContentInfo { return this.currentState?.snapShot; };
+  get contentInfoEditModel(): ContentInfo { return this.currentState?.snapShot; }
 
   hasPreviousState = false;
   hasNextState = false;
@@ -37,7 +37,11 @@ export class ContentInfoStateManager {
 
   preserveState(action: string = 'Unknow') {
     const nowSnapShot = JSON.parse(JSON.stringify(this.currentState.snapShot));
-    this.states.splice(this.currentIndex, this.states.length - this.currentIndex, new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action));
+    this.states.splice(
+      this.currentIndex,
+      this.states.length - this.currentIndex,
+      new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action)
+    );
     // this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action);
     this.currentIndex++;
     this.calHasState();

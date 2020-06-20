@@ -31,13 +31,13 @@ export class DeptComponent implements OnInit {
   private initPage(): Observable<any> {
     return concat(
       this.getDepts(),
-    )
+    );
   }
 
   private getDepts() {
     return this.departmentService.getAllDepartment().pipe(
       tap(depts => this.depts = depts),
-    )
+    );
   }
 
   afterTreeRender(tree: CmsTree<DepartmentInfo>) {

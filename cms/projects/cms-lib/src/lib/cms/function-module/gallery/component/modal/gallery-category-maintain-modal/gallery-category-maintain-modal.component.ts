@@ -10,15 +10,16 @@ import { GalleryService } from './../../../../../../service/gallery.service';
 })
 export class GalleryCategoryMaintainModalComponent extends CustomModalBase implements OnInit {
 
-  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}媒體庫群組`;
   actions: CustomModalActionButton[] = [];
 
   action: 'Create' | 'Update' = 'Create';
 
   @Input() categoryID: string;
-  @Input() category_name: string;
-  @Input() parent_id: string;
-  @Input() assign_dept_id: string;
+  @Input() categoryName: string;
+  @Input() parentId: string;
+  @Input() assignDeptId: string;
+
+  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}媒體庫群組`;
 
   constructor(
     private galleryService: GalleryService,
@@ -31,11 +32,11 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   }
 
   private save() {
-    console.warn('this.action = ', this.action)
+    console.warn('this.action = ', this.action);
     return (
       this.action === 'Create'
-        ? this.galleryService.createGalleryCategory(this.category_name, this.assign_dept_id, this.parent_id)
-        : this.galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.category_name, this.assign_dept_id, this.parent_id)
+        ? this.galleryService.createGalleryCategory(this.categoryName, this.assignDeptId, this.parentId)
+        : this.galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.categoryName, this.assignDeptId, this.parentId)
     );
   }
 
@@ -46,7 +47,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   }
 
   getErrorMessage(model: NgModel) {
-    if (model.hasError('required')) return 'Required';
+    if (model.hasError('required')) { return 'Required'; }
   }
 
 }

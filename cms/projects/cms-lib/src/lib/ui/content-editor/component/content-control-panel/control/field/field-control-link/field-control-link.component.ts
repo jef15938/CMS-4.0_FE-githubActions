@@ -15,8 +15,8 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selected']) {
-      const selected = changes['selected'].currentValue as TemplateFieldSelectEvent;
+    if (changes.selected) {
+      const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
       this.fieldInfo = selected.fieldInfo as LinkFieldInfo;
       this.fieldInfo.extension = this.fieldInfo.extension || {
         isTargetBlank: 'false'

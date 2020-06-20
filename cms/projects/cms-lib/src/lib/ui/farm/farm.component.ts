@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FarmService } from '../../service/farm.service';
-import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo, CmsFarmFormInfo } from '../../type/farm.class';
+import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo } from '../../type/farm.class';
 import { tap, takeUntil, concatMap, catchError } from 'rxjs/operators';
-import { Subject, of, throwError, never } from 'rxjs';
+import { Subject, of, throwError, NEVER } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
 import { CmsFarmTableDataAction } from '../../type/farm.enum';
@@ -59,7 +59,7 @@ export class FarmComponent implements OnInit, OnDestroy {
         this.farm = farm;
         this.activedCategory = this.farm?.category[0];
       }),
-    )
+    );
   }
 
   private getCategoryTableInfo(category: CmsFarmInfoCategory, page = 1) {
@@ -75,9 +75,9 @@ export class FarmComponent implements OnInit, OnDestroy {
       }),
       catchError(err => {
         console.error('err = ', err);
-        return never();
+        return NEVER;
       }),
-    )
+    );
   }
 
   destroySelf() {
