@@ -3,7 +3,7 @@
     <h1>
       <span *ngIf="title">{{title}}</span>{{categoryName ? ' > ' : ''}}{{categoryName||''}}
       <div style="float: right;" *ngIf="isSub">
-        <button type="button" mat-button (click)="destroySelf()">回上層</button>
+        <button type="button" tabindex="0" mat-button (click)="destroySelf()">回上層</button>
       </div>
     </h1>
   </div>

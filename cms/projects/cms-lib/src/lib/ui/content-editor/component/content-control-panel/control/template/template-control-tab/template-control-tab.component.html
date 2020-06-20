@@ -13,7 +13,7 @@
       </mat-list-item>
       <mat-list-item style="text-align: center;">
         <div class="item-container" style="text-align: center;">
-          <button type="button" mat-icon-button (click)="addTab()"
+          <button type="button" tabindex="0" mat-icon-button (click)="addTab()"
             [disabled]="templateInfo.tabList.length>=parseInt(''+maxItemCount)">
             <mat-icon class="pointer">add_circle</mat-icon>
           </button>

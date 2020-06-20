@@ -1,7 +1,7 @@
 <ng-container *ngIf="contentModel">
   <form #form="ngForm">
     <div class="btn-group">
-      <button type="button" mat-button (click)="preview()" style="float: right;">預覽</button>
+      <button type="button" tabindex="0" mat-button (click)="preview()" style="float: right;">預覽</button>
     </div>
     <div class="page-content-container">
       <mat-form-field appearance="outline">
@@ -12,13 +12,14 @@
         <mat-label>內文</mat-label>
         <div class="input-btn-group">
           <input matInput name="synonym" placeholder="請輸入內文" [(ngModel)]="newText">
-          <button type="button" mat-raised-button color="primary" [disabled]="!newText" (click)="addText()">新增</button>
+          <button type="button" tabindex="0" mat-raised-button color="primary" [disabled]="!newText"
+            (click)="addText()">新增</button>
         </div>
         <mat-list class="text-list">
           <ng-container *ngFor="let text of contentModel.text">
             <mat-list-item>
               {{text}}
-              <button type="button" mat-icon-button color="warn" (click)="removeText(text)">
+              <button type="button" tabindex="0" mat-icon-button color="warn" (click)="removeText(text)">
                 <mat-icon>delete</mat-icon>
               </button>
             </mat-list-item>
@@ -27,8 +28,8 @@
       </div>
     </div>
     <div class="btn-group">
-      <button type="button" mat-button (click)="close()">取消</button>
-      <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
     </div>
   </form>
 </ng-container>

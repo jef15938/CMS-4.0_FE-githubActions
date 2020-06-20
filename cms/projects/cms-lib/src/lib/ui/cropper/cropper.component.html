@@ -1,11 +1,12 @@
 <mat-menu #Menu="matMenu">
-  <button type="button" mat-menu-item (click)="showInfo()">Show Info</button>
-  <button type="button" mat-menu-item (click)="close()">取消並關閉</button>
-  <button type="button" mat-menu-item (click)="confirm()">裁切並關閉</button>
+  <button type="button" tabindex="0" mat-menu-item (click)="showInfo()">Show Info</button>
+  <button type="button" tabindex="0" mat-menu-item (click)="close()">取消並關閉</button>
+  <button type="button" tabindex="0" mat-menu-item (click)="confirm()">裁切並關閉</button>
 </mat-menu>
 
 <div style="border-bottom: 1px solid black;" *ngIf="cropperWrapper?.cropper">
-  <button type="button" mat-button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="Menu">Cropper</button>
+  <button type="button" tabindex="0" mat-button #menuTrigger="matMenuTrigger"
+    [matMenuTriggerFor]="Menu">Cropper</button>
   <cms-cropper-menu-edit [cropper]="cropperWrapper.cropper"></cms-cropper-menu-edit>
   <cms-cropper-menu-setting [cropper]="cropperWrapper.cropper"></cms-cropper-menu-setting>
 </div>

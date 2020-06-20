@@ -1,14 +1,14 @@
 <ng-container *ngIf="contentModel">
   <form #form="ngForm">
     <div class="btn-group">
-      <button type="button" mat-button (click)="preview()" style="float: right;">預覽</button>
+      <button type="button" tabindex="0" mat-button (click)="preview()" style="float: right;">預覽</button>
     </div>
     <div>
       <mat-label>
         項目
       </mat-label>
       <div class="option-btn-group">
-        <button type="button" mat-raised-button color="primary" (click)="addOption()">新增</button>
+        <button type="button" tabindex="0" mat-raised-button color="primary" (click)="addOption()">新增</button>
       </div>
       <mat-list class="content-list" cdkDropList (cdkDropListDropped)="onListDropped($event)">
         <ng-container *ngFor="let option of contentModel.options">
@@ -17,10 +17,10 @@
             <span>
               {{option.text}}
             </span>
-            <button type="button" mat-icon-button color="primary" (click)="editOption(option)">
+            <button type="button" tabindex="0" mat-icon-button color="primary" (click)="editOption(option)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button type="button" mat-icon-button color="warn" (click)="removeOption(option)">
+            <button type="button" tabindex="0" mat-icon-button color="warn" (click)="removeOption(option)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-list-item>
@@ -28,8 +28,8 @@
       </mat-list>
     </div>
     <div class="btn-group">
-      <button type="button" mat-button (click)="close()">取消</button>
-      <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
     </div>
   </form>
 </ng-container>

@@ -12,7 +12,7 @@
         </ng-container>
         <ng-container *ngIf="col===ACTION_COLUMN">
           <div *ngIf="tableInfo.can_create" style="text-align: center;">
-            <button type="button" mat-icon-button (click)="onActionClick(CmsFarmTableDataAction.CREATE)">
+            <button type="button" tabindex="0" mat-icon-button (click)="onActionClick(CmsFarmTableDataAction.CREATE)">
               <mat-icon>add</mat-icon>
             </button>
           </div>
@@ -31,7 +31,8 @@
         </ng-container>
         <ng-container *ngIf="col===ACTION_COLUMN">
           <ng-container *ngFor="let action of (element|getDataActions)">
-            <button type="button" mat-icon-button (click)="onActionClick(action, element)" [ngSwitch]="action">
+            <button type="button" tabindex="0" mat-icon-button (click)="onActionClick(action, element)"
+              [ngSwitch]="action">
               <mat-icon>
                 <ng-container *ngSwitchCase="CmsFarmTableDataAction.MODIFY">
                   edit

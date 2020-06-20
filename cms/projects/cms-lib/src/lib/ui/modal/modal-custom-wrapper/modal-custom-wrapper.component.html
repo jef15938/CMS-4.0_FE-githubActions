@@ -10,7 +10,7 @@
 <ng-container *ngIf="instance&&instance.actions&&instance.actions.length">
   <div mat-modal-actions>
     <span class="btn-group">
-      <button type="button" mat-button *ngFor="let action of instance.actions"
+      <button type="button" tabindex="0" mat-button *ngFor="let action of instance.actions"
         (click)="action.onClick($event)">{{action.text}}</button>
     </span>
   </div>

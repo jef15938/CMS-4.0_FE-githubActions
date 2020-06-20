@@ -4,8 +4,8 @@
     <div class="page-title-container">
       <h1>網站列表
         <div style="float: right;">
-          <button type="button" mat-button (click)="testContentEditor()">Content(測試)</button>
-          <button type="button" mat-button (click)="testHtmlEditor()">Html(測試)</button>
+          <button type="button" tabindex="0" mat-button (click)="testContentEditor()">Content(測試)</button>
+          <button type="button" tabindex="0" mat-button (click)="testHtmlEditor()">Html(測試)</button>
         </div>
       </h1>
     </div>
@@ -23,7 +23,7 @@
     <div class="page-title-container">
       <h1>網站設定
         <div style="float: right;">
-          <button type="button" mat-button (click)="swichMode(EditModeType.Node)">編輯節點</button>
+          <button type="button" tabindex="0" mat-button (click)="swichMode(EditModeType.Node)">編輯節點</button>
         </div>
       </h1>
     </div>
@@ -52,7 +52,7 @@
     <div class="page-title-container">
       <h1>{{selectedSite?.site_name}}
         <div style="float: right;">
-          <button type="button" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
+          <button type="button" tabindex="0" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
         </div>
       </h1>
     </div>

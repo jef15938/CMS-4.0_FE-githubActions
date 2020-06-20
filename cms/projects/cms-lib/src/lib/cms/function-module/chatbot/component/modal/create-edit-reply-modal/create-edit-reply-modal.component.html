@@ -1,7 +1,7 @@
 <ng-container *ngIf="replyModel">
   <form #form="ngForm">
     <div class="btn-group">
-      <button type="button" mat-button (click)="preview()" style="float: right;">預覽</button>
+      <button type="button" tabindex="0" mat-button (click)="preview()" style="float: right;">預覽</button>
     </div>
     <div class="page-content-container">
       <mat-form-field appearance="outline">
@@ -19,19 +19,21 @@
         </mat-label>
         <div class="reply-btn-group">
           <mat-menu #createContentMenu="matMenu">
-            <button type="button" mat-menu-item (click)="addRichContent(RichContentType.INFO)">資訊</button>
-            <button type="button" mat-menu-item (click)="addRichContent(RichContentType.DESCRIPTION)">描述</button>
-            <button type="button" mat-menu-item (click)="addRichContent(RichContentType.IMAGE)">圖片</button>
-            <button type="button" mat-menu-item (click)="addRichContent(RichContentType.BUTTON)">按鈕</button>
-            <button type="button" mat-menu-item (click)="addRichContent(RichContentType.LIST)">清單</button>
-            <button type="button" mat-menu-item (click)="addRichContent(RichContentType.ACCORDION)">折疊</button>
-            <button type="button" mat-menu-item (click)="addRichContent(RichContentType.CHIPS)">建議</button>
+            <button type="button" tabindex="0" mat-menu-item (click)="addRichContent(RichContentType.INFO)">資訊</button>
+            <button type="button" tabindex="0" mat-menu-item
+              (click)="addRichContent(RichContentType.DESCRIPTION)">描述</button>
+            <button type="button" tabindex="0" mat-menu-item (click)="addRichContent(RichContentType.IMAGE)">圖片</button>
+            <button type="button" tabindex="0" mat-menu-item
+              (click)="addRichContent(RichContentType.BUTTON)">按鈕</button>
+            <button type="button" tabindex="0" mat-menu-item (click)="addRichContent(RichContentType.LIST)">清單</button>
+            <button type="button" tabindex="0" mat-menu-item
+              (click)="addRichContent(RichContentType.ACCORDION)">折疊</button>
+            <button type="button" tabindex="0" mat-menu-item (click)="addRichContent(RichContentType.CHIPS)">建議</button>
           </mat-menu>
-          <button type="button" mat-raised-button color="primary" #menuTrigger="matMenuTrigger"
+          <button type="button" tabindex="0" mat-raised-button color="primary" #menuTrigger="matMenuTrigger"
             [matMenuTriggerFor]="createContentMenu">新增</button>
         </div>
-        <mat-list class="content-list" cdkDropList
-          (cdkDropListDropped)="onListDropped($event)">
+        <mat-list class="content-list" cdkDropList (cdkDropListDropped)="onListDropped($event)">
           <ng-container *ngFor="let richContent of replyModel.richContents">
             <mat-list-item cdkDrag>
               <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
@@ -44,10 +46,10 @@
                 <ng-container *ngSwitchCase="RichContentType.ACCORDION">折疊</ng-container>
                 <ng-container *ngSwitchCase="RichContentType.CHIPS">建議</ng-container>
               </span>
-              <button type="button" mat-icon-button color="primary" (click)="editRichContent(richContent)">
+              <button type="button" tabindex="0" mat-icon-button color="primary" (click)="editRichContent(richContent)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button type="button" mat-icon-button color="warn" (click)="removeRichContent(richContent)">
+              <button type="button" tabindex="0" mat-icon-button color="warn" (click)="removeRichContent(richContent)">
                 <mat-icon>delete</mat-icon>
               </button>
             </mat-list-item>
@@ -56,8 +58,8 @@
       </div>
     </div>
     <div class="btn-group">
-      <button type="button" mat-button (click)="close()">取消</button>
-      <button type="button" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
     </div>
   </form>
 </ng-container>
