@@ -41,7 +41,7 @@ export class CreateLink extends DomCmdAction {
         if (isCreate) { // 新增
           const commonAncestorContainer = range.commonAncestorContainer as HTMLElement;
           const isCreateOnImg =
-            commonAncestorContainer.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frame_id');
+            commonAncestorContainer.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frameId');
 
           if (isCreateOnImg) {
             aTagToModify.appendChild(range.commonAncestorContainer);
@@ -69,7 +69,7 @@ export class CreateLink extends DomCmdAction {
     const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
     const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLocaleLowerCase();
 
-    if (commonAncestorContainerTagName === 'img' && !commonAncestorContainer.getAttribute('frame_id')) { return false; }
+    if (commonAncestorContainerTagName === 'img' && !commonAncestorContainer.getAttribute('frameId')) { return false; }
     if (range.collapsed) { return true; }
     return true;
   }

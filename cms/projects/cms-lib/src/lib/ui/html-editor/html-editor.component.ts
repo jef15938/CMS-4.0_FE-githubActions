@@ -243,6 +243,14 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       nodes.forEach(node => {
         node.classList?.remove('selected');
         node.style?.removeProperty('outline');
+        if (node.tagName?.toLowerCase() === 'img' && node.getAttribute('frameId')) {
+          const frameId = node.getAttribute('frameId');
+          const iframe = document.createElement('iframe');
+          iframe.src = frameId;
+          iframe.setAttribute('style', 'width: 100%; height: 100%;');
+          node.parentNode.insertBefore(iframe, node);
+          node.parentNode.removeChild(node);
+        }
       });
       nodes = nodes.reduce((a, b) => {
         return a.concat(Array.from(b.childNodes || []));

@@ -8,7 +8,7 @@ export class InsertImage extends HtmlEditorActionBase {
   do() {
     const editorContainer = this.context.editorContainer;
     const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
-    const image = commonAncestorContainer?.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frame_id')
+    const image = commonAncestorContainer?.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frameId')
       ? commonAncestorContainer as HTMLImageElement
       : undefined;
     // https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230

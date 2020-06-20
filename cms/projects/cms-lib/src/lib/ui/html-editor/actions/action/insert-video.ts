@@ -8,7 +8,7 @@ export class InsertVideo extends HtmlEditorActionBase {
   do() {
     const editorContainer = this.context.editorContainer;
     const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
-    const image = commonAncestorContainer?.tagName?.toLowerCase() === 'img' && commonAncestorContainer.getAttribute('frame_id')
+    const image = commonAncestorContainer?.tagName?.toLowerCase() === 'img' && commonAncestorContainer.getAttribute('frameId')
       ? commonAncestorContainer as HTMLImageElement
       : undefined;
     // https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230
@@ -20,10 +20,10 @@ export class InsertVideo extends HtmlEditorActionBase {
       componentInitData: {
         title: `${image ? '修改' : '加入'}影片`,
         src: image?.src,
-        frame_id: image?.getAttribute('frame_id')
+        frameId: image?.getAttribute('frameId')
       }
     }).pipe(
-      tap((config: { src: string, frame_id: string }) => {
+      tap((config: { src: string, frameId: string }) => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
 
@@ -32,13 +32,13 @@ export class InsertVideo extends HtmlEditorActionBase {
           const nowRange = this.context.simpleWysiwygService.getRange();
           const imgElement = nowRange.commonAncestorContainer.childNodes[nowRange.startOffset - 1] as HTMLImageElement;
           if (imgElement && imgElement.tagName.toLowerCase() === 'img') {
-            imgElement.setAttribute('frame_id', config.frame_id);
+            imgElement.setAttribute('frameId', config.frameId);
             imgElement.src = config.src;
             imgElement.style.width = '100%';
             imgElement.style.height = 'auto';
           }
         } else {
-          image.setAttribute('frame_id', config.frame_id);
+          image.setAttribute('frameId', config.frameId);
           image.src = config.src;
         }
         return;

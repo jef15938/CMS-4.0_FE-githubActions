@@ -25,7 +25,6 @@ export class GelleryImgSrcPipe implements PipeTransform {
     // PNG,JPG,JPEG,GIF
     const imgFileExtensionNames = ['PNG', 'JPG', 'JPEG', 'GIF'];
     const extensionName = data.file_type.toUpperCase();
-    console.warn('extensionName = ', extensionName);
     return imgFileExtensionNames.indexOf(extensionName) > -1;
   }
 

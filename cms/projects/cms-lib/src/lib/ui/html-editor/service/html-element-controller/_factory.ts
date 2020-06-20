@@ -13,7 +13,7 @@ export class HtmlEditorElementControllerFactory {
 
       switch (tagName) {
         case 'img':
-          if (el.getAttribute('frame_id')) {
+          if (el.getAttribute('frameId')) {
             controller =
               HtmlEditorElementControllerFactory.getController(el)
               || new HtmlEditorVideoController(el as HTMLImageElement, context);

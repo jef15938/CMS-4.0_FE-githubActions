@@ -20,7 +20,7 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
   actions: CustomModalActionButton[];
 
   @Input() src = '';
-  @Input() frame_id = '';
+  @Input() frameId = '';
 
   isValidSrc = true;
 
@@ -37,13 +37,13 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
     if (!src) { this.modalService.openMessage({ message: 'Youtube 網址錯誤' }); return; }
     this.close({
       src: src,
-      frame_id: this.frame_id || '',
+      frameId: this.frameId || '',
     })
   }
 
   checkSrc() {
-    const frameId = this.frame_id;
-    if (this.frame_id.indexOf(YOUTUBE_EMBED_VIDEO_URL) > -1) {
+    const frameId = this.frameId;
+    if (this.frameId.indexOf(YOUTUBE_EMBED_VIDEO_URL) > -1) {
       const videoId = frameId.replace(YOUTUBE_EMBED_VIDEO_URL, '');
       this.isValidSrc = true;
       return YOUTUBE_EMBED_IMAGE_URL(videoId);
