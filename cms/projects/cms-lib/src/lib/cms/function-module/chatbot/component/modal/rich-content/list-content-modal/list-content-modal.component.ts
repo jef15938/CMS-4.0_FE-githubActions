@@ -52,14 +52,14 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
       type: RichContentType.LIST,
       title: '',
       subtitle: '',
-    }
+    };
   }
 
   ngOnInit(): void {
     super.ngOnInit();
 
     if (this.contentModel.event) {
-      const funcIds = this.functions.map(func => func.funcId);
+      const funcIds = this.functions.map(f => f.funcId);
       const func = this.contentModel.event.parameters;
       const funcId = func?.funcId;
       const funcIdIndex = funcIds.indexOf(funcId);
@@ -107,7 +107,7 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
         name: 'ExecFuncEvent',
         languageCode: 'zh-tw',
         parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
-      }
+      };
       this.contentModel.event.parameters.funcParams = this.selectedFunc.funcParams;
     } else {
       this.selectedFunc = null;
@@ -123,7 +123,7 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
       name: 'ExecFuncEvent',
       languageCode: 'zh-tw',
       parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
-    }
+    };
     this.contentModel.event.parameters.funcParams = this.selectedFunc.funcParams;
   }
 

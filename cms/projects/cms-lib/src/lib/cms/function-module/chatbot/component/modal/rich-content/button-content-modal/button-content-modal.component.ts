@@ -60,7 +60,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
         type: '',
         color: '',
       }
-    }
+    };
   }
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
     }
 
     if (this.contentModel.event) {
-      const funcIds = this.functions.map(func => func.funcId);
+      const funcIds = this.functions.map(f => f.funcId);
       const func = this.contentModel.event.parameters;
       const funcId = func?.funcId;
       const funcIdIndex = funcIds.indexOf(funcId);
@@ -131,7 +131,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
           name: 'ExecFuncEvent',
           languageCode: 'zh-tw',
           parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
-        }
+        };
         this.contentModel.event.parameters.funcParams = this.selectedFunc.funcParams;
         this.isLink = false;
         delete this.contentModel.link;
@@ -150,7 +150,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
       name: 'ExecFuncEvent',
       languageCode: 'zh-tw',
       parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
-    }
+    };
     this.contentModel.event.parameters.funcParams = this.selectedFunc.funcParams;
   }
 
