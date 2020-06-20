@@ -1,7 +1,7 @@
 import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { HtmlEditorContext } from '../../../../html-editor.interface';
-import { ITableController } from '../table-controller.interface';
+import { HtmlEditorTableControllerInterface } from '../table-controller.interface';
 
 export class AddRow extends HtmlEditorActionBase {
 
@@ -9,7 +9,7 @@ export class AddRow extends HtmlEditorActionBase {
 
   constructor(
     context: HtmlEditorContext,
-    private controller: ITableController,
+    private controller: HtmlEditorTableControllerInterface,
     position: 'before' | 'after',
   ) {
     super(context);

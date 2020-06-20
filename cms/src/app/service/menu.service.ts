@@ -1,7 +1,7 @@
-import { ICmsExtensionMenuResolver } from '@cms-lib';
+import { CmsExtensionMenuResolver } from '@cms-lib';
 import { of, Observable } from 'rxjs';
 
-export class MenuService implements ICmsExtensionMenuResolver {
+export class MenuService implements CmsExtensionMenuResolver {
   resolve: () => Observable<any[]> = () => {
     return of([
       {

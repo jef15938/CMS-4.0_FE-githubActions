@@ -1,13 +1,13 @@
 import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { HtmlEditorContext } from '../../../../html-editor.interface';
-import { ITableController, ITableCell } from '../table-controller.interface';
+import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from '../table-controller.interface';
 
 export class DeleteCol extends HtmlEditorActionBase {
 
   constructor(
     context: HtmlEditorContext,
-    private controller: ITableController,
+    private controller: HtmlEditorTableControllerInterface,
   ) {
     super(context);
   }
@@ -18,12 +18,12 @@ export class DeleteCol extends HtmlEditorActionBase {
 
     const rangeStartEnd = this.controller.tableControllerService.getStartEndBySelectedCols(this.controller.selectedCols);
 
-    const colsToDelete: ITableCell[] = [];
-    const minusMap = new Map<ITableCell, number>();
+    const colsToDelete: HtmlEditorTableCell[] = [];
+    const minusMap = new Map<HtmlEditorTableCell, number>();
 
     const rows = Array.from(this.controller.el.querySelectorAll('tr')) as HTMLTableRowElement[];
     rows.forEach(row => {
-      const cols = Array.from(row.childNodes) as ITableCell[];
+      const cols = Array.from(row.childNodes) as HtmlEditorTableCell[];
       cols.forEach(col => {
         const startEnd = this.controller.tableControllerService.getCellStartEnd(col);
         if (startEnd.colStart >= rangeStartEnd.colStart && startEnd.colEnd <= rangeStartEnd.colEnd) {

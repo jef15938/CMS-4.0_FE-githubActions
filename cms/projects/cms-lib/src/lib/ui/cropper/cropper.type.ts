@@ -1,5 +1,5 @@
 // https://github.com/fengyuanchen/cropperjs#options
-export interface ICropperOption {
+export interface CropperOption {
   /** Define the view mode of the cropper. */
   viewMode?: Cropper.ViewMode; // 0
   /** Define the dragging mode of the cropper. */

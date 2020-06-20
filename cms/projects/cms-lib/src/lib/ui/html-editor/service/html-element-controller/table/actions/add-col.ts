@@ -1,7 +1,7 @@
 import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { HtmlEditorContext } from '../../../../html-editor.interface';
-import { ITableController, ITableCell } from '../table-controller.interface';
+import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from '../table-controller.interface';
 
 export class AddCol extends HtmlEditorActionBase {
 
@@ -9,7 +9,7 @@ export class AddCol extends HtmlEditorActionBase {
 
   constructor(
     context: HtmlEditorContext,
-    private controller: ITableController,
+    private controller: HtmlEditorTableControllerInterface,
     position: 'left' | 'right',
   ) {
     super(context);
@@ -31,7 +31,7 @@ export class AddCol extends HtmlEditorActionBase {
     let cols = 0;
     const rows = trArr.length;
 
-    const row0Tds = Array.from(trArr[0].childNodes) as ITableCell[];
+    const row0Tds = Array.from(trArr[0].childNodes) as HtmlEditorTableCell[];
     row0Tds.forEach(td => {
       cols += td.colSpan;
     });
@@ -49,8 +49,8 @@ export class AddCol extends HtmlEditorActionBase {
     // tslint:disable-next-line: prefer-for-of
     for (let j = 0; j < trArr.length; j++) {
       const element = trArr[j];
-      const tds = Array.from(element.childNodes) as ITableCell[];
-      let tmpTD: ITableCell;
+      const tds = Array.from(element.childNodes) as HtmlEditorTableCell[];
+      let tmpTD: HtmlEditorTableCell;
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < tds.length; i++) {
         tmpTD = tds[i];
@@ -80,7 +80,7 @@ export class AddCol extends HtmlEditorActionBase {
     this.controller.checkTableState();
 
     trArr.forEach((tr) => {
-      const tds = Array.from(tr.childNodes) as ITableCell[];
+      const tds = Array.from(tr.childNodes) as HtmlEditorTableCell[];
       tds.forEach((td) => {
         const pos = td.cellPos;
         // console.warn(td, pos);
@@ -103,7 +103,7 @@ export class AddCol extends HtmlEditorActionBase {
       });
       if (num > 0) {
         const targetRow = trArr[i];
-        const tds = Array.from(targetRow.childNodes) as ITableCell[];
+        const tds = Array.from(targetRow.childNodes) as HtmlEditorTableCell[];
         // console.log('targetRow = ', targetRow);
         // tslint:disable-next-line: prefer-for-of
         for (let j = 0; j < tds.length; j++) {

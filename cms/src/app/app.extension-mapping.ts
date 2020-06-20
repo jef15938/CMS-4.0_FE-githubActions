@@ -1,8 +1,8 @@
-import { ICmsExtensionComponentMapping } from '@cms-lib';
+import { CmsExtensionComponentMapping } from '@cms-lib';
 import { Test1Component } from './test/test1.component';
 import { Test2Component } from './test/test2.component';
 
-export const ExtensionMappings: ICmsExtensionComponentMapping<any>[] = [
+export const ExtensionMappings: CmsExtensionComponentMapping<any>[] = [
   {
     component_id: 'test1',
     component: Test1Component

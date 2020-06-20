@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { ICmsExtensionMenuResolver, ICmsExtensionComponentMapping } from './type/extension.type';
+import { CmsExtensionMenuResolver, CmsExtensionComponentMapping } from './type/extension.type';
 
-export const CmsExtensionComponentMappings = new InjectionToken<ICmsExtensionComponentMapping<any>[]>('CmsExtensionComponentMappings');
-export const CmsExtensionMenuResolver = new InjectionToken<ICmsExtensionMenuResolver>('CmsExtensionMenuResolver');
+export const CmsExtensionComponentMappingsInjectionToken = new InjectionToken<CmsExtensionComponentMapping<any>[]>('CmsExtensionComponentMappings');
+export const CmsExtensionMenuResolverInjectionToken = new InjectionToken<CmsExtensionMenuResolver>('CmsExtensionMenuResolver');

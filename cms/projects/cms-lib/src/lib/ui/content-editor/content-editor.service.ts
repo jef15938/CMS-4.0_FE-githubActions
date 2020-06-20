@@ -1,11 +1,11 @@
-import { IContentEditorService, IContentEditorServiceConfig, EditorMode } from './content-editor.interface';
+import { ContentEditorServiceInterface, ContentEditorServiceConfig, EditorMode } from './content-editor.interface';
 import { Observable } from 'rxjs';
 import { ModalService } from '../modal/modal.service';
 import { EditorContainerModalComponent } from './component/editor-container-modal/editor-container-modal.component';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class ContentEditorService implements IContentEditorService {
+export class ContentEditorService implements ContentEditorServiceInterface {
 
   constructor(
     private modalService: ModalService,
@@ -13,7 +13,7 @@ export class ContentEditorService implements IContentEditorService {
 
   }
 
-  openEditor(config: IContentEditorServiceConfig): Observable<any> {
+  openEditor(config: ContentEditorServiceConfig): Observable<any> {
     const modalSetting = {
       id: `content-editor-${config.mode}`,
       width: '100%',

@@ -3,7 +3,7 @@ import { fromEvent, Subscription, merge, Observable, of } from 'rxjs';
 import { HtmlEditorContextMenuItem, HtmlEditorContext } from '../../../html-editor.interface';
 import { DeleteRow } from './actions/delete-row';
 import { AddRow } from './actions/add-row';
-import { ITableController, ITableCell } from './table-controller.interface';
+import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from './table-controller.interface';
 import { DeleteCol } from './actions/delete-col';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Merge } from './actions/merge';
@@ -13,7 +13,7 @@ import { TableControllerService, TABLE_STYLE_ATTR, TableStyle } from './table-co
 import { MarkCol } from './actions/mark-col';
 import { AddCol } from './actions/add-col';
 
-export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements ITableController {
+export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements HtmlEditorTableControllerInterface {
 
   private contextMenuItemsTemp: HtmlEditorContextMenuItem[];
   get contextMenuItems(): HtmlEditorContextMenuItem[] {
@@ -186,7 +186,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         const row = trs[i];
         const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
 
-        cells.forEach((cell: ITableCell) => {
+        cells.forEach((cell: HtmlEditorTableCell) => {
           const startEnd = this.tableControllerService.getCellStartEnd(cell);
           if (
             startEnd.rowStart >= selectedColsStartEnd.rowStart

@@ -1,22 +1,22 @@
 import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { HtmlEditorContext } from '../../../../html-editor.interface';
-import { ITableController, ITableCell } from '../table-controller.interface';
+import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from '../table-controller.interface';
 
 export class Merge extends HtmlEditorActionBase {
 
   constructor(
     context: HtmlEditorContext,
-    private controller: ITableController,
+    private controller: HtmlEditorTableControllerInterface,
   ) {
     super(context);
   }
 
   do(): Observable<any> {
-    let selectedCols = this.controller.selectedCols as ITableCell[];
+    let selectedCols = this.controller.selectedCols as HtmlEditorTableCell[];
     if (selectedCols.length < 2) { return this.context.modalService.openMessage({ message: '請選擇至少兩欄' }); }
 
-    const hasConsecutiveCol = selectedCols.some(col => selectedCols.indexOf(col.previousElementSibling as ITableCell) > -1);
+    const hasConsecutiveCol = selectedCols.some(col => selectedCols.indexOf(col.previousElementSibling as HtmlEditorTableCell) > -1);
 
     const selectedRows = this.controller.selectedRows;
     const hasConsecutiveRow = selectedRows.some(row => selectedRows.indexOf(row.previousElementSibling as HTMLTableRowElement) > -1);
@@ -26,7 +26,7 @@ export class Merge extends HtmlEditorActionBase {
     const table = this.controller.el;
     selectedCols.forEach(col => {
       if (!table.contains(col)) { return; }
-      const previous = col.previousElementSibling as ITableCell;
+      const previous = col.previousElementSibling as HtmlEditorTableCell;
       if (
         previous
         && selectedCols.indexOf(previous) > -1
@@ -43,7 +43,7 @@ export class Merge extends HtmlEditorActionBase {
       if (!table.contains(col)) { return; }
       const startEnd = this.controller.tableControllerService.getCellStartEnd(col);
 
-      const previous = selectedCols.find((c: ITableCell) => {
+      const previous = selectedCols.find((c: HtmlEditorTableCell) => {
         const previousStartEnd = this.controller.tableControllerService.getCellStartEnd(c);
         if (
           col === c

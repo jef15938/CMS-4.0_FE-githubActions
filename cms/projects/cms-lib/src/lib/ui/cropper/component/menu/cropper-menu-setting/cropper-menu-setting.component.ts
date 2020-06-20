@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ICropperOption } from '../../../cropper.type';
+import { CropperOption } from '../../../cropper.type';
 
 type AspectRatioMode = '16:9' | '4:3' | '3:2' | '1:1' | '2:3' | '9:16' | '3:4' | '9:16' | 'free';
 
@@ -11,7 +11,7 @@ type AspectRatioMode = '16:9' | '4:3' | '3:2' | '1:1' | '2:3' | '9:16' | '3:4' |
 export class CropperMenuSettingComponent implements OnInit {
 
   @Input() cropper: Cropper;
-  options: ICropperOption;
+  options: CropperOption;
 
   aspectRatioMode: AspectRatioMode = 'free';
 

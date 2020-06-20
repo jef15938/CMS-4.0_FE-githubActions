@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../modal/custom-modal-base';
 import { CropperComponent as CropperWrapper } from 'angular-cropperjs';
-import { ICropperOption } from './cropper.type';
+import { CropperOption } from './cropper.type';
 
 @Component({
   selector: 'cms-cropper',
@@ -18,7 +18,7 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
 
   @Input() imgUrl = '';
 
-  cropperOption: ICropperOption = {
+  cropperOption: CropperOption = {
     checkCrossOrigin: false,
     movable: true,
     scalable: true,

@@ -1,13 +1,13 @@
 import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { HtmlEditorContext } from '../../../../html-editor.interface';
-import { ITableController } from '../table-controller.interface';
+import { HtmlEditorTableControllerInterface } from '../table-controller.interface';
 
 export class DeleteTable extends HtmlEditorActionBase {
 
   constructor(
     context: HtmlEditorContext,
-    private controller: ITableController,
+    private controller: HtmlEditorTableControllerInterface,
   ) {
     super(context);
   }

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from 'layout';
 import { ContentEditorManager } from '../../service/content-editor-manager';
 import { ContentEditorServiceInjectionToken } from '../../content-editor.injection-token';
-import { IContentEditorService, EditorMode } from '../../content-editor.interface';
+import { ContentEditorServiceInterface, EditorMode } from '../../content-editor.interface';
 import { ContentInfo } from './../../../../neuxAPI/bean/ContentInfo';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 
@@ -39,7 +39,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   canTemplateMoveDown = false;
 
   constructor(
-    @Inject(ContentEditorServiceInjectionToken) private contentEditorService: IContentEditorService,
+    @Inject(ContentEditorServiceInjectionToken) private contentEditorService: ContentEditorServiceInterface,
   ) { }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ICropperOption } from '../../../cropper.type';
+import { CropperOption } from '../../../cropper.type';
 
 @Component({
   selector: 'cms-cropper-menu-edit',
@@ -9,7 +9,7 @@ import { ICropperOption } from '../../../cropper.type';
 export class CropperMenuEditComponent implements OnInit {
 
   @Input() cropper: Cropper;
-  options: ICropperOption;
+  options: CropperOption;
 
   constructor() { }
 

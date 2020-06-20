@@ -1,8 +1,8 @@
-import { ITableCell } from './table-controller.interface';
+import { HtmlEditorTableCell } from './table-controller.interface';
 import { Subscription, fromEvent } from 'rxjs';
 import { switchMap, takeUntil, tap, throttleTime } from 'rxjs/operators';
 
-export interface ITableSetting {
+export interface TableSetting {
   cols: number;
   style: TableStyle;
 }
@@ -65,7 +65,7 @@ export class TableControllerService {
     td.style.setProperty('overflow', 'hidden');
   }
 
-  getTableSetting(table: HTMLTableElement): ITableSetting {
+  getTableSetting(table: HTMLTableElement): TableSetting {
     const cols = table.querySelectorAll('thead > tr > td').length;
 
     const styleAttr = table.getAttribute(TABLE_STYLE_ATTR);
@@ -93,7 +93,7 @@ export class TableControllerService {
   }
 
   checkTHeadTdsWidth(table: HTMLTableElement, isAdjustingColWidth = false) {
-    const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as ITableCell[];
+    const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as HtmlEditorTableCell[];
     if (baseTds.every(td => !this.getWidthFromStyle(td))) { // init
       baseTds.forEach(td => {
         td.style.setProperty('width', `${table.clientWidth / baseTds.length}px`);
@@ -120,7 +120,7 @@ export class TableControllerService {
   }
 
   checkTBodyTdsWidth(table: HTMLTableElement, isAdjustingColWidth = false) {
-    const tds = Array.from(table.querySelectorAll('tbody > tr > td')) as ITableCell[];
+    const tds = Array.from(table.querySelectorAll('tbody > tr > td')) as HtmlEditorTableCell[];
     tds.forEach(td => {
       if (isAdjustingColWidth) {
         const startEnd = this.getCellStartEnd(td);
@@ -132,7 +132,7 @@ export class TableControllerService {
   }
 
   private getColWidthByColStartEnd(table: HTMLTableElement, colStart: number, colEnd: number) {
-    const baseTds = (Array.from(table.querySelectorAll('thead > tr > td')) as ITableCell[])
+    const baseTds = (Array.from(table.querySelectorAll('thead > tr > td')) as HtmlEditorTableCell[])
       .filter(baseTd => {
         const baseStartEnd = this.getCellStartEnd(baseTd);
         return baseStartEnd.colStart === colStart || baseStartEnd.colEnd === colEnd;
@@ -173,7 +173,7 @@ export class TableControllerService {
     return affectedCount;
   }
 
-  getCellStartEnd(cell: ITableCell) {
+  getCellStartEnd(cell: HtmlEditorTableCell) {
     const pos = cell.cellPos;
     const rowStart = pos.top;
     const rowEnd = rowStart + cell.rowSpan;
@@ -185,8 +185,8 @@ export class TableControllerService {
   }
 
   getStartEndByStartCellAndEndCell(start: HTMLTableDataCellElement, end: HTMLTableDataCellElement) {
-    const startPos = (start as ITableCell).cellPos;
-    const endPos = (end as ITableCell).cellPos;
+    const startPos = (start as HtmlEditorTableCell).cellPos;
+    const endPos = (end as HtmlEditorTableCell).cellPos;
 
     const startRowStart = startPos.top;
     const startRowEnd = startRowStart + start.rowSpan;
@@ -222,7 +222,7 @@ export class TableControllerService {
     if (!editorContainer || !table.parentNode) { return; }
     this.unregisterColResizer(editorContainer);
 
-    const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as ITableCell[];
+    const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as HtmlEditorTableCell[];
     // console.warn('baseTds = ', baseTds);
     const container = document.createElement('div');
     container.classList.add('col-resizer-container');

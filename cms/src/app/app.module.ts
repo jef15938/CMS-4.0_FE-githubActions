@@ -11,7 +11,7 @@ import { COMPONENT_SERVICE_TOKEN } from 'layout';
 import { DynamicComponentFactoryService } from './service/dynamic-component-factory.service';
 import { MenuService } from './service/menu.service';
 import { ExtensionMappings } from './app.extension-mapping';
-import { CmsModule, CmsLibModule, CmsExtensionMenuResolver, CmsExtensionComponentMappings } from '@cms-lib';
+import { CmsModule, CmsLibModule, CmsExtensionMenuResolverInjectionToken, CmsExtensionComponentMappingsInjectionToken } from '@cms-lib';
 
 @NgModule({
   declarations: [
@@ -26,8 +26,8 @@ import { CmsModule, CmsLibModule, CmsExtensionMenuResolver, CmsExtensionComponen
     BrowserAnimationsModule,
   ],
   providers: [
-    { provide: CmsExtensionMenuResolver, useClass: MenuService },
-    { provide: CmsExtensionComponentMappings, useValue: ExtensionMappings },
+    { provide: CmsExtensionMenuResolverInjectionToken, useClass: MenuService },
+    { provide: CmsExtensionComponentMappingsInjectionToken, useValue: ExtensionMappings },
     { provide: ConfigToken, useValue: environment },
     { provide: RestHeaderToken, useExisting: GlobalHeader },
     { provide: COMPONENT_SERVICE_TOKEN, useExisting: DynamicComponentFactoryService }

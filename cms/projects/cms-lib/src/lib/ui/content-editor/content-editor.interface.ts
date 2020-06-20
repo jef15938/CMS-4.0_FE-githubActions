@@ -6,14 +6,14 @@ export enum EditorMode {
   EDIT, INFO, READ,
 }
 
-export interface IContentEditorServiceConfig {
+export interface ContentEditorServiceConfig {
   contentInfo: ContentInfo;
   mode: EditorMode;
   selectableTemplates: TemplateGetResponse;
 }
 
-export interface IContentEditorService {
-  openEditor(config: IContentEditorServiceConfig): Observable<any>;
+export interface ContentEditorServiceInterface {
+  openEditor(config: ContentEditorServiceConfig): Observable<any>;
 }
 
 export class ContentEditorSaveEvent {
