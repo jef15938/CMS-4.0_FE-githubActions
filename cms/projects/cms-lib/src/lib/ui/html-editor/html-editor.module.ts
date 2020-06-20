@@ -4,7 +4,7 @@ import { HtmlEditorComponent } from './html-editor.component';
 import { HtmlEditorService } from './html-editor.service';
 import { EditorContainerModalComponent } from './editor-container-modal/editor-container-modal.component';
 import { PipeModule } from '../../pipe/pipe.module';
-import { HtmlEditorServiceInjectionToken } from './html-editor.injection-token';
+import { HTML_EDITOR_SERVICE } from './html-editor.injection-token';
 import { HtmlEditorCreateLinkModalComponent } from './modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -56,7 +56,7 @@ export class HtmlEditorModule {
       providers: [
         HtmlEditorService,
         {
-          provide: HtmlEditorServiceInjectionToken,
+          provide: HTML_EDITOR_SERVICE,
           useClass: HtmlEditorService,
         },
       ]

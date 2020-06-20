@@ -1,3 +1,3 @@
 import { InjectionToken } from '@angular/core';
 
-export const ContentEditorServiceInjectionToken = new InjectionToken('ContentEditorServiceInjectionToken');
+export const CONTENT_EDITOR_SERVICE = new InjectionToken('CONTENT_EDITOR_SERVICE');

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { HtmlEditorServiceInterface } from './../../../../../../../ui/html-editor/html-editor.interface';
-import { HtmlEditorServiceInjectionToken } from './../../../../../../../ui/html-editor/html-editor.injection-token';
+import { HTML_EDITOR_SERVICE } from './../../../../../../../ui/html-editor/html-editor.injection-token';
 
 @Component({
   selector: 'cms-field-control-html-editor',
@@ -11,7 +11,7 @@ import { HtmlEditorServiceInjectionToken } from './../../../../../../../ui/html-
 export class FieldControlHtmlEditorComponent extends ContentControlBase implements OnInit {
 
   constructor(
-    @Inject(HtmlEditorServiceInjectionToken) private htmlEditorService: HtmlEditorServiceInterface,
+    @Inject(HTML_EDITOR_SERVICE) private htmlEditorService: HtmlEditorServiceInterface,
   ) {
     super();
   }

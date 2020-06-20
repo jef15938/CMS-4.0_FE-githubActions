@@ -22,7 +22,7 @@ import { FieldControlHtmlEditorComponent } from './component/content-control-pan
 import { FieldControlGroupComponent } from './component/content-control-panel/control/field/field-control-group/field-control-group.component';
 import { TemplateControlGroupComponent } from './component/content-control-panel/control/template/template-control-group/template-control-group.component';
 import { EditorContainerModalComponent } from './component/editor-container-modal/editor-container-modal.component';
-import { ContentEditorServiceInjectionToken } from './content-editor.injection-token';
+import { CONTENT_EDITOR_SERVICE } from './content-editor.injection-token';
 import { ContentEditorService } from './content-editor.service';
 import { TemplateControlDataSourceComponent } from './component/content-control-panel/control/template/template-control-data-source/template-control-data-source.component';
 import { MatSelectModule } from '@angular/material/select';
@@ -74,7 +74,7 @@ export class ContentEditorModule {
       providers: [
         ContentEditorService,
         {
-          provide: ContentEditorServiceInjectionToken,
+          provide: CONTENT_EDITOR_SERVICE,
           useClass: ContentEditorService,
         },
       ]

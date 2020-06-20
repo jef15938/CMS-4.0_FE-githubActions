@@ -2,7 +2,7 @@ import {
   Component, OnInit, AfterViewInit, Inject, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CmsExtensionComponentMappingsInjectionToken } from '../../../cms-lib.injection-token';
+import { CMS_EXTENSION_COMPONENT_MAPPINGS } from '../../../cms-lib.injection-token';
 import { CmsExtensionComponentMapping } from '../../../type/extension.type';
 import { CmsUserMenuResolver } from '../../service/cms-menu-resolver';
 import { MenuInfo } from '../../../neuxAPI/bean/MenuInfo';
@@ -28,7 +28,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
     private changeDetectorRef: ChangeDetectorRef,
     private componentFactoryResolver: ComponentFactoryResolver,
     private cmsUserMenuResolver: CmsUserMenuResolver,
-    @Inject(CmsExtensionComponentMappingsInjectionToken) private cmsExtensionComponentMappings: CmsExtensionComponentMapping<any>[],
+    @Inject(CMS_EXTENSION_COMPONENT_MAPPINGS) private cmsExtensionComponentMappings: CmsExtensionComponentMapping<any>[],
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.funcId = params.funcId;

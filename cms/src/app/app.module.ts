@@ -10,8 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { COMPONENT_SERVICE_TOKEN } from 'layout';
 import { DynamicComponentFactoryService } from './service/dynamic-component-factory.service';
 import { MenuService } from './service/menu.service';
-import { ExtensionMappings } from './app.extension-mapping';
-import { CmsModule, CmsLibModule, CmsExtensionMenuResolverInjectionToken, CmsExtensionComponentMappingsInjectionToken } from '@cms-lib';
+import { EXTENSION_MAPPINGS } from './app.extension-mapping';
+import { CmsModule, CmsLibModule, CMS_EXTENSION_MENU_RESOLVER, CMS_EXTENSION_COMPONENT_MAPPINGS } from '@cms-lib';
 
 @NgModule({
   declarations: [
@@ -26,8 +26,8 @@ import { CmsModule, CmsLibModule, CmsExtensionMenuResolverInjectionToken, CmsExt
     BrowserAnimationsModule,
   ],
   providers: [
-    { provide: CmsExtensionMenuResolverInjectionToken, useClass: MenuService },
-    { provide: CmsExtensionComponentMappingsInjectionToken, useValue: ExtensionMappings },
+    { provide: CMS_EXTENSION_MENU_RESOLVER, useClass: MenuService },
+    { provide: CMS_EXTENSION_COMPONENT_MAPPINGS, useValue: EXTENSION_MAPPINGS },
     { provide: ConfigToken, useValue: environment },
     { provide: RestHeaderToken, useExisting: GlobalHeader },
     { provide: COMPONENT_SERVICE_TOKEN, useExisting: DynamicComponentFactoryService }
