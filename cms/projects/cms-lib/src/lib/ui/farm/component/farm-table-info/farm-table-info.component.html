@@ -59,11 +59,6 @@
     <tr mat-row *matRowDef="let row; columns:(tableInfo.datas|getDisplayCols);"></tr>
   </table>
   <ng-container *ngIf="tableInfo.pageInfo; let pageInfo">
-    <ng-container *ngIf="pageInfo.totalRecSize">
-      <br>
-      <div style="float: right;">總筆數:{{pageInfo.totalRecSize}}</div>
-      <br>
-    </ng-container>
     <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
     </mat-paginator>
   </ng-container>

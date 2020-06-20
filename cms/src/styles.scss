@@ -4,8 +4,15 @@
 @import "~@neux/ui/theme/config-all";
 @import '~@neux/ui/global/style-import-app-global';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .sidebar {
   position: fixed;
@@ -15,7 +22,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 10px;
 }
 
-button, .pointer {
+button,
+.pointer {
   cursor: pointer;
 }
 
@@ -40,12 +48,13 @@ mat-form-field {
   @extend .p-10;
 }
 
-:disabled, [disabled] {
+:disabled,
+[disabled] {
   cursor: not-allowed !important;
 }
 
 .btn-group {
-  > button:not(:first-child) {
+  >button:not(:first-child) {
     margin-left: 20px;
   }
 }
@@ -60,4 +69,8 @@ mat-form-field {
 
 .cdk-overlay-pane {
   overflow: auto;
+}
+
+.mat-paginator-container {
+  justify-content: center !important;
 }

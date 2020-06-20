@@ -23,11 +23,6 @@
       <cms-table [colDefs]="colDefs" [dataSource]="galleryDatas" (customEvent)="onTableCustomEvent($event)"></cms-table>
     </ng-container>
     <ng-container *ngIf="galleryPageInfo?.totalPageSize && galleryPageInfo?.totalRecSize">
-      <ng-container *ngIf="galleryPageInfo?.totalRecSize">
-        <br>
-        <div style="float: right;">總筆數:{{galleryPageInfo.totalRecSize}}</div>
-        <br>
-      </ng-container>
       <mat-paginator [length]="galleryPageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
       </mat-paginator>
     </ng-container>
