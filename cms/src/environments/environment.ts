@@ -4,6 +4,7 @@
 const BASE_URL = 'https://cms.decoder.com.tw';
 export const environment = {
   production: false,
+  apiBaseUrl: BASE_URL,
   API_URL: {
     GetGalleryByCategoryID: `${BASE_URL}\/Gallery/{categoryID}`,
     GetGalleryCategory: `${BASE_URL}\/GalleryCategory`,

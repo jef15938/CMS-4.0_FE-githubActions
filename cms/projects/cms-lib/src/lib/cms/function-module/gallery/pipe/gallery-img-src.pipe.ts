@@ -1,12 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { GalleryInfo } from './../../../../neuxAPI/bean/GalleryInfo';
+import { environment } from 'src/environments/environment';
 
 @Pipe({
   name: 'gelleryImgSrc'
 })
 export class GelleryImgSrcPipe implements PipeTransform {
 
-  readonly galleryShowUrl = 'https://cms.decoder.com.tw/Gallery/Show';
+  readonly galleryShowUrl = `${environment.apiBaseUrl}/Gallery/Show`;
 
   constructor() { }
 
