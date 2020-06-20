@@ -68,7 +68,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       || [
         '<p>',
         '請輸入',
-        '<a href="https://www.google.com.tw" target="_blank">',
+        '<a href="https://www.google.com.tw" target="_blank" rel="noreferrer noopener">',
         '<span><strong>google</strong></span>谷歌</a>',
         '  123  ',
         '<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="400" height="210">',

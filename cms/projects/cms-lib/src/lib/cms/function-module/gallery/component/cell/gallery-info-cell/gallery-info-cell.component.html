@@ -1,0 +1,20 @@
+<ng-container *ngIf="config?.data">
+  <div>
+    <div class="image-container">
+      <a [href]="galleryShowUrl+'/'+config.data.gallery_id" target="_blank" rel="noreferrer noopener">
+        <img [src]="config.data | gelleryImgSrc | safeResource">
+      </a>
+    </div>
+    <div class="info-container">
+      <div>
+        {{config.data.file_name}}
+      </div>
+      <div style="color: gray;">
+        {{config.data.size}} byte
+      </div>
+      <div style="color: gray;">
+        {{config.data.create_time}}
+      </div>
+    </div>
+  </div>
+</ng-container>

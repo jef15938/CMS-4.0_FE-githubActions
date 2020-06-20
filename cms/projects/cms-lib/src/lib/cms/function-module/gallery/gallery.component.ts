@@ -13,6 +13,7 @@ import { TreeComponent } from '../../../ui/tree/tree.component';
 import { UploadGalleryModalComponent } from './component/modal/upload-gallery-modal/upload-gallery-modal.component';
 import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from './component/cell/gallery-action-cell/gallery-action-cell.component';
 import { AuthorizationService } from '../../../service/authorization.service';
+import { GalleryInfoCellComponent } from './component/cell/gallery-info-cell/gallery-info-cell.component';
 
 @Component({
   selector: 'cms-gallery',
@@ -31,20 +32,26 @@ export class GalleryComponent implements OnInit, OnDestroy {
   galleryPageInfo: PageInfo;
   galleryDatas: GalleryInfo[];
   colDefs: ColDef[] = [
+    // {
+    //   colId: 'file_name',
+    //   field: 'file_name',
+    //   title: '檔名',
+    // },
+    // {
+    //   colId: 'size',
+    //   field: 'size',
+    //   title: '大小',
+    // },
+    // {
+    //   colId: 'file_type',
+    //   field: 'file_type',
+    //   title: '類型',
+    // },
     {
-      colId: 'file_name',
-      field: 'file_name',
-      title: '檔名',
-    },
-    {
-      colId: 'size',
-      field: 'size',
-      title: '大小',
-    },
-    {
-      colId: 'file_type',
-      field: 'file_type',
-      title: '類型',
+      colId: 'info',
+      field: 'info',
+      title: '資訊',
+      cellRenderer: GalleryInfoCellComponent,
     },
     {
       colId: 'action',
