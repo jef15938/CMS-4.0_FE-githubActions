@@ -29,6 +29,9 @@ const LAYOUTS = [
     MatDatepickerModule,
     MatNativeDateModule,
   ],
+  exports: [
+    SharedModule
+  ],
   declarations: [
     CmsComponent,
     ...LAYOUTS
