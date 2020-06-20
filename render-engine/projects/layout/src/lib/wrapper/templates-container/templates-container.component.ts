@@ -5,7 +5,7 @@ import { LayoutWrapperSelectEvent } from '../layout-wrapper/layout-wrapper.inter
 import { LayoutWrapperBase } from '../layout-wrapper/layout-wrapper-base';
 
 @Component({
-  selector: 'templates-container',
+  selector: 'lib-templates-container',
   templateUrl: './templates-container.component.html',
   styleUrls: ['./templates-container.component.scss']
 })
@@ -14,6 +14,7 @@ export class TemplatesContainerComponent extends LayoutWrapperBase implements On
   @Input() mode: 'preview' | 'edit' = 'preview';
   @Input() templates: TemplateInfo[];
 
+  // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
   @Output() enter = new EventEmitter<HTMLElement>();
   @Output() leave = new EventEmitter<HTMLElement>();

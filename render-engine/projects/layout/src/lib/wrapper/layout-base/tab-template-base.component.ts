@@ -6,10 +6,6 @@ export abstract class TabTemplateBaseComponent extends LayoutBaseComponent<TabTe
   templateType = TemplateType.TAB;
   /**
    * 必填，Tab個數限制
-   *
-   * @abstract
-   * @type {number}
-   * @memberof GroupTemplateBaseComponent
    */
-  abstract maxItemCount: number ;
+  abstract maxItemCount: number;
 }

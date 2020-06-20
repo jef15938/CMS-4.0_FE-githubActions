@@ -12,6 +12,7 @@ export class RenderService {
 
   getContentInfo(contentId: string): Observable<ContentInfo> {
     const content = CONTENT;
+    // tslint:disable-next-line: no-string-literal
     return of(content['default']);
   }
 

@@ -5,7 +5,7 @@ import { FieldInfo } from '../../../interface/field-info.interface';
 export interface ImgFieldInfo extends FieldInfo {
   extension: {
     altValue: string;
-  }
+  };
 }
 
 @Directive({
@@ -13,23 +13,21 @@ export interface ImgFieldInfo extends FieldInfo {
   exportAs: 'field',
 })
 export class LayoutFieldImgDirective extends TemplateFieldDirective {
+  // tslint:disable-next-line: no-input-rename
   @Input('libLayoutFieldImg') fieldInfo: ImgFieldInfo;
   /**
    * 建議寬度
-   *
-   * @memberof LayoutFieldImgDirective
    */
+  // tslint:disable-next-line: no-input-rename
   @Input('adviceWidth') adviceWidth = 120;
   /**
    * 建議高度
-   *
-   * @memberof LayoutFieldImgDirective
    */
+  // tslint:disable-next-line: no-input-rename
   @Input('adviceHeight') adviceHeight = 120;
   /**
    * 建議格式
-   *
-   * @memberof LayoutFieldImgDirective
    */
+  // tslint:disable-next-line: no-input-rename
   @Input('adviceFormat') adviceFormat = 'png';
 }

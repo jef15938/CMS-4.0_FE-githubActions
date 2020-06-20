@@ -6,7 +6,7 @@ import {
 import { CommonTemplateBaseComponent } from '../../wrapper/layout-base/common-template-base.component';
 
 @Component({
-  selector: 'rdr-slider',
+  selector: 'lib-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss']
 })

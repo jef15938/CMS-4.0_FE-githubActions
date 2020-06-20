@@ -7,17 +7,16 @@ import { FieldInfo } from '../../../interface/field-info.interface';
   exportAs: 'field',
 })
 export class LayoutFieldTextareaDirective extends TemplateFieldDirective {
+  // tslint:disable-next-line: no-input-rename
   @Input('libLayoutFieldTextarea') fieldInfo: FieldInfo;
   /**
-     * 長度限制，0無限制
-     *
-     * @memberof LayoutFieldTextareaDirective
-     */
+   * 長度限制，0無限制
+   */
+  // tslint:disable-next-line: no-input-rename
   @Input('maxLength') maxLength = 0;
   /**
-     * 行數限制，0無限制
-     *
-     * @memberof LayoutFieldTextareaDirective
-     */
+   * 行數限制，0無限制
+   */
+  // tslint:disable-next-line: no-input-rename
   @Input('maxLines') maxLines = 0;
 }

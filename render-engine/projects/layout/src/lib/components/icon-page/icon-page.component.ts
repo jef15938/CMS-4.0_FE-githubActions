@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../wrapper/layout-base/common-template-base.component';
 
 @Component({
-  selector: 'app-icon-page',
+  selector: 'lib-icon-page',
   templateUrl: './icon-page.component.html',
   styleUrls: ['./icon-page.component.scss']
 })

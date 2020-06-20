@@ -7,23 +7,21 @@ import { FieldInfo } from '../../../interface/field-info.interface';
   exportAs: 'field',
 })
 export class LayoutFieldBgimgDirective extends TemplateFieldDirective {
+  // tslint:disable-next-line: no-input-rename
   @Input('libLayoutFieldBgimg') fieldInfo: FieldInfo;
   /**
    * 建議寬度
-   *
-   * @memberof LayoutFieldBgimgDirective
    */
+  // tslint:disable-next-line: no-input-rename
   @Input('adviceWidth') adviceWidth = 120;
   /**
    * 建議高度
-   *
-   * @memberof LayoutFieldBgimgDirective
    */
+  // tslint:disable-next-line: no-input-rename
   @Input('adviceHeight') adviceHeight = 120;
   /**
    * 建議格式
-   *
-   * @memberof LayoutFieldBgimgDirective
    */
+  // tslint:disable-next-line: no-input-rename
   @Input('adviceFormat') adviceFormat = 'png';
 }

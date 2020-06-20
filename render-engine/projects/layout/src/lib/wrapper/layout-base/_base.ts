@@ -15,7 +15,8 @@ import { LayoutFieldBgimgDirective } from '../layout-wrapper/field-directive/lay
 import { LayoutFieldImgDirective } from '../layout-wrapper/field-directive/layout-field-img.directive';
 import { LayoutFieldHtmlEditorDirective } from '../layout-wrapper/field-directive/layout-field-html-editor.directive';
 
-export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy, OnChanges {
+export abstract class LayoutBaseComponent<TInfo extends TemplateInfo>
+  implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   abstract templateType: TemplateType;
 
@@ -33,7 +34,7 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
       ...(this.layoutFieldImgDirectives ? Array.from(this.layoutFieldImgDirectives) : []),
       ...(this.layoutFieldHtmlEditorDirectives ? Array.from(this.layoutFieldHtmlEditorDirectives) : []),
     ];
-  };
+  }
 
   @ViewChildren(LayoutFieldTextDirective) layoutFieldTextDirectives: QueryList<LayoutFieldTextDirective>;
   @ViewChildren(LayoutFieldTextareaDirective) layoutFieldTextareaDirectives: QueryList<LayoutFieldTextareaDirective>;
@@ -84,10 +85,8 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo> implements
   /**
    *
    *
-   * @param {string} fieldId 
-   * @param {FieldInfo[]} [fields] 不給的話從 this.templateInfo.fields 找
-   * @returns
-   * @memberof LayoutBaseComponent
+   * fieldId
+   * [fields] 不給的話從 this.templateInfo.fields 找
    */
   getFieldByFieldId(fieldId: string, fields?: FieldInfo[]): FieldInfo {
     fields = fields || this.templateInfo?.fields || [];

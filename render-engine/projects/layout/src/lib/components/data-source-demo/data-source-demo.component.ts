@@ -5,7 +5,7 @@ import { DataSourceDemoData } from './data-source-demo.interface';
 @Component({
   selector: 'lib-data-source-demo',
   templateUrl: './data-source-demo.component.html',
-  styleUrls: ['./data-source-demo.component.css']
+  styleUrls: ['./data-source-demo.component.scss']
 })
 export class DataSourceDemoComponent extends DataSourceTemplateBaseComponent<DataSourceDemoData> {
 

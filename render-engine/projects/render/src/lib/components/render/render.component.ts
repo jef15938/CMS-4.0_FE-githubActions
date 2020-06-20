@@ -22,6 +22,7 @@ export class RenderComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.pipe(
       concatMap(params =>
+        // tslint:disable-next-line: no-string-literal
         this.renderService.getContentInfo(params['contentId']).pipe(
           tap(contentInfo => this.contentInfo = contentInfo),
         )

@@ -17,18 +17,18 @@ export interface LayoutWrapper {
 export enum LayoutWrapperSelectedTargetType {
   TEMPLATE = 'Template',
   FIELD = 'Field',
-};
+}
 
 export interface TemplateFieldSelectEvent {
-  selectedTarget: HTMLElement,
-  selectedTargetType: LayoutWrapperSelectedTargetType,
+  selectedTarget: HTMLElement;
+  selectedTargetType: LayoutWrapperSelectedTargetType;
   fieldInfo: FieldInfo;
   fieldDirective: any;
 }
 
 export interface LayoutWrapperSelectEvent {
-  selectedTarget: HTMLElement,
-  selectedTargetType: LayoutWrapperSelectedTargetType,
+  selectedTarget: HTMLElement;
+  selectedTargetType: LayoutWrapperSelectedTargetType;
   wrapper: LayoutWrapper;
   componentRef: ComponentRef<any>;
   templateType: TemplateType;

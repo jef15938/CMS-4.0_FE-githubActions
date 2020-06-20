@@ -1,14 +1,18 @@
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef, HostListener, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef,
+  ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef,
+  HostListener, OnChanges, SimpleChanges
+} from '@angular/core';
 import { TemplateInfo } from '../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
 import { LayoutBase } from '../layout-base/_base.interface';
-import { takeUntil, map, tap } from 'rxjs/operators'
+import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
 import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
 import { LayoutWrapperBase } from './layout-wrapper-base';
 
 @Component({
-  selector: 'layout-wrapper',
+  selector: 'lib-layout-wrapper',
   templateUrl: './layout-wrapper.component.html',
   styleUrls: ['./layout-wrapper.component.scss']
 })
@@ -24,6 +28,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   componentRef: ComponentRef<LayoutBase<TemplateInfo>>;
 
+  // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
 
   private instanceEventSubscription: Subscription;
@@ -42,10 +47,10 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['mode']) {
+    if (changes.mode) {
       this.setMode();
     }
-    if (changes['templateInfo'] && this.componentRef?.instance) {
+    if (changes.templateInfo && this.componentRef?.instance) {
       this.componentRef.instance.templateInfo = this.templateInfo;
       if (this.componentRef?.instance?.ngOnChanges) {
         this.componentRef.instance.ngOnChanges(changes);
@@ -110,7 +115,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
         merge(...templatesContainerComponents.map(c => c.leave).filter(l => !!l)),
         merge(...templateFieldDirectives.map(c => c.leave).filter(l => !!l)),
       ).pipe(tap((e: HTMLElement) => this.leave.next(e)))
-    )
+    );
   }
 
   createLayoutWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {

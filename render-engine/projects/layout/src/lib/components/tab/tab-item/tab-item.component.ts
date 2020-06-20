@@ -1,6 +1,6 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 @Component({
-  selector: 'app-tab-item',
+  selector: 'lib-tab-item',
   template: `
         <ng-container *ngIf="show">
             <ng-content></ng-content>
@@ -9,9 +9,9 @@ import { Component, OnInit,Input } from '@angular/core';
   styleUrls: ['./tab-item.component.scss']
 })
 export class TabItemComponent implements OnInit {
-  public show:boolean = false;
+  public show = false;
   @Input()
-    tabTitle:string;
+  tabTitle: string;
 
   constructor() { }
 

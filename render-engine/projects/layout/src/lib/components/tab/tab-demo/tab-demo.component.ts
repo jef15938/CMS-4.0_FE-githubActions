@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TabTemplateBaseComponent } from '../../../wrapper/layout-base/tab-template-base.component';
 
 @Component({
-  selector: 'app-tab-demo',
+  selector: 'lib-tab-demo',
   templateUrl: './tab-demo.component.html',
   styleUrls: ['./tab-demo.component.scss'],
 })

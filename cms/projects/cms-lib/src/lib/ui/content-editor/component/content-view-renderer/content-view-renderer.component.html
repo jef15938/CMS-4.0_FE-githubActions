@@ -1,4 +1,5 @@
 <div class="view-container" [class.mode-info]="mode===EditorMode.INFO">
-  <templates-container [templates]="contentInfo.templates" mode="edit" (select)="select.next($event)"
-  (enter)="onEnter($event)" (leave)="onLeave($event)"></templates-container>
+  <lib-templates-container [templates]="contentInfo.templates" mode="edit" (select)="select.next($event)"
+    (enter)="onEnter($event)" (leave)="onLeave($event)">
+  </lib-templates-container>
 </div>

@@ -6,6 +6,7 @@ import { LayoutWrapperBase } from '../layout-wrapper-base';
 export abstract class TemplateFieldDirective extends LayoutWrapperBase {
 
   abstract fieldInfo: FieldInfo;
+  // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<TemplateFieldSelectEvent>();
 
   @HostListener('click', ['$event']) click(ev) {

@@ -6,18 +6,10 @@ export abstract class GroupTemplateBaseComponent extends LayoutBaseComponent<Gro
   templateType = TemplateType.GROUP;
   /**
    * 必填，不可為空值．編輯器用此Id的值作為個別GroupItem的顯示名稱．
-   *
-   * @abstract
-   * @type {string}
-   * @memberof GroupTemplateBaseComponent
    */
-  abstract groupItemDisplayFieldId: string ;
+  abstract groupItemDisplayFieldId: string;
   /**
    * 必填，Group個數限制
-   *
-   * @abstract
-   * @type {number}
-   * @memberof GroupTemplateBaseComponent
    */
-  abstract maxItemCount: number ;
+  abstract maxItemCount: number;
 }

@@ -5,12 +5,12 @@ import { TemplateFieldDirective } from '../layout-wrapper/field-directive/templa
 import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
 
 export interface LayoutBase<TInfo extends TemplateInfo> {
-    parentLayoutWrapper: LayoutWrapper;
-    templatesContainerComponents: QueryList<TemplatesContainerComponent>;
-    templateFieldDirectives: TemplateFieldDirective[];
-    templateInfo: TInfo;
-    templateType: TemplateType;
-    mode: 'preview' | 'edit';
+  parentLayoutWrapper: LayoutWrapper;
+  templatesContainerComponents: QueryList<TemplatesContainerComponent>;
+  templateFieldDirectives: TemplateFieldDirective[];
+  templateInfo: TInfo;
+  templateType: TemplateType;
+  mode: 'preview' | 'edit';
 
-    ngOnChanges(changes: SimpleChanges): void;
+  ngOnChanges(changes: SimpleChanges): void;
 }
