@@ -33,7 +33,6 @@ export class ApproveAuditingModalComponent extends CustomModalBase implements On
   constructor() { super(); }
 
   ngOnInit(): void {
-    if (!this.status || typeof (this.batch) !== 'boolean') { alert('參數錯誤'); setTimeout(_ => this.close(), 0); return; }
     this.approveRequest.status = this.status;
     this.approveRequest.comment = this.status === AuditingApproveStatus.Approve ? '審核通過' : '';
   }
