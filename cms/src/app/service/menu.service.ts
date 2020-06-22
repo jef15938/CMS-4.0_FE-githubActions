@@ -1,4 +1,4 @@
-import { CmsExtensionMenuResolver } from '@cms-lib';
+import { CmsExtensionMenuResolver } from '@neux/cms-core';
 import { of, Observable } from 'rxjs';
 
 export class MenuService implements CmsExtensionMenuResolver {

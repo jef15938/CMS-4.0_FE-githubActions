@@ -1,11 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { MenuService } from '../../service/menu.service';
-import { CMS_EXTENSION_MENU_RESOLVER } from '../../cms-lib.injection-token';
-import { CmsExtensionMenuResolver } from '../../type/extension.type';
-import { concatMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { MenuInfo } from '../../neuxAPI/bean/MenuInfo';
+import { concatMap, map } from 'rxjs/operators';
+import { CmsExtensionMenuResolver, CMS_EXTENSION_MENU_RESOLVER } from '@cms-lib/type';
+import { MenuInfo } from '@cms-lib/neuxAPI/bean/MenuInfo';
+import { MenuService } from '@cms-lib/api/service';
 
 @Injectable()
 export class CmsUserMenuResolver implements Resolve<any> {

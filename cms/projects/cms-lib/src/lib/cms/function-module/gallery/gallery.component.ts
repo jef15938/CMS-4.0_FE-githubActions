@@ -1,18 +1,17 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { GalleryCategoryInfo } from '../../../neuxAPI/bean/GalleryCategoryInfo';
-import { GalleryService } from '../../../service/gallery.service';
-import { GalleryCategoryNodeComponent, GalleryCategoryNodeCustomEvent } from './component/node/gallery-category-node/gallery-category-node.component';
 import { concat, Subject, of, Observable } from 'rxjs';
 import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
-import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
-import { GalleryInfo } from '../../../neuxAPI/bean/GalleryInfo';
-import { ColDef } from '../../../ui/table/table.interface';
-import { ModalService } from '../../../ui/modal/modal.service';
+import { AuthorizationService, GalleryService } from '@cms-lib/api/service';
+import { PageInfo } from '@cms-lib/neuxAPI/bean/PageInfo';
+import { GalleryInfo } from '@cms-lib/neuxAPI/bean/GalleryInfo';
+import { GalleryCategoryInfo } from '@cms-lib/neuxAPI/bean/GalleryCategoryInfo';
+import { ColDef } from '@cms-lib/ui/table';
+import { TreeComponent } from '@cms-lib/ui/tree';
+import { ModalService } from '@cms-lib/ui/modal';
+import { GalleryCategoryNodeComponent, GalleryCategoryNodeCustomEvent } from './component/node/gallery-category-node/gallery-category-node.component';
 import { GalleryCategoryMaintainModalComponent } from './component/modal/gallery-category-maintain-modal/gallery-category-maintain-modal.component';
-import { TreeComponent } from '../../../ui/tree/tree.component';
 import { UploadGalleryModalComponent } from './component/modal/upload-gallery-modal/upload-gallery-modal.component';
 import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from './component/cell/gallery-action-cell/gallery-action-cell.component';
-import { AuthorizationService } from '../../../service/authorization.service';
 import { GalleryInfoCellComponent } from './component/cell/gallery-info-cell/gallery-info-cell.component';
 
 @Component({

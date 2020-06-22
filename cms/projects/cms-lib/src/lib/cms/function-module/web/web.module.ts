@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '@cms-lib/shared/shared.module';
 import { WebRoutingModule } from './web-routing.module';
 import { WebComponent } from './web.component';
 
 @NgModule({
   declarations: [WebComponent],
   imports: [
-    CommonModule,
+    SharedModule,
     WebRoutingModule,
   ]
 })

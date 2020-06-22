@@ -1,7 +1,9 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
 const BASE_URL = 'https://cms.decoder.com.tw';
-
 export const environment = {
-  production: true,
+  production: false,
   apiBaseUrl: BASE_URL,
   API_URL: {
     GetGalleryByCategoryID: `${BASE_URL}\/Gallery/{categoryID}`,
@@ -48,16 +50,16 @@ export const environment = {
     GetGalleryCategory: 'Restful',
     PostGalleryCategory: 'Restful',
     PostLogin: 'Restful',
-    GetDepartment: 'Restful',
+    GetDepartment: 'Mock',
     DeleteGalleryCategoryByCategoryID: 'Restful',
     PutGalleryCategoryByCategoryID: 'Restful',
-    GetUserMenu: 'Restful',
+    GetUserMenu: 'Mock',
     GetLogout: 'Restful',
     PutDepartmentByDeptID: 'Restful',
     DeleteDepartmentByDeptID: 'Restful',
     PostDepartmentByDeptID: 'Restful',
     GetDepartmentByDeptID: 'Restful',
-    GetAuditing: 'Restful',
+    GetAuditing: 'Mock',
     PostAuditingByOrderID: 'Restful',
     GetLoginInfo: 'Restful',
     GetCMSMenu: 'Restful',
@@ -65,16 +67,16 @@ export const environment = {
     PostUserSiteMapBySiteID: 'Restful',
     PutUserSiteMapByNodeID: 'Restful',
     DeleteUserSiteMapByNodeID: 'Restful',
-    GetContentByContentID: 'Restful',
+    GetContentByContentID: 'Mock',
     PutContentByContentID: 'Restful',
-    GetMyAuditingByOrderID: 'Restful',
-    GetMyAuditing: 'Restful',
-    GetFarmByFuncID: 'Restful',
-    GetFarmTableInfoByFuncID: 'Restful',
-    GetFarmFormInfoByFuncID: 'Restful',
+    GetMyAuditingByOrderID: 'Mock',
+    GetMyAuditing: 'Mock',
+    GetFarmByFuncID: 'Mock',
+    GetFarmTableInfoByFuncID: 'Mock',
+    GetFarmFormInfoByFuncID: 'Mock',
     PostFarmFormInfoByFuncID: 'Restful',
     PutFarmFormInfoByFuncID: 'Restful',
-    GetFarmDetailInfoByFuncID: 'Restful',
+    GetFarmDetailInfoByFuncID: 'Mock',
     GetSite: 'Restful',
     GetSiteBySiteID: 'Restful',
     GetSiteBySiteIDAndNodeID: 'Restful',
@@ -84,3 +86,12 @@ export const environment = {
     DeleteGalleryByGalleryID: 'Restful',
   }
 };
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

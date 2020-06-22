@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuInfo } from '../../neuxAPI/bean/MenuInfo';
+import { MenuInfo } from '@cms-lib/neuxAPI/bean/MenuInfo';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

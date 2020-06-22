@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
-import { CmsFarmFormInfo } from './../../../../type/farm.class';
-import { FarmFormInfoComponent } from '../farm-form-info/farm-form-info.component';
+import { CmsFarmFormInfo } from '@cms-lib/type';
 import { FarmFormComp } from '../../farm.interface';
+import { FarmFormInfoComponent } from '../farm-form-info/farm-form-info.component';
 
 @Component({
   selector: 'cms-farm-search-info',

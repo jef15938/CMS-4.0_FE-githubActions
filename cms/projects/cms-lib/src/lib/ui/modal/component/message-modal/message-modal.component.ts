@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalActionButton, CustomModalBase } from '../../custom-modal-base';
+import { CustomModalActionButton, CustomModalBase } from '../../base/custom-modal-base';
 
 @Component({
   selector: 'cms-message-modal',

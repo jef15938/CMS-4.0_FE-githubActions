@@ -1,7 +1,6 @@
-import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
-import { ModalService } from './../../../../../../ui/modal/modal.service';
-import { RichContent, DialogFlowMessengerService } from './../../../../../service/dialog-flow.service';
 import { OnInit } from '@angular/core';
+import { RichContent, DialogFlowMessengerService } from '@cms-lib/cms/service';
+import { CustomModalBase, CustomModalActionButton, ModalService } from '@cms-lib/ui/modal';
 
 export abstract class RichContentModalComponent<TContent extends RichContent> extends CustomModalBase implements OnInit {
   abstract title: string;

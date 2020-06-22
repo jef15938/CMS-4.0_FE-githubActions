@@ -1,6 +1,6 @@
-import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
 import { Observable } from 'rxjs';
-import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
+import { ContentInfo } from '@cms-lib/neuxAPI/bean/ContentInfo';
+import { TemplateGetResponse } from '@cms-lib/neuxAPI/bean/TemplateGetResponse';
 
 export enum EditorMode {
   EDIT, INFO, READ,

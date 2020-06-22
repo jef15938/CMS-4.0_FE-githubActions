@@ -16,11 +16,17 @@
       "dom"
     ],
     "paths": {
-      "@cms-lib": [
-        // "dist/cms-lib/cms-lib",
-        // "dist/cms-lib"
-        "projects/cms-lib/src/public-api"
-      ]
+      "@cms-app/*": [
+        "src/app/*"
+      ],
+      "@cms-lib/*": [
+        "projects/cms-lib/src/lib/*"
+      ],
+      "@neux/cms-core": [
+        "projects/cms-lib/src/public-api",
+        // "dist/cms-lib",
+        // "dist/cms-lib/lib",
+      ],
     }
   },
   "angularCompilerOptions": {

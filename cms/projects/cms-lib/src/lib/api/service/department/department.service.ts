@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from '../neuxAPI/rest-api.service';
-import { ParamsError } from '@neux/core';
 import { Observable, of } from 'rxjs';
-import { DepartmentInfo } from '../neuxAPI/bean/DepartmentInfo';
 import { map } from 'rxjs/operators';
-import { DepartmentGetResponse } from '../neuxAPI/bean/DepartmentGetResponse';
+import { ParamsError } from '@neux/core';
+import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
+import { DepartmentInfo } from '@cms-lib/neuxAPI/bean/DepartmentInfo';
+import { DepartmentGetResponse } from '@cms-lib/neuxAPI/bean/DepartmentGetResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -93,10 +93,12 @@ export class DepartmentService {
       return null;
     }
     const dept = all.find(d => d.dept_id === id);
-    if (dept)
+    if (dept) {
       return dept;
-    else
+    }
+    else {
       return all.map(d => this.getDeptFromAllById(id, d.children)).find(x => x !== null);
+    }
   }
 
   /**

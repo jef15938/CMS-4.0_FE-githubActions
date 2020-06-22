@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { DepartmentInfo } from './../../../../../../neuxAPI/bean/DepartmentInfo';
-import { CmsTreeNodeRenderer, CmsTreeNode } from './../../../../../../ui/tree/tree.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DepartmentInfo } from '@cms-lib/neuxAPI/bean/DepartmentInfo';
+import { CmsTreeNodeRenderer, CmsTreeNode } from '@cms-lib/ui/tree';
 
 enum ActionType {
   Create, Edit

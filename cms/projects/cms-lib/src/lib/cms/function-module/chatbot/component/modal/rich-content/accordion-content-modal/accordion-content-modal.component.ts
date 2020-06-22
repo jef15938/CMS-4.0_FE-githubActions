@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RichContentType, RichContent } from './../../../../../../service/dialog-flow.service';
+import { RichContentType, RichContent } from '@cms-lib/cms/service';
 import { RichContentModalComponent } from '../rich-content-modal-base';
 
 interface AccordionContent extends RichContent {

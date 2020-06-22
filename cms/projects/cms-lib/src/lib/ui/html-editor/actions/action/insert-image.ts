@@ -1,7 +1,7 @@
 import { HtmlEditorActionBase } from '../action.base';
-import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 
 export class InsertImage extends HtmlEditorActionBase {
 

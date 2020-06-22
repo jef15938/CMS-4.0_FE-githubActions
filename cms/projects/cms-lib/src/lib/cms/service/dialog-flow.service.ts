@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { fromEvent, merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 export interface DialogFlowEvent {
   languageCode: string;
@@ -31,9 +31,7 @@ interface DialogFlowMessenger extends HTMLElement {
   hideChat_(): void;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DialogFlowMessengerService {
   private dfMessenger: DialogFlowMessenger;
 

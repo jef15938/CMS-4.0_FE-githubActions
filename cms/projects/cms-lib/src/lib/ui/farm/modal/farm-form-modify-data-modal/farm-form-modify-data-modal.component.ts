@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal/custom-modal-base';
-import { CmsFarmFormInfo } from './../../../../type/farm.class';
-import { FarmFormInfoComponent } from '../../component/farm-form-info/farm-form-info.component';
 import { of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
+import { CmsFarmFormInfo } from '@cms-lib/type';
+import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
+import { FarmFormInfoComponent } from '../../component/farm-form-info/farm-form-info.component';
 
 @Component({
   selector: 'cms-farm-form-modify-data-modal',

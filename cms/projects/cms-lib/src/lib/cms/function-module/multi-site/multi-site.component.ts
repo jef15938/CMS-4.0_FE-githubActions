@@ -1,19 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Observable, concat, Subject, forkJoin, of } from 'rxjs';
 import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
-import { ModalService } from '../../../ui/modal/modal.service';
-import { SitemapService } from '../../../service/sitemap.service';
-import { SiteMapInfo } from '../../../neuxAPI/bean/SiteMapInfo';
-import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from './component/multi-site-node/multi-site-node.component';
-import { CmsTree } from '../../../ui/tree/tree.interface';
-import { SiteInfo } from '../../../neuxAPI/bean/SiteInfo';
-import { TreeComponent } from '../../../ui/tree/tree.component';
-import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
+import { SiteMapInfo } from '@cms-lib/neuxAPI/bean/SiteMapInfo';
+import { SiteInfo } from '@cms-lib/neuxAPI/bean/SiteInfo';
+import { SitemapService, ContentService } from '@cms-lib/api/service';
+import { ModalService } from '@cms-lib/ui/modal';
+import { CmsTree, TreeComponent } from '@cms-lib/ui/tree';
+import { ContentEditorService, EditorMode } from '@cms-lib/ui/content-editor';
+import { HtmlEditorService } from '@cms-lib/ui/html-editor';
 import { SiteMapUpdateInfo } from './multi-site.interface';
-import { ContentEditorService } from '../../../ui/content-editor/content-editor.service';
-import { ContentService } from '../../../service/content.service';
-import { EditorMode } from '../../../ui/content-editor/content-editor.interface';
-import { HtmlEditorService } from '../../../ui/html-editor/html-editor.service';
+import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
+import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from './component/multi-site-node/multi-site-node.component';
 
 enum EditModeType {
   Site, Node,

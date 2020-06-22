@@ -1,4 +1,4 @@
-import { ContentInfo } from '../../../neuxAPI/bean/ContentInfo';
+import { ContentInfo } from '@cms-lib/neuxAPI/bean/ContentInfo';
 
 class ContentInfoState {
   constructor(

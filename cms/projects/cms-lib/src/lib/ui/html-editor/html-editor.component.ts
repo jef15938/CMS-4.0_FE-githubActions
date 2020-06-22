@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ModalService } from './../modal/modal.service';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { ModalService } from '@cms-lib/ui/modal';
 import { HtmlEditorContext, HtmlEditorContextMenuItem } from './html-editor.interface';
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
-import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'cms-html-editor',

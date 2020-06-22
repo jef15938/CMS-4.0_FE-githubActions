@@ -1,7 +1,7 @@
 import { DomCmdAction } from '../action.base';
-import { HtmlEditorCreateLinkModalComponent } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { HtmlEditorCreateLinkModalComponent } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
 
 export class CreateLink extends DomCmdAction {
   commandId = 'createLink';

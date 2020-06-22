@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from '../neuxAPI/rest-api.service';
 import { Observable } from 'rxjs';
-import { ContentInfo } from '../neuxAPI/bean/ContentInfo';
 import { ParamsError } from '@neux/core';
-import { map } from 'rxjs/operators';
-import { TemplateGetResponse } from '../neuxAPI/bean/TemplateGetResponse';
+import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
+import { ContentInfo } from '@cms-lib/neuxAPI/bean/ContentInfo';
+import { TemplateGetResponse } from '@cms-lib/neuxAPI/bean/TemplateGetResponse';
 
 @Injectable({
   providedIn: 'root'

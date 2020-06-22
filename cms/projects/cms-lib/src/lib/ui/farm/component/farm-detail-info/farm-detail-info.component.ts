@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CmsFarmFormInfo } from './../../../../type/farm.class';
+import { CmsFarmFormInfo } from '@cms-lib/type';
 
 @Component({
   selector: 'cms-farm-detail-info',

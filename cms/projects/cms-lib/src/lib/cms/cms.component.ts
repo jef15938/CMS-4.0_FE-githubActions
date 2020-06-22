@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DialogFlowMessengerService } from './service/dialog-flow.service';
+import { DialogFlowMessengerService } from './service';
 
 @Component({
   selector: 'cms-cms',

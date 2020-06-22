@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, Input, ComponentFactoryResolver, Type, TemplateRef } from '@angular/core';
+import { Directive, ViewContainerRef, Input, ComponentFactoryResolver, Type } from '@angular/core';
 import { CustomCellRenderer } from './table.interface';
 
 @Directive({

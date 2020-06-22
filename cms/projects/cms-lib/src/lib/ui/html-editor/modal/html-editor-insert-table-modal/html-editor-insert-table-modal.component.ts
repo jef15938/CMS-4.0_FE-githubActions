@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal/custom-modal-base';
+import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
 
 @Component({
   selector: 'cms-html-editor-insert-table-modal',
@@ -27,7 +27,7 @@ export class HtmlEditorInsertTableModalComponent extends CustomModalBase impleme
     this.close({
       rows: this.rows || null,
       cols: this.cols || null,
-    })
+    });
   }
 
 }

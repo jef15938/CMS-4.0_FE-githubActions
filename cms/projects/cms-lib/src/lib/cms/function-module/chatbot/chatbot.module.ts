@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { SharedModule } from '@cms-lib/shared/shared.module';
 import { ChatbotRoutingModule } from './chatbot-routing.module';
 import { ChatbotComponent } from './chatbot.component';
 import { ItemComponent } from './item/item.component';
 import { ReplyComponent } from './reply/reply.component';
-import { SharedModule } from '../../../shared/shared.module';
 import { ItemActionCellComponent } from './component/cell-renderer/item-action-cell/item-action-cell.component';
 import { CreateEditItemModalComponent } from './component/modal/create-edit-item-modal/create-edit-item-modal.component';
 import { CreateEditReplyModalComponent } from './component/modal/create-edit-reply-modal/create-edit-reply-modal.component';
@@ -20,6 +18,10 @@ import { ChipsContentModalComponent } from './component/modal/rich-content/chips
 import { ChipOptionCreateEditModalComponent } from './component/modal/rich-content/chip-option-create-edit-modal/chip-option-create-edit-modal.component';
 
 @NgModule({
+  imports: [
+    SharedModule,
+    ChatbotRoutingModule,
+  ],
   declarations: [
     ChatbotComponent,
     ItemComponent,
@@ -36,11 +38,6 @@ import { ChipOptionCreateEditModalComponent } from './component/modal/rich-conte
     AccordionContentModalComponent,
     ChipsContentModalComponent,
     ChipOptionCreateEditModalComponent,
-  ],
-  imports: [
-    CommonModule,
-    ChatbotRoutingModule,
-    SharedModule,
   ],
 })
 export class ChatbotModule { }

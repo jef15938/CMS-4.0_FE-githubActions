@@ -1,9 +1,9 @@
 import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/core';
-import { CmsTreeNodeRenderer, CmsTreeNode } from './../../../../../ui/tree/tree.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { SiteMapInfo } from './../../../../../neuxAPI/bean/SiteMapInfo';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CmsTreeNodeRenderer, CmsTreeNode } from '@cms-lib/ui/tree';
+import { SiteMapInfo } from '@cms-lib/neuxAPI/bean/SiteMapInfo';
 
 enum ActionType {
   Create, Delete

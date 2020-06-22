@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from 'layout';
+import { ContentInfo } from '@cms-lib/neuxAPI/bean/ContentInfo';
 import { ContentEditorManager } from '../../service/content-editor-manager';
-import { CONTENT_EDITOR_SERVICE } from '../../content-editor.injection-token';
-import { ContentEditorServiceInterface, EditorMode } from '../../content-editor.interface';
-import { ContentInfo } from './../../../../neuxAPI/bean/ContentInfo';
+import { EditorMode } from '../../content-editor.interface';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
+import { ContentEditorService } from '../../content-editor.service';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -39,7 +39,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   canTemplateMoveDown = false;
 
   constructor(
-    @Inject(CONTENT_EDITOR_SERVICE) private contentEditorService: ContentEditorServiceInterface,
+    private contentEditorService: ContentEditorService,
   ) { }
 
   ngOnInit(): void {

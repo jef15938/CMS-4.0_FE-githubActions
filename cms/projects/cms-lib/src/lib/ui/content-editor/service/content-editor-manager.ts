@@ -1,8 +1,7 @@
-import { ContentInfo } from '../../../neuxAPI/bean/ContentInfo';
-import { ContentInfoStateManager } from './content-info-state-manager';
+import { ContentInfo } from '@cms-lib/neuxAPI/bean/ContentInfo';
 import { LayoutWrapperSelectEvent } from 'layout';
+import { ContentInfoStateManager } from './content-info-state-manager';
 import { AddTemplateButtonComponent } from '../component/add-template-button/add-template-button.component';
-import { ContentTemplateInfo } from '../../../neuxAPI/bean/ContentTemplateInfo';
 
 export class ContentEditorManager {
 

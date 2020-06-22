@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CmsModule } from '@neux/cms-core';
 import { AppComponent } from './app.component';
-import { CmsModule } from '@cms-lib';
 
 const routes: Routes = [
   {

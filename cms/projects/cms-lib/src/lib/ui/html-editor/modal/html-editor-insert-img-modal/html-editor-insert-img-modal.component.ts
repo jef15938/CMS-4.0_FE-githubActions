@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal/custom-modal-base';
+import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
 
 @Component({
   selector: 'cms-html-editor-insert-img-modal',
@@ -32,7 +32,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
       const img = this.img.nativeElement;
       this.width = img.width;
       this.height = img.height;
-    }, 250)
+    }, 250);
   }
 
   confirm() {
@@ -41,7 +41,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
       alt: this.alt || '',
       width: this.width || null,
       height: this.height || null,
-    })
+    });
   }
 
 }

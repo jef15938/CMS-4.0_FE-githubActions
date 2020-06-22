@@ -1,15 +1,14 @@
 import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { FarmService } from '../../service/farm.service';
-import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo } from '../../type/farm.class';
-import { tap, takeUntil, concatMap, catchError } from 'rxjs/operators';
-import { Subject, of, throwError, NEVER } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Subject, of, throwError, NEVER } from 'rxjs';
+import { tap, takeUntil, concatMap, catchError } from 'rxjs/operators';
+import { FarmService } from '@cms-lib/api/service';
+import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo, CmsFarmTableDataAction } from '@cms-lib/type';
+import { ModalService } from '@cms-lib/ui/modal';
+import { FarmFormComp } from './farm.interface';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
-import { CmsFarmTableDataAction } from '../../type/farm.enum';
-import { ModalService } from '../modal/modal.service';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
-import { FarmFormComp } from './farm.interface';
 
 @Component({
   selector: 'cms-farm',

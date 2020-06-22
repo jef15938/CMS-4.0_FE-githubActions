@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal/custom-modal-base';
-import { ModalService } from '../../../modal/modal.service';
+import { CustomModalBase, CustomModalActionButton, ModalService } from '@cms-lib/ui/modal';
 
 const YOUTUBE_EMBED_VIDEO_URL = 'https://www.youtube.com/embed/';
 const YOUTUBE_EMBED_IMAGE_URL = (videoId: string) => {
@@ -36,9 +35,9 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
     const src = this.checkSrc();
     if (!src) { this.modalService.openMessage({ message: 'Youtube 網址錯誤' }); return; }
     this.close({
-      src: src,
+      src,
       frameId: this.frameId || '',
-    })
+    });
   }
 
   checkSrc() {

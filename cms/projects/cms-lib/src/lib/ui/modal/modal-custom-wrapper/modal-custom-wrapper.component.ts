@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ComponentFactoryResolver, ChangeDetectorRef,
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalOpenComponentConfig } from '../modal.interface';
 import { ModalCustomWrapperDirective } from './modal-custom-wrapper.directive';
-import { CustomModalBase } from '../custom-modal-base';
+import { CustomModalBase } from '../base/custom-modal-base';
 
 @Component({
   selector: 'cms-modal-custom-wrapper',

@@ -1,15 +1,15 @@
-import { HtmlEditorElementController } from './../_base';
 import { fromEvent, Subscription, merge, Observable, of } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { HtmlEditorElementController } from './../_base';
 import { HtmlEditorContextMenuItem, HtmlEditorContext } from '../../../html-editor.interface';
+import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from './table-controller.interface';
+import { TableControllerService, TABLE_STYLE_ATTR, TableStyle } from './table-controller-service';
 import { DeleteRow } from './actions/delete-row';
 import { AddRow } from './actions/add-row';
-import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from './table-controller.interface';
 import { DeleteCol } from './actions/delete-col';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Merge } from './actions/merge';
 import { Split } from './actions/split';
 import { DeleteTable } from './actions/delete-table';
-import { TableControllerService, TABLE_STYLE_ATTR, TableStyle } from './table-controller-service';
 import { MarkCol } from './actions/mark-col';
 import { AddCol } from './actions/add-col';
 

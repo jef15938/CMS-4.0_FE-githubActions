@@ -1,4 +1,4 @@
-import { SiteMapNodeInfo } from '../../../neuxAPI/bean/SiteMapNodeInfo';
+import { SiteMapNodeInfo } from '@cms-lib/neuxAPI/bean/SiteMapNodeInfo';
 
 export interface SiteMapUpdateInfo {
   siteMap: SiteMapNodeInfo;

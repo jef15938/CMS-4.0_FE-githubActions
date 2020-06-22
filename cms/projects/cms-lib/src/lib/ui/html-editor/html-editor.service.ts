@@ -1,9 +1,11 @@
-import { Observable } from 'rxjs';
-import { ModalService } from '../modal/modal.service';
-import { EditorContainerModalComponent } from './editor-container-modal/editor-container-modal.component';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ModalService } from '@cms-lib/ui/modal';
+import { EditorContainerModalComponent } from './editor-container-modal/editor-container-modal.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HtmlEditorService {
 
   constructor(

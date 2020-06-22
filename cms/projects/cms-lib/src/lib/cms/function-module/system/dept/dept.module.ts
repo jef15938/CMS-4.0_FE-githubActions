@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '@cms-lib/shared/shared.module';
 import { DeptRoutingModule } from './dept-routing.module';
 import { DeptComponent } from './dept.component';
 import { DeptNodeComponent } from './component/dept-node/dept-node.component';
 import { DeptMaintainModalComponent } from './component/dept-maintain-modal/dept-maintain-modal.component';
-import { SharedModule } from './../../../../shared/shared.module';
 
 const COMPONENTS = [
   DeptComponent,
   DeptNodeComponent,
-]
+];
 
 @NgModule({
   imports: [
-    CommonModule,
     DeptRoutingModule,
-    SharedModule 
+    SharedModule
   ],
   declarations: [
     ...COMPONENTS,

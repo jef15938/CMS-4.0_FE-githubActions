@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
-import { DepartmentService } from './../../../../../../service/department.service';
-import { DepartmentInfo } from './../../../../../../neuxAPI/bean/DepartmentInfo';
-import { tap } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { NgModel } from '@angular/forms';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { DepartmentInfo } from '@cms-lib/neuxAPI/bean/DepartmentInfo';
+import { DepartmentService } from '@cms-lib/api/service';
+import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
 
 @Component({
   selector: 'cms-dept-maintain-modal',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ModalService } from '../modal/modal.service';
 import { Observable } from 'rxjs';
+import { ModalService } from '@cms-lib/ui/modal';
 import { CropperComponent } from './cropper.component';
 
 @Injectable({

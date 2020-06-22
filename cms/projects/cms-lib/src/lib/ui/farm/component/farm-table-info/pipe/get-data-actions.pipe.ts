@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CmsFarmTableDataInfo } from './../../../../../type/farm.class';
-import { CmsFarmTableDataAction } from './../../../../../type/farm.enum';
+import { CmsFarmTableDataInfo, CmsFarmTableDataAction } from '@cms-lib/type';
 
 @Pipe({
   name: 'getDataActions'

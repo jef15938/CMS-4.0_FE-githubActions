@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomCellRenderer, CmsTable } from '../../../../../../ui/table/table.interface';
+import { CustomCellRenderer, CmsTable } from '@cms-lib/ui/table';
 import { ChatbotReply } from '../../../chatbot.model';
 
 enum ActionType {

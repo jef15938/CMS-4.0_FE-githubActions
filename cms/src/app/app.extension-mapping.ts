@@ -1,4 +1,4 @@
-import { CmsExtensionComponentMapping } from '@cms-lib';
+import { CmsExtensionComponentMapping } from '@neux/cms-core';
 import { Test1Component } from './test/test1.component';
 import { Test2Component } from './test/test2.component';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from './../../../../../../../ui/modal/custom-modal-base';
+import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
 
 interface ChipOption {
   text: string;

@@ -1,5 +1,5 @@
 import { ViewContainerRef, Type, TemplateRef } from '@angular/core';
-import { CustomModalBase } from './custom-modal-base';
+import { CustomModalBase } from './base/custom-modal-base';
 
 export interface ModalOpenComponentConfig<TComponent extends CustomModalBase> {
   component: Type<TComponent> | TemplateRef<TComponent>;

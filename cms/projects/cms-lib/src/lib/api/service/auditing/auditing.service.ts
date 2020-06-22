@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from '../neuxAPI/rest-api.service';
-import { ParamsError } from '@neux/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MyAuditingDetailGetResponse } from '../neuxAPI/bean/MyAuditingDetailGetResponse';
-import { MyAuditingDetailInfo } from '../neuxAPI/bean/MyAuditingDetailInfo';
-import { MyAuditingGetResponse } from '../neuxAPI/bean/MyAuditingGetResponse';
-import { AuditingGetResponse } from '../neuxAPI/bean/AuditingGetResponse';
+import { ParamsError } from '@neux/core';
+import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
+import { MyAuditingDetailGetResponse } from '@cms-lib/neuxAPI/bean/MyAuditingDetailGetResponse';
+import { MyAuditingDetailInfo } from '@cms-lib/neuxAPI/bean/MyAuditingDetailInfo';
+import { MyAuditingGetResponse } from '@cms-lib/neuxAPI/bean/MyAuditingGetResponse';
+import { AuditingGetResponse } from '@cms-lib/neuxAPI/bean/AuditingGetResponse';
 
 @Injectable({
   providedIn: 'root'

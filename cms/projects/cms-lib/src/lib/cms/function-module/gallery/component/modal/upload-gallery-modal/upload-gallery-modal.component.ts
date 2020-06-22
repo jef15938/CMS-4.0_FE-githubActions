@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, EventEmitter, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
-import { Subscription, of, Observable } from 'rxjs';
+import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { HttpRequest, HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { map, tap, last, catchError } from 'rxjs/operators';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { ColDef } from './../../../../../../ui/table/table.interface';
-import { CropperService } from './../../../../../../ui/cropper/cropper.service';
-import { GalleryService } from './../../../../../../service/gallery.service';
+import { Subscription, of, Observable } from 'rxjs';
+import { map, tap, last, catchError } from 'rxjs/operators';
+import { GalleryService } from '@cms-lib/api/service';
+import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
+import { ColDef } from '@cms-lib/ui/table';
+import { CropperService } from '@cms-lib/ui/cropper';
 
 export class FileUploadModel {
   fileName: string;

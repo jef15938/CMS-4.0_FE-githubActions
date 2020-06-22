@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
-import { ModalService } from './../modal/modal.service';
+import { MatSelect } from '@angular/material/select';
+import { ModalService } from '@cms-lib/ui/modal';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
-import { MatSelect } from '@angular/material/select';
 
 export interface HtmlEditorContext {
   simpleWysiwygService: SimpleWysiwygService;

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AuditingService } from '../../../service/auditing.service';
 import { Observable, concat } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
-import { MyAuditingInfo } from '../../../neuxAPI/bean/MyAuditingInfo';
+import { MyAuditingInfo } from '@cms-lib/neuxAPI/bean/MyAuditingInfo';
+import { PageInfo } from '@cms-lib/neuxAPI/bean/PageInfo';
+import { AuditingService } from '@cms-lib/api/service';
+import { ColDef } from '@cms-lib/ui/table';
+import { ModalService } from '@cms-lib/ui/modal';
 import { MyAuditingActionCellComponent, MyAuditingActionCellCustomEvent } from './component/cell-renderer/my-auditing-action-cell/my-auditing-action-cell.component';
-import { ColDef } from '../../../ui/table/table.interface';
-import { ModalService } from '../../../ui/modal/modal.service';
 import { MyAuditingDetailModalComponent } from './component/modal/my-auditing-detail-modal/my-auditing-detail-modal.component';
-import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
 
 @Component({
   selector: 'cms-my-auditing',

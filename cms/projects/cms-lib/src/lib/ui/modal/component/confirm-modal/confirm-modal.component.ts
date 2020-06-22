@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../custom-modal-base';
+import { CustomModalBase, CustomModalActionButton } from '../../base/custom-modal-base';
 
 @Component({
   selector: 'cms-confirm-modal',

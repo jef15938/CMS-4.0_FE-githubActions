@@ -1,6 +1,6 @@
 import { HtmlEditorElementController, HTML_EDITOR_ELEMENT_CONTROLLER } from './_base';
-import { HtmlEditorImageController } from './image/image-controller';
 import { HtmlEditorContext, HtmlEditorContextMenuItem } from '../../html-editor.interface';
+import { HtmlEditorImageController } from './image/image-controller';
 import { HtmlEditorTableController } from './table/table-controller';
 import { HtmlEditorVideoController } from './video/video-controller';
 

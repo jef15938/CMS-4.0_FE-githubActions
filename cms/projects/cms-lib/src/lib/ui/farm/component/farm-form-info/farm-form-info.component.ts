@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../type/farm.class';
-import { CmsFarmFormColumnDisplayType } from './../../../../type/farm.enum';
-import { FarmFormComp } from '../../farm.interface';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
-import { CmsValidator } from './../../../../util/validator';
 import { Observable, throwError, of, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { CmsFarmFormInfo, CmsFarmFormColumn, CmsFarmFormColumnDisplayType } from '@cms-lib/type';
+import { FarmFormComp } from '../../farm.interface';
+import { CmsValidator } from '@cms-lib/util';
+
 
 @Component({
   selector: 'cms-farm-form-info',

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal/custom-modal-base';
-import { stringify } from 'querystring';
+import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
 
 @Component({
   selector: 'cms-html-editor-create-link-modal',

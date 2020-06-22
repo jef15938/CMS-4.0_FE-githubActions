@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { SharedModule } from '@cms-lib/shared/shared.module';
 import { CorporateResponsibilityRoutingModule } from './corporate-responsibility-routing.module';
 import { CorporateResponsibilityComponent } from './corporate-responsibility.component';
-import { FarmModule } from './../../../../ui/farm/farm.module';
-
 
 @NgModule({
   declarations: [CorporateResponsibilityComponent],
   imports: [
-    CommonModule,
+    SharedModule,
     CorporateResponsibilityRoutingModule,
-    FarmModule,
   ]
 })
 export class CorporateResponsibilityModule { }

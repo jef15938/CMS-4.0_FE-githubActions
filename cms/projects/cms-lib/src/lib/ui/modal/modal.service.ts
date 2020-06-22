@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalCustomWrapperComponent } from './modal-custom-wrapper/modal-custom-wrapper.component';
 import { ModalOpenComponentConfig } from './modal.interface';
-import { CustomModalBase } from './custom-modal-base';
+import { CustomModalBase } from './base/custom-modal-base';
 import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.component';
 import { MessageModalComponent } from './component/message-modal/message-modal.component';
 
 let modalId = 0;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ModalService {
 
   constructor(

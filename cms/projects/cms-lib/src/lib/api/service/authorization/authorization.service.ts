@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from '../neuxAPI/rest-api.service';
-import { ParamsError } from '@neux/core';
-import { LoginRequest } from '../neuxAPI/bean/LoginRequest';
-import { LoginInfo } from '../neuxAPI/bean/LoginInfo';
+
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
-import { LoginResponse } from '../neuxAPI/bean/LoginResponse';
+import { map } from 'rxjs/operators';
+
+import { ParamsError } from '@neux/core';
+import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
+import { LoginRequest } from '@cms-lib/neuxAPI/bean/LoginRequest';
+import { LoginInfo } from '@cms-lib/neuxAPI/bean/LoginInfo';
+import { LoginResponse } from '@cms-lib/neuxAPI/bean/LoginResponse';
 
 @Injectable({
   providedIn: 'root'

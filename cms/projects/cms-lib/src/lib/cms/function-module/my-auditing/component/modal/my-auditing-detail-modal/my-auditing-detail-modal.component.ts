@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase } from './../../../../../../ui/modal/custom-modal-base';
-import { AuditingService } from './../../../../../../service/auditing.service';
-import { MyAuditingDetailInfo } from './../../../../../../neuxAPI/bean/MyAuditingDetailInfo';
 import { tap } from 'rxjs/operators';
-import { ColDef } from './../../../../../../ui/table/table.interface';
+import { MyAuditingDetailInfo } from '@cms-lib/neuxAPI/bean/MyAuditingDetailInfo';
+import { AuditingService } from '@cms-lib/api/service';
+import { CustomModalBase } from '@cms-lib/ui/modal';
+import { ColDef } from '@cms-lib/ui/table';
 
 @Component({
   selector: 'cms-my-auditing-detail-modal',

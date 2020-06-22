@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { TemplateGetResponse } from '@cms-lib/neuxAPI/bean/TemplateGetResponse';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
-import { TemplateGetResponse } from './../../../../neuxAPI/bean/TemplateGetResponse';
 
 class TemplateInfo {
   templateId: string;

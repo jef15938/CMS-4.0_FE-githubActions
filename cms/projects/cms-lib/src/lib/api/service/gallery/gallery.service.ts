@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from '../neuxAPI/rest-api.service';
-import { ParamsError } from '@neux/core';
-import { GalleryGetResponse } from '../neuxAPI/bean/GalleryGetResponse';
-import { Observable, throwError } from 'rxjs';
-import { GalleryCategoryInfo } from '../neuxAPI/bean/GalleryCategoryInfo';
-import { map, catchError, tap } from 'rxjs/operators';
-import { GalleryCaregoryGetResponse } from '../neuxAPI/bean/GalleryCaregoryGetResponse';
 import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
+import { ParamsError } from '@neux/core';
+import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
+import { GalleryGetResponse } from '@cms-lib/neuxAPI/bean/GalleryGetResponse';
+import { GalleryCategoryInfo } from '@cms-lib/neuxAPI/bean/GalleryCategoryInfo';
+import { GalleryCaregoryGetResponse } from '@cms-lib/neuxAPI/bean/GalleryCaregoryGetResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -114,10 +114,10 @@ export class GalleryService {
     formData.append('file', fileToUpload, fileToUpload.name);
     formData.append('description', 'description');
     return this.httpClient
-      .put(url, formData, { headers: headers }).pipe(
+      .put(url, formData, { headers }).pipe(
         tap(res => console.log('updateGallery response = ', res)),
         catchError((e) => {
-          console.error('error = ', e)
+          console.error('error = ', e);
           return throwError(e);
         }),
       );
@@ -138,10 +138,10 @@ export class GalleryService {
     formData.append('file', fileToUpload, fileToUpload.name);
     formData.append('description', 'description');
     return this.httpClient
-      .post(url, formData, { headers: headers }).pipe(
+      .post(url, formData, { headers }).pipe(
         tap(res => console.log('upload response = ', res)),
         catchError((e) => {
-          console.error('error = ', e)
+          console.error('error = ', e);
           return throwError(e);
         }),
       );

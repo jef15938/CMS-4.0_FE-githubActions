@@ -3,13 +3,9 @@ import {
   Bold, Italic, Underline,
   JustifyCenter, JustifyFull, JustifyLeft, JustifyRight,
   InsertOrderedList, InsertUnorderedList,
-  Indent, Outdent,
-  CreateLink, InsertImage,
+  Indent, Outdent, Highlight, Unhighlight,
+  CreateLink, InsertImage, InsertTable, InsertVideo,
 } from './action/_index';
-import { InsertTable } from './action/insert-table';
-import { InsertVideo } from './action/insert-video';
-import { Highlight } from './action/highlight';
-import { Unhighlight } from './action/unhighlight';
 
 export class HtmlEditorActions {
   private context: HtmlEditorContext;

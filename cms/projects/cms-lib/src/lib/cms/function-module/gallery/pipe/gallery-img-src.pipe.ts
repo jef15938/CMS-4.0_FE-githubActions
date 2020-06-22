@@ -1,15 +1,19 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { GalleryInfo } from './../../../../neuxAPI/bean/GalleryInfo';
-import { environment } from 'src/environments/environment';
+import { Pipe, PipeTransform, Inject } from '@angular/core';
+import { CMS_ENVIROMENT, CmsEnviroment } from '@cms-lib/type';
+import { GalleryInfo } from '@cms-lib/neuxAPI/bean/GalleryInfo';
 
 @Pipe({
   name: 'gelleryImgSrc'
 })
 export class GelleryImgSrcPipe implements PipeTransform {
 
-  readonly galleryShowUrl = `${environment.apiBaseUrl}/Gallery/Show`;
+  private galleryShowUrl = '';
 
-  constructor() { }
+  constructor(
+    @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
+  ) {
+    this.galleryShowUrl = `${environment.apiBaseUrl}/Gallery/Show`;
+  }
 
   transform(data: GalleryInfo, args?: any): string {
     if (data) {

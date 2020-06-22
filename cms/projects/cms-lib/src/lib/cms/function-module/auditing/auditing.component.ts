@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuditingInfo } from '../../../neuxAPI/bean/AuditingInfo';
-import { PageInfo } from '../../../neuxAPI/bean/PageInfo';
-import { AuditingService } from '../../../service/auditing.service';
-import { ModalService } from '../../../ui/modal/modal.service';
-import { ColDef } from '../../../ui/table/table.interface';
 import { Observable, concat } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { AuditingService } from '@cms-lib/api/service';
+import { AuditingInfo } from '@cms-lib/neuxAPI/bean/AuditingInfo';
+import { PageInfo } from '@cms-lib/neuxAPI/bean/PageInfo';
+import { ModalService } from '@cms-lib/ui/modal';
+import { ColDef } from '@cms-lib/ui/table';
 import { AuditingActionCellComponent, AuditingActionCellCustomEvent } from './component/cell-renderer/auditing-action-cell/auditing-action-cell.component';
 import { ApproveAuditingModalComponent, AuditingApproveStatus } from './component/modal/approve-auditing-modal/approve-auditing-modal.component';
 

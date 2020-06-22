@@ -2,10 +2,9 @@ import {
   Component, OnInit, AfterViewInit, Inject, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CMS_EXTENSION_COMPONENT_MAPPINGS } from '../../../cms-lib.injection-token';
-import { CmsExtensionComponentMapping } from '../../../type/extension.type';
-import { CmsUserMenuResolver } from '../../service/cms-menu-resolver';
-import { MenuInfo } from '../../../neuxAPI/bean/MenuInfo';
+import { CMS_EXTENSION_COMPONENT_MAPPINGS, CmsExtensionComponentMapping } from '@cms-lib/type';
+import { CmsUserMenuResolver } from '@cms-lib/cms/service';
+import { MenuInfo } from '@cms-lib/neuxAPI/bean/MenuInfo';
 
 @Component({
   selector: 'cms-extension',

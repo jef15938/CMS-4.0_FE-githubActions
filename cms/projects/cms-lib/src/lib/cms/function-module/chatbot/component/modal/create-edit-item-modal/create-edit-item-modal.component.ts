@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
-import { ChatbotService } from '../../../chatbot.service';
 import { of } from 'rxjs';
-import { ChatbotItem, ChatbotReply } from '../../../chatbot.model';
 import { tap } from 'rxjs/operators';
+import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
+import { ChatbotService } from '../../../chatbot.service';
+import { ChatbotItem, ChatbotReply } from '../../../chatbot.model';
 
 @Component({
   selector: 'cms-create-edit-item-modal',

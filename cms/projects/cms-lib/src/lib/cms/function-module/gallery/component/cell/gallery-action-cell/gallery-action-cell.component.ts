@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomCellRenderer, CmsTable } from './../../../../../../ui/table/table.interface';
-import { GalleryInfo } from './../../../../../../neuxAPI/bean/GalleryInfo';
+import { GalleryInfo } from '@cms-lib/neuxAPI/bean/GalleryInfo';
+import { CustomCellRenderer, CmsTable } from '@cms-lib/ui/table';
 
 enum ActionType {
   Edit, Delete

@@ -1,12 +1,10 @@
+import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { AuthorizationService } from '../../service/authorization.service';
 import { catchError, map, concatMap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { AuthorizationService } from '@cms-lib/api/service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CmsAuthGuard implements CanActivate {
 
   constructor(

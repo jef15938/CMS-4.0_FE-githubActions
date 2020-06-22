@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from '../neuxAPI/rest-api.service';
 import { Observable } from 'rxjs';
-import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../type/farm.class';
 import { ParamsError } from '@neux/core';
+import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
+import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '@cms-lib/type';
 
 @Injectable({
   providedIn: 'root'

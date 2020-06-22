@@ -1,11 +1,10 @@
 import { Component, OnInit, Type } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from './../../../../../../ui/modal/custom-modal-base';
-import { ChatbotService } from '../../../chatbot.service';
 import { of } from 'rxjs';
-import { ChatbotReply } from '../../../chatbot.model';
 import { tap, map } from 'rxjs/operators';
-import { RichContentType, RichContent, DialogFlowMessengerService } from './../../../../../service/dialog-flow.service';
-import { ModalService } from './../../../../../../ui/modal/modal.service';
+import { ModalService, CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
+import { RichContentType, RichContent, DialogFlowMessengerService } from '@cms-lib/cms/service';
+import { ChatbotService } from '../../../chatbot.service';
+import { ChatbotReply } from '../../../chatbot.model';
 import { InfoContentModalComponent } from '../rich-content/info-content-modal/info-content-modal.component';
 import { DescriptionContentModalComponent } from '../rich-content/description-content-modal/description-content-modal.component';
 import { ImageContentModalComponent } from '../rich-content/image-content-modal/image-content-modal.component';

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { DeptNodeComponent, DeptNodeCustomEvent } from './component/dept-node/dept-node.component';
-import { DepartmentInfo } from './../../../../neuxAPI/bean/DepartmentInfo';
-import { DeptMaintainModalComponent } from './component/dept-maintain-modal/dept-maintain-modal.component';
-import { ModalService } from './../../../../ui/modal/modal.service';
 import { Observable, concat } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { DepartmentService } from './../../../../service/department.service';
-import { CmsTree } from './../../../../ui/tree/tree.interface';
+import { DepartmentInfo } from '@cms-lib/neuxAPI/bean/DepartmentInfo';
+import { DepartmentService } from '@cms-lib/api/service';
+import { CmsTree } from '@cms-lib/ui/tree';
+import { ModalService } from '@cms-lib/ui/modal';
+import { DeptNodeComponent, DeptNodeCustomEvent } from './component/dept-node/dept-node.component';
+import { DeptMaintainModalComponent } from './component/dept-maintain-modal/dept-maintain-modal.component';
 
 @Component({
   selector: 'cms-dept',

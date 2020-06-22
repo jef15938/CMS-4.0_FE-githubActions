@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatbotItem } from '../chatbot.model';
 import { Observable, concat, of } from 'rxjs';
 import { tap, concatMap, map } from 'rxjs/operators';
-import { ColDef } from './../../../../ui/table/table.interface';
-import { ModalService } from './../../../../ui/modal/modal.service';
+import { ColDef } from '@cms-lib/ui/table';
+import { ModalService } from '@cms-lib/ui/modal';
+import { ChatbotItem } from '../chatbot.model';
 import { ChatbotService } from '../chatbot.service';
 import { ItemActionCellComponent, ItemActionCellCustomEvent } from '../component/cell-renderer/item-action-cell/item-action-cell.component';
 import { CreateEditItemModalComponent } from '../component/modal/create-edit-item-modal/create-edit-item-modal.component';

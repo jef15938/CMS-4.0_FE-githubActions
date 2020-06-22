@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { RestApiService } from '../neuxAPI/rest-api.service';
-import { ParamsError } from '@neux/core';
-import { SiteMapGetResponse } from '../neuxAPI/bean/SiteMapGetResponse';
-import { map } from 'rxjs/operators';
-import { SiteGetResponse } from '../neuxAPI/bean/SiteGetResponse';
 import { Observable } from 'rxjs';
-import { SiteInfo } from '../neuxAPI/bean/SiteInfo';
-import { SiteMapNodeInfo } from '../neuxAPI/bean/SiteMapNodeInfo';
-import { SiteMapInfo } from '../neuxAPI/bean/SiteMapInfo';
+import { map } from 'rxjs/operators';
+import { ParamsError } from '@neux/core';
+import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
+import { SiteMapGetResponse } from '@cms-lib/neuxAPI/bean/SiteMapGetResponse';
+import { SiteGetResponse } from '@cms-lib/neuxAPI/bean/SiteGetResponse';
+import { SiteInfo } from '@cms-lib/neuxAPI/bean/SiteInfo';
+import { SiteMapNodeInfo } from '@cms-lib/neuxAPI/bean/SiteMapNodeInfo';
+import { SiteMapInfo } from '@cms-lib/neuxAPI/bean/SiteMapInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +56,7 @@ export class SitemapService {
     };
 
     if (optional) {
-      for (let key of Object.keys(optional)) {
+      for (const key of Object.keys(optional)) {
         requestBody[key] = optional[key];
       }
     }
@@ -164,7 +164,7 @@ export class SitemapService {
     };
 
     if (optional) {
-      for (let key of Object.keys(optional)) {
+      for (const key of Object.keys(optional)) {
         params.requestBody[key] = optional[key];
       }
     }
