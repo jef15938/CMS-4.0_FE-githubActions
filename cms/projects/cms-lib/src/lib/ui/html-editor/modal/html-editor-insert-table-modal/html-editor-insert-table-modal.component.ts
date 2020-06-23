@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
+import { CustomModalBase, CustomModalActionButton } from './../../../../ui/modal';
 
 @Component({
   selector: 'cms-html-editor-insert-table-modal',

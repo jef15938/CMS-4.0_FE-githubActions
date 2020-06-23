@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
-import { ModalService } from '@cms-lib/ui/modal';
+import { Observable } from 'rxjs';
+import { ModalService } from './../../ui/modal';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
 

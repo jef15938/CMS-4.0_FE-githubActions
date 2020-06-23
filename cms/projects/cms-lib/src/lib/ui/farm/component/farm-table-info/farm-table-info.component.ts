@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CmsFarmTableInfo, CmsFarmTableDataInfo, CmsFarmTableDataAction, CmsFarmTableColumnDisplayType } from '@cms-lib/type';
+import { CmsFarmTableInfo, CmsFarmTableDataInfo, CmsFarmTableDataAction, CmsFarmTableColumnDisplayType } from './../../../../type';
 import { ACTION_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type';
 
 @Component({

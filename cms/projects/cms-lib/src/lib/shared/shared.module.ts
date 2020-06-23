@@ -26,15 +26,15 @@ import { MatRadioModule } from '@angular/material/radio';
 // @neux/core
 import { CoreModule } from '@neux/core';
 // cms-lib
-import { DirectiveModule } from '@cms-lib/directive';
-import { PipeModule } from '@cms-lib/pipe';
-import { TreeModule } from '@cms-lib/ui/tree';
-import { ModalModule } from '@cms-lib/ui/modal';
-import { TableModule } from '@cms-lib/ui/table';
-import { ContentEditorModule } from '@cms-lib/ui/content-editor';
-import { HtmlEditorModule } from '@cms-lib/ui/html-editor';
-import { CropperModule } from '@cms-lib/ui/cropper';
-import { FarmModule } from '@cms-lib/ui/farm';
+import { DirectiveModule } from './../directive';
+import { PipeModule } from './../pipe';
+import { TreeModule } from './../ui/tree';
+import { ModalModule } from './../ui/modal';
+import { TableModule } from './../ui/table';
+import { ContentEditorModule } from './../ui/content-editor';
+import { HtmlEditorModule } from './../ui/html-editor';
+import { CropperModule } from './../ui/cropper';
+import { FarmModule } from './../ui/farm';
 
 @NgModule({
   declarations: [],

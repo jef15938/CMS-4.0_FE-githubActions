@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton, ModalService } from '@cms-lib/ui/modal';
+import { CustomModalBase, CustomModalActionButton, ModalService } from './../../../../ui/modal';
 
 const YOUTUBE_EMBED_VIDEO_URL = 'https://www.youtube.com/embed/';
 const YOUTUBE_EMBED_IMAGE_URL = (videoId: string) => {

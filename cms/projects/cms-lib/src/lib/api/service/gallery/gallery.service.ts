@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
-import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
-import { GalleryGetResponse } from '@cms-lib/neuxAPI/bean/GalleryGetResponse';
-import { GalleryCategoryInfo } from '@cms-lib/neuxAPI/bean/GalleryCategoryInfo';
-import { GalleryCaregoryGetResponse } from '@cms-lib/neuxAPI/bean/GalleryCaregoryGetResponse';
+import { RestApiService } from './../../../neuxAPI/rest-api.service';
+import { GalleryGetResponse } from './../../../neuxAPI/bean/GalleryGetResponse';
+import { GalleryCategoryInfo } from './../../../neuxAPI/bean/GalleryCategoryInfo';
+import { GalleryCaregoryGetResponse } from './../../../neuxAPI/bean/GalleryCaregoryGetResponse';
 
 @Injectable({
   providedIn: 'root'

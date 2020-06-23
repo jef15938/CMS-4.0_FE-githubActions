@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
+import { DirectiveModule } from './../../directive';
 import { TreeComponent } from './tree.component';
 import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
-import { DirectiveModule } from '@cms-lib/directive';
 
 @NgModule({
   imports: [

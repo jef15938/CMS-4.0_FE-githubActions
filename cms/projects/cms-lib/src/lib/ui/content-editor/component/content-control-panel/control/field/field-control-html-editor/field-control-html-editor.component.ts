@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { HtmlEditorService } from '@cms-lib/ui/html-editor';
+import { HtmlEditorService } from './../../../../../../../ui/html-editor';
 
 @Component({
   selector: 'cms-field-control-html-editor',

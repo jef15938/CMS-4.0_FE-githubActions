@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
-import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
-import { DepartmentInfo } from '@cms-lib/neuxAPI/bean/DepartmentInfo';
-import { DepartmentGetResponse } from '@cms-lib/neuxAPI/bean/DepartmentGetResponse';
+import { RestApiService } from './../../../neuxAPI/rest-api.service';
+import { DepartmentInfo } from './../../../neuxAPI/bean/DepartmentInfo';
+import { DepartmentGetResponse } from './../../../neuxAPI/bean/DepartmentGetResponse';
 
 @Injectable({
   providedIn: 'root'

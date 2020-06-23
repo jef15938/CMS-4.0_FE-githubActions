@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
-import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
-import { SiteMapGetResponse } from '@cms-lib/neuxAPI/bean/SiteMapGetResponse';
-import { SiteGetResponse } from '@cms-lib/neuxAPI/bean/SiteGetResponse';
-import { SiteInfo } from '@cms-lib/neuxAPI/bean/SiteInfo';
-import { SiteMapNodeInfo } from '@cms-lib/neuxAPI/bean/SiteMapNodeInfo';
-import { SiteMapInfo } from '@cms-lib/neuxAPI/bean/SiteMapInfo';
+import { RestApiService } from './../../../neuxAPI/rest-api.service';
+import { SiteMapGetResponse } from './../../../neuxAPI/bean/SiteMapGetResponse';
+import { SiteGetResponse } from './../../../neuxAPI/bean/SiteGetResponse';
+import { SiteInfo } from './../../../neuxAPI/bean/SiteInfo';
+import { SiteMapNodeInfo } from './../../../neuxAPI/bean/SiteMapNodeInfo';
+import { SiteMapInfo } from './../../../neuxAPI/bean/SiteMapInfo';
 
 @Injectable({
   providedIn: 'root'

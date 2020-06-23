@@ -3,8 +3,8 @@ import {
   AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { TemplateGetResponse } from '@cms-lib/neuxAPI/bean/TemplateGetResponse';
-import { ContentInfo } from '@cms-lib/neuxAPI/bean/ContentInfo';
+import { TemplateGetResponse } from './../../neuxAPI/bean/TemplateGetResponse';
+import { ContentInfo } from './../../neuxAPI/bean/ContentInfo';
 import { ContentEditorSaveEvent, EditorMode } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';

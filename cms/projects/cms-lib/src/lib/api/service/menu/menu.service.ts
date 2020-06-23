@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
-import { MenuGetResponse } from '@cms-lib/neuxAPI/bean/MenuGetResponse';
-import { MenuInfo } from '@cms-lib/neuxAPI/bean/MenuInfo';
+import { RestApiService } from './../../../neuxAPI/rest-api.service';
+import { MenuGetResponse } from './../../../neuxAPI/bean/MenuGetResponse';
+import { MenuInfo } from './../../../neuxAPI/bean/MenuInfo';
 
 @Injectable({
   providedIn: 'root'

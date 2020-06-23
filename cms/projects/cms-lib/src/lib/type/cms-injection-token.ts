@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { CmsExtensionMenuResolver, CmsExtensionComponentMapping, CmsEnviroment } from '@cms-lib/type';
+import { CmsExtensionMenuResolver, CmsExtensionComponentMapping, CmsEnviroment } from './../type';
 
 export const CMS_ENVIROMENT = new InjectionToken<CmsEnviroment>('CmsExtensionMenuResolver');
 

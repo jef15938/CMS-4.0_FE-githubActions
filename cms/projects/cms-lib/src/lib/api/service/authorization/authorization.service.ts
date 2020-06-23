@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ParamsError } from '@neux/core';
-import { RestApiService } from '@cms-lib/neuxAPI/rest-api.service';
-import { LoginRequest } from '@cms-lib/neuxAPI/bean/LoginRequest';
-import { LoginInfo } from '@cms-lib/neuxAPI/bean/LoginInfo';
-import { LoginResponse } from '@cms-lib/neuxAPI/bean/LoginResponse';
+import { RestApiService } from './../../../neuxAPI/rest-api.service';
+import { LoginRequest } from './../../../neuxAPI/bean/LoginRequest';
+import { LoginInfo } from './../../../neuxAPI/bean/LoginInfo';
+import { LoginResponse } from './../../../neuxAPI/bean/LoginResponse';
 
 @Injectable({
   providedIn: 'root'

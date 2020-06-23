@@ -2,13 +2,13 @@ import {
   Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild,
   ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef
 } from '@angular/core';
-import { ContentInfo } from '@cms-lib/neuxAPI/bean/ContentInfo';
 import {
   LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperSelectedTargetType,
   LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective,
   LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective
 } from 'layout';
-import { ContentTemplateInfo } from '@cms-lib/neuxAPI/bean/ContentTemplateInfo';
+import { ContentInfo } from './../../../../neuxAPI/bean/ContentInfo';
+import { ContentTemplateInfo } from './../../../../neuxAPI/bean/ContentTemplateInfo';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { EditorMode } from '../../content-editor.interface';
 import { CheckViewConfig } from './content-view-renderer.interface';

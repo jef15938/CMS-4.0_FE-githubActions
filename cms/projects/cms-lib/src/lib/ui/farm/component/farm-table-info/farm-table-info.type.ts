@@ -1,4 +1,4 @@
-import { CmsFarmTableInfo, CmsFarmTableDataInfo, CmsFarmTableDataAction } from '@cms-lib/type';
+import { CmsFarmTableDataInfo, CmsFarmTableDataAction } from './../../../../type';
 
 
 export const ACTION_COLUMN = 'TABLE_ACTIONS';

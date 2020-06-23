@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { AngularCropperjsModule } from 'angular-cropperjs';
-import { PipeModule } from '@cms-lib/pipe';
+import { PipeModule } from './../../pipe';
 import { CropperComponent } from './cropper.component';
 import { CropperMenuSettingComponent } from './component/menu/cropper-menu-setting/cropper-menu-setting.component';
 import { CropperMenuEditComponent } from './component/menu/cropper-menu-edit/cropper-menu-edit.component';

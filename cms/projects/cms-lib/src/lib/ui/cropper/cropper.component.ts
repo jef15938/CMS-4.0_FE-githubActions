@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { CropperComponent as CropperWrapper } from 'angular-cropperjs';
-import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
+import { CustomModalBase, CustomModalActionButton } from './../../ui/modal';
 import { CropperOption } from './cropper.type';
 
 @Component({

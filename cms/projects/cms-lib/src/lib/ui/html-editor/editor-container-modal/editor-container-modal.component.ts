@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '@cms-lib/ui/modal';
+import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { HtmlEditorComponent } from '../html-editor.component';
 
 @Component({

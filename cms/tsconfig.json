@@ -19,9 +19,6 @@
       "@cms-app/*": [
         "src/app/*"
       ],
-      "@cms-lib/*": [
-        "projects/cms-lib/src/lib/*"
-      ],
       "@neux/cms-core": [
         "projects/cms-lib/src/public-api",
         // "dist/cms-lib",
