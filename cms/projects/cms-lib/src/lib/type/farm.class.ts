@@ -6,6 +6,7 @@ import { Type } from 'class-transformer';
 import { FarmTableDataInfo } from '../neuxAPI/bean/FarmTableDataInfo';
 import { CmsFarmFormColumnDisplayType, CmsFarmTableColumnDisplayType, CmsFarmTableDataAction } from './farm.enum';
 import { FarmValidationInfo } from '../neuxAPI/bean/FarmValidationInfo';
+import { TypeFactory } from '../neuxAPI/type-factory';
 
 export class CmsFarmValidationInfo extends FarmValidationInfo {
   public required: {
@@ -42,7 +43,7 @@ export class CmsFarmTableDataInfo extends FarmTableDataInfo {
 }
 
 export class CmsFarmTableInfo extends FarmTableInfo {
-  @Type(() => CmsFarmTableDataInfo)
+  @Type(TypeFactory(CmsFarmTableDataInfo))
   @ValidateNested()
   public datas: CmsFarmTableDataInfo[];
 }
@@ -68,8 +69,7 @@ export class CmsFarmFormColumn {
 
 export class CmsFarmFormInfo extends FarmFormInfo {
   public columns: CmsFarmFormColumn[];
-
-  @Type(() => CmsFarmValidationInfo)
+  @Type(TypeFactory(CmsFarmValidationInfo))
   @ValidateNested()
   public validation: CmsFarmValidationInfo;
 }
@@ -84,8 +84,7 @@ export class CmsFarmInfoCategory {
 export class FarmInfo extends FarmInfoGetResponse {
   @IsNotEmpty()
   public category: CmsFarmInfoCategory[];
-
-  @Type(() => CmsFarmFormInfo)
+  @Type(TypeFactory(CmsFarmFormInfo))
   @ValidateNested()
   public detailInfo: CmsFarmFormInfo;
 }
