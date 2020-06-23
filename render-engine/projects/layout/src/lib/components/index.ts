@@ -9,5 +9,5 @@ export * from './tab/tab-item/tab-item.component';
 export * from './tab/tab.module';
 
 export * from '../wrapper/layout-base/_base';
-export * from '../wrapper/layout-wrapper/layout-wrapper.component';
-export * from '../wrapper/layout-wrapper/layout-wrapper.interface';
+export { LayoutWrapperComponent } from '../wrapper/layout-wrapper/layout-wrapper.component';
+export { TemplateType, LayoutWrapper, LayoutWrapperSelectedTargetType, TemplateFieldSelectEvent, LayoutWrapperSelectEvent } from '../wrapper/layout-wrapper/layout-wrapper.interface';
