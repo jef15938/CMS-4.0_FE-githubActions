@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SystemComponent } from './system.component';
 import { DeptModule } from './dept/dept.module';
 
-const getDeptModule = () => DeptModule;
+export function getDeptModule() { return DeptModule; }
 
 const routes: Routes = [
   {

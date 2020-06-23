@@ -1,13 +1,13 @@
-<lib-tab-frame *ngIf="templateInfo">
-  <!-- <lib-tab-item [tabTitle]="'頁籤1'">頁籤1的內容拉啦啦啦</lib-tab-item>
-  <lib-tab-item [tabTitle]="'頁籤2'">頁籤2的內容拉啦啦啦</lib-tab-item>
-  <lib-tab-item [tabTitle]="'頁籤3'">頁籤3的內容拉啦啦啦</lib-tab-item> -->
-  <lib-tab-item *ngFor="let tabInfo of templateInfo.tabList" [tabTitle]="tabInfo.tabId">
+<layoutlib-tab-frame *ngIf="templateInfo">
+  <!-- <layoutlib-tab-item [tabTitle]="'頁籤1'">頁籤1的內容拉啦啦啦</lib-tab-item>
+  <layoutlib-tab-item [tabTitle]="'頁籤2'">頁籤2的內容拉啦啦啦</lib-tab-item>
+  <layoutlib-tab-item [tabTitle]="'頁籤3'">頁籤3的內容拉啦啦啦</lib-tab-item> -->
+  <layoutlib-tab-item *ngFor="let tabInfo of templateInfo.tabList" [tabTitle]="tabInfo.tabId">
     <!-- <ng-container #contentHost></ng-container> -->
-    <lib-templates-container [templates]="tabInfo.children">
-    </lib-templates-container>
+    <layoutlib-templates-container [templates]="tabInfo.children">
+    </layoutlib-templates-container>
     <!-- <div style="padding: 10px;">
-      <lib-layout-wrapper *ngFor="let template of tabInfo.children; let templateIndex = index" [templateInfo]="template"></layout-wrapper>
+      <layoutlib-layout-wrapper *ngFor="let template of tabInfo.children; let templateIndex = index" [templateInfo]="template"></layout-wrapper>
     </div>     -->
-  </lib-tab-item>
-</lib-tab-frame>
+  </layoutlib-tab-item>
+</layoutlib-tab-frame>

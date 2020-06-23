@@ -1,6 +1,7 @@
 import { LayoutBaseComponent } from './_base';
 import { GroupTemplateInfo } from '../../interface/group-template-info.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
+import { Injector } from '@angular/core';
 
 export abstract class GroupTemplateBaseComponent extends LayoutBaseComponent<GroupTemplateInfo> {
   templateType = TemplateType.GROUP;
@@ -12,4 +13,8 @@ export abstract class GroupTemplateBaseComponent extends LayoutBaseComponent<Gro
    * 必填，Group個數限制
    */
   abstract maxItemCount: number;
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 }

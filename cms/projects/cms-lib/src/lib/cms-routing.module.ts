@@ -12,15 +12,15 @@ import { WebModule } from './function-module/web/web.module';
 import { ExtensionModule } from './function-module/extension/extension.module';
 import { ChatbotModule } from './function-module/chatbot/chatbot.module';
 
-const getMultiSiteModule = () => MultiSiteModule;
-const getMyAuditingModule = () => MyAuditingModule;
-const getGalleryModule = () => GalleryModule;
-const getAuditingModule = () => AuditingModule;
-const getSystemModule = () => SystemModule;
-const getWebModule = () => WebModule;
-const getChatbotModule = () => ChatbotModule;
-const getExtensionModule = () => ExtensionModule;
-const getLoginModule = () => LoginModule;
+export function getMultiSiteModule() { return MultiSiteModule; }
+export function getMyAuditingModule() { return MyAuditingModule; }
+export function getGalleryModule() { return GalleryModule; }
+export function getAuditingModule() { return AuditingModule; }
+export function getSystemModule() { return SystemModule; }
+export function getWebModule() { return WebModule; }
+export function getChatbotModule() { return ChatbotModule; }
+export function getExtensionModule() { return ExtensionModule; }
+export function getLoginModule() { return LoginModule; }
 
 const routes: Routes = [
   {

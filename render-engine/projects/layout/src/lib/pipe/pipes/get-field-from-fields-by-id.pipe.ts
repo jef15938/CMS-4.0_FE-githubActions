@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FieldInfo } from '../interface/field-info.interface';
+import { FieldInfo } from '../../interface/field-info.interface';
 
 @Pipe({
   name: 'getFieldFromFieldsById'

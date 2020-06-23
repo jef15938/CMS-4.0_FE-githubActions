@@ -5,7 +5,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TableComponent } from './table.component';
 import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
 import { DirectiveModule } from './../../directive/directive.module';
-import { GetDisplayColsPipe } from './pipe/get-display-cols.pipe';
+import { GetTableDisplayColsPipe } from './pipe/get-table-display-cols.pipe';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import { GetDisplayColsPipe } from './pipe/get-display-cols.pipe';
   declarations: [
     TableComponent,
     CellRendererWrapperDirective,
-    GetDisplayColsPipe,
+    GetTableDisplayColsPipe,
   ],
   exports: [
     TableComponent

@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "generate-api": "nx generate-api ./cms-apis.v1.yaml",
     "install-layout": "npm install ../render-engine/dist/layout/layout-0.0.1.tgz",
-    "pack-cms": "ng build cms-lib && cd dist/cms-lib && npm pack && cd ../..",
+    "pack-cms": "ng build cms-lib --prod && cd dist/cms-lib && npm pack && cd ../..",
     "install-cms": "npm install ./dist/cms-lib/neux-cms-core-0.0.1.tgz",
     "remove-cms": "npm remove @neux/cms-core"
   },

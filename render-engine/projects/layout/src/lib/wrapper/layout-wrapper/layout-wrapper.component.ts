@@ -1,7 +1,7 @@
 import {
   Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef,
-  ComponentRef, AfterViewInit, EventEmitter, Output, ChangeDetectorRef, QueryList, ElementRef,
-  HostListener, OnChanges, SimpleChanges
+  ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
+  HostListener, OnChanges, SimpleChanges, Injector
 } from '@angular/core';
 import { TemplateInfo } from '../../interface';
 import { COMPONENT_SERVICE_TOKEN } from '../../injection-token';
@@ -12,7 +12,7 @@ import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, Layo
 import { LayoutWrapperBase } from './layout-wrapper-base';
 
 @Component({
-  selector: 'lib-layout-wrapper',
+  selector: 'layoutlib-layout-wrapper',
   templateUrl: './layout-wrapper.component.html',
   styleUrls: ['./layout-wrapper.component.scss']
 })
@@ -36,10 +36,9 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(COMPONENT_SERVICE_TOKEN) private componentFactory: any,
-    changeDetectorRef: ChangeDetectorRef,
-    elementRef: ElementRef,
+    injector: Injector,
   ) {
-    super(changeDetectorRef, elementRef);
+    super(injector);
     this.changeDetectorRef.detach();
   }
 

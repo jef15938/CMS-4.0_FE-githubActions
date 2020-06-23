@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LayoutModule } from 'layout';
+import { WrapperModule } from 'layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
@@ -41,7 +41,7 @@ import { TemplateControlDataSourceComponent } from './component/content-control-
     MatRadioModule,
     MatFormFieldModule,
     DragDropModule,
-    LayoutModule,
+    WrapperModule,
   ],
   declarations: [
     ContentEditorContainerModalComponent,

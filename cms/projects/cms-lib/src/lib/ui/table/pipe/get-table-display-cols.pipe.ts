@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ColDef } from '../table.interface';
 
 @Pipe({
-  name: 'getDisplayCols'
+  name: 'getTableDisplayCols'
 })
-export class GetDisplayColsPipe implements PipeTransform {
+export class GetTableDisplayColsPipe implements PipeTransform {
 
   transform(colDefs: ColDef[]): string[] {
     return colDefs ? colDefs.map(c => c.colId) : [];

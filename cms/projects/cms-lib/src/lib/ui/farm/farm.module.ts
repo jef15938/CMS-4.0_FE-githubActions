@@ -16,9 +16,9 @@ import { FarmComponent } from './farm.component';
 import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detail-info.component';
 import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
 import { FarmTableInfoComponent } from './component/farm-table-info/farm-table-info.component';
-import { GetDisplayColsPipe } from './component/farm-table-info/pipe/get-display-cols.pipe';
-import { GetColDataPipe } from './component/farm-table-info/pipe/get-col-data.pipe';
-import { GetDataActionsPipe } from './component/farm-table-info/pipe/get-data-actions.pipe';
+import { GetFarmTableDisplayColsPipe } from './component/farm-table-info/pipe/get-farm-table-display-cols.pipe';
+import { GetFarmTableColDataPipe } from './component/farm-table-info/pipe/get-farm-table-col-data.pipe';
+import { GetFarmTableDataActionsPipe } from './component/farm-table-info/pipe/get-farm-table-data-actions.pipe';
 import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
@@ -46,9 +46,9 @@ import { FarmFormValidationErrorsPipe } from './pipe/farm-form-validation-errors
     FarmDetailInfoComponent,
     FarmSearchInfoComponent,
     FarmTableInfoComponent,
-    GetDisplayColsPipe,
-    GetColDataPipe,
-    GetDataActionsPipe,
+    GetFarmTableDisplayColsPipe,
+    GetFarmTableColDataPipe,
+    GetFarmTableDataActionsPipe,
     FarmFormInfoComponent,
     FarmFormViewDataModalComponent,
     FarmFormModifyDataModalComponent,

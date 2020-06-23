@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CmsFarmTableDataInfo } from './../../../../../type';
+import { CmsFarmTableDataInfo } from '../../../../../type';
 import { ACTION_COLUMN } from '../farm-table-info.type';
 
 @Pipe({
-  name: 'getDisplayCols'
+  name: 'getFarmTableDisplayCols'
 })
-export class GetDisplayColsPipe implements PipeTransform {
+export class GetFarmTableDisplayColsPipe implements PipeTransform {
 
   transform(datas: CmsFarmTableDataInfo[]): string[] {
     const columns = datas && datas[0] ? datas[0].columns : [];

@@ -5,7 +5,7 @@
   </ng-container>
   <table mat-table [dataSource]="tableInfo.datas" class="mat-elevation-z8" style="width: 100%;">
 
-    <ng-container *ngFor="let col of (tableInfo.datas|getDisplayCols)" [matColumnDef]="col">
+    <ng-container *ngFor="let col of (tableInfo.datas|getFarmTableDisplayCols)" [matColumnDef]="col">
       <th mat-header-cell *matHeaderCellDef cmsResizer>
         <ng-container *ngIf="col!==ACTION_COLUMN">
           {{col}}
@@ -20,7 +20,7 @@
       </th>
       <td mat-cell *matCellDef="let element" [class.action-col]="col===ACTION_COLUMN">
         <ng-container *ngIf="col!==ACTION_COLUMN">
-          <ng-container *ngIf="element|getColData:col; let colData;">
+          <ng-container *ngIf="element|getFarmTableColData:col; let colData;">
             <ng-container *ngIf="colData.display_type===CmsFarmTableColumnDisplayType.LABEL">
               {{colData?.value}}
             </ng-container>
@@ -30,7 +30,7 @@
           </ng-container>
         </ng-container>
         <ng-container *ngIf="col===ACTION_COLUMN">
-          <ng-container *ngFor="let action of (element|getDataActions)">
+          <ng-container *ngFor="let action of (element|getFarmTableDataActions)">
             <button type="button" tabindex="0" mat-icon-button (click)="onActionClick(action, element)"
               [ngSwitch]="action">
               <mat-icon>
@@ -56,8 +56,8 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="tableInfo.datas|getDisplayCols"></tr>
-    <tr mat-row *matRowDef="let row; columns:(tableInfo.datas|getDisplayCols);"></tr>
+    <tr mat-header-row *matHeaderRowDef="tableInfo.datas|getFarmTableDisplayCols"></tr>
+    <tr mat-row *matRowDef="let row; columns:(tableInfo.datas|getFarmTableDisplayCols);"></tr>
   </table>
   <ng-container *ngIf="tableInfo.pageInfo; let pageInfo">
     <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">

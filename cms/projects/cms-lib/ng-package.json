@@ -6,6 +6,7 @@
     "umdModuleIds": {
       "class-transformer": "class-transformer",
       "class-validator": "class-validator",
+      "angular-cropperjs": "angular-cropperjs",
       "layout": "layout"
     }
   }

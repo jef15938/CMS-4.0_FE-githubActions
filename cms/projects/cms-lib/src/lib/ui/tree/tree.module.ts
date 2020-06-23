@@ -14,8 +14,8 @@ import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.direc
     DirectiveModule,
   ],
   declarations: [
+    TreeNodeCustomWrapperDirective,
     TreeComponent,
-    TreeNodeCustomWrapperDirective
   ],
   exports: [
     TreeComponent

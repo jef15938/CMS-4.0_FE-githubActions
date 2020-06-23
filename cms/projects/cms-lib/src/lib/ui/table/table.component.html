@@ -13,7 +13,7 @@
       </ng-container>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="colDefs | getDisplayCols"></tr>
-    <tr mat-row *matRowDef="let row; columns: (colDefs | getDisplayCols)"></tr>
+    <tr mat-header-row *matHeaderRowDef="colDefs | getTableDisplayCols"></tr>
+    <tr mat-row *matRowDef="let row; columns: (colDefs | getTableDisplayCols)"></tr>
   </table>
 </ng-container>

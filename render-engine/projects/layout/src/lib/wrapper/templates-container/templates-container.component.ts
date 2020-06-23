@@ -1,11 +1,14 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ElementRef, AfterViewChecked } from '@angular/core';
+import {
+  Component, OnInit, Input, AfterViewInit, ViewChildren, QueryList,
+  Output, EventEmitter, AfterViewChecked, Injector
+} from '@angular/core';
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
 import { LayoutWrapperSelectEvent } from '../layout-wrapper/layout-wrapper.interface';
 import { LayoutWrapperBase } from '../layout-wrapper/layout-wrapper-base';
 
 @Component({
-  selector: 'lib-templates-container',
+  selector: 'layoutlib-templates-container',
   templateUrl: './templates-container.component.html',
   styleUrls: ['./templates-container.component.scss']
 })
@@ -20,6 +23,12 @@ export class TemplatesContainerComponent extends LayoutWrapperBase implements On
   @Output() leave = new EventEmitter<HTMLElement>();
 
   @ViewChildren(LayoutWrapperComponent) layoutWrapperComponents: QueryList<LayoutWrapperComponent>;
+
+  constructor(
+    injector: Injector,
+  ) {
+    super(injector);
+  }
 
   ngOnInit(): void {
   }

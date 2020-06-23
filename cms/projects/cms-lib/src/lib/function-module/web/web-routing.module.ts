@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { WebComponent } from './web.component';
 import { CorporateResponsibilityModule } from './corporate-responsibility/corporate-responsibility.module';
 
-const getCorporateResponsibilityModule = () => CorporateResponsibilityModule;
+export function getCorporateResponsibilityModule() { return CorporateResponsibilityModule; }
 
 const routes: Routes = [
   {

@@ -1,7 +1,7 @@
 import { LayoutBaseComponent } from './_base';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
-import { OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { OnChanges, SimpleChanges, OnInit, Injector } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -10,6 +10,10 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
 
   templateType = TemplateType.DATA_SOURCE;
   sourceData: TData[] = [];
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 
   ngOnInit(): void {
     super.ngOnInit();

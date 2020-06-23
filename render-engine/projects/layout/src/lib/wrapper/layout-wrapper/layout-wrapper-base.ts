@@ -1,8 +1,11 @@
-import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef, Injector } from '@angular/core';
 import { Subject } from 'rxjs';
 
 export abstract class LayoutWrapperBase implements OnDestroy {
   mode: 'preview' | 'edit' = 'preview';
+
+  protected changeDetectorRef: ChangeDetectorRef = null;
+  public elementRef: ElementRef = null;
 
   @Output() enter = new EventEmitter<HTMLElement>();
   @Output() leave = new EventEmitter<HTMLElement>();
@@ -10,9 +13,11 @@ export abstract class LayoutWrapperBase implements OnDestroy {
   destroy$ = new Subject();
 
   constructor(
-    protected changeDetectorRef: ChangeDetectorRef,
-    public elementRef: ElementRef
-  ) { }
+    protected injector: Injector,
+  ) {
+    this.changeDetectorRef = injector.get(ChangeDetectorRef);
+    this.elementRef = injector.get(ElementRef);
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

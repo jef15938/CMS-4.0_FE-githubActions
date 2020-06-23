@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, Injector } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
 import { FieldInfo } from '../../../interface/field-info.interface';
 
@@ -14,6 +14,12 @@ export interface LinkFieldInfo extends FieldInfo {
 })
 export class LayoutFieldLinkDirective extends TemplateFieldDirective {
   @Input('libLayoutFieldLink') fieldInfo: LinkFieldInfo;
+
+  constructor(
+    injector: Injector,
+  ) {
+    super(injector);
+  }
 
   click(ev) {
     if (this.mode === 'edit') {

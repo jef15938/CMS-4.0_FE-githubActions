@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, Injector } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
 import { FieldInfo } from '../../../interface/field-info.interface';
 
@@ -19,4 +19,10 @@ export class LayoutFieldTextareaDirective extends TemplateFieldDirective {
    */
   // tslint:disable-next-line: no-input-rename
   @Input('maxLines') maxLines = 0;
+
+  constructor(
+    injector: Injector,
+  ) {
+    super(injector);
+  }
 }

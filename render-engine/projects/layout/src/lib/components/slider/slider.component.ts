@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import {
   SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface
@@ -6,7 +6,7 @@ import {
 import { CommonTemplateBaseComponent } from '../../wrapper/layout-base/common-template-base.component';
 
 @Component({
-  selector: 'lib-slider',
+  selector: 'layoutlib-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss']
 })
@@ -51,6 +51,12 @@ export class SliderComponent extends CommonTemplateBaseComponent implements OnIn
 
   @ViewChild(SwiperComponent, { static: false }) componentRef?: SwiperComponent;
   @ViewChild(SwiperDirective, { static: false }) directiveRef?: SwiperDirective;
+
+  constructor(
+    injector: Injector,
+  ) {
+    super(injector);
+  }
 
   ngOnInit() {
 
