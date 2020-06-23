@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { PipeModule } from './../../pipe';
 import { DirectiveModule } from './../../directive';
 import { HtmlEditorComponent } from './html-editor.component';
-import { EditorContainerModalComponent } from './editor-container-modal/editor-container-modal.component';
+import { HtmlEditorContainerModalComponent } from './html-editor-container-modal/html-editor-container-modal.component';
 import { HtmlEditorCreateLinkModalComponent } from './modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
 import { HtmlEditorInsertImgModalComponent } from './modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 import { EditorPathComponent } from './components/editor-path/editor-path.component';
@@ -34,7 +34,7 @@ import { HtmlEditorInsertVideoModalComponent } from './modal/html-editor-insert-
     FormsModule,
   ],
   declarations: [
-    EditorContainerModalComponent,
+    HtmlEditorContainerModalComponent,
     HtmlEditorComponent,
     EditorPathComponent,
     EditorToolbarComponent,

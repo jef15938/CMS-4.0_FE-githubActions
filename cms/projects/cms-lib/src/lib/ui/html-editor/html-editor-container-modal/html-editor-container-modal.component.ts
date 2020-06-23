@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
+import { CustomModalBase, CustomModalActionButton } from '../../modal';
 import { HtmlEditorComponent } from '../html-editor.component';
 
 @Component({
-  selector: 'cms-editor-container-modal',
-  templateUrl: './editor-container-modal.component.html',
-  styleUrls: ['./editor-container-modal.component.scss']
+  selector: 'cms-html-editor-container-modal',
+  templateUrl: './html-editor-container-modal.component.html',
+  styleUrls: ['./html-editor-container-modal.component.scss']
 })
-export class EditorContainerModalComponent extends CustomModalBase implements OnInit {
+export class HtmlEditorContainerModalComponent extends CustomModalBase implements OnInit {
 
   @ViewChild(HtmlEditorComponent) htmlEditorComponent: HtmlEditorComponent;
 

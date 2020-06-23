@@ -1,16 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ContentInfo } from './../../../../neuxAPI/bean/ContentInfo';
-import { TemplateGetResponse } from './../../../../neuxAPI/bean/TemplateGetResponse';
-import { CustomModalBase, CustomModalActionButton } from './../../../../ui/modal';
-import { ContentEditorSaveEvent, EditorMode } from './../../../content-editor/content-editor.interface';
+import { ContentInfo } from '../../../../neuxAPI/bean/ContentInfo';
+import { TemplateGetResponse } from '../../../../neuxAPI/bean/TemplateGetResponse';
+import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interface';
 
 
 @Component({
-  selector: 'cms-editor-container-modal',
-  templateUrl: './editor-container-modal.component.html',
-  styleUrls: ['./editor-container-modal.component.scss']
+  selector: 'cms-content-editor-container-modal',
+  templateUrl: './content-editor-container-modal.component.html',
+  styleUrls: ['./content-editor-container-modal.component.scss']
 })
-export class EditorContainerModalComponent extends CustomModalBase implements OnInit {
+export class ContentEditorContainerModalComponent extends CustomModalBase implements OnInit {
   actions: CustomModalActionButton[];
 
   @Input() contentInfo: ContentInfo;

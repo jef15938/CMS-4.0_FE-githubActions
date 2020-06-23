@@ -25,7 +25,7 @@ import { FieldControlImgComponent } from './component/content-control-panel/cont
 import { FieldControlHtmlEditorComponent } from './component/content-control-panel/control/field/field-control-html-editor/field-control-html-editor.component';
 import { FieldControlGroupComponent } from './component/content-control-panel/control/field/field-control-group/field-control-group.component';
 import { TemplateControlGroupComponent } from './component/content-control-panel/control/template/template-control-group/template-control-group.component';
-import { EditorContainerModalComponent } from './component/editor-container-modal/editor-container-modal.component';
+import { ContentEditorContainerModalComponent } from './component/content-editor-container-modal/content-editor-container-modal.component';
 import { TemplateControlDataSourceComponent } from './component/content-control-panel/control/template/template-control-data-source/template-control-data-source.component';
 
 @NgModule({
@@ -44,7 +44,7 @@ import { TemplateControlDataSourceComponent } from './component/content-control-
     LayoutModule,
   ],
   declarations: [
-    EditorContainerModalComponent,
+    ContentEditorContainerModalComponent,
     ContentEditorComponent,
     LayoutControlPanelComponent,
     ContentControlPanelComponent,

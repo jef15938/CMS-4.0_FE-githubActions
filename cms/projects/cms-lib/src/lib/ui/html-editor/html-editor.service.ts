@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ModalService } from './../../ui/modal';
-import { EditorContainerModalComponent } from './editor-container-modal/editor-container-modal.component';
+import { HtmlEditorContainerModalComponent } from './html-editor-container-modal/html-editor-container-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class HtmlEditorService {
     };
 
     return this.modalService.openComponent({
-      component: EditorContainerModalComponent,
+      component: HtmlEditorContainerModalComponent,
       componentInitData: { content, title },
       modalSetting
     });

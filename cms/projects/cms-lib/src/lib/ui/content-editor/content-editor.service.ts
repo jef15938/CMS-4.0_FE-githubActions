@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ModalService } from './../../ui/modal';
 import { ContentEditorServiceInterface, ContentEditorServiceConfig, EditorMode } from './content-editor.interface';
-import { EditorContainerModalComponent } from './component/editor-container-modal/editor-container-modal.component';
+import { ContentEditorContainerModalComponent } from './component/content-editor-container-modal/content-editor-container-modal.component';
 
 
 @Injectable({
@@ -31,7 +31,7 @@ export class ContentEditorService implements ContentEditorServiceInterface {
     }
 
     return this.modalService.openComponent({
-      component: EditorContainerModalComponent,
+      component: ContentEditorContainerModalComponent,
       componentInitData: {
         contentInfo: config.contentInfo,
         mode: config.mode,
