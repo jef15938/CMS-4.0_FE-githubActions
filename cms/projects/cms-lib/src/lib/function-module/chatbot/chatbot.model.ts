@@ -1,7 +1,7 @@
 export class ChatbotItem {
   value: string;
   synonyms: string[];
-  replyId: number;
+  replyID: number;
 }
 
 export class ChatbotReply {

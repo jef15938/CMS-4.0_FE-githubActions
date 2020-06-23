@@ -92,7 +92,7 @@ export class ReplyComponent implements OnInit {
       component: CreateEditReplyModalComponent,
       componentInitData: {
         action: 'Update',
-        replyId: reply.id,
+        replyID: reply.id,
       }
     });
   }

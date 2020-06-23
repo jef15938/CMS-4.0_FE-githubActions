@@ -95,7 +95,7 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
 
   action: 'Create' | 'Update' = 'Create';
 
-  replyId: number;
+  replyID: number;
 
   replyModel: ReplyModel;
 
@@ -117,7 +117,7 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
     return (
       this.action === 'Create'
         ? of(Factory.createNewReply())
-        : this.chatbotService.getReplyById(this.replyId)
+        : this.chatbotService.getReplyById(this.replyID)
     ).pipe(
       map(reply => Factory.replyToModel(reply, this.dialogFlowMessengerService)),
       tap(replyModel => this.replyModel = replyModel),

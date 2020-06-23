@@ -57,7 +57,7 @@ export class CreateEditItemModalComponent extends CustomModalBase implements OnI
     const item = new ChatbotItem();
     item.value = '';
     item.synonyms = [];
-    item.replyId = null;
+    item.replyID = null;
     return item;
   }
 

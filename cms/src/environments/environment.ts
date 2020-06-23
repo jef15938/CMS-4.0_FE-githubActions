@@ -84,6 +84,9 @@ export const environment = {
     GetGroupSiteMapByGroupID: 'Restful',
     GetTemplateByControlID: 'Restful',
     DeleteGalleryByGalleryID: 'Restful',
+  },
+  chatbot: {
+    apiUrl: 'https://labs.decoder.com.tw/chatbot-api'
   }
 };
 

@@ -8,8 +8,8 @@
         <!-- <mat-error *ngIf="modelValue.invalid">{{getErrorMessage(modelValue)}}</mat-error> -->
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>節點類型</mat-label>
-        <mat-select [(ngModel)]="item.replyId" name="replyId">
+        <mat-label>回覆</mat-label>
+        <mat-select [(ngModel)]="item.replyID" name="replyID">
           <mat-option *ngFor="let reply of replies" [value]="reply.id">
             {{reply.name}}
           </mat-option>
