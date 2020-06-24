@@ -1,6 +1,5 @@
 {
-  "datas": [
-    {
+  "datas": [{
       "func_id": "multi-site",
       "func_name": "多網站管理",
       "component_id ": "multi-site",
@@ -28,21 +27,18 @@
       "func_id": "web",
       "func_name": "網站管理",
       "component_id ": "web",
-      "children": [
-        {
-          "func_id": "corporate-responsibility",
-          "func_name": "企業社會責任輪播",
-          "component_id": "corporate-responsibility",
-          "children": []
-        }
-      ]
+      "children": [{
+        "func_id": "corporate-responsibility",
+        "func_name": "企業社會責任輪播",
+        "component_id": "corporate-responsibility",
+        "children": []
+      }]
     },
     {
       "func_id": "chatbot",
       "func_name": "智慧助手",
       "component_id ": "chatbot",
-      "children": [
-        {
+      "children": [{
           "func_id": "item",
           "func_name": "項目設定",
           "component_id": "item",
@@ -57,17 +53,33 @@
       ]
     },
     {
-      "func_id": "system",
-      "func_name": "中央權限管理",
-      "component_id ": "system",
-      "children": [
+      "func_id": "cms-chatbot",
+      "func_name": "CMS 助手",
+      "component_id ": "chatbot",
+      "children": [{
+          "func_id": "cms-item",
+          "func_name": "項目設定",
+          "component_id": "item",
+          "children": []
+        },
         {
-          "func_id": "dept",
-          "func_name": "部門管理",
-          "component_id": "dept",
+          "func_id": "cms-reply",
+          "func_name": "回覆設定",
+          "component_id": "reply",
           "children": []
         }
       ]
+    },
+    {
+      "func_id": "system",
+      "func_name": "中央權限管理",
+      "component_id ": "system",
+      "children": [{
+        "func_id": "dept",
+        "func_name": "部門管理",
+        "component_id": "dept",
+        "children": []
+      }]
     }
   ]
 }

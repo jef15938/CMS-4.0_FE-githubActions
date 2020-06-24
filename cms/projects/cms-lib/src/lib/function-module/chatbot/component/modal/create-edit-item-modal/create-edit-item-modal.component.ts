@@ -24,15 +24,16 @@ export class CreateEditItemModalComponent extends CustomModalBase implements OnI
 
   synonym = '';
 
+  chatbotService: ChatbotService;
+
   title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}項目`;
 
-  constructor(
-    private chatbotService: ChatbotService
-  ) {
+  constructor() {
     super();
   }
 
   ngOnInit(): void {
+    console.warn('this.chatbotService = ', this.chatbotService);
     this.getItem().subscribe();
     this.getReplies().subscribe();
   }

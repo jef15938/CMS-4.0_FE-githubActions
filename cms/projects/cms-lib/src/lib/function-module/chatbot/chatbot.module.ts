@@ -16,6 +16,8 @@ import { ListContentModalComponent } from './component/modal/rich-content/list-c
 import { AccordionContentModalComponent } from './component/modal/rich-content/accordion-content-modal/accordion-content-modal.component';
 import { ChipsContentModalComponent } from './component/modal/rich-content/chips-content-modal/chips-content-modal.component';
 import { ChipOptionCreateEditModalComponent } from './component/modal/rich-content/chip-option-create-edit-modal/chip-option-create-edit-modal.component';
+import { CmsItemComponent } from './item/cms-item.component';
+import { CmsReplyComponent } from './reply/cms-reply.component';
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import { ChipOptionCreateEditModalComponent } from './component/modal/rich-conte
   declarations: [
     ChatbotComponent,
     ItemComponent,
+    CmsItemComponent,
     ReplyComponent,
+    CmsReplyComponent,
     ItemActionCellComponent,
     CreateEditItemModalComponent,
     ReplyActionCellComponent,

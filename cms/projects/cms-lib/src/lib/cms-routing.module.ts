@@ -62,6 +62,10 @@ const routes: Routes = [
         loadChildren: getChatbotModule
       },
       {
+        path: 'cms-chatbot',
+        loadChildren: getChatbotModule
+      },
+      {
         path: 'extension',
         // loadChildren: () => import('./function-module/extension/extension.module').then(m => m.ExtensionModule)
         loadChildren: getExtensionModule

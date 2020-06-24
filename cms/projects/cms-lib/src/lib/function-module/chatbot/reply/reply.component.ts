@@ -15,6 +15,7 @@ import { CreateEditReplyModalComponent } from '../component/modal/create-edit-re
 })
 export class ReplyComponent implements OnInit {
 
+  title = '智慧助手 > 回覆設定';
   replies: ChatbotReply[];
 
   colDefs: ColDef[] = [
@@ -79,6 +80,7 @@ export class ReplyComponent implements OnInit {
       component: CreateEditReplyModalComponent,
       componentInitData: {
         action: 'Create',
+        chatbotService: this.chatbotService,
       },
     }).pipe(
       concatMap(res => {
@@ -93,6 +95,7 @@ export class ReplyComponent implements OnInit {
       componentInitData: {
         action: 'Update',
         replyID: reply.id,
+        chatbotService: this.chatbotService,
       }
     });
   }

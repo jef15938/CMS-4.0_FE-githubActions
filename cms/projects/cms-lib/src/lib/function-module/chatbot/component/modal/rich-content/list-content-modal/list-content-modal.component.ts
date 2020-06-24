@@ -104,7 +104,7 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
       this.selectedFunc = JSON.parse(JSON.stringify(this.functions[0]));
       this.selectedFunc.funcParams = this.functions[0].funcParams;
       this.contentModel.event = {
-        name: 'ExecFuncEvent',
+        name: this.chatbotService.getExecFuncEventName(),
         languageCode: 'zh-tw',
         parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
       };
@@ -120,7 +120,7 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
     this.selectedFunc.funcName = selectedFunc.funcName;
     this.selectedFunc.funcParams = selectedFunc.funcParams;
     this.contentModel.event = {
-      name: 'ExecFuncEvent',
+      name: this.chatbotService.getExecFuncEventName(),
       languageCode: 'zh-tw',
       parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
     };
@@ -132,7 +132,7 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
 
     if (this.isEvent && this.selectedFunc) {
       content.event = {
-        name: 'ExecFuncEvent',
+        name: this.chatbotService.getExecFuncEventName(),
         languageCode: 'zh-tw',
         parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
       };

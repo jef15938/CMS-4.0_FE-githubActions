@@ -15,6 +15,7 @@ import { CreateEditItemModalComponent } from '../component/modal/create-edit-ite
 })
 export class ItemComponent implements OnInit {
 
+  title = '智慧助手 > 項目設定';
   items: ChatbotItem[];
 
   colDefs: ColDef[] = [
@@ -79,6 +80,7 @@ export class ItemComponent implements OnInit {
       component: CreateEditItemModalComponent,
       componentInitData: {
         action: 'Create',
+        chatbotService: this.chatbotService,
       }
     }).pipe(
       concatMap(res => {
@@ -93,6 +95,7 @@ export class ItemComponent implements OnInit {
       componentInitData: {
         action: 'Update',
         itemValue: item.value,
+        chatbotService: this.chatbotService,
       }
     });
   }

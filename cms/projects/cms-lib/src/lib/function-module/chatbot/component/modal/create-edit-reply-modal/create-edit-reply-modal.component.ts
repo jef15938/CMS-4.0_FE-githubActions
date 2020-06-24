@@ -99,10 +99,11 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
 
   replyModel: ReplyModel;
 
+  chatbotService: ChatbotService;
+
   title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}回覆`;
 
   constructor(
-    private chatbotService: ChatbotService,
     private modalService: ModalService,
     private dialogFlowMessengerService: DialogFlowMessengerService,
   ) {
@@ -214,7 +215,8 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
     return component ? this.modalService.openComponent({
       component,
       componentInitData: {
-        content
+        content,
+        chatbotService: this.chatbotService
       },
     }).pipe(
       tap((res: RichContent) => {

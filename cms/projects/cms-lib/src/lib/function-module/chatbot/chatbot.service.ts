@@ -12,7 +12,7 @@ const DEMO_REPLY_CONTENT = '[{"text":{"text":["感謝您使用新逸資訊服務
 export class ChatbotService {
 
   private apiUrl = '';
-  private type = 'frontend';
+  protected type = 'frontend';
 
   constructor(
     @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
@@ -49,14 +49,14 @@ export class ChatbotService {
 
   updateItem(toUpdate: ChatbotItem): Observable<ChatbotItem> {
     return this.httpClient.put<ChatbotItem>(
-      `${this.apiUrl}/entity/${toUpdate.value}/frontend`,
+      `${this.apiUrl}/entity/${toUpdate.value}/${this.type}`,
       { data: toUpdate }
     );
   }
 
   deleteItem(value: string): Observable<any> {
     return this.httpClient.delete<any>(
-      `${this.apiUrl}/entity/${value}/frontend`
+      `${this.apiUrl}/entity/${value}/${this.type}`
     );
   }
 
@@ -81,15 +81,19 @@ export class ChatbotService {
 
   updateReply(toUpdate: ChatbotReply): Observable<ChatbotReply> {
     return this.httpClient.put<ChatbotReply>(
-      `${this.apiUrl}/reply/${toUpdate.id}/frontend`,
+      `${this.apiUrl}/reply/${toUpdate.id}/${this.type}`,
       { data: toUpdate }
     );
   }
 
   deleteReply(id: number): Observable<any> {
     return this.httpClient.delete<any>(
-      `${this.apiUrl}/reply/${id}/frontend`
+      `${this.apiUrl}/reply/${id}/${this.type}`
     );
+  }
+
+  getExecFuncEventName(): string {
+    return 'ExecFuncEvent';
   }
 
 }

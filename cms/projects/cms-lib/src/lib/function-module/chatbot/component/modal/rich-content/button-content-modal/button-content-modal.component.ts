@@ -128,7 +128,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
         this.selectedFunc = JSON.parse(JSON.stringify(this.functions[0]));
         this.selectedFunc.funcParams = this.functions[0].funcParams;
         this.contentModel.event = {
-          name: 'ExecFuncEvent',
+          name: this.chatbotService.getExecFuncEventName(),
           languageCode: 'zh-tw',
           parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
         };
@@ -147,7 +147,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
     this.selectedFunc.funcName = selectedFunc.funcName;
     this.selectedFunc.funcParams = selectedFunc.funcParams;
     this.contentModel.event = {
-      name: 'ExecFuncEvent',
+      name: this.chatbotService.getExecFuncEventName(),
       languageCode: 'zh-tw',
       parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
     };
@@ -159,7 +159,7 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
 
     if (this.isEvent && this.selectedFunc) {
       content.event = {
-        name: 'ExecFuncEvent',
+        name: this.chatbotService.getExecFuncEventName(),
         languageCode: 'zh-tw',
         parameters: JSON.parse(JSON.stringify(this.selectedFunc)),
       };
