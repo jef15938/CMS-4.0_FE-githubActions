@@ -13,6 +13,7 @@ export class ChatbotService {
 
   private apiUrl = '';
   protected type = 'frontend';
+  protected execFuncEventName = 'ExecFuncEvent';
 
   constructor(
     @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
@@ -93,7 +94,7 @@ export class ChatbotService {
   }
 
   getExecFuncEventName(): string {
-    return 'ExecFuncEvent';
+    return this.execFuncEventName;
   }
 
 }

@@ -6,8 +6,5 @@ import { ChatbotService } from './chatbot.service';
 })
 export class CmsChatbotService extends ChatbotService {
   protected type = 'cms';
-
-  getExecFuncEventName(): string {
-    return 'ExecCmsFuncEvent';
-  }
+  protected execFuncEventName = 'ExecCmsFuncEvent';
 }
