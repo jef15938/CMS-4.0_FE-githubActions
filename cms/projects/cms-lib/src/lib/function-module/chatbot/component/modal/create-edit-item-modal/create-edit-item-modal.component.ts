@@ -33,7 +33,6 @@ export class CreateEditItemModalComponent extends CustomModalBase implements OnI
   }
 
   ngOnInit(): void {
-    console.warn('this.chatbotService = ', this.chatbotService);
     this.getItem().subscribe();
     this.getReplies().subscribe();
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { RichContentType, RichContent } from './../../../../../../type';
 import { RichContentModalComponent } from '../rich-content-modal-base';
@@ -28,6 +28,10 @@ interface ChipsContent extends RichContent {
 export class ChipsContentModalComponent extends RichContentModalComponent<ChipsContent> {
 
   title = '建議';
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 
   createNewModel(): ChipsContent {
     return {

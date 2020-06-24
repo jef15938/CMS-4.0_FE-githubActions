@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import { RichContentType, RichContent } from './../../../../../../type';
 import { RichContentModalComponent } from '../rich-content-modal-base';
 
@@ -51,6 +51,10 @@ export class ButtonContentModalComponent extends RichContentModalComponent<Butto
   ];
 
   selectedFunc: Func;
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 
   createNewModel(): ButtonContent {
     return {

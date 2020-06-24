@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { RichContentType, RichContent } from './../../../../../../type';
 import { RichContentModalComponent } from '../rich-content-modal-base';
 
@@ -22,6 +22,10 @@ interface InfoContent extends RichContent {
 export class InfoContentModalComponent extends RichContentModalComponent<InfoContent> {
 
   title = '資訊';
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 
   createNewModel(): InfoContent {
     return {

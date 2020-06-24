@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { RichContentType, RichContent } from './../../../../../../type';
 import { RichContentModalComponent } from '../rich-content-modal-base';
 
@@ -22,6 +22,10 @@ interface AccordionContent extends RichContent {
 export class AccordionContentModalComponent extends RichContentModalComponent<AccordionContent> {
 
   title = '折疊';
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 
   createNewModel(): AccordionContent {
     return {

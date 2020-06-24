@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { RichContentType, RichContent } from './../../../../../../type';
 import { RichContentModalComponent } from '../rich-content-modal-base';
 
@@ -18,6 +18,10 @@ export class DescriptionContentModalComponent extends RichContentModalComponent<
   title = '描述';
 
   newText = '';
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 
   createNewModel(): DescriptionContent {
     return {

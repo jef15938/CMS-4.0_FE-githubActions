@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { RichContentType, RichContent } from './../../../../../../type';
 import { RichContentModalComponent } from '../rich-content-modal-base';
 
@@ -16,6 +16,10 @@ interface ImageContent extends RichContent {
 export class ImageContentModalComponent extends RichContentModalComponent<ImageContent> {
 
   title = '圖片';
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 
   createNewModel(): ImageContent {
     return {

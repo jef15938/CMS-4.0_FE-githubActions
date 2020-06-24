@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import { RichContentType, RichContent } from './../../../../../../type';
 import { RichContentModalComponent } from '../rich-content-modal-base';
 
@@ -46,6 +46,10 @@ export class ListContentModalComponent extends RichContentModalComponent<ListCon
   ];
 
   selectedFunc: Func;
+
+  constructor(
+    injector: Injector,
+  ) { super(injector); }
 
   createNewModel(): ListContent {
     return {
