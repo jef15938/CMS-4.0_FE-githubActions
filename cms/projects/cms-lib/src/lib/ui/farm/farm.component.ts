@@ -65,7 +65,6 @@ export class FarmComponent implements OnInit, OnDestroy {
     return of(undefined).pipe(
       concatMap(_ => this.searchInfoFormComponentMap.get(category)?.requestFormInfo() || throwError('No Category in Map.')),
       concatMap(searchFormInfo => { // TODO: 查詢 table 時帶 search 表單
-        console.warn('searchFormInfo = ', searchFormInfo);
         return this.farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
           tap(farmTableInfo => {
             category.tableInfo = farmTableInfo;
@@ -134,9 +133,6 @@ export class FarmComponent implements OnInit, OnDestroy {
   }
 
   onTableActionClick(category: CmsFarmInfoCategory, event: FarmTableInfoActionEvent) {
-    console.warn('onTableActionClick() category = ', category);
-    console.warn('onTableActionClick() event = ', event);
-
     switch (event.action) {
       case CmsFarmTableDataAction.DETAIL:
         this.createSub(category);

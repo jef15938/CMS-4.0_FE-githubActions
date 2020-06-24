@@ -32,7 +32,6 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   }
 
   private save() {
-    console.warn('this.action = ', this.action);
     return (
       this.action === 'Create'
         ? this.galleryService.createGalleryCategory(this.categoryName, this.assignDeptId, this.parentId)

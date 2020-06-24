@@ -50,7 +50,6 @@ class ReplyModel {
       });
     }
 
-    console.warn('getContent()', this, content);
     return JSON.stringify(content);
   }
 }
@@ -127,7 +126,6 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
 
   private save() {
     const reply = Factory.modelToReply(this.replyModel);
-    console.warn('save() reply = ', reply);
     return (
       this.action === 'Create'
         ? this.chatbotService.createReply(reply)

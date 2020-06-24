@@ -19,10 +19,8 @@ export class Unhighlight extends HtmlEditorActionBase {
 
         const parentNode = el.parentNode as HTMLElement;
         if (parentNode?.classList?.contains('highlight')) {
-          console.warn(1);
           const next = parentNode.nextSibling;
           if (next) {
-            console.warn(2);
             next.parentNode.insertBefore(textNode, next);
           } else {
             parentNode.parentNode.appendChild(textNode);

@@ -114,7 +114,6 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       this.files = this.files.concat(
         Array.from(fileUpload.files).map(file => this.mapFileToFileUploadModel(file))
       );
-      console.warn('this.files = ', this.files);
     });
     fileUpload.click();
   }
@@ -143,8 +142,6 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
           if (!dataUrl) { return; }
           const blob = this.dataURItoBlob(dataUrl);
           const newFile = this.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
-          console.warn('file = ', file);
-          console.warn('newFile = ', newFile);
           this.files.splice(this.files.indexOf(file), 1, newFile);
         });
       };
