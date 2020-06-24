@@ -6,12 +6,14 @@ import { TableComponent } from './table.component';
 import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
 import { DirectiveModule } from './../../directive/directive.module';
 import { GetTableDisplayColsPipe } from './pipe/get-table-display-cols.pipe';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
     CommonModule,
     MatTableModule,
     MatPaginatorModule,
+    MatButtonModule,
     DirectiveModule,
   ],
   declarations: [

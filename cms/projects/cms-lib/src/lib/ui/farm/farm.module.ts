@@ -23,6 +23,7 @@ import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { FarmFormValidationErrorsPipe } from './pipe/farm-form-validation-errors.pipe';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { FarmFormValidationErrorsPipe } from './pipe/farm-form-validation-errors
     MatNativeDateModule,
     MatIconModule,
     MatPaginatorModule,
+    MatButtonModule,
   ],
   declarations: [
     FarmComponent,

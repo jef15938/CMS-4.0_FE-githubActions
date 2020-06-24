@@ -6,6 +6,7 @@ import { ModalCustomWrapperDirective } from './modal-custom-wrapper/modal-custom
 import { ModalCustomWrapperComponent } from './modal-custom-wrapper/modal-custom-wrapper.component';
 import { MessageModalComponent } from './component/message-modal/message-modal.component';
 import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.c
   imports: [
     CommonModule,
     MatDialogModule,
+    MatButtonModule,
     PipeModule,
   ],
   exports: [

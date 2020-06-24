@@ -5,12 +5,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { DirectiveModule } from './../../directive';
 import { TreeComponent } from './tree.component';
 import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
     CommonModule,
     MatTreeModule,
     MatIconModule,
+    MatButtonModule,
     DirectiveModule,
   ],
   declarations: [
