@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserSiteMapPostRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPostRequest';
 import { SitemapService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
-import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
+import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
   nodeType = null;

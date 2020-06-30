@@ -6,8 +6,8 @@ import { SiteMapNodeInfo } from '../../../../global/api/neuxAPI/bean/SiteMapNode
 import { ModalService } from './../../../ui/modal';
 import { SitemapService, ContentService } from '../../../../global/api/service';
 import { ContentEditorService, EditorMode } from './../../../ui/content-editor';
-import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../multi-site.enum';
-import { SiteMapUpdateInfo } from '../../multi-site.interface';
+import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
+import { SiteMapUpdateInfo } from './../../../../global/interface';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
   constructor(siteMapInfo: SiteMapNodeInfo, parentId: string, nodeOrders: string) {

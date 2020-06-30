@@ -1,18 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SystemComponent } from './system.component';
-import { DeptModule } from './dept/dept.module';
-
-export function getDeptModule() { return DeptModule; }
+import { SystemComponent } from './component/system/system.component';
+import { DeptComponent } from './component/dept/dept.component';
 
 const routes: Routes = [
   {
     path: '', component: SystemComponent,
     children: [
       {
-        path: 'dept',
-        // loadChildren: () => import('./dept/dept.module').then(m => m.DeptModule)
-        loadChildren: getDeptModule
+        path: 'dept', component: DeptComponent,
       }
     ]
   },

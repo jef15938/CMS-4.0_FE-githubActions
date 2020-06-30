@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { WebRoutingModule } from './web-routing.module';
-import { WebComponent } from './web.component';
+import { WebComponent } from './component/web/web.component';
+import { CorporateResponsibilityComponent } from './component/corporate-responsibility/corporate-responsibility.component';
 
 @NgModule({
-  declarations: [WebComponent],
+  declarations: [
+    WebComponent,
+    CorporateResponsibilityComponent,
+  ],
   imports: [
     SharedModule,
     WebRoutingModule,

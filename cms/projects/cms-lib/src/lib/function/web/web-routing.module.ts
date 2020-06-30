@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { WebComponent } from './web.component';
-import { CorporateResponsibilityModule } from './corporate-responsibility/corporate-responsibility.module';
-
-export function getCorporateResponsibilityModule() { return CorporateResponsibilityModule; }
+import { WebComponent } from './component/web/web.component';
+import { CorporateResponsibilityComponent } from './component/corporate-responsibility/corporate-responsibility.component';
 
 const routes: Routes = [
   {
     path: '', component: WebComponent,
     children: [
       {
-        path: 'corporate-responsibility',
-        // loadChildren: () => import('./corporate-responsibility/corporate-responsibility.module')
-        // .then(m => m.CorporateResponsibilityModule)
-        loadChildren: getCorporateResponsibilityModule
+        path: 'corporate-responsibility', component: CorporateResponsibilityComponent
       }
     ]
   },

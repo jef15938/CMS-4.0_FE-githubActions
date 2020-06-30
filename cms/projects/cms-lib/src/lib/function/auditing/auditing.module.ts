@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { AuditingRoutingModule } from './auditing-routing.module';
-import { AuditingComponent } from './auditing.component';
-import { AuditingActionCellComponent } from './component/cell-renderer/auditing-action-cell/auditing-action-cell.component';
-import { ApproveAuditingModalComponent } from './component/modal/approve-auditing-modal/approve-auditing-modal.component';
+import { AuditingComponent } from './component/auditing/auditing.component';
+import { AuditingActionCellComponent } from './component/auditing-action-cell/auditing-action-cell.component';
+import { ApproveAuditingModalComponent } from './component/approve-auditing-modal/approve-auditing-modal.component';
 
 @NgModule({
   imports: [
