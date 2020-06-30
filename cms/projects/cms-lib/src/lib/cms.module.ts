@@ -1,11 +1,11 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './function/shared/shared.module';
 import { CmsRoutingModule } from './cms-routing.module';
 import { CmsComponent } from './cms.component';
-import { MenuNodeComponent } from './layouts/menu-node.component';
-import { WithCredentialsInterceptor } from './interceptor/cms-http-interceptor';
-import { CmsAuthGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './service';
+import { MenuNodeComponent } from './global/layouts/menu-node.component';
+import { WithCredentialsInterceptor } from './global/interceptor/cms-http-interceptor';
+import { CmsAuthGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './global/service';
 
 const LAYOUTS = [
   MenuNodeComponent,

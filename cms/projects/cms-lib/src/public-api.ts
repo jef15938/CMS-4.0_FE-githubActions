@@ -2,9 +2,12 @@
  * Public API Surface of cms-lib
  */
 export * from './lib/cms.module';
-export * from './lib/ui';
-export * from './lib/pipe';
-export * from './lib/directive';
-export * from './lib/type';
-export * from './lib/util';
-export * from './lib/service';
+export * from './lib/function/ui';
+export * from './lib/global/pipe';
+export * from './lib/global/directive';
+export * from './lib/global/enum';
+export * from './lib/global/interface';
+export * from './lib/global/injection-token';
+export * from './lib/global/model';
+export * from './lib/global/util';
+export * from './lib/global/service';

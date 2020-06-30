@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CmsComponent } from './cms.component';
-import { CmsUserMenuResolver, CmsAuthGuard } from './service';
-import { LoginModule } from './login/login.module';
-import { MultiSiteModule } from './function-module/multi-site/multi-site.module';
-import { MyAuditingModule } from './function-module/my-auditing/my-auditing.module';
-import { GalleryModule } from './function-module/gallery/gallery.module';
-import { AuditingModule } from './function-module/auditing/auditing.module';
-import { SystemModule } from './function-module/system/system.module';
-import { WebModule } from './function-module/web/web.module';
-import { ExtensionModule } from './function-module/extension/extension.module';
-import { ChatbotModule } from './function-module/chatbot/chatbot.module';
+import { CmsUserMenuResolver, CmsAuthGuard } from './global/service';
+import { LoginModule } from './function/login/login.module';
+import { MultiSiteModule } from './function/multi-site/multi-site.module';
+import { MyAuditingModule } from './function/my-auditing/my-auditing.module';
+import { GalleryModule } from './function/gallery/gallery.module';
+import { AuditingModule } from './function/auditing/auditing.module';
+import { SystemModule } from './function/system/system.module';
+import { WebModule } from './function/web/web.module';
+import { ExtensionModule } from './function/extension/extension.module';
+import { ChatbotModule } from './function/chatbot/chatbot.module';
 
 export function getMultiSiteModule() { return MultiSiteModule; }
 export function getMyAuditingModule() { return MyAuditingModule; }
