@@ -1,10 +1,11 @@
 import { LayoutBaseComponent } from './_base';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
-import { OnChanges, SimpleChanges, OnInit, Injector } from '@angular/core';
+import { OnChanges, SimpleChanges, OnInit, Injector, Directive } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
+@Directive()
 export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseComponent<DataSourceTemplateInfo>
   implements OnInit, OnChanges {
 

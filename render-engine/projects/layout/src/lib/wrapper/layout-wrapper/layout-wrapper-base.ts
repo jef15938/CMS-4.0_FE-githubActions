@@ -1,6 +1,7 @@
-import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef, Injector } from '@angular/core';
+import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef, Injector, Directive } from '@angular/core';
 import { Subject } from 'rxjs';
 
+@Directive()
 export abstract class LayoutWrapperBase implements OnDestroy {
   mode: 'preview' | 'edit' = 'preview';
 

@@ -1,6 +1,8 @@
 import { CmsExtensionMenuResolver } from '@neux/cms-core';
 import { of, Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class MenuService implements CmsExtensionMenuResolver {
   resolve: () => Observable<any[]> = () => {
     return of([

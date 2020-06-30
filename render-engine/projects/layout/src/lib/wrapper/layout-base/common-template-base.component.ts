@@ -1,8 +1,9 @@
 import { LayoutBaseComponent } from './_base';
 import { TemplateInfo } from '../../interface/template-info.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
-import { Injector } from '@angular/core';
+import { Injector, Directive } from '@angular/core';
 
+@Directive()
 export abstract class CommonTemplateBaseComponent extends LayoutBaseComponent<TemplateInfo> {
   templateType = TemplateType.COMMON;
 

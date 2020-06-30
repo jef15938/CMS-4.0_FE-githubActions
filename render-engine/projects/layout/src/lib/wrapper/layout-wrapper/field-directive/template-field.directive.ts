@@ -1,8 +1,9 @@
-import { HostListener, Output, EventEmitter, Injector } from '@angular/core';
+import { HostListener, Output, EventEmitter, Injector, Directive } from '@angular/core';
 import { FieldInfo } from '../../../interface/field-info.interface';
 import { TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from '../layout-wrapper.interface';
 import { LayoutWrapperBase } from '../layout-wrapper-base';
 
+@Directive()
 export abstract class TemplateFieldDirective extends LayoutWrapperBase {
 
   abstract fieldInfo: FieldInfo;
