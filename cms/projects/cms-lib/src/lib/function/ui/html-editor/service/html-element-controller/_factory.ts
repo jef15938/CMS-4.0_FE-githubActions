@@ -35,6 +35,7 @@ export class HtmlEditorElementControllerFactory {
         return controller;
       }
     }
+    return null;
   }
 
   static getController(el: HTMLElement): HtmlEditorElementController<HTMLElement> {

@@ -5,24 +5,33 @@ import { Injectable } from '@angular/core';
 })
 export class SimpleWysiwygService {
 
+  // tslint:disable-next-line: only-arrow-functions
   getSelectionCollapsed = function (containerNode) {
     if (window.getSelection) {
       const sel = window.getSelection();
-      if (sel.isCollapsed)
+      if (sel.isCollapsed) {
         return true;
+      }
       return false;
     }
+    // tslint:disable-next-line: no-string-literal
     else if (document['selection']) {
+      // tslint:disable-next-line: no-string-literal
       const sel = document['selection'];
-      if (sel.type == 'Text') {
+      if (sel.type === 'Text') {
+        // tslint:disable-next-line: no-string-literal
         const range = document['selection'].createRange();
+        // tslint:disable-next-line: no-string-literal
         const textrange = document.body['createTextRange']();
         textrange.moveToElementText(containerNode);
         textrange.setEndPoint('EndToStart', range);
+        // tslint:disable-next-line: triple-equals
         return range.htmlText.length == 0;
       }
-      if (sel.type == 'Control') // e.g. an image selected
+      // tslint:disable-next-line: triple-equals
+      if (sel.type == 'Control') { // e.g. an image selected
         return false;
+      }
       // sel.type == 'None' -> collapsed selection
     }
     return true;
@@ -43,6 +52,7 @@ export class SimpleWysiwygService {
         return node;
       }
     }
+    // tslint:disable-next-line: no-string-literal
     else if (document['selection']) {
       // TODO: ie 11
       // const sel = document['selection'];
@@ -63,8 +73,8 @@ export class SimpleWysiwygService {
     if (window.getSelection) {
       const sel = window.getSelection();
       if (sel.rangeCount) {
-        const container = document.createElement('div'),
-          len = sel.rangeCount;
+        const container = document.createElement('div');
+        const len = sel.rangeCount;
         for (let i = 0; i < len; ++i) {
           const contents = sel.getRangeAt(i).cloneContents();
           container.appendChild(contents);
@@ -72,15 +82,17 @@ export class SimpleWysiwygService {
         return container.innerHTML;
       }
     }
+    // tslint:disable-next-line: no-string-literal
     else if (document['selection']) {
+      // tslint:disable-next-line: no-string-literal
       const sel = document['selection'];
-      if (sel.type == 'Text') {
-        const range = sel['createRange']();
+      if (sel.type === 'Text') {
+        const range = sel.createRange();
         return range.htmlText;
       }
     }
     return null;
-  };
+  }
 
   clearSelection() {
     if (window.getSelection) {
@@ -89,7 +101,9 @@ export class SimpleWysiwygService {
       } else if (window.getSelection().removeAllRanges) {  // Firefox
         window.getSelection().removeAllRanges();
       }
+      // tslint:disable-next-line: no-string-literal
     } else if (document['selection']) {  // IE?
+      // tslint:disable-next-line: no-string-literal
       document['selection'].empty();
     }
   }
@@ -99,28 +113,34 @@ export class SimpleWysiwygService {
   getRange(): Range {
     if (window.getSelection) {
       const sel = window.getSelection();
-      if (sel.rangeCount > 0)
+      if (sel.rangeCount > 0) {
         return sel.getRangeAt(0);
+      }
     }
+    // tslint:disable-next-line: no-string-literal
     else if (document['selection']) {
+      // tslint:disable-next-line: no-string-literal
       const sel = document['selection'];
-      return sel['createRange']();
+      return sel.createRange();
     }
     return null;
-  };
+  }
 
   restoreSelection(range: Range) {
-    if (!range)
+    if (!range) {
       return;
+    }
     if (window.getSelection) {
       const sel = window.getSelection();
       sel.removeAllRanges();
       sel.addRange(range);
     }
+    // tslint:disable-next-line: no-string-literal
     else if (document['selection']) {
+      // tslint:disable-next-line: no-string-literal
       range['select']();
     }
-  };
+  }
 
   setSelectionOnNode(node: Node, start = 0, end = 0) {
     const range = document.createRange();
@@ -130,11 +150,13 @@ export class SimpleWysiwygService {
   }
 
   // http://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-a-child-of-another
+  // tslint:disable-next-line: only-arrow-functions
   isOrContainsNode = function (ancestor, descendant) {
     let node = descendant;
     while (node) {
-      if (node === ancestor)
+      if (node === ancestor) {
         return true;
+      }
       node = node.parentNode;
     }
     return false;
@@ -159,25 +181,31 @@ export class SimpleWysiwygService {
         // sel.addRange(range);
       }
     }
+    // tslint:disable-next-line: no-string-literal
     else if (document['selection']) {
+      // tslint:disable-next-line: no-string-literal
       const sel = document['selection'];
-      if (sel.type == 'Control') // e.g. an image selected
+      if (sel.type === 'Control') // e.g. an image selected
       {
         // http://msdn.microsoft.com/en-us/library/ie/hh826021%28v=vs.85%29.aspx
-        const range = sel['createRange']();
-        if (range['length'] != 0 && this.isOrContainsNode(containerNode, range[0])) // test only the first element
+        const range = sel.createRange();
+        // tslint:disable-next-line: triple-equals
+        if (range.length != 0 && this.isOrContainsNode(containerNode, range[0])) { // test only the first element
           return true;
+        }
       }
-      else //if( sel.type == 'Text' || sel.type == 'None' )
+      else // if( sel.type == 'Text' || sel.type == 'None' )
       {
         // Range of container
         // http://stackoverflow.com/questions/12243898/how-to-select-all-text-in-contenteditable-div
+        // tslint:disable-next-line: no-string-literal
         const rangeContainer = document.body['createTextRange']();
         rangeContainer.moveToElementText(containerNode);
         // Compare with selection range
-        const range = sel['createRange']();
-        if (rangeContainer.inRange(range))
+        const range = sel.createRange();
+        if (rangeContainer.inRange(range)) {
           return true;
+        }
       }
       return false;
       // // selection at least partly outside editor
@@ -188,10 +216,10 @@ export class SimpleWysiwygService {
       // const range = document.body['createTextRange']();
       // range['moveToElementText'](containerNode);
       // range.setEndPoint('StartToEnd', range); // collapse
-      // range.select();
+      // range['select']();
     }
     return true;
-  };
+  }
 
   // exec command
   // https://developer.mozilla.org/en-US/docs/Web/API/document.execCommand
@@ -217,14 +245,17 @@ export class SimpleWysiwygService {
       }
     }
     // for IE
+    // tslint:disable-next-line: no-string-literal
     else if (document['selection']) {
+      // tslint:disable-next-line: no-string-literal
       const sel = document['selection'];
-      if (sel.type != 'None') {
+      if (sel.type !== 'None') {
         const range = sel.createRange();
         // Buggy, call within 'try/catch'
         try {
-          if (!range.queryCommandEnabled(command))
+          if (!range.queryCommandEnabled(command)) {
             return false;
+          }
           return range.execCommand(command, false, param);
         }
         catch (e) {
@@ -232,30 +263,30 @@ export class SimpleWysiwygService {
       }
     }
     return false;
-  };
+  }
 
   insertHtml(htmlString: string) {
     const range = this.getRange();
-    
-    if (!range) { return; }
+
+    if (!range) { return null; }
 
     const modifiedId = 'to-modify';
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     const innerHTML = htmlString.trim();
     div.innerHTML = innerHTML;
     const elToAdd = div.firstChild as HTMLElement;
     elToAdd.id = modifiedId;
     htmlString = elToAdd.outerHTML;
-    document.execCommand("ms-beginUndoUnit");
+    document.execCommand('ms-beginUndoUnit');
 
-    var success = document.execCommand('InsertHTML', false, htmlString);
+    const success = document.execCommand('InsertHTML', false, htmlString);
 
     if (!success) {
       range.insertNode(elToAdd);
-      document.execCommand("ms-endUndoUnit");
+      document.execCommand('ms-endUndoUnit');
     }
 
-    var added = document.getElementById(modifiedId);
+    const added = document.getElementById(modifiedId);
 
     if (added) {
       added.removeAttribute('id');

@@ -1,9 +1,15 @@
 import { Subject } from 'rxjs';
 
+export interface CmsTreeCustomCellEvent {
+  ActionType: any;
+  action: any;
+  data: any;
+}
+
 export interface CmsTree<TData> {
   rightClickedNode: Subject<TData>;
   selectNode: (node: TData) => void;
-  triggerCustomEvent: (event: any) => void;
+  triggerCustomEvent: (event: CmsTreeCustomCellEvent) => void;
 }
 
 export interface CmsTreeNode<TData> {

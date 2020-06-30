@@ -88,7 +88,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
   }
 
   private findMenuByFuncId(funcId: string, sources: MenuInfo[]): MenuInfo {
-    if (!funcId || !sources?.length) { return; }
+    if (!funcId || !sources?.length) { return null; }
     const menu = sources.find(m => m?.func_id === `extension/${this.funcId}`);
     return menu || sources.map(s => this.findMenuByFuncId(funcId, s.children)).find(m => m?.func_id === `extension/${this.funcId}`);
   }

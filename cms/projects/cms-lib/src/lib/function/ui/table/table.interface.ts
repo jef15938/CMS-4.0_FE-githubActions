@@ -9,8 +9,14 @@ export interface ColDef {
   headClass?: string;
 }
 
+export interface CmsTableCustomCellEvent {
+  ActionType: any;
+  action: any;
+  data: any;
+}
+
 export interface CmsTable {
-  triggerCustomEvent: (event: any) => void;
+  triggerCustomEvent: (event: CmsTableCustomCellEvent) => void;
 }
 
 export interface CustomCellRenderer {

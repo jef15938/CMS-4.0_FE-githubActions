@@ -2,7 +2,7 @@ import {
   Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter
 } from '@angular/core';
 import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
-import { ColDef } from './table.interface';
+import { ColDef, CmsTableCustomCellEvent } from './table.interface';
 
 @Component({
   selector: 'cms-table',
@@ -16,7 +16,7 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
   @Input() colDefs: ColDef[];
   @Input() dataSource: TData[];
 
-  @Output() customEvent = new EventEmitter<{ $event: any, data: TData }>();
+  @Output() customEvent = new EventEmitter<CmsTableCustomCellEvent>();
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -46,7 +46,7 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
     return this.colDefs ? this.colDefs.map(c => c.colId) : [];
   }
 
-  triggerCustomEvent(event) {
+  triggerCustomEvent(event: CmsTableCustomCellEvent) {
     this.customEvent.next(event);
   }
 

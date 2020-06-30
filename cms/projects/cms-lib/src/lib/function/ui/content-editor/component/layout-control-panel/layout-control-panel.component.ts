@@ -1,12 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { TemplateGetResponse } from './../../../../../global/api/neuxAPI/bean/TemplateGetResponse';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
-
-class TemplateInfo {
-  templateId: string;
-  templateName: string;
-  img: string;
-}
+import { TemplateInfo } from './../../../../../global/api/neuxAPI/bean/TemplateInfo';
 
 @Component({
   selector: 'cms-layout-control-panel',
@@ -22,7 +17,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
   mainTemplates: TemplateInfo[] = [];
 
-  @Output() templateAdd = new EventEmitter<string>(); // templateName
+  @Output() templateAdd = new EventEmitter<string>(); // template_name
 
   @Input() selectedBtn: AddTemplateButtonComponent;
 
@@ -31,19 +26,19 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.mainTemplates = [
       {
-        templateId: 'Tab',
-        templateName: 'Tab',
-        img: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+        template_id: 'Tab',
+        template_name: 'Tab',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
       },
       {
-        templateId: 'IconPage',
-        templateName: 'IconPage',
-        img: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+        template_id: 'IconPage',
+        template_name: 'IconPage',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
       },
       {
-        templateId: 'Slide',
-        templateName: 'Slide',
-        img: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+        template_id: 'Slide',
+        template_name: 'Slide',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
       }
     ];
   }
@@ -63,17 +58,17 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   }
 
   selectTemplate(t: TemplateInfo) {
-    const yes = window.confirm(`確定加入${t.templateName}？`);
+    const yes = window.confirm(`確定加入${t.template_name}？`);
     if (!yes) { return; }
-    const mock = this[`_get${t.templateId}`]();
+    const mock = this[`_get${t.template_id}`]();
     this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, mock);
-    this.templateAdd.emit(mock.templateId);
+    this.templateAdd.emit(mock.template_id);
   }
 
   private getTab() {
     return {
       id: '1',
-      templateId: 'Tab',
+      template_id: 'Tab',
       fields: [],
       attributes: {},
       tabList: [],
@@ -83,7 +78,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   private getIconPage() {
     return {
       id: '2',
-      templateId: 'IconPage',
+      template_id: 'IconPage',
       fields: [],
       attributes: {},
     };
@@ -92,7 +87,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   private getSlide() {
     return {
       id: '3',
-      templateId: 'Slide',
+      template_id: 'Slide',
       fields: [],
       attributes: {
         height: '300px'

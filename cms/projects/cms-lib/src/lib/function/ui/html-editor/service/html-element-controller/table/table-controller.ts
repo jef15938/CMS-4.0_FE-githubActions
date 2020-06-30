@@ -18,7 +18,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   private contextMenuItemsTemp: HtmlEditorContextMenuItem[];
   get contextMenuItems(): HtmlEditorContextMenuItem[] {
     const menuItems: HtmlEditorContextMenuItem[] = [].concat(this.contextMenuItemsTemp);
-    if (!menuItems?.length) { return; }
+    if (!menuItems?.length) { return menuItems; }
 
     setTimeout(_ => {
       const rowItem = menuItems[0];

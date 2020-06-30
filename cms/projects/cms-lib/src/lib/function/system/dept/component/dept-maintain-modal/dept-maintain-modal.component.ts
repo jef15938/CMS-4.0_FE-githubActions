@@ -60,6 +60,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
 
   getErrorMessage(model: NgModel) {
     if (model.hasError('required')) { return 'Required'; }
+    return null;
   }
 
 }

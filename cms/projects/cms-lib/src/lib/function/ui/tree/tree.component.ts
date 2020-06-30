@@ -7,7 +7,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
-import { CmsTreeNodeRenderer, CmsTree } from './tree.interface';
+import { CmsTreeNodeRenderer, CmsTree, CmsTreeCustomCellEvent } from './tree.interface';
 
 @Component({
   selector: 'cms-tree',
@@ -35,7 +35,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   @Output() afterRender = new EventEmitter<TreeComponent<any>>();
   @Output() nodeSelect = new EventEmitter<{ node: TData }>();
-  @Output() customEvent = new EventEmitter<{ $event: any, data: TData }>();
+  @Output() customEvent = new EventEmitter<CmsTreeCustomCellEvent>();
 
   rightClickedNode = new Subject<TData>();
 
@@ -160,7 +160,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.treeControl.toggle(data);
   }
 
-  triggerCustomEvent(event) {
+  triggerCustomEvent(event: CmsTreeCustomCellEvent) {
     this.customEvent.next(event);
   }
 

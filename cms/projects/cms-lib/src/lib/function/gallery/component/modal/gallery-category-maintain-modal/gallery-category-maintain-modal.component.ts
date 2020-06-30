@@ -47,6 +47,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
 
   getErrorMessage(model: NgModel) {
     if (model.hasError('required')) { return 'Required'; }
+    return null;
   }
 
 }

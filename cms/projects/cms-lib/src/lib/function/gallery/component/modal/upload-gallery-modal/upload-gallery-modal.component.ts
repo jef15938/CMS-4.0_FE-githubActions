@@ -169,10 +169,11 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
         switch (event.type) {
           case HttpEventType.UploadProgress:
             file.progress = Math.round(event.loaded * 100 / event.total);
-            break;
+            return null;
           case HttpEventType.Response:
             return event;
         }
+        return null;
       }),
       tap(message => { }),
       last(),

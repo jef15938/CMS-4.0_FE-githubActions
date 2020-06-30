@@ -29,5 +29,6 @@ export class DynamicComponentFactoryService {
     else if (id === 'DataSourceDemo') {
       return DataSourceDemoComponent;
     }
+    return null;
   }
 }

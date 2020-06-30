@@ -32,8 +32,13 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
   }
 
   confirm() {
+    this.isValidSrc = true;
     const src = this.checkSrc();
-    if (!src) { this.modalService.openMessage({ message: 'Youtube 網址錯誤' }); return; }
+    if (!src) {
+      this.modalService.openMessage({ message: 'Youtube 網址錯誤' });
+      this.isValidSrc = false;
+      return;
+    }
     this.close({
       src,
       frameId: this.frameId || '',
@@ -44,10 +49,9 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
     const frameId = this.frameId;
     if (this.frameId.indexOf(YOUTUBE_EMBED_VIDEO_URL) > -1) {
       const videoId = frameId.replace(YOUTUBE_EMBED_VIDEO_URL, '');
-      this.isValidSrc = true;
       return YOUTUBE_EMBED_IMAGE_URL(videoId);
     }
-    this.isValidSrc = false;
+    return '';
   }
 
 }
