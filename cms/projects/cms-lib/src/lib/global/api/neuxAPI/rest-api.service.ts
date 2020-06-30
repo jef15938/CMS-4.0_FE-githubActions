@@ -105,7 +105,7 @@ const APIResponseMap = {
   GetTemplateByControlID: TemplateGetResponse,
   DeleteGalleryByGalleryID: GenerationHeader,
 
-};
+}
 
 @Injectable({
   providedIn: 'root'
@@ -167,22 +167,23 @@ export class RestApiService {
     this.setUrl(restAPI, params);
     return this.dispatcher.dispatch(restAPI).pipe(
       map(x => {
-        x._body = plainToClass(APIResponseMap[name], x.body);
+        x['_body'] = plainToClass(APIResponseMap[name], x.body);
         return x;
       }),
-      switchMap(x => from(this.validateBodyClass(x)))
+      switchMap(x => from(this.validateBodyClass(x))),
+      map(x => x._body), // 因應res結構調整
     );
   }
 
   private setAPIParams(api: any, params: any) {
-    for (const key in params) {
+    for (let key in params) {
       api[key] = params[key];
     }
   }
 
   private setUrl(api: any, params: any) {
     let _url = this.apiConfig.API_URL[api.getApiName()];
-    for (const key in params) {
+    for (let key in params) {
       _url = _url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
     }
     api.url = _url;
@@ -190,7 +191,7 @@ export class RestApiService {
 
   private async validateBodyClass(obj) {
     try {
-      console.log(obj);
+      console.log(obj)
       await validateOrReject(obj.body);
       return obj;
     } catch (error) {
