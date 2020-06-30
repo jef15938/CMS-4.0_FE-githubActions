@@ -1,4 +1,4 @@
-import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
+import { Api, MockApi, RestfulApi, ApiRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
 import {GalleryCategoryPutRequest} from '../bean/GalleryCategoryPutRequest';
@@ -7,7 +7,7 @@ import {GalleryCategoryPutRequest} from '../bean/GalleryCategoryPutRequest';
 /**
  * CreateGalleryCategory
  */
-export class PostGalleryCategoryAPI implements API, MockAPI, RestfulAPI {
+export class PostGalleryCategoryAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public requestBody: GalleryCategoryPutRequest;
@@ -15,13 +15,13 @@ export class PostGalleryCategoryAPI implements API, MockAPI, RestfulAPI {
 
     constructor() { }
 
-    public getAPIName(): string {
+    public getApiName(): string {
         return 'PostGalleryCategory';
     }
 
-    public getRequestData(): APIRequest {
+    public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
-        let requestData = new APIRequest();
+        let requestData = new ApiRequest();
         requestData.body = this.requestBody;
 
         requestData.type = 'POST';

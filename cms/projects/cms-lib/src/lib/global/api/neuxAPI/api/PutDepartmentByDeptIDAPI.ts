@@ -1,4 +1,4 @@
-import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
+import { Api, MockApi, RestfulApi, ApiRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
 import {DepartmentMaintainRequest} from '../bean/DepartmentMaintainRequest';
@@ -7,7 +7,7 @@ import {DepartmentMaintainRequest} from '../bean/DepartmentMaintainRequest';
 /**
  * UpdateDepartment
  */
-export class PutDepartmentByDeptIDAPI implements API, MockAPI, RestfulAPI {
+export class PutDepartmentByDeptIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public requestBody: DepartmentMaintainRequest;
@@ -15,13 +15,13 @@ export class PutDepartmentByDeptIDAPI implements API, MockAPI, RestfulAPI {
 
     constructor() { }
 
-    public getAPIName(): string {
+    public getApiName(): string {
         return 'PutDepartmentByDeptID';
     }
 
-    public getRequestData(): APIRequest {
+    public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
-        let requestData = new APIRequest();
+        let requestData = new ApiRequest();
         requestData.body = this.requestBody;
 
         requestData.type = 'PUT';

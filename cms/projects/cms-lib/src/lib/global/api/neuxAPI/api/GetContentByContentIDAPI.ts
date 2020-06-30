@@ -1,4 +1,4 @@
-import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
+import { Api, MockApi, RestfulApi, ApiRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
 
@@ -6,7 +6,7 @@ import { StringUtils } from '@neux/core';
 /**
  * GetContent
  */
-export class GetContentByContentIDAPI implements API, MockAPI, RestfulAPI {
+export class GetContentByContentIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public version: number;
@@ -14,13 +14,13 @@ export class GetContentByContentIDAPI implements API, MockAPI, RestfulAPI {
 
     constructor() { }
 
-    public getAPIName(): string {
+    public getApiName(): string {
         return 'GetContentByContentID';
     }
 
-    public getRequestData(): APIRequest {
+    public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
-        let requestData = new APIRequest();
+        let requestData = new ApiRequest();
         queryParams = queryParams.set('version', 
                       StringUtils.coerceStringProperty(this.version));
 

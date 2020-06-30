@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ConfigToken, RestHeaderToken } from '@neux/core';
+import { API_CONFIG_TOKEN, API_HEADER_TOKEN } from '@neux/core';
 import { COMPONENT_SERVICE_TOKEN } from 'layout';
 import {
   CmsModule, CMS_ENVIROMENT, CMS_EXTENSION_MENU_RESOLVER, CMS_EXTENSION_COMPONENT_MAPPINGS
@@ -30,8 +30,8 @@ import { EXTENSION_MAPPINGS } from './app.extension-mapping';
     { provide: CMS_ENVIROMENT, useValue: environment },
     { provide: CMS_EXTENSION_MENU_RESOLVER, useClass: MenuService },
     { provide: CMS_EXTENSION_COMPONENT_MAPPINGS, useValue: EXTENSION_MAPPINGS },
-    { provide: ConfigToken, useValue: environment },
-    { provide: RestHeaderToken, useExisting: GlobalHeader },
+    { provide: API_CONFIG_TOKEN, useValue: environment },
+    { provide: API_HEADER_TOKEN, useExisting: GlobalHeader },
     { provide: COMPONENT_SERVICE_TOKEN, useExisting: DynamicComponentFactoryService }
   ],
   bootstrap: [AppComponent]

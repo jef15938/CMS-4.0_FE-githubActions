@@ -1,4 +1,4 @@
-import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
+import { Api, MockApi, RestfulApi, ApiRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
 import {LoginRequest} from '../bean/LoginRequest';
@@ -7,7 +7,7 @@ import {LoginRequest} from '../bean/LoginRequest';
 /**
  * Login
  */
-export class PostLoginAPI implements API, MockAPI, RestfulAPI {
+export class PostLoginAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public requestBody: LoginRequest;
@@ -15,13 +15,13 @@ export class PostLoginAPI implements API, MockAPI, RestfulAPI {
 
     constructor() { }
 
-    public getAPIName(): string {
+    public getApiName(): string {
         return 'PostLogin';
     }
 
-    public getRequestData(): APIRequest {
+    public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
-        let requestData = new APIRequest();
+        let requestData = new ApiRequest();
         requestData.body = this.requestBody;
 
         requestData.type = 'POST';

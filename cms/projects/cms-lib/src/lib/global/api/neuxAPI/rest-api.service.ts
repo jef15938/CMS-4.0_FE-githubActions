@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, from} from 'rxjs';
-import { APIFactory, APIDispatch, ConfigGetter, AppConfig } from '@neux/core';
+import { Observable, from } from 'rxjs';
+import { ApiFactory, ApiDispatch, ConfigGetter, ApiConfig } from '@neux/core';
 import { map, switchMap } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
@@ -65,138 +65,137 @@ import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
 
 
-const APIResponseMap= {
-    GetGalleryByCategoryID: GalleryGetResponse,
-GetGalleryCategory: GalleryCaregoryGetResponse,
-PostGalleryCategory: GenerationHeader,
-PostLogin: LoginResponse,
-GetDepartment: DepartmentGetResponse,
-DeleteGalleryCategoryByCategoryID: GenerationHeader,
-PutGalleryCategoryByCategoryID: GenerationHeader,
-GetUserMenu: MenuGetResponse,
-GetLogout: GenerationHeader,
-PutDepartmentByDeptID: GenerationHeader,
-DeleteDepartmentByDeptID: GenerationHeader,
-PostDepartmentByDeptID: GenerationHeader,
-GetDepartmentByDeptID: DepartmentDetailInfo,
-GetAuditing: AuditingGetResponse,
-PostAuditingByOrderID: GenerationHeader,
-GetLoginInfo: LoginResponse,
-GetCMSMenu: MenuGetResponse,
-GetUserSiteMapBySiteID: SiteMapGetResponse,
-PostUserSiteMapBySiteID: GenerationHeader,
-PutUserSiteMapByNodeID: GenerationHeader,
-DeleteUserSiteMapByNodeID: GenerationHeader,
-GetContentByContentID: ContentInfo,
-PutContentByContentID: GenerationHeader,
-GetMyAuditingByOrderID: MyAuditingDetailGetResponse,
-GetMyAuditing: MyAuditingGetResponse,
-GetFarmByFuncID: FarmInfoGetResponse,
-GetFarmTableInfoByFuncID: FarmTableInfo,
-GetFarmFormInfoByFuncID: FarmFormInfo,
-PostFarmFormInfoByFuncID: GenerationHeader,
-PutFarmFormInfoByFuncID: GenerationHeader,
-GetFarmDetailInfoByFuncID: FarmFormInfo,
-GetSite: SiteGetResponse,
-GetSiteBySiteID: SiteMapGetResponse,
-GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
-GetGroupMenuByGroupID: GroupMenuGetResponse,
-GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
-GetTemplateByControlID: TemplateGetResponse,
-DeleteGalleryByGalleryID: GenerationHeader,
+const APIResponseMap = {
+  GetGalleryByCategoryID: GalleryGetResponse,
+  GetGalleryCategory: GalleryCaregoryGetResponse,
+  PostGalleryCategory: GenerationHeader,
+  PostLogin: LoginResponse,
+  GetDepartment: DepartmentGetResponse,
+  DeleteGalleryCategoryByCategoryID: GenerationHeader,
+  PutGalleryCategoryByCategoryID: GenerationHeader,
+  GetUserMenu: MenuGetResponse,
+  GetLogout: GenerationHeader,
+  PutDepartmentByDeptID: GenerationHeader,
+  DeleteDepartmentByDeptID: GenerationHeader,
+  PostDepartmentByDeptID: GenerationHeader,
+  GetDepartmentByDeptID: DepartmentDetailInfo,
+  GetAuditing: AuditingGetResponse,
+  PostAuditingByOrderID: GenerationHeader,
+  GetLoginInfo: LoginResponse,
+  GetCMSMenu: MenuGetResponse,
+  GetUserSiteMapBySiteID: SiteMapGetResponse,
+  PostUserSiteMapBySiteID: GenerationHeader,
+  PutUserSiteMapByNodeID: GenerationHeader,
+  DeleteUserSiteMapByNodeID: GenerationHeader,
+  GetContentByContentID: ContentInfo,
+  PutContentByContentID: GenerationHeader,
+  GetMyAuditingByOrderID: MyAuditingDetailGetResponse,
+  GetMyAuditing: MyAuditingGetResponse,
+  GetFarmByFuncID: FarmInfoGetResponse,
+  GetFarmTableInfoByFuncID: FarmTableInfo,
+  GetFarmFormInfoByFuncID: FarmFormInfo,
+  PostFarmFormInfoByFuncID: GenerationHeader,
+  PutFarmFormInfoByFuncID: GenerationHeader,
+  GetFarmDetailInfoByFuncID: FarmFormInfo,
+  GetSite: SiteGetResponse,
+  GetSiteBySiteID: SiteMapGetResponse,
+  GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
+  GetGroupMenuByGroupID: GroupMenuGetResponse,
+  GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
+  GetTemplateByControlID: TemplateGetResponse,
+  DeleteGalleryByGalleryID: GenerationHeader,
 
-}
+};
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class RestApiService {
 
-    private appConfig: AppConfig;
+  private apiConfig: ApiConfig;
 
-    constructor(
-        private ApiFactory: APIFactory,
-        private dispatcher: APIDispatch,
-        private configGetter: ConfigGetter,
-    ) {
-        this.appConfig = this.configGetter.getAppConfig();
-        this.ApiFactory.registerAPI(new GetGalleryByCategoryIDAPI());
-this.ApiFactory.registerAPI(new GetGalleryCategoryAPI());
-this.ApiFactory.registerAPI(new PostGalleryCategoryAPI());
-this.ApiFactory.registerAPI(new PostLoginAPI());
-this.ApiFactory.registerAPI(new GetDepartmentAPI());
-this.ApiFactory.registerAPI(new DeleteGalleryCategoryByCategoryIDAPI());
-this.ApiFactory.registerAPI(new PutGalleryCategoryByCategoryIDAPI());
-this.ApiFactory.registerAPI(new GetUserMenuAPI());
-this.ApiFactory.registerAPI(new GetLogoutAPI());
-this.ApiFactory.registerAPI(new PutDepartmentByDeptIDAPI());
-this.ApiFactory.registerAPI(new DeleteDepartmentByDeptIDAPI());
-this.ApiFactory.registerAPI(new PostDepartmentByDeptIDAPI());
-this.ApiFactory.registerAPI(new GetDepartmentByDeptIDAPI());
-this.ApiFactory.registerAPI(new GetAuditingAPI());
-this.ApiFactory.registerAPI(new PostAuditingByOrderIDAPI());
-this.ApiFactory.registerAPI(new GetLoginInfoAPI());
-this.ApiFactory.registerAPI(new GetCMSMenuAPI());
-this.ApiFactory.registerAPI(new GetUserSiteMapBySiteIDAPI());
-this.ApiFactory.registerAPI(new PostUserSiteMapBySiteIDAPI());
-this.ApiFactory.registerAPI(new PutUserSiteMapByNodeIDAPI());
-this.ApiFactory.registerAPI(new DeleteUserSiteMapByNodeIDAPI());
-this.ApiFactory.registerAPI(new GetContentByContentIDAPI());
-this.ApiFactory.registerAPI(new PutContentByContentIDAPI());
-this.ApiFactory.registerAPI(new GetMyAuditingByOrderIDAPI());
-this.ApiFactory.registerAPI(new GetMyAuditingAPI());
-this.ApiFactory.registerAPI(new GetFarmByFuncIDAPI());
-this.ApiFactory.registerAPI(new GetFarmTableInfoByFuncIDAPI());
-this.ApiFactory.registerAPI(new GetFarmFormInfoByFuncIDAPI());
-this.ApiFactory.registerAPI(new PostFarmFormInfoByFuncIDAPI());
-this.ApiFactory.registerAPI(new PutFarmFormInfoByFuncIDAPI());
-this.ApiFactory.registerAPI(new GetFarmDetailInfoByFuncIDAPI());
-this.ApiFactory.registerAPI(new GetSiteAPI());
-this.ApiFactory.registerAPI(new GetSiteBySiteIDAPI());
-this.ApiFactory.registerAPI(new GetSiteBySiteIDAndNodeIDAPI());
-this.ApiFactory.registerAPI(new GetGroupMenuByGroupIDAPI());
-this.ApiFactory.registerAPI(new GetGroupSiteMapByGroupIDAPI());
-this.ApiFactory.registerAPI(new GetTemplateByControlIDAPI());
-this.ApiFactory.registerAPI(new DeleteGalleryByGalleryIDAPI());
+  constructor(
+    private apiFactory: ApiFactory,
+    private dispatcher: ApiDispatch,
+    private configGetter: ConfigGetter,
+  ) {
+    this.apiConfig = this.configGetter.getApiConfig();
+    this.apiFactory.registerApi(new GetGalleryByCategoryIDAPI());
+    this.apiFactory.registerApi(new GetGalleryCategoryAPI());
+    this.apiFactory.registerApi(new PostGalleryCategoryAPI());
+    this.apiFactory.registerApi(new PostLoginAPI());
+    this.apiFactory.registerApi(new GetDepartmentAPI());
+    this.apiFactory.registerApi(new DeleteGalleryCategoryByCategoryIDAPI());
+    this.apiFactory.registerApi(new PutGalleryCategoryByCategoryIDAPI());
+    this.apiFactory.registerApi(new GetUserMenuAPI());
+    this.apiFactory.registerApi(new GetLogoutAPI());
+    this.apiFactory.registerApi(new PutDepartmentByDeptIDAPI());
+    this.apiFactory.registerApi(new DeleteDepartmentByDeptIDAPI());
+    this.apiFactory.registerApi(new PostDepartmentByDeptIDAPI());
+    this.apiFactory.registerApi(new GetDepartmentByDeptIDAPI());
+    this.apiFactory.registerApi(new GetAuditingAPI());
+    this.apiFactory.registerApi(new PostAuditingByOrderIDAPI());
+    this.apiFactory.registerApi(new GetLoginInfoAPI());
+    this.apiFactory.registerApi(new GetCMSMenuAPI());
+    this.apiFactory.registerApi(new GetUserSiteMapBySiteIDAPI());
+    this.apiFactory.registerApi(new PostUserSiteMapBySiteIDAPI());
+    this.apiFactory.registerApi(new PutUserSiteMapByNodeIDAPI());
+    this.apiFactory.registerApi(new DeleteUserSiteMapByNodeIDAPI());
+    this.apiFactory.registerApi(new GetContentByContentIDAPI());
+    this.apiFactory.registerApi(new PutContentByContentIDAPI());
+    this.apiFactory.registerApi(new GetMyAuditingByOrderIDAPI());
+    this.apiFactory.registerApi(new GetMyAuditingAPI());
+    this.apiFactory.registerApi(new GetFarmByFuncIDAPI());
+    this.apiFactory.registerApi(new GetFarmTableInfoByFuncIDAPI());
+    this.apiFactory.registerApi(new GetFarmFormInfoByFuncIDAPI());
+    this.apiFactory.registerApi(new PostFarmFormInfoByFuncIDAPI());
+    this.apiFactory.registerApi(new PutFarmFormInfoByFuncIDAPI());
+    this.apiFactory.registerApi(new GetFarmDetailInfoByFuncIDAPI());
+    this.apiFactory.registerApi(new GetSiteAPI());
+    this.apiFactory.registerApi(new GetSiteBySiteIDAPI());
+    this.apiFactory.registerApi(new GetSiteBySiteIDAndNodeIDAPI());
+    this.apiFactory.registerApi(new GetGroupMenuByGroupIDAPI());
+    this.apiFactory.registerApi(new GetGroupSiteMapByGroupIDAPI());
+    this.apiFactory.registerApi(new GetTemplateByControlIDAPI());
+    this.apiFactory.registerApi(new DeleteGalleryByGalleryIDAPI());
 
+  }
+
+  public dispatchRestApi(name: string, params: any): Observable<any> {
+    const restAPI = this.apiFactory.getApi(name);
+    this.setAPIParams(restAPI, params);
+    this.setUrl(restAPI, params);
+    return this.dispatcher.dispatch(restAPI).pipe(
+      map(x => {
+        x._body = plainToClass(APIResponseMap[name], x.body);
+        return x;
+      }),
+      switchMap(x => from(this.validateBodyClass(x)))
+    );
+  }
+
+  private setAPIParams(api: any, params: any) {
+    for (const key in params) {
+      api[key] = params[key];
     }
+  }
 
-    public dispatchRestApi(name: string, params: any): Observable<any> {
-        const restAPI = this.ApiFactory.getAPI(name);
-        this.setAPIParams(restAPI, params);
-        this.setUrl(restAPI, params);
-        return this.dispatcher.dispatch(restAPI).pipe(
-            map(x => {
-                x['_body'] = plainToClass(APIResponseMap[name], x.body);
-                return x;
-            }),
-            switchMap(x => from(this.validateBodyClass(x))),
-            map(x => x['_body']), // 因應res結構調整，暫時先用此方式處理 // TODO: 調整lib相關程式
-        );
+  private setUrl(api: any, params: any) {
+    let _url = this.apiConfig.API_URL[api.getApiName()];
+    for (const key in params) {
+      _url = _url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
     }
+    api.url = _url;
+  }
 
-    private setAPIParams(api: any, params: any) {
-        for (let key in params) {
-            api[key] = params[key];
-        }
+  private async validateBodyClass(obj) {
+    try {
+      console.log(obj);
+      await validateOrReject(obj.body);
+      return obj;
+    } catch (error) {
+      throw error;
     }
-
-    private setUrl(api: any, params: any) {
-        let _url = this.appConfig.API_URL[api.getAPIName()];
-        for (let key in params) {
-            _url = _url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
-        }
-        api.url = _url;
-    }
-
-    private async validateBodyClass(obj) {
-        try {
-            console.log(obj)
-            await validateOrReject(obj.body);
-            return obj;
-        } catch (error) {
-            throw error;
-        }
-    }
+  }
 
 }

@@ -1,4 +1,4 @@
-import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
+import { Api, MockApi, RestfulApi, ApiRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
 
@@ -6,7 +6,7 @@ import { StringUtils } from '@neux/core';
 /**
  * GetFarmDetailInfo
  */
-export class GetFarmDetailInfoByFuncIDAPI implements API, MockAPI, RestfulAPI {
+export class GetFarmDetailInfoByFuncIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public dataID: string;
@@ -14,13 +14,13 @@ export class GetFarmDetailInfoByFuncIDAPI implements API, MockAPI, RestfulAPI {
 
     constructor() { }
 
-    public getAPIName(): string {
+    public getApiName(): string {
         return 'GetFarmDetailInfoByFuncID';
     }
 
-    public getRequestData(): APIRequest {
+    public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
-        let requestData = new APIRequest();
+        let requestData = new ApiRequest();
         queryParams = queryParams.set('dataID', 
                       StringUtils.coerceStringProperty(this.dataID));
 

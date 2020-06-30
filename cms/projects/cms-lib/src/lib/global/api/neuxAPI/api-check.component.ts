@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestApiService } from './rest-api.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { APIFactory } from '@neux/core';
+import { ApiFactory } from '@neux/core';
 
 @Component({
   selector: 'app-api-check',
@@ -31,16 +31,16 @@ export class ApiCheckComponent implements OnInit {
 
   constructor(
     private restApiService: RestApiService,
-    private apiFactory: APIFactory
+    private apiFactory: ApiFactory
   ) { }
 
   ngOnInit() {
 
-    this.apiList = this.apiFactory.getAPIList();
+    this.apiList = this.apiFactory.getApiList();
   }
 
   onApiChange(e) {
-    const apiName = e.target.value;
+    let apiName = e.target.value;
     this.currentSelectAPI = apiName;
   }
 

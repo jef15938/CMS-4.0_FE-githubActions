@@ -1,4 +1,4 @@
-import { API, MockAPI, RestfulAPI, APIRequest } from '@neux/core';
+import { Api, MockApi, RestfulApi, ApiRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
 
@@ -6,20 +6,20 @@ import { StringUtils } from '@neux/core';
 /**
  * GetGalleryCategory
  */
-export class GetGalleryCategoryAPI implements API, MockAPI, RestfulAPI {
+export class GetGalleryCategoryAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     
 
     constructor() { }
 
-    public getAPIName(): string {
+    public getApiName(): string {
         return 'GetGalleryCategory';
     }
 
-    public getRequestData(): APIRequest {
+    public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
-        let requestData = new APIRequest();
+        let requestData = new ApiRequest();
         
         requestData.type = 'GET';
         requestData.params = queryParams;
