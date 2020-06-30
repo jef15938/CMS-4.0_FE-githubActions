@@ -27,15 +27,15 @@ export class AuthorizationService {
    * @returns
    * @memberof AuthorizationService
    */
-  login(username: string, password: string, validation_code: number) {
+  login(username: string, password: string, validationCode: number) {
     if (!username) { throw new ParamsError('username', 'login', 'string', username); }
     if (!password) { throw new ParamsError('password', 'login', 'string', password); }
-    if (!validation_code) { throw new ParamsError('validation_code', 'login', 'number', validation_code); }
+    if (!validationCode) { throw new ParamsError('validationCode', 'login', 'number', validationCode); }
 
     const requestBody: LoginRequest = {
       username,
       password,
-      validation_code
+      validation_code: validationCode,
     };
 
     return this.respAPIService.dispatchRestApi('PostLogin', { requestBody });

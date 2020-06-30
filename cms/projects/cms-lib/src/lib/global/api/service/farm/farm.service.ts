@@ -24,7 +24,7 @@ export class FarmService {
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
-    return this.restAPIService.dispatchRestApi('GetFarmByFuncID', { funcID });;
+    return this.restAPIService.dispatchRestApi('GetFarmByFuncID', { funcID });
   }
 
   /**
@@ -42,7 +42,7 @@ export class FarmService {
     if (!page) {
       throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page);
     }
-    return this.restAPIService.dispatchRestApi('GetFarmTableInfoByFuncID', { funcID, page });;
+    return this.restAPIService.dispatchRestApi('GetFarmTableInfoByFuncID', { funcID, page });
   }
 
   /**
@@ -60,7 +60,7 @@ export class FarmService {
     if (!dataID) {
       throw new ParamsError('dataID', 'GetFarmDetailInfoByFuncID', 'string', dataID);
     }
-    return this.restAPIService.dispatchRestApi('GetFarmDetailInfoByFuncID', { farmID, dataID });;
+    return this.restAPIService.dispatchRestApi('GetFarmDetailInfoByFuncID', { farmID, dataID });
   }
 
   /**
@@ -75,7 +75,7 @@ export class FarmService {
     if (!farmID) {
       throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', farmID);
     }
-    return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { farmID, dataID });;
+    return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { farmID, dataID });
   }
 
 }

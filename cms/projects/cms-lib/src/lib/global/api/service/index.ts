@@ -1,5 +1,4 @@
 export * from './auditing/auditing.service';
-export * from './auth/auth.service';
 export * from './authorization/authorization.service';
 export * from './content/content.service';
 export * from './department/department.service';

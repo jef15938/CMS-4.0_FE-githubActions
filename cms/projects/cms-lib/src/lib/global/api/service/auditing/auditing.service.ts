@@ -62,14 +62,14 @@ export class AuditingService {
   }
 
   /**
- *
- *
- * @param {number} orderID Auditing order ID
- * @param {string} status required
- * @param {string} comment optional
- * @returns
- * @memberof AuditingService
- */
+   *
+   *
+   * @param {number} orderID Auditing order ID
+   * @param {string} status required
+   * @param {string} comment optional
+   * @returns
+   * @memberof AuditingService
+   */
   approveAuditing(orderID: number, status: string, comment?: string) {
     if (!orderID) { throw new ParamsError('orderID', 'approveAuditing', 'number', orderID); }
     if (!status) { throw new ParamsError('status', 'approveAuditing', 'string', status); }

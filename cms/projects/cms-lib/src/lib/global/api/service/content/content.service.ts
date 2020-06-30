@@ -25,7 +25,7 @@ export class ContentService {
     if (!contentID) {
       throw new ParamsError('contentID', 'getContentByContentID', 'string', contentID);
     }
-    return this.restAPIService.dispatchRestApi('GetContentByContentID', { contentID });;
+    return this.restAPIService.dispatchRestApi('GetContentByContentID', { contentID });
   }
 
   /**
@@ -39,6 +39,6 @@ export class ContentService {
     if (!controlID) {
       throw new ParamsError('controlID', 'getTemplateByControlID', 'string', controlID);
     }
-    return this.restAPIService.dispatchRestApi('GetTemplateByControlID', { controlID });;
+    return this.restAPIService.dispatchRestApi('GetTemplateByControlID', { controlID });
   }
 }
