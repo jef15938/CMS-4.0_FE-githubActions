@@ -10,10 +10,10 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { GlobalHeader } from './common/global-header';
-import { DynamicComponentFactoryService } from './service/dynamic-component-factory.service';
-import { MenuService } from './service/menu.service';
-import { EXTENSION_MAPPINGS } from './app.extension-mapping';
+import { GlobalHeader } from './global/common/global-header';
+import { DynamicComponentFactoryService } from './global/service/dynamic-component-factory.service';
+import { MenuService } from './global/service/menu.service';
+import { EXTENSION_MAPPINGS } from './global/common/app.extension-mapping';
 
 @NgModule({
   declarations: [
