@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RenderComponent } from './components/render/render.component';
-import { LayoutModule } from '@layout';
+import { WrapperModule } from '@layout';
 import { CommonModule } from '@angular/common';
 import { RenderRoutingModule } from './render-routing.module';
 
@@ -9,7 +9,7 @@ import { RenderRoutingModule } from './render-routing.module';
   imports: [
     CommonModule,
     RenderRoutingModule,
-    LayoutModule
+    WrapperModule
   ],
   exports: [RenderComponent]
 })
