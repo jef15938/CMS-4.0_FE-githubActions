@@ -1,8 +1,10 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav mode="side" opened #SideNav>
-    <div class="page-content-container">
-      <ul *ngIf="menus.length">
-        <cms-menu-node *ngFor="let menu of menus" [menu]="menu"></cms-menu-node>
+    <div class="menu-container" #MenuContainer>
+      <ul class="menu-container__menu" *ngIf="menus.length">
+        <li class="menu-container__item" *ngFor="let menu of menus">
+          <cms-menu-node [menu]="menu"></cms-menu-node>
+        </li>
       </ul>
     </div>
   </mat-sidenav>

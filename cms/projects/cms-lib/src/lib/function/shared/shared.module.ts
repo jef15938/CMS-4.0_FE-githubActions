@@ -23,6 +23,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatRippleModule} from '@angular/material/core';
 // @neux/core
 import { CoreModule } from '@neux/core';
 // cms-lib
@@ -63,6 +64,7 @@ import { FarmModule } from '../ui/farm';
     MatProgressBarModule,
     MatExpansionModule,
     MatRadioModule,
+    MatRippleModule,
     // @neux/core
     CoreModule,
     // cms-lib

@@ -1,8 +1,12 @@
-<ng-container *ngIf="menu">
-  <li><a (click)="navigate()">{{menu.func_name}}</a></li>
-  <ng-container *ngIf="menu.children.length">
-    <ul style="padding-left: 10px;">
-      <cms-menu-node *ngFor="let child of menu.children" [menu]="child" [category]="menu.func_id"></cms-menu-node>
+<div class="menu" *ngIf="menu">
+  <div class="menu__item item">
+    <a matRipple class="item__link" (click)="navigate()">{{menu.func_name}}</a>
+  </div>
+  <div class="item" *ngIf="menu.children.length">
+    <ul class="item__submenu">
+      <li class="item__submenu__item" *ngFor="let child of menu.children">
+        <cms-menu-node [menu]="child" [category]="menu.func_id"></cms-menu-node>
+      </li>
     </ul>
-  </ng-container>
-</ng-container>
+  </div>
+</div>

@@ -18,7 +18,7 @@
   mat-toolbar {
     height: 40px;
     min-height: 40px;
-    
+
     mat-toolbar-row {
       height: 40px;
       color: black;
@@ -30,6 +30,31 @@
 }
 
 .content {
-  height: calc(100% - 40px); 
+  height: calc(100% - 40px);
   overflow: auto;
+}
+
+.menu-container {
+  background-color: rgba(57, 57, 57, 1);
+  height: 100%;
+  width: 200px;
+  position: relative;
+
+  &:after {
+    background-color: rgba(57, 57, 57, 1);
+    height: 50px;
+    content: '';
+    display: block;
+  }
+
+  &::ng-deep {
+    canvas {
+      position: fixed;
+      z-index: 10;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+    }
+  }
+
 }

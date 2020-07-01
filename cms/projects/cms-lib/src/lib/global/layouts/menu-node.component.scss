@@ -1,1 +1,46 @@
+:host {
+  display: block;
+}
 
+.menu {
+  background-color: rgba(57, 57, 57, 1);
+  width: 100%;
+  user-select: none;
+  font-size: 15px;
+
+}
+
+.item {
+
+  color: white;
+
+  &__link {
+    text-decoration: none;
+    padding: .6em 1em;
+    width: 100%;
+    cursor: pointer
+  }
+
+  &__submenu {
+
+    position: relative;
+
+    &__item {
+      margin-left: 1em;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 1em;
+        top: 50%;
+        height: 100%;
+        transform: translateY(-50%);
+        border-left: 1px dashed rgba(255, 255, 255, 0.5);
+        width: 1px;
+        display: block;
+      }
+    }
+  }
+
+
+}
