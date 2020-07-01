@@ -40,16 +40,15 @@
   width: 200px;
   position: relative;
 
-  &:after {
-    background-color: rgba(57, 57, 57, 1);
-    height: 50px;
-    content: '';
-    display: block;
+  &__menu {
+    height: 100%;
   }
+
 
   &::ng-deep {
     canvas {
       position: fixed;
+      height: 100%;
       z-index: 10;
       pointer-events: none;
       top: 0;

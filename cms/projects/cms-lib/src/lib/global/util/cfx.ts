@@ -16,18 +16,21 @@ export class RippleScreen {
     ){
     this.init();
   }
-  private space = document.createElement('canvas');
-  private ctx = this.space.getContext('2d');
+  private space ;
+  private ctx ;
   private pool: any[] = [];
   public canvasWidth: number ;
   public canvasHeight: number ;
   private loop;
   init() {
+    const space = document.createElement('canvas');
+    this.ele.appendChild(space);
     this.canvasWidth =  this.ele.getBoundingClientRect().width;
     this.canvasHeight  = this.ele.getBoundingClientRect().height;
+    this.space = this.ele.querySelectorAll('canvas')[0];
+    this.ctx = this.space.getContext('2d');
     this.size();
-    this.ele.appendChild(this.space);
-    const id = 0 ;
+
     const $this = this;
     window.addEventListener('resize', $this.debounce(
       () => {
@@ -124,10 +127,14 @@ export class RippleScreen {
 
 
   size() {
-    this.space.width = this.canvasWidth;
-    this.space.height = this.canvasHeight;
-    this.canvasWidth = this.ele.getBoundingClientRect().width;
-    this.canvasHeight = this.ele.getBoundingClientRect().height;
+    const eleWidth = this.ele.getBoundingClientRect().width;
+    const eleHeight = this.ele.getBoundingClientRect().height;
+    if (this.space.width !== eleWidth || this.space.width !== eleHeight) {
+      this.canvasWidth = this.ele.getBoundingClientRect().width;
+      this.canvasHeight = this.ele.getBoundingClientRect().height;
+      this.space.width = this.canvasWidth;
+      this.space.height = this.canvasHeight;
+    }
   }
 
   debounce(func, delay) {
