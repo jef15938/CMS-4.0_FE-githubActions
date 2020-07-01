@@ -1,18 +1,18 @@
 export class RippleScreen {
   constructor(
     private ele,
-    private points: number = 3,
-    private maxBorder: number = 4,
-    private lineColor: string = 'white',
-    private fillColor: string = 'rgba(255,255,255,.25)',
-    private fadeInSpan: number = 500,
-    private lifeSpan: number = 5000,
-    private maxSize: number = 750,
-    private minRate: number =  0.5,
-    private randomFill: boolean = true,
-    private radiusMetaRate: number = 10,
-    private speedMetaRate: number = 0.5,
-    private globalAlpha: number = 0.35
+    private points: number = 3, // 總波紋數量
+    private maxBorder: number = 4, // 波紋最大線寬
+    private lineColor: string = 'white', // 波紋顏色
+    private fillColor: string = 'rgba(255,255,255,.25)', // 波紋有填充時的顏色
+    private fadeInSpan: number = 500, // 波紋淡入時的耗時
+    private lifeSpan: number = 5000, // 波紋淡入到淡出至0的總耗時
+    private maxSize: number = 750, // 波紋最大尺寸
+    private minRate: number =  0.5, // 波紋最小尺寸倍率（取最大尺寸浮點百分比）
+    private randomFill: boolean = true, // 是否隨機填充
+    private radiusMetaRate: number = 10, // 波紋半徑擴張速度
+    private speedMetaRate: number = 0.5, // 波紋中心點位移速度
+    private globalAlpha: number = 0.35// 波紋透明度
     ){
     this.init();
   }
