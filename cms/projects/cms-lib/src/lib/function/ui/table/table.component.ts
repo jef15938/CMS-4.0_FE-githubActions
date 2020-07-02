@@ -1,8 +1,9 @@
 import {
-  Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter
+  Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef,
+  ViewChildren, QueryList, AfterViewInit, Output, EventEmitter, ComponentRef
 } from '@angular/core';
-import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
-import { ColDef, CmsTableCustomCellEvent } from './table.interface';
+import { ColDef, CmsTableCustomCellEvent, CustomCellRenderer } from './table.interface';
+import { DynamicWrapperDirective } from 'layout';
 
 @Component({
   selector: 'cms-table',
@@ -11,7 +12,7 @@ import { ColDef, CmsTableCustomCellEvent } from './table.interface';
 })
 export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
 
-  @ViewChildren(CellRendererWrapperDirective) customRenderWrappers: QueryList<CellRendererWrapperDirective>;
+  @ViewChildren(DynamicWrapperDirective) customRenderWrappers: QueryList<DynamicWrapperDirective<CustomCellRenderer>>;
 
   @Input() colDefs: ColDef[];
   @Input() dataSource: TData[];
@@ -26,20 +27,20 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-    this.render();
+    // this.render();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.colDefs || changes.dataSource) {
-      this.render();
+      // this.render();
     }
   }
 
   private render() {
-    if (!this.customRenderWrappers) { return; }
-    this.changeDetectorRef.detectChanges();
-    this.customRenderWrappers.forEach(wrapper => wrapper.render());
-    this.changeDetectorRef.detectChanges();
+    // if (!this.customRenderWrappers) { return; }
+    // this.changeDetectorRef.detectChanges();
+    // this.customRenderWrappers.forEach(wrapper => wrapper.render());
+    // this.changeDetectorRef.detectChanges();
   }
 
   getDisplayedColumns() {
@@ -48,6 +49,18 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
 
   triggerCustomEvent(event: CmsTableCustomCellEvent) {
     this.customEvent.next(event);
+  }
+
+  onCellComponentLoad = (data) => {
+    return (componentRef: ComponentRef<CustomCellRenderer>) => {
+      const instance = componentRef.instance;
+      if (instance?.compInit) {
+        instance.compInit({
+          table: this,
+          data,
+        });
+      }
+    };
   }
 
 }

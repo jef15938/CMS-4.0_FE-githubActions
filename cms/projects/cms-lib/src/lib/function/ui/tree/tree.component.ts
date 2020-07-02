@@ -6,8 +6,8 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
-import { CmsTreeNodeRenderer, CmsTree, CmsTreeCustomCellEvent } from './tree.interface';
+import { CmsTree, CmsTreeCustomCellEvent } from './tree.interface';
+import { DynamicWrapperDirective } from 'layout';
 
 @Component({
   selector: 'cms-tree',
@@ -16,7 +16,7 @@ import { CmsTreeNodeRenderer, CmsTree, CmsTreeCustomCellEvent } from './tree.int
 })
 export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewInit, OnChanges, OnDestroy {
 
-  @ViewChildren(TreeNodeCustomWrapperDirective) customRenderWrappers: QueryList<TreeNodeCustomWrapperDirective<TData>>;
+  @ViewChildren(DynamicWrapperDirective) customRenderWrappers: QueryList<DynamicWrapperDirective<TData>>;
 
   treeControl: NestedTreeControl<TData>;
   dataSource: MatTreeNestedDataSource<TData>;
@@ -84,7 +84,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   private init() {
     this.selectedNode = undefined;
-    this.renderCustom();
+    // this.renderCustom();
     this.expandLevel(this.defaultExpandLevel);
     this.afterRender.emit(this);
   }
@@ -92,20 +92,23 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   private renderCustom() {
     if (!this.customNodeRenderer) { return; }
     this.changeDetectorRef.detectChanges();
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.customNodeRenderer);
     this.customRenderWrappers.forEach(wrapper => {
-      wrapper.viewContainerRef.clear();
-      const componentRef = wrapper.viewContainerRef.createComponent(componentFactory);
-      const instance = componentRef.instance as CmsTreeNodeRenderer<TData>;
-      if (instance.compInit && typeof (instance.compInit) === 'function') {
-        instance.compInit({
-          context: this.context,
-          tree: this,
-          data: wrapper.data,
-        });
-      }
+      wrapper.loadComponent();
     });
-    this.changeDetectorRef.detectChanges();
+    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.customNodeRenderer);
+    // this.customRenderWrappers.forEach(wrapper => {
+    //   wrapper.viewContainerRef.clear();
+    //   const componentRef = wrapper.viewContainerRef.createComponent(componentFactory);
+    //   const instance = componentRef.instance as CmsTreeNodeRenderer<TData>;
+    //   if (instance.compInit && typeof (instance.compInit) === 'function') {
+    //     instance.compInit({
+    //       context: this.context,
+    //       tree: this,
+    //       data: wrapper.data,
+    //     });
+    //   }
+    // });
+    // this.changeDetectorRef.detectChanges();
   }
 
   private expandLevel(level: number) {

@@ -5,7 +5,9 @@
       <li class="pointer mat-tree-node" [class.selected]="node===selectedNode" (dblclick)="onRowDbClicked($event, node)"
         (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
         <span *ngIf="customNodeRenderer">
-          <span cmsTreeNodeCustomWrapper [data]="node"></span>
+          <span neuxDynamicWrapper [componentClass]="customNodeRenderer"
+            [onComponentLoad]="this | nodeRenderOnload:node:context">
+          </span>
         </span>
         <span *ngIf="!customNodeRenderer">
           {{node[nodeDisplayField]}}
@@ -20,7 +22,9 @@
         cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
         <div class="mat-tree-node" [class.selected]="node===selectedNode">
           <span *ngIf="customNodeRenderer">
-            <span cmsTreeNodeCustomWrapper [data]="node"></span>
+            <span neuxDynamicWrapper [componentClass]="customNodeRenderer"
+              [onComponentLoad]="this | nodeRenderOnload:node:context">
+            </span>
           </span>
           <span *ngIf="!customNodeRenderer">
             {{node[nodeDisplayField]}}

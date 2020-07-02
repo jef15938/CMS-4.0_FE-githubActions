@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TableComponent } from './table.component';
-import { CellRendererWrapperDirective } from './cell-renderer-wrapper.directive';
 import { DirectiveModule } from './../../../global/directive/directive.module';
 import { GetTableDisplayColsPipe } from './pipe/get-table-display-cols.pipe';
+import { CellRenderOnloadPipe } from './pipe/cell-render-onload.pipe';
 import { MatButtonModule } from '@angular/material/button';
+import { DynamicWrapperModule } from 'layout';
 
 @NgModule({
   imports: [
     CommonModule,
+    DynamicWrapperModule,
     MatTableModule,
     MatPaginatorModule,
     MatButtonModule,
@@ -18,8 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   declarations: [
     TableComponent,
-    CellRendererWrapperDirective,
     GetTableDisplayColsPipe,
+    CellRenderOnloadPipe,
   ],
   exports: [
     TableComponent

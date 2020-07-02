@@ -4,8 +4,9 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { DirectiveModule } from './../../../global/directive';
 import { TreeComponent } from './tree.component';
-import { TreeNodeCustomWrapperDirective } from './tree-node-custom-wrapper.directive';
 import { MatButtonModule } from '@angular/material/button';
+import { NodeRenderOnloadPipe } from './pipe/node-render-onload.pipe';
+import { DynamicWrapperModule } from 'layout';
 
 @NgModule({
   imports: [
@@ -14,10 +15,11 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatButtonModule,
     DirectiveModule,
+    DynamicWrapperModule,
   ],
   declarations: [
-    TreeNodeCustomWrapperDirective,
     TreeComponent,
+    NodeRenderOnloadPipe,
   ],
   exports: [
     TreeComponent
