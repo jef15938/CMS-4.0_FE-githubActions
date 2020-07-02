@@ -1,4 +1,4 @@
-<div style="width: 100%; border: 1px solid blue; text-align: center;">
+<div style="width: 100%; border: 1px solid blue; text-align: center;" *ngIf="templateInfo">
   <h1>Group Template Demo</h1>
   <div style="margin: 10px; padding: 10px; border: 1px solid pink">
     <div *ngFor="let group of templateInfo.itemList; let i = index;">

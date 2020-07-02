@@ -58,9 +58,10 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   }
 
   selectTemplate(t: TemplateInfo) {
+    console.warn('t = ', t);
     const yes = window.confirm(`確定加入${t.template_name}？`);
     if (!yes) { return; }
-    const mock = this[`_get${t.template_id}`]();
+    const mock = this[`get${t.template_id}`]();
     this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, mock);
     this.templateAdd.emit(mock.template_id);
   }
@@ -69,6 +70,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     return {
       id: '1',
       template_id: 'Tab',
+      templateId: 'Tab',
       fields: [],
       attributes: {},
       tabList: [],
@@ -79,6 +81,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     return {
       id: '2',
       template_id: 'IconPage',
+      templateId: 'IconPage',
       fields: [],
       attributes: {},
     };
@@ -88,6 +91,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     return {
       id: '3',
       template_id: 'Slide',
+      templateId: 'Slide',
       fields: [],
       attributes: {
         height: '300px'

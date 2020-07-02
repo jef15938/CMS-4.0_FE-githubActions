@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewChild, ViewContainerRef,
+  Component, OnInit, Input, Inject, ViewChild,
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
   HostListener, OnChanges, SimpleChanges, Injector
 } from '@angular/core';
@@ -10,6 +10,7 @@ import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
 import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
 import { LayoutWrapperBase } from './layout-wrapper-base';
+import { DynamicWrapperComponent } from '../../dynamic-wrapper/component/dynamic-wrapper/dynamic-wrapper.component';
 
 @Component({
   selector: 'layoutlib-layout-wrapper',
@@ -22,11 +23,14 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   @Input() templateInfo: TemplateInfo;
   @Input() mode: 'preview' | 'edit' = 'edit';
 
-  @ViewChild('DynamicHost', { read: ViewContainerRef }) host: ViewContainerRef;
+  @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<TemplateInfo>>;
 
   parentTemplatesContainer: { templates: TemplateInfo[]; };
 
-  componentRef: ComponentRef<LayoutBase<TemplateInfo>>;
+  componentClass: any;
+
+  get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
+
 
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
@@ -34,7 +38,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   private instanceEventSubscription: Subscription;
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(COMPONENT_SERVICE_TOKEN) private componentFactory: any,
     injector: Injector,
   ) {
@@ -43,6 +46,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   ngOnInit(): void {
+    this.componentClass = this.componentFactory.getComponent(this.templateInfo.templateId);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,28 +63,14 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   ngAfterViewInit() {
     this.changeDetectorRef.reattach();
-    this.loadComponent();
+    this.changeDetectorRef.detectChanges();
+    this.dynamicWrapperComponent.loadComponent();
     this.checkEventBinding();
     this.setMode();
   }
 
-  loadComponent() {
-    this.changeDetectorRef.detectChanges();
-    this.host.clear();
-    const componentRef = this.createComponentRef();
-    this.setInstanceProperties(componentRef?.instance);
-    this.componentRef = componentRef;
-    this.changeDetectorRef.detectChanges(); // 讓內含的畫面長出，ViewChild/ViewChildren才會更新
-  }
-
-  private createComponentRef(): ComponentRef<LayoutBase<TemplateInfo>> {
-    const componentClass = this.componentFactory.getComponent(this.templateInfo.templateId);
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
-    const componentRef = this.host.createComponent(componentFactory) as ComponentRef<LayoutBase<TemplateInfo>>;
-    return componentRef;
-  }
-
-  private setInstanceProperties(instance: LayoutBase<TemplateInfo>): void {
+  setInstanceProperties = (componentRef: ComponentRef<LayoutBase<TemplateInfo>>): void => {
+    const instance = componentRef?.instance;
     if (instance) {
       instance.templateInfo = this.templateInfo;
       instance.mode = this.mode;

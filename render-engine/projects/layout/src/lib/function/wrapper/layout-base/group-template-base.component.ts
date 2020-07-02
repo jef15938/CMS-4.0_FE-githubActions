@@ -1,9 +1,8 @@
 import { LayoutBaseComponent } from './_base';
 import { GroupTemplateInfo } from '../../../global/interface/group-template-info.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
-import { Injector, Directive } from '@angular/core';
+import { Injector } from '@angular/core';
 
-@Directive()
 export abstract class GroupTemplateBaseComponent extends LayoutBaseComponent<GroupTemplateInfo> {
   templateType = TemplateType.GROUP;
   /**
