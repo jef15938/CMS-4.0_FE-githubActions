@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { IconPageComponent } from './components/icon-page/icon-page.component';
-import { SliderComponent } from './components/slider/slider.component';
-import { TabModule } from './components/tab/tab.module';
+import { IconPageComponent } from './global/component/icon-page/icon-page.component';
+import { SliderComponent } from './global/component/slider/slider.component';
+import { TabModule } from './global/component/tab/tab.module';
 import { SwiperModule } from 'ngx-swiper-wrapper';
-import { WrapperModule } from './wrapper/wrapper.module';
-import { FieldsDemoComponent } from './components/fields-demo/fields-demo.component';
-import { GroupTemplateDemoComponent } from './components/group-template-demo/group-template-demo.component';
-import { DataSourceDemoComponent } from './components/data-source-demo/data-source-demo.component';
-import { PipeModule } from './pipe/pipe.module';
+import { WrapperModule } from './function/wrapper/wrapper.module';
+import { FieldsDemoComponent } from './global/component/fields-demo/fields-demo.component';
+import { GroupTemplateDemoComponent } from './global/component/group-template-demo/group-template-demo.component';
+import { DataSourceDemoComponent } from './global/component/data-source-demo/data-source-demo.component';
+import { PipeModule } from './global/pipe/pipe.module';
 
 @NgModule({
   imports: [

@@ -3,8 +3,7 @@
  */
 
 export * from './lib/layout.module';
-export * from './lib/layout.service';
-export * from './lib/injection-token';
-export * from './lib/wrapper/index';
-export * from './lib/components/index';
-export * from './lib/interface/index';
+export * from './lib/global/injection-token/injection-token';
+export * from './lib/function/wrapper/index';
+export * from './lib/global/component/index';
+export * from './lib/global/interface/index';

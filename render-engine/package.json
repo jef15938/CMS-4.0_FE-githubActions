@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pack-layout": "ng build layout --prod && cd dist/layout && npm pack && cd ../.."
+    "pack-layout": "ng build layout --prod && cd dist/layout && npm pack && cd ../..",
+    "pack-render": "ng build render --prod && cd dist/render && npm pack && cd ../.."
   },
   "private": true,
   "dependencies": {

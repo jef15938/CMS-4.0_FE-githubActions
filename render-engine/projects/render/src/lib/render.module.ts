@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RenderComponent } from './components/render/render.component';
+import { RenderComponent } from './global/component/render/render.component';
 import { WrapperModule } from '@layout';
 import { CommonModule } from '@angular/common';
 import { RenderRoutingModule } from './render-routing.module';
