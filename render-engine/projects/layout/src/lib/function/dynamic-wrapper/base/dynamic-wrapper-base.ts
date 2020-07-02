@@ -21,14 +21,14 @@ export abstract class DynamicWrapperBase<TComponent> implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (!this.componentClass) { return; }
-    this.loadComponent();
+    this.loadWithComponent(this.componentClass);
   }
 
-  loadComponent() {
+  loadWithComponent(componentClass) {
     if (!this.host) { throw (new Error('No host')); }
-    if (!this.componentClass) { throw (new Error('No componentClass')); }
+    if (!componentClass) { throw (new Error('No componentClass')); }
     this.host.clear();
-    const componentRef = this.createComponentRef(this.componentClass);
+    const componentRef = this.createComponentRef(componentClass);
     if (this.onComponentLoad) {
       this.onComponentLoad(componentRef);
     }

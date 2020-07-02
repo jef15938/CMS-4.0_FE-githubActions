@@ -1,44 +1,31 @@
-import { Component, OnInit, Inject, ComponentFactoryResolver, ChangeDetectorRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Inject, ViewChild, ComponentRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalOpenComponentConfig } from '../modal.interface';
-import { ModalCustomWrapperDirective } from './modal-custom-wrapper.directive';
 import { CustomModalBase } from '../base/custom-modal-base';
+import { DynamicWrapperDirective } from 'layout';
 
 @Component({
   selector: 'cms-modal-custom-wrapper',
   templateUrl: './modal-custom-wrapper.component.html',
   styleUrls: ['./modal-custom-wrapper.component.scss']
 })
-export class ModalCustomWrapperComponent implements OnInit, AfterViewInit {
+export class ModalCustomWrapperComponent {
 
-  @ViewChild(ModalCustomWrapperDirective) customRenderWrapper: ModalCustomWrapperDirective;
+  @ViewChild(DynamicWrapperDirective) dynamicWrapperDirective: DynamicWrapperDirective<CustomModalBase>;
+
+  componentClass;
 
   instance: CustomModalBase;
 
   instanceTitle = '';
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private config: ModalOpenComponentConfig<any>,
+    @Inject(MAT_DIALOG_DATA) public config: ModalOpenComponentConfig<any>,
     private modalRef: MatDialogRef<ModalCustomWrapperComponent>,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
-  ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit(): void {
-    this.renderCustom();
-    this.changeDetectorRef.detectChanges();
-  }
-
-  renderCustom() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.config.component as any);
-    const wrapper = this.customRenderWrapper;
-    wrapper.viewContainerRef.clear();
-    const componentRef = wrapper.viewContainerRef.createComponent(componentFactory);
-    const instance = componentRef.instance as CustomModalBase;
+  onComponentLoad = (componentRef: ComponentRef<CustomModalBase>) => {
+    const instance = componentRef.instance;
     if (this.config.componentInitData) {
       for (const k of Object.keys(this.config.componentInitData)) {
         instance[k] = this.config.componentInitData[k];

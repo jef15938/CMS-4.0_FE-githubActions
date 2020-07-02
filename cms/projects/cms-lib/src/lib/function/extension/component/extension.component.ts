@@ -1,11 +1,12 @@
 import {
-  Component, OnInit, AfterViewInit, Inject, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ChangeDetectorRef
+  Component, OnInit, AfterViewInit, Inject, ViewChild, ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CMS_EXTENSION_COMPONENT_MAPPINGS } from '../../../global/injection-token';
 import { CmsExtensionComponentMapping } from '../../../global/interface';
 import { CmsUserMenuResolver } from '../../../global/service';
 import { MenuInfo } from '../../../global/api/neuxAPI/bean/MenuInfo';
+import { DynamicWrapperComponent } from 'layout';
 
 @Component({
   selector: 'cms-extension',
@@ -14,19 +15,16 @@ import { MenuInfo } from '../../../global/api/neuxAPI/bean/MenuInfo';
 })
 export class ExtensionComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('vc', { read: ViewContainerRef }) vc: ViewContainerRef;
+  @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<any>;
 
   funcId = '';
   errorMsg = '';
-
-  private componentRef: ComponentRef<any>;
 
   private afterViewInit = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
     private cmsUserMenuResolver: CmsUserMenuResolver,
     @Inject(CMS_EXTENSION_COMPONENT_MAPPINGS) private cmsExtensionComponentMappings: CmsExtensionComponentMapping<any>[],
   ) {
@@ -50,8 +48,6 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
 
   private initState() {
     this.errorMsg = '';
-    this.vc.clear();
-    this.componentRef?.destroy();
 
     const menus = this.cmsUserMenuResolver.getMenus();
     if (!menus?.length) {
@@ -77,14 +73,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.render(comp, this.vc);
-  }
-
-  private render(comp, vc: ViewContainerRef) {
-    if (!comp) { return; }
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(comp);
-    const componentRef = vc.createComponent(componentFactory);
-    this.componentRef = componentRef;
+    this.dynamicWrapperComponent?.loadWithComponent(comp);
   }
 
   private findMenuByFuncId(funcId: string, sources: MenuInfo[]): MenuInfo {

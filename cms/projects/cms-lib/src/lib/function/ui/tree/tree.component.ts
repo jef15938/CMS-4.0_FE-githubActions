@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, OnChanges, Output, EventEmitter,
-  ComponentFactoryResolver, AfterViewInit, ViewChildren, QueryList, ChangeDetectorRef, HostListener, OnDestroy, SimpleChanges
+  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy, SimpleChanges
 } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -41,12 +41,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   private destroy$ = new Subject();
 
-  constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private changeDetectorRef: ChangeDetectorRef,
-  ) {
-
-  }
+  constructor() { }
 
   ngOnInit(): void {
     this.treeControl = new NestedTreeControl<TData>(node => node[this.nodeChildrenEntryField]);
@@ -87,28 +82,6 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     // this.renderCustom();
     this.expandLevel(this.defaultExpandLevel);
     this.afterRender.emit(this);
-  }
-
-  private renderCustom() {
-    if (!this.customNodeRenderer) { return; }
-    this.changeDetectorRef.detectChanges();
-    this.customRenderWrappers.forEach(wrapper => {
-      wrapper.loadComponent();
-    });
-    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.customNodeRenderer);
-    // this.customRenderWrappers.forEach(wrapper => {
-    //   wrapper.viewContainerRef.clear();
-    //   const componentRef = wrapper.viewContainerRef.createComponent(componentFactory);
-    //   const instance = componentRef.instance as CmsTreeNodeRenderer<TData>;
-    //   if (instance.compInit && typeof (instance.compInit) === 'function') {
-    //     instance.compInit({
-    //       context: this.context,
-    //       tree: this,
-    //       data: wrapper.data,
-    //     });
-    //   }
-    // });
-    // this.changeDetectorRef.detectChanges();
   }
 
   private expandLevel(level: number) {

@@ -4,7 +4,9 @@
 </ng-container>
 <!-- content -->
 <div mat-modal-content>
-  <span cmsModalCustomWrapper></span>
+  <!-- <span cmsModalCustomWrapper></span> -->
+  <span neuxDynamicWrapper [componentClass]="config?.component" [onComponentLoad]="onComponentLoad">
+  </span>
 </div>
 <!-- footer -->
 <ng-container *ngIf="instance&&instance.actions&&instance.actions.length">

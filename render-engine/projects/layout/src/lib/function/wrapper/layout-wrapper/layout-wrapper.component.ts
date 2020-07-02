@@ -27,8 +27,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   parentTemplatesContainer: { templates: TemplateInfo[]; };
 
-  componentClass: any;
-
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
 
 
@@ -46,7 +44,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   ngOnInit(): void {
-    this.componentClass = this.componentFactory.getComponent(this.templateInfo.templateId);
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -64,7 +62,8 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   ngAfterViewInit() {
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
-    this.dynamicWrapperComponent.loadComponent();
+    const componentClass = this.componentFactory.getComponent(this.templateInfo.templateId);
+    this.dynamicWrapperComponent.loadWithComponent(componentClass);
     this.checkEventBinding();
     this.setMode();
   }
