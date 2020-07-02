@@ -3,7 +3,7 @@ import {
   ViewChildren, QueryList, AfterViewInit, Output, EventEmitter, ComponentRef
 } from '@angular/core';
 import { ColDef, CmsTableCustomCellEvent, CustomCellRenderer } from './table.interface';
-import { DynamicWrapperDirective } from 'layout';
+import { DynamicWrapperDirective } from '@neux/core';
 
 @Component({
   selector: 'cms-table',

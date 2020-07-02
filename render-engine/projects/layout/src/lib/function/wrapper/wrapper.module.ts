@@ -8,7 +8,7 @@ import { LayoutFieldLinkDirective } from './layout-wrapper/field-directive/layou
 import { LayoutFieldBgimgDirective } from './layout-wrapper/field-directive/layout-field-bgimg.directive';
 import { LayoutFieldImgDirective } from './layout-wrapper/field-directive/layout-field-img.directive';
 import { LayoutFieldHtmlEditorDirective } from './layout-wrapper/field-directive/layout-field-html-editor.directive';
-import { DynamicWrapperModule } from '../dynamic-wrapper/dynamic-wrapper.module';
+import { DynamicWrapperModule } from '@neux/core';
 
 const FIELD_DIRECTIVES = [
   LayoutFieldTextDirective,

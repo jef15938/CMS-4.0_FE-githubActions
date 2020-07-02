@@ -6,7 +6,7 @@ import { DirectiveModule } from './../../../global/directive';
 import { TreeComponent } from './tree.component';
 import { MatButtonModule } from '@angular/material/button';
 import { NodeRenderOnloadPipe } from './pipe/node-render-onload.pipe';
-import { DynamicWrapperModule } from 'layout';
+import { DynamicWrapperModule } from '@neux/core';
 
 @NgModule({
   imports: [

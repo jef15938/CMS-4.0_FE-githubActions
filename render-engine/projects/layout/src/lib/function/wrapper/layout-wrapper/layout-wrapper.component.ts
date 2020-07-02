@@ -10,7 +10,7 @@ import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
 import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
 import { LayoutWrapperBase } from './layout-wrapper-base';
-import { DynamicWrapperComponent } from '../../dynamic-wrapper/component/dynamic-wrapper/dynamic-wrapper.component';
+import { DynamicWrapperComponent } from '@neux/core';
 
 @Component({
   selector: 'layoutlib-layout-wrapper',

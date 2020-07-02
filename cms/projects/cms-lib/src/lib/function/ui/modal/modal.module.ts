@@ -6,7 +6,7 @@ import { ModalCustomWrapperComponent } from './modal-custom-wrapper/modal-custom
 import { MessageModalComponent } from './component/message-modal/message-modal.component';
 import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.component';
 import { MatButtonModule } from '@angular/material/button';
-import { DynamicWrapperModule } from 'layout';
+import { DynamicWrapperModule } from '@neux/core';
 
 @NgModule({
   declarations: [

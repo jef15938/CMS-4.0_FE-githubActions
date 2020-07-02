@@ -7,7 +7,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CmsTree, CmsTreeCustomCellEvent } from './tree.interface';
-import { DynamicWrapperDirective } from 'layout';
+import { DynamicWrapperDirective } from '@neux/core';
 
 @Component({
   selector: 'cms-tree',

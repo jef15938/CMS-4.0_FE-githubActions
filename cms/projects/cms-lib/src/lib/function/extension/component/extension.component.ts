@@ -6,7 +6,7 @@ import { CMS_EXTENSION_COMPONENT_MAPPINGS } from '../../../global/injection-toke
 import { CmsExtensionComponentMapping } from '../../../global/interface';
 import { CmsUserMenuResolver } from '../../../global/service';
 import { MenuInfo } from '../../../global/api/neuxAPI/bean/MenuInfo';
-import { DynamicWrapperComponent } from 'layout';
+import { DynamicWrapperComponent } from '@neux/core';
 
 @Component({
   selector: 'cms-extension',

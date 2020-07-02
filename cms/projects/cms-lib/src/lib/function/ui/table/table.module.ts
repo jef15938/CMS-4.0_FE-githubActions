@@ -7,7 +7,7 @@ import { DirectiveModule } from './../../../global/directive/directive.module';
 import { GetTableDisplayColsPipe } from './pipe/get-table-display-cols.pipe';
 import { CellRenderOnloadPipe } from './pipe/cell-render-onload.pipe';
 import { MatButtonModule } from '@angular/material/button';
-import { DynamicWrapperModule } from 'layout';
+import { DynamicWrapperModule } from '@neux/core';
 
 @NgModule({
   imports: [

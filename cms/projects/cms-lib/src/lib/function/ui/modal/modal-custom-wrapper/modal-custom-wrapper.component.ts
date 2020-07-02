@@ -2,7 +2,7 @@ import { Component, Inject, ViewChild, ComponentRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalOpenComponentConfig } from '../modal.interface';
 import { CustomModalBase } from '../base/custom-modal-base';
-import { DynamicWrapperDirective } from 'layout';
+import { DynamicWrapperDirective } from '@neux/core';
 
 @Component({
   selector: 'cms-modal-custom-wrapper',
