@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "generate-api": "nx generate-api ./cms-apis.v1.yaml",
-    "install-layout": "npm install ../render-engine/dist/layout/layout-0.0.1.tgz",
+    "install-render": "npm install ../render-engine/dist/render/render-0.0.1.tgz",
     "pack-cms": "ng build cms-lib --prod && cd dist/cms-lib && npm pack && cd ../..",
     "install-cms": "npm install ./dist/cms-lib/neux-cms-core-0.0.1.tgz",
     "remove-cms": "npm remove @neux/cms-core"
@@ -33,8 +33,8 @@
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.1",
     "cropperjs": "^1.5.7",
-    "layout": "file:../render-engine/dist/layout/layout-0.0.1.tgz",
     "ngx-swiper-wrapper": "^9.0.1",
+    "render": "file:../render-engine/dist/render/render-0.0.1.tgz",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

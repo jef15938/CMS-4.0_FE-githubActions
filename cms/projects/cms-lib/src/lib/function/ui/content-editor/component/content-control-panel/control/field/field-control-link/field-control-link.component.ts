@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LinkFieldInfo } from 'layout';
+import { TemplateFieldSelectEvent, LinkFieldInfo } from 'render';
 
 @Component({
   selector: 'cms-field-control-link',

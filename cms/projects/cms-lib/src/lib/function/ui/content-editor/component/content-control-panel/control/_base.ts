@@ -1,5 +1,5 @@
 import { Input, Output, EventEmitter, Directive } from '@angular/core';
-import { LayoutWrapperSelectEvent } from 'layout';
+import { LayoutWrapperSelectEvent } from 'render';
 
 @Directive()
 export abstract class ContentControlBase {

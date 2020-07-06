@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { DataSourceTemplateInfo, LayoutWrapperSelectEvent } from 'layout';
+import { DataSourceTemplateInfo, LayoutWrapperSelectEvent } from 'render';
 
 @Component({
   selector: 'cms-template-control-data-source',

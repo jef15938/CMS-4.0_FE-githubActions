@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   IconPageComponent, SliderComponent, TabDemoComponent, FieldsDemoComponent, GroupTemplateDemoComponent, DataSourceDemoComponent
-} from 'layout';
+} from 'render';
 
 @Injectable({
   providedIn: 'root'

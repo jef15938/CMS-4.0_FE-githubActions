@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldTextareaDirective } from 'layout';
+import { TemplateFieldSelectEvent, LayoutFieldTextareaDirective } from 'render';
 
 @Component({
   selector: 'cms-field-control-textarea',

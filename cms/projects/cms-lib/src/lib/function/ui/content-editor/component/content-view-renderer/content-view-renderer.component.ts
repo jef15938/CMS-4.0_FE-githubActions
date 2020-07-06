@@ -6,7 +6,7 @@ import {
   LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperSelectedTargetType,
   LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective,
   LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective
-} from 'layout';
+} from 'render';
 import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentTemplateInfo } from './../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';

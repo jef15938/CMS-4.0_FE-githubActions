@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldImgDirective, ImgFieldInfo } from 'layout';
+import { TemplateFieldSelectEvent, LayoutFieldImgDirective, ImgFieldInfo } from 'render';
 
 @Component({
   selector: 'cms-field-control-img',

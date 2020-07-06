@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective } from 'layout';
+import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective } from 'render';
 
 @Component({
   selector: 'cms-field-control-bgimg',
