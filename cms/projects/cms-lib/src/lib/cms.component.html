@@ -17,8 +17,16 @@
           </button>
           <span style="margin-left: 1rem;">Header</span>
           <span class="example-spacer"></span>
-          <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user
+          <mat-icon class="example-icon" aria-hidden="false" aria-label="Settings" #menuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="appMenu">
+            settings
           </mat-icon>
+          <mat-menu #appMenu="matMenu">
+            <button type="button" tabindex="0" mat-menu-item (click)="logout()">
+              <mat-icon>power_settings_new</mat-icon>
+              登出
+            </button>
+          </mat-menu>
         </mat-toolbar-row>
       </mat-toolbar>
     </div>

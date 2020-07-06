@@ -1,1 +1,52 @@
-<p>login works!</p>
+<div class="container" style="background-image: url('assets/img/CMS-login-bg.png');">
+  <div class="welcome-txt">
+    <p>Welcome !</p>
+  </div>
+  <div class="all-login">
+
+    <div class="CMS-login-left" style="background-image: url('assets/img/CMS-login-left-cover-bg.png');">
+      <div class="login-CI">
+        <div class="logo">
+          <img src="assets/img/CMS-logo-vertical.png">
+        </div>
+
+      </div>
+    </div>
+    <form class="form-signin" id="form" action="auth?action=login" method="post">
+      <div class="projectitems">
+        <div class="title main-title CMS-main-color">Login</div>
+        <div class="selectitems">
+          <p>/</p>
+
+        </div>
+      </div>
+      <div class="login">
+        <p class="account">
+          <input type="text" name="username" class="form-control" placeholder="使用者帳號" required="" autofocus="">
+        </p>
+
+        <p class="password">
+          <input type="password" name="password" class="form-control" placeholder="使用者密碼" required=""
+            autocomplete="off">
+        </p>
+
+        <p class="account">
+          <input type="text" autocomplete="off" name="validNumber" class="form-control" placeholder="驗證碼" required=""
+            autofocus="">
+          <img src="garden?action=createValidNumber&amp;validType=simple&amp;v=1594007682191" id="validNumberImg">
+          <span class="refreshh">
+            <a href="#" id="validNumberRefresh">
+              <img src="assets/img/CMS-reload.png">
+            </a>
+          </span>
+        </p>
+        <input class="btn CMS-main-bgcolor" type="submit" value="Login">
+
+
+      </div>
+
+    </form>
+  </div>
+
+
+</div>

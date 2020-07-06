@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
@@ -48,7 +48,9 @@ export class AuthorizationService {
    * @memberof AuthorizationService
    */
   logout() {
-    return this.respAPIService.dispatchRestApi('GetLogout', {});
+    return this.respAPIService.dispatchRestApi('GetLogout', {}).pipe(
+      tap(_ => localStorage.clear()),
+    );
   }
 
   /**
