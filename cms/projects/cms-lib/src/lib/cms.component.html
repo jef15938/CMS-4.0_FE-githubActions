@@ -15,18 +15,23 @@
           <button type="button" tabindex="0" mat-icon-button (click)="SideNav.toggle()">
             <mat-icon style="vertical-align: middle;">list</mat-icon>
           </button>
-          <span style="margin-left: 1rem;">Header</span>
-          <span class="example-spacer"></span>
-          <mat-icon class="example-icon" aria-hidden="false" aria-label="Settings" #menuTrigger="matMenuTrigger"
-            [matMenuTriggerFor]="appMenu">
-            settings
-          </mat-icon>
-          <mat-menu #appMenu="matMenu">
-            <button type="button" tabindex="0" mat-menu-item (click)="logout()">
-              <mat-icon>power_settings_new</mat-icon>
-              登出
-            </button>
-          </mat-menu>
+          <div class="account">
+            <div class="pic">
+              <img src="assets/img/CMS-person.png">
+            </div>
+            <div class="username">admin</div>
+            <mat-icon class="setting-btn" aria-hidden="false" aria-label="Settings" #menuTrigger="matMenuTrigger"
+              [matMenuTriggerFor]="appMenu">
+              settings
+            </mat-icon>
+            <mat-menu #appMenu="matMenu">
+              <button type="button" tabindex="0" mat-menu-item (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon>
+                登出
+              </button>
+            </mat-menu>
+          </div>
+
         </mat-toolbar-row>
       </mat-toolbar>
     </div>

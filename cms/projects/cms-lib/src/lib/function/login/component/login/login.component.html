@@ -34,9 +34,7 @@
           <input type="text" autocomplete="off" name="validNumber" class="form-control" placeholder="驗證碼" required=""
             autofocus="" [(ngModel)]="validationCode" #modelValidationCode="ngModel"
             [class.has-error]="modelValidationCode.invalid">
-          <img
-            src="https://garden.decoder.com.tw/demo_cms/garden?action=createValidNumber&amp;validType=simple&amp;v=1594007682191"
-            id="validNumberImg">
+          <img src="garden?action=createValidNumber&amp;validType=simple&amp;v=1594007682191" id="validNumberImg">
           <span class="refreshh">
             <a href="#" id="validNumberRefresh">
               <img src="assets/img/CMS-reload.png">
