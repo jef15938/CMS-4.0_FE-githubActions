@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { concat, Subject, of, Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
+import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../global/api/service';
 import { PageInfo } from '../../../../global/api/neuxAPI/bean/PageInfo';
@@ -13,6 +13,8 @@ import { GalleryCategoryMaintainModalComponent } from '../gallery-category-maint
 import { UploadGalleryModalComponent } from '../upload-gallery-modal/upload-gallery-modal.component';
 import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from '../gallery-action-cell/gallery-action-cell.component';
 import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell.component';
+import { CMS_ENVIROMENT } from '../../../../global/injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../../global/interface/cms-enviroment.interface';
 
 @Component({
   selector: 'cms-gallery',
@@ -63,11 +65,16 @@ export class GalleryComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   private categorySelected$ = new Subject<GalleryCategoryInfo>();
 
+  galleryShowUrl = '';
+
   constructor(
+    @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
     private galleryService: GalleryService,
     private authorizationService: AuthorizationService,
     private modalService: ModalService,
-  ) { }
+  ) {
+    this.galleryShowUrl = `${environment.apiBaseUrl}/Gallery/Show`;
+  }
 
   ngOnInit(): void {
     this.init().subscribe();
@@ -178,6 +185,25 @@ export class GalleryComponent implements OnInit, OnDestroy {
     }
   }
 
+  copyToClipBoard(text: string) {
+    const input = document.getElementById('clipBoardInput') as HTMLInputElement;
+    input.setAttribute('type', 'text');
+    input.setAttribute('value', text);
+    input.select();
+    try {
+      console.warn('input.value = ', input.value);
+      const successful = document.execCommand('copy');
+      const msg = successful ? 'successful' : 'unsuccessful';
+      input.setAttribute('type', 'hidden');
+      alert('Testing code was copied ' + msg);
+    } catch (err) {
+      alert('Oops, unable to copy');
+    }
+
+    /* unselect the range */
+    window.getSelection().removeAllRanges();
+  }
+
   onTableCustomEvent(event) {
     if (event instanceof GalleryActionCellCustomEvent) {
       let action: Observable<any>;
@@ -189,6 +215,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
           action = this.galleryService.deleteGallery(event.data.gallery_id).pipe(
             map(_ => 'Deleted')
           );
+          break;
+        case event.ActionType.CopyUrl:
+          this.copyToClipBoard(`${this.galleryShowUrl}/${event.data.gallery_id}`);
+          action = NEVER;
           break;
       }
 

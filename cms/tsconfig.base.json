@@ -20,9 +20,9 @@
         "src/app/*"
       ],
       "@neux/cms-core": [
-        // "projects/cms-lib/src/public-api",
-        "dist/cms-lib",
-        "dist/cms-lib/lib",
+        "projects/cms-lib/src/public-api",
+        // "dist/cms-lib",
+        // "dist/cms-lib/lib",
       ],
     },
     "noImplicitAny": false,

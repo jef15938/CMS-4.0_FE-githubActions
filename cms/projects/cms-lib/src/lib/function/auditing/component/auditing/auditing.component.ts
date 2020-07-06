@@ -85,7 +85,7 @@ export class AuditingComponent implements OnInit {
 
   onCustomEvent(event: AuditingActionCellCustomEvent) {
     if (event instanceof AuditingActionCellCustomEvent) {
-      if (event.action === event.ActionType.Approve || event.ActionType.Refuse) {
+      if (event.action === event.ActionType.Approve || event.action === event.ActionType.Refuse) {
         let status: AuditingApproveStatus;
         switch (event.action) {
           case event.ActionType.Approve:
