@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <form class="form-signin" #form="ngForm">
+    <form class="form-signin" #form="ngForm" (submit)="login()">
       <div class="projectitems">
         <div class="title main-title CMS-main-color">Login</div>
         <div class="selectitems">
@@ -44,7 +44,7 @@
           </span>
         </p>
 
-        <input class="btn CMS-main-bgcolor" type="button" value="Login" (click)="login()" [disabled]="form.invalid">
+        <input class="btn CMS-main-bgcolor" type="submit" value="Login" [disabled]="form.invalid">
       </div>
     </form>
   </div>
