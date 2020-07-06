@@ -11,7 +11,7 @@
     <li *ngFor="let file of files" [@fadeInOut]="file.state">
       <mat-progress-bar [value]="file.progress"></mat-progress-bar>
       <span id="file-label">
-        {{file.data.name}}
+        {{file.data.name}} : [{{file.progress}}]
         <a title="crop" (click)="cropFile(file)">
           <mat-icon>open_in_new</mat-icon>
         </a>
@@ -28,7 +28,7 @@
 
   <br>
   <div>
-    <button type="button" tabindex="0" mat-button (click)="upload()">Upload</button>
+    <button type="button" tabindex="0" mat-button (click)="uploadFiles()">Upload</button>
   </div>
 
 </div>

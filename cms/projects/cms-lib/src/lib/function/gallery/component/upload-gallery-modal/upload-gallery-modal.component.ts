@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, Inject } from '@angular/core';
 import { HttpRequest, HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Subscription, of, Observable } from 'rxjs';
@@ -7,6 +7,8 @@ import { GalleryService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
 import { ColDef } from '../../../ui/table';
 import { CropperService } from '../../../ui/cropper';
+import { CMS_ENVIROMENT } from '../../../../global/injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../../global/interface/cms-enviroment.interface';
 
 export class FileUploadModel {
   fileName: string;
@@ -76,6 +78,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   constructor(
     private http: HttpClient,
     private cropperService: CropperService,
+    @Inject(CMS_ENVIROMENT) private environment: CmsEnviroment,
     private galleryService: GalleryService,
     private changeDetectorRef: ChangeDetectorRef,
   ) { super(); }
@@ -100,7 +103,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       fileSize: file.size,
       fileType: file.type,
       data: file,
-      state: 'in',
+      state: '',
       inProgress: false,
       progress: 0,
       canRetry: false,
@@ -126,7 +129,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     if (file.sub) {
       file.sub.unsubscribe();
     }
-    this.removeFileFromArray(file);
+    // this.removeFileFromArray(file);
   }
 
   cropFile(file: FileUploadModel) {
@@ -156,16 +159,18 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   private uploadFile(file: FileUploadModel) {
-    const fd = new FormData();
-    fd.append(this.param, file.data);
+    const formData = new FormData();
+    formData.append(this.param, file.data);
+    // formData.append('description', file.data.name);
 
-    const req = new HttpRequest('POST', this.target, fd, {
+    const req = new HttpRequest('POST', `${this.environment.apiBaseUrl}/Gallery/${this.categoryId}`, formData, {
       reportProgress: true
     });
 
     file.inProgress = true;
     file.sub = this.http.request(req).pipe(
       map(event => {
+        console.warn('uploadFile() event = ', event);
         switch (event.type) {
           case HttpEventType.UploadProgress:
             file.progress = Math.round(event.loaded * 100 / event.total);
@@ -175,30 +180,59 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
         }
         return null;
       }),
-      tap(message => { }),
       last(),
       catchError((error: HttpErrorResponse) => {
+        console.warn('uploadFail', error);
         file.inProgress = false;
         file.canRetry = true;
         return of(`${file.data.name} upload failed.`);
       })
-    ).subscribe(
-      (event: any) => {
-        if (typeof (event) === 'object') {
-          this.removeFileFromArray(file);
-          this.complete.emit(event.body);
-        }
-      }
-    );
+    ).subscribe(_ => {
+      file.inProgress = false;
+      file.canRetry = false;
+      file.canCancel = false;
+    });
+
+    // file.sub = this.http.request(req).pipe(
+    //   map(event => {
+    //     console.warn('uploadFile() event = ', event);
+    //     switch (event.type) {
+    //       case HttpEventType.UploadProgress:
+    //         file.progress = Math.round(event.loaded * 100 / event.total);
+    //         return null;
+    //       case HttpEventType.Response:
+    //         return event;
+    //     }
+    //     return null;
+    //   }),
+    //   tap(message => { }),
+    //   last(),
+    //   catchError((error: HttpErrorResponse) => {
+    //     file.inProgress = false;
+    //     file.canRetry = true;
+    //     return of(`${file.data.name} upload failed.`);
+    //   })
+    // ).subscribe(
+    //   (event: any) => {
+    //     if (typeof (event) === 'object') {
+    //       // this.removeFileFromArray(file);
+    //       // this.complete.emit(event.body);
+    //     }
+    //   }
+    // );
   }
 
-  private uploadFiles() {
+  uploadFiles() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.value = '';
 
-    this.files.forEach(file => {
-      this.uploadFile(file);
-    });
+    // forkJoin(this.files.map(file => this.uploadFile(file))).subscribe(() => {
+    //   alert('Complete');
+    // });
+
+    // this.files.forEach(file => {
+    //   this.uploadFile(file);
+    // });
   }
 
   private removeFileFromArray(file: FileUploadModel) {
