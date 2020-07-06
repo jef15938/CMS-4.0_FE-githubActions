@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DialogFlowMessengerService } from './global/service';
 import { RippleScreen } from './global/util/cfx';
-import { MatSidenav } from '@angular/material/sidenav';
+import { AuthorizationService } from './global/api/service';
+
 @Component({
   selector: 'cms-cms',
   templateUrl: './cms.component.html',
@@ -10,21 +11,28 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class CmsComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('MenuContainer') menuContainer: ElementRef;
+
   menus = [];
 
   constructor(
-    private route: ActivatedRoute,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authorizationService: AuthorizationService,
     private dialogFlowMessengerService: DialogFlowMessengerService,
   ) { }
-  @ViewChild('MenuContainer') menuContainer: ElementRef;
 
   ngOnInit(): void {
-    this.menus = this.route.snapshot.data.menus;
+    this.menus = this.activatedRoute.snapshot.data.menus;
   }
-  ngAfterViewInit(){
+
+  ngAfterViewInit() {
     const menuContainerEle = this.menuContainer.nativeElement;
     const rippleFx = new RippleScreen(menuContainerEle);
   }
 
+  logout() {
+    this.authorizationService.logout().subscribe(_ => this.router.navigate(['login']));
+  }
 
 }
