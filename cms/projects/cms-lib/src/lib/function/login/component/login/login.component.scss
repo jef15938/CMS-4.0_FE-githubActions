@@ -507,3 +507,7 @@ input.btn:active {
 ::-webkit-scrollbar-corner {
   display: none;
 }
+
+input.has-error {
+  border-bottom: red 1px solid !important;
+}

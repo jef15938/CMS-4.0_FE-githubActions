@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DialogFlowMessengerService } from './global/service';
 import { RippleScreen } from './global/util/cfx';
 import { AuthorizationService } from './global/api/service';
@@ -16,7 +16,6 @@ export class CmsComponent implements OnInit, AfterViewInit {
   menus = [];
 
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private authorizationService: AuthorizationService,
     private dialogFlowMessengerService: DialogFlowMessengerService,
@@ -32,7 +31,7 @@ export class CmsComponent implements OnInit, AfterViewInit {
   }
 
   logout() {
-    this.authorizationService.logout().subscribe(_ => this.router.navigate(['login']));
+    this.authorizationService.logout().subscribe();
   }
 
 }

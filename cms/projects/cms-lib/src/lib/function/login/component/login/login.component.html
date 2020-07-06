@@ -9,44 +9,44 @@
         <div class="logo">
           <img src="assets/img/CMS-logo-vertical.png">
         </div>
-
       </div>
     </div>
-    <form class="form-signin" id="form" action="auth?action=login" method="post">
+
+    <form class="form-signin" #form="ngForm">
       <div class="projectitems">
         <div class="title main-title CMS-main-color">Login</div>
         <div class="selectitems">
           <p>/</p>
-
         </div>
       </div>
       <div class="login">
         <p class="account">
-          <input type="text" name="username" class="form-control" placeholder="使用者帳號" required="" autofocus="">
+          <input type="text" name="username" class="form-control" placeholder="使用者帳號" required="" autofocus=""
+            [(ngModel)]="username" #modelUsername="ngModel" [class.has-error]="modelUsername.invalid">
         </p>
 
         <p class="password">
-          <input type="password" name="password" class="form-control" placeholder="使用者密碼" required=""
-            autocomplete="off">
+          <input type="password" name="password" class="form-control" placeholder="使用者密碼" required="" autocomplete="off"
+            [(ngModel)]="password" #modelPassword="ngModel" [class.has-error]="modelPassword.invalid">
         </p>
 
         <p class="account">
           <input type="text" autocomplete="off" name="validNumber" class="form-control" placeholder="驗證碼" required=""
-            autofocus="">
-          <img src="garden?action=createValidNumber&amp;validType=simple&amp;v=1594007682191" id="validNumberImg">
+            autofocus="" [(ngModel)]="validationCode" #modelValidationCode="ngModel"
+            [class.has-error]="modelValidationCode.invalid">
+          <img
+            src="https://garden.decoder.com.tw/demo_cms/garden?action=createValidNumber&amp;validType=simple&amp;v=1594007682191"
+            id="validNumberImg">
           <span class="refreshh">
             <a href="#" id="validNumberRefresh">
               <img src="assets/img/CMS-reload.png">
             </a>
           </span>
         </p>
-        <input class="btn CMS-main-bgcolor" type="submit" value="Login">
 
-
+        <input class="btn CMS-main-bgcolor" type="button" value="Login" (click)="login()" [disabled]="form.invalid">
       </div>
-
     </form>
   </div>
-
 
 </div>

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, concatMap } from 'rxjs/operators';
 
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { LoginRequest } from '../../neuxAPI/bean/LoginRequest';
 import { LoginInfo } from '../../neuxAPI/bean/LoginInfo';
 import { LoginResponse } from '../../neuxAPI/bean/LoginResponse';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ import { LoginResponse } from '../../neuxAPI/bean/LoginResponse';
 export class AuthorizationService {
 
   constructor(
-    private respAPIService: RestApiService
+    private respAPIService: RestApiService,
+    private router: Router,
   ) { }
 
   /**
@@ -38,7 +40,9 @@ export class AuthorizationService {
       validation_code: validationCode,
     };
 
-    return this.respAPIService.dispatchRestApi('PostLogin', { requestBody });
+    return this.respAPIService.dispatchRestApi('PostLogin', { requestBody }).pipe(
+      tap(_ => this.router.navigate([''])),
+    );
   }
 
   /**
@@ -49,7 +53,10 @@ export class AuthorizationService {
    */
   logout() {
     return this.respAPIService.dispatchRestApi('GetLogout', {}).pipe(
-      tap(_ => localStorage.clear()),
+      tap(_ => {
+        localStorage.clear();
+        this.router.navigate(['login']);
+      }),
     );
   }
 
