@@ -81,10 +81,15 @@
             <div class="column-label">{{col.display_text}}</div>
             <div class="column-content">{{col.value}}</div>
           </ng-container>
-          <!-- Editor -->
+          <!-- EDITOR -->
           <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.EDITOR">
             <div class="column-label">{{col.display_text}}</div>
-            <button type="button" mat-button (click)="openContentEditor(col)">編輯</button>
+            <button type="button" mat-button (click)="openContentEditor(col)">編輯 Content</button>
+          </ng-container>
+          <!-- HTMLEDITOR -->
+          <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.HTMLEDITOR">
+            <div class="column-label">{{col.display_text}}</div>
+            <button type="button" mat-button (click)="openHtmlEditor(col)">編輯 Html</button>
           </ng-container>
         </ng-container>
       </div>

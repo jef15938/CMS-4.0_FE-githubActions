@@ -9,6 +9,7 @@ import { FarmFormComp } from '../../farm.interface';
 import { ContentEditorService, EditorMode } from './../../../content-editor';
 import { ContentService } from '../../../../../global/api/service';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
+import { HtmlEditorService } from '../../../html-editor';
 
 @Component({
   selector: 'cms-farm-form-info',
@@ -30,6 +31,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   constructor(
     private contentService: ContentService,
     private contentEditorService: ContentEditorService,
+    private htmlEditorService: HtmlEditorService,
   ) { }
 
   ngOnInit(): void {
@@ -226,6 +228,17 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       }).subscribe((res: ContentInfo) => {
         column.value = res ? JSON.stringify(res) : '';
       });
+    });
+  }
+
+  openHtmlEditor(column: CmsFarmFormColumn) {
+    this.htmlEditorService.openEditor({
+      // title: `Html編輯`,
+      content: column.value
+    }).subscribe(content => {
+      if (content || content === '') {
+        column.value = content;
+      }
     });
   }
 

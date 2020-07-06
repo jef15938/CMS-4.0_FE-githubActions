@@ -187,7 +187,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
       title: `Html編輯`,
       content: ''
     }).subscribe(content => {
-      if (content) {
+      if (content || content === '') {
         console.warn('content = ', content);
       }
     });
