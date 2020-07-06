@@ -28,11 +28,54 @@
       "func_name": "網站管理",
       "component_id ": "web",
       "children": [{
-        "func_id": "corporate-responsibility",
-        "func_name": "企業社會責任輪播",
-        "component_id": "corporate-responsibility",
-        "children": []
-      }]
+          "func_id": "qa-temp",
+          "func_name": "常見問題管理",
+          "component_id": "qa-temp",
+          "children": []
+        },
+        {
+          "func_id": "qa-type",
+          "func_name": "常見問題分類管理",
+          "component_id": "qa-type",
+          "children": []
+        },
+        {
+          "func_id": "news-temp",
+          "func_name": "最新消息管理",
+          "component_id": "news-temp",
+          "children": []
+        },
+        {
+          "func_id": "news-type",
+          "func_name": "最新消息分類管理",
+          "component_id": "news-type",
+          "children": []
+        },
+        {
+          "func_id": "slider-temp",
+          "func_name": "輪播管理",
+          "component_id": "slider-temp",
+          "children": []
+        },
+        {
+          "func_id": "slider-type",
+          "func_name": "輪播分類管理",
+          "component_id": "slider-type",
+          "children": []
+        },
+        {
+          "func_id": "form-download-temp",
+          "func_name": "表單下載管理",
+          "component_id": "form-download-temp",
+          "children": []
+        },
+        {
+          "func_id": "form-download-type",
+          "func_name": "表單下載分類管理",
+          "component_id": "form-download-type",
+          "children": []
+        }
+      ]
     },
     {
       "func_id": "chatbot",
