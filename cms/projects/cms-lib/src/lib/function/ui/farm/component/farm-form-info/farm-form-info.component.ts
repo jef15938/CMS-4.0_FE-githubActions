@@ -6,6 +6,9 @@ import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../../global/mode
 import { CmsFarmFormColumnDisplayType } from './../../../../../global/enum';
 import { CmsValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm.interface';
+import { ContentEditorService, EditorMode } from './../../../content-editor';
+import { ContentService } from '../../../../../global/api/service';
+import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 
 @Component({
   selector: 'cms-farm-form-info',
@@ -24,7 +27,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   columnTrigger = new Subject<CmsFarmFormColumn>();
 
-  constructor() { }
+  constructor(
+    private contentService: ContentService,
+    private contentEditorService: ContentEditorService,
+  ) { }
 
   ngOnInit(): void {
     this.rows = this.createRows(this.farmFormInfo);
@@ -207,6 +213,20 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       // TODO:
 
     }
+  }
+
+  openContentEditor(column: CmsFarmFormColumn) {
+    const contentInfo = JSON.parse(column.value);
+    const controlId = 'farm-control-id';
+    this.contentService.getTemplateByControlID(controlId).subscribe(selectableTemplates => {
+      this.contentEditorService.openEditor({
+        contentInfo,
+        selectableTemplates,
+        mode: EditorMode.EDIT,
+      }).subscribe((res: ContentInfo) => {
+        column.value = res ? JSON.stringify(res) : '';
+      });
+    });
   }
 
 }

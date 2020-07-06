@@ -27,9 +27,8 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
     this.modalRef.addPanelClass('cms-content-editor-container-modal');
   }
 
-  close() {
-    // alert('Modal close()');
-    super.close();
+  close(currentContentInfo: ContentInfo) {
+    super.close(currentContentInfo);
   }
 
   save(event: ContentEditorSaveEvent) {
