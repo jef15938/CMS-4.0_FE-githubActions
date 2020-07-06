@@ -1,0 +1,14 @@
+.tab-list{
+    display: inline-flex;
+    li{
+        list-style: none;
+        +li{
+            margin-left: 50px;
+            
+        }
+    }
+}
+.content{
+    position: relative;
+
+}

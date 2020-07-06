@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^9.1.1",
-    "@angular/core": "^9.1.1"
-},
+    "@angular/core": "^9.1.1",
+    "@neux/core": "^0.1.9",
+    "ngx-swiper-wrapper": "^9.0.1"
+  },
   "dependencies": {
     "tslib": "^2.0.0"
   }

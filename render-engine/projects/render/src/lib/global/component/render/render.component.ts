@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ContentInfo } from '@layout';
-import { RenderService } from '../../service/render.service';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, tap } from 'rxjs/operators';
+import { ContentInfo } from '../../interface';
+import { RenderService } from '../../service/render.service';
 
 @Component({
   selector: 'lib-render',

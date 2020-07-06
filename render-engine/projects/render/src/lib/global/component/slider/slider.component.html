@@ -1,0 +1,11 @@
+<div class="swiper-container" [style.height]="templateInfo.attributes['height']">
+  <p>swiper</p>
+  <swiper class="swiper" [config]="config" [disabled]="disabled" (indexChange)="onIndexChange($event)"
+    (swiperTransitionStart)="onSwiperEvent('transitionStart')" (swiperTransitionEnd)="onSwiperEvent('transitionEnd')">
+    <div *ngFor="let slide of slides" class="swiper-slide">
+      <div>
+        {{slide}}
+      </div>
+    </div>
+  </swiper>
+</div>

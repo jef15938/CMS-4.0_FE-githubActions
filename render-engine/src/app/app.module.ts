@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RenderModule } from '@render';
 import { DynamicComponentFactoryService } from './dynamic-component-factory.service';
-import { LayoutModule, COMPONENT_SERVICE_TOKEN } from '@layout';
+import { WrapperModule, COMPONENT_SERVICE_TOKEN } from '@render';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { LayoutModule, COMPONENT_SERVICE_TOKEN } from '@layout';
     BrowserAnimationsModule,
     AppRoutingModule,
     RenderModule,
-    LayoutModule
+    WrapperModule,
   ],
   providers: [
     {

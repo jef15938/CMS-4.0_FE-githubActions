@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ContentInfo } from '@layout';
-import * as CONTENT from './render.service.mock-data.json';
 import { Observable, of } from 'rxjs';
+import { ContentInfo } from '../interface';
+import * as CONTENT from './render.service.mock-data.json';
 
 @Injectable({
   providedIn: 'root'
