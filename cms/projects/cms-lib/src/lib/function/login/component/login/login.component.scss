@@ -1,0 +1,509 @@
+/* ------- color chage -------- */
+/* main: #71d306 -> #82b21e;	*/
+/* main-hover: #457409; 		*/
+/* ---------------------------- */
+
+@charset "utf-8";
+
+html {
+  background-color: #0065ac;
+  font-family: Arial;
+}
+
+p {
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+
+p.right {
+  font-size: 0.6em;
+  text-align: left;
+  color: #999898;
+}
+
+#form .title {
+  text-align: center;
+}
+
+.main-title {
+  font-family: "EuphemiaUCAS*";
+  font-size: 3.2em;
+  color: #fff;
+}
+
+.sub-title {
+  font-family: Arial;
+  font-size: 1.0em;
+  letter-spacing: 0.11em;
+  color: #DBDCDC;
+  margin-bottom: 2%;
+}
+
+.try {
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 00 20px 18px 20px;
+  border-color: transparent transparent #DBDCDC transparent;
+  margin-left: 46%;
+}
+
+.btn {
+  font-family: "EuphemiaUCAS*";
+  font-size: 1.2em;
+  color: #fff;
+  background-color: #0065ac;
+  border: none;
+  width: 92%;
+  padding: 6px;
+
+  margin-bottom: 20%;
+}
+
+.login {
+  text-align: center;
+  background-color: #DBDCDC;
+  padding: 14% 8% 4% 8%;
+  border-radius: 10px;
+  color: #595757;
+  font-family: "蘋果儷中黑";
+  margin: 0 10%;
+}
+
+.form-signin {
+  max-width: 24em;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.container {
+  margin: 0 auto;
+  margin-top: 5em;
+}
+
+.form-control {
+  width: 75%;
+
+  height: 1.8em;
+}
+
+input {
+  border: none;
+  font-size: 0.7em;
+  margin-left: 2%;
+}
+
+.right-mini {
+  display: none;
+}
+
+@media screen and (max-width: 320px) {
+  p {
+    font-size: 1em;
+  }
+
+  .container {
+    margin-top: 3em;
+  }
+
+  .main-title {
+    font-size: 2.4em;
+  }
+
+  .sub-title {
+    font-size: 0.8em;
+    letter-spacing: 0.08em;
+  }
+
+  .login {
+    padding: 8%;
+    border-radius: 15px;
+  }
+
+  .form-control {
+    width: 67%;
+  }
+
+  .btn {
+    font-size: 1em;
+    width: 85%;
+  }
+
+  .right {
+    display: none;
+  }
+
+  .right-mini {
+    display: block;
+    font-size: 0.5em;
+    text-align: left;
+    color: #999898;
+  }
+
+  .try {
+    margin-left: 44%;
+  }
+}
+
+
+
+
+
+
+/*2017/10/30---CMS美化*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: '微軟正黑體', MicrosoftJhengHei;
+}
+
+html {
+  background-color: transparent;
+}
+
+.CMS-main-color {
+  color: #82b21e;
+}
+
+.CMS-main-bgcolor {
+  background-color: #82b21e;
+}
+
+.container {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  // background-image: url('./assets/img/CMS-login (34).png');
+  height: 100%;
+  margin-top: 0;
+  padding-top: 80px;
+  position: absolute;
+  width: 100%;
+}
+
+input.btn.CMS-main-bgcolor:hover,
+input.btn.CMS-main-bgcolor:active {
+  background-color: #457409;
+  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.23);
+}
+
+.welcome-txt {
+  margin-bottom: 52px;
+}
+
+.welcome-txt p {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 2.2px;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.38);
+}
+
+.all-login {
+  width: 798px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.35);
+  font-size: 0;
+  margin: auto;
+  background-image: none !important;
+}
+
+.all-login .CMS-login-left {
+  width: 326px;
+  height: 403px;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 16px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.all-login .CMS-login-left .login-CI {}
+
+.all-login .CMS-login-left .login-CI .logo {
+  width: 109px;
+  height: 109px;
+  margin: 77px auto 0 auto;
+}
+
+.all-login .CMS-login-left .login-CI .logo img {
+  width: 109px;
+  height: 109px;
+}
+
+.all-login .CMS-login-left .login-CI .ul-items {
+  padding-top: 90px;
+  padding-left: 72px;
+}
+
+.all-login .CMS-login-left .login-CI .ul-items .ul-li-items {
+  margin-bottom: 11px;
+  color: #fafafa;
+  list-style-type: circle;
+}
+
+.all-login .CMS-login-left .login-CI .ul-items .ul-li-items a {
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  text-align: left;
+  color: #fafafa;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
+  text-decoration: none;
+}
+
+.form-signin {
+  width: auto;
+  max-width: none;
+  text-align: left;
+  background-color: #ffffff;
+  padding: 56px 92px 54px 70px;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 16px;
+}
+
+.projectitems {
+  font-size: 0;
+  margin-bottom: 20px;
+}
+
+.projectitems .main-title {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 2.2px;
+  text-align: left;
+  color: #82b21e;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 16px;
+}
+
+.projectitems .selectitems {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 16px;
+  padding-top: 10px;
+}
+
+.projectitems .selectitems p {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  text-align: left;
+  color: #737373;
+  display: none;
+}
+
+.projectitems .selectitems .items {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  width: 125px;
+  display: none;
+}
+
+.projectitems .selectitems .items select {
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  text-align: left;
+  color: #737373;
+  border: 0;
+  padding: 0 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.projectitems .selectitems .items select:focus {
+  outline: 0;
+}
+
+.projectitems .selectitems .items:after {
+  content: '';
+  position: absolute;
+  right: 0px;
+  top: 8px;
+  bottom: 0;
+  margin: auto;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #82b21e;
+  border-left: 5px solid transparent;
+}
+
+.login {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+}
+
+.login .account {
+  padding: 3px 0 9px 0;
+  font-size: 0;
+}
+
+.login .password {
+  padding: 3px 0 9px 0;
+}
+
+.login .account:first-child input {
+  width: 306px;
+  border-bottom: solid 1px #9b9b9b;
+  height: 40px;
+  margin-right: 0px;
+}
+
+.login .password input {
+  width: 306px;
+  border-bottom: solid 1px #9b9b9b;
+  height: 40px;
+  color: #4a4a4a;
+  margin-left: 0%;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+}
+
+.login .account input {
+  width: 153px;
+  border-bottom: solid 1px #9b9b9b;
+  height: 40px;
+  margin-right: 20px;
+  color: #4a4a4a;
+  margin-left: 0%;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+}
+
+.login .password input:focus,
+.login .account input:focus {
+  outline: 0;
+}
+
+.account img {
+  width: 105px;
+  max-width: 105px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.refreshh {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 20px;
+  padding-left: 15px;
+}
+
+.refreshh img {
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+input.btn {
+  width: 89px;
+  border-radius: 37px;
+  font-family: MicrosoftJhengHei;
+  background-color: #82b21e;
+  font-size: 16px;
+  line-height: 21px;
+  letter-spacing: 1.3px;
+  text-align: center;
+  /*color: #122101;*/
+  color: #ffffff;
+  margin-bottom: 0;
+  padding: 4px 6px 6px 6px;
+  cursor: pointer;
+  margin-top: 33px;
+}
+
+input.btn:focus {
+  outline-style: none;
+}
+
+input.btn:hover,
+input.btn:active {
+  border-radius: 37px;
+  background-color: #92aa4f;
+  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.23);
+  color: #ffffff;
+}
+
+@media only screen and (min-width: 320px) and (max-width:1023px) {
+  .all-login {
+    width: 100%;
+  }
+
+  .form-signin {
+    padding: 56px 65px 54px 65px;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width:767px) {
+  .all-login .CMS-login-left {
+    display: block;
+    width: auto;
+    background-position: center;
+  }
+
+  .form-signin {
+    display: block;
+    padding: 56px 30px 54px 30px;
+  }
+
+  .all-login .CMS-login-left .login-CI .logo {
+    height: auto;
+    padding-top: 77px;
+    margin: auto;
+  }
+
+  .login .account:first-child input {
+    width: 100%;
+    max-width: 306px;
+  }
+
+  .login .password input {
+    width: 100%;
+    max-width: 306px;
+  }
+
+  .login .account input {
+    width: 100px;
+  }
+}
+
+/*2017/10/30---CMS美化*/
+
+
+/* ---------------------------------------------------------------------- */
+/*  Browser Scroll Bar
+/* ---------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  opacity: 0;
+  background: rgba(204, 204, 204, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 0px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  background-color: rgba(66, 66, 66, 0.3);
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
