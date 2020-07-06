@@ -6,18 +6,11 @@
 */
 {
   "files": [],
-  "references": [
-    {
+  "references": [{
       "path": "./tsconfig.app.json"
     },
     {
       "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/layout/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/layout/tsconfig.spec.json"
     },
     {
       "path": "./projects/render/tsconfig.lib.json"
