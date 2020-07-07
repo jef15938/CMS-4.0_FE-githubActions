@@ -8,6 +8,7 @@ import { SiteGetResponse } from '../../neuxAPI/bean/SiteGetResponse';
 import { SiteInfo } from '../../neuxAPI/bean/SiteInfo';
 import { SiteMapNodeInfo } from '../../neuxAPI/bean/SiteMapNodeInfo';
 import { SiteMapInfo } from '../../neuxAPI/bean/SiteMapInfo';
+import { UserSiteMapPutRequest } from '../../neuxAPI/bean/UserSiteMapPutRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -154,20 +155,25 @@ export class SitemapService {
     if (!nodeOrders) { throw new ParamsError('nodeOrders', 'updateSiteNode', 'string', nodeOrders); }
     if (!metaTitle) { throw new ParamsError('metaTitle', 'updateSiteNode', 'string', metaTitle); }
 
-    const params: { [k: string]: any } = {
-      nodeID,
-      requestBody: {
-        node_name: nodeName,
-        node_orders: nodeOrders,
-        meta_title: metaTitle,
-      }
+    const requestBody: UserSiteMapPutRequest = {
+      node_name: nodeName,
+      node_orders: nodeOrders,
+      parent_id: optional?.parentId,
+      url_type: optional?.contentPath,
+      url_link_node_id: optional?.urlLinkNodeId,
+      url: optional?.url,
+      url_blank: optional?.urlBlank,
+      content_path: optional?.contentPath,
+      meta_title: metaTitle,
+      meta_description: optional?.metaDescription,
+      meta_keyword: optional?.metaKeyword,
+      meta_image: optional?.metaImage,
     };
 
-    if (optional) {
-      for (const key of Object.keys(optional)) {
-        params.requestBody[key] = optional[key];
-      }
-    }
+    const params: { [k: string]: any } = {
+      nodeID,
+      requestBody,
+    };
 
     return this.restAPIService.dispatchRestApi('PutUserSiteMapByNodeID', params);
   }

@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, OnChanges, Output, EventEmitter,
-  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy, SimpleChanges
+  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy, SimpleChanges,
 } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -40,6 +40,15 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   rightClickedNode = new Subject<TData>();
 
   private destroy$ = new Subject();
+
+  /* Drag and drop */
+  @Input() draggable = false;
+  @Output() dragTo = new EventEmitter<{ target: TData, to: TData }>();
+  dragNode: any;
+  dragEvent: any;
+  dragNodeExpandOverWaitTimeMs = 300;
+  dragNodeExpandOverNode: any;
+  dragNodeExpandOverTime: number;
 
   constructor() { }
 
@@ -125,7 +134,6 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.selectNode(data);
   }
 
-  // @HostListener('document:selectstart', ['$event'])
   onSelectstart(event) {
     event.preventDefault();
   }
@@ -148,6 +156,67 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     };
     const parent = sources.find(finder);
     return parent || sources.map(s => this.findParent(node, s ? s[this.nodeChildrenEntryField] : [])).find(finder);
+  }
+
+  private createDragGhost(node: HTMLElement) {
+    const id = 'drag-ghost';
+
+    const existing = document.getElementById(id);
+    if (existing) { document.body.removeChild(existing); }
+
+    const ghost = node.cloneNode(true) as HTMLElement;
+    ghost.style.position = 'fixed';
+    ghost.style.top = '-1000px';
+    ghost.style.zIndex = '9999';
+    document.body.appendChild(ghost);
+    return ghost;
+  }
+
+  handleDragStart(event, node) {
+    if (!this.draggable) { return; }
+    // Required by Firefox (https://stackoverflow.com/questions/19055264/why-doesnt-html5-drag-and-drop-work-in-firefox)
+    event.dataTransfer.setData('foo', 'bar');
+    const ghost = this.createDragGhost(event.target);
+    event.dataTransfer.setDragImage(ghost, -25, -25);
+    this.dragEvent = event;
+    this.dragNode = node;
+    this.treeControl.collapse(node);
+  }
+
+  handleDragOver(event, node) {
+    if (!this.draggable) { return; }
+    event.preventDefault();
+    // Handle node expand
+    if (node === this.dragNodeExpandOverNode) {
+      if (this.dragNode !== node && !this.treeControl.isExpanded(node)) {
+        if ((new Date().getTime() - this.dragNodeExpandOverTime) > this.dragNodeExpandOverWaitTimeMs) {
+          this.treeControl.expand(node);
+        }
+      }
+    } else {
+      this.dragNodeExpandOverNode = node;
+      this.dragNodeExpandOverTime = new Date().getTime();
+    }
+  }
+
+  handleDrop(event, node) {
+    if (!this.draggable) { return; }
+    event.preventDefault();
+    if (node !== this.dragNode) {
+      this.dragTo.emit({ target: this.dragNode, to: this.dragNodeExpandOverNode || this.dragNode });
+    }
+    this.dragNode = null;
+    this.dragNodeExpandOverNode = null;
+    this.dragNodeExpandOverTime = 0;
+  }
+
+  handleDragEnd(event) {
+    const ghost = document.getElementById('drag-ghost');
+    if (ghost) { document.body.removeChild(ghost); }
+    if (!this.draggable) { return; }
+    this.dragNode = null;
+    this.dragNodeExpandOverNode = null;
+    this.dragNodeExpandOverTime = 0;
   }
 
 }

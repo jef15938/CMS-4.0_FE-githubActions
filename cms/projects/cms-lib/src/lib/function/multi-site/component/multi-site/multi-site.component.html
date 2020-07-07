@@ -57,9 +57,10 @@
       </h1>
     </div>
     <div class="page-content-container">
-      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="sitemaps"
-        [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1" (customEvent)="onCustomEvent($event)"
-        (nodeSelect)="onNodeSelected($event)" (afterRender)="afterTreeRender($event)"></cms-tree>
+      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="sitemaps" [nodeDisplayField]="'node_name'"
+        [draggable]="true" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
+        (customEvent)="onCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
+        (afterRender)="afterTreeRender($event)" (dragTo)="onTreeDragTo($event)"></cms-tree>
     </div>
   </div>
   <div *ngIf="selectedSiteMap" style="width: 50%; float: right; border-left: 1px solid lightgray;">

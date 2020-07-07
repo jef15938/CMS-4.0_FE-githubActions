@@ -193,4 +193,37 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     });
   }
 
+  onTreeDragTo(ev: { target: SiteMapInfo, to: SiteMapInfo }) {
+    const target = ev.target;
+    const to = ev.to;
+    if (!target || !to || target === to || to.children.indexOf(target) > -1) { return; }
+    this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
+      if (!confirm) { return; }
+      of(undefined).pipe(
+        concatMap(_ => this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, target.node_id)),
+        concatMap(nodeToUpdate => {
+          return this.sitemapService.updateSiteNode(
+            nodeToUpdate.node_id,
+            nodeToUpdate.node_name,
+            '0',
+            nodeToUpdate.meta_title,
+            {
+              parentId: to.node_id,
+              contentPath: nodeToUpdate.content_path,
+              urlType: nodeToUpdate.url_type,
+              urlLinkNodeId: nodeToUpdate.url_link_node_id,
+              url: nodeToUpdate.url,
+              urlBlank: nodeToUpdate.url_blank,
+              metaDescription: nodeToUpdate.meta_description,
+              metaKeyword: nodeToUpdate.meta_keyword,
+              metaImage: nodeToUpdate.meta_image,
+            }
+          );
+        }),
+      ).subscribe(_ => {
+        this.onSiteMapUpdated(undefined);
+      });
+    });
+  }
+
 }
