@@ -73,7 +73,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         '  123  ',
         '<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="400" height="210">',
         '  456  ',
-        'dsfsdfsdfsdfsdfsdfsdfsdfsdfdsfsdfsdfsdfsdfsdfsdfsdfsdfdsfsdfsdfsdfsdfsdfsdfsdfsdf',
+        '[a]1234567890[b]1234567890[c]1234567890[d]1234567890[e]1234567890[f]1234567890',
         '<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="400" height="210">',
         '  789  ',
         '</p>'

@@ -7,12 +7,18 @@
 }
 
 .neux-noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
                         supported by Chrome, Edge, Opera and Firefox */
 }
 
@@ -40,11 +46,12 @@
 
   margin: 10px;
 
-  ::ng-deep img::-moz-selection { /* Code for Firefox */
+  ::ng-deep img::-moz-selection {
+    /* Code for Firefox */
     color: transparent !important;
     background: transparent !important;
   }
-  
+
   ::ng-deep img::selection {
     color: transparent !important;
     background: transparent !important;
@@ -61,10 +68,21 @@
     line-height: 1.71;
     letter-spacing: normal;
     text-align: left;
-    color: #d0021b;
   }
 
-  ::ng-deep .neux-table  {
+  ::ng-deep .highlight-1 {
+    color: red;
+  }
+
+  ::ng-deep .highlight-2 {
+    color: green;
+  }
+
+  ::ng-deep .highlight-3 {
+    color: blue;
+  }
+
+  ::ng-deep .neux-table {
 
     &.selected {
       outline: 3px solid #b4d7ff;
@@ -75,16 +93,16 @@
     margin: 10px;
 
     td {
-      font-family:Arial, sans-serif;
-      font-size:14px;
-      padding:10px 5px;
-      border-style:solid;
-      border-width:1px;
-      overflow:hidden;
-      word-break:normal;
-      border-color:black;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      padding: 10px 5px;
+      border-style: solid;
+      border-width: 1px;
+      overflow: hidden;
+      word-break: normal;
+      border-color: black;
     }
-    
+
     td.highlightTD {
       background-color: rgba(212, 75, 22, 0.5);
     }
@@ -94,59 +112,59 @@
     }
 
     th {
-      font-family:Arial, sans-serif;
-      font-size:14px;
-      font-weight:normal;
-      padding:10px 5px;
-      border-style:solid;
-      border-width:1px;
-      overflow:hidden;
-      word-break:normal;
-      border-color:black;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      padding: 10px 5px;
+      border-style: solid;
+      border-width: 1px;
+      overflow: hidden;
+      word-break: normal;
+      border-color: black;
     }
 
-    .tg-0pky{
-      border-color:inherit;
-      text-align:left;
-      vertical-align:top
-    } 
-  
+    .tg-0pky {
+      border-color: inherit;
+      text-align: left;
+      vertical-align: top
+    }
+
     .seleted {
-        background-color: silver;
+      background-color: silver;
     }
   }
 
   .figure-color {
-      display: block;
-      border-color: salmon;
-      border-width: 3px;
-      float:left;
-      margin-right: 0.5%;
-      margin-left: 0;
-      margin-top: 0;
+    display: block;
+    border-color: salmon;
+    border-width: 3px;
+    float: left;
+    margin-right: 0.5%;
+    margin-left: 0;
+    margin-top: 0;
   }
-  
+
   .image-style-side {
-      max-width:100%;
-      position: relative;
-      // float:left;
+    max-width: 100%;
+    position: relative;
+    // float:left;
   }
-  
+
   .item-hover:hover {
-      border:2px green dashed;
+    border: 2px green dashed;
   }
-  
+
   .item-seleted {
-      border:10px green dashed;
+    border: 10px green dashed;
   }
 }
 
 .tool {
-    position: absolute;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
+  position: absolute;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
 }

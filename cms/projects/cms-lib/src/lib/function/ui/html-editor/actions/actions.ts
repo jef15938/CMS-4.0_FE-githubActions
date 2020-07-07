@@ -25,7 +25,9 @@ export class HtmlEditorActions {
   insertImage: InsertImage;
   insertTable: InsertTable;
   insertVideo: InsertVideo;
-  highlight: Highlight;
+  highlight1: Highlight;
+  highlight2: Highlight;
+  highlight3: Highlight;
   unhighlight: Unhighlight;
 
   constructor(
@@ -48,7 +50,9 @@ export class HtmlEditorActions {
     this.insertImage = new InsertImage(context);
     this.insertTable = new InsertTable(context);
     this.insertVideo = new InsertVideo(context);
-    this.highlight = new Highlight(context);
+    this.highlight1 = new Highlight(context, 1);
+    this.highlight2 = new Highlight(context, 2);
+    this.highlight3 = new Highlight(context, 3);
     this.unhighlight = new Unhighlight(context);
   }
 }

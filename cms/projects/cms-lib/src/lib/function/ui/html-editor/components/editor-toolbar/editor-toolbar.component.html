@@ -10,7 +10,12 @@
 <button type="button" tabindex="0" mat-button (click)="doAction(htmlEditorActions.indent)">向內縮排</button>
 <button type="button" tabindex="0" mat-button (click)="doAction(htmlEditorActions.outdent)">向外縮排</button>
 <button type="button" tabindex="0" mat-button (click)="doAction(htmlEditorActions.createLink)">插入連結</button>
-<button type="button" tabindex="0" mat-button (click)="doAction(htmlEditorActions.highlight)">標記文字</button>
+<button type="button" tabindex="0" mat-button
+  (click)="doAction(htmlEditorActions.highlight1)">標記文字_{{htmlEditorActions.highlight1?.order}}</button>
+<button type="button" tabindex="0" mat-button
+  (click)="doAction(htmlEditorActions.highlight2)">標記文字_{{htmlEditorActions.highlight2?.order}}</button>
+<button type="button" tabindex="0" mat-button
+  (click)="doAction(htmlEditorActions.highlight3)">標記文字_{{htmlEditorActions.highlight3?.order}}</button>
 <button type="button" tabindex="0" mat-button (click)="doAction(htmlEditorActions.unhighlight)">取消標記文字</button>
 <button type="button" tabindex="0" mat-button (click)="doAction(htmlEditorActions.insertImage)">插入圖片</button>
 <button type="button" tabindex="0" mat-button (click)="doAction(htmlEditorActions.insertTable)">插入表格</button>
