@@ -2,6 +2,8 @@ import { HtmlEditorActionBase } from '../action.base';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+const HIGH_LIGHT_CLASS = 'highlight';
+
 export class Highlight extends HtmlEditorActionBase {
 
   do(): Observable<any> {
@@ -27,12 +29,28 @@ export class Highlight extends HtmlEditorActionBase {
     } else {
       const elements = Array.from(container.querySelectorAll('font[color="#0000ff"]'));
       elements.forEach((el: HTMLElement) => {
-        const span = document.createElement('span');
-        span.classList.add('highlight');
-        span.innerHTML = el.innerHTML;
-        el.parentNode.insertBefore(span, el);
+        let node;
+        if (el.parentElement.classList.contains(HIGH_LIGHT_CLASS)) {
+          node = document.createTextNode(el.innerText);
+        } else {
+          node = document.createElement('span');
+          node.classList.add(HIGH_LIGHT_CLASS);
+          node.innerHTML = el.innerHTML;
+        }
+        el.parentNode.insertBefore(node, el);
         el.parentNode.removeChild(el);
       });
+
+      const highlights = Array.from(container.querySelectorAll(`.${HIGH_LIGHT_CLASS}`)) as HTMLElement[];
+      highlights.forEach(highlight => {
+        if (highlights.indexOf(highlight.parentElement) > -1) {
+          const parent = highlight.parentElement;
+          const textNode = document.createTextNode(highlight.innerText);
+          parent.insertBefore(textNode, highlight);
+          parent.removeChild(highlight);
+        }
+      });
+
       this.context.editorContainer.innerHTML = container.innerHTML;
       this.context.checkInnerHtml();
       return of(undefined);
