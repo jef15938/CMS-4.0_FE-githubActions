@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
@@ -7,16 +7,23 @@ import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { GalleryGetResponse } from '../../neuxAPI/bean/GalleryGetResponse';
 import { GalleryCategoryInfo } from '../../neuxAPI/bean/GalleryCategoryInfo';
 import { GalleryCaregoryGetResponse } from '../../neuxAPI/bean/GalleryCaregoryGetResponse';
+import { CMS_ENVIROMENT } from '../../../injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../interface/cms-enviroment.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GalleryService {
 
+  private apiUrl = '';
+
   constructor(
     private respAPIService: RestApiService,
     private httpClient: HttpClient,
-  ) { }
+    @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
+  ) {
+    this.apiUrl = `${environment.apiBaseUrl}/Gallery`;
+  }
 
   /**
    *
@@ -145,6 +152,14 @@ export class GalleryService {
           return throwError(e);
         }),
       );
+  }
+
+  getGalleryShowUrl() {
+    return `${this.apiUrl}/Show`;
+  }
+
+  getGalleryShowUrlByGalleryID(galleryID: number) {
+    return `${this.getGalleryShowUrl()}/${galleryID}`;
   }
 
 

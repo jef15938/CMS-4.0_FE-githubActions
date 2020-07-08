@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { CMS_ENVIROMENT } from '../../../../global/injection-token';
-import { CmsEnviroment } from '../../../../global/interface';
+import { Component, OnInit } from '@angular/core';
 import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { CustomCellRenderer, CmsTable } from '../../../ui/table';
+import { GalleryService } from '../../../../global/api/service/gallery/gallery.service';
 
 @Component({
   selector: 'cms-gallery-info-cell',
@@ -11,14 +10,14 @@ import { CustomCellRenderer, CmsTable } from '../../../ui/table';
 })
 export class GalleryInfoCellComponent implements CustomCellRenderer, OnInit {
 
-  galleryShowUrl = '';
+  galleryShowUrl: string;
 
   config: { data: GalleryInfo, table: CmsTable };
 
   constructor(
-    @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
+    galleryService: GalleryService,
   ) {
-    this.galleryShowUrl = `${environment.apiBaseUrl}/Gallery/Show`;
+    this.galleryShowUrl = galleryService.getGalleryShowUrl();
   }
 
   ngOnInit(): void {

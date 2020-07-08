@@ -1,19 +1,18 @@
 import { Pipe, PipeTransform, Inject } from '@angular/core';
-import { CMS_ENVIROMENT } from '../../../global/injection-token';
-import { CmsEnviroment } from '../../../global/interface';
 import { GalleryInfo } from '../../../global/api/neuxAPI/bean/GalleryInfo';
+import { GalleryService } from '../../../global/api/service/gallery/gallery.service';
 
 @Pipe({
   name: 'gelleryImgSrc'
 })
 export class GelleryImgSrcPipe implements PipeTransform {
 
-  private galleryShowUrl = '';
+  private galleryShowUrl: string;
 
   constructor(
-    @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
+    galleryService: GalleryService,
   ) {
-    this.galleryShowUrl = `${environment.apiBaseUrl}/Gallery/Show`;
+    this.galleryShowUrl = galleryService.getGalleryShowUrl();
   }
 
   transform(data: GalleryInfo, args?: any): string {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../global/api/service';
@@ -13,8 +13,6 @@ import { GalleryCategoryMaintainModalComponent } from '../gallery-category-maint
 import { UploadGalleryModalComponent } from '../upload-gallery-modal/upload-gallery-modal.component';
 import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from '../gallery-action-cell/gallery-action-cell.component';
 import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell.component';
-import { CMS_ENVIROMENT } from '../../../../global/injection-token/cms-injection-token';
-import { CmsEnviroment } from '../../../../global/interface/cms-enviroment.interface';
 
 @Component({
   selector: 'cms-gallery',
@@ -65,16 +63,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   private categorySelected$ = new Subject<GalleryCategoryInfo>();
 
-  galleryShowUrl = '';
-
   constructor(
-    @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
     private galleryService: GalleryService,
     private authorizationService: AuthorizationService,
     private modalService: ModalService,
-  ) {
-    this.galleryShowUrl = `${environment.apiBaseUrl}/Gallery/Show`;
-  }
+  ) { }
 
   ngOnInit(): void {
     this.init().subscribe();
@@ -217,7 +210,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
           );
           break;
         case event.ActionType.CopyUrl:
-          this.copyToClipBoard(`${this.galleryShowUrl}/${event.data.gallery_id}`);
+          this.copyToClipBoard(`${this.galleryService.getGalleryShowUrlByGalleryID(event.data.gallery_id)}`);
           action = NEVER;
           break;
       }
