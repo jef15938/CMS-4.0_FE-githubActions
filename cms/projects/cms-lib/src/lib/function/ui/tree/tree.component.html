@@ -9,14 +9,16 @@
           [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
           (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
           (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);">
-          <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
-            [onComponentLoad]="this | nodeRenderOnload:node:context">
-          </span>
-          <span *ngIf="!customNodeRenderer">
-            {{node[nodeDisplayField]}}
-          </span>
-          <!-- use a disabled button to provide padding for tree leaf -->
-          <button type="button" tabindex="0" mat-icon-button class="node-expand-btn" disabled></button>
+          <mat-checkbox [checked]="checkedNodes.indexOf(node)>-1" (change)="onNodeCheckboxChange($event, node)">
+            <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
+              [onComponentLoad]="this | nodeRenderOnload:node:context">
+            </span>
+            <span *ngIf="!customNodeRenderer">
+              {{node[nodeDisplayField]}}
+            </span>
+            <!-- use a disabled button to provide padding for tree leaf -->
+            <!-- <button type="button" tabindex="0" mat-icon-button class="node-expand-btn" disabled></button> -->
+          </mat-checkbox>
         </div>
       </li>
     </mat-tree-node>
@@ -28,18 +30,20 @@
           [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
           (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
           (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);">
-          <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
-            [onComponentLoad]="this | nodeRenderOnload:node:context">
-          </span>
-          <span *ngIf="!customNodeRenderer">
-            {{node[nodeDisplayField]}}
-          </span>
-          <button type="button" tabindex="0" mat-icon-button class="node-expand-btn"
-            [attr.aria-label]="'toggle ' + node[nodeDisplayField]">
-            <mat-icon class="mat-icon-rtl-mirror">
-              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-            </mat-icon>
-          </button>
+          <mat-checkbox [checked]="checkedNodes.indexOf(node)>-1" (change)="onNodeCheckboxChange($event, node)">
+            <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
+              [onComponentLoad]="this | nodeRenderOnload:node:context">
+            </span>
+            <span *ngIf="!customNodeRenderer">
+              {{node[nodeDisplayField]}}
+            </span>
+            <button type="button" tabindex="0" mat-icon-button class="node-expand-btn"
+              [attr.aria-label]="'toggle ' + node[nodeDisplayField]">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+          </mat-checkbox>
         </div>
         <ul class="tree-children" [class.example-tree-invisible]="!treeControl.isExpanded(node)">
           <ng-container matTreeNodeOutlet></ng-container>

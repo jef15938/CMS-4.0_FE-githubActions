@@ -17,14 +17,18 @@
   }
 }
 
-.mat-tree-node.selected {
-  background-color: lightgreen;
-}
+.mat-tree-node {
+  &.selected {
+    background-color: lightgreen;
+  }
 
-li.mat-tree-node:not(.selected):hover,
-div.mat-tree-node:not(.selected):hover {
-  background-color: rgb(191, 244, 191);
+  &:not(.selected):hover {
+    background-color: rgb(191, 244, 191);
+  }
 
+  &>mat-checkbox {
+    margin-left: 8px;
+  }
 }
 
 .tree-children {

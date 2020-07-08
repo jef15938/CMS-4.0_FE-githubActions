@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CmsTree, CmsTreeCustomCellEvent } from './tree.interface';
 import { DynamicWrapperDirective } from '@neux/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'cms-tree',
@@ -31,7 +32,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   selectedNode: TData;
   private selectedNodeEmitter = new Subject();
 
-  @Input() customNodeRenderer; // 客制的節點Template
+  @Input() customNodeRenderer; // 客製的節點Template
 
   @Output() afterRender = new EventEmitter<TreeComponent<any>>();
   @Output() nodeSelect = new EventEmitter<{ node: TData }>();
@@ -40,6 +41,11 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   rightClickedNode = new Subject<TData>();
 
   private destroy$ = new Subject();
+
+  /** Checkbox */
+  @Input() checkbox = false;
+  @Input() checkedNodes: TData[] = [];
+  @Input() checkMode: 'single' | 'multiple' = 'multiple';
 
   /* Drag and drop */
   @Input() draggable = false;
@@ -217,6 +223,25 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.dragNode = null;
     this.dragNodeExpandOverNode = null;
     this.dragNodeExpandOverTime = 0;
+  }
+
+  onNodeCheckboxChange(ev: MatCheckboxChange, node: TData) {
+    if (ev.checked && this.checkedNodes.indexOf(node) < 0) {
+      if (this.checkMode === 'multiple') {
+        this.checkedNodes.push(node);
+      } else {
+        this.checkedNodes.length = 0;
+        this.checkedNodes.push(node);
+      }
+    }
+    if (!ev.checked && this.checkedNodes.indexOf(node) > -1) {
+      this.checkedNodes.splice(this.checkedNodes.indexOf(node), 1);
+    }
+    // console.warn('this.checkedNodes = ', this.checkedNodes);
+  }
+
+  getSelectedNodes(): TData[] {
+    return [].concat(this.checkedNodes);
   }
 
 }
