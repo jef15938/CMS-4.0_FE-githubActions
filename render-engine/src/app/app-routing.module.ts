@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RenderModule } from '@render';
 
 const routes: Routes = [
   {
     path: 'render',
-    loadChildren: () => Promise.resolve(RenderModule)
+    loadChildren: () => import('@render').then(m => m.RenderModule)
+    // loadChildren: () => Promise.resolve(RenderModule)
   },
   {
     path: '**',

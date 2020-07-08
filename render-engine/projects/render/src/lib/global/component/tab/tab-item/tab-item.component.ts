@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 @Component({
-  selector: 'layoutlib-tab-item',
+  selector: 'rdr-tab-item',
   template: `
         <ng-container *ngIf="show">
             <ng-content></ng-content>

@@ -1,5 +1,5 @@
 <div class="view-container" [class.mode-info]="mode===EditorMode.INFO">
-  <layoutlib-templates-container [templates]="contentInfo.templates" mode="edit" (select)="select.next($event)"
+  <rdr-templates-container [templates]="contentInfo.templates" mode="edit" (select)="select.next($event)"
     (enter)="onEnter($event)" (leave)="onLeave($event)">
-  </layoutlib-templates-container>
+  </rdr-templates-container>
 </div>

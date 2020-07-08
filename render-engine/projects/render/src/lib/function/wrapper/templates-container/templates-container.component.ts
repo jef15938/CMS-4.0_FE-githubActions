@@ -8,7 +8,7 @@ import { LayoutWrapperSelectEvent } from '../layout-wrapper/layout-wrapper.inter
 import { LayoutWrapperBase } from '../layout-wrapper/layout-wrapper-base';
 
 @Component({
-  selector: 'layoutlib-templates-container',
+  selector: 'rdr-templates-container',
   templateUrl: './templates-container.component.html',
   styleUrls: ['./templates-container.component.scss']
 })

@@ -13,7 +13,7 @@ import { LayoutWrapperBase } from './layout-wrapper-base';
 import { DynamicWrapperComponent } from '@neux/core';
 
 @Component({
-  selector: 'layoutlib-layout-wrapper',
+  selector: 'rdr-layout-wrapper',
   templateUrl: './layout-wrapper.component.html',
   styleUrls: ['./layout-wrapper.component.scss']
 })

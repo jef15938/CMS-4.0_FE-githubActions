@@ -2,7 +2,7 @@ import { Component, OnInit, AfterContentInit, ContentChildren, QueryList } from 
 import { TabItemComponent } from '../tab-item/tab-item.component';
 
 @Component({
-  selector: 'layoutlib-tab-frame',
+  selector: 'rdr-tab-frame',
   templateUrl: './tab-frame.component.html',
   styleUrls: ['./tab-frame.component.scss']
 })

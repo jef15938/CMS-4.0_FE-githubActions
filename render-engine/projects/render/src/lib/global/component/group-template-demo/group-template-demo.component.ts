@@ -2,7 +2,7 @@ import { Component, OnInit, Injector } from '@angular/core';
 import { GroupTemplateBaseComponent } from '../../../function/wrapper/layout-base/group-template-base.component';
 
 @Component({
-  selector: 'layoutlib-group-template-demo',
+  selector: 'rdr-group-template-demo',
   templateUrl: './group-template-demo.component.html',
   styleUrls: ['./group-template-demo.component.scss']
 })

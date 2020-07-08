@@ -3,7 +3,7 @@ import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layou
 import { DataSourceDemoData } from './data-source-demo.interface';
 
 @Component({
-  selector: 'layoutlib-data-source-demo',
+  selector: 'rdr-data-source-demo',
   templateUrl: './data-source-demo.component.html',
   styleUrls: ['./data-source-demo.component.scss']
 })

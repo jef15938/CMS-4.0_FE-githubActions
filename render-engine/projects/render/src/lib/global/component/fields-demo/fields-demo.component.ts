@@ -2,7 +2,7 @@ import { Component, OnInit, Injector } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
 
 @Component({
-  selector: 'layoutlib-fields-demo',
+  selector: 'rdr-fields-demo',
   templateUrl: './fields-demo.component.html',
   styleUrls: ['./fields-demo.component.scss']
 })
