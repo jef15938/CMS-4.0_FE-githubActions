@@ -1,0 +1,19 @@
+<div [formGroup]="form">
+  <div>
+    <div class="column-label">姓名</div>
+    <div class="column-content">
+      <input type="input" formControlName="name">
+    </div>
+    <div *ngIf="form.controls['name']?.errors" style="color:red">{{form.controls['name']?.errors | json}}</div>
+  </div>
+  <div>
+    <div class="column-label">性別</div>
+    <div class="column-content">
+      <select formControlName="sex">
+        <option *ngFor="let sex of sexList" [value]="sex.value">
+          {{sex.display}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>

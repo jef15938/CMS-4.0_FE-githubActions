@@ -65,6 +65,7 @@ export class CmsFarmFormColumn {
     trigger_target: string[]; // 放哪些欄位被連動
     trigger_setting: { [key: string]: string };
   }[];
+  component_id?: string; // for CUSTOM
 }
 
 export class CmsFarmFormInfo extends FarmFormInfo {

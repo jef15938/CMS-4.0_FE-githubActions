@@ -11,6 +11,7 @@ export enum CmsFarmFormColumnDisplayType {
   DATETIME = 'DATETIME',
   TREE = 'TREE',
   LABEL = 'LABEL',
+  CUSTOM = 'CUSTOM',
 }
 
 export enum CmsFarmTableColumnDisplayType {

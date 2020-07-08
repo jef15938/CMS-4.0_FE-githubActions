@@ -1,6 +1,21 @@
 {
   "split_size": 2,
   "columns": [{
+      "display_text": "Custom元件(人)",
+      "display_type": "CUSTOM",
+      "options": [],
+      "component_id": "farm-custom-form-control",
+      "value": {
+        "name": "MyName",
+        "sex": 1
+      },
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "custom-column",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
       "display_text": "Editor測試",
       "display_type": "EDITOR",
       "options": [],

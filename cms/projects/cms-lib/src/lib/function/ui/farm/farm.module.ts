@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
 import { FarmComponent } from './farm.component';
 import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detail-info.component';
 import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
@@ -23,7 +24,7 @@ import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { FarmFormValidationErrorsPipe } from './pipe/farm-form-validation-errors.pipe';
-import { MatButtonModule } from '@angular/material/button';
+import { FarmDynamicFormControlDirective } from './directive/farm-dynamic-form-control.directive';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { MatButtonModule } from '@angular/material/button';
     FarmFormInfoComponent,
     FarmFormViewDataModalComponent,
     FarmFormModifyDataModalComponent,
-    FarmFormValidationErrorsPipe
+    FarmFormValidationErrorsPipe,
+    FarmDynamicFormControlDirective,
   ],
   exports: [
     FarmComponent

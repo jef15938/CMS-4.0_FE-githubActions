@@ -38,9 +38,9 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.rows = this.createRows(this.farmFormInfo);
     this.formGroup = this.createFormGroup(this.farmFormInfo);
 
-    this.columnTrigger.pipe(
-      debounceTime(300)
-    ).subscribe(col => this.checkColumnTrigger(col));
+    // this.columnTrigger.pipe(
+    //   debounceTime(300)
+    // ).subscribe(col => this.checkColumnTrigger(col));
   }
 
   private createRows(farmFormInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
