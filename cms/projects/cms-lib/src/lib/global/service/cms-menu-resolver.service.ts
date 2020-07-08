@@ -10,7 +10,14 @@ import { MenuService } from '../api/service';
 @Injectable()
 export class CmsUserMenuResolver implements Resolve<any> {
 
-  private menus: MenuInfo[] = [];
+  // private menus: MenuInfo[] = [];
+  private menus: {
+    cmsMenus: MenuInfo[],
+    appMenus: MenuInfo[],
+  } = {
+      cmsMenus: [],
+      appMenus: [],
+    };
 
   constructor(
     private menuService: MenuService,
@@ -18,37 +25,28 @@ export class CmsUserMenuResolver implements Resolve<any> {
   ) { }
 
   getMenus() {
-    return this.menus || [];
+    return this.menus;
   }
 
   resolve(route: ActivatedRouteSnapshot) {
     return this.menuService.getUserMenu().pipe(
       concatMap(cmsMenus => {
+        const menus = {
+          cmsMenus: [],
+          appMenus: [],
+        };
+
+        menus.cmsMenus = cmsMenus;
+
         if (!this.cmsExtensionMenuProvidor) { return of(cmsMenus); }
         return this.cmsExtensionMenuProvidor.resolve().pipe(
           map(extensionMenus => {
-            let result = [].concat(cmsMenus);
-
-            if (extensionMenus?.length) {
-              this.addExtensionRoute(extensionMenus);
-              result = result.concat(extensionMenus);
-            }
-
-            this.menus = JSON.parse(JSON.stringify(result));
-            return result;
+            menus.appMenus = extensionMenus || [];
+            this.menus = menus;
+            return menus;
           })
         );
       })
     );
-  }
-
-  private addExtensionRoute(menus: MenuInfo[]) {
-    if (!menus?.length) { return; }
-    let children: MenuInfo[] = [];
-    menus.forEach(menu => {
-      menu.func_id = menu.func_id ? `extension/${menu.func_id}` : '';
-      children = children.concat(menu.children || []);
-    });
-    this.addExtensionRoute(children);
   }
 }

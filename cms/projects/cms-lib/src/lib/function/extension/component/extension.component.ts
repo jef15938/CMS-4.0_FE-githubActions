@@ -49,7 +49,8 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
   private initState() {
     this.errorMsg = '';
 
-    const menus = this.cmsUserMenuResolver.getMenus();
+    const menus = this.cmsUserMenuResolver.getMenus()?.appMenus;
+
     if (!menus?.length) {
       this.errorMsg = `系統異常 : 沒有Menu資料`;
       return;
@@ -58,6 +59,10 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
     const menu = this.findMenuByFuncId(this.funcId, menus);
     if (!menu) {
       this.errorMsg = `沒有找到對應的MenuInfo, func_id=[${this.funcId}]`;
+      return;
+    }
+
+    if (!menu.component_id) {
       return;
     }
 
@@ -78,8 +83,8 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
 
   private findMenuByFuncId(funcId: string, sources: MenuInfo[]): MenuInfo {
     if (!funcId || !sources?.length) { return null; }
-    const menu = sources.find(m => m?.func_id === `extension/${this.funcId}`);
-    return menu || sources.map(s => this.findMenuByFuncId(funcId, s.children)).find(m => m?.func_id === `extension/${this.funcId}`);
+    const menu = sources.find(m => m?.func_id === `${this.funcId}`);
+    return menu || sources.map(s => this.findMenuByFuncId(funcId, s.children)).find(m => m?.func_id === `${this.funcId}`);
   }
 
 }

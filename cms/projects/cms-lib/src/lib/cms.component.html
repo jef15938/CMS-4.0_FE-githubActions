@@ -1,9 +1,12 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav mode="side" opened #SideNav>
     <div class="menu-container" #MenuContainer>
-      <ul class="menu-container__menu" *ngIf="menus.length">
-        <li class="menu-container__item" *ngFor="let menu of menus">
+      <ul class="menu-container__menu">
+        <li class="menu-container__item" *ngFor="let menu of cmsMenus">
           <cms-menu-node [menu]="menu"></cms-menu-node>
+        </li>
+        <li class="menu-container__item" *ngFor="let menu of appMenus">
+          <cms-menu-node [menu]="menu" [isAppMenu]="true"></cms-menu-node>
         </li>
       </ul>
     </div>

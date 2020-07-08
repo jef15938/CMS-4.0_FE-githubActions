@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuInfo } from '../api/neuxAPI/bean/MenuInfo';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cms-menu-node',
@@ -9,20 +8,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MenuNodeComponent implements OnInit {
 
+  @Input() isAppMenu = false;
   @Input() menu: MenuInfo;
   @Input() category = '';
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+  constructor() { }
 
   ngOnInit(): void { }
-
-  navigate() {
-    const routes = this.menu.func_id.split('/');
-    this.router.navigate([this.category, ...routes]);
-  }
 
 }
 

@@ -13,7 +13,8 @@ export class CmsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('MenuContainer') menuContainer: ElementRef;
 
-  menus = [];
+  cmsMenus = [];
+  appMenus = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,7 +23,9 @@ export class CmsComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.menus = this.activatedRoute.snapshot.data.menus;
+    const menus = this.activatedRoute.snapshot.data.menus;
+    this.cmsMenus = menus.cmsMenus || [];
+    this.appMenus = menus.appMenus || [];
   }
 
   ngAfterViewInit() {
