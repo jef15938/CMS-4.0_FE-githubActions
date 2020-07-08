@@ -29,6 +29,12 @@
   &>mat-checkbox {
     margin-left: 8px;
   }
+
+  ::ng-deep mat-checkbox.unactive {
+    .mat-checkbox-inner-container {
+      display: none;
+    }
+  }
 }
 
 .tree-children {
