@@ -29,7 +29,6 @@ export class CmsDateAdapter extends NativeDateAdapter {
       const year = date.getFullYear();
       const hh = date.getHours();
       const mm = date.getMinutes();
-      console.warn({ year, month, day, hh, mm });
       return `${year}-${month}-${day} ${hh > 9 ? '' : '0'}${hh}:${mm > 9 ? '' : '0'}${mm}`;
     }
     return date.toDateString();

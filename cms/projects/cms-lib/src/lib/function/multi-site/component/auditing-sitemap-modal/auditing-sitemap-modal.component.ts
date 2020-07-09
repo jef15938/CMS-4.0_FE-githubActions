@@ -3,7 +3,8 @@ import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service';
 import { SiteMapNodeInfo } from '../../../../global/api/neuxAPI/bean/SiteMapNodeInfo';
 import { CmsDateAdapter } from '../../../../global/util/mat-date/mat-date';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CmsFormValidator } from '../../../../global/util/form-validator';
 
 @Component({
   selector: 'cms-auditing-sitemap-modal',
@@ -30,42 +31,18 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
     const endTime = new Date(`9999/12/31`);
 
     this.form = formBuilder.group({
-      startTime: [startTime, Validators.compose([Validators.required, this.timeValidator('startTime')])],
-      endTime: [endTime, Validators.compose([Validators.required, this.timeValidator('endTime')])],
+      startTime: [startTime, Validators.compose([Validators.required])],
+      endTime: [endTime, Validators.compose([Validators.required])],
       memo: ['', Validators.compose([Validators.required])],
+    }, {
+      validators: [
+        CmsFormValidator.startTimeEndTime('startTime', 'endTime'),
+      ],
     });
   }
 
   ngOnInit(): void {
 
-  }
-
-  timeValidator(formControlName: 'startTime' | 'endTime'): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (this.form) {
-        let oppositeControl: AbstractControl;
-        let startTime: Date;
-        let endTime: Date;
-        if (formControlName === 'startTime') {
-          startTime = control.value;
-          oppositeControl = this.form.get('endTime');
-          endTime = oppositeControl.value;
-        } else if (formControlName === 'endTime') {
-          oppositeControl = this.form.get('startTime');
-          startTime = oppositeControl.value;
-          endTime = control.value;
-        }
-
-        if (!(endTime > startTime)) {
-          const error = {
-            startTimeEndTime: '結束時間需大於開始時間'
-          };
-          oppositeControl.setErrors(error);
-          return error;
-        }
-      }
-      return null;
-    };
   }
 
   confirm() {

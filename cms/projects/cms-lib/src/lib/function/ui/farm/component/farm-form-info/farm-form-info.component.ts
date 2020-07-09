@@ -4,7 +4,7 @@ import { Observable, throwError, of, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../../global/model';
 import { CmsFarmFormColumnDisplayType } from './../../../../../global/enum';
-import { CmsValidator } from './../../../../../global/util';
+import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm.interface';
 import { ContentEditorService, EditorMode } from './../../../content-editor';
 import { ContentService } from '../../../../../global/api/service';
@@ -63,6 +63,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   private createFormGroup(farmFormInfo: CmsFarmFormInfo): FormGroup {
     const formGroup = new FormGroup({});
+    const rangeValidatorFns: ValidatorFn[] = [];
     farmFormInfo.columns.forEach((column, index) => {
       const formControl = new FormControl(
         column.display_type !== CmsFarmFormColumnDisplayType.DATE
@@ -112,30 +113,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
             return null;
           });
         }
-        // range
-        const ranges = validation.range?.filter(r => column.column_id === r.start_column || column.column_id === r.end_column) || [];
-        ranges.forEach(r => {
-          validatorFns.push((control: AbstractControl) => {
-            if (!control.value) { return { range: '區間必須有值' }; }
-
-            const start = r.start_column;
-            const end = r.end_column;
-            const thisColumnId = column.column_id;
-            const isThisColumnStart = thisColumnId === start;
-            const oppositeColumnId = isThisColumnStart ? end : start;
-            if (!(formGroup.controls[start].value < formGroup.controls[end].value)) {
-              const range = [
-                '區間必須',
-                isThisColumnStart ? '小於' : '大於',
-                ' ',
-                `[${farmFormInfo.columns.find(col => col.column_id === oppositeColumnId)?.display_text}]`
-              ].join('');
-              return { range };
-            }
-
-            return null;
-          });
-        });
 
         if (validatorFns.length) {
           formControl.setValidators(validatorFns);
@@ -143,30 +120,18 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       }
       formGroup.addControl(column.column_id, formControl);
     });
-    return formGroup;
-  }
 
-  onDateChange(columnId: string) {
-    if (this.useValidation) {
-      this.checkRange(columnId);
+    // range
+    if (this.useValidation && farmFormInfo.validation) {
+      farmFormInfo.validation.range.forEach(r => {
+        rangeValidatorFns.push(
+          CmsFormValidator.startTimeEndTime(r.start_column, r.end_column),
+        );
+      });
     }
-  }
+    formGroup.setValidators(rangeValidatorFns);
 
-  private checkRange(columnId: string) {
-    const ranges = this.farmFormInfo?.validation?.range?.filter(r => columnId === r.start_column || columnId === r.end_column);
-    ranges.forEach(r => {
-      const start = r.start_column;
-      const end = r.end_column;
-      const thisColumnId = columnId;
-      const isThisColumnStart = thisColumnId === start;
-      const oppositeColumnId = isThisColumnStart ? end : start;
-      const oppositeColumnFormControl = this.formGroup.controls[oppositeColumnId];
-      if (oppositeColumnFormControl) {
-        oppositeColumnFormControl.markAsDirty();
-        oppositeColumnFormControl.markAsTouched();
-        oppositeColumnFormControl.updateValueAndValidity({ emitEvent: false });
-      }
-    });
+    return formGroup;
   }
 
   clearForm() {
