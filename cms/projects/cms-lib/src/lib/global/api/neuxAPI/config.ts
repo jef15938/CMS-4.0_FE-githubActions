@@ -1,5 +1,5 @@
 
-const BASE_URL = 'http://cms.decoder.com.tw';
+const BASE_URL = 'https://cms.decoder.com.tw';
 const API_URL = {
     GetGalleryByCategoryID: `${BASE_URL}\/Gallery/{categoryID}`,
 GetGalleryCategory: `${BASE_URL}\/GalleryCategory`,
@@ -31,6 +31,7 @@ GetFarmTableInfoByFuncID: `${BASE_URL}\/FarmTableInfo/{funcID}`,
 GetFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
 PostFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
 PutFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
+PostFarmAuditingByFuncId: `${BASE_URL}\/FarmAuditing/{funcId}`,
 GetFarmDetailInfoByFuncID: `${BASE_URL}\/FarmDetailInfo/{funcID}`,
 GetSite: `${BASE_URL}\/Site`,
 GetSiteBySiteID: `${BASE_URL}\/Site/{siteID}`,
@@ -39,6 +40,7 @@ GetGroupMenuByGroupID: `${BASE_URL}\/Group/Menu/{groupID}`,
 GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
 GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
 DeleteGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
+PostSitemapAuditingByFuncId: `${BASE_URL}\/SitemapAuditing/{funcId}`,
 
 };
 const API_TYPE = {
@@ -72,6 +74,7 @@ GetFarmTableInfoByFuncID: 'Restful',
 GetFarmFormInfoByFuncID: 'Restful',
 PostFarmFormInfoByFuncID: 'Restful',
 PutFarmFormInfoByFuncID: 'Restful',
+PostFarmAuditingByFuncId: 'Restful',
 GetFarmDetailInfoByFuncID: 'Restful',
 GetSite: 'Restful',
 GetSiteBySiteID: 'Restful',
@@ -80,5 +83,6 @@ GetGroupMenuByGroupID: 'Restful',
 GetGroupSiteMapByGroupID: 'Restful',
 GetTemplateByControlID: 'Restful',
 DeleteGalleryByGalleryID: 'Restful',
+PostSitemapAuditingByFuncId: 'Restful',
 
 };

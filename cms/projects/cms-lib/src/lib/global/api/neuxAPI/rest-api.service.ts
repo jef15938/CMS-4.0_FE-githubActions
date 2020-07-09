@@ -34,6 +34,7 @@ import { GetFarmTableInfoByFuncIDAPI } from './api/GetFarmTableInfoByFuncIDAPI';
 import { GetFarmFormInfoByFuncIDAPI } from './api/GetFarmFormInfoByFuncIDAPI';
 import { PostFarmFormInfoByFuncIDAPI } from './api/PostFarmFormInfoByFuncIDAPI';
 import { PutFarmFormInfoByFuncIDAPI } from './api/PutFarmFormInfoByFuncIDAPI';
+import { PostFarmAuditingByFuncIdAPI } from './api/PostFarmAuditingByFuncIdAPI';
 import { GetFarmDetailInfoByFuncIDAPI } from './api/GetFarmDetailInfoByFuncIDAPI';
 import { GetSiteAPI } from './api/GetSiteAPI';
 import { GetSiteBySiteIDAPI } from './api/GetSiteBySiteIDAPI';
@@ -42,6 +43,7 @@ import { GetGroupMenuByGroupIDAPI } from './api/GetGroupMenuByGroupIDAPI';
 import { GetGroupSiteMapByGroupIDAPI } from './api/GetGroupSiteMapByGroupIDAPI';
 import { GetTemplateByControlIDAPI } from './api/GetTemplateByControlIDAPI';
 import { DeleteGalleryByGalleryIDAPI } from './api/DeleteGalleryByGalleryIDAPI';
+import { PostSitemapAuditingByFuncIdAPI } from './api/PostSitemapAuditingByFuncIdAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GalleryCaregoryGetResponse } from './bean/GalleryCaregoryGetResponse';
@@ -65,138 +67,142 @@ import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
 
 
-const APIResponseMap = {
-  GetGalleryByCategoryID: GalleryGetResponse,
-  GetGalleryCategory: GalleryCaregoryGetResponse,
-  PostGalleryCategory: GenerationHeader,
-  PostLogin: LoginResponse,
-  GetDepartment: DepartmentGetResponse,
-  DeleteGalleryCategoryByCategoryID: GenerationHeader,
-  PutGalleryCategoryByCategoryID: GenerationHeader,
-  GetUserMenu: MenuGetResponse,
-  GetLogout: GenerationHeader,
-  PutDepartmentByDeptID: GenerationHeader,
-  DeleteDepartmentByDeptID: GenerationHeader,
-  PostDepartmentByDeptID: GenerationHeader,
-  GetDepartmentByDeptID: DepartmentDetailInfo,
-  GetAuditing: AuditingGetResponse,
-  PostAuditingByOrderID: GenerationHeader,
-  GetLoginInfo: LoginResponse,
-  GetCMSMenu: MenuGetResponse,
-  GetUserSiteMapBySiteID: SiteMapGetResponse,
-  PostUserSiteMapBySiteID: GenerationHeader,
-  PutUserSiteMapByNodeID: GenerationHeader,
-  DeleteUserSiteMapByNodeID: GenerationHeader,
-  GetContentByContentID: ContentInfo,
-  PutContentByContentID: GenerationHeader,
-  GetMyAuditingByOrderID: MyAuditingDetailGetResponse,
-  GetMyAuditing: MyAuditingGetResponse,
-  GetFarmByFuncID: FarmInfoGetResponse,
-  GetFarmTableInfoByFuncID: FarmTableInfo,
-  GetFarmFormInfoByFuncID: FarmFormInfo,
-  PostFarmFormInfoByFuncID: GenerationHeader,
-  PutFarmFormInfoByFuncID: GenerationHeader,
-  GetFarmDetailInfoByFuncID: FarmFormInfo,
-  GetSite: SiteGetResponse,
-  GetSiteBySiteID: SiteMapGetResponse,
-  GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
-  GetGroupMenuByGroupID: GroupMenuGetResponse,
-  GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
-  GetTemplateByControlID: TemplateGetResponse,
-  DeleteGalleryByGalleryID: GenerationHeader,
+const APIResponseMap= {
+    GetGalleryByCategoryID: GalleryGetResponse,
+GetGalleryCategory: GalleryCaregoryGetResponse,
+PostGalleryCategory: GenerationHeader,
+PostLogin: LoginResponse,
+GetDepartment: DepartmentGetResponse,
+DeleteGalleryCategoryByCategoryID: GenerationHeader,
+PutGalleryCategoryByCategoryID: GenerationHeader,
+GetUserMenu: MenuGetResponse,
+GetLogout: GenerationHeader,
+PutDepartmentByDeptID: GenerationHeader,
+DeleteDepartmentByDeptID: GenerationHeader,
+PostDepartmentByDeptID: GenerationHeader,
+GetDepartmentByDeptID: DepartmentDetailInfo,
+GetAuditing: AuditingGetResponse,
+PostAuditingByOrderID: GenerationHeader,
+GetLoginInfo: LoginResponse,
+GetCMSMenu: MenuGetResponse,
+GetUserSiteMapBySiteID: SiteMapGetResponse,
+PostUserSiteMapBySiteID: GenerationHeader,
+PutUserSiteMapByNodeID: GenerationHeader,
+DeleteUserSiteMapByNodeID: GenerationHeader,
+GetContentByContentID: ContentInfo,
+PutContentByContentID: GenerationHeader,
+GetMyAuditingByOrderID: MyAuditingDetailGetResponse,
+GetMyAuditing: MyAuditingGetResponse,
+GetFarmByFuncID: FarmInfoGetResponse,
+GetFarmTableInfoByFuncID: FarmTableInfo,
+GetFarmFormInfoByFuncID: FarmFormInfo,
+PostFarmFormInfoByFuncID: GenerationHeader,
+PutFarmFormInfoByFuncID: GenerationHeader,
+PostFarmAuditingByFuncId: GenerationHeader,
+GetFarmDetailInfoByFuncID: FarmFormInfo,
+GetSite: SiteGetResponse,
+GetSiteBySiteID: SiteMapGetResponse,
+GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
+GetGroupMenuByGroupID: GroupMenuGetResponse,
+GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
+GetTemplateByControlID: TemplateGetResponse,
+DeleteGalleryByGalleryID: GenerationHeader,
+PostSitemapAuditingByFuncId: GenerationHeader,
 
 }
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class RestApiService {
 
-  private apiConfig: ApiConfig;
+    private apiConfig: ApiConfig;
 
-  constructor(
-    private apiFactory: ApiFactory,
-    private dispatcher: ApiDispatch,
-    private configGetter: ConfigGetter,
-  ) {
-    this.apiConfig = this.configGetter.getApiConfig();
-    this.apiFactory.registerApi(new GetGalleryByCategoryIDAPI());
-    this.apiFactory.registerApi(new GetGalleryCategoryAPI());
-    this.apiFactory.registerApi(new PostGalleryCategoryAPI());
-    this.apiFactory.registerApi(new PostLoginAPI());
-    this.apiFactory.registerApi(new GetDepartmentAPI());
-    this.apiFactory.registerApi(new DeleteGalleryCategoryByCategoryIDAPI());
-    this.apiFactory.registerApi(new PutGalleryCategoryByCategoryIDAPI());
-    this.apiFactory.registerApi(new GetUserMenuAPI());
-    this.apiFactory.registerApi(new GetLogoutAPI());
-    this.apiFactory.registerApi(new PutDepartmentByDeptIDAPI());
-    this.apiFactory.registerApi(new DeleteDepartmentByDeptIDAPI());
-    this.apiFactory.registerApi(new PostDepartmentByDeptIDAPI());
-    this.apiFactory.registerApi(new GetDepartmentByDeptIDAPI());
-    this.apiFactory.registerApi(new GetAuditingAPI());
-    this.apiFactory.registerApi(new PostAuditingByOrderIDAPI());
-    this.apiFactory.registerApi(new GetLoginInfoAPI());
-    this.apiFactory.registerApi(new GetCMSMenuAPI());
-    this.apiFactory.registerApi(new GetUserSiteMapBySiteIDAPI());
-    this.apiFactory.registerApi(new PostUserSiteMapBySiteIDAPI());
-    this.apiFactory.registerApi(new PutUserSiteMapByNodeIDAPI());
-    this.apiFactory.registerApi(new DeleteUserSiteMapByNodeIDAPI());
-    this.apiFactory.registerApi(new GetContentByContentIDAPI());
-    this.apiFactory.registerApi(new PutContentByContentIDAPI());
-    this.apiFactory.registerApi(new GetMyAuditingByOrderIDAPI());
-    this.apiFactory.registerApi(new GetMyAuditingAPI());
-    this.apiFactory.registerApi(new GetFarmByFuncIDAPI());
-    this.apiFactory.registerApi(new GetFarmTableInfoByFuncIDAPI());
-    this.apiFactory.registerApi(new GetFarmFormInfoByFuncIDAPI());
-    this.apiFactory.registerApi(new PostFarmFormInfoByFuncIDAPI());
-    this.apiFactory.registerApi(new PutFarmFormInfoByFuncIDAPI());
-    this.apiFactory.registerApi(new GetFarmDetailInfoByFuncIDAPI());
-    this.apiFactory.registerApi(new GetSiteAPI());
-    this.apiFactory.registerApi(new GetSiteBySiteIDAPI());
-    this.apiFactory.registerApi(new GetSiteBySiteIDAndNodeIDAPI());
-    this.apiFactory.registerApi(new GetGroupMenuByGroupIDAPI());
-    this.apiFactory.registerApi(new GetGroupSiteMapByGroupIDAPI());
-    this.apiFactory.registerApi(new GetTemplateByControlIDAPI());
-    this.apiFactory.registerApi(new DeleteGalleryByGalleryIDAPI());
+    constructor(
+        private apiFactory: ApiFactory,
+        private dispatcher: ApiDispatch,
+        private configGetter: ConfigGetter,
+    ) {
+        this.apiConfig = this.configGetter.getApiConfig();
+        this.apiFactory.registerApi(new GetGalleryByCategoryIDAPI());
+this.apiFactory.registerApi(new GetGalleryCategoryAPI());
+this.apiFactory.registerApi(new PostGalleryCategoryAPI());
+this.apiFactory.registerApi(new PostLoginAPI());
+this.apiFactory.registerApi(new GetDepartmentAPI());
+this.apiFactory.registerApi(new DeleteGalleryCategoryByCategoryIDAPI());
+this.apiFactory.registerApi(new PutGalleryCategoryByCategoryIDAPI());
+this.apiFactory.registerApi(new GetUserMenuAPI());
+this.apiFactory.registerApi(new GetLogoutAPI());
+this.apiFactory.registerApi(new PutDepartmentByDeptIDAPI());
+this.apiFactory.registerApi(new DeleteDepartmentByDeptIDAPI());
+this.apiFactory.registerApi(new PostDepartmentByDeptIDAPI());
+this.apiFactory.registerApi(new GetDepartmentByDeptIDAPI());
+this.apiFactory.registerApi(new GetAuditingAPI());
+this.apiFactory.registerApi(new PostAuditingByOrderIDAPI());
+this.apiFactory.registerApi(new GetLoginInfoAPI());
+this.apiFactory.registerApi(new GetCMSMenuAPI());
+this.apiFactory.registerApi(new GetUserSiteMapBySiteIDAPI());
+this.apiFactory.registerApi(new PostUserSiteMapBySiteIDAPI());
+this.apiFactory.registerApi(new PutUserSiteMapByNodeIDAPI());
+this.apiFactory.registerApi(new DeleteUserSiteMapByNodeIDAPI());
+this.apiFactory.registerApi(new GetContentByContentIDAPI());
+this.apiFactory.registerApi(new PutContentByContentIDAPI());
+this.apiFactory.registerApi(new GetMyAuditingByOrderIDAPI());
+this.apiFactory.registerApi(new GetMyAuditingAPI());
+this.apiFactory.registerApi(new GetFarmByFuncIDAPI());
+this.apiFactory.registerApi(new GetFarmTableInfoByFuncIDAPI());
+this.apiFactory.registerApi(new GetFarmFormInfoByFuncIDAPI());
+this.apiFactory.registerApi(new PostFarmFormInfoByFuncIDAPI());
+this.apiFactory.registerApi(new PutFarmFormInfoByFuncIDAPI());
+this.apiFactory.registerApi(new PostFarmAuditingByFuncIdAPI());
+this.apiFactory.registerApi(new GetFarmDetailInfoByFuncIDAPI());
+this.apiFactory.registerApi(new GetSiteAPI());
+this.apiFactory.registerApi(new GetSiteBySiteIDAPI());
+this.apiFactory.registerApi(new GetSiteBySiteIDAndNodeIDAPI());
+this.apiFactory.registerApi(new GetGroupMenuByGroupIDAPI());
+this.apiFactory.registerApi(new GetGroupSiteMapByGroupIDAPI());
+this.apiFactory.registerApi(new GetTemplateByControlIDAPI());
+this.apiFactory.registerApi(new DeleteGalleryByGalleryIDAPI());
+this.apiFactory.registerApi(new PostSitemapAuditingByFuncIdAPI());
 
-  }
-
-  public dispatchRestApi(name: string, params: any): Observable<any> {
-    const restAPI = this.apiFactory.getApi(name);
-    this.setAPIParams(restAPI, params);
-    this.setUrl(restAPI, params);
-    return this.dispatcher.dispatch(restAPI).pipe(
-      map(x => {
-        x['_body'] = plainToClass(APIResponseMap[name], x.body);
-        return x;
-      }),
-      switchMap(x => from(this.validateBodyClass(x))),
-      map(x => x._body), // 因應res結構調整
-    );
-  }
-
-  private setAPIParams(api: any, params: any) {
-    for (let key in params) {
-      api[key] = params[key];
     }
-  }
 
-  private setUrl(api: any, params: any) {
-    let _url = this.apiConfig.API_URL[api.getApiName()];
-    for (let key in params) {
-      _url = _url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
+    public dispatchRestApi(name: string, params: any): Observable<any> {
+        const restAPI = this.apiFactory.getApi(name);
+        this.setAPIParams(restAPI, params);
+        this.setUrl(restAPI, params);
+        return this.dispatcher.dispatch(restAPI).pipe(
+            map(x => {
+                x['_body'] = plainToClass(APIResponseMap[name], x.body);
+                return x;
+            }),
+            switchMap(x => from(this.validateBodyClass(x))),
+            map(x => x._body), // 因應res結構調整
+        );
     }
-    api.url = _url;
-  }
 
-  private async validateBodyClass(obj) {
-    try {
-      console.log(obj)
-      await validateOrReject(obj.body);
-      return obj;
-    } catch (error) {
-      throw error;
+    private setAPIParams(api: any, params: any) {
+        for (let key in params) {
+            api[key] = params[key];
+        }
     }
-  }
+
+    private setUrl(api: any, params: any) {
+        let _url = this.apiConfig.API_URL[api.getApiName()];
+        for (let key in params) {
+            _url = _url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
+        }
+        api.url = _url;
+    }
+
+    private async validateBodyClass(obj) {
+        try {
+            console.log(obj)
+            await validateOrReject(obj.body);
+            return obj;
+        } catch (error) {
+            throw error;
+        }
+    }
 
 }

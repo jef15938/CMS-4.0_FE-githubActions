@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RestApiService } from './rest-api.service';
+import { RestApiService } from '../neuxAPI/rest-api.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiFactory } from '@neux/core';

@@ -6,7 +6,7 @@ info:
   license:
     name: neux-garden
 servers:
-  - url: 'http://cms.decoder.com.tw'
+  - url: 'https://cms.decoder.com.tw'
 paths:
   '/Gallery/{categoryID}':
     get:
@@ -892,6 +892,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerationHeader'
+        '201':
+          description: Created
         '400':
           description: Bad Request
           content:
@@ -950,6 +952,50 @@ paths:
           name: content-type
           required: true
           description: multipart/form-data
+  '/FarmAuditing/{funcId}':
+    post:
+      summary: AuditingFarmData
+      operationId: post-FarmAuditing-funcID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - Farm
+      description: 網站管理資料送審
+      parameters:
+        - schema:
+            type: string
+            example: ''
+          in: header
+          name: content-type
+          description: multipart/form-data
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FarmAuditingRequest'
+    parameters:
+      - schema:
+          type: string
+        name: funcId
+        in: path
+        required: true
+        description: 功能ID
   '/FarmDetailInfo/{funcID}':
     get:
       summary: GetFarmDetailInfo
@@ -1192,6 +1238,31 @@ paths:
           description: application/json
       tags:
         - Gallery
+  '/SitemapAuditing/{funcId}':
+    post:
+      summary: AuditingSitemap
+      operationId: post-SitemapAuditing
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SitemapAuditingRequest'
+      tags:
+        - SiteMap
+    parameters:
+      - schema:
+          type: string
+        name: funcId
+        in: path
+        required: true
+        description: 節點ID
 components:
   schemas:
     LoginRequest:
@@ -1225,7 +1296,7 @@ components:
         identity:
           type: string
           description: >-
-            若為新增或修改，回傳資料pk，經過base64編碼組合，ex編碼前:node=1\u0026version=2，會回傳bm9kZT0xJnZlcnNpb249Mg==
+            若為新增或修改，回傳資料pk，經過base64編碼組合，ex編碼前:node=1(And符號打不出來)version=2，會回傳bm9kZT0xJnZlcnNpb249Mg==
           example: bm9kZT0xJnZlcnNpb249Mg==
       required:
         - success
@@ -2337,4 +2408,52 @@ components:
         - template_id
         - template_name
         - template_thumbnail
+    FarmAuditingRequest:
+      title: FarmAuditingRequest
+      type: object
+      description: ''
+      properties:
+        data_id:
+          type: string
+          description: 資料id(tableInfo.data_id)
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        memo:
+          type: string
+        func_id:
+          type: string
+      required:
+        - data_id
+        - start_time
+        - end_time
+        - memo
+        - func_id
+    SitemapAuditingRequest:
+      title: SitemapAuditingRequest
+      type: object
+      description: ''
+      properties:
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        memo:
+          type: string
+        site_id:
+          type: string
+        node_id:
+          description: 節點流水號
+          type: string
+      required:
+        - start_time
+        - end_time
+        - memo
+        - site_id
+        - node_id
   securitySchemes: {}
