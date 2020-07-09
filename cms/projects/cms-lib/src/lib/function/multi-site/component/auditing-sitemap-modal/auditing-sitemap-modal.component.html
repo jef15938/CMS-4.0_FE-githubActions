@@ -1,24 +1,32 @@
-<div class="page-content-container">
-  <form #form="ngForm">
+<div class="page-content-container" [formGroup]="form">
+  <div>
     <mat-form-field appearance="outline">
       <mat-label>上線時間</mat-label>
-      <input matInput [(ngModel)]="startTime" name="startTime" required #modelStartTime="ngModel">
-      <mat-error *ngIf="modelStartTime.invalid">請輸入上線時間</mat-error>
+      <input matInput [matDatepicker]="pickerStart" formControlName="startTime">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+      <mat-error *ngIf="form.controls.startTime.errors?.required">請輸入上線時間</mat-error>
+      <mat-error *ngIf="form.controls.startTime.errors?.startTimeEndTime">結束時間需大於開始時間</mat-error>
     </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-label>下架時間</mat-label>
-      <input matInput [(ngModel)]="endTime" name="endTime" required #modelEndTime="ngModel">
-      <mat-error *ngIf="modelEndTime.invalid">請輸入下架時間</mat-error>
+      <input matInput [matDatepicker]="pickerEnd" formControlName="endTime">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+      <mat-error *ngIf="form.controls.endTime.errors?.required">請輸入下架時間</mat-error>
+      <mat-error *ngIf="form.controls.endTime.errors?.startTimeEndTime">結束時間需大於開始時間</mat-error>
     </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-label>Memo</mat-label>
-      <input matInput [(ngModel)]="memo" name="memo" required #modelMemo="ngModel">
-      <mat-error *ngIf="modelMemo.invalid">請輸入Memo</mat-error>
+      <input matInput formControlName="memo">
+      <mat-error *ngIf="form.controls.memo.errors?.required">請輸入Memo</mat-error>
     </mat-form-field>
 
     <div class="btn-group">
       <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
       <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
     </div>
-  </form>
+  </div>
 </div>
