@@ -7,6 +7,9 @@ import { MenuNodeComponent } from './global/layouts/menu-node.component';
 import { WithCredentialsInterceptor } from './global/interceptor/cms-http-interceptor';
 import { CmsAuthGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './global/service';
 
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { CmsDateAdapter, CMS_DATE_FORMATS } from './global/util/mat-date/mat-date';
+
 const LAYOUTS = [
   MenuNodeComponent,
 ];
@@ -41,7 +44,10 @@ export class CmsModule {
         {
           provide: HTTP_INTERCEPTORS, multi: true,
           useClass: WithCredentialsInterceptor
-        }
+        },
+        { provide: DateAdapter, useClass: CmsDateAdapter },
+        CmsDateAdapter,
+        { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS }
       ]
     };
   }
