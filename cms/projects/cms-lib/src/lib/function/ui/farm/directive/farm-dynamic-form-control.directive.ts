@@ -3,8 +3,7 @@ import {
   Optional, Host, SkipSelf, ComponentFactoryResolver, ViewContainerRef, OnDestroy, Inject, Input, Type, ChangeDetectorRef, Self
 } from '@angular/core';
 import { NgControl, FormControl, ControlContainer, ValidatorFn, AsyncValidatorFn, Validator, AbstractControl, NG_VALIDATORS, Validators } from '@angular/forms';
-import { CMS_EXTENSION_COMPONENT_MAPPINGS } from '../../../../global/injection-token/cms-injection-token';
-import { CmsExtensionComponentMapping } from '../../../../global/interface/cms-extension.interface';
+import { RENDER_COMPONENT_MAPPING_TOKEN, RenderComponentMapping } from 'render';
 
 function normalizeValidator(validator: ValidatorFn | Validator): ValidatorFn {
   if ((validator as Validator).validate) {
@@ -35,13 +34,13 @@ export class FarmDynamicFormControlDirective extends NgControl implements OnInit
     @Optional() @Self() @Inject(NG_VALIDATORS) private validators: Array<Validator | ValidatorFn>,
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef,
-    @Inject(CMS_EXTENSION_COMPONENT_MAPPINGS) private cmsExtensionComponentMappings: CmsExtensionComponentMapping<any>[],
+    @Inject(RENDER_COMPONENT_MAPPING_TOKEN) private componentMappings: RenderComponentMapping<any>[],
   ) {
     super();
   }
 
   ngOnInit() {
-    const mapping = this.cmsExtensionComponentMappings.find(m => m.component_id === this.componentId);
+    const mapping = this.componentMappings.find(m => m.component_id === this.componentId);
     if (!mapping) { throw (new Error('Cannot find form control components mapping')); }
     const componentClass = mapping.component as Type<any>;
     const componentFactory = this.resolver.resolveComponentFactory(componentClass);

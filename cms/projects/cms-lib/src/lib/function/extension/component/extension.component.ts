@@ -2,11 +2,10 @@ import {
   Component, OnInit, AfterViewInit, Inject, ViewChild, ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CMS_EXTENSION_COMPONENT_MAPPINGS } from '../../../global/injection-token';
-import { CmsExtensionComponentMapping } from '../../../global/interface';
+import { DynamicWrapperComponent } from '@neux/core';
+import { RENDER_COMPONENT_MAPPING_TOKEN, RenderComponentMapping } from 'render';
 import { CmsUserMenuResolver } from '../../../global/service';
 import { MenuInfo } from '../../../global/api/neuxAPI/bean/MenuInfo';
-import { DynamicWrapperComponent } from '@neux/core';
 
 @Component({
   selector: 'cms-extension',
@@ -26,7 +25,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
     private cmsUserMenuResolver: CmsUserMenuResolver,
-    @Inject(CMS_EXTENSION_COMPONENT_MAPPINGS) private cmsExtensionComponentMappings: CmsExtensionComponentMapping<any>[],
+    @Inject(RENDER_COMPONENT_MAPPING_TOKEN) private componentMappings: RenderComponentMapping<any>[],
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.funcId = params.funcId;
@@ -66,7 +65,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const mapping = this.cmsExtensionComponentMappings.find(m => m.component_id === menu.component_id);
+    const mapping = this.componentMappings.find(m => m.component_id === menu.component_id);
     if (!mapping) {
       this.errorMsg = `沒有找到對應的元件設定, func_id=[${this.funcId}]`;
       return;

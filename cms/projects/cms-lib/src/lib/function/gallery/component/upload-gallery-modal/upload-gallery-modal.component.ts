@@ -7,7 +7,7 @@ import { GalleryService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
 import { ColDef } from '../../../ui/table';
 import { CropperService } from '../../../ui/cropper';
-import { CMS_ENVIROMENT } from '../../../../global/injection-token/cms-injection-token';
+import { CMS_ENVIROMENT_TOKEN } from '../../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../../global/interface/cms-enviroment.interface';
 
 export class FileUploadModel {
@@ -78,7 +78,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   constructor(
     private http: HttpClient,
     private cropperService: CropperService,
-    @Inject(CMS_ENVIROMENT) private environment: CmsEnviroment,
+    @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
     private galleryService: GalleryService,
     private changeDetectorRef: ChangeDetectorRef,
   ) { super(); }

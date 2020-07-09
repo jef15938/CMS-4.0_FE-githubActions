@@ -4,7 +4,7 @@ import {
   HostListener, OnChanges, SimpleChanges, Injector
 } from '@angular/core';
 import { TemplateInfo } from '../../../global/interface';
-import { COMPONENT_SERVICE_TOKEN } from '../../../global/injection-token/injection-token';
+import { RENDER_COMPONENT_SERVICE_TOKEN } from '../../../global/injection-token/injection-token';
 import { LayoutBase } from '../layout-base/_base.interface';
 import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
@@ -36,7 +36,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   private instanceEventSubscription: Subscription;
 
   constructor(
-    @Inject(COMPONENT_SERVICE_TOKEN) private componentFactory: any,
+    @Inject(RENDER_COMPONENT_SERVICE_TOKEN) private componentFactory: any,
     injector: Injector,
   ) {
     super(injector);

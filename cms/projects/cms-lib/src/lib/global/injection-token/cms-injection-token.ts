@@ -1,6 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { CmsExtensionMenuResolver, CmsExtensionComponentMapping, CmsEnviroment } from '../interface';
+import { CmsExtensionMenuResolver, CmsEnviroment } from '../interface';
 
-export const CMS_ENVIROMENT = new InjectionToken<CmsEnviroment>('CMS_ENVIROMENT');
-export const CMS_EXTENSION_COMPONENT_MAPPINGS = new InjectionToken<CmsExtensionComponentMapping<any>[]>('CMS_EXTENSION_COMPONENT_MAPPINGS');
-export const CMS_EXTENSION_MENU_RESOLVER = new InjectionToken<CmsExtensionMenuResolver>('CMS_EXTENSION_MENU_RESOLVER');
+export const CMS_ENVIROMENT_TOKEN = new InjectionToken<CmsEnviroment>('CMS_ENVIROMENT_TOKEN');
+export const CMS_EXTENSION_MENU_RESOLVER_TOKEN = new InjectionToken<CmsExtensionMenuResolver>('CMS_EXTENSION_MENU_RESOLVER_TOKEN');

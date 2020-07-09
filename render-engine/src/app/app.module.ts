@@ -1,12 +1,10 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-
+import { RenderModule, WrapperModule, RENDER_COMPONENT_SERVICE_TOKEN } from '@render';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RenderModule } from '@render';
 import { DynamicComponentFactoryService } from './dynamic-component-factory.service';
-import { WrapperModule, COMPONENT_SERVICE_TOKEN } from '@render';
 
 @NgModule({
   declarations: [
@@ -21,7 +19,7 @@ import { WrapperModule, COMPONENT_SERVICE_TOKEN } from '@render';
   ],
   providers: [
     {
-      provide: COMPONENT_SERVICE_TOKEN,
+      provide: RENDER_COMPONENT_SERVICE_TOKEN,
       useExisting: DynamicComponentFactoryService
     }
   ],

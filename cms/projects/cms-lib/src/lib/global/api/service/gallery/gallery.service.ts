@@ -7,7 +7,7 @@ import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { GalleryGetResponse } from '../../neuxAPI/bean/GalleryGetResponse';
 import { GalleryCategoryInfo } from '../../neuxAPI/bean/GalleryCategoryInfo';
 import { GalleryCaregoryGetResponse } from '../../neuxAPI/bean/GalleryCaregoryGetResponse';
-import { CMS_ENVIROMENT } from '../../../injection-token/cms-injection-token';
+import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface/cms-enviroment.interface';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class GalleryService {
   constructor(
     private respAPIService: RestApiService,
     private httpClient: HttpClient,
-    @Inject(CMS_ENVIROMENT) environment: CmsEnviroment,
+    @Inject(CMS_ENVIROMENT_TOKEN) environment: CmsEnviroment,
   ) {
     this.apiUrl = `${environment.apiBaseUrl}/Gallery`;
   }
