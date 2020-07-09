@@ -17,7 +17,7 @@ export class ContentService {
   /**
    *
    *
-   * @param {string} contentID // SiteMapInfo.layout_id
+   * @param {string} contentID // SiteMapGetResponse.layout_id
    * @returns
    * @memberof ContentService
    */
@@ -31,7 +31,7 @@ export class ContentService {
   /**
    *
    *
-   * @param {string} controlID // SiteMapInfo.layout_id
+   * @param {string} controlID // SiteMapGetResponse.layout_id
    * @returns
    * @memberof ContentService
    */

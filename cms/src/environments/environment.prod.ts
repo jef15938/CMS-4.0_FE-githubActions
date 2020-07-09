@@ -45,7 +45,7 @@ export const environment = {
     GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
     GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
     DeleteGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
-    PostSitemapAuditingByFuncId: `${BASE_URL}\/SitemapAuditing/{funcId}`,
+    PostSitemapAuditingByNodeId: `${BASE_URL}\/SitemapAuditing/{nodeId}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -87,7 +87,7 @@ export const environment = {
     GetGroupSiteMapByGroupID: 'Restful',
     GetTemplateByControlID: 'Restful',
     DeleteGalleryByGalleryID: 'Restful',
-    PostSitemapAuditingByFuncId: 'Restful',
+    PostSitemapAuditingByNodeId: 'Restful',
   },
   chatbot: {
     apiUrl: 'https://labs.decoder.com.tw/chatbot-api'

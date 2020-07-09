@@ -7,7 +7,6 @@ import { SiteMapGetResponse } from '../../neuxAPI/bean/SiteMapGetResponse';
 import { SiteGetResponse } from '../../neuxAPI/bean/SiteGetResponse';
 import { SiteInfo } from '../../neuxAPI/bean/SiteInfo';
 import { SiteMapNodeInfo } from '../../neuxAPI/bean/SiteMapNodeInfo';
-import { SiteMapInfo } from '../../neuxAPI/bean/SiteMapInfo';
 import { UserSiteMapPutRequest } from '../../neuxAPI/bean/UserSiteMapPutRequest';
 import { SitemapAuditingRequest } from '../../neuxAPI/bean/SitemapAuditingRequest';
 
@@ -86,10 +85,8 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getCMSSiteMap(siteID: string) {
-    return this.restAPIService.dispatchRestApi('GetCMSSiteMapBySiteID', { siteID }).pipe(
-      map((res: SiteMapGetResponse) => res.datas)
-    );
+  getCMSSiteMap(siteID: string): Observable<SiteMapGetResponse[]> {
+    return this.restAPIService.dispatchRestApi('GetCMSSiteMapBySiteID', { siteID });
   }
 
   /**
@@ -98,10 +95,8 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getUserSiteMapNodes(siteID: string) {
-    return this.restAPIService.dispatchRestApi('GetSiteBySiteID', { siteID }).pipe(
-      map((res: SiteMapGetResponse) => res.datas)
-    );
+  getUserSiteMapNodes(siteID: string): Observable<SiteMapGetResponse[]> {
+    return this.restAPIService.dispatchRestApi('GetSiteBySiteID', { siteID }).pipe(map(res => [res]));
   }
 
   /**
@@ -115,7 +110,7 @@ export class SitemapService {
     return this.restAPIService.dispatchRestApi('GetSiteBySiteIDAndNodeID', { siteID, nodeID });
   }
 
-  private findNodeByNodeID(sources: SiteMapInfo[], nodeID: string): SiteMapNodeInfo {
+  private findNodeByNodeID(sources: SiteMapGetResponse[], nodeID: string): SiteMapNodeInfo {
     if (!sources?.length || !nodeID) { return null; }
 
     const node = sources.find(s => s.node_id === nodeID);
@@ -195,28 +190,26 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  auditingSitemap(funcId: string, startTime: string, endTime: string, memo: string, siteId: string, nodeId: string) {
-    if (!funcId) { throw new ParamsError('funcId', 'auditingSitemap', 'string', funcId); }
+  auditingSitemap(nodeId: string, startTime: string, endTime: string, memo: string, siteId: string) {
+    if (!nodeId) { throw new ParamsError('nodeId', 'auditingSitemap', 'string', nodeId); }
     if (!startTime) { throw new ParamsError('startTime', 'auditingSitemap', 'string', startTime); }
     if (!endTime) { throw new ParamsError('endTime', 'auditingSitemap', 'string', endTime); }
     if (!siteId) { throw new ParamsError('siteId', 'auditingSitemap', 'string', siteId); }
     if (!memo) { throw new ParamsError('memo', 'auditingSitemap', 'string', memo); }
-    if (!nodeId) { throw new ParamsError('nodeId', 'auditingSitemap', 'string', nodeId); }
 
     const requestBody: SitemapAuditingRequest = {
       start_time: startTime,
       end_time: endTime,
       site_id: siteId,
       memo,
-      node_id: nodeId,
     };
 
     const params: { [k: string]: any } = {
-      funcId,
+      nodeId,
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PostSitemapAuditingByFuncId', params);
+    return this.restAPIService.dispatchRestApi('PostSitemapAuditingByNodeId', params);
   }
 
 }

@@ -70,12 +70,11 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
 
   confirm() {
     this.siteMapService.auditingSitemap(
-      this.sitemapNode.layout_id,
+      this.sitemapNode.node_id,
       this.cmsDateAdapter.format(this.form.controls.startTime.value),
       this.cmsDateAdapter.format(this.form.controls.endTime.value),
       this.form.controls.memo.value,
       this.siteId,
-      this.sitemapNode.node_id
     ).subscribe(_ => {
       this.close('Created');
     });

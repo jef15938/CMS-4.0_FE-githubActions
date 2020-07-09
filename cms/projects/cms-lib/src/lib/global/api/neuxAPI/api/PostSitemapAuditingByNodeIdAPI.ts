@@ -7,7 +7,7 @@ import {SitemapAuditingRequest} from '../bean/SitemapAuditingRequest';
 /**
  * AuditingSitemap
  */
-export class PostSitemapAuditingByFuncIdAPI implements Api, MockApi, RestfulApi {
+export class PostSitemapAuditingByNodeIdAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public requestBody: SitemapAuditingRequest;
@@ -16,7 +16,7 @@ export class PostSitemapAuditingByFuncIdAPI implements Api, MockApi, RestfulApi 
     constructor() { }
 
     public getApiName(): string {
-        return 'PostSitemapAuditingByFuncId';
+        return 'PostSitemapAuditingByNodeId';
     }
 
     public getRequestData(): ApiRequest {
@@ -31,7 +31,7 @@ export class PostSitemapAuditingByFuncIdAPI implements Api, MockApi, RestfulApi 
     }
 
     public getMockPath(): string {
-        return './assets/mock/PostSitemapAuditingByFuncIdAPI.json';
+        return './assets/mock/PostSitemapAuditingByNodeIdAPI.json';
     }
 
 }

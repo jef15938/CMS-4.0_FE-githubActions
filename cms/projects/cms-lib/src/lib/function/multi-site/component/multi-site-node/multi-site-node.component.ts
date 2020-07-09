@@ -3,7 +3,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CmsTreeNodeRenderer, CmsTreeNode } from './../../../ui/tree';
-import { SiteMapInfo } from '../../../../global/api/neuxAPI/bean/SiteMapInfo';
+import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 
 enum ActionType {
   Create, Delete
@@ -13,7 +13,7 @@ export class MultiSiteNodeCustomEvent {
   ActionType = ActionType;
   constructor(
     public action: ActionType,
-    public data: SiteMapInfo,
+    public data: SiteMapGetResponse,
   ) { }
 }
 
@@ -22,20 +22,20 @@ export class MultiSiteNodeCustomEvent {
   templateUrl: './multi-site-node.component.html',
   styleUrls: ['./multi-site-node.component.scss']
 })
-export class MultiSiteNodeComponent implements CmsTreeNodeRenderer<SiteMapInfo>, OnInit, OnDestroy {
+export class MultiSiteNodeComponent implements CmsTreeNodeRenderer<SiteMapGetResponse>, OnInit, OnDestroy {
 
   ActionType = ActionType;
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-  node: CmsTreeNode<SiteMapInfo>;
+  node: CmsTreeNode<SiteMapGetResponse>;
 
   private destroy$ = new Subject();
 
   constructor() { }
 
   // called before ngOnInit()
-  compInit(node: CmsTreeNode<SiteMapInfo>) {
+  compInit(node: CmsTreeNode<SiteMapGetResponse>) {
     this.node = node;
   }
 

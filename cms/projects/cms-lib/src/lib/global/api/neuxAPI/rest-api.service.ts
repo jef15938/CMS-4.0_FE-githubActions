@@ -43,7 +43,7 @@ import { GetGroupMenuByGroupIDAPI } from './api/GetGroupMenuByGroupIDAPI';
 import { GetGroupSiteMapByGroupIDAPI } from './api/GetGroupSiteMapByGroupIDAPI';
 import { GetTemplateByControlIDAPI } from './api/GetTemplateByControlIDAPI';
 import { DeleteGalleryByGalleryIDAPI } from './api/DeleteGalleryByGalleryIDAPI';
-import { PostSitemapAuditingByFuncIdAPI } from './api/PostSitemapAuditingByFuncIdAPI';
+import { PostSitemapAuditingByNodeIdAPI } from './api/PostSitemapAuditingByNodeIdAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GalleryCaregoryGetResponse } from './bean/GalleryCaregoryGetResponse';
@@ -107,7 +107,7 @@ GetGroupMenuByGroupID: GroupMenuGetResponse,
 GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
 GetTemplateByControlID: TemplateGetResponse,
 DeleteGalleryByGalleryID: GenerationHeader,
-PostSitemapAuditingByFuncId: GenerationHeader,
+PostSitemapAuditingByNodeId: GenerationHeader,
 
 }
 
@@ -163,7 +163,7 @@ this.apiFactory.registerApi(new GetGroupMenuByGroupIDAPI());
 this.apiFactory.registerApi(new GetGroupSiteMapByGroupIDAPI());
 this.apiFactory.registerApi(new GetTemplateByControlIDAPI());
 this.apiFactory.registerApi(new DeleteGalleryByGalleryIDAPI());
-this.apiFactory.registerApi(new PostSitemapAuditingByFuncIdAPI());
+this.apiFactory.registerApi(new PostSitemapAuditingByNodeIdAPI());
 
     }
 

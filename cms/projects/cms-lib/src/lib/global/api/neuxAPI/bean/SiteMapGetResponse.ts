@@ -1,14 +1,22 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {SiteMapInfo} from './SiteMapInfo';
+import {IsNotEmpty} from 'class-validator';
 
 import { TypeFactory } from '../type-factory';
 
 export class SiteMapGetResponse {
 
-@Type(TypeFactory(SiteMapInfo))
+@IsNotEmpty()
+public node_id: string;
+@IsNotEmpty()
+public node_name: string;
+@IsNotEmpty()
+public canModify: boolean;
+@IsNotEmpty()
+public canSubmit: boolean;
+@Type(TypeFactory(SiteMapGetResponse))
 @ValidateNested()
-public datas: Array<SiteMapInfo>;
+public children: Array<SiteMapGetResponse>;
 
 
 }

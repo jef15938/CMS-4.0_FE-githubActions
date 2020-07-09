@@ -14,8 +14,6 @@ public end_time: string;
 public memo: string;
 @IsNotEmpty()
 public site_id: string;
-@IsNotEmpty()
-public node_id: string;
 
 
 }

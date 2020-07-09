@@ -1238,7 +1238,7 @@ paths:
           description: application/json
       tags:
         - Gallery
-  '/SitemapAuditing/{funcId}':
+  '/SitemapAuditing/{nodeId}':
     post:
       summary: AuditingSitemap
       operationId: post-SitemapAuditing
@@ -1259,10 +1259,10 @@ paths:
     parameters:
       - schema:
           type: string
-        name: funcId
+        name: nodeId
         in: path
         required: true
-        description: 節點ID
+        description: 節點流水號
 components:
   schemas:
     LoginRequest:
@@ -1654,33 +1654,6 @@ components:
         - status
       x-tags:
         - Model
-    SiteMapInfo:
-      title: SiteMapInfo
-      type: object
-      x-tags:
-        - Model
-      properties:
-        node_id:
-          type: string
-          description: 節點流水號
-        node_name:
-          type: string
-          description: 節點名稱
-        canModify:
-          type: boolean
-          description: 是否能修改
-        canSubmit:
-          type: boolean
-          description: 是否能送審
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/SiteMapInfo'
-      required:
-        - node_id
-        - node_name
-        - canModify
-        - canSubmit
     SiteMapNodeInfo:
       title: SiteMapInfo
       type: object
@@ -1813,10 +1786,27 @@ components:
       x-tags:
         - Model
       properties:
-        datas:
+        node_id:
+          type: string
+          description: 節點流水號
+        node_name:
+          type: string
+          description: 節點名稱
+        canModify:
+          type: boolean
+          description: 是否能修改
+        canSubmit:
+          type: boolean
+          description: 是否能送審
+        children:
           type: array
           items:
-            $ref: '#/components/schemas/SiteMapInfo'
+            $ref: '#/components/schemas/SiteMapGetResponse'
+      required:
+        - node_id
+        - node_name
+        - canModify
+        - canSubmit
     SiteMapNodeGetResponse:
       $ref: '#/components/schemas/SiteMapNodeInfo'
     UserSiteMapPutRequest:
@@ -1856,6 +1846,8 @@ components:
     UserSiteMapPostRequest:
       title: UserSiteMapPostRequest
       type: object
+      x-tags:
+        - Model
       properties:
         node_name:
           type: string
@@ -1875,6 +1867,7 @@ components:
           type: string
         content_path:
           type: string
+          description: 節點連結路徑
         meta_title:
           type: string
         meta_description:
@@ -1886,8 +1879,6 @@ components:
       required:
         - node_name
         - meta_title
-      x-tags:
-        - Model
     ErrorInfo:
       title: ErrorInfo
       type: object
@@ -2447,13 +2438,9 @@ components:
           type: string
         site_id:
           type: string
-        node_id:
-          description: 節點流水號
-          type: string
       required:
         - start_time
         - end_time
         - memo
         - site_id
-        - node_id
   securitySchemes: {}

@@ -108,7 +108,7 @@ export class AuditingComponent implements OnInit {
             event.data.order_id,
             res.status,
             res.comment,
-          ).subscribe();
+          ).subscribe(_ => this.getMyAuditings().subscribe());
         });
       } else {
         switch (event.action) {

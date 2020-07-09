@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Observable, concat, Subject, forkJoin, of } from 'rxjs';
 import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
-import { SiteMapInfo } from '../../../../global/api/neuxAPI/bean/SiteMapInfo';
+import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
 import { SitemapService, ContentService } from '../../../../global/api/service';
 import { ModalService } from '../../../ui/modal';
@@ -32,7 +32,7 @@ class SiteInfoUpdateModel extends SiteInfo {
 })
 export class MultiSiteComponent implements OnInit, OnDestroy {
 
-  @ViewChild('sitemapTree') sitemapTree: TreeComponent<SiteMapInfo>;
+  @ViewChild('sitemapTree') sitemapTree: TreeComponent<SiteMapGetResponse>;
 
   EditModeType = EditModeType;
 
@@ -42,11 +42,11 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   editMode: EditModeType = EditModeType.Site;
 
-  sitemaps: SiteMapInfo[];
+  sitemaps: SiteMapGetResponse[];
 
   selectedSiteMap: SiteMapUpdateInfo;
   customNodeRenderer = MultiSiteNodeComponent;
-  private sitemapSelected$ = new Subject<SiteMapInfo>();
+  private sitemapSelected$ = new Subject<SiteMapGetResponse>();
 
   private destroy$ = new Subject();
 
@@ -105,11 +105,11 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     }
   }
 
-  onNodeSelected(event: { node: SiteMapInfo }) {
+  onNodeSelected(event: { node: SiteMapGetResponse }) {
     this.sitemapSelected$.next(event.node);
   }
 
-  afterTreeRender(tree: CmsTree<SiteMapInfo>) {
+  afterTreeRender(tree: CmsTree<SiteMapGetResponse>) {
     const defaultSelect = this.sitemaps ? this.sitemaps[0] : undefined;
     tree.selectNode(defaultSelect);
   }
@@ -193,7 +193,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     });
   }
 
-  onTreeDragTo(ev: { target: SiteMapInfo, to: SiteMapInfo }) {
+  onTreeDragTo(ev: { target: SiteMapGetResponse, to: SiteMapGetResponse }) {
     const target = ev.target;
     const to = ev.to;
     if (!target || !to || target === to || to.children.indexOf(target) > -1) { return; }

@@ -40,7 +40,7 @@ GetGroupMenuByGroupID: `${BASE_URL}\/Group/Menu/{groupID}`,
 GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
 GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
 DeleteGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
-PostSitemapAuditingByFuncId: `${BASE_URL}\/SitemapAuditing/{funcId}`,
+PostSitemapAuditingByNodeId: `${BASE_URL}\/SitemapAuditing/{nodeId}`,
 
 };
 const API_TYPE = {
@@ -83,6 +83,6 @@ GetGroupMenuByGroupID: 'Restful',
 GetGroupSiteMapByGroupID: 'Restful',
 GetTemplateByControlID: 'Restful',
 DeleteGalleryByGalleryID: 'Restful',
-PostSitemapAuditingByFuncId: 'Restful',
+PostSitemapAuditingByNodeId: 'Restful',
 
 };
