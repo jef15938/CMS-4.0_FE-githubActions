@@ -36,6 +36,7 @@ export const environment = {
     GetFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
     PostFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
     PutFarmFormInfoByFuncID: `${BASE_URL}\/FarmFormInfo/{funcID}`,
+    PostFarmAuditingByFuncId: `${BASE_URL}\/FarmAuditing/{funcId}`,
     GetFarmDetailInfoByFuncID: `${BASE_URL}\/FarmDetailInfo/{funcID}`,
     GetSite: `${BASE_URL}\/Site`,
     GetSiteBySiteID: `${BASE_URL}\/Site/{siteID}`,
@@ -44,6 +45,7 @@ export const environment = {
     GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
     GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
     DeleteGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
+    PostSitemapAuditingByFuncId: `${BASE_URL}\/SitemapAuditing/{funcId}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
