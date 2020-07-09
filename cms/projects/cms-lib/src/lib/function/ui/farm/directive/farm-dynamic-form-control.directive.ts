@@ -1,9 +1,9 @@
 import {
   Directive, OnInit, ComponentRef, Output, EventEmitter,
-  Optional, Host, SkipSelf, ComponentFactoryResolver, ViewContainerRef, OnDestroy, Inject, Input, Type, ChangeDetectorRef, Self
+  Optional, Host, SkipSelf, ComponentFactoryResolver, ViewContainerRef, OnDestroy, Inject, Input, ChangeDetectorRef, Self
 } from '@angular/core';
 import { NgControl, FormControl, ControlContainer, ValidatorFn, AsyncValidatorFn, Validator, AbstractControl, NG_VALIDATORS, Validators } from '@angular/forms';
-import { RENDER_COMPONENT_MAPPING_TOKEN, RenderComponentMapping } from 'render';
+import { DynamicComponentFactoryService } from 'render';
 
 function normalizeValidator(validator: ValidatorFn | Validator): ValidatorFn {
   if ((validator as Validator).validate) {
@@ -34,16 +34,14 @@ export class FarmDynamicFormControlDirective extends NgControl implements OnInit
     @Optional() @Self() @Inject(NG_VALIDATORS) private validators: Array<Validator | ValidatorFn>,
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef,
-    @Inject(RENDER_COMPONENT_MAPPING_TOKEN) private componentMappings: RenderComponentMapping<any>[],
+    private dynamicComponentFactoryService: DynamicComponentFactoryService,
   ) {
     super();
   }
 
   ngOnInit() {
-    const mapping = this.componentMappings.find(m => m.component_id === this.componentId);
-    if (!mapping) { throw (new Error('Cannot find form control components mapping')); }
-    const componentClass = mapping.component as Type<any>;
-    const componentFactory = this.resolver.resolveComponentFactory(componentClass);
+    const component = this.dynamicComponentFactoryService.getComponent(this.componentId);
+    const componentFactory = this.resolver.resolveComponentFactory(component);
     this.componentRef = this.container.createComponent(componentFactory);
     this.valueAccessor = this.componentRef.instance;
 

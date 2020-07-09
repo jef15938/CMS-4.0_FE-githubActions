@@ -1,11 +1,11 @@
 import {
-  Component, OnInit, AfterViewInit, Inject, ViewChild, ChangeDetectorRef
+  Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicWrapperComponent } from '@neux/core';
-import { RENDER_COMPONENT_MAPPING_TOKEN, RenderComponentMapping } from 'render';
 import { CmsUserMenuResolver } from '../../../global/service';
 import { MenuInfo } from '../../../global/api/neuxAPI/bean/MenuInfo';
+import { DynamicComponentFactoryService } from 'render';
 
 @Component({
   selector: 'cms-extension',
@@ -25,7 +25,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
     private cmsUserMenuResolver: CmsUserMenuResolver,
-    @Inject(RENDER_COMPONENT_MAPPING_TOKEN) private componentMappings: RenderComponentMapping<any>[],
+    private dynamicComponentFactoryService: DynamicComponentFactoryService,
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.funcId = params.funcId;
@@ -65,19 +65,13 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const mapping = this.componentMappings.find(m => m.component_id === menu.component_id);
-    if (!mapping) {
-      this.errorMsg = `沒有找到對應的元件設定, func_id=[${this.funcId}]`;
+    const component = this.dynamicComponentFactoryService.getComponent(menu.component_id);
+    if (!component) {
+      this.errorMsg = `沒有提供擴充功能元件, func_id=[${this.funcId}], component_id=[${menu.component_id}]`;
       return;
     }
 
-    const comp = mapping.component;
-    if (!comp) {
-      this.errorMsg = `沒有提供擴充功能元件, func_id=[${this.funcId}], component_id=[${mapping.component_id}]`;
-      return;
-    }
-
-    this.dynamicWrapperComponent?.loadWithComponent(comp);
+    this.dynamicWrapperComponent?.loadWithComponent(component);
   }
 
   private findMenuByFuncId(funcId: string, sources: MenuInfo[]): MenuInfo {
