@@ -7,6 +7,7 @@ import { MyAuditingDetailGetResponse } from '../../neuxAPI/bean/MyAuditingDetail
 import { MyAuditingDetailInfo } from '../../neuxAPI/bean/MyAuditingDetailInfo';
 import { MyAuditingGetResponse } from '../../neuxAPI/bean/MyAuditingGetResponse';
 import { AuditingGetResponse } from '../../neuxAPI/bean/AuditingGetResponse';
+import { AuditingSubmitRequest } from '../../neuxAPI/bean/AuditingSubmitRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -74,12 +75,15 @@ export class AuditingService {
     if (!orderID) { throw new ParamsError('orderID', 'approveAuditing', 'number', orderID); }
     if (!status) { throw new ParamsError('status', 'approveAuditing', 'string', status); }
 
-    const params: { [k: string]: any } = {
-      orderID,
+    const requestBody: AuditingSubmitRequest = {
       status,
+      comment,
     };
 
-    if (comment) { params.comment = comment; }
+    const params: { [k: string]: any } = {
+      orderID,
+      requestBody,
+    };
 
     return this.restAPIService.dispatchRestApi('PostAuditingByOrderID', params);
   }

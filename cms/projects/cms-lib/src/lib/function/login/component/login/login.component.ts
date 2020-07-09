@@ -8,9 +8,9 @@ import { AuthorizationService } from '../../../../global/api/service';
 })
 export class LoginComponent implements OnInit {
 
-  username = 'admin';
-  password = 'admin1234';
-  validationCode = 1;
+  username = '';
+  password = '';
+  validationCode = 1234;
 
   constructor(
     private authorizationService: AuthorizationService,

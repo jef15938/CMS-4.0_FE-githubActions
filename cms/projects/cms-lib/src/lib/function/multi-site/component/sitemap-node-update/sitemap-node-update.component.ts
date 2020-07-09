@@ -8,6 +8,7 @@ import { SitemapService, ContentService } from '../../../../global/api/service';
 import { ContentEditorService, EditorMode } from './../../../ui/content-editor';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
 import { SiteMapUpdateInfo } from './../../../../global/interface';
+import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
   constructor(siteMapInfo: SiteMapNodeInfo, parentId: string, nodeOrders: string) {
@@ -41,6 +42,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   NodeType = SiteMapNodeType;
   UrlType = SiteMapUrlType;
 
+  @Input() siteId: string;
   @Input() siteMapUpdateInfo: SiteMapUpdateInfo;
 
   @Output() updated = new EventEmitter<UserSiteMapPutRequest>();
@@ -104,6 +106,16 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
         mode: EditorMode.EDIT,
       }).subscribe();
     });
+  }
+
+  auditingSiteMap() {
+    this.modalService.openComponent({
+      component: AuditingSitemapModalComponent,
+      componentInitData: {
+        siteId: this.siteId,
+        sitemapNode: this.siteMapUpdateInfo.siteMap
+      }
+    }).subscribe();
   }
 
   save() {

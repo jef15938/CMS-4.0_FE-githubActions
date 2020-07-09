@@ -8,6 +8,7 @@ import { ModalService } from '../../../ui/modal';
 import { ColDef } from '../../../ui/table';
 import { AuditingActionCellComponent, AuditingActionCellCustomEvent } from '../auditing-action-cell/auditing-action-cell.component';
 import { ApproveAuditingModalComponent, AuditingApproveStatus } from '../approve-auditing-modal/approve-auditing-modal.component';
+import { AuditingSubmitRequest } from '../../../../global/api/neuxAPI/bean/AuditingSubmitRequest';
 
 @Component({
   selector: 'cms-auditing',
@@ -101,7 +102,14 @@ export class AuditingComponent implements OnInit {
             batch: false,
             status,
           },
-        }).subscribe(res => console.warn('res = ', res));
+        }).subscribe((res: AuditingSubmitRequest) => {
+          if (!res) { return; }
+          this.auditingService.approveAuditing(
+            event.data.order_id,
+            res.status,
+            res.comment,
+          ).subscribe();
+        });
       } else {
         switch (event.action) {
           case event.ActionType.PreviewPc:

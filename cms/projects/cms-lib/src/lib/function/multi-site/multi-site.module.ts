@@ -6,6 +6,7 @@ import { MultiSiteNodeComponent } from './component/multi-site-node/multi-site-n
 import { SitemapNodeUpdateComponent } from './component/sitemap-node-update/sitemap-node-update.component';
 import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
 import { GetStartEndTimePipe } from './pipe/get-start-end-time.pipe';
+import { AuditingSitemapModalComponent } from './component/auditing-sitemap-modal/auditing-sitemap-modal.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { GetStartEndTimePipe } from './pipe/get-start-end-time.pipe';
     SitemapNodeUpdateComponent,
     SitemapNodeCreateModalComponent,
     GetStartEndTimePipe,
+    AuditingSitemapModalComponent,
   ],
 })
 export class MultiSiteModule { }

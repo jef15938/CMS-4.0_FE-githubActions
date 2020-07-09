@@ -9,6 +9,7 @@ import { SiteInfo } from '../../neuxAPI/bean/SiteInfo';
 import { SiteMapNodeInfo } from '../../neuxAPI/bean/SiteMapNodeInfo';
 import { SiteMapInfo } from '../../neuxAPI/bean/SiteMapInfo';
 import { UserSiteMapPutRequest } from '../../neuxAPI/bean/UserSiteMapPutRequest';
+import { SitemapAuditingRequest } from '../../neuxAPI/bean/SitemapAuditingRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -187,6 +188,35 @@ export class SitemapService {
     return this.restAPIService.dispatchRestApi('GetSite', {}).pipe(
       map((res: SiteGetResponse) => res.datas)
     );
+  }
+
+  /**
+   *
+   * @returns
+   * @memberof SitemapService
+   */
+  auditingSitemap(funcId: string, startTime: string, endTime: string, memo: string, siteId: string, nodeId: string) {
+    if (!funcId) { throw new ParamsError('funcId', 'auditingSitemap', 'string', funcId); }
+    if (!startTime) { throw new ParamsError('startTime', 'auditingSitemap', 'string', startTime); }
+    if (!endTime) { throw new ParamsError('endTime', 'auditingSitemap', 'string', endTime); }
+    if (!siteId) { throw new ParamsError('siteId', 'auditingSitemap', 'string', siteId); }
+    if (!memo) { throw new ParamsError('memo', 'auditingSitemap', 'string', memo); }
+    if (!nodeId) { throw new ParamsError('nodeId', 'auditingSitemap', 'string', nodeId); }
+
+    const requestBody: SitemapAuditingRequest = {
+      start_time: startTime,
+      end_time: endTime,
+      site_id: siteId,
+      memo,
+      node_id: nodeId,
+    };
+
+    const params: { [k: string]: any } = {
+      funcId,
+      requestBody,
+    };
+
+    return this.restAPIService.dispatchRestApi('PostSitemapAuditingByFuncId', params);
   }
 
 }
