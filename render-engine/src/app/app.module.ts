@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RenderModule, WrapperModule, RENDER_COMPONENT_SERVICE_TOKEN } from '@render';
+import { RenderModule, WrapperModule } from '@render';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DynamicComponentFactoryService } from './dynamic-component-factory.service';
 
 @NgModule({
   declarations: [
@@ -18,10 +17,7 @@ import { DynamicComponentFactoryService } from './dynamic-component-factory.serv
     WrapperModule,
   ],
   providers: [
-    {
-      provide: RENDER_COMPONENT_SERVICE_TOKEN,
-      useExisting: DynamicComponentFactoryService
-    }
+    ...RenderModule.forRoot().providers,
   ],
   bootstrap: [AppComponent]
 })

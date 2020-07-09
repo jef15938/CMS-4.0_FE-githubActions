@@ -1,16 +1,16 @@
 import {
-  Component, OnInit, Input, Inject, ViewChild,
+  Component, OnInit, Input, ViewChild,
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
   HostListener, OnChanges, SimpleChanges, Injector
 } from '@angular/core';
 import { TemplateInfo } from '../../../global/interface';
-import { RENDER_COMPONENT_SERVICE_TOKEN } from '../../../global/injection-token/injection-token';
 import { LayoutBase } from '../layout-base/_base.interface';
 import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
 import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
 import { LayoutWrapperBase } from './layout-wrapper-base';
 import { DynamicWrapperComponent } from '@neux/core';
+import { DynamicComponentFactoryService } from '../../../global/service/dynamic-component-factory.service';
 
 @Component({
   selector: 'rdr-layout-wrapper',
@@ -29,14 +29,13 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
 
-
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
 
   private instanceEventSubscription: Subscription;
 
   constructor(
-    @Inject(RENDER_COMPONENT_SERVICE_TOKEN) private componentFactory: any,
+    private dynamicComponentFactoryService: DynamicComponentFactoryService,
     injector: Injector,
   ) {
     super(injector);
@@ -62,8 +61,8 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   ngAfterViewInit() {
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
-    const componentClass = this.componentFactory.getComponent(this.templateInfo.templateId);
-    this.dynamicWrapperComponent.loadWithComponent(componentClass);
+    const component = this.dynamicComponentFactoryService.getComponent(this.templateInfo.templateId);
+    this.dynamicWrapperComponent.loadWithComponent(component);
     this.checkEventBinding();
     this.setMode();
   }
