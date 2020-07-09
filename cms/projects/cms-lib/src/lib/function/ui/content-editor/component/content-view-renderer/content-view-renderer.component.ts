@@ -111,9 +111,8 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
     // 子節點的templatesContainer繼續產生
     templatesContainer.layoutWrapperComponents.forEach(lw => {
-      return lw.componentRef.instance.templatesContainerComponents
-        ? lw.componentRef.instance.templatesContainerComponents.map(t => this.renderAddTemplateButton(t))
-        : undefined;
+      return lw?.componentRef?.instance?.templatesContainerComponents?.map(t => this.renderAddTemplateButton(t))
+        || undefined;
     });
   }
 

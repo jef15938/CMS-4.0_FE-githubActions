@@ -1,5 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
-import { RENDER_DEFAULT_COMPONENT_MAPPING_TOKEN, RENDER_COMPONENT_MAPPING_TOKEN } from '../injection-token/injection-token';
+import {
+  RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN,
+  RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN,
+  RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN,
+} from '../injection-token/injection-token';
 
 @Injectable({
   providedIn: 'root'
@@ -9,35 +13,34 @@ export class DynamicComponentFactoryService {
   constructor(private injector: Injector) { }
 
   getComponent(componentId: string) {
-    // console.warn('DynamicComponentFactoryService.getComponent() componentId = ', componentId);
-
     const defaultComponentMappings = this.getDefaultComponentMappings();
-    // console.warn('    defaultComponentMappings = ', defaultComponentMappings);
-
     const customComponentMappings = this.getCustomComponentMappings();
-    // console.warn('    customComponentMappings = ', customComponentMappings);
-
     const mapping = customComponentMappings.find(m => m.component_id === componentId)
       || defaultComponentMappings.find(m => m.component_id === componentId);
-    // console.warn('    mapping = ', mapping);
-
     const component = mapping?.component;
-    // // console.warn('    component = ', component);
-
     return component;
   }
 
+  getAppShellNoRenderComponentIds(): string[] {
+    let ids = [];
+    try {
+      ids = this.injector.get(RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN);
+    } catch (error) {
+    }
+    return ids;
+  }
+
   private getDefaultComponentMappings() {
-    const mappings = this.injector.get(RENDER_DEFAULT_COMPONENT_MAPPING_TOKEN);
+    const mappings = this.injector.get(RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN);
     return mappings || [];
   }
 
   private getCustomComponentMappings() {
+    let mappings = [];
     try {
-      const mappings = this.injector.get(RENDER_COMPONENT_MAPPING_TOKEN);
-      return mappings || [];
+      mappings = this.injector.get(RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN);
     } catch (error) {
-      return [];
     }
+    return mappings;
   }
 }

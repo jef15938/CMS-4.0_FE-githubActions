@@ -1,7 +1,7 @@
 import {
   Component, OnInit, Input, ViewChild,
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
-  HostListener, OnChanges, SimpleChanges, Injector
+  HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID
 } from '@angular/core';
 import { TemplateInfo } from '../../../global/interface';
 import { LayoutBase } from '../layout-base/_base.interface';
@@ -11,6 +11,7 @@ import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, Layo
 import { LayoutWrapperBase } from './layout-wrapper-base';
 import { DynamicWrapperComponent } from '@neux/core';
 import { DynamicComponentFactoryService } from '../../../global/service/dynamic-component-factory.service';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'rdr-layout-wrapper',
@@ -34,11 +35,14 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   private instanceEventSubscription: Subscription;
 
+  private platformId = '';
+
   constructor(
     private dynamicComponentFactoryService: DynamicComponentFactoryService,
     injector: Injector,
   ) {
     super(injector);
+    this.platformId = this.injector.get<string>(PLATFORM_ID);
     this.changeDetectorRef.detach();
   }
 
@@ -59,6 +63,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   ngAfterViewInit() {
+    if (!this.canRender(this.templateInfo.templateId)) { return; }
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
     const component = this.dynamicComponentFactoryService.getComponent(this.templateInfo.templateId);
@@ -134,6 +139,13 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     if (this.mode === 'edit') {
       this.select.emit(this.createLayoutWrapperSelectEvent());
     }
+  }
+
+  canRender(componentId: string): boolean {
+    const appShellNoRenderComponentIds = this.dynamicComponentFactoryService.getAppShellNoRenderComponentIds();
+    const appShellNoRender = appShellNoRenderComponentIds.indexOf(componentId) > -1;
+    const canRender = !(isPlatformServer(this.platformId) && appShellNoRender);
+    return canRender;
   }
 
 }
