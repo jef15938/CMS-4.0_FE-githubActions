@@ -1,7 +1,7 @@
 import { HtmlEditorElementController } from '../_base';
 import { fromEvent, Subscription } from 'rxjs';
 import { HtmlEditorContextMenuItem } from '../../../html-editor.interface';
-import { InsertImage, CreateLink } from '../../../actions/action/_index';
+import { ModifyImage, CreateLink } from '../../../actions/action/_index';
 
 const IS_FAKE = 'IS_FAKE';
 
@@ -17,7 +17,7 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     if (this.el[IS_FAKE]) { return; }
 
     this.contextMenuItems = [
-      { text: '圖片設定', icon: 'edit', action: new InsertImage(this.context) },
+      { text: '圖片設定', icon: 'edit', action: new ModifyImage(this.context) },
       { text: '連結', icon: 'link', action: new CreateLink(this.context) },
     ];
 

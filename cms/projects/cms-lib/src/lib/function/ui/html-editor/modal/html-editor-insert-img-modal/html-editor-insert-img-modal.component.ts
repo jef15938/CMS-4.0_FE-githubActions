@@ -53,8 +53,8 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
     this.close({
       src: this.src || '',
       alt: this.alt || '',
-      width: this.width || null,
-      height: this.height || null,
+      width: this.width || 200,
+      height: this.height || 200,
     });
   }
 

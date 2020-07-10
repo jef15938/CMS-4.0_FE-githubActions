@@ -1,10 +1,15 @@
 <form #form="ngForm">
   <div class="page-content-container">
     <div class="img-container">
-      <img #Img [src]="src">
+      <img [src]="src">
       <button class="dark-style" type="button" tabindex="-1" mat-button (click)="changeImage()"
-        style="position: absolute; top: 0; right: 0">變更圖片</button>
+        style="position: absolute; top: 0; right: 0">媒體庫</button>
     </div>
+    <mat-form-field appearance="outline">
+      <mat-label>圖片網址</mat-label>
+      <input matInput [(ngModel)]="src" name="src" required #modelSrc="ngModel" (ngModelChange)="checkWidthHeight()">
+      <mat-error *ngIf="modelSrc.invalid">請輸入連結</mat-error>
+    </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>圖片描述</mat-label>
       <input matInput [(ngModel)]="alt" name="alt">
@@ -23,3 +28,4 @@
     <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
   </div>
 </form>
+<img #Img [src]="src" style="display: none;">
