@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
-import { CustomCellRenderer, CmsTable } from '../../../ui/table';
-import { GalleryService } from '../../../../global/api/service/gallery/gallery.service';
+import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { GalleryService } from '../../../../../global/api/service/gallery/gallery.service';
+import { CustomCellRenderer, CmsTable } from '../../../../ui/table';
 
 @Component({
   selector: 'cms-gallery-info-cell',

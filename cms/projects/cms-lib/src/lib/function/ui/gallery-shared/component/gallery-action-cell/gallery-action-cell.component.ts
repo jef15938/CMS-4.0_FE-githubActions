@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
-import { CustomCellRenderer, CmsTable } from '../../../ui/table';
+import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { CustomCellRenderer, CmsTable } from '../../../../ui/table';
 
 enum ActionType {
   Edit, Delete, CopyUrl,

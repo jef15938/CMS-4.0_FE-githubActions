@@ -1,6 +1,6 @@
-import { Pipe, PipeTransform, Inject } from '@angular/core';
-import { GalleryInfo } from '../../../global/api/neuxAPI/bean/GalleryInfo';
-import { GalleryService } from '../../../global/api/service/gallery/gallery.service';
+import { Pipe, PipeTransform } from '@angular/core';
+import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { GalleryService } from '../../../../global/api/service/gallery/gallery.service';
 
 @Pipe({
   name: 'gelleryImgSrc'

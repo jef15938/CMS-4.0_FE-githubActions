@@ -2,8 +2,8 @@ import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { GalleryCategoryInfo } from '../../../../global/api/neuxAPI/bean/GalleryCategoryInfo';
-import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../ui/tree';
+import { GalleryCategoryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryCategoryInfo';
+import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../../ui/tree';
 
 enum ActionType {
   Create, Edit, Delete, Upload

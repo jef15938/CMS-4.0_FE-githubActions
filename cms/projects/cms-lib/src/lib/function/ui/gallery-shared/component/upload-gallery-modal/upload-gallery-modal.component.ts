@@ -2,13 +2,13 @@ import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewIni
 import { HttpRequest, HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Subscription, of, Observable } from 'rxjs';
-import { map, tap, last, catchError } from 'rxjs/operators';
-import { GalleryService } from '../../../../global/api/service';
-import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
-import { ColDef } from '../../../ui/table';
-import { CropperService } from '../../../ui/cropper';
-import { CMS_ENVIROMENT_TOKEN } from '../../../../global/injection-token/cms-injection-token';
-import { CmsEnviroment } from '../../../../global/interface/cms-enviroment.interface';
+import { map, last, catchError } from 'rxjs/operators';
+import { GalleryService } from '../../../../../global/api/service';
+import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../../../global/interface/cms-enviroment.interface';
+import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
+import { ColDef } from '../../../../ui/table';
+import { CropperService } from '../../../../ui/cropper';
 
 export class FileUploadModel {
   fileName: string;
