@@ -38,7 +38,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   private destroy$ = new Subject();
 
   constructor(
-    private gallerySharedService: GallerySharedService,
+    public gallerySharedService: GallerySharedService,
     simpleWysiwygService: SimpleWysiwygService,
     modalService: ModalService,
     private changeDetectorRef: ChangeDetectorRef,
@@ -196,18 +196,17 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   onRightClick(ev: MouseEvent) {
-    this.gallerySharedService.openGallery().subscribe();
-    // const target = ev.target as HTMLElement;
-    // const special =
-    //   this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
-    //   || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
-    //   || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
-    //   ;
+    const target = ev.target as HTMLElement;
+    const special =
+      this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
+      ;
 
-    // if (special) {
-    //   this.openRightClickMenu(ev, special);
-    //   return;
-    // }
+    if (special) {
+      this.openRightClickMenu(ev, special);
+      return;
+    }
   }
 
   private openRightClickMenu(ev: MouseEvent, target: HTMLElement) {
