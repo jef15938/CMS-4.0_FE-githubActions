@@ -184,7 +184,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   testHtmlEditor() {
     this.htmlEditorService.openEditor({
-      title: `Html編輯`,
+      // title: `Html編輯`,
       content: ''
     }).subscribe(content => {
       if (content || content === '') {

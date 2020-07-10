@@ -6,6 +6,16 @@
   }
 }
 
+:host {
+  >div:not(:first-child) {
+    border-top: 1px solid black;
+  }
+}
+
+.html-editor-container {
+  position: relative;
+}
+
 .neux-noselect {
   -webkit-touch-callout: none;
   /* iOS Safari */

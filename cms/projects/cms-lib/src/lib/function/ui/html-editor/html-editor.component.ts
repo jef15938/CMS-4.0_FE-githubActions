@@ -176,8 +176,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   onClick(ev: MouseEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
+    this.evPreventDefaultAndStopPropagation(ev);
 
     if (ev.target === this.editorContainer) {
       return;
@@ -196,7 +195,6 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
   onRightClick(ev: MouseEvent) {
     const target = ev.target as HTMLElement;
-
     const special =
       this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')

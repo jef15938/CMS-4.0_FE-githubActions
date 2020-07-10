@@ -20,7 +20,7 @@ export class FieldControlHtmlEditorComponent extends ContentControlBase implemen
 
   openEditor() {
     this.htmlEditorService.openEditor({
-      title: `Html編輯 : ${this.selected.fieldInfo.fieldId}`,
+      // title: `Html編輯 : ${this.selected.fieldInfo.fieldId}`,
       content: this.selected.fieldInfo.fieldVal
     }).subscribe(content => {
       if (content || content === '') {
