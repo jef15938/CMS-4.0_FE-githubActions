@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
+import { GalleryService } from '../../../../../global/api/service';
+import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 
 @Component({
   selector: 'cms-html-editor-insert-img-modal',
@@ -18,7 +21,10 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   @Input() width: number = null;
   @Input() height: number = null;
 
-  constructor() { super(); }
+  constructor(
+    private galleryService: GalleryService,
+    private gallerySharedService: GallerySharedService,
+  ) { super(); }
 
   ngOnInit(): void {
     this.src = this.src || '';
@@ -33,6 +39,14 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
       this.width = img.width;
       this.height = img.height;
     }, 250);
+  }
+
+  changeImage() {
+    this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
+      if (selectedGallery) {
+        this.src = `${this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id)}`;
+      }
+    });
   }
 
   confirm() {

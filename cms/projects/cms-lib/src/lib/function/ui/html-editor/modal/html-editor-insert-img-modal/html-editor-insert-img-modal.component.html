@@ -1,9 +1,10 @@
 <form #form="ngForm">
   <div class="page-content-container">
-    <!-- <mat-form-field appearance="outline">
-      <mat-label>圖片網址</mat-label>
-      <input matInput [(ngModel)]="src" name="src" required #modelSrc="ngModel" (ngModelChange)="checkWidthHeight()">
-    </mat-form-field> -->
+    <div class="img-container">
+      <img #Img [src]="src">
+      <button class="dark-style" type="button" tabindex="-1" mat-button (click)="changeImage()"
+        style="position: absolute; top: 0; right: 0">變更圖片</button>
+    </div>
     <mat-form-field appearance="outline">
       <mat-label>圖片描述</mat-label>
       <input matInput [(ngModel)]="alt" name="alt">
@@ -16,9 +17,6 @@
       <mat-label>高</mat-label>
       <input type="number" matInput [(ngModel)]="height" name="height">
     </mat-form-field>
-    <div style="display: none;">
-      <img #Img [src]="src">
-    </div>
   </div>
   <div class="btn-group">
     <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
