@@ -6,6 +6,7 @@ import {
   Indent, Outdent, Highlight, Unhighlight,
   CreateLink, InsertImage, InsertTable, InsertVideo,
 } from './action/_index';
+import { InsertFile } from './action/insert-file';
 
 export class HtmlEditorActions {
   private context: HtmlEditorContext;
@@ -29,6 +30,7 @@ export class HtmlEditorActions {
   highlight2: Highlight;
   highlight3: Highlight;
   unhighlight: Unhighlight;
+  insertFile: InsertFile;
 
   constructor(
     context: HtmlEditorContext,
@@ -54,5 +56,6 @@ export class HtmlEditorActions {
     this.highlight2 = new Highlight(context, 2);
     this.highlight3 = new Highlight(context, 3);
     this.unhighlight = new Unhighlight(context);
+    this.insertFile = new InsertFile(context, this.createLink, this.insertImage);
   }
 }

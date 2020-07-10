@@ -20,7 +20,8 @@
       <br>
     </ng-container>
     <ng-container *ngIf="galleryDatas">
-      <cms-table [colDefs]="colDefs" [dataSource]="galleryDatas" (customEvent)="onTableCustomEvent($event)"></cms-table>
+      <cms-table [colDefs]="colDefs" [dataSource]="galleryDatas" (customEvent)="onTableCustomEvent($event)"
+        (rowClick)="onRowClick($event)"></cms-table>
     </ng-container>
     <ng-container *ngIf="galleryPageInfo?.totalPageSize && galleryPageInfo?.totalRecSize">
       <mat-paginator [length]="galleryPageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">

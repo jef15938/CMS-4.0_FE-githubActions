@@ -18,6 +18,7 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
   @Input() dataSource: TData[];
 
   @Output() customEvent = new EventEmitter<CmsTableCustomCellEvent>();
+  @Output() rowClick = new EventEmitter<TData>();
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -61,6 +62,10 @@ export class TableComponent<TData> implements OnInit, AfterViewInit, OnChanges {
         });
       }
     };
+  }
+
+  onRowClick(row: TData) {
+    this.rowClick.emit(row);
   }
 
 }

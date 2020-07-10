@@ -16,6 +16,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="colDefs | getTableDisplayCols"></tr>
-    <tr mat-row *matRowDef="let row; columns: (colDefs | getTableDisplayCols)"></tr>
+    <tr mat-row *matRowDef="let row; columns: (colDefs | getTableDisplayCols)" (click)="onRowClick(row)"></tr>
   </table>
 </ng-container>

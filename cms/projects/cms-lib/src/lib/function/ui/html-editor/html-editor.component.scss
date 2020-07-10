@@ -12,8 +12,15 @@
   }
 }
 
+$top-height: 93px;
+
 .html-editor-container {
-  position: relative;
+  position: absolute;
+  width: 100%;
+  top: $top-height;
+  height: calc(100% - #{$top-height});
+  max-height: calc(100% - #{$top-height});
+  overflow: auto;
 }
 
 .neux-noselect {
@@ -33,7 +40,6 @@
 }
 
 .neux-editor {
-
   ::ng-deep ol {
     display: block;
     list-style-type: decimal;
@@ -68,8 +74,6 @@
   }
 
   outline:none;
-
-  height: 95%;
 
   ::ng-deep .highlight {
     font-weight: normal;

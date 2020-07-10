@@ -1,6 +1,8 @@
 <ng-container *ngIf="sitemapMaintainModel">
   <div *ngIf="siteMapUpdateInfo?.siteMap" class="page-title-container">
     <h1>{{siteMapUpdateInfo.siteMap.node_name}}</h1>
+  </div>
+  <div class="page-content-container" *ngIf="siteMapUpdateInfo?.siteMap">
     <div>ParentId：{{siteMapUpdateInfo.parentId}} / NodeOrder：{{siteMapUpdateInfo.nodeOrder}}</div>
     <div class="btn-group" *ngIf="siteMapUpdateInfo?.siteMap?.node_type === NodeType.Content">
       <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"
@@ -18,10 +20,9 @@
       <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.published; let obj">
         線上上下架：{{ obj | getStartEndTime }}
       </div>
+      <hr>
     </div>
-  </div>
-  <div class="page-content-container">
-    <form #form="ngForm">
+    <form #form="ngForm" style="margin-top: 10px;">
       <mat-form-field appearance="outline">
         <mat-label>節點名稱</mat-label>
         <input matInput [(ngModel)]="sitemapMaintainModel.node_name" name="node_name" required #modelNodeName="ngModel">

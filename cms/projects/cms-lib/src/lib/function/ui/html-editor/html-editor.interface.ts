@@ -3,8 +3,10 @@ import { Observable } from 'rxjs';
 import { ModalService } from '../modal';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
+import { Injector } from '@angular/core';
 
 export interface HtmlEditorContext {
+  injector: Injector;
   simpleWysiwygService: SimpleWysiwygService;
   modalService: ModalService;
   editorContainer: HTMLDivElement;

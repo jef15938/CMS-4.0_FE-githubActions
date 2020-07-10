@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy, Injector } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -7,7 +7,6 @@ import { HtmlEditorContext, HtmlEditorContextMenuItem } from './html-editor.inte
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
-import { GallerySharedService } from '../gallery-shared/service/gallery-shared.service';
 
 @Component({
   selector: 'cms-html-editor',
@@ -21,8 +20,6 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   @ViewChild('EditorContainer') private editorContainerElRef: ElementRef<HTMLDivElement>;
   @ViewChild('MenuTrigger') private editorMenu: MatMenuTrigger;
 
-  simpleWysiwygService: SimpleWysiwygService;
-  modalService: ModalService;
   commonAncestorContainer: Node;
 
   get editorContainer() { return this.editorContainerElRef?.nativeElement; }
@@ -38,14 +35,11 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   private destroy$ = new Subject();
 
   constructor(
-    public gallerySharedService: GallerySharedService,
-    simpleWysiwygService: SimpleWysiwygService,
-    modalService: ModalService,
+    public injector: Injector,
+    public simpleWysiwygService: SimpleWysiwygService,
+    public modalService: ModalService,
     private changeDetectorRef: ChangeDetectorRef,
-  ) {
-    this.simpleWysiwygService = simpleWysiwygService;
-    this.modalService = modalService;
-  }
+  ) { }
 
   ngOnInit() {
 

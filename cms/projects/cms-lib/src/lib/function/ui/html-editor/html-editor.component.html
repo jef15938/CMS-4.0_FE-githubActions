@@ -1,8 +1,8 @@
 <div class="neux-noselect">
-  <cms-editor-path [context]="this"></cms-editor-path>
+  <cms-editor-toolbar [context]="this"></cms-editor-toolbar>
 </div>
 <div class="neux-noselect">
-  <cms-editor-toolbar [context]="this"></cms-editor-toolbar>
+  <cms-editor-path [context]="this"></cms-editor-path>
 </div>
 <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
   [style.top]="contextMenuPosition.y" #MenuTrigger="matMenuTrigger" [matMenuTriggerFor]="EditorMenu">
@@ -42,7 +42,6 @@
     </ng-container>
   </ng-container>
   <button type="button" tabindex="0" mat-menu-item>
-    <!-- <mat-icon>reply</mat-icon> -->
     取消
   </button>
 </mat-menu>
@@ -50,8 +49,4 @@
   <div #EditorContainer contenteditable id='editor' class="neux-editor" cmsRightClickHandler (click)="onClick($event)"
     (rightClick)="onRightClick($event)">
   </div>
-  <!-- <cms-html-editor-table-toolbar *ngIf="selectComponent == toolbarEnum.TABLE" (addRowAbove)="addRowAbove()"
-    (addRowBelow)="addRowBelow()" (addColLeftward)="addColLeftward()" (addColRightward)="addColRightward()"
-    (mergeTable)="mergeTable()" (unmerge)="unmerge()" (deleteRow)="deleteRow()" (deleteCol)="deleteCol()">
-  </cms-html-editor-table-toolbar> -->
 </div>

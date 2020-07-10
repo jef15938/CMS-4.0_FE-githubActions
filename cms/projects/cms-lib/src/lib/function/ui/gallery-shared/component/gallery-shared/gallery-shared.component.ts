@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
 import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../../global/api/service';
@@ -20,6 +20,8 @@ import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell
   styleUrls: ['./gallery-shared.component.scss']
 })
 export class GallerySharedComponent implements OnInit, OnDestroy {
+
+  @Output() galleryClick = new EventEmitter<GalleryInfo>();
 
   @ViewChild(TreeComponent) tree: TreeComponent<GalleryCategoryInfo>;
 
@@ -230,6 +232,10 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   onPageChanged(event: { pageIndex: number }) {
     this.galleryPageInfo.page = event.pageIndex + 1;
     this.getGallery().subscribe();
+  }
+
+  onRowClick(gallery: GalleryInfo) {
+    this.galleryClick.emit(gallery);
   }
 
 }

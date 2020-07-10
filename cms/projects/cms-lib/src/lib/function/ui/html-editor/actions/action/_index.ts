@@ -15,3 +15,4 @@ export * from './create-link';
 export * from './insert-image';
 export * from './insert-table';
 export * from './insert-video';
+export * from './insert-file';

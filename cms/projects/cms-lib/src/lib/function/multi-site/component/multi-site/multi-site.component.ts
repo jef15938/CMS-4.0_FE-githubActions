@@ -143,7 +143,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   private registerSubjects() {
     this.sitemapSelected$.pipe(
       takeUntil(this.destroy$),
-      debounceTime(500),
+      debounceTime(250),
       concatMap(selectedSitemap => {
         return (
           selectedSitemap

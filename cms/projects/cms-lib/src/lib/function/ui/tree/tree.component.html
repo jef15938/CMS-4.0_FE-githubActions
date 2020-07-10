@@ -39,7 +39,7 @@
             <span *ngIf="!customNodeRenderer">
               {{node[nodeDisplayField]}}
             </span>
-            <button type="button" tabindex="0" mat-icon-button class="node-expand-btn"
+            <button type="button" tabindex="-1" mat-icon-button class="node-expand-btn"
               [attr.aria-label]="'toggle ' + node[nodeDisplayField]">
               <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
