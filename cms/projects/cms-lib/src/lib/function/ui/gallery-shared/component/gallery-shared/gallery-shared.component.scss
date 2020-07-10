@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.page-content-container {
+  height: calc(100% - 52px);
+  overflow: auto;
+}

@@ -59,6 +59,7 @@ mat-form-field {
 .page-title-container {
   @extend .p-10;
   border-bottom: 1px solid lightgray;
+  height: 52px;
 
   h1 {
     margin-bottom: 0;

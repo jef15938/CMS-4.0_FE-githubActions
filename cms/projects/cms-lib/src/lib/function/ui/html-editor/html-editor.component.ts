@@ -7,6 +7,7 @@ import { HtmlEditorContext, HtmlEditorContextMenuItem } from './html-editor.inte
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
+import { GallerySharedService } from '../gallery-shared/service/gallery-shared.service';
 
 @Component({
   selector: 'cms-html-editor',
@@ -37,6 +38,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   private destroy$ = new Subject();
 
   constructor(
+    private gallerySharedService: GallerySharedService,
     simpleWysiwygService: SimpleWysiwygService,
     modalService: ModalService,
     private changeDetectorRef: ChangeDetectorRef,
@@ -194,17 +196,18 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   onRightClick(ev: MouseEvent) {
-    const target = ev.target as HTMLElement;
-    const special =
-      this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
-      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
-      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
-      ;
+    this.gallerySharedService.openGallery().subscribe();
+    // const target = ev.target as HTMLElement;
+    // const special =
+    //   this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
+    //   || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
+    //   || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
+    //   ;
 
-    if (special) {
-      this.openRightClickMenu(ev, special);
-      return;
-    }
+    // if (special) {
+    //   this.openRightClickMenu(ev, special);
+    //   return;
+    // }
   }
 
   private openRightClickMenu(ev: MouseEvent, target: HTMLElement) {

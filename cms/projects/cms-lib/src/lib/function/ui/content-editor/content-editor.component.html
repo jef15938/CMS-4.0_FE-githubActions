@@ -5,9 +5,9 @@
       [class.current-state]="manager?.stateManager?.currentIndex === i+1">{{state.action}}</div>
   </mat-menu>
 </div>
-<div class="cms-content-editor dark-style">
+<div class="cms-content-editor">
   <!-- 按鈕們 -->
-  <div #clickCapturelistenerBlock class="btn-panel" *ngIf="mode===EditorMode.EDIT">
+  <div #clickCapturelistenerBlock class="btn-panel dark-style" *ngIf="mode===EditorMode.EDIT">
     <button type="button" tabindex="-1" mat-icon-button alt="save" #btnSave (click)="save()" *ngIf="btnSave"
       [disabled]="saved">
       <mat-icon>save</mat-icon>

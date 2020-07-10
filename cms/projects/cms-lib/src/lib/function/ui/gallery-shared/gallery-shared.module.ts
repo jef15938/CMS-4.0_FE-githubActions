@@ -10,9 +10,11 @@ import { UploadGalleryModalComponent } from './component/upload-gallery-modal/up
 import { GalleryActionCellComponent } from './component/gallery-action-cell/gallery-action-cell.component';
 import { GalleryInfoCellComponent } from './component/gallery-info-cell/gallery-info-cell.component';
 import { GelleryImgSrcPipe } from './pipe/gallery-img-src.pipe';
+import { GallerySharedContainerModalComponent } from './component/gallery-shared-container-modal/gallery-shared-container-modal.component';
 
 const COMPONENTS_PIPES = [
   GallerySharedComponent,
+  GallerySharedContainerModalComponent,
   GalleryCategoryNodeComponent,
   GalleryCategoryMaintainModalComponent,
   UploadGalleryModalComponent,
