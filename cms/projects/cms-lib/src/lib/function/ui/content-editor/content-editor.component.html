@@ -5,31 +5,31 @@
       [class.current-state]="manager?.stateManager?.currentIndex === i+1">{{state.action}}</div>
   </mat-menu>
 </div>
-<div class="cms-content-editor">
+<div class="cms-content-editor dark-style">
   <!-- 按鈕們 -->
   <div #clickCapturelistenerBlock class="btn-panel" *ngIf="mode===EditorMode.EDIT">
-    <button type="button" tabindex="0" mat-icon-button alt="save" #btnSave (click)="save()" *ngIf="btnSave"
+    <button type="button" tabindex="-1" mat-icon-button alt="save" #btnSave (click)="save()" *ngIf="btnSave"
       [disabled]="saved">
       <mat-icon>save</mat-icon>
     </button>
-    <button type="button" tabindex="0" mat-icon-button alt="undo" #btnUndo
+    <button type="button" tabindex="-1" mat-icon-button alt="undo" #btnUndo
       [disabled]="!manager?.stateManager?.hasPreviousState"
       (click)="resetSelected(); manager?.stateManager?.back(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>undo</mat-icon>
     </button>
-    <button type="button" tabindex="0" mat-icon-button alt="redo" #btnRedo
+    <button type="button" tabindex="-1" mat-icon-button alt="redo" #btnRedo
       [disabled]="!manager?.stateManager?.hasNextState"
       (click)="resetSelected(); manager?.stateManager?.forward(); setEditorUnsaved(); contentViewRenderer?.checkView();">
       <mat-icon>redo</mat-icon>
     </button>
-    <button type="button" tabindex="0" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger"
+    <button type="button" tabindex="-1" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger"
       [matMenuTriggerFor]="stateMenu">
       <mat-icon>list</mat-icon>
     </button>
-    <button type="button" tabindex="0" mat-icon-button alt="clear" #btnClear (click)="clear()">
+    <button type="button" tabindex="-1" mat-icon-button alt="clear" #btnClear (click)="clear()">
       <mat-icon>delete</mat-icon>
     </button>
-    <button type="button" tabindex="0" mat-icon-button alt="close" #btnClose (click)="close()" *ngIf="btnClose">
+    <button type="button" tabindex="-1" mat-icon-button alt="close" #btnClose (click)="close()" *ngIf="btnClose">
       <mat-icon>clear</mat-icon>
     </button>
   </div>

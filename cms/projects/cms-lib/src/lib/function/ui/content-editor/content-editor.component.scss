@@ -7,9 +7,8 @@
   height: 100%;
 
   .btn-panel {
-    padding: 10px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
-  
+
     button:not(:first-child) {
       margin-left: 5px;
     }
@@ -60,7 +59,7 @@
         width: 300px;
       }
     }
-  
+
     .action-list-panel {
       width: 100%;
       height: 100px;
@@ -73,7 +72,8 @@
 
   }
 
-  .main-block.layout-control, .main-block.content-control {
+  .main-block.layout-control,
+  .main-block.content-control {
     & .content-panel {
       position: absolute;
       width: calc(100% - 300px);
@@ -86,4 +86,3 @@
   }
 
 }
-
