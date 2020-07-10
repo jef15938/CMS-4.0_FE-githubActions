@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Observable, concat, Subject, forkJoin, of } from 'rxjs';
-import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
+import { tap, takeUntil, concatMap, map, throttleTime } from 'rxjs/operators';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
 import { SitemapService, ContentService } from '../../../../global/api/service';
@@ -143,7 +143,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   private registerSubjects() {
     this.sitemapSelected$.pipe(
       takeUntil(this.destroy$),
-      debounceTime(250),
+      throttleTime(750),
       concatMap(selectedSitemap => {
         return (
           selectedSitemap
