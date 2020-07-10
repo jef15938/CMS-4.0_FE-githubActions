@@ -24,7 +24,7 @@ export class InsertImage extends HtmlEditorActionBase {
     return this.context.modalService.openComponent({
       component: HtmlEditorInsertImgModalComponent,
       componentInitData: {
-        title: `${image ? '修改' : '加入'}圖片`,
+        // title: `${image ? '修改' : '加入'}圖片`,
         src: image?.src,
         alt: image?.alt,
         width: image?.width,

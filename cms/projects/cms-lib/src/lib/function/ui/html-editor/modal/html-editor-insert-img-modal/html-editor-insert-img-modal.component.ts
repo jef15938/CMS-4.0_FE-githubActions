@@ -10,7 +10,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
 
   @ViewChild('Img') img: ElementRef<HTMLImageElement>;
 
-  title = '';
+  title = '圖片設定';
   actions: CustomModalActionButton[];
 
   @Input() src = '';
