@@ -33,6 +33,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   private selectedNodeEmitter = new Subject();
 
   @Input() customNodeRenderer; // 客製的節點Template
+  @Input() onCustomNodeRendererInit: (customRender: any) => void;
 
   @Output() afterRender = new EventEmitter<TreeComponent<any>>();
   @Output() nodeSelect = new EventEmitter<{ node: TData }>();

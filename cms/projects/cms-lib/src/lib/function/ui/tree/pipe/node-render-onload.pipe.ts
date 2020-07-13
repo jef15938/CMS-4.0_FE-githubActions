@@ -1,12 +1,16 @@
 import { Pipe, PipeTransform, ComponentRef } from '@angular/core';
-import { CmsTreeNodeRenderer } from '../tree.interface';
+import { CmsTree, CmsTreeNodeRenderer } from '../tree.interface';
 
 @Pipe({
   name: 'nodeRenderOnload'
 })
 export class NodeRenderOnloadPipe implements PipeTransform {
 
-  transform(tree, data, context): (componentRef: ComponentRef<CmsTreeNodeRenderer<any>>) => void {
+  transform(
+    tree: CmsTree<any>,
+    data,
+    context
+  ): (componentRef: ComponentRef<CmsTreeNodeRenderer<any>>) => void {
     return (componentRef: ComponentRef<CmsTreeNodeRenderer<any>>) => {
       const instance = componentRef.instance;
       if (instance?.compInit) {
@@ -15,6 +19,9 @@ export class NodeRenderOnloadPipe implements PipeTransform {
           data,
           context,
         });
+        if (tree.onCustomNodeRendererInit) {
+          tree.onCustomNodeRendererInit(componentRef);
+        }
       }
     };
   }

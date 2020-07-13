@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { HttpClient, HttpRequest, HttpEventType, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Observable, throwError, Subscription, of } from 'rxjs';
+import { map, catchError, tap, last } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { GalleryGetResponse } from '../../neuxAPI/bean/GalleryGetResponse';
@@ -9,6 +9,20 @@ import { GalleryCategoryInfo } from '../../neuxAPI/bean/GalleryCategoryInfo';
 import { GalleryCaregoryGetResponse } from '../../neuxAPI/bean/GalleryCaregoryGetResponse';
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface/cms-enviroment.interface';
+
+export class FileUploadModel {
+  fileName: string;
+  fileSize: number;
+  fileType: string;
+  data: File;
+  state: string;
+  inProgress: boolean;
+  progress: number;
+  canRetry: boolean;
+  canCancel: boolean;
+  success: boolean;
+  sub?: Subscription;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -114,22 +128,6 @@ export class GalleryService {
     return this.respAPIService.dispatchRestApi('PutGalleryCategoryByCategoryID', { categoryID, requestBody });
   }
 
-  updateGallery(fileToUpload: File, galleryID: number) {
-    const headers = null;
-    const url = `https://cms.decoder.com.tw/Gallery/${galleryID}`;
-    const formData: FormData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-    formData.append('description', 'description');
-    return this.httpClient
-      .put(url, formData, { headers }).pipe(
-        tap(res => console.log('updateGallery response = ', res)),
-        catchError((e) => {
-          console.error('error = ', e);
-          return throwError(e);
-        }),
-      );
-  }
-
   deleteGallery(galleryID: number) {
     return this.httpClient.delete(`https://cms.decoder.com.tw/Gallery/${galleryID}`, {
       headers: {
@@ -138,20 +136,93 @@ export class GalleryService {
     });
   }
 
-  createGallery(fileToUpload: File, categoryID: string) {
-    const headers = null;
-    const url = `https://cms.decoder.com.tw/Gallery/${categoryID}`;
-    const formData: FormData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-    formData.append('description', 'description');
-    return this.httpClient
-      .post(url, formData, { headers }).pipe(
-        tap(res => console.log('upload response = ', res)),
-        catchError((e) => {
-          console.error('error = ', e);
-          return throwError(e);
-        }),
-      );
+  createGallery(file: FileUploadModel, categoryID: string) {
+    const formData = new FormData();
+    formData.append('file', file.data);
+    formData.append('description', file.data.name);
+    const req = new HttpRequest('POST', `${this.apiUrl}/${categoryID}`, formData, {
+      reportProgress: true
+    });
+    file.success = false;
+    file.canCancel = true;
+    return this.httpClient.request(req).pipe(
+      map(event => {
+        // console.warn('uploadFile() event = ', event);
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            file.progress = Math.round(event.loaded * 100 / event.total);
+            return null;
+          case HttpEventType.Response:
+            return event.body;
+        }
+        return null;
+      }),
+      last(),
+      catchError((error: HttpErrorResponse) => {
+        console.error(`${file.data.name} upload failed.`, error);
+        return of({ success: false });
+      }),
+      map((res: { success: boolean }) => res?.success || false),
+      map(success => {
+        file.success = success;
+        file.inProgress = false;
+        file.canRetry = !success;
+        file.canCancel = false;
+        return file;
+      })
+    );
+  }
+
+  updateGallery(file: FileUploadModel, galleryID: number) {
+    const formData = new FormData();
+    formData.append('file', file.data);
+    formData.append('description', file.data.name);
+    const req = new HttpRequest('POST', `${this.apiUrl}/${galleryID}`, formData, {
+      reportProgress: true
+    });
+    file.success = false;
+    file.canCancel = true;
+    return this.httpClient.request(req).pipe(
+      map(event => {
+        // console.warn('uploadFile() event = ', event);
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            file.progress = Math.round(event.loaded * 100 / event.total);
+            return null;
+          case HttpEventType.Response:
+            return event.body;
+        }
+        return null;
+      }),
+      last(),
+      catchError((error: HttpErrorResponse) => {
+        console.error(`${file.data.name} upload failed.`, error);
+        return of({ success: false });
+      }),
+      map((res: { success: boolean }) => res?.success || false),
+      map(success => {
+        file.success = success;
+        file.inProgress = false;
+        file.canRetry = !success;
+        file.canCancel = false;
+        return file;
+      })
+    );
+  }
+
+  mapFileToFileUploadModel(file: File): FileUploadModel {
+    return {
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type,
+      data: file,
+      state: '',
+      inProgress: false,
+      progress: 0,
+      canRetry: false,
+      canCancel: true,
+      success: false,
+    };
   }
 
   getGalleryShowUrl() {

@@ -15,20 +15,26 @@
         <a title="crop" (click)="cropFile(file)">
           <mat-icon>open_in_new</mat-icon>
         </a>
-        <a title="refresh" (click)="retryFile(file)" *ngIf="file.canRetry">
+        <!-- <a title="refresh" (click)="retryFile(file)" *ngIf="file.canRetry">
           <mat-icon>refresh</mat-icon>
-        </a>
-        <a title="cancel" (click)="cancelFile(file)" *ngIf="file.canCancel">
+        </a> -->
+        <!-- <a title="cancel" (click)="cancelFile(file)" *ngIf="file.canCancel">
           <mat-icon>cancel</mat-icon>
+        </a> -->
+        <a title="cancel" (click)="removeFile(file)">
+          <mat-icon>delete</mat-icon>
         </a>
       </span>
     </li>
   </ul>
-  <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" accept="{{accept}}" style="display:none;" />
-
+  <input type="file" id="fileUpload" name="fileUpload" [multiple]="isCreate" accept="{{accept}}"
+    style="display:none;" />
   <br>
   <div>
-    <button type="button" tabindex="0" mat-button (click)="uploadFiles()">Upload</button>
+    <button type="button" tabindex="0" mat-button (click)="create()" *ngIf="isCreate"
+      [disabled]="!files.length">上傳檔案</button>
+    <button type="button" tabindex="0" mat-button (click)="update()" *ngIf="!isCreate"
+      [disabled]="!files.length">修改檔案</button>
   </div>
 
 </div>

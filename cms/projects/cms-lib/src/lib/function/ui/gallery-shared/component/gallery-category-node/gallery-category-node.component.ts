@@ -28,6 +28,7 @@ export class GalleryCategoryNodeComponent implements CmsTreeNodeRenderer<Gallery
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
+  mode: 'page' | 'modal' = 'page';
   node: CmsTreeNode<GalleryCategoryInfo>;
 
   private destroy$ = new Subject();

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../../global/api/service';
@@ -21,6 +21,8 @@ import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell
 })
 export class GallerySharedComponent implements OnInit, OnDestroy {
 
+  @Input() mode: 'page' | 'modal' = 'page';
+
   @Output() galleryClick = new EventEmitter<GalleryInfo>();
 
   @ViewChild(TreeComponent) tree: TreeComponent<GalleryCategoryInfo>;
@@ -32,35 +34,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   galleryPageInfo: PageInfo;
   galleryDatas: GalleryInfo[];
-  colDefs: ColDef[] = [
-    // {
-    //   colId: 'file_name',
-    //   field: 'file_name',
-    //   title: '檔名',
-    // },
-    // {
-    //   colId: 'size',
-    //   field: 'size',
-    //   title: '大小',
-    // },
-    // {
-    //   colId: 'file_type',
-    //   field: 'file_type',
-    //   title: '類型',
-    // },
-    {
-      colId: 'info',
-      field: 'info',
-      title: '資訊',
-      cellRenderer: GalleryInfoCellComponent,
-    },
-    {
-      colId: 'action',
-      field: 'action',
-      title: '操作',
-      cellRenderer: GalleryActionCellComponent,
-    }
-  ];
+  colDefs: ColDef[];
 
   private destroy$ = new Subject();
   private categorySelected$ = new Subject<GalleryCategoryInfo>();
@@ -72,6 +46,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.colDefs = this.createColDefs(this.mode);
     this.init().subscribe();
 
     this.categorySelected$.pipe(
@@ -86,6 +61,43 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
     this.destroy$.unsubscribe();
+  }
+
+  private createColDefs(mode: 'page' | 'modal'): ColDef[] {
+    const colDefs: ColDef[] = [
+      // {
+      //   colId: 'file_name',
+      //   field: 'file_name',
+      //   title: '檔名',
+      // },
+      // {
+      //   colId: 'size',
+      //   field: 'size',
+      //   title: '大小',
+      // },
+      // {
+      //   colId: 'file_type',
+      //   field: 'file_type',
+      //   title: '類型',
+      // },
+      {
+        colId: 'info',
+        field: 'info',
+        title: '資訊',
+        cellRenderer: GalleryInfoCellComponent,
+      },
+    ];
+
+    if (this.mode === 'page') {
+      colDefs.push({
+        colId: 'action',
+        field: 'action',
+        title: '操作',
+        cellRenderer: GalleryActionCellComponent,
+      });
+    }
+
+    return colDefs;
   }
 
   private init() {
@@ -236,6 +248,10 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   onRowClick(gallery: GalleryInfo) {
     this.galleryClick.emit(gallery);
+  }
+
+  onCustomNodeRendererInit = (customRender: GalleryCategoryNodeComponent) => {
+    customRender.mode = this.mode;
   }
 
 }

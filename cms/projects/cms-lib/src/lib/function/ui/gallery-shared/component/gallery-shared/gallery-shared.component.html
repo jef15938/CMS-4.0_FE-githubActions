@@ -1,32 +1,35 @@
-<div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer>
-  <div class="page-title-container">
-    <h1>
-      媒體庫群組
-    </h1>
+<ng-container *ngIf="colDefs">
+  <div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer>
+    <div class="page-title-container">
+      <h1>
+        媒體庫群組
+      </h1>
+    </div>
+    <div class="page-content-container">
+      <cms-tree class="cms-tree" [context]="this" [nodeDatas]="categories" [customNodeRenderer]="customNodeRenderer"
+        (customEvent)="onTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
+        [onCustomNodeRendererInit]="onCustomNodeRendererInit">
+      </cms-tree>
+    </div>
   </div>
-  <div class="page-content-container">
-    <cms-tree class="cms-tree" [context]="this" [nodeDatas]="categories" [customNodeRenderer]="customNodeRenderer"
-      (customEvent)="onTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)">
-    </cms-tree>
+  <div style="width: 70%; height: 100%; float: right; border-right: 1px solid lightgray;">
+    <div class="page-title-container">
+      <h1>媒體庫：{{selectedCategory?.category_name}}</h1>
+    </div>
+    <div class="page-content-container">
+      <ng-container *ngIf="galleryPageInfo?.page">
+        <div>目前頁數:{{galleryPageInfo.page}}</div>
+        <br>
+      </ng-container>
+      <ng-container *ngIf="galleryDatas">
+        <cms-table [colDefs]="colDefs" [dataSource]="galleryDatas" (customEvent)="onTableCustomEvent($event)"
+          (rowClick)="onRowClick($event)"></cms-table>
+      </ng-container>
+      <ng-container *ngIf="galleryPageInfo?.totalPageSize && galleryPageInfo?.totalRecSize">
+        <mat-paginator [length]="galleryPageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
+        </mat-paginator>
+      </ng-container>
+    </div>
+    <input type="hidden" id="clipBoardInput">
   </div>
-</div>
-<div style="width: 70%; height: 100%; float: right; border-right: 1px solid lightgray;">
-  <div class="page-title-container">
-    <h1>媒體庫：{{selectedCategory?.category_name}}</h1>
-  </div>
-  <div class="page-content-container">
-    <ng-container *ngIf="galleryPageInfo?.page">
-      <div>目前頁數:{{galleryPageInfo.page}}</div>
-      <br>
-    </ng-container>
-    <ng-container *ngIf="galleryDatas">
-      <cms-table [colDefs]="colDefs" [dataSource]="galleryDatas" (customEvent)="onTableCustomEvent($event)"
-        (rowClick)="onRowClick($event)"></cms-table>
-    </ng-container>
-    <ng-container *ngIf="galleryPageInfo?.totalPageSize && galleryPageInfo?.totalRecSize">
-      <mat-paginator [length]="galleryPageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
-      </mat-paginator>
-    </ng-container>
-  </div>
-  <input type="hidden" id="clipBoardInput">
-</div>
+</ng-container>

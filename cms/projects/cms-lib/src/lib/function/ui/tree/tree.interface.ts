@@ -8,6 +8,7 @@ export interface CmsTreeCustomCellEvent {
 
 export interface CmsTree<TData> {
   rightClickedNode: Subject<TData>;
+  onCustomNodeRendererInit: (customRender: any) => void;
   selectNode: (node: TData) => void;
   triggerCustomEvent: (event: CmsTreeCustomCellEvent) => void;
 }

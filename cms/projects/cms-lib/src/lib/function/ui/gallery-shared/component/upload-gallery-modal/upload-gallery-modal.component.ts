@@ -1,27 +1,12 @@
 import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, Inject } from '@angular/core';
-import { HttpRequest, HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { Subscription, of, Observable } from 'rxjs';
-import { map, last, catchError } from 'rxjs/operators';
-import { GalleryService } from '../../../../../global/api/service';
+import { forkJoin } from 'rxjs';
+import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../../../global/interface/cms-enviroment.interface';
 import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
 import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
-
-export class FileUploadModel {
-  fileName: string;
-  fileSize: number;
-  fileType: string;
-  data: File;
-  state: string;
-  inProgress: boolean;
-  progress: number;
-  canRetry: boolean;
-  canCancel: boolean;
-  sub?: Subscription;
-}
 
 @Component({
   selector: 'cms-upload-gallery-modal',
@@ -43,10 +28,10 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   @Input() categoryName: string;
   @Input() categoryId: string;
   @Input() galleryId: number;
+  @Input() galleryType: string;
 
-  param = 'file';
-  target = 'https://file.io';
-  accept = 'image/*';
+  isCreate = true;
+  accept: string;
   complete = new EventEmitter<string>();
 
   files: Array<FileUploadModel> = [];
@@ -76,7 +61,6 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   ];
 
   constructor(
-    private http: HttpClient,
     private cropperService: CropperService,
     @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
     private galleryService: GalleryService,
@@ -87,8 +71,11 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     this.updateSize('1280px');
 
     if (this.categoryId && this.categoryName) {
+      this.isCreate = true;
       this.title = `上傳檔案：${this.categoryName}`;
-    } else if (this.galleryId) {
+      this.accept = 'image/*';
+    } else if (this.galleryId && this.galleryType) {
+      this.isCreate = false;
       this.title = `修改檔案：${this.galleryId}`;
     }
   }
@@ -97,25 +84,11 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     this.changeDetectorRef.detectChanges();
   }
 
-  private mapFileToFileUploadModel(file: File): FileUploadModel {
-    return {
-      fileName: file.name,
-      fileSize: file.size,
-      fileType: file.type,
-      data: file,
-      state: '',
-      inProgress: false,
-      progress: 0,
-      canRetry: false,
-      canCancel: true
-    };
-  }
-
   addFiles() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = fileUpload.onchange || (() => {
       this.files = this.files.concat(
-        Array.from(fileUpload.files).map(file => this.mapFileToFileUploadModel(file))
+        Array.from(fileUpload.files).map(file => this.galleryService.mapFileToFileUploadModel(file))
       );
     });
     fileUpload.click();
@@ -126,10 +99,9 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   cancelFile(file: FileUploadModel) {
-    if (file.sub) {
+    if (file.canCancel && file.sub) {
       file.sub.unsubscribe();
     }
-    // this.removeFileFromArray(file);
   }
 
   cropFile(file: FileUploadModel) {
@@ -144,7 +116,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
         this.cropperService.openEditor(url).subscribe((dataUrl: string) => {
           if (!dataUrl) { return; }
           const blob = this.dataURItoBlob(dataUrl);
-          const newFile = this.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
+          const newFile = this.galleryService.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
           this.files.splice(this.files.indexOf(file), 1, newFile);
         });
       };
@@ -159,83 +131,37 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   private uploadFile(file: FileUploadModel) {
-    const formData = new FormData();
-    formData.append(this.param, file.data);
-    // formData.append('description', file.data.name);
-
-    const req = new HttpRequest('POST', `${this.environment.apiBaseUrl}/Gallery/${this.categoryId}`, formData, {
-      reportProgress: true
-    });
-
-    file.inProgress = true;
-    file.sub = this.http.request(req).pipe(
-      map(event => {
-        console.warn('uploadFile() event = ', event);
-        switch (event.type) {
-          case HttpEventType.UploadProgress:
-            file.progress = Math.round(event.loaded * 100 / event.total);
-            return null;
-          case HttpEventType.Response:
-            return event;
-        }
-        return null;
-      }),
-      last(),
-      catchError((error: HttpErrorResponse) => {
-        console.warn('uploadFail', error);
-        file.inProgress = false;
-        file.canRetry = true;
-        return of(`${file.data.name} upload failed.`);
-      })
-    ).subscribe(_ => {
-      file.inProgress = false;
-      file.canRetry = false;
-      file.canCancel = false;
-    });
-
-    // file.sub = this.http.request(req).pipe(
-    //   map(event => {
-    //     console.warn('uploadFile() event = ', event);
-    //     switch (event.type) {
-    //       case HttpEventType.UploadProgress:
-    //         file.progress = Math.round(event.loaded * 100 / event.total);
-    //         return null;
-    //       case HttpEventType.Response:
-    //         return event;
-    //     }
-    //     return null;
-    //   }),
-    //   tap(message => { }),
-    //   last(),
-    //   catchError((error: HttpErrorResponse) => {
-    //     file.inProgress = false;
-    //     file.canRetry = true;
-    //     return of(`${file.data.name} upload failed.`);
-    //   })
-    // ).subscribe(
-    //   (event: any) => {
-    //     if (typeof (event) === 'object') {
-    //       // this.removeFileFromArray(file);
-    //       // this.complete.emit(event.body);
-    //     }
-    //   }
-    // );
+    return this.galleryService.createGallery(file, this.categoryId);
   }
 
-  uploadFiles() {
+  create() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.value = '';
 
-    // forkJoin(this.files.map(file => this.uploadFile(file))).subscribe(() => {
-    //   alert('Complete');
-    // });
+    forkJoin(this.files.map(file => this.uploadFile(file))).subscribe(results => {
+      if (results.map(r => r.success).every(success => !!success)) {
+        this.close(true);
+      } else {
 
-    // this.files.forEach(file => {
-    //   this.uploadFile(file);
-    // });
+      }
+    });
   }
 
-  private removeFileFromArray(file: FileUploadModel) {
+  update() {
+    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+    fileUpload.value = '';
+
+    const file = this.files[0];
+    this.uploadFile(file).subscribe(result => {
+      if (result.success) {
+        this.close(true);
+      } else {
+
+      }
+    });
+  }
+
+  removeFile(file: FileUploadModel) {
     const index = this.files.indexOf(file);
     if (index > -1) {
       this.files.splice(index, 1);
@@ -261,28 +187,6 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     }
 
     return new Blob([ia], { type: mimeString });
-  }
-
-  upload() {
-    if (!this.files.length) {
-      alert('沒有檔案');
-      return;
-    }
-    const file = this.files[0];
-    let action: Observable<any>;
-    if (this.categoryId && this.categoryName) { // 新增
-      action = this.galleryService.createGallery(file.data, this.categoryId);
-    } else if (this.galleryId) { // 修改
-      action = this.galleryService.updateGallery(file.data, this.galleryId);
-    }
-    if (action) {
-      action.subscribe((result: { success: boolean }) => {
-        if (!result.success) {
-          alert('操作失敗');
-        }
-        this.close(true);
-      });
-    }
   }
 
 }
