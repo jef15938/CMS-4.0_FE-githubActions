@@ -45,7 +45,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   @Input() siteId: string;
   @Input() siteMapUpdateInfo: SiteMapUpdateInfo;
 
-  @Output() updated = new EventEmitter<UserSiteMapPutRequest>();
+  @Output() update = new EventEmitter<UserSiteMapPutRequest>();
 
   sitemapMaintainModel: SiteMapUpdateModel;
 
@@ -126,7 +126,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
       this.sitemapMaintainModel.meta_title,
       this.sitemapMaintainModel
     ).subscribe(_ => {
-      this.updated.emit(this.sitemapMaintainModel);
+      this.update.emit(this.sitemapMaintainModel);
     });
   }
 

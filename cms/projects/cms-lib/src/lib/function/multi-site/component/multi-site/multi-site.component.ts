@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Observable, concat, Subject, forkJoin, of } from 'rxjs';
 import { tap, takeUntil, concatMap, map, throttleTime } from 'rxjs/operators';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
@@ -30,7 +30,7 @@ class SiteInfoUpdateModel extends SiteInfo {
   templateUrl: './multi-site.component.html',
   styleUrls: ['./multi-site.component.scss']
 })
-export class MultiSiteComponent implements OnInit, OnDestroy {
+export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('sitemapTree') sitemapTree: TreeComponent<SiteMapGetResponse>;
 
@@ -44,13 +44,14 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   sitemaps: SiteMapGetResponse[];
 
-  selectedSiteMap: SiteMapUpdateInfo;
   customNodeRenderer = MultiSiteNodeComponent;
-  private sitemapSelected$ = new Subject<SiteMapGetResponse>();
+  selectedNode: SiteMapUpdateInfo;
+  private nodeSelected$ = new Subject<SiteMapGetResponse>();
 
   private destroy$ = new Subject();
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private modalService: ModalService,
     private sitemapService: SitemapService,
     private contentService: ContentService,
@@ -61,6 +62,10 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.registerSubjects();
     this.init().subscribe();
+  }
+
+  ngAfterViewInit(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -90,7 +95,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
 
   swichMode(mode: EditModeType) {
     this.sitemaps = undefined;
-    this.selectedSiteMap = undefined;
+    this.selectedNode = undefined;
     switch (mode) {
       case EditModeType.Node:
         if (!this.selectedSite) { this.modalService.openMessage({ message: '尚未選擇網站' }); return; }
@@ -106,7 +111,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   }
 
   onNodeSelected(event: { node: SiteMapGetResponse }) {
-    this.sitemapSelected$.next(event.node);
+    this.nodeSelected$.next(event.node);
   }
 
   afterTreeRender(tree: CmsTree<SiteMapGetResponse>) {
@@ -141,19 +146,19 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
   }
 
   private registerSubjects() {
-    this.sitemapSelected$.pipe(
+    this.nodeSelected$.pipe(
       takeUntil(this.destroy$),
       throttleTime(750),
-      concatMap(selectedSitemap => {
+      concatMap(selectedNode => {
         return (
-          selectedSitemap
-            ? this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedSitemap.node_id)
+          selectedNode
+            ? this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id)
             : of(undefined)
         ).pipe(
           tap(selectedSitemapNode => {
-            const parent = this.sitemapTree.findParent(selectedSitemap);
-            const order = (parent?.children || []).indexOf(selectedSitemap);
-            this.selectedSiteMap = {
+            const parent = this.sitemapTree.findParent(selectedNode);
+            const order = (parent?.children || []).indexOf(selectedNode);
+            this.selectedNode = {
               siteMap: selectedSitemapNode,
               parentId: parent?.node_id,
               nodeOrder: order > -1 ? `${order}` : '',
@@ -164,7 +169,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  onSiteMapUpdated(ev) {
+  onNodeUpdate(ev) {
     this.swichMode(EditModeType.Node);
   }
 
@@ -221,7 +226,7 @@ export class MultiSiteComponent implements OnInit, OnDestroy {
           );
         }),
       ).subscribe(_ => {
-        this.onSiteMapUpdated(undefined);
+        this.onNodeUpdate(undefined);
       });
     });
   }
