@@ -182,7 +182,8 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
     const special =
       this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
-      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe');
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'a');
     if (special) {
       this.simpleWysiwygService.setSelectionOnNode(special);
       return;
@@ -195,6 +196,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'a')
       ;
 
     if (special) {

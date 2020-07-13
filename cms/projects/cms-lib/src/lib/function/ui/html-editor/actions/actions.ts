@@ -56,6 +56,6 @@ export class HtmlEditorActions {
     this.highlight2 = new Highlight(context, 2);
     this.highlight3 = new Highlight(context, 3);
     this.unhighlight = new Unhighlight(context);
-    this.insertFile = new InsertFile(context, this.createLink, this.insertImage);
+    this.insertFile = new InsertFile(context);
   }
 }

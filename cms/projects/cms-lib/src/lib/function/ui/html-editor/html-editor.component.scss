@@ -100,6 +100,11 @@ $top-height: 72px;
     color: #0088cc;
   }
 
+  ::ng-deep a.gallery-file {
+    color: #0088cc;
+    text-decoration: none;
+  }
+
   ::ng-deep .neux-table {
 
     &.selected {

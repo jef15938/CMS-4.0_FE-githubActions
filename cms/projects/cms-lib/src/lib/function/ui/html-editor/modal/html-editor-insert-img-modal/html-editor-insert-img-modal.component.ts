@@ -59,7 +59,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
     this.height = img.height;
   }
 
-  changeImage() {
+  changeGallery() {
     this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         this.src = `${this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id)}`;

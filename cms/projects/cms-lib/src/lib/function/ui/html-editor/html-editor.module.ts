@@ -18,6 +18,7 @@ import { EditorPathComponent } from './components/editor-path/editor-path.compon
 import { EditorToolbarComponent } from './components/editor-toolbar/editor-toolbar.component';
 import { HtmlEditorInsertTableModalComponent } from './modal/html-editor-insert-table-modal/html-editor-insert-table-modal.component';
 import { HtmlEditorInsertVideoModalComponent } from './modal/html-editor-insert-video-modal/html-editor-insert-video-modal.component';
+import { HtmlEditorInsertFileModalComponent } from './modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { HtmlEditorInsertVideoModalComponent } from './modal/html-editor-insert-
     HtmlEditorInsertImgModalComponent,
     HtmlEditorInsertTableModalComponent,
     HtmlEditorInsertVideoModalComponent,
+    HtmlEditorInsertFileModalComponent,
   ],
   exports: [
     // HtmlEditorComponent

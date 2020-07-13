@@ -17,3 +17,5 @@ export * from './modify-image';
 export * from './insert-table';
 export * from './insert-video';
 export * from './insert-file';
+export * from './modify-file';
+

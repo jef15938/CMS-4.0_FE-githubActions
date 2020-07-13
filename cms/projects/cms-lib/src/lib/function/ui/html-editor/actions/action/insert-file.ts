@@ -1,64 +1,32 @@
 import { HtmlEditorActionBase } from '../action.base';
-import { of, Observable } from 'rxjs';
-import { tap, concatMap } from 'rxjs/operators';
-import { CreateLink } from './create-link';
-import { InsertImage, InsertImageConfig } from './insert-image';
-import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
-import { HtmlEditorContext } from '../../html-editor.interface';
-import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
-import { GalleryService } from '../../../../../global/api/service/gallery/gallery.service';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { HtmlEditorInsertFileModalComponent } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
+
+const CLASS_NAME_GALLERY_FILE = 'gallery-file';
 
 export class InsertFile extends HtmlEditorActionBase {
 
-  private createLink: CreateLink;
-  private insertImage: InsertImage;
-
-  constructor(
-    context: HtmlEditorContext,
-    createLink: CreateLink,
-    insertImage: InsertImage,
-  ) {
-    super(context);
-    this.createLink = createLink;
-    this.insertImage = insertImage;
-  }
-
   do() {
     const range = this.context.simpleWysiwygService.getRange();
-    const gallerySharedService: GallerySharedService = this.context.injector.get(GallerySharedService);
+    if (!range) { return of(undefined); }
 
-    return gallerySharedService.openGallery().pipe(
+    return this.context.modalService.openComponent({
+      component: HtmlEditorInsertFileModalComponent,
+    }).pipe(
       tap(_ => this.context.simpleWysiwygService.restoreSelection(range)),
-      concatMap(selectedGallery => this.chooseNextStep(selectedGallery)),
+      tap((configATag: HTMLAnchorElement) => {
+        if (!configATag) { return; }
+        const aTag = document.createElement('a');
+        aTag.href = configATag.href;
+        aTag.text = configATag.text;
+        aTag.target = '_blank';
+        aTag.classList.add(CLASS_NAME_GALLERY_FILE);
+
+        const inserted = this.context.simpleWysiwygService.insertHtml(aTag.outerHTML);
+      }),
     );
+
   }
 
-  private chooseNextStep(selectedGallery: GalleryInfo): Observable<any> {
-    console.warn('selectedGallery = ', selectedGallery);
-    if (!selectedGallery) { return of(undefined); }
-    // 'PDF', 'DOC', 'DOCX', 'XLS', 'XLSX', 'PNG', 'JPG', 'JPEG', 'GIF',
-    const imgExtensionNames = ['png', 'jpg', 'jpeg', 'gif'];
-    if (imgExtensionNames.indexOf(selectedGallery.file_type) > -1) {
-      return this.addImage(selectedGallery);
-    } else {
-      return this.addFile(selectedGallery);
-    }
-  }
-
-  private addImage(selectedGallery: GalleryInfo): Observable<any> {
-    const galleryService: GalleryService = this.context.injector.get(GalleryService);
-    const config: InsertImageConfig = {
-      src: `${galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id)}`,
-      alt: ``,
-      width: 200,
-      height: 200,
-    };
-
-    const created = this.insertImage.addImg(config);
-    return of(created);
-  }
-
-  private addFile(selectedGallery: GalleryInfo): Observable<any> {
-    return of(undefined);
-  }
 }

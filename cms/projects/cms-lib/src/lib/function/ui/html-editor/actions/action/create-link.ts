@@ -3,6 +3,8 @@ import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorCreateLinkModalComponent } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
 
+const CLASS_NAME_EDITOR_LINK = 'editor-link';
+
 export class CreateLink extends DomCmdAction {
   commandId = 'createLink';
 
@@ -49,7 +51,7 @@ export class CreateLink extends DomCmdAction {
               aTagToModify.appendChild(contents);
             }
           }
-          aTagToModify.classList.add('editor-link');
+          aTagToModify.classList.add(CLASS_NAME_EDITOR_LINK);
           const modified = this.context.simpleWysiwygService.insertHtml(aTagToModify.outerHTML);
 
           this.context.simpleWysiwygService.setSelectionOnNode(
@@ -99,7 +101,7 @@ export class CreateLink extends DomCmdAction {
       }
     }
 
-    return aTag;
+    return aTag && aTag.classList.contains(CLASS_NAME_EDITOR_LINK) ? aTag : undefined;
   }
 
 }
