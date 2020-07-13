@@ -55,7 +55,7 @@ export class InsertFile extends HtmlEditorActionBase {
     };
 
     const created = this.insertImage.addImg(config);
-    return of(undefined);
+    return of(created);
   }
 
   private addFile(selectedGallery: GalleryInfo): Observable<any> {

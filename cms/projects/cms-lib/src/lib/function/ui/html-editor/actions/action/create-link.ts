@@ -12,11 +12,8 @@ export class CreateLink extends DomCmdAction {
     if (!range) { return of(undefined); }
 
     const existingATag = this.getExistingATag(range);
-    // console.warn('existingATag = ', existingATag);
     const isCreate = !existingATag;
-    // console.warn('isCreate = ', isCreate);
     const canModifyText = this.canModifyText(range);
-    // console.warn('canModifyText = ', canModifyText);
     const aTagToModify = isCreate ? document.createElement('a') : existingATag;
 
     if (isCreate && canModifyText) {
@@ -31,7 +28,7 @@ export class CreateLink extends DomCmdAction {
         canModifyText
       }
     }).pipe(
-      tap((configATag: HTMLAnchorElement, ) => {
+      tap((configATag: HTMLAnchorElement) => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!configATag) { return; }
 

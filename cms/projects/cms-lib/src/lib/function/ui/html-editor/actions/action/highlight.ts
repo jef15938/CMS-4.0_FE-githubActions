@@ -22,7 +22,6 @@ export class Highlight extends HtmlEditorActionBase {
   do(): Observable<any> {
 
     const result = document.execCommand('foreColor', false, '#0000ff');
-    console.warn('result = ', result);
 
     const container = this.context.editorContainer.cloneNode(true) as HTMLDivElement;
 
@@ -79,7 +78,7 @@ export class Highlight extends HtmlEditorActionBase {
   }
 
   private flatHightlightElements(container: HTMLDivElement) {
-    const hightlightElements = Array.from(container.querySelectorAll(`.${HIGH_LIGHT_CLASS}`)) as HTMLElement[];
+    let hightlightElements = Array.from(container.querySelectorAll(`.${HIGH_LIGHT_CLASS}`)) as HTMLElement[];
     hightlightElements.forEach((hightlightElement: HTMLElement) => {
       const children = Array.from(hightlightElement.childNodes) as HTMLElement[];
       const hasHighlightChild = children.some(child => child.classList?.contains(HIGH_LIGHT_CLASS));
@@ -96,6 +95,24 @@ export class Highlight extends HtmlEditorActionBase {
         });
         parent.removeChild(hightlightElement);
       }
+    });
+
+    hightlightElements = Array.from(container.querySelectorAll(`.${HIGH_LIGHT_CLASS}`)) as HTMLElement[];
+    hightlightElements.forEach((hightlightElement: HTMLElement) => {
+      let next = hightlightElement.nextElementSibling;
+      const nextSameClassElements = [];
+      while (next && next.className === hightlightElement.className) {
+        nextSameClassElements.push(next);
+        next = next.nextElementSibling;
+      }
+      nextSameClassElements.forEach(nextSameClassElement => {
+        hightlightElement.innerHTML += nextSameClassElement.innerHTML;
+        nextSameClassElement.parentElement.removeChild(nextSameClassElement);
+        const index = hightlightElements.indexOf(nextSameClassElement);
+        if (index > -1) {
+          hightlightElements.splice(index, 1);
+        }
+      });
     });
   }
 
