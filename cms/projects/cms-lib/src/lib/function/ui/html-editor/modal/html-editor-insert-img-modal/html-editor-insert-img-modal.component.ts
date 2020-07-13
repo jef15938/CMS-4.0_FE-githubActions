@@ -1,15 +1,17 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { GalleryService } from '../../../../../global/api/service';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { Subject, fromEvent } from 'rxjs';
+import { switchMap, tap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cms-html-editor-insert-img-modal',
   templateUrl: './html-editor-insert-img-modal.component.html',
   styleUrls: ['./html-editor-insert-img-modal.component.scss']
 })
-export class HtmlEditorInsertImgModalComponent extends CustomModalBase implements OnInit {
+export class HtmlEditorInsertImgModalComponent extends CustomModalBase implements OnInit, OnDestroy {
 
   @ViewChild('Img') img: ElementRef<HTMLImageElement>;
 
@@ -21,6 +23,9 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   @Input() width: number = null;
   @Input() height: number = null;
 
+  private srcChange$ = new Subject();
+  private destroy$ = new Subject();
+
   constructor(
     private galleryService: GalleryService,
     private gallerySharedService: GallerySharedService,
@@ -31,20 +36,34 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
     this.alt = this.alt || '';
     this.width = this.width || null;
     this.height = this.height || null;
+
+    this.srcChange$.pipe(
+      takeUntil(this.destroy$),
+      switchMap(_ => fromEvent(this.img.nativeElement, 'load').pipe(tap(__ => this.checkWidthHeight()))),
+    ).subscribe();
   }
 
-  checkWidthHeight() {
-    setTimeout(() => {
-      const img = this.img.nativeElement;
-      this.width = img.width;
-      this.height = img.height;
-    }, 250);
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
+  }
+
+  checkImgSize() {
+    this.srcChange$.next();
+  }
+
+  private checkWidthHeight() {
+    const img = this.img.nativeElement;
+    this.width = img.width;
+    this.height = img.height;
   }
 
   changeImage() {
     this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         this.src = `${this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id)}`;
+        this.checkImgSize();
       }
     });
   }
