@@ -5,6 +5,8 @@ import { HtmlEditorContext } from '../../html-editor.interface';
 
 const HIGH_LIGHT_CLASS = 'highlight';
 
+const HIGH_LIGHT_IDENTIFY_COLOR = '#FFC0CB';
+
 export class Highlight extends HtmlEditorActionBase {
 
   order: number;
@@ -21,16 +23,16 @@ export class Highlight extends HtmlEditorActionBase {
 
   do(): Observable<any> {
 
-    const result = document.execCommand('foreColor', false, '#0000ff');
+    const result = document.execCommand('foreColor', false, HIGH_LIGHT_IDENTIFY_COLOR);
 
     const container = this.context.editorContainer.cloneNode(true) as HTMLDivElement;
 
-    if (Array.from(container.querySelectorAll('font[color="#0000ff"] img')).length > 0) {
+    if (Array.from(container.querySelectorAll(`font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"] img`)).length > 0) {
       return this.context.modalService.openMessage({ message: '標記文字不可包含圖片' })
         .pipe(tap(_ => document.execCommand('undo')));
     } else if (
-      Array.from(container.querySelectorAll('font[color="#0000ff"] b,font[color="#0000ff"] i,font[color="#0000ff"] u,font[color="#0000ff"] strong,font[color="#0000ff"] em')).length > 0
-      || Array.from(container.querySelectorAll('font[color="#0000ff"]'))
+      Array.from(container.querySelectorAll(`font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"] b,font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"] i,font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"] u,font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"] strong,font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"] em`)).length > 0
+      || Array.from(container.querySelectorAll(`font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"]`))
         .map(el => el.parentNode)
         .filter((el: HTMLElement) => {
           if (!el?.tagName) { return false; }
@@ -41,7 +43,7 @@ export class Highlight extends HtmlEditorActionBase {
       return this.context.modalService.openMessage({ message: '標記文字不可包含粗體、斜體或底線' })
         .pipe(tap(_ => document.execCommand('undo')));
     } else {
-      const elements = Array.from(container.querySelectorAll('font[color="#0000ff"]')) as HTMLElement[];
+      const elements = Array.from(container.querySelectorAll(`font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"]`)) as HTMLElement[];
       elements.forEach((el: HTMLElement) => {
         const innerHighlights = Array.from(el.querySelectorAll(`.${HIGH_LIGHT_CLASS}`)) as HTMLElement[];
         innerHighlights.forEach(highlight => {
