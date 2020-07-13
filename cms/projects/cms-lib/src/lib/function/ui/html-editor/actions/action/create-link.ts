@@ -8,7 +8,6 @@ export class CreateLink extends DomCmdAction {
 
   do() {
     const range = this.context.simpleWysiwygService.getRange();
-
     if (!range) { return of(undefined); }
 
     const existingATag = this.getExistingATag(range);
@@ -50,7 +49,7 @@ export class CreateLink extends DomCmdAction {
               aTagToModify.appendChild(contents);
             }
           }
-
+          aTagToModify.classList.add('editor-link');
           const modified = this.context.simpleWysiwygService.insertHtml(aTagToModify.outerHTML);
 
           this.context.simpleWysiwygService.setSelectionOnNode(

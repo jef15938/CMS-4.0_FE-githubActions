@@ -82,9 +82,14 @@ export class Highlight extends HtmlEditorActionBase {
   private flatHightlightElements(container: HTMLDivElement) {
     let hightlightElements = Array.from(container.querySelectorAll(`.${HIGH_LIGHT_CLASS}`)) as HTMLElement[];
     hightlightElements.forEach((hightlightElement: HTMLElement) => {
+      if (hightlightElement.parentElement.tagName.toLowerCase() === 'a') {
+        hightlightElement.parentElement.innerText = hightlightElement.parentElement.innerText;
+        return;
+      }
+
       const children = Array.from(hightlightElement.childNodes) as HTMLElement[];
-      const hasHighlightChild = children.some(child => child.classList?.contains(HIGH_LIGHT_CLASS));
-      if (hasHighlightChild) {
+      const hasElementChild = children.some(child => child.nodeType !== Node.TEXT_NODE);
+      if (hasElementChild) {
         const parent = hightlightElement.parentElement;
         children.forEach(child => {
           if (child.nodeType === Node.TEXT_NODE) {

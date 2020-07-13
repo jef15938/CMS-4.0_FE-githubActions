@@ -20,36 +20,10 @@ export class Unhighlight extends HtmlEditorActionBase {
       this.flatHightlightFontElements(container);
 
       const elements = Array.from(container.querySelectorAll(`font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"]`)) as HTMLElement[];
-
-      elements.forEach((el: HTMLElement) => {
-
-        const innerHighlights = Array.from(el.querySelectorAll(`.${HIGH_LIGHT_CLASS}`)) as HTMLElement[];
-        innerHighlights.forEach(highlight => {
-          const parent = highlight.parentElement;
-          const innerTextNode = document.createTextNode(highlight.innerText);
-          parent.insertBefore(innerTextNode, highlight);
-          parent.removeChild(highlight);
-        });
-
-        const textNode = document.createTextNode(el.innerHTML);
-
-        const parentNode = el.parentNode as HTMLElement;
-        if (parentNode?.classList?.contains(HIGH_LIGHT_CLASS)) {
-          const next = parentNode.nextSibling;
-          if (next) {
-            next.parentNode.insertBefore(textNode, next);
-          } else {
-            parentNode.parentNode.appendChild(textNode);
-          }
-        } else {
-          const next = el.nextSibling;
-          if (next) {
-            next.parentNode.insertBefore(textNode, next);
-          } else {
-            el.parentNode.appendChild(textNode);
-          }
-        }
-        el.parentNode.removeChild(el);
+      elements.forEach(el => {
+        const textNode = document.createTextNode(el.innerText);
+        el.parentElement.insertBefore(textNode, el);
+        el.parentElement.removeChild(el);
       });
 
       this.context.editorContainer.innerHTML = container.innerHTML;
@@ -59,24 +33,59 @@ export class Unhighlight extends HtmlEditorActionBase {
   }
 
   private flatHightlightFontElements(container: HTMLDivElement) {
-    const hightlightElements = Array.from(container.querySelectorAll(`font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"]`)) as HTMLElement[];
-    const parents = hightlightElements
-      .map(el => el.parentElement)
-      .filter((el, i, arr) => arr.indexOf(el) === i)
-      .filter(el => el.tagName.toLowerCase() !== 'p')
-      ;
-    parents.forEach((parent: HTMLElement) => {
-      const children = Array.from(parent.childNodes) as HTMLElement[];
-      children.forEach(child => {
-        if (child.nodeType === Node.TEXT_NODE) {
-          const newContainer = parent.cloneNode() as HTMLElement;
-          newContainer.appendChild(child);
-          parent.parentElement.insertBefore(newContainer, parent);
-        } else {
-          parent.parentElement.insertBefore(child.cloneNode(true), parent);
-        }
-      });
-      parent.parentElement.removeChild(parent);
+    let hightlightElements = Array.from(container.querySelectorAll(`font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"]`)) as HTMLElement[];
+    hightlightElements.forEach((hightlightElement: HTMLElement) => {
+      const parent = hightlightElement.parentElement;
+
+      if (parent.tagName?.toLowerCase() === 'a') {
+        const innerText = parent.innerText;
+        Array.from(parent.children)
+          .forEach((child: Node) => child.parentElement.removeChild(child));
+        parent.innerText = innerText;
+        return;
+      }
+
+      const children = Array.from(hightlightElement.childNodes) as HTMLElement[];
+      const hasElementChild = children.some(child => child.nodeType !== Node.TEXT_NODE);
+      if (hasElementChild) {
+        children.forEach(child => {
+          if (
+            child.nodeType === Node.TEXT_NODE
+            ||
+            (child.tagName?.toLowerCase() === 'span' && child.classList?.contains(HIGH_LIGHT_CLASS))
+          ) {
+            const newContainer = hightlightElement.cloneNode() as HTMLElement;
+            newContainer.innerText = child.innerText || child.innerHTML || child.nodeValue || '';
+            parent.insertBefore(newContainer, hightlightElement);
+          } else {
+            parent.insertBefore(child.cloneNode(true), hightlightElement);
+          }
+        });
+        parent.removeChild(hightlightElement);
+      }
+
+    });
+
+    hightlightElements = Array.from(container.querySelectorAll(`font[color="${HIGH_LIGHT_IDENTIFY_COLOR}"]`)) as HTMLElement[];
+
+    hightlightElements.forEach((hightlightElement: HTMLElement) => {
+      const parent = hightlightElement.parentElement;
+
+      if (parent.classList?.contains(HIGH_LIGHT_CLASS)) {
+        const children = Array.from(parent.childNodes) as HTMLElement[];
+
+        children.forEach(child => {
+          if (child.nodeType === Node.TEXT_NODE) {
+            const newContainer = parent.cloneNode() as HTMLElement;
+            newContainer.innerText = child.innerText || child.innerHTML || child.nodeValue || '';
+            parent.parentElement.insertBefore(newContainer, parent);
+          } else {
+            parent.parentElement.insertBefore(child, parent);
+          }
+        });
+        parent.parentElement.removeChild(parent);
+      }
+
     });
   }
 

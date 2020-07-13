@@ -96,6 +96,10 @@ $top-height: 72px;
     color: blue;
   }
 
+  ::ng-deep a.editor-link {
+    color: #0088cc;
+  }
+
   ::ng-deep .neux-table {
 
     &.selected {
