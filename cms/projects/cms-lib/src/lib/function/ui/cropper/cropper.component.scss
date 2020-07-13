@@ -1,3 +1,17 @@
+$top: 36px;
+$padding: 16px;
+
 ::ng-deep .cms-cropper-modal mat-dialog-container {
   padding: 0;
+
+  .cropper-tools {
+    height: $top;
+  }
+
+  .cms-cropper-container {
+    overflow: auto;
+    width: 100%;
+    padding: $padding;
+    height: calc(100% - #{$top} - #{$padding} - #{$padding});
+  }
 }
