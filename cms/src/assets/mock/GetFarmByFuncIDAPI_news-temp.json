@@ -73,194 +73,56 @@
     "tableInfo": {
       "pageInfo": {
         "page": 1,
-        "totalPageSize": 2,
-        "totalRecSize": 15
+        "totalPageSize": 1,
+        "totalRecSize": 1
       },
       "can_create": true,
       "can_checkbox": true,
       "datas": [{
-          "data_id": "table-data-1",
-          "is_checked": true,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 1 label",
-              "display_text": "Label欄位",
-              "actions": [
-                "preview",
-                "modify",
-                "delete",
-                "auditing",
-                "detail"
-              ]
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 1 link",
-              "display_text": "Link欄位",
-              "actions": [
-                "preview",
-                "modify",
-                "delete",
-                "auditing",
-                "detail"
-              ]
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-2",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 2 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 2 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-3",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 3 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 3 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-4",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 4 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 4 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-5",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 5 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 5 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-6",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 6 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 6 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-7",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 7 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 7 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-8",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 8 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 8 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-9",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 9 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 9 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        },
-        {
-          "data_id": "table-data-10",
-          "is_checked": false,
-          "columns": [{
-              "display_type": "LABEL",
-              "value": "資料 10 label",
-              "display_text": "Label欄位",
-              "actions": []
-            },
-            {
-              "display_type": "LINK",
-              "value": "資料 10 link",
-              "display_text": "Link欄位",
-              "actions": []
-            }
-          ]
-        }
-      ]
+        "data_id": "news-temp-data-1",
+        "is_checked": true,
+        "columns": [{
+            "display_type": "LABEL",
+            "value": "凱基證券台股最新消息",
+            "display_text": "標題",
+            "actions": [
+              "preview",
+              "modify",
+              "delete"
+            ]
+          },
+          {
+            "display_type": "LABEL",
+            "value": "2019-03-04 00:00:00",
+            "display_text": "開始時間",
+            "actions": [
+              "preview",
+              "modify",
+              "delete"
+            ]
+          },
+          {
+            "display_type": "LABEL",
+            "value": "9999-12-31 00:00:00",
+            "display_text": "結束時間",
+            "actions": [
+              "preview",
+              "modify",
+              "delete"
+            ]
+          },
+          {
+            "display_type": "LABEL",
+            "value": "審核中",
+            "display_text": "資料狀態",
+            "actions": [
+              "preview",
+              "modify",
+              "delete"
+            ]
+          }
+        ]
+      }]
     },
     "category_name": "最新消息管理",
     "category_id": "news-temp"
