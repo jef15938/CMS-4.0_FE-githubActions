@@ -116,7 +116,11 @@
               </ng-container>
               <!-- LABEL -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LABEL">
-                {{col.value}}
+                <div [innerHTML]="col.value | safeHtml"></div>
+              </ng-container>
+              <!-- LINK -->
+              <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LINK">
+                <a [href]="col.value" target="_blank" rel="noreferrer noopener">內容預覽</a>
               </ng-container>
               <!-- CUSTOM -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CUSTOM">

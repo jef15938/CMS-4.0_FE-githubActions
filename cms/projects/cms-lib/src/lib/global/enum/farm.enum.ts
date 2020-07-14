@@ -12,6 +12,7 @@ export enum CmsFarmFormColumnDisplayType {
   TREE = 'TREE',
   LABEL = 'LABEL',
   CUSTOM = 'CUSTOM',
+  LINK = 'LINK',
 }
 
 export enum CmsFarmTableColumnDisplayType {

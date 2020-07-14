@@ -1,0 +1,69 @@
+{
+  "split_size": 2,
+  "columns": [{
+      "display_text": "標題",
+      "display_type": "LABEL",
+      "value": "凱基證券台股最新消息"
+    },
+    {
+      "display_text": "最新消息連結路徑",
+      "display_type": "LABEL",
+      "value": "<a href=\"http://garden.decoder.com.tw/transglobe/newsDetail.html?newsId=584\" target=\"_blank\">http://garden.decoder.com.tw/transglobe/newsDetail.html?newsId=584</a>"
+    },
+    {
+      "display_text": "內頁連結方式",
+      "display_type": "LABEL",
+      "value": "自行編輯內容"
+    },
+    {
+      "display_text": "內容預覽",
+      "display_type": "LINK",
+      "value": "jsp/auditingPreview.jsp?mappingTable=news_temp&mappingId=bmV3c19pZD01ODQ="
+    },
+    {
+      "display_text": "開始時間",
+      "display_type": "LABEL",
+      "value": "2019-03-04 00:00:00"
+    },
+    {
+      "display_text": "結束時間",
+      "display_type": "LABEL",
+      "value": "9999-12-31 00:00:00"
+    },
+    {
+      "display_text": "建立時間",
+      "display_type": "LABEL",
+      "value": "2019-03-04 17:34:11"
+    },
+    {
+      "display_text": "建立者",
+      "display_type": "LABEL",
+      "value": "admin(admin)"
+    },
+    {
+      "display_text": "建立部門",
+      "display_type": "LABEL",
+      "value": "總部門(001)"
+    },
+    {
+      "display_text": "修改時間",
+      "display_type": "LABEL",
+      "value": "2020-05-26 09:34:08"
+    },
+    {
+      "display_text": "修改者",
+      "display_type": "LABEL",
+      "value": "admin(admin)"
+    },
+    {
+      "display_text": "修改部門",
+      "display_type": "LABEL",
+      "value": "總部門(001)"
+    },
+    {
+      "display_text": "發佈位置",
+      "display_type": "LABEL",
+      "value": "官網 > 全球新聞"
+    }
+  ]
+}
