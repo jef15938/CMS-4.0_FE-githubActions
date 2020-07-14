@@ -36,12 +36,9 @@ export class FarmService {
    * @memberof FarmService
    */
   getFarmTableInfoByFuncID(funcID: string, page: number): Observable<CmsFarmTableInfo> {
-    if (!funcID) {
-      throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'string', funcID);
-    }
-    if (!page) {
-      throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page);
-    }
+    if (!funcID) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'string', funcID); }
+    if (!page) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page); }
+
     return this.restAPIService.dispatchRestApi('GetFarmTableInfoByFuncID', { funcID, page });
   }
 
@@ -54,9 +51,7 @@ export class FarmService {
    * @memberof FarmService
    */
   getFarmDetailInfoByFuncID(farmID: string, dataID: string): Observable<CmsFarmFormInfo> {
-    if (!farmID) {
-      throw new ParamsError('funcID', 'GetFarmDetailInfoByFuncID', 'string', farmID);
-    }
+    if (!farmID) { throw new ParamsError('funcID', 'GetFarmDetailInfoByFuncID', 'string', farmID); }
     if (!dataID) {
       throw new ParamsError('dataID', 'GetFarmDetailInfoByFuncID', 'string', dataID);
     }
@@ -72,9 +67,8 @@ export class FarmService {
    * @memberof FarmService
    */
   getFarmFormInfoByFuncID(farmID: string, dataID?: string): Observable<CmsFarmFormInfo> {
-    if (!farmID) {
-      throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', farmID);
-    }
+    if (!farmID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', farmID); }
+
     return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { farmID, dataID });
   }
 
