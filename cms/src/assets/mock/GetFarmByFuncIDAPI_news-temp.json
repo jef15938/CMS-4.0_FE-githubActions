@@ -76,8 +76,8 @@
         "totalPageSize": 1,
         "totalRecSize": 1
       },
-      "can_create": true,
-      "can_checkbox": true,
+      "can_create": false,
+      "can_checkbox": false,
       "datas": [{
         "data_id": "news-temp-data-1",
         "is_checked": true,

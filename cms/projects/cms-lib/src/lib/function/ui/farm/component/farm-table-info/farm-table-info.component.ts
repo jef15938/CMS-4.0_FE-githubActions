@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CmsFarmTableInfo, CmsFarmTableDataInfo } from './../../../../../global/model';
 import { CmsFarmTableDataAction, CmsFarmTableColumnDisplayType } from './../../../../../global/enum';
-import { ACTION_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type';
+import { ACTION_COLUMN, CHECKBOX_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type';
 
 @Component({
   selector: 'cms-farm-table-info',
@@ -10,6 +10,7 @@ import { ACTION_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type'
 })
 export class FarmTableInfoComponent implements OnInit {
 
+  CHECKBOX_COLUMN = CHECKBOX_COLUMN;
   ACTION_COLUMN = ACTION_COLUMN;
   CmsFarmTableDataAction = CmsFarmTableDataAction;
   CmsFarmTableColumnDisplayType = CmsFarmTableColumnDisplayType;
@@ -19,9 +20,12 @@ export class FarmTableInfoComponent implements OnInit {
   @Output() actionClick = new EventEmitter<FarmTableInfoActionEvent>();
   @Output() pageChange = new EventEmitter<number>();
 
+  totalChecked = false;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.onRowCheckChange();
   }
 
   onActionClick(action: CmsFarmTableDataAction, rowData?: CmsFarmTableDataInfo) {
@@ -30,6 +34,16 @@ export class FarmTableInfoComponent implements OnInit {
 
   onPageChanged(event: { pageIndex: number }) {
     this.pageChange.emit(event.pageIndex + 1);
+  }
+
+  onTotalCheckChange() {
+    this.tableInfo.datas.forEach(data => {
+      data.is_checked = this.totalChecked;
+    });
+  }
+
+  onRowCheckChange() {
+    this.totalChecked = this.tableInfo.datas.map(_ => _.is_checked).every(checked => !!checked);
   }
 
 }
