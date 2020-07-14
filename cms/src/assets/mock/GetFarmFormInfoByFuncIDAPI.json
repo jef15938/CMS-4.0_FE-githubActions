@@ -16,6 +16,17 @@
       "triggers": []
     },
     {
+      "display_text": "媒體庫測試",
+      "display_type": "GALLERY",
+      "options": [],
+      "value": "http://www.neux.com.tw/neuximg/neuxLOGO.png",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "gallery-column",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
       "display_text": "Editor測試",
       "display_type": "EDITOR",
       "options": [],

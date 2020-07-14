@@ -7,9 +7,11 @@ import { CmsFarmFormColumnDisplayType } from './../../../../../global/enum';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm.interface';
 import { ContentEditorService, EditorMode } from './../../../content-editor';
-import { ContentService } from '../../../../../global/api/service';
+import { ContentService, GalleryService } from '../../../../../global/api/service';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { HtmlEditorService } from '../../../html-editor';
+import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 
 @Component({
   selector: 'cms-farm-form-info',
@@ -32,6 +34,8 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     private contentService: ContentService,
     private contentEditorService: ContentEditorService,
     private htmlEditorService: HtmlEditorService,
+    private gallerySharedService: GallerySharedService,
+    private galleryService: GalleryService,
   ) { }
 
   ngOnInit(): void {
@@ -203,6 +207,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     }).subscribe(content => {
       if (content || content === '') {
         column.value = content;
+      }
+    });
+  }
+
+  changeGallery(col: CmsFarmFormColumn) {
+    this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
+      if (selectedGallery) {
+        col.value = this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id);
       }
     });
   }

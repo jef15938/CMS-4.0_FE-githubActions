@@ -44,6 +44,23 @@
                 </mat-error>
               </mat-form-field>
             </ng-container>
+            <!-- RADIO -->
+            <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
+              <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;"
+                (change)="columnTrigger.next(col)">
+                <ng-container *ngFor="let option of col.options; let i=index;">
+                  <mat-radio-button [value]="option.value" style="display: inline-block;"
+                    [style.marginLeft]="i===0?'0':'15px'">
+                    {{option.text}}
+                  </mat-radio-button>
+                </ng-container>
+              </mat-radio-group>
+            </ng-container>
+            <!-- CHECKBOX -->
+            <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CHECKBOX">
+              <mat-checkbox [formControlName]="col.column_id" (change)="columnTrigger.next(col)">
+              </mat-checkbox>
+            </ng-container>
             <!-- DATE -->
             <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATE">
               <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
@@ -61,26 +78,9 @@
                 </mat-error>
               </mat-form-field>
             </ng-container>
-            <!-- CHECKBOX -->
-            <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CHECKBOX">
-              <mat-checkbox [formControlName]="col.column_id" (change)="columnTrigger.next(col)">
-              </mat-checkbox>
-            </ng-container>
-            <!-- RADIO -->
-            <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
-              <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;"
-                (change)="columnTrigger.next(col)">
-                <ng-container *ngFor="let option of col.options; let i=index;">
-                  <mat-radio-button [value]="option.value" style="display: inline-block;"
-                    [style.marginLeft]="i===0?'0':'15px'">
-                    {{option.text}}
-                  </mat-radio-button>
-                </ng-container>
-              </mat-radio-group>
-            </ng-container>
-            <!-- LABEL -->
-            <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LABEL">
-              {{col.value}}
+            <!-- GALLERY -->
+            <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.GALLERY">
+              <button type="button" mat-button (click)="changeGallery(col)">媒體庫</button>
             </ng-container>
             <!-- EDITOR -->
             <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.EDITOR">
@@ -89,6 +89,27 @@
             <!-- HTMLEDITOR -->
             <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.HTMLEDITOR">
               <button type="button" mat-button (click)="openHtmlEditor(col)">編輯 Html</button>
+            </ng-container>
+            <!-- DATETIME -->
+            <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATETIME">
+              <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
+                <input matInput [matDatepicker]="picker" [formControlName]="col.column_id"
+                  (dateChange)="columnTrigger.next(col)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="!useValidation && formGroup.controls[col.column_id]?.errors?.matDatepickerParse">
+                  <div>日期格式不符</div>
+                </mat-error>
+                <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
+                  <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">
+                    {{err}}
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+            <!-- LABEL -->
+            <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LABEL">
+              {{col.value}}
             </ng-container>
             <!-- CUSTOM -->
             <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CUSTOM">
