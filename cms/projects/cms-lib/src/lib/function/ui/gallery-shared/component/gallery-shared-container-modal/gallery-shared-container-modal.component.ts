@@ -15,8 +15,6 @@ export class GallerySharedContainerModalComponent extends CustomModalBase implem
   @Input() title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 
-  // @Input() content: string;
-
   constructor() { super(); }
 
   ngOnInit(): void {
