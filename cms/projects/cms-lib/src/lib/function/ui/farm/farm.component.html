@@ -8,7 +8,7 @@
     </h1>
   </div> -->
   <ng-container *ngIf="farm">
-    <div style="position: absolute; right: 0; top: 0; z-index: 2000;" *ngIf="isSub">
+    <div class="tool-btns" *ngIf="isSub">
       <button type="button" tabindex="0" mat-button (click)="destroySelf()">回上層</button>
     </div>
     <div>

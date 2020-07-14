@@ -2,4 +2,12 @@
   display: block;
   height: 100%;
   position: relative;
+
+  .tool-btns {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2000;
+    line-height: 48px;
+  }
 }
