@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/model';
+
+import * as MOCK_NEWS_TEMP from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_news-temp.json';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +23,13 @@ export class FarmService {
    * @memberof FarmService
    */
   getFarmByFuncID(funcID: string): Observable<FarmInfo> {
+    console.warn('getFarmByFuncID() funcID = ', funcID);
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
+    }
+    if (funcID === 'news-temp') {
+      console.warn('MOCK_NEWS_TEMP = ', MOCK_NEWS_TEMP);
+      return of((MOCK_NEWS_TEMP['default']) as FarmInfo);
     }
     return this.restAPIService.dispatchRestApi('GetFarmByFuncID', { funcID });
   }

@@ -1,10 +1,8 @@
 {
-  "category": [
-    {
+  "category": [{
       "searchInfo": {
         "split_size": 2,
-        "columns": [
-          {
+        "columns": [{
             "display_text": "作為預設",
             "display_type": "CHECKBOX",
             "options": [],
@@ -18,8 +16,7 @@
           {
             "display_text": "喜歡",
             "display_type": "RADIO",
-            "options": [
-              {
+            "options": [{
                 "value": "dog",
                 "text": "狗"
               },
@@ -60,8 +57,7 @@
           {
             "display_text": "資料狀態",
             "display_type": "SELECT",
-            "options": [
-              {
+            "options": [{
                 "value": "waiting",
                 "text": "待上架"
               },
@@ -114,12 +110,10 @@
         },
         "can_create": true,
         "can_checkbox": true,
-        "datas": [
-          {
+        "datas": [{
             "data_id": "table-data-1",
             "is_checked": true,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 1 label",
                 "display_text": "Label欄位",
@@ -148,8 +142,7 @@
           {
             "data_id": "table-data-2",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 2 label",
                 "display_text": "Label欄位",
@@ -166,8 +159,7 @@
           {
             "data_id": "table-data-3",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 3 label",
                 "display_text": "Label欄位",
@@ -184,8 +176,7 @@
           {
             "data_id": "table-data-4",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 4 label",
                 "display_text": "Label欄位",
@@ -202,8 +193,7 @@
           {
             "data_id": "table-data-5",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 5 label",
                 "display_text": "Label欄位",
@@ -220,8 +210,7 @@
           {
             "data_id": "table-data-6",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 6 label",
                 "display_text": "Label欄位",
@@ -238,8 +227,7 @@
           {
             "data_id": "table-data-7",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 7 label",
                 "display_text": "Label欄位",
@@ -256,8 +244,7 @@
           {
             "data_id": "table-data-8",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 8 label",
                 "display_text": "Label欄位",
@@ -274,8 +261,7 @@
           {
             "data_id": "table-data-9",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 9 label",
                 "display_text": "Label欄位",
@@ -292,8 +278,7 @@
           {
             "data_id": "table-data-10",
             "is_checked": false,
-            "columns": [
-              {
+            "columns": [{
                 "display_type": "LABEL",
                 "value": "資料 10 label",
                 "display_text": "Label欄位",
@@ -309,7 +294,7 @@
           }
         ]
       },
-      "category_name": "Category 1",
+      "category_name": "社會企業輪播",
       "category_id": "category-1"
     },
     {
@@ -321,8 +306,7 @@
   ],
   "detailInfo": {
     "split_size": 3,
-    "columns": [
-      {
+    "columns": [{
         "display_text": "項目代碼",
         "display_type": "LABEL",
         "value": "11"

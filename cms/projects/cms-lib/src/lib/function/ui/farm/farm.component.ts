@@ -22,7 +22,7 @@ export class FarmComponent implements OnInit, OnDestroy {
 
   private searchInfoFormComponentMap = new Map<CmsFarmInfoCategory, FarmFormComp>();
 
-  @Input() title: string;
+  // @Input() title: string;
   @Input() categoryName: string;
   @Input() funcId: string;
   @Input() categoryId: string;
@@ -110,7 +110,8 @@ export class FarmComponent implements OnInit, OnDestroy {
     const subComponentRef = viewContainerRef.createComponent(componentFactory);
     subComponentRef.instance.isSub = true;
     subComponentRef.instance.funcId = category.category_id;
-    subComponentRef.instance.title = `${this.title || ''}${this.title ? ' > ' : ''}${category.category_name}`;
+    // subComponentRef.instance.title = `${this.title || ''}${this.title ? ' > ' : ''}${category.category_name}`;
+    subComponentRef.instance.categoryName = `${this.categoryName || ''}${this.categoryName ? ' > ' : ''}${category.category_name}`;
     this.subComponentRef = subComponentRef;
     this.subComponentRef.instance.destroyMe.pipe(
       takeUntil(this.destroy$),

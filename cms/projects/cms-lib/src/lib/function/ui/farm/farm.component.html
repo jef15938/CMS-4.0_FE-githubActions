@@ -1,22 +1,26 @@
 <div [hidden]="!!subComponentRef">
-  <div class="page-title-container">
+  <!-- <div class="page-title-container">
     <h1>
       <span *ngIf="title">{{title}}</span>{{categoryName ? ' > ' : ''}}{{categoryName||''}}
       <div style="float: right;" *ngIf="isSub">
         <button type="button" tabindex="0" mat-button (click)="destroySelf()">回上層</button>
       </div>
     </h1>
-  </div>
+  </div> -->
   <ng-container *ngIf="farm">
-    <!-- TODO: 正式程式 isSub 要拿掉，現在是為了展示 -->
-    <div class="detail-info-container" *ngIf="isSub && farm.detailInfo">
-      <cms-farm-detail-info [detailInfo]="farm.detailInfo"></cms-farm-detail-info>
-      <hr>
+    <div style="position: absolute; right: 0; top: 0; z-index: 2000;" *ngIf="isSub">
+      <button type="button" tabindex="0" mat-button (click)="destroySelf()">回上層</button>
     </div>
     <div>
       <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
-        <mat-tab *ngFor="let category of farm.category" [label]="category.category_name">
+        <mat-tab *ngFor="let category of farm.category"
+          [label]="(categoryName ? categoryName + ' > ' : '') + category.category_name">
           <ng-template matTabContent>
+            <!-- TODO: 正式程式 isSub 要拿掉，現在是為了展示 -->
+            <div class="detail-info-container" *ngIf="isSub && farm.detailInfo">
+              <cms-farm-detail-info [detailInfo]="farm.detailInfo"></cms-farm-detail-info>
+              <hr>
+            </div>
             <div class="search-info-container" *ngIf="category.searchInfo">
               <cms-farm-search-info #FarmSearchComp [searchInfo]="category.searchInfo"
                 (needQuery)="onSearchInfoNeedQuery(category)"

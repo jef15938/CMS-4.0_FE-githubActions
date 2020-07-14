@@ -1,5 +1,5 @@
 <ng-container *ngIf="searchInfo">
-  <cms-farm-form-info [farmFormInfo]="searchInfo"></cms-farm-form-info>
+  <cms-farm-form-info [farmFormInfo]="searchInfo" [useValidation]="true"></cms-farm-form-info>
   <div class="page-content-container" style="text-align: center;">
     <div class="btn-group">
       <button type="button" tabindex="0" mat-button (click)="clear()">清除</button>
