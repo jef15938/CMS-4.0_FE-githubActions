@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { GalleryService } from '../../../../../global/api/service';
+import { GalleryService, DepartmentService } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
+import { DepartmentInfo } from '../../../../../global/api/neuxAPI/bean/DepartmentInfo';
 
 @Component({
   selector: 'cms-gallery-category-maintain-modal',
@@ -19,16 +20,19 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   @Input() parentId: string;
   @Input() assignDeptId: string;
 
+  depts: DepartmentInfo[] = [];
+
   title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}媒體庫群組`;
 
   constructor(
     private galleryService: GalleryService,
+    private departmentService: DepartmentService,
   ) {
     super();
   }
 
   ngOnInit(): void {
-
+    this.departmentService.getAllDepartment().subscribe(depts => this.depts = depts);
   }
 
   private save() {
@@ -48,6 +52,10 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   getErrorMessage(model: NgModel) {
     if (model.hasError('required')) { return 'Required'; }
     return null;
+  }
+
+  onNodeCheckedChange(ev: { nodes: DepartmentInfo[] }) {
+    console.warn('onNodeCheckedChange() ev = ', ev);
   }
 
 }

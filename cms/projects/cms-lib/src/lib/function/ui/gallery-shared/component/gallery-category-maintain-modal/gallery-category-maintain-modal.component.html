@@ -5,6 +5,12 @@
       <input matInput [(ngModel)]="categoryName" name="categoryName" required #modelName="ngModel">
       <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error>
     </mat-form-field>
+    <div>
+      <h3>選擇部門</h3>
+      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="depts" nodeDisplayField="dept_name"
+        [checkbox]="true" [defaultExpandLevel]="-1" (nodeCheckedChange)="onNodeCheckedChange($event)">
+      </cms-tree>
+    </div>
   </div>
   <div class="btn-group">
     <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
