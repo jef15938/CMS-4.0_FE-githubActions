@@ -1,6 +1,9 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { TemplateFieldSelectEvent, LayoutFieldImgDirective, ImgFieldInfo } from 'render';
+import { GallerySharedService } from './../../../../../../../../function/ui/gallery-shared/service/gallery-shared.service';
+import { GalleryInfo } from '../../../../../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { GalleryService } from '../../../../../../../../global/api/service/gallery/gallery.service';
 
 @Component({
   selector: 'cms-field-control-img',
@@ -14,6 +17,13 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
   adviceFormat = '';
   adviceWidth = 0;
   adviceHeight = 0;
+
+  constructor(
+    private gallerySharedService: GallerySharedService,
+    private galleryService: GalleryService,
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
   }
@@ -30,6 +40,15 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
         altValue: ''
       };
     }
+  }
+
+  changeGallery() {
+    this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
+      if (selectedGallery) {
+        this.fieldInfo.fieldVal = this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id);
+        this.change.emit();
+      }
+    });
   }
 
 }

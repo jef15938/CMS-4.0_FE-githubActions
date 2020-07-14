@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input, ComponentRef } from '@angular/core';
 import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../../global/api/service';
@@ -250,8 +250,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.galleryClick.emit(gallery);
   }
 
-  onCustomNodeRendererInit = (customRender: GalleryCategoryNodeComponent) => {
-    customRender.mode = this.mode;
+  onCustomNodeRendererInit = (customRenderComponentRef: ComponentRef<GalleryCategoryNodeComponent>) => {
+    customRenderComponentRef.instance.mode = this.mode;
   }
 
 }

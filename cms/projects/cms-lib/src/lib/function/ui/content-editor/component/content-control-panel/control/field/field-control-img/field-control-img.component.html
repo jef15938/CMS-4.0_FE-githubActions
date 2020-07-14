@@ -4,7 +4,10 @@
   建議格式 : {{adviceFormat}}
 </div>
 <ng-container *ngIf="fieldInfo">
-  <br>
+  <div class="btn-container">
+    <button class="dark-style" type="button" tabindex="-1" mat-button (click)="changeGallery()"
+      style="float: right;">媒體庫</button>
+  </div>
   <mat-form-field appearance="outline">
     <mat-label>圖片連結</mat-label>
     <input matInput [(ngModel)]="fieldInfo.fieldVal" (keydown)="change.emit()">
