@@ -11,7 +11,7 @@ export class CmsFormValidator {
         const endFormControl = formGroup.get(endFormControlName);
         const startTime: Date = startFormControl.value;
         const endTime: Date = endFormControl.value;
-        if (!(endTime > startTime)) {
+        if (startTime && endTime && !(endTime > startTime)) {
           const error = {
             startTimeEndTime: '結束時間需大於開始時間'
           };
