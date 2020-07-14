@@ -47,6 +47,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Input() checkbox = false;
   @Input() checkedNodes: TData[] = [];
   @Input() checkMode: 'single' | 'multiple' = 'multiple';
+  @Output() nodeCheckedChange = new EventEmitter<{ nodes: TData[] }>();
 
   /* Drag and drop */
   @Input() draggable = false;
@@ -238,6 +239,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     if (!ev.checked && this.checkedNodes.indexOf(node) > -1) {
       this.checkedNodes.splice(this.checkedNodes.indexOf(node), 1);
     }
+    this.nodeCheckedChange.emit({ nodes: this.checkedNodes });
     // console.warn('this.checkedNodes = ', this.checkedNodes);
   }
 

@@ -1,5 +1,5 @@
 {
-  "split_size": 2,
+  "split_size": 1,
   "columns": [{
       "display_text": "Custom元件(人)",
       "display_type": "CUSTOM",
@@ -176,6 +176,17 @@
       "max_length": 0,
       "placeholder": "",
       "column_id": "ga_data_status",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "樹測試",
+      "display_type": "TREE",
+      "options": [],
+      "value": "nodeIdA,nodeIdB",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "gallery-column",
       "is_readonly": false,
       "triggers": []
     }

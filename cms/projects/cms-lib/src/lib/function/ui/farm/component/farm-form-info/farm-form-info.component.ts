@@ -7,11 +7,12 @@ import { CmsFarmFormColumnDisplayType } from './../../../../../global/enum';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm.interface';
 import { ContentEditorService, EditorMode } from './../../../content-editor';
-import { ContentService, GalleryService } from '../../../../../global/api/service';
+import { ContentService, GalleryService, SitemapService } from '../../../../../global/api/service';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { HtmlEditorService } from '../../../html-editor';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'cms-farm-form-info',
@@ -30,17 +31,26 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   columnTrigger = new Subject<CmsFarmFormColumn>();
 
+  // TEST
+  sitemaps: any[];
+
   constructor(
     private contentService: ContentService,
     private contentEditorService: ContentEditorService,
     private htmlEditorService: HtmlEditorService,
     private gallerySharedService: GallerySharedService,
     private galleryService: GalleryService,
+    private sitemapService: SitemapService,
   ) { }
 
   ngOnInit(): void {
     this.rows = this.createRows(this.farmFormInfo);
     this.formGroup = this.createFormGroup(this.farmFormInfo);
+
+    // TEST
+    this.sitemapService.getUserSiteMapNodes('site1').subscribe(sitemap => {
+      this.sitemaps = sitemap;
+    });
 
     // this.columnTrigger.pipe(
     //   debounceTime(300)
@@ -217,6 +227,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
         col.value = this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id);
       }
     });
+  }
+
+  onNodeCheckedChange(ev: { nodes: any[] }) {
+    console.warn('onNodeCheckedChange() ev = ', ev);
   }
 
 }

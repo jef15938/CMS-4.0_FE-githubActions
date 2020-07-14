@@ -25,6 +25,7 @@ import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-moda
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { FarmFormValidationErrorsPipe } from './pipe/farm-form-validation-errors.pipe';
 import { FarmDynamicFormControlDirective } from './directive/farm-dynamic-form-control.directive';
+import { TreeModule } from '../tree/tree.module';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { FarmDynamicFormControlDirective } from './directive/farm-dynamic-form-c
     MatIconModule,
     MatPaginatorModule,
     MatButtonModule,
+    TreeModule,
   ],
   declarations: [
     FarmComponent,
