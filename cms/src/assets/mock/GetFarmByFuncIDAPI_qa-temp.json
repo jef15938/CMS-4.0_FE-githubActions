@@ -82,8 +82,12 @@
               "text": "審核中"
             },
             {
-              "value": "node-ㄓ",
+              "value": "node-5",
               "text": "已下架"
+            },
+            {
+              "value": "node-6",
+              "text": "已上架"
             }
           ],
           "value": "node-1",
@@ -111,7 +115,7 @@
       "can_checkbox": false,
       "datas": [{
         "data_id": "qa-temp-data-1",
-        "is_checked": true,
+        "is_checked": false,
         "columns": [{
             "display_type": "LABEL",
             "value": "editor測試",

@@ -28,6 +28,11 @@ import * as MOCK_SLIDER_TYPE from './../../../../../../../../src/assets/mock/Get
 import * as MOCK_SLIDER_TYPE_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_slider-type.json';
 import * as MOCK_SLIDER_TYPE_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_slider-type.json';
 import * as MOCK_SLIDER_TYPE_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_slider-type.json';
+// SLIDER TEMP
+import * as MOCK_SLIDER_TEMP from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_slider-temp.json';
+import * as MOCK_SLIDER_TEMP_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_slider-temp.json';
+import * as MOCK_SLIDER_TEMP_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_slider-temp.json';
+import * as MOCK_SLIDER_TEMP_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_slider-temp.json';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +70,9 @@ export class FarmService {
     if (funcID === 'slider-type') {
       return of(((MOCK_SLIDER_TYPE as any).default) as FarmInfo);
     }
+    if (funcID === 'slider-temp') {
+      return of(((MOCK_SLIDER_TEMP as any).default) as FarmInfo);
+    }
     return this.restAPIService.dispatchRestApi('GetFarmByFuncID', { funcID });
   }
 
@@ -95,6 +103,9 @@ export class FarmService {
     }
     if (funcID === 'slider-type') {
       return of(((MOCK_SLIDER_TYPE_TABLE_INFO as any).default) as CmsFarmTableInfo);
+    }
+    if (funcID === 'slider-temp') {
+      return of(((MOCK_SLIDER_TEMP_TABLE_INFO as any).default) as CmsFarmTableInfo);
     }
     return this.restAPIService.dispatchRestApi('GetFarmTableInfoByFuncID', { funcID, page });
   }
@@ -129,6 +140,9 @@ export class FarmService {
     if (funcID === 'slider-type') {
       return of(((MOCK_SLIDER_TYPE_DETAIL_INFO as any).default) as CmsFarmFormInfo);
     }
+    if (funcID === 'slider-temp') {
+      return of(((MOCK_SLIDER_TEMP_DETAIL_INFO as any).default) as CmsFarmFormInfo);
+    }
     return this.restAPIService.dispatchRestApi('GetFarmDetailInfoByFuncID', { funcID, dataID });
   }
 
@@ -158,6 +172,9 @@ export class FarmService {
     }
     if (funcID === 'slider-type') {
       return of(((MOCK_SLIDER_TYPE_FORM_INFO as any).default) as CmsFarmFormInfo);
+    }
+    if (funcID === 'slider-temp') {
+      return of(((MOCK_SLIDER_TEMP_FORM_INFO as any).default) as CmsFarmFormInfo);
     }
     return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { funcID, dataID });
   }
