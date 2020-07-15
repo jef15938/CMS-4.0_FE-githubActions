@@ -1,0 +1,49 @@
+{
+  "split_size": 2,
+  "columns": [{
+      "display_text": "類別名稱",
+      "display_type": "LABEL",
+      "value": "首頁主視覺"
+    },
+    {
+      "display_text": "顯示順序",
+      "display_type": "LABEL",
+      "value": "0"
+    },
+    {
+      "display_text": "是否顯示",
+      "display_type": "LABEL",
+      "value": "否"
+    },
+    {
+      "display_text": "建立時間",
+      "display_type": "LABEL",
+      "value": "2018-08-05 14:22:06"
+    },
+    {
+      "display_text": "建立者",
+      "display_type": "LABEL",
+      "value": "admin(admin)"
+    },
+    {
+      "display_text": "建立者部門",
+      "display_type": "LABEL",
+      "value": "總部門(001)"
+    },
+    {
+      "display_text": "最後修改時間",
+      "display_type": "LABEL",
+      "value": "2018-09-29 17:32:59"
+    },
+    {
+      "display_text": "修改者",
+      "display_type": "LABEL",
+      "value": "admin(admin)"
+    },
+    {
+      "display_text": "修改者部門",
+      "display_type": "LABEL",
+      "value": "總部門(001)"
+    }
+  ]
+}

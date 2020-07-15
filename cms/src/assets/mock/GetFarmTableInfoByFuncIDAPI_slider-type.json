@@ -7,11 +7,11 @@
   "can_create": false,
   "can_checkbox": false,
   "datas": [{
-    "data_id": "qa-type-data-1",
+    "data_id": "slider-type-data-1",
     "is_checked": true,
     "columns": [{
         "display_type": "LABEL",
-        "value": "常見問題",
+        "value": "首頁主視覺",
         "display_text": "類別名稱",
         "actions": [
           "preview",
@@ -20,7 +20,7 @@
       },
       {
         "display_type": "LABEL",
-        "value": "管理者(admin)",
+        "value": "admin(admin)",
         "display_text": "建立者",
         "actions": [
           "preview",
@@ -29,7 +29,7 @@
       },
       {
         "display_type": "LABEL",
-        "value": "否",
+        "value": "是",
         "display_text": "是否顯示",
         "actions": [
           "preview",
