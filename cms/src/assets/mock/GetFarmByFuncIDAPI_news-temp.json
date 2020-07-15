@@ -87,8 +87,7 @@
             "display_text": "標題",
             "actions": [
               "preview",
-              "modify",
-              "delete"
+              "modify"
             ]
           },
           {
@@ -97,8 +96,7 @@
             "display_text": "開始時間",
             "actions": [
               "preview",
-              "modify",
-              "delete"
+              "modify"
             ]
           },
           {
@@ -107,8 +105,7 @@
             "display_text": "結束時間",
             "actions": [
               "preview",
-              "modify",
-              "delete"
+              "modify"
             ]
           },
           {
@@ -117,8 +114,7 @@
             "display_text": "資料狀態",
             "actions": [
               "preview",
-              "modify",
-              "delete"
+              "modify"
             ]
           }
         ]

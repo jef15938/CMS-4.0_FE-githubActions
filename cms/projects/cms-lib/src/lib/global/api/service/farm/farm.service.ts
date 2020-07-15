@@ -9,6 +9,11 @@ import * as MOCK_NEWS_TEMP_TABLE_INFO from './../../../../../../../../src/assets
 import * as MOCK_NEWS_TEMP_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_news-temp.json';
 import * as MOCK_NEWS_TEMP_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_news-temp.json';
 
+import * as MOCK_NEWS_TYPE from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_news-type.json';
+import * as MOCK_NEWS_TYPE_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_news-type.json';
+import * as MOCK_NEWS_TYPE_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_news-type.json';
+import * as MOCK_NEWS_TYPE_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_news-type.json';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,6 +38,9 @@ export class FarmService {
     if (funcID === 'news-temp') {
       return of(((MOCK_NEWS_TEMP as any).default) as FarmInfo);
     }
+    if (funcID === 'news-type') {
+      return of(((MOCK_NEWS_TYPE as any).default) as FarmInfo);
+    }
     return this.restAPIService.dispatchRestApi('GetFarmByFuncID', { funcID });
   }
 
@@ -51,6 +59,9 @@ export class FarmService {
     if (!page) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page); }
     if (funcID === 'news-temp') {
       return of(((MOCK_NEWS_TEMP_TABLE_INFO as any).default) as CmsFarmTableInfo);
+    }
+    if (funcID === 'news-type') {
+      return of(((MOCK_NEWS_TYPE_TABLE_INFO as any).default) as CmsFarmTableInfo);
     }
     return this.restAPIService.dispatchRestApi('GetFarmTableInfoByFuncID', { funcID, page });
   }
@@ -73,6 +84,9 @@ export class FarmService {
     if (funcID === 'news-temp') {
       return of(((MOCK_NEWS_TEMP_DETAIL_INFO as any).default) as CmsFarmFormInfo);
     }
+    if (funcID === 'news-type') {
+      return of(((MOCK_NEWS_TYPE_DETAIL_INFO as any).default) as CmsFarmFormInfo);
+    }
     return this.restAPIService.dispatchRestApi('GetFarmDetailInfoByFuncID', { funcID, dataID });
   }
 
@@ -90,6 +104,9 @@ export class FarmService {
     if (!funcID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', funcID); }
     if (funcID === 'news-temp') {
       return of(((MOCK_NEWS_TEMP_FORM_INFO as any).default) as CmsFarmFormInfo);
+    }
+    if (funcID === 'news-type') {
+      return of(((MOCK_NEWS_TYPE_FORM_INFO as any).default) as CmsFarmFormInfo);
     }
     return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { funcID, dataID });
   }

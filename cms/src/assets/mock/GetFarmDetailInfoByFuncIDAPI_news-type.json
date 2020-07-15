@@ -1,0 +1,49 @@
+{
+  "split_size": 2,
+  "columns": [{
+      "display_text": "類別名稱",
+      "display_type": "LABEL",
+      "value": "投資商品專區公告"
+    },
+    {
+      "display_text": "顯示順序",
+      "display_type": "LABEL",
+      "value": "0"
+    },
+    {
+      "display_text": "是否顯示",
+      "display_type": "LABEL",
+      "value": "是"
+    },
+    {
+      "display_text": "建立時間",
+      "display_type": "LABEL",
+      "value": "2018-01-01 00:00:00"
+    },
+    {
+      "display_text": "建立者",
+      "display_type": "LABEL",
+      "value": "管理者(admin)"
+    },
+    {
+      "display_text": "建立者部門",
+      "display_type": "LABEL",
+      "value": "總部門(001)"
+    },
+    {
+      "display_text": "最後修改時間",
+      "display_type": "LABEL",
+      "value": "2018-11-03 16:07:12"
+    },
+    {
+      "display_text": "修改者",
+      "display_type": "LABEL",
+      "value": "管理者(admin)"
+    },
+    {
+      "display_text": "修改者部門",
+      "display_type": "LABEL",
+      "value": "總部門(001)"
+    }
+  ]
+}

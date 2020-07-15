@@ -7,6 +7,7 @@
 
     .column-container {
       display: table;
+      width: 100%;
 
       .column-label,
       .column-content {
@@ -16,6 +17,7 @@
 
       .column-label {
         width: 150px;
+        min-width: 150px;
         text-align: right;
         padding-right: 15px;
         border-right: 1px solid #ccc;
