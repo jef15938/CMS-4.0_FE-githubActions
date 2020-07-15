@@ -4,7 +4,6 @@ import { TemplateGetResponse } from './../../../../../global/api/neuxAPI/bean/Te
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interface';
 
-
 @Component({
   selector: 'cms-content-editor-container-modal',
   templateUrl: './content-editor-container-modal.component.html',
@@ -16,8 +15,6 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   @Input() contentInfo: ContentInfo;
   @Input() mode: EditorMode = EditorMode.EDIT;
   @Input() selectableTemplates: TemplateGetResponse;
-
-  private contentSaved = true;
 
   title: string | (() => string) = () => this.mode === EditorMode.INFO ? '版型規範' : '';
 
@@ -33,6 +30,8 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   save(event: ContentEditorSaveEvent) {
     event.editorSave();
+    console.warn('event.contentInfo = ', event.contentInfo);
+    console.warn('event.contentInfo = ', JSON.stringify(event.contentInfo));
     alert('saved');
   }
 

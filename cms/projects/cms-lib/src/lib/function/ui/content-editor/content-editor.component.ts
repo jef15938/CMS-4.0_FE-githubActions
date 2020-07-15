@@ -1,7 +1,8 @@
 import {
   Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild,
-  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList
+  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener
 } from '@angular/core';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ContentInfo } from '../../../global/api/neuxAPI/bean/ContentInfo';
 import { TemplateGetResponse } from '../../../global/api/neuxAPI/bean/TemplateGetResponse';
@@ -10,13 +11,15 @@ import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
+import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactive-guardian.interface';
+import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
 
 @Component({
   selector: 'cms-content-editor',
   templateUrl: './content-editor.component.html',
   styleUrls: ['./content-editor.component.scss']
 })
-export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked {
+export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked, CmsCanDeactiveGuardian {
   EditorMode = EditorMode;
 
   @ViewChild(ContentViewRendererComponent) contentViewRenderer: ContentViewRendererComponent;
@@ -45,20 +48,22 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   saved = true;
   isScaleContent = false;
 
-  private destroy$ = new Subject();
+  destroy$ = new Subject();
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
+    private cmsCanDeactiveGuard: CmsCanDeactiveGuard,
   ) {
 
   }
 
-  ngAfterViewInit(): void {
-    this.registerClickCaptureListener('register');
+  ngOnInit(): void {
+    this.cmsCanDeactiveGuard.registerAsGuardian(this);
+    this.init(this.contentInfo);
   }
 
-  ngOnInit(): void {
-    this.init(this.contentInfo);
+  ngAfterViewInit(): void {
+    this.registerClickCaptureListener('register');
   }
 
   ngAfterContentChecked(): void {
@@ -161,6 +166,32 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     if (this.mode !== EditorMode.EDIT) { return; }
     this.resetSelected();
     this.manager.selectedViewElementEvent = $event;
+  }
+
+  canDeactivate(
+    component: any,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
+  ): boolean {
+    if (!this.saved) {
+      alert('有尚未儲存的內容');
+      return false;
+    }
+    this.close();
+    return true;
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunload(e): boolean {
+    if (!this.saved) {
+      // Cancel the event
+      e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+      // Chrome requires returnValue to be set
+      e.returnValue = '';
+      return false;
+    }
+    return true;
   }
 
 }
