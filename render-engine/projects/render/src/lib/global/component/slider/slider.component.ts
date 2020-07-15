@@ -3,14 +3,16 @@ import {
   SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
+import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
+import { SliderData } from './slider.interface';
+import { MOCK_SOURCE_DATA } from './slider.mock';
 
 @Component({
   selector: 'rdr-slider',
   templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.scss']
+  styleUrls: ['./slider.component.scss'],
 })
-export class SliderComponent extends CommonTemplateBaseComponent implements OnInit {
+export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData> implements OnInit {
   public show = true;
 
   public slides = [
@@ -55,11 +57,7 @@ export class SliderComponent extends CommonTemplateBaseComponent implements OnIn
   constructor(
     injector: Injector,
   ) {
-    super(injector);
-  }
-
-  ngOnInit() {
-
+    super(injector, MOCK_SOURCE_DATA);
   }
 
   public toggleType(): void {

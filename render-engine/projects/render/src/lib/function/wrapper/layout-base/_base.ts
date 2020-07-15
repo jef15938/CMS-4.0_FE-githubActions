@@ -1,4 +1,4 @@
-import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector, OnDestroy, OnChanges, SimpleChanges, Directive } from '@angular/core';
 import { TemplateInfo } from '../../../global/interface/template-info.interface';
 import { LayoutBase } from './_base.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
@@ -15,6 +15,7 @@ import { LayoutFieldBgimgDirective } from '../layout-wrapper/field-directive/lay
 import { LayoutFieldImgDirective } from '../layout-wrapper/field-directive/layout-field-img.directive';
 import { LayoutFieldHtmlEditorDirective } from '../layout-wrapper/field-directive/layout-field-html-editor.directive';
 
+@Directive()
 export abstract class LayoutBaseComponent<TInfo extends TemplateInfo>
   implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy, OnChanges {
 

@@ -1,10 +1,8 @@
 {
-  "templates": [
-    {
+  "templates": [{
       "id": "fd01",
       "templateId": "FieldsDemo",
-      "fields": [
-        {
+      "fields": [{
           "fieldId": "title",
           "fieldType": "TEXT",
           "fieldVal": "頁面標題",
@@ -58,8 +56,7 @@
       "fields": [],
       "attributes": {},
       "itemList": [
-        [
-          {
+        [{
             "fieldId": "name",
             "fieldType": "TEXT",
             "fieldVal": "群組1",
@@ -78,8 +75,7 @@
             "extension": {}
           }
         ],
-        [
-          {
+        [{
             "fieldId": "name",
             "fieldType": "TEXT",
             "fieldVal": "群組2",
@@ -105,29 +101,21 @@
       "templateId": "Tab",
       "fields": [],
       "attributes": {},
-      "tabList": [
-        {
+      "tabList": [{
           "fieldId": "f1",
           "fieldType": "GROUP",
           "fieldVal": "",
           "extension": {},
           "tabId": "t1",
-          "children": [
-            {
-              "id": "c1",
-              "templateId": "IconPage",
-              "fields": [],
-              "attributes": {}
-            },
-            {
-              "id": "c2",
-              "templateId": "Slide",
-              "fields": [],
-              "attributes": {
-                "height": "300px"
-              }
+          "children": [{
+            "id": "c1",
+            "templateId": "Slide",
+            "fields": [],
+            "source": "SlideSource",
+            "attributes": {
+              "height": "600px"
             }
-          ]
+          }]
         },
         {
           "fieldId": "f2",
@@ -135,7 +123,12 @@
           "fieldVal": "",
           "extension": {},
           "tabId": "t2",
-          "children": []
+          "children": [{
+            "id": "c1",
+            "templateId": "IconPage",
+            "fields": [],
+            "attributes": {}
+          }]
         }
       ]
     }
