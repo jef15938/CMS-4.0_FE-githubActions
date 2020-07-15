@@ -167,7 +167,6 @@ export class FarmComponent implements OnInit, OnDestroy {
           },
           modalSetting: {
             width: '1440px',
-            height: '90%',
           }
         });
       })
@@ -191,7 +190,6 @@ export class FarmComponent implements OnInit, OnDestroy {
           },
           modalSetting: {
             width: '1440px',
-            height: '90%',
           }
         });
       })
