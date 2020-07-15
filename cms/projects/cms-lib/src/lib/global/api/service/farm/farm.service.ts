@@ -33,6 +33,7 @@ import * as MOCK_SLIDER_TEMP from './../../../../../../../../src/assets/mock/Get
 import * as MOCK_SLIDER_TEMP_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_slider-temp.json';
 import * as MOCK_SLIDER_TEMP_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_slider-temp.json';
 import * as MOCK_SLIDER_TEMP_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_slider-temp.json';
+import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -177,6 +178,34 @@ export class FarmService {
       return of(((MOCK_SLIDER_TEMP_FORM_INFO as any).default) as CmsFarmFormInfo);
     }
     return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { funcID, dataID });
+  }
+
+  /**
+   *
+   * @returns
+   * @memberof FarmService
+   */
+  auditingFarmData(funcId: string, dataId: string, startTime: string, endTime: string, memo: string) {
+    if (!funcId) { throw new ParamsError('funcId', 'auditingFarmData', 'string', funcId); }
+    if (!dataId) { throw new ParamsError('dataId', 'auditingFarmData', 'string', dataId); }
+    if (!startTime) { throw new ParamsError('startTime', 'auditingFarmData', 'string', startTime); }
+    if (!endTime) { throw new ParamsError('endTime', 'auditingFarmData', 'string', endTime); }
+    if (!memo) { throw new ParamsError('memo', 'auditingFarmData', 'string', memo); }
+
+    const requestBody: FarmAuditingRequest = {
+      data_id: dataId,
+      start_time: startTime,
+      end_time: endTime,
+      memo,
+      func_id: funcId
+    };
+
+    const params: { [k: string]: any } = {
+      funcId,
+      requestBody,
+    };
+
+    return this.restAPIService.dispatchRestApi('PostFarmAuditingByFuncId', params);
   }
 
 }

@@ -27,6 +27,7 @@ import { FarmFormValidationErrorsPipe } from './pipe/farm-form-validation-errors
 import { FarmDynamicFormControlDirective } from './directive/farm-dynamic-form-control.directive';
 import { TreeModule } from '../tree/tree.module';
 import { PipeModule } from '../../../global/pipe/pipe.module';
+import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import { PipeModule } from '../../../global/pipe/pipe.module';
     GetFarmTableColDataPipe,
     GetFarmTableDataActionsPipe,
     FarmFormInfoComponent,
+    AuditingFarmDataModalComponent,
     FarmFormViewDataModalComponent,
     FarmFormModifyDataModalComponent,
     FarmFormValidationErrorsPipe,

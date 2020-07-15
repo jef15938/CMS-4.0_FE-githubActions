@@ -10,6 +10,7 @@ import { FarmFormComp } from './farm.interface';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
+import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
 
 @Component({
   selector: 'cms-farm',
@@ -151,6 +152,9 @@ export class FarmComponent implements OnInit, OnDestroy {
       case CmsFarmTableDataAction.DELETE:
         this.deleteData(category, event.rowData);
         break;
+      case CmsFarmTableDataAction.AUDITING:
+        this.auditingData(category, event.rowData);
+        break;
     }
   }
 
@@ -203,6 +207,22 @@ export class FarmComponent implements OnInit, OnDestroy {
   private deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
     alert(`Delete : ${rowData.data_id}`);
     this.getCategoryTableInfo(category).subscribe();
+  }
+
+  private auditingData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    of(undefined).pipe(
+      concatMap(_ => this.modalService.openComponent({
+        component: AuditingFarmDataModalComponent,
+        componentInitData: {
+          funcId: category.category_id,
+          dataId: rowData.data_id,
+        }
+      }))
+    ).subscribe(confirm => {
+      if (confirm) {
+        this.getCategoryTableInfo(category).subscribe();
+      }
+    });
   }
 
 }
