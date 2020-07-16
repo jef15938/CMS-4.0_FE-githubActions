@@ -4,35 +4,35 @@ import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/model';
 // NEWS TYPE
-import * as MOCK_NEWS_TYPE from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_news-type.json';
-import * as MOCK_NEWS_TYPE_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_news-type.json';
-import * as MOCK_NEWS_TYPE_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_news-type.json';
-import * as MOCK_NEWS_TYPE_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_news-type.json';
+import * as MOCK_NEWS_TYPE from './mock/GetFarmByFuncIDAPI_news-type.json';
+import * as MOCK_NEWS_TYPE_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_news-type.json';
+import * as MOCK_NEWS_TYPE_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_news-type.json';
+import * as MOCK_NEWS_TYPE_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_news-type.json';
 // NEWS TEMP
-import * as MOCK_NEWS_TEMP from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_news-temp.json';
-import * as MOCK_NEWS_TEMP_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_news-temp.json';
-import * as MOCK_NEWS_TEMP_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_news-temp.json';
-import * as MOCK_NEWS_TEMP_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_news-temp.json';
+import * as MOCK_NEWS_TEMP from './mock/GetFarmByFuncIDAPI_news-temp.json';
+import * as MOCK_NEWS_TEMP_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_news-temp.json';
+import * as MOCK_NEWS_TEMP_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_news-temp.json';
+import * as MOCK_NEWS_TEMP_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_news-temp.json';
 // QA TYPE
-import * as MOCK_QA_TYPE from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_qa-type.json';
-import * as MOCK_QA_TYPE_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_qa-type.json';
-import * as MOCK_QA_TYPE_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_qa-type.json';
-import * as MOCK_QA_TYPE_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_qa-type.json';
+import * as MOCK_QA_TYPE from './mock/GetFarmByFuncIDAPI_qa-type.json';
+import * as MOCK_QA_TYPE_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_qa-type.json';
+import * as MOCK_QA_TYPE_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_qa-type.json';
+import * as MOCK_QA_TYPE_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_qa-type.json';
 // QA TEMP
-import * as MOCK_QA_TEMP from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_qa-temp.json';
-import * as MOCK_QA_TEMP_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_qa-temp.json';
-import * as MOCK_QA_TEMP_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_qa-temp.json';
-import * as MOCK_QA_TEMP_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_qa-temp.json';
+import * as MOCK_QA_TEMP from './mock/GetFarmByFuncIDAPI_qa-temp.json';
+import * as MOCK_QA_TEMP_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_qa-temp.json';
+import * as MOCK_QA_TEMP_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_qa-temp.json';
+import * as MOCK_QA_TEMP_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_qa-temp.json';
 // SLIDER TYPE
-import * as MOCK_SLIDER_TYPE from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_slider-type.json';
-import * as MOCK_SLIDER_TYPE_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_slider-type.json';
-import * as MOCK_SLIDER_TYPE_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_slider-type.json';
-import * as MOCK_SLIDER_TYPE_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_slider-type.json';
+import * as MOCK_SLIDER_TYPE from './mock/GetFarmByFuncIDAPI_slider-type.json';
+import * as MOCK_SLIDER_TYPE_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_slider-type.json';
+import * as MOCK_SLIDER_TYPE_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_slider-type.json';
+import * as MOCK_SLIDER_TYPE_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_slider-type.json';
 // SLIDER TEMP
-import * as MOCK_SLIDER_TEMP from './../../../../../../../../src/assets/mock/GetFarmByFuncIDAPI_slider-temp.json';
-import * as MOCK_SLIDER_TEMP_TABLE_INFO from './../../../../../../../../src/assets/mock/GetFarmTableInfoByFuncIDAPI_slider-temp.json';
-import * as MOCK_SLIDER_TEMP_DETAIL_INFO from './../../../../../../../../src/assets/mock/GetFarmDetailInfoByFuncIDAPI_slider-temp.json';
-import * as MOCK_SLIDER_TEMP_FORM_INFO from './../../../../../../../../src/assets/mock/GetFarmFormInfoByFuncIDAPI_slider-temp.json';
+import * as MOCK_SLIDER_TEMP from './mock/GetFarmByFuncIDAPI_slider-temp.json';
+import * as MOCK_SLIDER_TEMP_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_slider-temp.json';
+import * as MOCK_SLIDER_TEMP_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_slider-temp.json';
+import * as MOCK_SLIDER_TEMP_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_slider-temp.json';
 import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
 
 @Injectable({
