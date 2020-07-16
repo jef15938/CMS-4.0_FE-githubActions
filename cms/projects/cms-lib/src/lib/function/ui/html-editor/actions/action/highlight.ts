@@ -106,11 +106,11 @@ export class Highlight extends HtmlEditorActionBase {
 
     hightlightElements = Array.from(container.querySelectorAll(`.${HIGH_LIGHT_CLASS}`)) as HTMLElement[];
     hightlightElements.forEach((hightlightElement: HTMLElement) => {
-      let next = hightlightElement.nextElementSibling;
+      let next = hightlightElement.nextSibling as Element;
       const nextSameClassElements = [];
       while (next && next.className === hightlightElement.className) {
         nextSameClassElements.push(next);
-        next = next.nextElementSibling;
+        next = next.nextSibling as Element;
       }
       nextSameClassElements.forEach(nextSameClassElement => {
         hightlightElement.innerHTML += nextSameClassElement.innerHTML;
