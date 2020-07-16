@@ -97,6 +97,15 @@
       ]
     },
     {
+      "id": "c1",
+      "templateId": "Slide",
+      "fields": [],
+      "source": "SlideSource",
+      "attributes": {
+        "height": "592px"
+      }
+    },
+    {
       "id": "tp1",
       "templateId": "Tab",
       "fields": [],
@@ -109,12 +118,9 @@
           "tabId": "t1",
           "children": [{
             "id": "c1",
-            "templateId": "Slide",
+            "templateId": "IconPage",
             "fields": [],
-            "source": "SlideSource",
-            "attributes": {
-              "height": "600px"
-            }
+            "attributes": {}
           }]
         },
         {
@@ -123,12 +129,7 @@
           "fieldVal": "",
           "extension": {},
           "tabId": "t2",
-          "children": [{
-            "id": "c1",
-            "templateId": "IconPage",
-            "fields": [],
-            "attributes": {}
-          }]
+          "children": []
         }
       ]
     }

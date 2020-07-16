@@ -1,13 +1,13 @@
-<div class="swiper-container" [style.height]="mode==='edit'?'300px':templateInfo.attributes['height']">
+<div class="slider-container" [style.height]="templateInfo.attributes['height']">
   <ng-container *ngIf="mode==='edit'">
     <div class="full-width">
       Slider 區域
     </div>
   </ng-container>
   <ng-container *ngIf="mode==='preview'">
-    <swiper class="swiper" [config]="config" [disabled]="disabled" (indexChange)="onIndexChange($event)"
+    <swiper [config]="config" [disabled]="disabled" (indexChange)="onIndexChange($event)"
       (swiperTransitionStart)="onSwiperEvent('transitionStart')" (swiperTransitionEnd)="onSwiperEvent('transitionEnd')">
-      <div *ngFor="let data of sourceData" class="swiper-slide full-width">
+      <div *ngFor="let data of sourceData" class="full-width">
         <a [href]="data.url" target="_blank" class="full-width">
           <div class="full-width" ga-edit="bgimg" [ngStyle]="{'background-image': '
           url('+data.picture+')'}"> </div>
