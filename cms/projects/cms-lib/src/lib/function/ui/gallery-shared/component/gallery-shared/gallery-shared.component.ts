@@ -155,11 +155,12 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateGallery(galleryId: number) {
+  private updateGallery(gallery: GalleryInfo) {
     return this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
-        galleryId,
+        galleryId: gallery.gallery_id,
+        galleryType: gallery.file_type,
       }
     });
   }
@@ -216,7 +217,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
       let action: Observable<any>;
       switch (event.action) {
         case event.ActionType.Edit:
-          action = this.updateGallery(event.data.gallery_id);
+          action = this.updateGallery(event.data);
           break;
         case event.ActionType.Delete:
           action = this.galleryService.deleteGallery(event.data.gallery_id).pipe(

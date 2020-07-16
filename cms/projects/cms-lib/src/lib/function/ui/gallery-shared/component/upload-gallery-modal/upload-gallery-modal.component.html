@@ -27,8 +27,7 @@
       </span>
     </li>
   </ul>
-  <input type="file" id="fileUpload" name="fileUpload" [multiple]="isCreate" accept="{{accept}}"
-    style="display:none;" />
+  <input type="file" id="fileUpload" name="fileUpload" [multiple]="isCreate" [accept]="accept" style="display:none;" />
   <br>
   <div>
     <button type="button" tabindex="0" mat-button (click)="create()" *ngIf="isCreate"

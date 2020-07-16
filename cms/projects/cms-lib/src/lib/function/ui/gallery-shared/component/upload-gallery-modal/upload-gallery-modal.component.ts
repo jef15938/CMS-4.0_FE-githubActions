@@ -29,9 +29,9 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   @Input() categoryId: string;
   @Input() galleryId: number;
   @Input() galleryType: string;
+  @Input() accept: string;
 
   isCreate = true;
-  accept: string;
   complete = new EventEmitter<string>();
 
   files: Array<FileUploadModel> = [];
@@ -73,10 +73,11 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     if (this.categoryId && this.categoryName) {
       this.isCreate = true;
       this.title = `上傳檔案：${this.categoryName}`;
-      this.accept = 'image/*';
+      this.accept = '.pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif';
     } else if (this.galleryId && this.galleryType) {
       this.isCreate = false;
       this.title = `修改檔案：${this.galleryId}`;
+      this.accept = `.${this.galleryType}`;
     }
   }
 
