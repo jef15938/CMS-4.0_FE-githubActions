@@ -1,6 +1,8 @@
+import { Injectable } from '@angular/core';
 import { NativeDateAdapter } from '@angular/material/core';
 import { MatDateFormats } from '@angular/material/core';
 
+@Injectable()
 export class CmsDateAdapter extends NativeDateAdapter {
 
   // parse(value: any): Date | null {
