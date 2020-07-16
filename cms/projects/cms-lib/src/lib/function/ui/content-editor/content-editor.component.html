@@ -33,7 +33,7 @@
       <mat-icon>clear</mat-icon>
     </button>
   </div>
-  <div class="main-block" *ngIf="manager?.stateManager?.currentState?.snapShot"
+  <div tabindex="0" class="main-block" *ngIf="manager?.stateManager?.currentState?.snapShot"
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
     <!-- 頁面內容 -->
     <div #clickCapturelistenerBlock class="content-panel" [class.scale]="isScaleContent">
