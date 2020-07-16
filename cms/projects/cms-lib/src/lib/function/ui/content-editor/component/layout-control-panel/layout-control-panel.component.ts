@@ -94,8 +94,8 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       templateId: 'Slide',
       fields: [],
       attributes: {
-        height: '300px'
-      },
+        height: '592px'
+      }
     };
   }
 

@@ -1,9 +1,9 @@
-<div class="slider-container" [style.height]="templateInfo.attributes['height']">
+<div class="slider-container" [style.height]="templateInfo?.attributes?.height">
   <ng-container *ngIf="mode==='edit'">
     <div class="full-width"
       [ngStyle]="{'background-image': '
     url(https://www.transglobe.com.tw/transglobe_resource/leap_do/slider_picture/1592278286507/4.官網大BN_1920x592_zumba副董款.jpg)'}">
-      <div style="background: black; padding: 10px; color: white;">Slider 區域</div>
+      <div style="background: rgba(0,0,0,0.5); padding: 10px; color: white;">輪播區域</div>
     </div>
   </ng-container>
   <ng-container *ngIf="mode==='preview'">

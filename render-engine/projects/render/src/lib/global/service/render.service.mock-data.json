@@ -1,5 +1,13 @@
 {
   "templates": [{
+      "id": "c1",
+      "templateId": "Slide",
+      "fields": [],
+      "source": "SlideSource",
+      "attributes": {
+        "height": "592px"
+      }
+    }, {
       "id": "fd01",
       "templateId": "FieldsDemo",
       "fields": [{
@@ -95,15 +103,6 @@
           }
         ]
       ]
-    },
-    {
-      "id": "c1",
-      "templateId": "Slide",
-      "fields": [],
-      "source": "SlideSource",
-      "attributes": {
-        "height": "592px"
-      }
     },
     {
       "id": "tp1",
