@@ -35,11 +35,11 @@ export class CmsFarmTableDataColumn {
   display_type: CmsFarmTableColumnDisplayType; // 顯示類型
   value: string; // 顯示值
   display_text: string; // 顯示標題
-  actions: CmsFarmTableDataAction[]; // 該筆可以做的操作
 }
 
 export class CmsFarmTableDataInfo extends FarmTableDataInfo {
-  public columns: CmsFarmTableDataColumn[];
+  columns: CmsFarmTableDataColumn[];
+  actions: CmsFarmTableDataAction[]; // 該筆可以做的操作
 }
 
 export class CmsFarmTableInfo extends FarmTableInfo {

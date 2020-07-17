@@ -12,7 +12,7 @@ export class GetFarmTableDisplayColsPipe implements PipeTransform {
     const columns = datas && datas[0] ? datas[0].columns : [];
     const displays = columns.map(c => c.display_text);
     const hasAction = datas?.some(data => {
-      return data.columns?.some(column => column.actions?.length);
+      return data.actions?.length;
     });
     if (hasAction) {
       displays.push(ACTION_COLUMN);

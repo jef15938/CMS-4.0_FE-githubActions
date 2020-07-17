@@ -8,7 +8,7 @@ import { CmsFarmTableDataAction } from '../../../../../../global/enum';
 export class GetFarmTableDataActionsPipe implements PipeTransform {
 
   transform(data: CmsFarmTableDataInfo): CmsFarmTableDataAction[] {
-    return data.columns[0].actions;
+    return data.actions;
   }
 
 }

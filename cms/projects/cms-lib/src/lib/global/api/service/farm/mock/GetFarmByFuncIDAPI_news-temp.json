@@ -81,41 +81,29 @@
       "datas": [{
         "data_id": "news-temp-data-1",
         "is_checked": false,
+        "actions": [
+          "preview",
+          "modify"
+        ],
         "columns": [{
             "display_type": "LABEL",
             "value": "凱基證券台股最新消息",
-            "display_text": "標題",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "標題"
           },
           {
             "display_type": "LABEL",
             "value": "2019-03-04 00:00:00",
-            "display_text": "開始時間",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "開始時間"
           },
           {
             "display_type": "LABEL",
             "value": "9999-12-31 00:00:00",
-            "display_text": "結束時間",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "結束時間"
           },
           {
             "display_type": "LABEL",
             "value": "審核中",
-            "display_text": "資料狀態",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "資料狀態"
           }
         ]
       }]

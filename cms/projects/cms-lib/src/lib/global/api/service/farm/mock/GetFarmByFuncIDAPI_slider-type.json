@@ -25,41 +25,29 @@
       "datas": [{
         "data_id": "slider-type-data-1",
         "is_checked": true,
+        "actions": [
+          "preview",
+          "modify"
+        ],
         "columns": [{
             "display_type": "LABEL",
             "value": "首頁主視覺",
-            "display_text": "類別名稱",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "類別名稱"
           },
           {
             "display_type": "LABEL",
             "value": "admin(admin)",
-            "display_text": "建立者",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "建立者"
           },
           {
             "display_type": "LABEL",
             "value": "是",
-            "display_text": "是否顯示",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "是否顯示"
           },
           {
             "display_type": "LABEL",
             "value": "0",
-            "display_text": "顯示順序",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "顯示順序"
           }
         ]
       }]

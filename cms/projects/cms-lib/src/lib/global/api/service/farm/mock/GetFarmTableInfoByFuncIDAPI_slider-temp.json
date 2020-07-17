@@ -9,65 +9,40 @@
   "datas": [{
     "data_id": "slider-temp-data-1",
     "is_checked": false,
+    "actions": [
+      "preview",
+      "modify",
+      "auditing"
+    ],
     "columns": [{
         "display_type": "LABEL",
         "value": "abtesting",
-        "display_text": "標題名稱",
-        "actions": [
-          "preview",
-          "modify",
-          "auditing"
-        ]
+        "display_text": "標題名稱"
       },
       {
         "display_type": "LABEL",
         "value": "a.jpg",
-        "display_text": "圖片",
-        "actions": [
-          "preview",
-          "modify",
-          "auditing"
-        ]
+        "display_text": "圖片"
       },
       {
         "display_type": "LABEL",
         "value": "2019-09-22 00:00",
-        "display_text": "開始時間",
-        "actions": [
-          "preview",
-          "modify",
-          "auditing"
-        ]
+        "display_text": "開始時間"
       },
       {
         "display_type": "LABEL",
         "value": "9999-12-31 00:00",
-        "display_text": "結束時間",
-        "actions": [
-          "preview",
-          "modify",
-          "auditing"
-        ]
+        "display_text": "結束時間"
       },
       {
         "display_type": "LABEL",
         "value": "2020-07-14 10:58:49",
-        "display_text": "修改時間",
-        "actions": [
-          "preview",
-          "modify",
-          "auditing"
-        ]
+        "display_text": "修改時間"
       },
       {
         "display_type": "LABEL",
         "value": "草稿",
-        "display_text": "資料狀態",
-        "actions": [
-          "preview",
-          "modify",
-          "auditing"
-        ]
+        "display_text": "資料狀態"
       }
     ]
   }]

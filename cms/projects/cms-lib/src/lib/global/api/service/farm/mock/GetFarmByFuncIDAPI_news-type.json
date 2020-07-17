@@ -25,50 +25,34 @@
       "datas": [{
         "data_id": "news-type-data-1",
         "is_checked": true,
+        "actions": [
+          "preview",
+          "modify"
+        ],
         "columns": [{
             "display_type": "LABEL",
             "value": "activity",
-            "display_text": "類別ID",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "類別ID"
           },
           {
             "display_type": "LABEL",
             "value": "投資商品專區公告",
-            "display_text": "類別名稱",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "類別名稱"
           },
           {
             "display_type": "LABEL",
             "value": "管理者(admin)",
-            "display_text": "建立者",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "建立者"
           },
           {
             "display_type": "LABEL",
             "value": "是",
-            "display_text": "是否顯示",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "是否顯示"
           },
           {
             "display_type": "LABEL",
             "value": "0",
-            "display_text": "顯示順序",
-            "actions": [
-              "preview",
-              "modify"
-            ]
+            "display_text": "顯示順序"
           }
         ]
       }]

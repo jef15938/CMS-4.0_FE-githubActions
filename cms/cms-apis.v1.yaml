@@ -2169,26 +2169,27 @@ components:
               display_text:
                 type: string
                 description: 顯示標題
-              actions:
-                type: array
-                description: 該筆可以做的操作(action)
-                items:
-                  type: string
-                  enum:
-                    - MODIFY
-                    - DELETE
-                    - PUBLISH
-                    - 'OFF'
-                    - PREVIEW
-                    - MORE
             required:
               - display_type
               - value
               - display_text
-              - actions
+        actions:
+          type: array
+          description: 該筆可以做的操作(action)
+          items:
+            type: string
+            enum:
+              - MODIFY
+              - DELETE
+              - PUBLISH
+              - 'OFF'
+              - PREVIEW
+              - MORE
       required:
         - data_id
         - is_checked
+        - actions
+      description: ''
     FarmInfoGetResponse:
       title: FarmInfoGetResponse
       type: object
