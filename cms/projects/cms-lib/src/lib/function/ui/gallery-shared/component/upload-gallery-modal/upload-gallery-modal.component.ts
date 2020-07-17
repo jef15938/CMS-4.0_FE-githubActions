@@ -77,7 +77,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     } else if (this.galleryId && this.galleryType) {
       this.isCreate = false;
       this.title = `修改檔案：${this.galleryId}`;
-      this.accept = `.${this.galleryType}`;
+      this.accept = `.${this.galleryType.toLowerCase()}`;
     }
   }
 
