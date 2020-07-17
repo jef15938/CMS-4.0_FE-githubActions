@@ -13,7 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
-import { FarmComponent } from './farm.component';
+import { FarmSharedComponent } from './farm-shared.component';
 import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detail-info.component';
 import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
 import { FarmTableInfoComponent } from './component/farm-table-info/farm-table-info.component';
@@ -50,7 +50,7 @@ import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal
     TreeModule,
   ],
   declarations: [
-    FarmComponent,
+    FarmSharedComponent,
     FarmDetailInfoComponent,
     FarmSearchInfoComponent,
     FarmTableInfoComponent,
@@ -65,7 +65,7 @@ import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal
     FarmDynamicFormControlDirective,
   ],
   exports: [
-    FarmComponent
+    FarmSharedComponent
   ]
 })
 export class FarmModule { }

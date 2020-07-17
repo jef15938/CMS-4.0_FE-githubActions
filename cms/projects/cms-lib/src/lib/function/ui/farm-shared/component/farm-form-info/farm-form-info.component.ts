@@ -5,7 +5,7 @@ import { debounceTime } from 'rxjs/operators';
 import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../../global/model';
 import { CmsFarmFormColumnDisplayType } from './../../../../../global/enum';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
-import { FarmFormComp } from '../../farm.interface';
+import { FarmFormComp } from '../../farm-shared.interface';
 import { ContentEditorService, EditorMode } from './../../../content-editor';
 import { ContentService, GalleryService, SitemapService } from '../../../../../global/api/service';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';

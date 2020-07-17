@@ -35,7 +35,7 @@ import { TableModule } from '../ui/table';
 import { ContentEditorModule } from '../ui/content-editor';
 import { HtmlEditorModule } from '../ui/html-editor';
 import { CropperModule } from '../ui/cropper';
-import { FarmModule } from '../ui/farm';
+import { FarmModule } from '../ui/farm-shared';
 
 @NgModule({
   declarations: [],

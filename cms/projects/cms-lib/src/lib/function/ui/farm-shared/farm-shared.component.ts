@@ -2,22 +2,22 @@ import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewConta
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subject, of, throwError, NEVER } from 'rxjs';
 import { tap, takeUntil, concatMap, catchError } from 'rxjs/operators';
-import { FarmService } from './../../../global/api/service';
-import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo } from './../../../global/model';
-import { CmsFarmTableDataAction } from './../../../global/enum';
+import { FarmService } from '../../../global/api/service';
+import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo } from '../../../global/model';
+import { CmsFarmTableDataAction } from '../../../global/enum';
 import { ModalService } from '../modal';
-import { FarmFormComp } from './farm.interface';
+import { FarmFormComp } from './farm-shared.interface';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
 
 @Component({
-  selector: 'cms-farm',
-  templateUrl: './farm.component.html',
-  styleUrls: ['./farm.component.scss']
+  selector: 'cms-farm-shared',
+  templateUrl: './farm-shared.component.html',
+  styleUrls: ['./farm-shared.component.scss']
 })
-export class FarmComponent implements OnInit, OnDestroy {
+export class FarmSharedComponent implements OnInit, OnDestroy {
 
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
 
@@ -33,7 +33,7 @@ export class FarmComponent implements OnInit, OnDestroy {
 
   activedCategory: CmsFarmInfoCategory;
 
-  subComponentRef: ComponentRef<FarmComponent>;
+  subComponentRef: ComponentRef<FarmSharedComponent>;
 
   destroyMe = new Subject();
   private destroy$ = new Subject();
@@ -103,7 +103,7 @@ export class FarmComponent implements OnInit, OnDestroy {
   private createSub(category: CmsFarmInfoCategory) {
     if (!category) { return; }
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmSharedComponent);
     const viewContainerRef = this.subContainerViewContainerRef;
     viewContainerRef.clear();
     this.subComponentRef = undefined;
