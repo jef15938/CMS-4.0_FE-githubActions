@@ -5,7 +5,7 @@ import {
 } from 'ngx-swiper-wrapper';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { SliderData } from './slider.interface';
-import { MOCK_SOURCE_DATA } from './slider.mock';
+import { MOCK_SLIDER_DATA } from './slider.mock';
 
 @Component({
   selector: 'rdr-slider',
@@ -40,7 +40,7 @@ export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData>
   constructor(
     injector: Injector,
   ) {
-    super(injector, MOCK_SOURCE_DATA);
+    super(injector, MOCK_SLIDER_DATA);
   }
 
   onIndexChange(index: number): void {

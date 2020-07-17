@@ -53,7 +53,7 @@
     },
     {
       "id": "dataSourceTemplateInfo01",
-      "templateId": "DataSourceDemo",
+      "templateId": "News",
       "fields": [],
       "attributes": {},
       "source": "mock_source"

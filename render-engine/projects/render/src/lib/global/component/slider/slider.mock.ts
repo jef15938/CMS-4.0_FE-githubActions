@@ -1,6 +1,6 @@
 import { SliderData } from './slider.interface';
 
-export const MOCK_SOURCE_DATA: SliderData[] = [
+export const MOCK_SLIDER_DATA: SliderData[] = [
   {
     id: '1',
     title: '2020「因為愛舞所聚ZUMBA ®」公益活動',

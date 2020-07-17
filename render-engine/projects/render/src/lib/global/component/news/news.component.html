@@ -1,5 +1,5 @@
 <div style="width: 100%; border: 1px solid purple; text-align: center;">
-  <h1>DataSourceDemo</h1>
+  <h1>News</h1>
   <hr>
   <div style="height: 300px; line-height: 300px; vertical-align: middle; background-color: lightblue;"
     *ngIf="mode==='edit'">
@@ -7,17 +7,10 @@
   </div>
   <div style="height: 300px; background-color: lightgrey; overflow-y: auto;" *ngIf="mode==='preview'">
     <table style="width: 100%; height: 100%; line-height: 50px; vertical-align: middle;">
-      <tr>
-        <th>No</th>
-        <th>Title</th>
-        <th>Content</th>
-        <th>Date</th>
-      </tr>
       <tr *ngFor="let data of sourceData">
-        <td>{{data.id}}</td>
-        <td>{{data.title}}</td>
-        <td>{{data.content}}</td>
         <td>{{data.date}}</td>
+        <td>{{data.title}}</td>
+        <td>{{data.url}}</td>
       </tr>
     </table>
   </div>

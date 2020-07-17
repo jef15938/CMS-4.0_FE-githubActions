@@ -10,16 +10,16 @@ import { IconPageComponent } from './global/component/icon-page/icon-page.compon
 import { SliderComponent } from './global/component/slider/slider.component';
 import { FieldsDemoComponent } from './global/component/fields-demo/fields-demo.component';
 import { GroupTemplateDemoComponent } from './global/component/group-template-demo/group-template-demo.component';
-import { DataSourceDemoComponent } from './global/component/data-source-demo/data-source-demo.component';
+import { NewsComponent } from './global/component/news/news.component';
 import { RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN } from './global/injection-token/injection-token';
 import { RENDER_DEFAULT_COMPONENT_MAPPINGS } from './global/const/component-mapping';
 
-const DEMO_COMPONENTS = [
-  IconPageComponent,
+const COMPONENTS = [
   SliderComponent,
+  NewsComponent,
+  IconPageComponent,
   FieldsDemoComponent,
   GroupTemplateDemoComponent,
-  DataSourceDemoComponent,
 ];
 
 @NgModule({
@@ -33,11 +33,11 @@ const DEMO_COMPONENTS = [
   ],
   declarations: [
     RenderComponent,
-    ...DEMO_COMPONENTS,
+    ...COMPONENTS,
   ],
   exports: [
     RenderComponent,
-    ...DEMO_COMPONENTS,
+    ...COMPONENTS,
   ]
 })
 export class RenderModule {

@@ -1,6 +1,6 @@
 import { RenderComponentMapping } from '../interface';
 import {
-  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, DataSourceDemoComponent
+  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, NewsComponent
 } from '../component';
 
 export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = [
@@ -25,7 +25,7 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
     component: GroupTemplateDemoComponent,
   },
   {
-    component_id: 'DataSourceDemo',
-    component: DataSourceDemoComponent,
+    component_id: 'News',
+    component: NewsComponent,
   }
 ];
