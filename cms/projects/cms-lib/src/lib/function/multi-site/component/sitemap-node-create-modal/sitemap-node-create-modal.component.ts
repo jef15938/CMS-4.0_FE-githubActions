@@ -5,7 +5,6 @@ import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
-  nodeType = null;
 
   constructor(parentId: string) {
     super();
@@ -28,7 +27,7 @@ class SiteMapCreateModel extends UserSiteMapPostRequest {
   }
 
   checkFieldsByNodeType() {
-    switch (this.nodeType) {
+    switch (this.node_type) {
       case null:
         this.clearLink();
         this.clearContent();

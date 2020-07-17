@@ -6,7 +6,7 @@
     <div>ParentId：{{siteMapUpdateInfo.parentId}} / NodeOrder：{{siteMapUpdateInfo.nodeOrder}}</div>
     <div class="btn-group" *ngIf="siteMapUpdateInfo?.siteMap?.node_type === NodeType.Content">
       <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"
-        (click)="editContent(siteMapUpdateInfo.siteMap.layout_id)">編輯</button>
+        (click)="editContent(siteMapUpdateInfo.siteMap.node_id)">編輯</button>
       <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canSubmit"
         (click)="auditingSiteMap()">送審</button>
     </div>

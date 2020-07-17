@@ -174,10 +174,10 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   testContentEditor() {
-    const layoutId = 'fakeLayoutId';
+    const fakeNodeId = 'fakeNodeId';
     forkJoin([
-      this.contentService.getContentByContentID(layoutId),
-      this.contentService.getTemplateByControlID(layoutId),
+      this.contentService.getContentByContentID(fakeNodeId),
+      this.contentService.getTemplateByControlID(fakeNodeId),
     ]).subscribe(([contentInfo, selectableTemplates]) => {
       this.contentEditorService.openEditor({
         contentInfo,

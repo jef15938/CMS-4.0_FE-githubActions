@@ -95,10 +95,10 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     }
   }
 
-  editContent(layoutId: string) {
+  editContent(nodeId: string) {
     forkJoin([
-      this.contentService.getContentByContentID(layoutId),
-      this.contentService.getTemplateByControlID(layoutId),
+      this.contentService.getContentByContentID(nodeId),
+      this.contentService.getTemplateByControlID(nodeId),
     ]).subscribe(([contentInfo, selectableTemplates]) => {
       this.contentEditorService.openEditor({
         contentInfo,
