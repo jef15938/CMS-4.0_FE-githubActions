@@ -17,9 +17,12 @@ export class GelleryImgSrcPipe implements PipeTransform {
 
   transform(data: GalleryInfo, args?: any): string {
     if (data) {
-      return this.isImg(data)
-        ? `${this.galleryShowUrl}/${data.gallery_id}`
-        : `${this.getLocalUrl()}/assets/img/icon/${data.file_type}.png`;
+      const isImg = this.isImg(data);
+      const path =
+        isImg
+          ? `${this.galleryShowUrl}/${data.gallery_id}`
+          : `${this.getLocalUrl()}/assets/img/icon/${data.file_type.toLowerCase()}.png`;
+      return path;
     } else {
       return '';
     }
