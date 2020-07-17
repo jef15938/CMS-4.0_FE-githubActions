@@ -18,11 +18,11 @@
           <button type="button" tabindex="0" mat-icon-button (click)="SideNav.toggle()">
             <mat-icon style="vertical-align: middle;">list</mat-icon>
           </button>
-          <div class="account">
+          <div class="account" *ngIf="loginInfo">
             <div class="pic">
               <img src="assets/img/CMS-person.png">
             </div>
-            <div class="username">admin</div>
+            <div class="username">{{loginInfo.user_name}}</div>
             <mat-icon class="setting-btn" aria-hidden="false" aria-label="Settings" #menuTrigger="matMenuTrigger"
               [matMenuTriggerFor]="appMenu">
               settings
