@@ -1,6 +1,8 @@
 <br>
-<div *ngIf="templateInfo">
+<div *ngIf="templateInfo && sourceType">
   Source: {{templateInfo?.source}}
+  <br>
+  SourceType: {{sourceType}}
   <mat-form-field appearance="outline">
     <mat-label>資料來源</mat-label>
     <mat-select [(ngModel)]="templateInfo.source" (selectionChange)="change.emit()">
