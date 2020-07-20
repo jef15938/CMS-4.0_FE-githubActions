@@ -80,13 +80,17 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     const formGroup = new FormGroup({});
     const rangeValidatorFns: ValidatorFn[] = [];
     farmFormInfo.columns.forEach((column, index) => {
+      console.warn('column = ', column);
       // parse DATE & DATETIME
       let value: any = column.value;
       if (column.display_type === CmsFarmFormColumnDisplayType.DATE) {
-        value = this.cmsDateAdapter.convertDateStringToDate(column.value);
+        value = this.cmsDateAdapter.convertDateStringToDate(value);
       } else if (column.display_type === CmsFarmFormColumnDisplayType.DATETIME) {
-        value = this.cmsDateAdapter.convertDateStringToDate(column.value);
+        value = this.cmsDateAdapter.convertDateStringToDate(value);
+      } else if (column.display_type === CmsFarmFormColumnDisplayType.LABEL) {
+        value = this.cmsDateAdapter.convertDateString(value, CmsFarmFormColumnDisplayType.DATETIME);
       }
+      console.warn('---- value = ', value);
       // create FormControl
       const formControl = new FormControl(value);
       if (this.useValidation && farmFormInfo.validation) {

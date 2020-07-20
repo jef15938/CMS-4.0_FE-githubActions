@@ -27,7 +27,7 @@
         <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN">
           <ng-container *ngIf="element|getFarmTableColData:col; let colData;">
             <ng-container *ngIf="colData.display_type===CmsFarmTableColumnDisplayType.LABEL">
-              {{colData?.value}}
+              {{colData?.value | dateStringFormat:'DATETIME'}}
             </ng-container>
             <ng-container *ngIf="colData.display_type!==CmsFarmTableColumnDisplayType.LABEL">
               <a [href]="colData?.value" target="_blank" rel="noreferrer noopener">{{colData?.value}}</a>

@@ -13,17 +13,17 @@
     {
       "display_text": "開始時間",
       "display_type": "LABEL",
-      "value": "2020-07-06T00:00:00"
+      "value": "2020-07-06T00:00:00+0800"
     },
     {
       "display_text": "結束時間",
       "display_type": "LABEL",
-      "value": "9999-12-31T00:00:00"
+      "value": "9999-12-31T00:00:00+0800"
     },
     {
       "display_text": "建立時間",
       "display_type": "LABEL",
-      "value": "2020-07-06T18:52:23"
+      "value": "2020-07-06T18:52:23+0800"
     },
     {
       "display_text": "建立者",
@@ -38,7 +38,7 @@
     {
       "display_text": "修改時間",
       "display_type": "LABEL",
-      "value": "2020-07-06T20:11:30"
+      "value": "2020-07-06T20:11:30+0800"
     },
     {
       "display_text": "修改者",

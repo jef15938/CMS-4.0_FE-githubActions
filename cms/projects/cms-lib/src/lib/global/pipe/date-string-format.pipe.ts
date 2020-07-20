@@ -12,7 +12,7 @@ export class DateStringFormatPipe implements PipeTransform {
 
   transform(value: string, type: 'DATE' | 'DATETIME'): string {
     if (value) {
-      return this.cmsDateAdapter.convertDateToDateString(this.cmsDateAdapter.convertDateStringToDate(value), type);
+      return this.cmsDateAdapter.convertDateString(value, type);
     } else {
       return '';
     }

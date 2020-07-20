@@ -116,7 +116,7 @@
               </ng-container>
               <!-- LABEL -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LABEL">
-                <div [innerHTML]="col.value | safeHtml"></div>
+                <div [innerHTML]="col.value | dateStringFormat:'DATETIME' | safeHtml"></div>
               </ng-container>
               <!-- LINK -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LINK">
