@@ -8,6 +8,7 @@ import { DynamicWrapperModule } from '@neux/core';
 import { DirectiveModule } from './../../../global/directive';
 import { TreeComponent } from './tree.component';
 import { NodeRenderOnloadPipe } from './pipe/node-render-onload.pipe';
+import { NodeCheckboxDisabledPipe } from './pipe/node-checkbox-disabled';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { NodeRenderOnloadPipe } from './pipe/node-render-onload.pipe';
   declarations: [
     TreeComponent,
     NodeRenderOnloadPipe,
+    NodeCheckboxDisabledPipe,
   ],
   exports: [
     TreeComponent

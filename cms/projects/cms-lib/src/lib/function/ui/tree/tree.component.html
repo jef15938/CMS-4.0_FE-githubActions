@@ -10,7 +10,7 @@
           (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
           (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);">
           <mat-checkbox [checked]="checkedNodes.indexOf(node)>-1" (change)="onNodeCheckboxChange($event, node)"
-            [class.unactive]="!checkbox">
+            [class.unactive]="!checkbox || (checkbox && node|nodeCheckboxDisabled:checkboxDisabled)">
             <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
               [onComponentLoad]="this | nodeRenderOnload:node:context">
             </span>
@@ -32,7 +32,7 @@
           (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
           (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);">
           <mat-checkbox [checked]="checkedNodes.indexOf(node)>-1" (change)="onNodeCheckboxChange($event, node)"
-            [class.unactive]="!checkbox">
+            [class.unactive]="!checkbox || (checkbox && node|nodeCheckboxDisabled:checkboxDisabled)">
             <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
               [onComponentLoad]="this | nodeRenderOnload:node:context">
             </span>

@@ -73,4 +73,8 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
     this.checkedDepts = ev.nodes;
   }
 
+  deptDisabled = (dept: DepartmentInfo): boolean => {
+    return this.depts?.length && dept === this.depts[0];
+  }
+
 }

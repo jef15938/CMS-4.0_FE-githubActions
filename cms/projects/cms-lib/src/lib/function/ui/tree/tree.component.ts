@@ -43,12 +43,6 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   private destroy$ = new Subject();
 
-  /** Checkbox */
-  @Input() checkbox = false;
-  @Input() checkedNodes: TData[] = [];
-  @Input() checkMode: 'single' | 'multiple' = 'multiple';
-  @Output() nodeCheckedChange = new EventEmitter<{ nodes: TData[] }>();
-
   /* Drag and drop */
   @Input() draggable = false;
   @Output() dragTo = new EventEmitter<{ target: TData, to: TData }>();
@@ -58,6 +52,13 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   dragNodeExpandOverWaitTimeMs = 300;
   dragNodeExpandOverNode: any;
   dragNodeExpandOverTime: number;
+
+  /** Checkbox */
+  @Input() checkbox = false;
+  @Input() checkedNodes: TData[] = [];
+  @Input() checkMode: 'single' | 'multiple' = 'multiple';
+  @Output() nodeCheckedChange = new EventEmitter<{ nodes: TData[] }>();
+  @Input() checkboxDisabled = (node: TData) => false;
 
   constructor() { }
 
