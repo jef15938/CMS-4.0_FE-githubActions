@@ -92,12 +92,12 @@
           },
           {
             "display_type": "LABEL",
-            "value": "2019-03-04 00:00:00",
+            "value": "2019-03-04T00:00:00",
             "display_text": "開始時間"
           },
           {
             "display_type": "LABEL",
-            "value": "9999-12-31 00:00:00",
+            "value": "9999-12-31T00:00:00",
             "display_text": "結束時間"
           },
           {

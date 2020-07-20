@@ -12,7 +12,7 @@ import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo'
 import { HtmlEditorService } from '../../../html-editor';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
 
 @Component({
   selector: 'cms-farm-form-info',
@@ -41,6 +41,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     private gallerySharedService: GallerySharedService,
     private galleryService: GalleryService,
     private sitemapService: SitemapService,
+    private cmsDateAdapter: CmsDateAdapter,
   ) { }
 
   ngOnInit(): void {
@@ -79,11 +80,15 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     const formGroup = new FormGroup({});
     const rangeValidatorFns: ValidatorFn[] = [];
     farmFormInfo.columns.forEach((column, index) => {
-      const formControl = new FormControl(
-        column.display_type !== CmsFarmFormColumnDisplayType.DATE
-          ? column.value
-          : this.convertStringToDate(column.value)
-      );
+      // parse DATE & DATETIME
+      let value: any = column.value;
+      if (column.display_type === CmsFarmFormColumnDisplayType.DATE) {
+        value = this.cmsDateAdapter.convertDateStringToDate(column.value);
+      } else if (column.display_type === CmsFarmFormColumnDisplayType.DATETIME) {
+        value = this.cmsDateAdapter.convertDateStringToDate(column.value);
+      }
+      // create FormControl
+      const formControl = new FormControl(value);
       if (this.useValidation && farmFormInfo.validation) {
         const validatorFns: ValidatorFn[] = [];
         const validation = farmFormInfo.validation;
@@ -181,11 +186,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   private convertDateToString(date: Date) {
     if (!date) { return ''; }
     return `${date.getTime() / 1000}`;
-  }
-
-  private convertStringToDate(str: string) {
-    if (!str) { return null; }
-    return new Date(+str * 1000); // 1588635072000
   }
 
   private checkColumnTrigger(column: CmsFarmFormColumn) {

@@ -23,12 +23,12 @@
     {
       "display_text": "開始時間",
       "display_type": "LABEL",
-      "value": "2019-09-22 00:00:00"
+      "value": "2019-09-22T00:00:00"
     },
     {
       "display_text": "結束時間",
       "display_type": "LABEL",
-      "value": "9999-12-31 00:00:00"
+      "value": "9999-12-31T00:00:00"
     },
     {
       "display_text": "順序",
@@ -38,7 +38,7 @@
     {
       "display_text": "建立時間",
       "display_type": "LABEL",
-      "value": "2019-09-22 14:48:13"
+      "value": "2019-09-22T14:48:13"
     },
     {
       "display_text": "建立者",
@@ -53,7 +53,7 @@
     {
       "display_text": "最後修改時間",
       "display_type": "LABEL",
-      "value": "2020-07-14 10:58:49"
+      "value": "2020-07-14T10:58:49"
     },
     {
       "display_text": "修改者",

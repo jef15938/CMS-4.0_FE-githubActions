@@ -32,7 +32,9 @@ const LAYOUTS = [
     {
       provide: HTTP_INTERCEPTORS, multi: true,
       useClass: WithCredentialsInterceptor
-    }
+    },
+    { provide: DateAdapter, useClass: CmsDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS }
   ]
 })
 export class CmsModule {
@@ -50,7 +52,6 @@ export class CmsModule {
           useClass: WithCredentialsInterceptor
         },
         { provide: DateAdapter, useClass: CmsDateAdapter },
-        CmsDateAdapter,
         { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS }
       ]
     };

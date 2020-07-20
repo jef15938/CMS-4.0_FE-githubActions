@@ -18,7 +18,7 @@
     {
       "display_text": "建立時間",
       "display_type": "LABEL",
-      "value": "2018-01-01 00:00:00"
+      "value": "2018-01-01T00:00:00"
     },
     {
       "display_text": "建立者",
@@ -33,7 +33,7 @@
     {
       "display_text": "最後修改時間",
       "display_type": "LABEL",
-      "value": "2018-11-03 16:07:12"
+      "value": "2018-11-03T16:07:12"
     },
     {
       "display_text": "修改者",

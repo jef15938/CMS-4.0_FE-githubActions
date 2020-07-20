@@ -12,13 +12,13 @@
     </div>
     <div *ngIf="siteMapUpdateInfo.siteMap.publish_info" style="color: gray;">
       <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.draft; let obj">
-        後台草稿上下架：{{ obj | getStartEndTime }}
+        後台草稿上下架：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
       </div>
       <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.pending_published; let obj">
-        等待發布：{{ obj | getStartEndTime }}
+        等待發布：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
       </div>
       <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.published; let obj">
-        線上上下架：{{ obj | getStartEndTime }}
+        線上上下架：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
       </div>
       <hr>
     </div>

@@ -93,7 +93,7 @@
             "display_text": "送審日期",
             "display_type": "DATE",
             "options": [],
-            "value": "1589040000",
+            "value": "2020-05-10",
             "max_length": 0,
             "placeholder": "",
             "column_id": "submit_time",
@@ -308,17 +308,17 @@
       {
         "display_text": "開始時間",
         "display_type": "LABEL",
-        "value": "2020-05-26 00:00:00"
+        "value": "2020-05-26T00:00:00"
       },
       {
         "display_text": "結束時間",
         "display_type": "LABEL",
-        "value": "9999-12-31 00:00:00"
+        "value": "9999-12-31T00:00:00"
       },
       {
         "display_text": "建立時間",
         "display_type": "LABEL",
-        "value": "2020-05-26 09:34:08"
+        "value": "2020-05-26T09:34:08"
       },
       {
         "display_text": "建立者",
@@ -333,7 +333,7 @@
       {
         "display_text": "修改時間",
         "display_type": "LABEL",
-        "value": "2020-05-26 09:34:08"
+        "value": "2020-05-26T09:34:08"
       },
       {
         "display_text": "修改者",
