@@ -61,13 +61,9 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    if (!menu.component_id) {
-      return;
-    }
-
-    const component = this.dynamicComponentFactoryService.getComponent(menu.component_id);
+    const component = this.dynamicComponentFactoryService.getComponent(menu.func_id);
     if (!component) {
-      this.errorMsg = `沒有提供擴充功能元件, func_id=[${this.funcId}], component_id=[${menu.component_id}]`;
+      this.errorMsg = `沒有提供擴充功能元件, func_id=[${this.funcId}]`;
       return;
     }
 

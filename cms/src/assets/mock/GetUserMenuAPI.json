@@ -2,77 +2,77 @@
   "datas": [{
       "func_id": "multi-site",
       "func_name": "多網站管理",
-      "component_id ": "multi-site",
+      "component_id ": "",
       "children": []
     },
     {
       "func_id": "my-auditing",
       "func_name": "我的申請單",
-      "component_id ": "my-auditing",
+      "component_id ": "",
       "children": []
     },
     {
       "func_id": "gallery",
       "func_name": "媒體庫",
-      "component_id ": "gallery",
+      "component_id ": "",
       "children": []
     },
     {
       "func_id": "auditing",
       "func_name": "審核/放行管理",
-      "component_id ": "auditing",
+      "component_id ": "",
       "children": []
     },
     {
       "func_id": "web",
       "func_name": "網站管理",
-      "component_id ": "web",
+      "component_id ": "",
       "children": [{
           "func_id": "qa-temp",
           "func_name": "常見問題管理",
-          "component_id": "qa-temp",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "qa-type",
           "func_name": "常見問題分類管理",
-          "component_id": "qa-type",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "news-temp",
           "func_name": "最新消息管理",
-          "component_id": "news-temp",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "news-type",
           "func_name": "最新消息分類管理",
-          "component_id": "news-type",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "slider-temp",
           "func_name": "輪播管理",
-          "component_id": "slider-temp",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "slider-type",
           "func_name": "輪播分類管理",
-          "component_id": "slider-type",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "form-download-temp",
           "func_name": "表單下載管理",
-          "component_id": "form-download-temp",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "form-download-type",
           "func_name": "表單下載分類管理",
-          "component_id": "form-download-type",
+          "component_id": "",
           "children": []
         }
       ]
@@ -80,17 +80,17 @@
     {
       "func_id": "chatbot",
       "func_name": "智慧助手",
-      "component_id ": "chatbot",
+      "component_id ": "",
       "children": [{
           "func_id": "item",
           "func_name": "項目設定",
-          "component_id": "item",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "reply",
           "func_name": "回覆設定",
-          "component_id": "reply",
+          "component_id": "",
           "children": []
         }
       ]
@@ -98,17 +98,17 @@
     {
       "func_id": "cms-chatbot",
       "func_name": "CMS 助手",
-      "component_id ": "chatbot",
+      "component_id ": "",
       "children": [{
           "func_id": "cms-item",
           "func_name": "項目設定",
-          "component_id": "item",
+          "component_id": "",
           "children": []
         },
         {
           "func_id": "cms-reply",
           "func_name": "回覆設定",
-          "component_id": "reply",
+          "component_id": "",
           "children": []
         }
       ]
@@ -116,11 +116,11 @@
     {
       "func_id": "system",
       "func_name": "中央權限管理",
-      "component_id ": "system",
+      "component_id ": "",
       "children": [{
         "func_id": "dept",
         "func_name": "部門管理",
-        "component_id": "dept",
+        "component_id": "",
         "children": []
       }]
     }
