@@ -202,9 +202,9 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
       const successful = document.execCommand('copy');
       const msg = successful ? 'successful' : 'unsuccessful';
       input.setAttribute('type', 'hidden');
-      alert('Testing code was copied ' + msg);
+      alert('複製成功，請直接貼上使用!!');
     } catch (err) {
-      alert('Oops, unable to copy');
+      alert('無法複製到剪貼板');
     }
 
     /* unselect the range */
