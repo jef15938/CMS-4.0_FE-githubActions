@@ -36,6 +36,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   galleryDatas: GalleryInfo[];
   colDefs: ColDef[];
 
+  readonly clipBoardInputId = 'gallerySharedClipBoardInput';
+
   private destroy$ = new Subject();
   private categorySelected$ = new Subject<GalleryCategoryInfo>();
 
@@ -194,7 +196,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   }
 
   copyToClipBoard(text: string) {
-    const input = document.getElementById('clipBoardInput') as HTMLInputElement;
+    const input = document.getElementById(this.clipBoardInputId) as HTMLInputElement;
     input.setAttribute('type', 'text');
     input.setAttribute('value', text);
     input.select();
