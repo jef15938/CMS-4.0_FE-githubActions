@@ -52,6 +52,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   /* Drag and drop */
   @Input() draggable = false;
   @Output() dragTo = new EventEmitter<{ target: TData, to: TData }>();
+  readonly dragGhostId = 'drag-ghost';
   dragNode: any;
   dragEvent: any;
   dragNodeExpandOverWaitTimeMs = 300;
@@ -167,9 +168,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   private createDragGhost(node: HTMLElement) {
-    const id = 'drag-ghost';
-
-    const existing = document.getElementById(id);
+    const existing = document.getElementById(this.dragGhostId);
     if (existing) { document.body.removeChild(existing); }
 
     const ghost = node.cloneNode(true) as HTMLElement;
@@ -219,7 +218,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   handleDragEnd(event) {
-    const ghost = document.getElementById('drag-ghost');
+    const ghost = document.getElementById(this.dragGhostId);
     if (ghost) { document.body.removeChild(ghost); }
     if (!this.draggable) { return; }
     this.dragNode = null;
@@ -240,7 +239,6 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
       this.checkedNodes.splice(this.checkedNodes.indexOf(node), 1);
     }
     this.nodeCheckedChange.emit({ nodes: this.checkedNodes });
-    // console.warn('this.checkedNodes = ', this.checkedNodes);
   }
 
   getSelectedNodes(): TData[] {

@@ -7,8 +7,9 @@
     </mat-form-field>
     <div>
       <h3>選擇部門</h3>
-      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="depts" nodeDisplayField="dept_name"
-        [checkbox]="true" [defaultExpandLevel]="-1" (nodeCheckedChange)="onNodeCheckedChange($event)">
+      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="depts" [checkedNodes]="checkedDepts"
+        nodeDisplayField="dept_name" [checkbox]="true" [defaultExpandLevel]="-1"
+        (nodeCheckedChange)="onNodeCheckedChange($event)">
       </cms-tree>
     </div>
   </div>

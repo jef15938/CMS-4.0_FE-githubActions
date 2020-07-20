@@ -140,7 +140,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
         categoryID: action === 'Update' ? category.category_id : undefined,
         categoryName: action === 'Update' ? category.category_name : undefined,
         parentId: action === 'Update' ? this.tree.findParent(category)?.category_id : category.category_id,
-        assignDeptId: this.authorizationService.getCurrentLoginInfo().dept_id
+        assignDeptId: action === 'Update' ? '' : this.authorizationService.getCurrentLoginInfo().dept_id,
       }
     });
   }
