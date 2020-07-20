@@ -14,6 +14,8 @@ export abstract class GroupTemplateBaseComponent extends LayoutBaseComponent<Gro
    */
   abstract maxItemCount: number;
 
+  abstract defaultTemplateInfo: GroupTemplateInfo;
+
   constructor(
     injector: Injector,
   ) { super(injector); }

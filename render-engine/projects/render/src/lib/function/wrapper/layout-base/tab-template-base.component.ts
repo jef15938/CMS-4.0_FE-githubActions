@@ -10,6 +10,8 @@ export abstract class TabTemplateBaseComponent extends LayoutBaseComponent<TabTe
    */
   abstract maxItemCount: number;
 
+  abstract defaultTemplateInfo: TabTemplateInfo;
+
   constructor(
     injector: Injector,
   ) { super(injector); }

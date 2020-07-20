@@ -6,6 +6,7 @@ import {
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { SliderData } from './slider.interface';
 import { MOCK_SLIDER_DATA } from './slider.mock';
+import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
 
 @Component({
   selector: 'rdr-slider',
@@ -13,6 +14,18 @@ import { MOCK_SLIDER_DATA } from './slider.mock';
   styleUrls: ['./slider.component.scss'],
 })
 export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData> implements OnInit {
+
+  defaultTemplateInfo: DataSourceTemplateInfo = {
+    id: '',
+    templateId: 'Slide',
+    fields: [],
+    source: '',
+    attributes: {
+      height: '592px'
+    }
+  };
+
+  sourceType = 'slider';
 
   disabled = false;
 

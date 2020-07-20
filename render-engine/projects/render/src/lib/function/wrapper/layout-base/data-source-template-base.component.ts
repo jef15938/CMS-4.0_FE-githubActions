@@ -9,6 +9,9 @@ import { takeUntil, tap } from 'rxjs/operators';
 export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseComponent<DataSourceTemplateInfo>
   implements OnInit, OnChanges {
 
+  abstract defaultTemplateInfo: DataSourceTemplateInfo;
+  abstract sourceType: string;
+
   templateType = TemplateType.DATA_SOURCE;
   sourceData: TData[] = [];
 

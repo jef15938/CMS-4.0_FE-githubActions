@@ -1,5 +1,6 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
+import { TemplateInfo } from '../../interface/template-info.interface';
 
 @Component({
   selector: 'rdr-icon-page',
@@ -7,6 +8,12 @@ import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-ba
   styleUrls: ['./icon-page.component.scss']
 })
 export class IconPageComponent extends CommonTemplateBaseComponent implements OnInit {
+  defaultTemplateInfo: TemplateInfo = {
+    id: '',
+    templateId: 'IconPage',
+    fields: [],
+    attributes: {},
+  };
 
   constructor(
     injector: Injector,

@@ -1,7 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import {
+  Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges,
+  ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef
+} from '@angular/core';
 import { TemplateGetResponse } from './../../../../../global/api/neuxAPI/bean/TemplateGetResponse';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { TemplateInfo } from './../../../../../global/api/neuxAPI/bean/TemplateInfo';
+import { DynamicComponentFactoryService } from 'render';
+import { LayoutBaseComponent } from 'render/lib/function/wrapper/layout-base/_base';
+import { ContentTemplateInfo } from '../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 
 @Component({
   selector: 'cms-layout-control-panel',
@@ -9,6 +15,8 @@ import { TemplateInfo } from './../../../../../global/api/neuxAPI/bean/TemplateI
   styleUrls: ['./layout-control-panel.component.scss']
 })
 export class LayoutControlPanelComponent implements OnInit, OnChanges {
+
+  @ViewChild('CreateTemplateContainer', { read: ViewContainerRef }) createTemplateContainer: ViewContainerRef;
 
   show = false;
 
@@ -21,25 +29,28 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
   @Input() selectedBtn: AddTemplateButtonComponent;
 
-  constructor() { }
+  constructor(
+    private dynamicComponentFactoryService: DynamicComponentFactoryService,
+    private componentFactoryResolver: ComponentFactoryResolver,
+  ) { }
 
   ngOnInit(): void {
     this.mainTemplates = [
+      {
+        template_id: 'Slide',
+        template_name: 'Slide',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      },
       {
         template_id: 'Tab',
         template_name: 'Tab',
         template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
       },
-      {
-        template_id: 'IconPage',
-        template_name: 'IconPage',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      },
-      {
-        template_id: 'Slide',
-        template_name: 'Slide',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      }
+      // {
+      //   template_id: 'IconPage',
+      //   template_name: 'IconPage',
+      //   template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      // },
     ];
   }
 
@@ -57,46 +68,29 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     }
   }
 
-  selectTemplate(t: TemplateInfo) {
-    console.warn('t = ', t);
-    const yes = window.confirm(`確定加入${t.template_name}？`);
+  selectTemplate(templateInfo: TemplateInfo) {
+    const yes = window.confirm(`確定加入${templateInfo.template_name}:${templateInfo.template_id}？`);
     if (!yes) { return; }
-    const mock = this[`get${t.template_id}`]();
-    this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, mock);
-    this.templateAdd.emit(mock.template_id);
-  }
+    const component = this.dynamicComponentFactoryService.getComponent(templateInfo.template_id);
+    if (!component) { alert(`找不到指定id的版面元件 : ${templateInfo.template_id}`); return; }
 
-  private getTab() {
-    return {
-      id: '1',
-      template_id: 'Tab',
-      templateId: 'Tab',
-      fields: [],
-      attributes: {},
-      tabList: [],
-    };
-  }
+    let defaultTemplateInfo: ContentTemplateInfo;
 
-  private getIconPage() {
-    return {
-      id: '2',
-      template_id: 'IconPage',
-      templateId: 'IconPage',
-      fields: [],
-      attributes: {},
-    };
-  }
+    try {
+      const viewContainerRef = this.createTemplateContainer;
+      viewContainerRef.clear();
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+      const componentRef = viewContainerRef.createComponent(componentFactory) as ComponentRef<LayoutBaseComponent<any>>;
+      defaultTemplateInfo = componentRef.instance.defaultTemplateInfo;
+      componentRef.destroy();
+      viewContainerRef.clear();
+    } catch (error) {
 
-  private getSlide() {
-    return {
-      id: '3',
-      template_id: 'Slide',
-      templateId: 'Slide',
-      fields: [],
-      attributes: {
-        height: '592px'
-      }
-    };
+    }
+
+    if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${templateInfo.template_id}`); return; }
+    this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
+    this.templateAdd.emit(templateInfo.template_id);
   }
 
 }

@@ -20,6 +20,7 @@ export abstract class LayoutBaseComponent<TInfo extends TemplateInfo>
   implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   abstract templateType: TemplateType;
+  abstract defaultTemplateInfo: TInfo;
 
   readonly FieldType = FieldType;
   readonly TemplateType = TemplateType;
