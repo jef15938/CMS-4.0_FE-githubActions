@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cms-farm',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FarmComponent implements OnInit {
 
-  constructor() { }
+  funcId: string;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.funcId = params.params;
+      console.warn('this.funcId = ', this.funcId);
+    });
   }
 
 }

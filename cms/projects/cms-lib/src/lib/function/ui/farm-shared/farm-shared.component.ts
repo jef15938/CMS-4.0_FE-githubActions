@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver, OnChanges, SimpleChanges } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subject, of, throwError, NEVER } from 'rxjs';
 import { tap, takeUntil, concatMap, catchError } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal
   templateUrl: './farm-shared.component.html',
   styleUrls: ['./farm-shared.component.scss']
 })
-export class FarmSharedComponent implements OnInit, OnDestroy {
+export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
 
@@ -25,11 +25,10 @@ export class FarmSharedComponent implements OnInit, OnDestroy {
 
   // @Input() title: string;
   @Input() categoryName: string;
-  @Input() funcId: string;
   @Input() categoryId: string;
   @Input() isSub = false;
 
-  farm: FarmInfo;
+  @Input() farm: FarmInfo;
 
   activedCategory: CmsFarmInfoCategory;
 
@@ -44,23 +43,23 @@ export class FarmSharedComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
   ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (changes.farm) {
+      this.destroySub();
+      this.farm = changes.farm.currentValue;
+      this.activedCategory = this.farm?.category[0];
+    }
+  }
+
   ngOnInit(): void {
-    this.getFarm().subscribe();
+
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
     this.destroy$.unsubscribe();
-  }
-
-  private getFarm() {
-    return this.farmService.getFarmByFuncID(this.funcId).pipe(
-      tap(farm => {
-        this.farm = farm;
-        this.activedCategory = this.farm?.category[0];
-      }),
-    );
   }
 
   private getCategoryTableInfo(category: CmsFarmInfoCategory, page = 1) {
@@ -103,35 +102,36 @@ export class FarmSharedComponent implements OnInit, OnDestroy {
   private createSub(category: CmsFarmInfoCategory) {
     if (!category) { return; }
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmSharedComponent);
-    const viewContainerRef = this.subContainerViewContainerRef;
-    viewContainerRef.clear();
-    this.subComponentRef = undefined;
+    this.farmService.getFarmByFuncID(category.category_id).subscribe(farm => {
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmSharedComponent);
+      const viewContainerRef = this.subContainerViewContainerRef;
+      viewContainerRef.clear();
+      this.subComponentRef = undefined;
 
-    const subComponentRef = viewContainerRef.createComponent(componentFactory);
-    subComponentRef.instance.isSub = true;
-    subComponentRef.instance.funcId = category.category_id;
-    // subComponentRef.instance.title = `${this.title || ''}${this.title ? ' > ' : ''}${category.category_name}`;
-    subComponentRef.instance.categoryName = `${this.categoryName || ''}${this.categoryName ? ' > ' : ''}${category.category_name}`;
-    this.subComponentRef = subComponentRef;
-    this.subComponentRef.instance.destroyMe.pipe(
-      takeUntil(this.destroy$),
-      tap(_ => this.destroySub()),
-    ).subscribe();
+      const subComponentRef = viewContainerRef.createComponent(componentFactory);
+      subComponentRef.instance.isSub = true;
+      subComponentRef.instance.farm = farm;
+      subComponentRef.instance.categoryName = `${this.categoryName || ''}${this.categoryName ? ' > ' : ''}${category.category_name}`;
+      this.subComponentRef = subComponentRef;
+      this.subComponentRef.instance.destroyMe.pipe(
+        takeUntil(this.destroy$),
+        tap(_ => this.destroySub()),
+      ).subscribe();
+    });
   }
 
   private destroySub() {
     try {
-      this.subComponentRef.instance.destroyMe.unsubscribe();
+      this.subComponentRef?.instance?.destroyMe?.unsubscribe();
     } catch (error) {
       console.error('destroySub() destroyMe.unsubscribe()', error);
     }
     try {
-      this.subComponentRef.destroy();
+      this.subComponentRef?.destroy();
     } catch (error) {
       console.error('destroySub() subComponentRef.destroy()', error);
     }
-    this.subContainerViewContainerRef.clear();
+    this.subContainerViewContainerRef?.clear();
     this.subComponentRef = undefined;
   }
 

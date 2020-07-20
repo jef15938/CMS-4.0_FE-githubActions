@@ -8,6 +8,8 @@ import { WithCredentialsInterceptor } from './global/interceptor/cms-http-interc
 import { CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './global/service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { CmsDateAdapter, CMS_DATE_FORMATS } from './global/util/mat-date/mat-date';
+import { DynamicRoutingComponent } from './global/component/dynamic-routing/dynamic-routing.component';
+import { CmsFarmDataResolver } from './global/service/cms-farm-data-resolver.service';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -23,7 +25,8 @@ const LAYOUTS = [
   ],
   declarations: [
     CmsComponent,
-    ...LAYOUTS
+    ...LAYOUTS,
+    DynamicRoutingComponent
   ],
   providers: [
     {
@@ -41,6 +44,7 @@ export class CmsModule {
         CmsCanDeactiveGuard,
         DialogFlowMessengerService,
         CmsUserMenuResolver,
+        CmsFarmDataResolver,
         {
           provide: HTTP_INTERCEPTORS, multi: true,
           useClass: WithCredentialsInterceptor

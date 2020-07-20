@@ -35,7 +35,7 @@ export class DynamicComponentFactoryService {
     return mappings || [];
   }
 
-  private getCustomComponentMappings() {
+  getCustomComponentMappings() {
     let mappings = [];
     try {
       mappings = this.injector.get(RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN);

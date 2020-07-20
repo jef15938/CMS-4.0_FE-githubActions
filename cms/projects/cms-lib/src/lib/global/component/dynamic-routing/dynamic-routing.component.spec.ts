@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QaTempComponent } from './qa-temp.component';
+import { DynamicRoutingComponent } from './dynamic-routing.component';
 
-describe('QaTempComponent', () => {
-  let component: QaTempComponent;
-  let fixture: ComponentFixture<QaTempComponent>;
+describe('DynamicRoutingComponent', () => {
+  let component: DynamicRoutingComponent;
+  let fixture: ComponentFixture<DynamicRoutingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QaTempComponent ]
+      declarations: [ DynamicRoutingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QaTempComponent);
+    fixture = TestBed.createComponent(DynamicRoutingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

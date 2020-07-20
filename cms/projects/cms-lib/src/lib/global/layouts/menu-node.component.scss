@@ -21,6 +21,11 @@
     cursor: pointer
   }
 
+  &__link.disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+
   &__submenu {
 
     position: relative;

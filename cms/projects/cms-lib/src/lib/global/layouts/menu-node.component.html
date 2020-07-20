@@ -1,11 +1,11 @@
 <div class="menu" *ngIf="menu">
   <div class="menu__item item">
     <a matRipple class="item__link" [routerLink]="[(isAppMenu?'extension/':'')+(category?category+'/':'')+menu.func_id]"
-      routerLinkActive="router-active">
+      routerLinkActive="router-active" [class.disabled]="menu.children?.length">
       {{menu.func_name}}
     </a>
   </div>
-  <div class=" item" *ngIf="menu.children.length">
+  <div class=" item" *ngIf="menu.children?.length">
     <ul class="item__submenu">
       <li class="item__submenu__item" *ngFor="let child of menu.children">
         <cms-menu-node [menu]="child" [category]="menu.func_id" [isAppMenu]="isAppMenu"></cms-menu-node>

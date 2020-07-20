@@ -8,23 +8,24 @@ import { MyAuditingModule } from './function/my-auditing/my-auditing.module';
 import { GalleryModule } from './function/gallery/gallery.module';
 import { AuditingModule } from './function/auditing/auditing.module';
 import { SystemModule } from './function/system/system.module';
-import { WebModule } from './function/web/web.module';
 import { ExtensionModule } from './function/extension/extension.module';
 import { ChatbotModule } from './function/chatbot/chatbot.module';
+import { DynamicRoutingComponent } from './global/component/dynamic-routing/dynamic-routing.component';
+import { CmsFarmDataResolver } from './global/service/cms-farm-data-resolver.service';
 
 export function getMultiSiteModule() { return MultiSiteModule; }
 export function getMyAuditingModule() { return MyAuditingModule; }
 export function getGalleryModule() { return GalleryModule; }
 export function getAuditingModule() { return AuditingModule; }
 export function getSystemModule() { return SystemModule; }
-export function getWebModule() { return WebModule; }
 export function getChatbotModule() { return ChatbotModule; }
 export function getExtensionModule() { return ExtensionModule; }
 export function getLoginModule() { return LoginModule; }
 
 const routes: Routes = [
   {
-    path: '', component: CmsComponent, resolve: { menus: CmsUserMenuResolver }, canActivate: [CmsAuthGuard],
+    path: '', component: CmsComponent, resolve: { menus: CmsUserMenuResolver },
+    canActivate: [CmsAuthGuard],
     children: [
       {
         path: 'multi-site', canDeactivate: [CmsCanDeactiveGuard],
@@ -52,11 +53,6 @@ const routes: Routes = [
         loadChildren: getSystemModule
       },
       {
-        path: 'web', canDeactivate: [CmsCanDeactiveGuard],
-        // loadChildren: () => import('./function-module/web/web.module').then(m => m.WebModule)
-        loadChildren: getWebModule
-      },
-      {
         path: 'chatbot', canDeactivate: [CmsCanDeactiveGuard],
         // loadChildren: () => import('./function-module/chatbot/chatbot.module').then(m => m.ChatbotModule)
         loadChildren: getChatbotModule
@@ -69,6 +65,18 @@ const routes: Routes = [
         path: 'extension', canDeactivate: [CmsCanDeactiveGuard],
         // loadChildren: () => import('./function-module/extension/extension.module').then(m => m.ExtensionModule)
         loadChildren: getExtensionModule
+      },
+      {
+        path: ':funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+      },
+      {
+        path: ':category1/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+      },
+      {
+        path: ':category1/:category2/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+      },
+      {
+        path: ':category1/:category2/:category3/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
       }
     ]
   },
