@@ -199,7 +199,6 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     input.setAttribute('value', text);
     input.select();
     try {
-      console.warn('input.value = ', input.value);
       const successful = document.execCommand('copy');
       const msg = successful ? 'successful' : 'unsuccessful';
       input.setAttribute('type', 'hidden');
