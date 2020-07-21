@@ -89,6 +89,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       } else if (column.display_type === CmsFarmFormColumnDisplayType.LABEL) {
         value = this.cmsDateAdapter.convertDateString(value, CmsFarmFormColumnDisplayType.DATETIME);
       }
+
       // create FormControl
       const formControl = new FormControl(value);
       if (this.useValidation && farmFormInfo.validation) {
@@ -172,16 +173,21 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
     const info: CmsFarmFormInfo = JSON.parse(JSON.stringify(this.farmFormInfo));
     info.columns.forEach(col => {
-      const value = formGroup.controls[col.column_id]?.value;
-      col.value = col.display_type !== CmsFarmFormColumnDisplayType.DATE
-        ? value
-        : this.convertDateToString(value);
+      // TODO: 修正格式轉換
+      // const value = formGroup.controls[col.column_id]?.value;
+      // col.value = col.display_type !== CmsFarmFormColumnDisplayType.DATE
+      //   ? value
+      //   : this.convertDateToString(value);
     });
+
+    console.warn('formGroup = ', formGroup);
+    console.warn('info = ', info);
 
     if (!this.useValidation) { return of(info); }
 
     if (!formGroup.valid) { return throwError('Form is not valid.'); }
 
+    return throwError('');
     return of(info);
   }
 

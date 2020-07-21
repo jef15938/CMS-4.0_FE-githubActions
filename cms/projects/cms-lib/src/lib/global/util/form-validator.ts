@@ -1,6 +1,15 @@
-import { FormGroup, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { FormGroup, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 
 export class CmsFormValidator {
+
+  static validDate = (abstractControl: AbstractControl) => {
+    const value = abstractControl.value;
+    if (!value && !abstractControl.errors) { return null; }
+    if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
+      return null;
+    }
+    return { invalidDate: '格式錯誤', }
+  }
 
   static startTimeEndTime(startFormControlName: string, endFormControlName: string): ValidatorFn {
     // Error encountered in metadata generated for exported symbol : Lambda not supported.

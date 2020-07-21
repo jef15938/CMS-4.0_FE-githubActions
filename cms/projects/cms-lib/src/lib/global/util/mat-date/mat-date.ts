@@ -7,24 +7,23 @@ import { MatDateFormats } from '@angular/material/core';
 })
 export class CmsDateAdapter extends NativeDateAdapter {
 
-  // parse(value: any): Date | null {
-  //   console.warn('parse()');
-  //   console.warn('    value = ', value);
+  parse(value: string): Date | null {
+    if (!value) { return null; }
 
-  //   if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
-  //     const str = value.split('/');
+    const dateTimeStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9]) (2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?$/g);
+    if (dateTimeStringTester.test(value)) {
+      return new Date(value);
+    }
 
-  //     const year = Number(str[2]);
-  //     const month = Number(str[1]) - 1;
-  //     const date = Number(str[0]);
+    const dateStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])?$/g)
+    if (dateStringTester.test(value)) {
+      const date = new Date(value);
+      date.setHours(0);
+      return date;
+    }
 
-  //     return new Date(year, month, date);
-  //   }
-  //   const timestamp = typeof value === 'number' ? value : Date.parse(value);
-  //   const result = isNaN(timestamp) ? null : new Date(timestamp);
-  //   console.warn('    result = ', result);
-  //   return result;
-  // }
+    return new Date('Invalid Date');
+  }
 
   convertDateString(dateString: string, type: 'DATE' | 'DATETIME'): string {
     const date = this.convertDateStringToDate(dateString);

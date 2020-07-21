@@ -1,7 +1,8 @@
-import { Component, OnInit, forwardRef, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, Validator, FormGroup, FormBuilder, AbstractControl, ValidationErrors, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
+import { Component, OnInit, forwardRef, Output, EventEmitter, Input, OnChanges, SimpleChanges, Injector } from '@angular/core';
+import { ControlValueAccessor, Validator, FormGroup, FormBuilder, AbstractControl, ValidationErrors, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, NgControl } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { CMS_DATE_FORMATS_DATE, CMS_DATE_FORMATS_DATETIME } from '../../../global/util/mat-date/mat-date';
+import { CmsFormValidator } from '../../../global/util/form-validator';
 
 @Component({
   selector: 'cms-date-picker',
@@ -36,23 +37,26 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
   // 用來接收 setDisabledState 的狀態
   disabled = false;
 
-  // 用來接收 registerOnChange 和 onTouched 傳入的方法
-  onChange: (value) => {};
   onTouched: () => {};
+  onValidatorChange: () => void;
 
-  // 元件內必須找一個時機觸發 change 方法
-  controlValueChange() {
-    this.onChange(this.model);
-  }
+  ngControl: NgControl;;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private injector: Injector,
   ) {
 
   }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group(this.createInitValue());
+    this.form = this.formBuilder.group({
+      [`${this.formControlName}`]: [
+        null,
+        Validators.compose([CmsFormValidator.validDate])
+      ],
+    });
+    this.ngControl = this.injector.get(NgControl);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -63,13 +67,10 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
   }
 
   createInitValue() {
-    const result = {
-      [`${this.formControlName}`]: [
-        null,
-        // Validators.compose([Validators.required])
-      ],
+    const config = {
+      [`${this.formControlName}`]: [null, Validators.compose([CmsFormValidator.validDate])],
     };
-    return result;
+    return config;
   }
 
   // 以下是 ControlValueAccessor 需實做的方法
@@ -79,12 +80,19 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
         [`${this.formControlName}`]: value,
       });
     } else {
-      this.form.patchValue(this.createInitValue());
+      this.form.patchValue({ [`${this.formControlName}`]: null });
     }
   }
 
   registerOnChange(fn: any): void {
-    this.form.valueChanges.subscribe(values => fn(values[this.formControlName]));
+    this.form.valueChanges.subscribe(values => {
+      const innerControl = this.form.get(this.formControlName);
+      if (innerControl.valid) {
+        fn(values[this.formControlName])
+      } else {
+        this.ngControl.control.setErrors(innerControl.errors);
+      }
+    });
   }
 
   registerOnTouched(fn: any): void {
@@ -96,22 +104,33 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
   }
 
   validate(control: AbstractControl): ValidationErrors {
-    if (this.form.valid === false) {
-      for (const controlName of Object.keys(this.form.controls)) {
-        if (this.form.controls[controlName].errors) {
-          return { controlName: this.form.controls[controlName].errors };
-        }
-      }
+    if (
+      control.value
+      && Object.prototype.toString.call(control.value) === '[object Date]'
+      && isNaN(control.value.getTime())
+    ) {
+      // is Invalid Date
+      if (control.parent.valid) { control.parent.updateValueAndValidity({ onlySelf: false, emitEvent: true }); }
+      return null;
     }
-    return null;
+
+    const innerControl = this.form.controls[this.formControlName];
+    const innerErrors = innerControl.errors;
+    const outerErrors = control.errors;
+    const result = innerErrors ? { [this.formControlName]: innerErrors } : null;
+    return result;
   }
 
   registerOnValidatorChange?(fn: () => void): void {
-    // console.warn('registerOnValidatorChange() fn = ', fn ? fn.toString() : null);
+    this.onValidatorChange = fn;
   }
 
   onDateChange(ev) {
     this.dateChange.emit(ev);
+  }
+
+  onDateInput(ev) {
+    // console.warn('onDateInput() ev = ', ev);
   }
 
 }
