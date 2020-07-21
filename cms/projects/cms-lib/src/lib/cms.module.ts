@@ -4,7 +4,7 @@ import { SharedModule } from './function/shared/shared.module';
 import { CmsRoutingModule } from './cms-routing.module';
 import { CmsComponent } from './cms.component';
 import { MenuNodeComponent } from './global/layouts/menu-node.component';
-import { WithCredentialsInterceptor } from './global/interceptor/cms-http-interceptor';
+import { WithCredentialsInterceptor, HttpError401Interceptor } from './global/interceptor/cms-http-interceptor';
 import { CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './global/service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { CmsDateAdapter, CMS_DATE_FORMATS_DATETIME } from './global/util/mat-date/mat-date';
@@ -29,10 +29,6 @@ const LAYOUTS = [
     DynamicRoutingComponent
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS, multi: true,
-      useClass: WithCredentialsInterceptor
-    },
     { provide: DateAdapter, useClass: CmsDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME }
   ]
@@ -50,6 +46,10 @@ export class CmsModule {
         {
           provide: HTTP_INTERCEPTORS, multi: true,
           useClass: WithCredentialsInterceptor
+        },
+        {
+          provide: HTTP_INTERCEPTORS, multi: true,
+          useClass: HttpError401Interceptor
         },
         { provide: DateAdapter, useClass: CmsDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME }
