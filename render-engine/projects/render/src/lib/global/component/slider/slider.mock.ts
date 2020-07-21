@@ -4,7 +4,7 @@ export const MOCK_SLIDER_DATA: SliderData[] = [
   {
     id: '1',
     title: '2020「因為愛舞所聚ZUMBA ®」公益活動',
-    picture: 'https://www.transglobe.com.tw/transglobe_resource/leap_do/slider_picture/1592278286507/4.官網大BN_1920x592_zumba副董款.jpg',
+    picture: 'https://www.transglobe.com.tw/transglobe_resource/leap_do/slider_picture/1592984306389/官網大BN_1920x592_保險大聯盟.jpg',
     url: 'https://www.eventpal.com.tw/FOAS/actions/ActivityIndex.action?showTabContent&seqno=45b00272-5ed2-4938-afcf-566ad511075e',
     description: '全球人壽「因為愛舞所聚ZUMBA ®」公益活動，與全球人壽 X八三夭 ZUMBA® for Love展活力獻愛心！部分報名費捐助忠義基金會做為失依兒少助養金。讓我們一起因為愛，舞所聚！'
   },

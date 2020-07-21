@@ -11,6 +11,21 @@ import { DataSourceTemplateInfo } from '../../interface/data-source-template-inf
 })
 export class NewsComponent extends DataSourceTemplateBaseComponent<NewsData> {
 
+  month = {
+    '01': 'JAN',
+    '02': 'FEB',
+    '03': 'MAR',
+    '04': 'APR',
+    '05': 'MAY',
+    '06': 'JUN',
+    '07': 'JUL',
+    '08': 'AUG',
+    '09': 'SEP',
+    '10': 'OCT',
+    '11': 'NOV',
+    '12': 'DEC',
+  }
+
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
     templateId: 'News',
@@ -28,5 +43,7 @@ export class NewsComponent extends DataSourceTemplateBaseComponent<NewsData> {
   ) {
     super(injector, MOCK_NEWS_DATA);
   }
+
+
 
 }

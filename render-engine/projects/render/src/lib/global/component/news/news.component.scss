@@ -1,0 +1,347 @@
+@charset "UTF-8";
+.transglobe-source-news-002 {
+  /*garden-news-type2*/
+  /*garden-news-type2*/
+}
+
+.transglobe-source-news-002 .garden-news-type2 * {
+  margin: 0;
+  padding: 0;
+  /* border: 0; */
+  font-family: sans-serif, "微軟正黑體";
+
+}
+
+.transglobe-source-news-002 .garden-news-type2 {
+    width: 100%;
+    overflow: hidden;
+}
+
+.transglobe-source-news-002 .page-block {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items {
+  padding: 0;
+  max-width: 840px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items {
+  position: relative;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.13);
+  border: solid 1px #f2f2f2;
+  margin-bottom: 0;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items:last-child {
+  margin-bottom: 0px;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a {
+  display: table;
+  width: 100%;
+  height: 75px;
+  position: relative;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a:hover {
+  text-decoration: none;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .catalog-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .catalog-label .txt {
+  background-color: #27327b;
+  padding: 10px 4px;
+  width: 19px;
+  display: block;
+  height: 100%;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .catalog-label .txt p {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.25;
+  text-align: center;
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1em;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-num {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+  padding-left: 27px;
+  width: 140px;
+  position: relative;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-num:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 10px auto;
+  width: 1px;
+  height: 44px;
+  background-color: #e4e4e4;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-num .monnthyeaar {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 10px;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-num .monnthyeaar .monnth p {
+  font-size: 14px;
+  text-align: center;
+  color: #000;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.71;
+  letter-spacing: 2px;
+  display: inline-block;
+  max-width: 45px;
+  width: 100%;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-num .monnthyeaar .yeaar p {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.71;
+  letter-spacing: 1px;
+  color: #000000;
+  display: inline-block;
+  max-width: 45px;
+  width: 100%;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-num .txt {
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 15px 0 12px;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-num .txt p {
+  font-size: 24px;
+  letter-spacing: 1px;
+  text-align: center;
+  color: #4a4a4a;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt {
+  display: table-cell;
+  vertical-align: middle;
+  position: relative;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .txt {
+  margin-right: 150px;
+  margin-left: 20px;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .txt p {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.71;
+  letter-spacing: 1px;
+  color: #000000;
+  text-align: left;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .deco-btnnn {
+  width: 61px;
+  height: 75px;
+  text-align: center;
+  position: absolute;
+  right: 25px;
+  top: 0;
+  margin: auto;
+}
+
+.transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .deco-btnnn p {
+  font-size: 12px;
+  text-align: center;
+  color: #000000;
+  border-radius: 100px;
+  background-color: #f6f6f6;
+  position: absolute;
+  width: 61px;
+  height: 24px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  line-height: 24px;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .txt {
+    margin-right: 122px;
+  }
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .deco-btnnn {
+    right: 40px;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 1023px) {
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .txt {
+    margin-right: 80px;
+  }
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .deco-btnnn {
+    right: 10px;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .txt {
+    margin-right: 0px;
+    width: 79%;
+  }
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .txt p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .deco-btnnn {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 374px) {
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-txt .txt {
+    margin-left: 10px;
+    width: 90%;
+  }
+  .transglobe-source-news-002 .garden-news-type2 .ul-items .ul-li-items a .question-num {
+    width: 132px;
+  }
+}
+
+.page-block {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    margin: auto 0 auto auto;
+    width: 30%;
+    text-align: right;
+    float: right;
+    margin-right: 0;
+    margin-bottom: 10px;
+}
+
+.page-block .ga-page-control {
+    padding-top: 0;
+    margin-top: 0;
+    padding-right: 5px;
+}
+
+.page-block .prev {
+    display: inline-block;
+    min-width: auto;
+    padding-bottom: 0;
+    vertical-align: middle;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 8px 0;
+    border-color: transparent #717171 transparent transparent;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+.page-block .next {
+    display: inline-block;
+    min-width: auto;
+    padding-bottom: 0;
+    vertical-align: middle;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 0 8px 8px;
+    border-color: transparent transparent transparent #717171;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+.page-block .pager {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 5px;
+    margin: 0 10px;
+}
+
+.page-block .pager>li {
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 10px;
+}
+
+.page-block .pager>li.active a {
+    border-bottom: 2px solid #3d9cf8;
+}
+
+.page-block .pager>li.numberOfPage a {
+    border-bottom: 2px solid transparent;
+    color: #717171;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 2px;
+    margin-left: 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.page-block .pager>li.numberOfPage.active a {
+    border-bottom: 2px solid #3d9cf8;
+}
+
+.page-block .pager>li+li {
+    margin-left: 3px;
+}
+
+.page-block.page-style-top-single-line {
+    background: #FFF;
+    margin-bottom: 0;
+    float: none;
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    padding: 40px 30px 0 0px;
+}
