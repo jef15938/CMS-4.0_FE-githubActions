@@ -36,6 +36,7 @@ import { ContentEditorModule } from '../ui/content-editor';
 import { HtmlEditorModule } from '../ui/html-editor';
 import { CropperModule } from '../ui/cropper';
 import { FarmModule } from '../ui/farm-shared';
+import { DatePickerModule } from '../ui/date-picker';
 
 @NgModule({
   declarations: [],
@@ -78,6 +79,7 @@ import { FarmModule } from '../ui/farm-shared';
     HtmlEditorModule,
     CropperModule,
     FarmModule,
+    DatePickerModule,
   ]
 })
 export class SharedModule { }

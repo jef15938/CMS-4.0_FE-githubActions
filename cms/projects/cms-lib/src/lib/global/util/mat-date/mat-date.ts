@@ -64,22 +64,39 @@ export class CmsDateAdapter extends NativeDateAdapter {
     return null;
   }
 
-  format(date: Date, displayFormat = 'input'): string {
+  format(date: Date, displayFormat = 'DATETIME'): string {
     if (!date) { return ''; }
-    if (displayFormat === 'input') {
+    if (displayFormat === 'DATETIME') {
       return this.convertDateToDateString(date, 'DATETIME');
+    }
+    if (displayFormat === 'DATE') {
+      return this.convertDateToDateString(date, 'DATE');
     }
     return date.toDateString();
   }
 
 }
 
-export const CMS_DATE_FORMATS: MatDateFormats = {
+export const CMS_DATE_FORMATS_DATETIME: MatDateFormats = {
   parse: {
     dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
   },
   display: {
-    dateInput: 'input',
+    dateInput: 'DATETIME',
+    monthYearLabel: { year: 'numeric', month: 'numeric' },
+    dateA11yLabel: {
+      year: 'numeric', month: 'long', day: 'numeric'
+    },
+    monthYearA11yLabel: { year: 'numeric', month: 'long' },
+  }
+};
+
+export const CMS_DATE_FORMATS_DATE: MatDateFormats = {
+  parse: {
+    dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
+  },
+  display: {
+    dateInput: 'DATE',
     monthYearLabel: { year: 'numeric', month: 'numeric' },
     dateA11yLabel: {
       year: 'numeric', month: 'long', day: 'numeric'

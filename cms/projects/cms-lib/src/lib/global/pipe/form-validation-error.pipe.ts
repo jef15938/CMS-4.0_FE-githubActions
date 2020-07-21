@@ -2,13 +2,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 
 @Pipe({
-  name: 'farmFormValidationErrors'
+  name: 'formValidationError'
 })
-export class FarmFormValidationErrorsPipe implements PipeTransform {
+export class FormValidationErrorPipe implements PipeTransform {
 
   transform(errors: ValidationErrors): string[] {
     if (errors.matDatepickerParse) { return ['日期格式不符']; }
-    return Object.keys(errors).map(key => errors[key]);
+    const result = Object.keys(errors).map(key => errors[key]);
+    return result;
   }
 
 }

@@ -23,11 +23,11 @@ import { GetFarmTableDataActionsPipe } from './component/farm-table-info/pipe/ge
 import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
-import { FarmFormValidationErrorsPipe } from './pipe/farm-form-validation-errors.pipe';
 import { FarmDynamicFormControlDirective } from './directive/farm-dynamic-form-control.directive';
 import { TreeModule } from '../tree/tree.module';
 import { PipeModule } from '../../../global/pipe/pipe.module';
 import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
+import { DatePickerModule } from '../date-picker/date-picker.module';
 
 @NgModule({
   imports: [
@@ -48,6 +48,7 @@ import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal
     MatButtonModule,
     PipeModule,
     TreeModule,
+    DatePickerModule,
   ],
   declarations: [
     FarmSharedComponent,
@@ -61,7 +62,6 @@ import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal
     AuditingFarmDataModalComponent,
     FarmFormViewDataModalComponent,
     FarmFormModifyDataModalComponent,
-    FarmFormValidationErrorsPipe,
     FarmDynamicFormControlDirective,
   ],
   exports: [

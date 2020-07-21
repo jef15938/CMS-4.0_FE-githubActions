@@ -1,0 +1,13 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <mat-form-field [appearance]="appearance">
+    <mat-label *ngIf="label">{{label}}</mat-label>
+    <input matInput [matDatepicker]="picker" [formControlName]="formControlName" (dateChange)="onDateChange($event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.controls[formControlName]?.errors">
+      <div *ngFor="let err of (form?.controls[formControlName]?.errors | formValidationError)">
+        {{err}}
+      </div>
+    </mat-error>
+  </mat-form-field>
+</ng-container>

@@ -7,7 +7,7 @@ import { MenuNodeComponent } from './global/layouts/menu-node.component';
 import { WithCredentialsInterceptor } from './global/interceptor/cms-http-interceptor';
 import { CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './global/service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { CmsDateAdapter, CMS_DATE_FORMATS } from './global/util/mat-date/mat-date';
+import { CmsDateAdapter, CMS_DATE_FORMATS_DATETIME } from './global/util/mat-date/mat-date';
 import { DynamicRoutingComponent } from './global/component/dynamic-routing/dynamic-routing.component';
 import { CmsFarmDataResolver } from './global/service/cms-farm-data-resolver.service';
 
@@ -34,7 +34,7 @@ const LAYOUTS = [
       useClass: WithCredentialsInterceptor
     },
     { provide: DateAdapter, useClass: CmsDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME }
   ]
 })
 export class CmsModule {
@@ -52,7 +52,7 @@ export class CmsModule {
           useClass: WithCredentialsInterceptor
         },
         { provide: DateAdapter, useClass: CmsDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS }
+        { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME }
       ]
     };
   }

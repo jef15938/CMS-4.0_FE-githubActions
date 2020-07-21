@@ -12,7 +12,7 @@
                   <input matInput [formControlName]="col.column_id" [maxLength]="col.max_length"
                     [placeholder]="col.placeholder" (keydown)="columnTrigger.next(col)">
                   <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">
+                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
                       {{err}}
                     </div>
                   </mat-error>
@@ -24,7 +24,7 @@
                   <textarea matInput [formControlName]="col.column_id" [maxLength]="col.max_length"
                     [placeholder]="col.placeholder" rows="1" (keydown)="columnTrigger.next(col)"></textarea>
                   <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">
+                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
                       {{err}}
                     </div>
                   </mat-error>
@@ -39,7 +39,7 @@
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">
+                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
                       {{err}}
                     </div>
                   </mat-error>
@@ -64,20 +64,9 @@
               </ng-container>
               <!-- DATE -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATE">
-                <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                  <input matInput [matDatepicker]="picker" [formControlName]="col.column_id"
-                    (dateChange)="columnTrigger.next(col)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                  <mat-error *ngIf="!useValidation && formGroup.controls[col.column_id]?.errors?.matDatepickerParse">
-                    <div>日期格式不符</div>
-                  </mat-error>
-                  <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">
-                      {{err}}
-                    </div>
-                  </mat-error>
-                </mat-form-field>
+                <cms-date-picker [formControlName]="col.column_id" [errors]="formGroup.controls[col.column_id]?.errors"
+                  (dateChange)="columnTrigger.next(col)">
+                </cms-date-picker>
               </ng-container>
               <!-- GALLERY -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.GALLERY">
@@ -93,20 +82,9 @@
               </ng-container>
               <!-- DATETIME -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATETIME">
-                <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                  <input matInput [matDatepicker]="picker" [formControlName]="col.column_id"
-                    (dateChange)="columnTrigger.next(col)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                  <mat-error *ngIf="!useValidation && formGroup.controls[col.column_id]?.errors?.matDatepickerParse">
-                    <div>日期格式不符</div>
-                  </mat-error>
-                  <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | farmFormValidationErrors)">
-                      {{err}}
-                    </div>
-                  </mat-error>
-                </mat-form-field>
+                <cms-date-picker-datetime [formControlName]="col.column_id" [errors]="formGroup.controls[col.column_id]?.errors"
+                  (dateChange)="columnTrigger.next(col)">
+                </cms-date-picker-datetime>
               </ng-container>
               <!-- TREE -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TREE">

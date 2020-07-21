@@ -5,9 +5,11 @@ import { SafeResourcePipe } from './safe-resource.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { ObjectKeysPipe } from './object-keys.pipe';
 import { DateStringFormatPipe } from './date-string-format.pipe';
+import { FormValidationErrorPipe } from './form-validation-error.pipe';
 
 const PIPES = [
   DateStringFormatPipe,
+  FormValidationErrorPipe,
   SafeHtmlPipe,
   SafeResourcePipe,
   SafeUrlPipe,
