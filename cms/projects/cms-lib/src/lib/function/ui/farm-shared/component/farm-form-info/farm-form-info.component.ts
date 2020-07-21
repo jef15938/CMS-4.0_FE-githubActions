@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
 import { Observable, throwError, of, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../../global/model';
 import { CmsFarmFormColumnDisplayType } from './../../../../../global/enum';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
@@ -48,14 +47,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.rows = this.createRows(this.farmFormInfo);
     this.formGroup = this.createFormGroup(this.farmFormInfo);
 
-    // TEST
+    // TODO: TEST
     this.sitemapService.getUserSiteMapNodes('site1').subscribe(sitemap => {
       this.sitemaps = sitemap;
     });
-
-    // this.columnTrigger.pipe(
-    //   debounceTime(300)
-    // ).subscribe(col => this.checkColumnTrigger(col));
   }
 
   private createRows(farmFormInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
@@ -173,33 +168,25 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
     const info: CmsFarmFormInfo = JSON.parse(JSON.stringify(this.farmFormInfo));
     info.columns.forEach(col => {
-      // TODO: 修正格式轉換
-      // const value = formGroup.controls[col.column_id]?.value;
-      // col.value = col.display_type !== CmsFarmFormColumnDisplayType.DATE
-      //   ? value
-      //   : this.convertDateToString(value);
-    });
+      if (
+        col.display_type !== CmsFarmFormColumnDisplayType.DATE
+        && col.display_type !== CmsFarmFormColumnDisplayType.DATETIME
+      ) { return; }
+      const value = formGroup.controls[col.column_id]?.value;
 
-    console.warn('formGroup = ', formGroup);
-    console.warn('info = ', info);
+      col.value = this.cmsDateAdapter.convertDateToDateString(value, col.display_type);
+    });
 
     if (!this.useValidation) { return of(info); }
 
     if (!formGroup.valid) { return throwError('Form is not valid.'); }
-
-    return throwError('');
     return of(info);
-  }
-
-  private convertDateToString(date: Date) {
-    if (!date) { return ''; }
-    return `${date.getTime() / 1000}`;
   }
 
   private checkColumnTrigger(column: CmsFarmFormColumn) {
     const triggers = column?.triggers;
     if (triggers) {
-      // TODO:
+      // TODO: Farm checkColumnTrigger
 
     }
   }
