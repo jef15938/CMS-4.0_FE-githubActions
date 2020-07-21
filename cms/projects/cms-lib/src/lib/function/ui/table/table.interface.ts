@@ -7,6 +7,7 @@ export interface ColDef {
   cellClass?: string;
   cellRenderer?: Type<any>;
   headClass?: string;
+  format?: 'DATE' | 'DATETIME';
 }
 
 export interface CmsTableCustomCellEvent {

@@ -46,4 +46,9 @@ export class FarmTableInfoComponent implements OnInit {
     this.totalChecked = this.tableInfo.datas.map(_ => _.is_checked).every(checked => !!checked);
   }
 
+  passDateStringFormat(value): boolean {
+    if (!isNaN(+value)) { return true; }
+    return false;
+  }
+
 }

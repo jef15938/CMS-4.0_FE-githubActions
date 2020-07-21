@@ -45,11 +45,13 @@ export class AuditingComponent implements OnInit {
     //   colId: 'start_time',
     //   field: 'start_time',
     //   title: '上架時間',
+    //   format: 'DATETIME',
     // },
     // {
     //   colId: 'end_time',
     //   field: 'end_time',
     //   title: '下架時間',
+    //   format: 'DATETIME',
     // },
     {
       colId: 'action',

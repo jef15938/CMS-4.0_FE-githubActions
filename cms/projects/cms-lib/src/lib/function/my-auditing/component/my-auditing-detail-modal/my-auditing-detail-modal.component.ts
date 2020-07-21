@@ -48,6 +48,7 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
       colId: 'auditing_time',
       field: 'auditing_time',
       title: '時間',
+      format: 'DATETIME',
     },
     {
       colId: 'auditing_comment',

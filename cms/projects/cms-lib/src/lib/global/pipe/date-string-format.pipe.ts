@@ -10,7 +10,8 @@ export class DateStringFormatPipe implements PipeTransform {
     private cmsDateAdapter: CmsDateAdapter,
   ) { }
 
-  transform(value: string, type: 'DATE' | 'DATETIME'): string {
+  transform(value: string, type: 'DATE' | 'DATETIME', pass?: (value) => boolean): string {
+    if (pass && typeof (pass) === 'function' && pass(value)) { return value; }
     if (value) {
       return this.cmsDateAdapter.convertDateString(value, type);
     } else {
