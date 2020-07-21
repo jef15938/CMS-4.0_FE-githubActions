@@ -24,6 +24,11 @@ export function getLoginModule() { return LoginModule; }
 
 const routes: Routes = [
   {
+    path: 'login',
+    // loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+    loadChildren: getLoginModule
+  },
+  {
     path: '', component: CmsComponent, resolve: { menus: CmsUserMenuResolver },
     canActivate: [CmsAuthGuard],
     children: [
@@ -79,11 +84,6 @@ const routes: Routes = [
         path: ':category1/:category2/:category3/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
       }
     ]
-  },
-  {
-    path: 'login',
-    // loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
-    loadChildren: getLoginModule
   },
   {
     path: '**',
