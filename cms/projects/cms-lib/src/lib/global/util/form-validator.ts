@@ -2,7 +2,7 @@ import { FormGroup, ValidatorFn, ValidationErrors, AbstractControl } from '@angu
 
 export class CmsFormValidator {
 
-  static validDate = (abstractControl: AbstractControl) => {
+  static validDate(abstractControl: AbstractControl) {
     const { value, errors } = abstractControl;
     if (!value) { return null; }
     if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
