@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { ApiFactory, ApiDispatch, ConfigGetter, ApiConfig } from '@neux/core';
+import { ApiFactory, ApiDispatch, ConfigGetter, ApiConfig, ApiDispatchOptions } from '@neux/core';
 import { map, switchMap } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
@@ -68,6 +68,7 @@ import { GroupMenuGetResponse } from './bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
 import { LayoutGetResponse } from './bean/LayoutGetResponse';
+import { HttpHeaders } from '@angular/common/http';
 
 
 const APIResponseMap = {
@@ -174,11 +175,19 @@ export class RestApiService {
 
   }
 
-  public dispatchRestApi<T>(name: string, params: any): Observable<T> {
+  public dispatchRestApi<T>(name: string, params: any, options?: ApiDispatchOptions): Observable<T> {
     const restAPI = this.apiFactory.getApi(name);
     this.setAPIParams(restAPI, params);
     this.setUrl(restAPI, params);
-    return this.dispatcher.dispatch(restAPI).pipe(
+
+    const header = new HttpHeaders();
+    header.append('Content-Type', options?.header?.get('Content-Type') || 'application/json');
+    header.append('X-Date', new Date().toUTCString());
+    header.append('X-Request-ID', Date.now().toString());
+
+    const apiDispatchOptions: ApiDispatchOptions = { header };
+
+    return this.dispatcher.dispatch(restAPI, apiDispatchOptions).pipe(
       map(x => {
         x._body = plainToClass(APIResponseMap[name], x.body);
         return x;

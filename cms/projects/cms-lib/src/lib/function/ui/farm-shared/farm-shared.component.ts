@@ -178,18 +178,21 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private openModifyDataModal(action: 'create' | 'edit', category: CmsFarmInfoCategory, rowData?: CmsFarmTableDataInfo) {
+    const funcID = category.category_id;
+    const dataID = rowData?.data_id || '';
     if (action === 'edit' && !rowData) {
       alert('資料異常');
       return;
     }
-    const title = action === 'create' ? '新增' : `修改 : ${rowData.data_id}`;
     of(undefined).pipe(
-      concatMap(_ => this.farmService.getFarmFormInfoByFuncID(category.category_id, rowData?.data_id)),
+      concatMap(_ => this.farmService.getFarmFormInfoByFuncID(funcID, rowData?.data_id)),
       concatMap(farmFormInfo => {
         return this.modalService.openComponent({
           component: FarmFormModifyDataModalComponent,
           componentInitData: {
-            title,
+            action,
+            funcID,
+            dataID,
             farmFormInfo,
           },
           modalSetting: {

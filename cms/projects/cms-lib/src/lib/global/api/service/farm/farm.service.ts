@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, Inject } from '@angular/core';
+import { Observable, of, throwError } from 'rxjs';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
 import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/model';
+import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../interface';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,9 @@ import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/
 export class FarmService {
 
   constructor(
-    private restAPIService: RestApiService
+    private httpClient: HttpClient,
+    private restAPIService: RestApiService,
+    @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
   ) { }
 
   /**
@@ -76,6 +81,51 @@ export class FarmService {
     console.warn('                            dataID = ', dataID);
     if (!funcID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', funcID); }
     return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { funcID, dataID });
+  }
+
+  getCreateUpdateFarmFormUrl(funcID: string) {
+    return `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}`;
+  }
+
+  /**
+   * 新增 FarmForm
+   *
+   * @param {string} funcID // 子層時用子層的category_id
+   * @returns
+   * @memberof FarmService
+   */
+  createFarmForm(funcID: string, formData: FormData) {
+    if (!funcID) { throw new ParamsError('funcID', 'createFarmForm', 'string', funcID); }
+    if (!formData) { throw new ParamsError('formData', 'createFarmForm', 'FormData', formData); }
+
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+
+    const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}`;
+    return this.httpClient.post(url, formData, { headers });
+
+    // return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header: headers });
+  }
+
+  /**
+   * 修改 FarmForm
+   *
+   * @param {string} funcID // 子層時用子層的category_id
+   * @returns
+   * @memberof FarmService
+   */
+  updateFarmForm(funcID: string, dataID: string, formData: FormData) {
+    if (!funcID) { throw new ParamsError('funcID', 'updateFarmForm', 'string', funcID); }
+    if (!dataID) { throw new ParamsError('dataID', 'updateFarmForm', 'string', dataID); }
+    if (!formData) { throw new ParamsError('formData', 'updateFarmForm', 'FormData', formData); }
+
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+
+    const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}?dataID=${dataID}`;
+    return this.httpClient.put(url, formData, { headers });
+
+    // return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header: headers });
   }
 
   /**

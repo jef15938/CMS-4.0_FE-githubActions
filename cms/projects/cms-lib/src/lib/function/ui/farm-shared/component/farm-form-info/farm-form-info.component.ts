@@ -168,13 +168,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
     const info: CmsFarmFormInfo = JSON.parse(JSON.stringify(this.farmFormInfo));
     info.columns.forEach(col => {
+      let value = formGroup.controls[col.column_id]?.value;
       if (
-        col.display_type !== CmsFarmFormColumnDisplayType.DATE
-        && col.display_type !== CmsFarmFormColumnDisplayType.DATETIME
-      ) { return; }
-      const value = formGroup.controls[col.column_id]?.value;
-
-      col.value = this.cmsDateAdapter.convertDateToDateString(value, col.display_type);
+        col.display_type === CmsFarmFormColumnDisplayType.DATE
+        || col.display_type === CmsFarmFormColumnDisplayType.DATETIME
+      ) {
+        value = this.cmsDateAdapter.convertDateToDateString(value, col.display_type);
+      }
+      col.value = value;
     });
 
     if (!this.useValidation) { return of(info); }

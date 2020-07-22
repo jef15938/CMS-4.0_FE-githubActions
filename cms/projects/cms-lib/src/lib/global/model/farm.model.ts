@@ -51,21 +51,26 @@ export class CmsFarmTableInfo extends FarmTableInfo {
 export class CmsFarmFormColumn {
   display_text: string; // 欄位顯示名稱
   display_type: CmsFarmFormColumnDisplayType; // 欄位顯示類型
-  options: {
-    value: string;
-    text: string;
-  }[]; // 選單類內容
   value: string; // 欄位值
-  max_length: number; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
-  placeholder: string; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
   column_id: string; // 視為 input 的 name
-  is_readonly: boolean;
   triggers: {
     trigger_type: string; // 驅動類型
     trigger_target: string[]; // 放哪些欄位被連動
     trigger_setting: { [key: string]: string };
   }[];
-  component_id?: string; // for CUSTOM
+  setting: {
+    max_length?: number; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
+    options?: {
+      value: string;
+      text: string;
+    }[]; // 選單類內容
+    placeholder?: string; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
+    tree_source?: string; // Type為TREE才會有，主要放長TREE的API路徑
+    file_name?: string; // 上傳後的檔名
+    url?: string; // 當type是LINK時提供url網址
+    component_id?: string; // for CUSTOM，目前只有前端用
+  };
+  is_readonly: boolean;
 }
 
 export class CmsFarmFormInfo extends FarmFormInfo {

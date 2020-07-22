@@ -9,8 +9,8 @@
               <!-- TEXT -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXT">
                 <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                  <input matInput [formControlName]="col.column_id" [maxLength]="col.max_length"
-                    [placeholder]="col.placeholder" (keydown)="columnTrigger.next(col)">
+                  <input matInput [formControlName]="col.column_id" [maxLength]="col.setting?.max_length||-1"
+                    [placeholder]="col.setting?.placeholder||''" (keydown)="columnTrigger.next(col)">
                   <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
                       {{err}}
@@ -21,8 +21,9 @@
               <!-- TEXTAREA -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXTAREA">
                 <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                  <textarea matInput [formControlName]="col.column_id" [maxLength]="col.max_length"
-                    [placeholder]="col.placeholder" rows="1" (keydown)="columnTrigger.next(col)"></textarea>
+                  <textarea matInput [formControlName]="col.column_id" [maxLength]="col.setting?.max_length||-1"
+                    [placeholder]="col.setting?.placeholder||''" rows="1"
+                    (keydown)="columnTrigger.next(col)"></textarea>
                   <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
                       {{err}}
@@ -34,7 +35,7 @@
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.SELECT">
                 <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
                   <mat-select [formControlName]="col.column_id" (selectionChange)="columnTrigger.next(col)">
-                    <mat-option *ngFor="let option of col.options" [value]="option.value">
+                    <mat-option *ngFor="let option of (col.setting?.options||[])" [value]="option.value">
                       {{option.text}}
                     </mat-option>
                   </mat-select>
@@ -49,7 +50,7 @@
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
                 <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;"
                   (change)="columnTrigger.next(col)">
-                  <ng-container *ngFor="let option of col.options; let i=index;">
+                  <ng-container *ngFor="let option of (col.setting?.options||[]); let i=index;">
                     <mat-radio-button [value]="option.value" style="display: inline-block;"
                       [style.marginLeft]="i===0?'0':'15px'">
                       {{option.text}}
@@ -82,8 +83,8 @@
               </ng-container>
               <!-- DATETIME -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATETIME">
-                <cms-date-picker-datetime [formControlName]="col.column_id" [errors]="formGroup.controls[col.column_id]?.errors"
-                  (dateChange)="columnTrigger.next(col)">
+                <cms-date-picker-datetime [formControlName]="col.column_id"
+                  [errors]="formGroup.controls[col.column_id]?.errors" (dateChange)="columnTrigger.next(col)">
                 </cms-date-picker-datetime>
               </ng-container>
               <!-- TREE -->
@@ -102,7 +103,8 @@
               </ng-container>
               <!-- CUSTOM -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CUSTOM">
-                <div cmsFarmDynamicFormControl [componentId]="col.component_id" [columnId]="col.column_id"></div>
+                <div cmsFarmDynamicFormControl [componentId]="col.setting?.component_id" [columnId]="col.column_id">
+                </div>
               </ng-container>
             </ng-container>
           </div>
