@@ -34,6 +34,8 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   subComponentRef: ComponentRef<FarmSharedComponent>;
 
+  currentTablePage = 1;
+
   destroyMe = new Subject();
   private destroy$ = new Subject();
 
@@ -62,7 +64,8 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     this.destroy$.unsubscribe();
   }
 
-  private getCategoryTableInfo(category: CmsFarmInfoCategory, page = 1) {
+  private getCategoryTableInfo(category: CmsFarmInfoCategory) {
+    const page = this.currentTablePage;
     return of(undefined).pipe(
       concatMap(_ => this.searchInfoFormComponentMap.get(category)?.requestFormInfo() || throwError('No Category in Map.')),
       concatMap(searchFormInfo => { // TODO: 查詢 table 時帶 search 表單
@@ -84,7 +87,8 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onTablePageChange(category: CmsFarmInfoCategory, page: number) {
-    this.getCategoryTableInfo(category, page).subscribe();
+    this.currentTablePage = page;
+    this.getCategoryTableInfo(category).subscribe();
   }
 
   onSelectedTabChange(ev: MatTabChangeEvent) {
