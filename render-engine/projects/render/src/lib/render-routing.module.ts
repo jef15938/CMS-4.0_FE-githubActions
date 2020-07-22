@@ -4,11 +4,20 @@ import { RenderComponent } from './global/component/render/render.component';
 
 const routes: Routes = [
   {
-    path: 'preview/:contentId', component: RenderComponent
+    path: ':contentID', component: RenderComponent // runtime
+  },
+  {
+    path: ':contentID/:languageID', component: RenderComponent // runtime
+  },
+  {
+    path: 'preview/:contentID', component: RenderComponent // preview
+  },
+  {
+    path: 'preview/:contentID/:languageID', component: RenderComponent // preview
   },
   {
     path: '**',
-    redirectTo: 'preview/fake-content-id-need-modify-render-routing-module'
+    redirectTo: 'need-to-change-to-home-router-when-finishing-developing'
   }
 ];
 

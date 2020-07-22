@@ -12,10 +12,7 @@ import { RenderService } from '../../service/render.service';
 })
 export class RenderComponent implements OnInit {
 
-  private readonly defaultLanguageId = 'zh-tw';
-  languageId = 'zh-tw';
-
-  contentInfo: ContentInfo;
+  templates: ContentTemplateInfo[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -24,13 +21,32 @@ export class RenderComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.pipe(
-      concatMap(params =>
+      concatMap(params => {
+        const contentID = params.contentID;
+        const languageID = params.languageID;
         // tslint:disable-next-line: no-string-literal
-        this.renderService.getContentInfo(params['contentId']).pipe(
-          tap(contentInfo => this.contentInfo = contentInfo),
-        )
-      )
+        return this.renderService.getContentInfo(contentID).pipe(
+          tap(contentInfo => this.templates = this.getTemplateInfoByLanguageId(contentInfo, languageID)),
+        );
+      })
     ).subscribe();
+  }
+
+  private getTemplateInfoByLanguageId(contentInfo: ContentInfo, languageID: string): ContentTemplateInfo[] {
+    // 異常資料處理
+    if (!contentInfo) { return []; }
+    const languages = contentInfo.languages;
+    if (!languages?.length) { return []; }
+
+    if (languageID) {  // 有 languageID
+      const templatesByLanguage: ContentTemplateInfo[] = languages.find(lang => lang.language_id === languageID)?.templates;
+      // 回傳對應 languageID 的資料 || []
+      return templatesByLanguage || [];
+    } else { // 沒有 languageID
+      // 回傳 default language 的資料
+      const templatesByDefaultLanguage = languages.find(lang => lang.is_default)?.templates;
+      return templatesByDefaultLanguage || languages[0]?.templates || [];
+    }
   }
 
 }

@@ -3,13 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'render',
+    path: '',
     loadChildren: () => import('@render').then(m => m.RenderModule)
     // loadChildren: () => Promise.resolve(RenderModule)
   },
   {
     path: '**',
-    redirectTo: 'render'
+    redirectTo: ''
   }
 ];
 

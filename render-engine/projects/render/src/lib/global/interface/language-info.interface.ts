@@ -5,4 +5,5 @@ export interface LanguageInfo {
   language_name: string;
   templates: ContentTemplateInfo[];
   galleries: string[];
+  is_default: boolean;
 }
