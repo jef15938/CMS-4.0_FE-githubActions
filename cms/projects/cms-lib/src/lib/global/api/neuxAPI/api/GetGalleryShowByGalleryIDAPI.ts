@@ -4,33 +4,31 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * CreateFarmForm
+ * GetGalleryShow
  */
-export class PostFarmFormInfoByFuncIDAPI implements Api, MockApi, RestfulApi {
+export class GetGalleryShowByGalleryIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
-    public requestBody: any;
-
+    
 
     constructor() { }
 
     public getApiName(): string {
-        return 'PostFarmFormInfoByFuncID';
+        return 'GetGalleryShowByGalleryID';
     }
 
     public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
         let requestData = new ApiRequest();
-        requestData.body = this.requestBody;
-
-        requestData.type = 'POST';
+        
+        requestData.type = 'GET';
         requestData.params = queryParams;
         requestData.url = this.url;
         return requestData;
     }
 
     public getMockPath(): string {
-        return './assets/mock/PostFarmFormInfoByFuncIDAPI.json';
+        return './assets/mock/GetGalleryShowByGalleryIDAPI.json';
     }
 
 }

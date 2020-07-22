@@ -4,9 +4,9 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * CreateFarmForm
+ * CreateGallery
  */
-export class PostFarmFormInfoByFuncIDAPI implements Api, MockApi, RestfulApi {
+export class PostGalleryByCategoryIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public requestBody: any;
@@ -15,7 +15,7 @@ export class PostFarmFormInfoByFuncIDAPI implements Api, MockApi, RestfulApi {
     constructor() { }
 
     public getApiName(): string {
-        return 'PostFarmFormInfoByFuncID';
+        return 'PostGalleryByCategoryID';
     }
 
     public getRequestData(): ApiRequest {
@@ -30,7 +30,7 @@ export class PostFarmFormInfoByFuncIDAPI implements Api, MockApi, RestfulApi {
     }
 
     public getMockPath(): string {
-        return './assets/mock/PostFarmFormInfoByFuncIDAPI.json';
+        return './assets/mock/PostGalleryByCategoryIDAPI.json';
     }
 
 }

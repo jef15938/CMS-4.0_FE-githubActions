@@ -10,6 +10,8 @@ export class GetGalleryByCategoryIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public page: number;
+public fileType: string;
+public fileName: string;
 
 
     constructor() { }
@@ -23,6 +25,10 @@ export class GetGalleryByCategoryIDAPI implements Api, MockApi, RestfulApi {
         let requestData = new ApiRequest();
         queryParams = queryParams.set('page', 
                       StringUtils.coerceStringProperty(this.page));
+queryParams = queryParams.set('fileType', 
+                      StringUtils.coerceStringProperty(this.fileType));
+queryParams = queryParams.set('fileName', 
+                      StringUtils.coerceStringProperty(this.fileName));
 
         requestData.type = 'GET';
         requestData.params = queryParams;

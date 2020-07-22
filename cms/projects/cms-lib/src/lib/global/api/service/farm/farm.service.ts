@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, Inject } from '@angular/core';
+import { Observable, of, throwError } from 'rxjs';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
 import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/model';
-import { HttpHeaders } from '@angular/common/http';
+import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../interface';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,9 @@ import { HttpHeaders } from '@angular/common/http';
 export class FarmService {
 
   constructor(
+    private httpClient: HttpClient,
     private restAPIService: RestApiService,
+    @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
   ) { }
 
   /**
@@ -94,6 +98,9 @@ export class FarmService {
       'Content-Type': 'multipart/form-data'
     });
 
+    const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}`;
+    // return this.httpClient.post(url, formData, { headers: header });
+
     return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header });
   }
 
@@ -113,7 +120,14 @@ export class FarmService {
       'Content-Type': 'multipart/form-data'
     });
 
-    return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header });
+    formData.forEach((v, k) => {
+      console.log('formData ' + k + ' = ' + v);
+    });
+
+    const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}?dataID=${dataID}`;
+    // return this.httpClient.put(url, formData, { headers: header });
+
+    return this.restAPIService.dispatchRestApi('PutFarmFormInfoByFuncID', { funcID, dataID, requestBody: formData }, { header });
   }
 
   /**

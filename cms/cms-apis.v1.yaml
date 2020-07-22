@@ -31,7 +31,7 @@ paths:
         '500':
           description: Internal Server Error
       operationId: get-gallery
-      description: 顯示該目錄底下的媒體清單
+      description: 顯示該目錄底下的媒體清單，預設排序時間新到舊
       parameters:
         - schema:
             type: string
@@ -45,12 +45,50 @@ paths:
             minimum: 1
           in: query
           name: page
+        - schema:
+            type: string
+          in: query
+          name: fileType
+          description: 副檔名篩選
+        - schema:
+            type: string
+          in: query
+          name: fileName
+          description: 檔名篩選，模糊搜尋
     parameters:
       - schema:
           type: string
         name: categoryID
         in: path
         required: true
+    post:
+      summary: CreateGallery
+      operationId: post-Gallery-categoryID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      description: 新增一筆媒體庫資料與檔案
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              description: Form data格式
+        description: |-
+          用formData型式傳入
+          file:媒體庫檔案
+          description:檔案描述
+      tags:
+        - Gallery
   /GalleryCategory:
     get:
       summary: GetGalleryCategory
@@ -1035,6 +1073,33 @@ paths:
         in: path
         required: true
         description: 功能代碼
+  '/Gallery/Show/{galleryID}':
+    get:
+      summary: GetGalleryShow
+      tags:
+        - Gallery
+      responses:
+        '200':
+          description: OK
+          headers: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Gallery-Show
+      description: 顯示媒體庫檔案(圖片的話直接將這個網址放入img src內，檔案的話另開視窗)
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
   /Site:
     get:
       summary: GetSiteList
@@ -1221,6 +1286,29 @@ paths:
         name: galleryID
         in: path
         required: true
+    put:
+      summary: UpdateGallery
+      operationId: put-Gallery-galleryID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      parameters: []
+      description: ''
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              description: Form data格式
+        description: |-
+          用formData型式傳入
+          file:媒體庫檔案
+          description:檔案描述
+      tags:
+        - Gallery
     delete:
       summary: DeleteGallery
       operationId: delete-Gallery-galleryID
@@ -2291,6 +2379,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LanguageInfo'
+        galleries:
+          type: array
+          description: 使用的媒體庫檔案ID
+          items:
+            type: string
     ContentTemplateInfo:
       title: ContentTemplateInfo
       type: object
@@ -2522,11 +2615,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContentTemplateInfo'
-        galleries:
-          type: array
-          description: 使用的媒體庫檔案ID
-          items:
-            type: string
     LayoutGetResponse:
       title: LayoutGetResponse
       type: object

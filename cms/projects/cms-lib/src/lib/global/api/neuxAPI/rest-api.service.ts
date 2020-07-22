@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
 import { GetGalleryByCategoryIDAPI } from './api/GetGalleryByCategoryIDAPI';
+import { PostGalleryByCategoryIDAPI } from './api/PostGalleryByCategoryIDAPI';
 import { GetGalleryCategoryAPI } from './api/GetGalleryCategoryAPI';
 import { PostGalleryCategoryAPI } from './api/PostGalleryCategoryAPI';
 import { PostLoginAPI } from './api/PostLoginAPI';
@@ -36,20 +37,22 @@ import { PostFarmFormInfoByFuncIDAPI } from './api/PostFarmFormInfoByFuncIDAPI';
 import { PutFarmFormInfoByFuncIDAPI } from './api/PutFarmFormInfoByFuncIDAPI';
 import { PostFarmAuditingByFuncIdAPI } from './api/PostFarmAuditingByFuncIdAPI';
 import { GetFarmDetailInfoByFuncIDAPI } from './api/GetFarmDetailInfoByFuncIDAPI';
+import { GetGalleryShowByGalleryIDAPI } from './api/GetGalleryShowByGalleryIDAPI';
 import { GetSiteAPI } from './api/GetSiteAPI';
 import { GetSiteBySiteIDAPI } from './api/GetSiteBySiteIDAPI';
 import { GetSiteBySiteIDAndNodeIDAPI } from './api/GetSiteBySiteIDAndNodeIDAPI';
 import { GetGroupMenuByGroupIDAPI } from './api/GetGroupMenuByGroupIDAPI';
 import { GetGroupSiteMapByGroupIDAPI } from './api/GetGroupSiteMapByGroupIDAPI';
 import { GetTemplateByControlIDAPI } from './api/GetTemplateByControlIDAPI';
+import { PutGalleryByGalleryIDAPI } from './api/PutGalleryByGalleryIDAPI';
 import { DeleteGalleryByGalleryIDAPI } from './api/DeleteGalleryByGalleryIDAPI';
 import { PostSitemapAuditingByNodeIdAPI } from './api/PostSitemapAuditingByNodeIdAPI';
 import { GetLayoutAPI } from './api/GetLayoutAPI';
 import { GetFarmTakeOffByFuncIDAPI } from './api/GetFarmTakeOffByFuncIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
-import { GalleryCaregoryGetResponse } from './bean/GalleryCaregoryGetResponse';
 import { GenerationHeader } from './bean/GenerationHeader';
+import { GalleryCaregoryGetResponse } from './bean/GalleryCaregoryGetResponse';
 import { LoginResponse } from './bean/LoginResponse';
 import { DepartmentGetResponse } from './bean/DepartmentGetResponse';
 import { MenuGetResponse } from './bean/MenuGetResponse';
@@ -72,6 +75,7 @@ import { LayoutGetResponse } from './bean/LayoutGetResponse';
 
 const APIResponseMap= {
     GetGalleryByCategoryID: GalleryGetResponse,
+PostGalleryByCategoryID: GenerationHeader,
 GetGalleryCategory: GalleryCaregoryGetResponse,
 PostGalleryCategory: GenerationHeader,
 PostLogin: LoginResponse,
@@ -109,6 +113,7 @@ GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
 GetGroupMenuByGroupID: GroupMenuGetResponse,
 GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
 GetTemplateByControlID: TemplateGetResponse,
+PutGalleryByGalleryID: GenerationHeader,
 DeleteGalleryByGalleryID: GenerationHeader,
 PostSitemapAuditingByNodeId: GenerationHeader,
 GetLayout: LayoutGetResponse,
@@ -130,6 +135,7 @@ export class RestApiService {
     ) {
         this.apiConfig = this.configGetter.getApiConfig();
         this.apiFactory.registerApi(new GetGalleryByCategoryIDAPI());
+this.apiFactory.registerApi(new PostGalleryByCategoryIDAPI());
 this.apiFactory.registerApi(new GetGalleryCategoryAPI());
 this.apiFactory.registerApi(new PostGalleryCategoryAPI());
 this.apiFactory.registerApi(new PostLoginAPI());
@@ -161,12 +167,14 @@ this.apiFactory.registerApi(new PostFarmFormInfoByFuncIDAPI());
 this.apiFactory.registerApi(new PutFarmFormInfoByFuncIDAPI());
 this.apiFactory.registerApi(new PostFarmAuditingByFuncIdAPI());
 this.apiFactory.registerApi(new GetFarmDetailInfoByFuncIDAPI());
+this.apiFactory.registerApi(new GetGalleryShowByGalleryIDAPI());
 this.apiFactory.registerApi(new GetSiteAPI());
 this.apiFactory.registerApi(new GetSiteBySiteIDAPI());
 this.apiFactory.registerApi(new GetSiteBySiteIDAndNodeIDAPI());
 this.apiFactory.registerApi(new GetGroupMenuByGroupIDAPI());
 this.apiFactory.registerApi(new GetGroupSiteMapByGroupIDAPI());
 this.apiFactory.registerApi(new GetTemplateByControlIDAPI());
+this.apiFactory.registerApi(new PutGalleryByGalleryIDAPI());
 this.apiFactory.registerApi(new DeleteGalleryByGalleryIDAPI());
 this.apiFactory.registerApi(new PostSitemapAuditingByNodeIdAPI());
 this.apiFactory.registerApi(new GetLayoutAPI());

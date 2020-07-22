@@ -34,4 +34,5 @@ export enum CmsFarmTableDataAction {
   PREVIEW = 'PREVIEW',
   AUDITING = 'AUDITING',
   DETAIL = 'DETAIL',
+  PUBLISH = 'PUBLISH',
 }

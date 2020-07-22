@@ -10,6 +10,7 @@ export class PutFarmFormInfoByFuncIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     public dataID: string;
+public requestBody: any;
 
 
     constructor() { }
@@ -23,6 +24,7 @@ export class PutFarmFormInfoByFuncIDAPI implements Api, MockApi, RestfulApi {
         let requestData = new ApiRequest();
         queryParams = queryParams.set('dataID', 
                       StringUtils.coerceStringProperty(this.dataID));
+requestData.body = this.requestBody;
 
         requestData.type = 'PUT';
         requestData.params = queryParams;
