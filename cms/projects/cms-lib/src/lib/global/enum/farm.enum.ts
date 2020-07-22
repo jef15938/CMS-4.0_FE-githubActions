@@ -28,10 +28,10 @@ export enum CmsFarmFormColumnTriggerType {
 }
 
 export enum CmsFarmTableDataAction {
-  CREATE = 'create',
-  MODIFY = 'modify',
-  DELETE = 'delete',
-  PREVIEW = 'preview',
-  AUDITING = 'auditing',
-  DETAIL = 'detail',
+  CREATE = 'CREATE',
+  MODIFY = 'MODIFY',
+  DELETE = 'DELETE',
+  PREVIEW = 'PREVIEW',
+  AUDITING = 'AUDITING',
+  DETAIL = 'DETAIL',
 }

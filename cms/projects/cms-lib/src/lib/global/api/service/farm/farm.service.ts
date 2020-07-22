@@ -4,36 +4,6 @@ import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
 import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/model';
-// MOCK NEWS TYPE
-import * as MOCK_NEWS_TYPE from './mock/GetFarmByFuncIDAPI_news-type.json';
-import * as MOCK_NEWS_TYPE_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_news-type.json';
-import * as MOCK_NEWS_TYPE_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_news-type.json';
-import * as MOCK_NEWS_TYPE_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_news-type.json';
-// MOCK NEWS TEMP
-import * as MOCK_NEWS_TEMP from './mock/GetFarmByFuncIDAPI_news-temp.json';
-import * as MOCK_NEWS_TEMP_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_news-temp.json';
-import * as MOCK_NEWS_TEMP_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_news-temp.json';
-import * as MOCK_NEWS_TEMP_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_news-temp.json';
-// MOCK QA TYPE
-import * as MOCK_QA_TYPE from './mock/GetFarmByFuncIDAPI_qa-type.json';
-import * as MOCK_QA_TYPE_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_qa-type.json';
-import * as MOCK_QA_TYPE_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_qa-type.json';
-import * as MOCK_QA_TYPE_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_qa-type.json';
-// MOCK QA TEMP
-import * as MOCK_QA_TEMP from './mock/GetFarmByFuncIDAPI_qa-temp.json';
-import * as MOCK_QA_TEMP_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_qa-temp.json';
-import * as MOCK_QA_TEMP_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_qa-temp.json';
-import * as MOCK_QA_TEMP_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_qa-temp.json';
-// MOCK SLIDER TYPE
-import * as MOCK_SLIDER_TYPE from './mock/GetFarmByFuncIDAPI_slider-type.json';
-import * as MOCK_SLIDER_TYPE_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_slider-type.json';
-import * as MOCK_SLIDER_TYPE_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_slider-type.json';
-import * as MOCK_SLIDER_TYPE_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_slider-type.json';
-// MOCK SLIDER TEMP
-import * as MOCK_SLIDER_TEMP from './mock/GetFarmByFuncIDAPI_slider-temp.json';
-import * as MOCK_SLIDER_TEMP_TABLE_INFO from './mock/GetFarmTableInfoByFuncIDAPI_slider-temp.json';
-import * as MOCK_SLIDER_TEMP_DETAIL_INFO from './mock/GetFarmDetailInfoByFuncIDAPI_slider-temp.json';
-import * as MOCK_SLIDER_TEMP_FORM_INFO from './mock/GetFarmFormInfoByFuncIDAPI_slider-temp.json';
 
 @Injectable({
   providedIn: 'root'
@@ -56,24 +26,6 @@ export class FarmService {
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
-    if (funcID === 'news-type') {
-      return of(((MOCK_NEWS_TYPE as any).default) as FarmInfo);
-    }
-    if (funcID === 'news-temp') {
-      return of(((MOCK_NEWS_TEMP as any).default) as FarmInfo);
-    }
-    if (funcID === 'qa-type') {
-      return of(((MOCK_QA_TYPE as any).default) as FarmInfo);
-    }
-    if (funcID === 'qa-temp') {
-      return of(((MOCK_QA_TEMP as any).default) as FarmInfo);
-    }
-    if (funcID === 'slider-type') {
-      return of(((MOCK_SLIDER_TYPE as any).default) as FarmInfo);
-    }
-    if (funcID === 'slider-temp') {
-      return of(((MOCK_SLIDER_TEMP as any).default) as FarmInfo);
-    }
     return this.restAPIService.dispatchRestApi('GetFarmByFuncID', { funcID });
   }
 
@@ -90,24 +42,6 @@ export class FarmService {
     console.warn('                            page = ', page);
     if (!funcID) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'string', funcID); }
     if (!page) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page); }
-    if (funcID === 'news-type') {
-      return of(((MOCK_NEWS_TYPE_TABLE_INFO as any).default) as CmsFarmTableInfo);
-    }
-    if (funcID === 'news-temp') {
-      return of(((MOCK_NEWS_TEMP_TABLE_INFO as any).default) as CmsFarmTableInfo);
-    }
-    if (funcID === 'qa-type') {
-      return of(((MOCK_QA_TYPE_TABLE_INFO as any).default) as CmsFarmTableInfo);
-    }
-    if (funcID === 'qa-temp') {
-      return of(((MOCK_QA_TEMP_TABLE_INFO as any).default) as CmsFarmTableInfo);
-    }
-    if (funcID === 'slider-type') {
-      return of(((MOCK_SLIDER_TYPE_TABLE_INFO as any).default) as CmsFarmTableInfo);
-    }
-    if (funcID === 'slider-temp') {
-      return of(((MOCK_SLIDER_TEMP_TABLE_INFO as any).default) as CmsFarmTableInfo);
-    }
     return this.restAPIService.dispatchRestApi('GetFarmTableInfoByFuncID', { funcID, page });
   }
 
@@ -126,24 +60,6 @@ export class FarmService {
     if (!dataID) {
       throw new ParamsError('dataID', 'GetFarmDetailInfoByFuncID', 'string', dataID);
     }
-    if (funcID === 'news-type') {
-      return of(((MOCK_NEWS_TYPE_DETAIL_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'news-temp') {
-      return of(((MOCK_NEWS_TEMP_DETAIL_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'qa-type') {
-      return of(((MOCK_QA_TYPE_DETAIL_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'qa-temp') {
-      return of(((MOCK_QA_TEMP_DETAIL_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'slider-type') {
-      return of(((MOCK_SLIDER_TYPE_DETAIL_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'slider-temp') {
-      return of(((MOCK_SLIDER_TEMP_DETAIL_INFO as any).default) as CmsFarmFormInfo);
-    }
     return this.restAPIService.dispatchRestApi('GetFarmDetailInfoByFuncID', { funcID, dataID });
   }
 
@@ -159,24 +75,6 @@ export class FarmService {
     console.warn('getFarmFormInfoByFuncID() funcID = ', funcID);
     console.warn('                            dataID = ', dataID);
     if (!funcID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', funcID); }
-    if (funcID === 'news-type') {
-      return of(((MOCK_NEWS_TYPE_FORM_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'news-temp') {
-      return of(((MOCK_NEWS_TEMP_FORM_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'qa-type') {
-      return of(((MOCK_QA_TYPE_FORM_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'qa-temp') {
-      return of(((MOCK_QA_TEMP_FORM_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'slider-type') {
-      return of(((MOCK_SLIDER_TYPE_FORM_INFO as any).default) as CmsFarmFormInfo);
-    }
-    if (funcID === 'slider-temp') {
-      return of(((MOCK_SLIDER_TEMP_FORM_INFO as any).default) as CmsFarmFormInfo);
-    }
     return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { funcID, dataID });
   }
 

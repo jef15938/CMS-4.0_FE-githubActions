@@ -28,54 +28,27 @@
       "func_name": "網站管理",
       "component_id ": "",
       "children": [{
-          "func_id": "qa-temp",
-          "func_name": "常見問題管理",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "qa-type",
-          "func_name": "常見問題分類管理",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "news-temp",
-          "func_name": "最新消息管理",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "news-type",
-          "func_name": "最新消息分類管理",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "slider-temp",
-          "func_name": "輪播管理",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "slider-type",
-          "func_name": "輪播分類管理",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "form-download-temp",
-          "func_name": "表單下載管理",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "form-download-type",
-          "func_name": "表單下載分類管理",
-          "component_id": "",
-          "children": []
-        }
-      ]
+        "func_id": "news",
+        "func_name": "最新消息管理",
+        "component_id": "",
+        "children": []
+      }]
+    },
+    {
+      "func_id": "system",
+      "func_name": "中央權限管理",
+      "component_id ": "",
+      "children": [{
+        "func_id": "admin_user",
+        "func_name": "帳號管理",
+        "component_id": "",
+        "children": []
+      }, {
+        "func_id": "dept",
+        "func_name": "部門管理",
+        "component_id": "",
+        "children": []
+      }]
     },
     {
       "func_id": "chatbot",
@@ -112,17 +85,6 @@
           "children": []
         }
       ]
-    },
-    {
-      "func_id": "system",
-      "func_name": "中央權限管理",
-      "component_id ": "",
-      "children": [{
-        "func_id": "dept",
-        "func_name": "部門管理",
-        "component_id": "",
-        "children": []
-      }]
     }
   ]
 }
