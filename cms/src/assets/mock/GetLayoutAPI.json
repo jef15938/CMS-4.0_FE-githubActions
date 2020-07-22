@@ -1,0 +1,18 @@
+{
+  "datas": [{
+      "layout_id": "layout-01",
+      "layout_name": "layout-01",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-02",
+      "layout_name": "layout-02",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-03",
+      "layout_name": "layout-03",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    }
+  ]
+}
