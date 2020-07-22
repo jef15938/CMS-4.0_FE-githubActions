@@ -27,7 +27,7 @@
     "@angular/platform-browser": "^10.0.1",
     "@angular/platform-browser-dynamic": "^10.0.1",
     "@angular/router": "^10.0.1",
-    "@neux/core": "^0.1.9",
+    "@neux/core": "^0.1.11",
     "@neux/ui": "0.0.25-beta.5",
     "angular-cropperjs": "^1.0.2",
     "class-transformer": "^0.2.3",

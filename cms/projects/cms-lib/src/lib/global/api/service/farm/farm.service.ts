@@ -83,10 +83,6 @@ export class FarmService {
     return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { funcID, dataID });
   }
 
-  getCreateUpdateFarmFormUrl(funcID: string) {
-    return `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}`;
-  }
-
   /**
    * 新增 FarmForm
    *
@@ -98,13 +94,11 @@ export class FarmService {
     if (!funcID) { throw new ParamsError('funcID', 'createFarmForm', 'string', funcID); }
     if (!formData) { throw new ParamsError('formData', 'createFarmForm', 'FormData', formData); }
 
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
+    const header = new HttpHeaders({
+      'Content-Type': 'multipart/form-data'
+    });
 
-    const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}`;
-    return this.httpClient.post(url, formData, { headers });
-
-    // return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header: headers });
+    return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header });
   }
 
   /**
@@ -119,13 +113,11 @@ export class FarmService {
     if (!dataID) { throw new ParamsError('dataID', 'updateFarmForm', 'string', dataID); }
     if (!formData) { throw new ParamsError('formData', 'updateFarmForm', 'FormData', formData); }
 
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
+    const header = new HttpHeaders({
+      'Content-Type': 'multipart/form-data'
+    });
 
-    const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}?dataID=${dataID}`;
-    return this.httpClient.put(url, formData, { headers });
-
-    // return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header: headers });
+    return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header });
   }
 
   /**
