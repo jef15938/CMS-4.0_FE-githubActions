@@ -47,6 +47,8 @@ export const environment = {
     GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
     DeleteGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
     PostSitemapAuditingByNodeId: `${BASE_URL}\/SitemapAuditing/{nodeId}`,
+    GetLayout: `${BASE_URL}\/Layout`,
+    GetFarmTakeOffByFuncID: `${BASE_URL}\/FarmTakeOff/{funcID}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -89,6 +91,8 @@ export const environment = {
     GetTemplateByControlID: 'Restful',
     DeleteGalleryByGalleryID: 'Restful',
     PostSitemapAuditingByNodeId: 'Restful',
+    GetLayout: 'Mock',
+    GetFarmTakeOffByFuncID: 'Restful',
   },
   chatbot: {
     apiUrl: 'https://labs.decoder.com.tw/chatbot-api'
