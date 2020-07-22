@@ -1,12 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
 import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/model';
-import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
-import { CmsEnviroment } from '../../../interface';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class FarmService {
 
   constructor(
-    private httpClient: HttpClient,
     private restAPIService: RestApiService,
-    @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
   ) { }
 
   /**
