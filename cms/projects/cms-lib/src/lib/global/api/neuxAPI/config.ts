@@ -41,6 +41,8 @@ GetGroupSiteMapByGroupID: `${BASE_URL}\/Group/SiteMap/{groupID}`,
 GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
 DeleteGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
 PostSitemapAuditingByNodeId: `${BASE_URL}\/SitemapAuditing/{nodeId}`,
+GetLayout: `${BASE_URL}\/Layout`,
+GetFarmTakeOffByFuncID: `${BASE_URL}\/FarmTakeOff/{funcID}`,
 
 };
 const API_TYPE = {
@@ -84,5 +86,7 @@ GetGroupSiteMapByGroupID: 'Restful',
 GetTemplateByControlID: 'Restful',
 DeleteGalleryByGalleryID: 'Restful',
 PostSitemapAuditingByNodeId: 'Restful',
+GetLayout: 'Restful',
+GetFarmTakeOffByFuncID: 'Restful',
 
 };

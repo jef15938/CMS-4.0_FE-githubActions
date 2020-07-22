@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, tap } from 'rxjs/operators';
-import { ContentInfo } from '../../interface';
+import { ContentInfo, ContentTemplateInfo } from '../../interface';
 import { RenderService } from '../../service/render.service';
 
 @Component({
@@ -11,6 +11,9 @@ import { RenderService } from '../../service/render.service';
   ]
 })
 export class RenderComponent implements OnInit {
+
+  private readonly defaultLanguageId = 'zh-tw';
+  languageId = 'zh-tw';
 
   contentInfo: ContentInfo;
 

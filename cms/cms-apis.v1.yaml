@@ -109,6 +109,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GalleryCategoryPutRequest'
+        description: ''
       tags:
         - Gallery
   /Login:
@@ -1263,6 +1264,57 @@ paths:
         in: path
         required: true
         description: 節點流水號
+  /Layout:
+    get:
+      summary: GetLayout
+      tags:
+        - Content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LayoutGetResponse'
+      operationId: get-Layout
+      description: 取得版面佈局列表
+  '/FarmTakeOff/{funcID}':
+    parameters:
+      - schema:
+          type: string
+        name: funcID
+        in: path
+        required: true
+    get:
+      summary: TakeOffFarmData
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FarmTakeOff-funcID
+      description: 針對某一筆資料強制下架
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: dataID
+          required: true
+          description: 帶入TableDataInfo.data_id
 components:
   schemas:
     LoginRequest:
@@ -1391,6 +1443,12 @@ components:
           type: boolean
           example: 'true'
           description: 是否能上傳至該目錄
+        assign_dept_id:
+          type: string
+          description: |-
+            指定給哪些部門使用(新增需帶入登入者部門且不能取消)
+
+            多個部門用半形(,)逗點分開
         children:
           type: array
           description: 子層目錄
@@ -1427,6 +1485,8 @@ components:
     GalleryInfo:
       title: GalleryInfo
       type: object
+      x-tags:
+        - Model
       properties:
         gallery_id:
           type: number
@@ -1457,14 +1517,16 @@ components:
           format: date-time
           example: '2020-04-30 15:00:00'
           description: 檔案建立時間
+        url:
+          type: string
+          description: 檔案URL
       required:
         - gallery_id
         - file_name
         - size
         - file_type
         - create_time
-      x-tags:
-        - Model
+        - url
     PageInfo:
       title: PageInfo
       type: object
@@ -1936,7 +1998,7 @@ components:
     FarmFormInfo:
       title: FarmFormInfo
       type: object
-      description: Search & Form共用的物件
+      description: Search & Form & Detail共用的物件
       x-tags:
         - Model
       properties:
@@ -1964,33 +2026,46 @@ components:
                   - DATE
                   - GALLERY
                   - EDITOR
-                  - HTMLEDITOR
                   - DATETIME
                   - TREE
                   - LABEL
-              options:
-                type: array
-                description: 選單類內容
-                items:
-                  $ref: '#/components/schemas/FarmOptionInfo'
+                  - LINK
               value:
                 type: string
                 description: 欄位值
-              max_length:
-                type: number
-                description: 最大長度(只有TEXT跟TEXTAREA才有)
-              placeholder:
-                type: string
-                description: 欄位背景說明(只有TEXT / TEXTAREA才有)
               column_id:
                 type: string
                 description: 視為input的name
-              is_readonly:
-                type: boolean
               triggers:
                 type: array
                 items:
                   $ref: '#/components/schemas/FarmTriggerInfo'
+              setting:
+                type: object
+                description: 欄位設定
+                properties:
+                  max_length:
+                    type: number
+                    description: 最大長度(只有TEXT跟TEXTAREA才有)
+                  options:
+                    type: array
+                    description: 選單類內容
+                    items:
+                      $ref: '#/components/schemas/FarmOptionInfo'
+                  placeholder:
+                    type: string
+                    description: 輸入框的提醒文字
+                  tree_source:
+                    type: string
+                    description: Type為TREE才會有，主要放長TREE的API路徑
+                  file_name:
+                    type: string
+                    description: 上傳後的檔名
+                  url:
+                    type: string
+                    description: 當type是LINK時提供url網址
+              is_readonly:
+                type: boolean
             required:
               - display_text
               - display_type
@@ -2145,6 +2220,7 @@ components:
       type: object
       x-tags:
         - Model
+      description: ''
       properties:
         data_id:
           type: string
@@ -2189,7 +2265,6 @@ components:
         - data_id
         - is_checked
         - actions
-      description: ''
     FarmInfoGetResponse:
       title: FarmInfoGetResponse
       type: object
@@ -2201,21 +2276,7 @@ components:
           type: array
           description: 前台以tab方式區分不同資料分類
           items:
-            type: object
-            properties:
-              searchInfo:
-                $ref: '#/components/schemas/FarmFormInfo'
-              tableInfo:
-                $ref: '#/components/schemas/FarmTableInfo'
-              category_name:
-                type: string
-                description: 帶入前台tab顯示名稱
-              category_id:
-                type: string
-                description: 當如果該category點了更多，funcId帶入category_id
-            required:
-              - category_name
-              - category_id
+            $ref: '#/components/schemas/FarmCategoryInfo'
         detailInfo:
           $ref: '#/components/schemas/FarmFormInfo'
       required:
@@ -2226,10 +2287,10 @@ components:
       x-tags:
         - Model
       properties:
-        templates:
+        languages:
           type: array
           items:
-            $ref: '#/components/schemas/ContentTemplateInfo'
+            $ref: '#/components/schemas/LanguageInfo'
     ContentTemplateInfo:
       title: ContentTemplateInfo
       type: object
@@ -2444,4 +2505,66 @@ components:
         - end_time
         - memo
         - site_id
+    LanguageInfo:
+      title: LanguageInfo
+      type: object
+      description: ''
+      properties:
+        language_id:
+          type: string
+          description: 語言ID
+          example: zh-TW
+        language_name:
+          type: string
+          description: 語言名稱
+          example: 中文
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentTemplateInfo'
+        galleries:
+          type: array
+          description: 使用的媒體庫檔案ID
+          items:
+            type: string
+    LayoutGetResponse:
+      title: LayoutGetResponse
+      type: object
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/LayoutInfo'
+    LayoutInfo:
+      title: LayoutInfo
+      type: object
+      properties:
+        layout_id:
+          type: string
+          description: 版面佈局ID
+        layout_name:
+          type: string
+          description: 版面佈局名稱
+        layout_thumbnail:
+          type: string
+          description: 版面佈局縮圖
+    FarmCategoryInfo:
+      title: FarmCategoryInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        category_id:
+          type: string
+          description: 當如果該category點了更多，funcId帶入category_id
+        category_name:
+          type: string
+          description: 帶入前台tab顯示名稱
+        searchInfo:
+          $ref: '#/components/schemas/FarmFormInfo'
+        tableInfo:
+          $ref: '#/components/schemas/FarmTableInfo'
+      required:
+        - category_id
+        - category_name
   securitySchemes: {}

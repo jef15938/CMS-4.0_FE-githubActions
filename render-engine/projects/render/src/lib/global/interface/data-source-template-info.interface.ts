@@ -1,5 +1,5 @@
-import { TemplateInfo } from './template-info.interface';
+import { ContentTemplateInfo } from './content-template-info.interface';
 
-export interface DataSourceTemplateInfo extends TemplateInfo {
-    source: string;
+export interface DataSourceTemplateInfo extends ContentTemplateInfo {
+  source: string;
 }

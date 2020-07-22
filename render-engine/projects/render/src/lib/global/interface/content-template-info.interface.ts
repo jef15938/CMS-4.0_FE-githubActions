@@ -1,6 +1,6 @@
 import { FieldInfo } from './field-info.interface';
 
-export interface TemplateInfo {
+export interface ContentTemplateInfo {
   id: string;
   templateId: string;
   fields: FieldInfo[];

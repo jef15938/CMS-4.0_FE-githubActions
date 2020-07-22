@@ -1,5 +1,5 @@
 import { ComponentRef } from '@angular/core';
-import { TemplateInfo } from '../../../global/interface/template-info.interface';
+import { ContentTemplateInfo } from '../../../global/interface/content-template-info.interface';
 import { FieldInfo } from '../../../global/interface/field-info.interface';
 
 export enum TemplateType {
@@ -11,7 +11,7 @@ export enum TemplateType {
 }
 
 export interface LayoutWrapper {
-  parentTemplatesContainer: { templates: TemplateInfo[]; };
+  parentTemplatesContainer: { templates: ContentTemplateInfo[]; };
 }
 
 export enum LayoutWrapperSelectedTargetType {
@@ -32,7 +32,7 @@ export interface LayoutWrapperSelectEvent {
   wrapper: LayoutWrapper;
   componentRef: ComponentRef<any>;
   templateType: TemplateType;
-  templateInfo: TemplateInfo;
+  templateInfo: ContentTemplateInfo;
   fieldInfo?: FieldInfo;
   fieldDirective?: any;
 }

@@ -1,9 +1,9 @@
 import { LayoutBaseComponent } from './_base';
-import { TemplateInfo } from '../../../global/interface/template-info.interface';
+import { ContentTemplateInfo } from '../../../global/interface/content-template-info.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { Injector } from '@angular/core';
 
-export abstract class CommonTemplateBaseComponent extends LayoutBaseComponent<TemplateInfo> {
+export abstract class CommonTemplateBaseComponent extends LayoutBaseComponent<ContentTemplateInfo> {
   templateType = TemplateType.COMMON;
 
   constructor(

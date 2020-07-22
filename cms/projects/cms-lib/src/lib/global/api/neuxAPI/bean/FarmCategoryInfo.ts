@@ -1,20 +1,23 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
 import {IsNotEmpty} from 'class-validator';
+import {FarmTableInfo} from './FarmTableInfo';
 import {FarmFormInfo} from './FarmFormInfo';
-import {FarmCategoryInfo} from './FarmCategoryInfo';
 
 import { TypeFactory } from '../type-factory';
 
-export class FarmInfoGetResponse {
+export class FarmCategoryInfo {
 
-@Type(TypeFactory(FarmCategoryInfo))
-@ValidateNested()
 @IsNotEmpty()
-public category: Array<FarmCategoryInfo>;
+public category_id: string;
+@IsNotEmpty()
+public category_name: string;
 @Type(TypeFactory(FarmFormInfo))
 @ValidateNested()
-public detailInfo: FarmFormInfo;
+public searchInfo: FarmFormInfo;
+@Type(TypeFactory(FarmTableInfo))
+@ValidateNested()
+public tableInfo: FarmTableInfo;
 
 
 }

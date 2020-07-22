@@ -1,5 +1,5 @@
-import { TemplateInfo } from './template-info.interface';
+import { LanguageInfo } from './language-info.interface';
 
 export interface ContentInfo {
-    templates: TemplateInfo[];
+  languages: LanguageInfo[];
 }

@@ -2,7 +2,7 @@ import {
   Component, OnInit, Input, AfterViewInit, ViewChildren, QueryList,
   Output, EventEmitter, AfterViewChecked, Injector
 } from '@angular/core';
-import { TemplateInfo } from '../../../global/interface/template-info.interface';
+import { ContentTemplateInfo } from '../../../global/interface/content-template-info.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
 import { LayoutWrapperSelectEvent } from '../layout-wrapper/layout-wrapper.interface';
 import { LayoutWrapperBase } from '../layout-wrapper/layout-wrapper-base';
@@ -15,7 +15,7 @@ import { LayoutWrapperBase } from '../layout-wrapper/layout-wrapper-base';
 export class TemplatesContainerComponent extends LayoutWrapperBase implements OnInit, AfterViewInit, AfterViewChecked {
 
   @Input() mode: 'preview' | 'edit' = 'preview';
-  @Input() templates: TemplateInfo[];
+  @Input() templates: ContentTemplateInfo[];
 
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();

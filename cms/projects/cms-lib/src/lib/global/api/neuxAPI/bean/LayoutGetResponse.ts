@@ -1,14 +1,14 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {LanguageInfo} from './LanguageInfo';
+import {LayoutInfo} from './LayoutInfo';
 
 import { TypeFactory } from '../type-factory';
 
-export class ContentInfo {
+export class LayoutGetResponse {
 
-@Type(TypeFactory(LanguageInfo))
+@Type(TypeFactory(LayoutInfo))
 @ValidateNested()
-public languages: Array<LanguageInfo>;
+public datas: Array<LayoutInfo>;
 
 
 }

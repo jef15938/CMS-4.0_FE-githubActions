@@ -12,6 +12,7 @@ public category_id: string;
 public category_name: string;
 @IsNotEmpty()
 public can_upload: boolean;
+public assign_dept_id: string;
 @Type(TypeFactory(GalleryCategoryInfo))
 @ValidateNested()
 public children: Array<GalleryCategoryInfo>;

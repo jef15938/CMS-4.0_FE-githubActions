@@ -44,6 +44,8 @@ import { GetGroupSiteMapByGroupIDAPI } from './api/GetGroupSiteMapByGroupIDAPI';
 import { GetTemplateByControlIDAPI } from './api/GetTemplateByControlIDAPI';
 import { DeleteGalleryByGalleryIDAPI } from './api/DeleteGalleryByGalleryIDAPI';
 import { PostSitemapAuditingByNodeIdAPI } from './api/PostSitemapAuditingByNodeIdAPI';
+import { GetLayoutAPI } from './api/GetLayoutAPI';
+import { GetFarmTakeOffByFuncIDAPI } from './api/GetFarmTakeOffByFuncIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GalleryCaregoryGetResponse } from './bean/GalleryCaregoryGetResponse';
@@ -65,6 +67,7 @@ import { SiteMapNodeInfo } from './bean/SiteMapNodeInfo';
 import { GroupMenuGetResponse } from './bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
+import { LayoutGetResponse } from './bean/LayoutGetResponse';
 
 
 const APIResponseMap= {
@@ -108,6 +111,8 @@ GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
 GetTemplateByControlID: TemplateGetResponse,
 DeleteGalleryByGalleryID: GenerationHeader,
 PostSitemapAuditingByNodeId: GenerationHeader,
+GetLayout: LayoutGetResponse,
+GetFarmTakeOffByFuncID: GenerationHeader,
 
 }
 
@@ -164,6 +169,8 @@ this.apiFactory.registerApi(new GetGroupSiteMapByGroupIDAPI());
 this.apiFactory.registerApi(new GetTemplateByControlIDAPI());
 this.apiFactory.registerApi(new DeleteGalleryByGalleryIDAPI());
 this.apiFactory.registerApi(new PostSitemapAuditingByNodeIdAPI());
+this.apiFactory.registerApi(new GetLayoutAPI());
+this.apiFactory.registerApi(new GetFarmTakeOffByFuncIDAPI());
 
     }
 

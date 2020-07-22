@@ -86,11 +86,11 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    * 顯示版型info
    */
   templateShowInfo() {
-    this.contentEditorService.openEditor({
-      contentInfo: { templates: [this.selected.templateInfo] } as ContentInfo,
-      mode: EditorMode.INFO,
-      selectableTemplates: {} as any
-    }).subscribe();
+    // this.contentEditorService.openEditor({
+    //   contentInfo: { templates: [this.selected.templateInfo] } as ContentInfo,
+    //   mode: EditorMode.INFO,
+    //   selectableTemplates: {} as any
+    // }).subscribe();
   }
 
   templateMove(direction: 'up' | 'down') {

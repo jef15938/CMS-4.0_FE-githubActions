@@ -3,7 +3,7 @@ import {
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
   HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID
 } from '@angular/core';
-import { TemplateInfo } from '../../../global/interface';
+import { ContentTemplateInfo } from '../../../global/interface';
 import { LayoutBase } from '../layout-base/_base.interface';
 import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
@@ -21,12 +21,12 @@ import { isPlatformServer } from '@angular/common';
 export class LayoutWrapperComponent extends LayoutWrapperBase implements
   LayoutWrapper, OnInit, AfterViewInit, OnChanges {
 
-  @Input() templateInfo: TemplateInfo;
+  @Input() templateInfo: ContentTemplateInfo;
   @Input() mode: 'preview' | 'edit' = 'edit';
 
-  @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<TemplateInfo>>;
+  @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfo>>;
 
-  parentTemplatesContainer: { templates: TemplateInfo[]; };
+  parentTemplatesContainer: { templates: ContentTemplateInfo[]; };
 
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
 
@@ -72,7 +72,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     this.setMode();
   }
 
-  setInstanceProperties = (componentRef: ComponentRef<LayoutBase<TemplateInfo>>): void => {
+  setInstanceProperties = (componentRef: ComponentRef<LayoutBase<ContentTemplateInfo>>): void => {
     const instance = componentRef?.instance;
     if (instance) {
       instance.templateInfo = this.templateInfo;
@@ -87,7 +87,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
       this.registerInstanceEvents(this.componentRef?.instance).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
-  private registerInstanceEvents(instance: LayoutBase<TemplateInfo>) {
+  private registerInstanceEvents(instance: LayoutBase<ContentTemplateInfo>) {
     const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
     const templateFieldDirectives = (instance?.templateFieldDirectives || []);
     return merge(

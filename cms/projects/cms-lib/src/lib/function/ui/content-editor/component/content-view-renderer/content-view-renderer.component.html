@@ -1,5 +1,8 @@
 <div class="view-container" [class.mode-info]="mode===EditorMode.INFO">
-  <rdr-templates-container [templates]="contentInfo.templates" mode="edit" (select)="select.next($event)"
-    (enter)="onEnter($event)" (leave)="onLeave($event)">
-  </rdr-templates-container>
+  <ng-container *ngFor="let language of contentInfo.languages">
+    <h3>{{language.language_name}}:{{language.language_id}}</h3>
+    <rdr-templates-container [templates]="language.templates" mode="edit" (select)="select.next($event)"
+      (enter)="onEnter($event)" (leave)="onLeave($event)">
+    </rdr-templates-container>
+  </ng-container>
 </div>

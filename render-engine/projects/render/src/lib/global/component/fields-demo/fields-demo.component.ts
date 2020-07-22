@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
-import { TemplateInfo } from '../../interface/template-info.interface';
+import { ContentTemplateInfo } from '../../interface/content-template-info.interface';
 
 @Component({
   selector: 'rdr-fields-demo',
@@ -9,7 +9,7 @@ import { TemplateInfo } from '../../interface/template-info.interface';
 })
 export class FieldsDemoComponent extends CommonTemplateBaseComponent implements OnInit {
 
-  defaultTemplateInfo: TemplateInfo = {
+  defaultTemplateInfo: ContentTemplateInfo = {
     id: '',
     templateId: 'FieldsDemo',
     fields: [],

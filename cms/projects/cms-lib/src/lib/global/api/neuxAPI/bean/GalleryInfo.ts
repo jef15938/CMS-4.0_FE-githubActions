@@ -16,6 +16,8 @@ public size: string;
 public file_type: string;
 @IsNotEmpty()
 public create_time: string;
+@IsNotEmpty()
+public url: string;
 
 
 }
