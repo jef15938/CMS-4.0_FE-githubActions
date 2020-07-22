@@ -47,20 +47,20 @@
                 <ng-container *ngSwitchCase="CmsFarmTableDataAction.MODIFY">
                   edit
                 </ng-container>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.PREVIEW">
-                  visibility
-                </ng-container>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.AUDITING">
-                  redo
-                </ng-container>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.DETAIL">
-                  more_horiz
-                </ng-container>
                 <ng-container *ngSwitchCase="CmsFarmTableDataAction.DELETE">
                   delete
                 </ng-container>
                 <ng-container *ngSwitchCase="CmsFarmTableDataAction.PUBLISH">
                   publish
+                </ng-container>
+                <ng-container *ngSwitchCase="CmsFarmTableDataAction.OFF">
+                  redo
+                </ng-container>
+                <ng-container *ngSwitchCase="CmsFarmTableDataAction.PREVIEW">
+                  visibility
+                </ng-container>
+                <ng-container *ngSwitchCase="CmsFarmTableDataAction.MORE">
+                  more_horiz
                 </ng-container>
               </mat-icon>
             </button>

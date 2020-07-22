@@ -142,12 +142,6 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   onTableActionClick(category: CmsFarmInfoCategory, event: FarmTableInfoActionEvent) {
     switch (event.action) {
-      case CmsFarmTableDataAction.DETAIL:
-        this.createSub(category);
-        break;
-      case CmsFarmTableDataAction.PREVIEW:
-        this.openViewDataModal(category, event.rowData);
-        break;
       case CmsFarmTableDataAction.CREATE:
         this.openModifyDataModal('create', category);
         break;
@@ -157,8 +151,17 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
       case CmsFarmTableDataAction.DELETE:
         this.deleteData(category, event.rowData);
         break;
-      case CmsFarmTableDataAction.AUDITING:
+      case CmsFarmTableDataAction.PUBLISH:
         this.auditingData(category, event.rowData);
+        break;
+      case CmsFarmTableDataAction.OFF:
+        // TODO: CmsFarmTableDataAction.OFF
+        break;
+      case CmsFarmTableDataAction.PREVIEW:
+        this.openViewDataModal(category, event.rowData);
+        break;
+      case CmsFarmTableDataAction.MORE:
+        this.createSub(category);
         break;
     }
   }

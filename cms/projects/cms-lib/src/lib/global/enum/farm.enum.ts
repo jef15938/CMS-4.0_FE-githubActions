@@ -31,8 +31,8 @@ export enum CmsFarmTableDataAction {
   CREATE = 'CREATE',
   MODIFY = 'MODIFY',
   DELETE = 'DELETE',
-  PREVIEW = 'PREVIEW',
-  AUDITING = 'AUDITING',
-  DETAIL = 'DETAIL',
   PUBLISH = 'PUBLISH',
+  OFF = 'OFF',
+  PREVIEW = 'PREVIEW',
+  MORE = 'MORE',
 }
