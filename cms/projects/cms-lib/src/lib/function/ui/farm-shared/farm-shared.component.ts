@@ -100,6 +100,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onSearchInfoNeedQuery(category: CmsFarmInfoCategory) {
+    this.currentTablePage = 1;
     this.getCategoryTableInfo(category).subscribe();
   }
 

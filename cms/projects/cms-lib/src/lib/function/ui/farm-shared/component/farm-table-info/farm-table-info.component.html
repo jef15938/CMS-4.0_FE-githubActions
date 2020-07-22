@@ -73,7 +73,8 @@
     <tr mat-row *matRowDef="let row; columns:(tableInfo|getFarmTableDisplayCols);"></tr>
   </table>
   <ng-container *ngIf="tableInfo.pageInfo; let pageInfo">
-    <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
+    <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)"
+      [pageIndex]="pageInfo.page - 1">
     </mat-paginator>
   </ng-container>
 </ng-container>
