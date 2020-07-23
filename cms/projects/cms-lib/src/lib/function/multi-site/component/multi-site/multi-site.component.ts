@@ -174,7 +174,6 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
       // }),
     ).subscribe(selectedNode => {
       if (selectedNode) {
-        console.warn('selectedNode = ', selectedNode);
         this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id).pipe(
           catchError(err => {
             alert(`取得節點錯誤 : ${selectedNode.node_name}`);
