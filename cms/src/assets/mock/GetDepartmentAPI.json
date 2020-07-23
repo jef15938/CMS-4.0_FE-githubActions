@@ -3,22 +3,22 @@
     "dept_id": "000",
     "dept_name": "總部門",
     "children": [{
-        "dept_id": "001-1",
+        "dept_id": "001",
         "dept_name": "部門A",
         "children": [{
-            "dept_id": "001-1-1",
+            "dept_id": "001",
             "dept_name": "部門A-1",
             "children": []
           },
           {
-            "dept_id": "001-1-2",
+            "dept_id": "001-2",
             "dept_name": "部門A-2",
             "children": []
           }
         ]
       },
       {
-        "dept_id": "001-2",
+        "dept_id": "002",
         "dept_name": "部門B",
         "children": []
       }

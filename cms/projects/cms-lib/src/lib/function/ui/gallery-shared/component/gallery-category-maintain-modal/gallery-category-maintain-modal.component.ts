@@ -33,7 +33,6 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   }
 
   ngOnInit(): void {
-    this.assignDeptId = '001-1';
     const assignedDeptIds = this.assignDeptId.split(',');
     this.departmentService.getAllDepartment().subscribe(depts => {
       this.checkedDepts = this.getDeptsByDeptIds(assignedDeptIds, depts);
@@ -49,7 +48,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   }
 
   private save() {
-    const checkedDeptIds = this.checkedDepts.map(dept => dept.dept_id);
+    const checkedDeptIds = Array.from(new Set(this.checkedDepts.map(dept => dept.dept_id)));
     const assignDeptId = checkedDeptIds.length ? checkedDeptIds.join(',') : '';
     return (
       this.action === 'Create'
