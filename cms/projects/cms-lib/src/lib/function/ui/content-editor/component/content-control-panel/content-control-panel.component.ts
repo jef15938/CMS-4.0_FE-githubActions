@@ -5,6 +5,7 @@ import { ContentEditorManager } from '../../service/content-editor-manager';
 import { EditorMode } from '../../content-editor.interface';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 import { ContentEditorService } from '../../content-editor.service';
+import { LanguageInfo } from '../../../../../global/api/neuxAPI/bean/LanguageInfo';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -86,11 +87,17 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    * 顯示版型info
    */
   templateShowInfo() {
-    // this.contentEditorService.openEditor({
-    //   contentInfo: { templates: [this.selected.templateInfo] } as ContentInfo,
-    //   mode: EditorMode.INFO,
-    //   selectableTemplates: {} as any
-    // }).subscribe();
+    const languageInfo = new LanguageInfo();
+    languageInfo.templates = [this.selected.templateInfo];
+    const contentInfo = new ContentInfo();
+    contentInfo.languages = [languageInfo];
+
+    this.contentEditorService.openEditor({
+      contentID: null,
+      contentInfo,
+      mode: EditorMode.INFO,
+      selectableTemplates: {} as any
+    }).subscribe();
   }
 
   templateMove(direction: 'up' | 'down') {
