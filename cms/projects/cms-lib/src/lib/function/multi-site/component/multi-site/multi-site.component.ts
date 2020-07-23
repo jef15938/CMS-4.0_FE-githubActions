@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Observable, concat, Subject, forkJoin, of } from 'rxjs';
-import { tap, takeUntil, concatMap, map, throttleTime } from 'rxjs/operators';
+import { Observable, concat, Subject, forkJoin, of, NEVER, throwError } from 'rxjs';
+import { tap, takeUntil, concatMap, map, throttleTime, catchError, switchMap } from 'rxjs/operators';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
 import { SitemapService, ContentService } from '../../../../global/api/service';
@@ -119,7 +119,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     tree.selectNode(defaultSelect);
   }
 
-  onCustomEvent(event: MultiSiteNodeCustomEvent) {
+  onSiteMapTreeCustomEvent(event: MultiSiteNodeCustomEvent) {
     if (event instanceof MultiSiteNodeCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
@@ -149,42 +149,51 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.nodeSelected$.pipe(
       takeUntil(this.destroy$),
       throttleTime(750),
-      concatMap(selectedNode => {
-        return (
-          selectedNode
-            ? this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id)
-            : of(undefined)
-        ).pipe(
-          tap(selectedSitemapNode => {
-            const parent = this.sitemapTree.findParent(selectedNode);
-            const order = (parent?.children || []).indexOf(selectedNode);
-            this.selectedNode = {
-              siteMap: selectedSitemapNode,
-              parentId: parent?.node_id,
-              nodeOrder: order > -1 ? `${order}` : '',
-            };
+      // switchMap(selectedNode => {
+      //   console.warn('selectedNode = ', selectedNode);
+      //   return (
+      //     selectedNode
+      //       ? this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id).pipe(
+      //         catchError(err => {
+      //           alert(`取得節點錯誤 : ${selectedNode.node_name}`);
+      //           return throwError(`取得節點錯誤 : ${selectedNode.node_name}`);
+      //         })
+      //       )
+      //       : of(undefined)
+      //   ).pipe(
+      //     tap(selectedSitemapNode => {
+      //       const parent = this.sitemapTree.findParent(selectedNode);
+      //       const order = (parent?.children || []).indexOf(selectedNode);
+      //       this.selectedNode = {
+      //         siteMap: selectedSitemapNode,
+      //         parentId: parent?.node_id,
+      //         nodeOrder: order > -1 ? `${order}` : '',
+      //       };
+      //     })
+      //   );
+      // }),
+    ).subscribe(selectedNode => {
+      if (selectedNode) {
+        this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id).pipe(
+          catchError(err => {
+            alert(`取得節點錯誤 : ${selectedNode.node_name}`);
+            return throwError(`取得節點錯誤 : ${selectedNode.node_name}`);
           })
-        );
-      }),
-    ).subscribe();
+        ).subscribe(selectedSitemapNode => {
+          const parent = this.sitemapTree.findParent(selectedNode);
+          const order = (parent?.children || []).indexOf(selectedNode);
+          this.selectedNode = {
+            siteMap: selectedSitemapNode,
+            parentId: parent?.node_id,
+            nodeOrder: order > -1 ? `${order}` : '',
+          };
+        });
+      }
+    });
   }
 
   onNodeUpdate(ev) {
     this.swichMode(EditModeType.Node);
-  }
-
-  testContentEditor() {
-    const fakeNodeId = 'fakeNodeId';
-    forkJoin([
-      this.contentService.getContentByContentID(fakeNodeId),
-      this.contentService.getTemplateByControlID(fakeNodeId),
-    ]).subscribe(([contentInfo, selectableTemplates]) => {
-      this.contentEditorService.openEditor({
-        contentInfo,
-        selectableTemplates,
-        mode: EditorMode.EDIT,
-      }).subscribe();
-    });
   }
 
   testHtmlEditor() {

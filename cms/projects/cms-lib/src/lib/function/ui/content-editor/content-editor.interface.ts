@@ -7,9 +7,11 @@ export enum EditorMode {
 }
 
 export interface ContentEditorServiceConfig {
+  contentID: string;
   contentInfo: ContentInfo;
   mode: EditorMode;
   selectableTemplates: TemplateGetResponse;
+  onSaved?: () => void;
 }
 
 export interface ContentEditorServiceInterface {

@@ -194,9 +194,11 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   openContentEditor(column: CmsFarmFormColumn) {
     const contentInfo = JSON.parse(column.value);
+    // TODO: fake
     const controlId = 'farm-control-id';
     this.contentService.getTemplateByControlID(controlId).subscribe(selectableTemplates => {
       this.contentEditorService.openEditor({
+        contentID: controlId,
         contentInfo,
         selectableTemplates,
         mode: EditorMode.EDIT,

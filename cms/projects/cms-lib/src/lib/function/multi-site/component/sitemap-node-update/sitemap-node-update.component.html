@@ -3,6 +3,7 @@
     <h1>{{siteMapUpdateInfo.siteMap.node_name}}</h1>
   </div>
   <div class="page-content-container" *ngIf="siteMapUpdateInfo?.siteMap">
+    <div>NodeId：{{siteMapUpdateInfo.siteMap.node_id}}</div>
     <div>ParentId：{{siteMapUpdateInfo.parentId}} / NodeOrder：{{siteMapUpdateInfo.nodeOrder}}</div>
     <div class="btn-group" *ngIf="siteMapUpdateInfo?.siteMap?.node_type === NodeType.Content">
       <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"

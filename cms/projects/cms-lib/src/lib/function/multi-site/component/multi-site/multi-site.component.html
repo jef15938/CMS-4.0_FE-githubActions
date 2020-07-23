@@ -4,7 +4,6 @@
     <div class="page-title-container">
       <h1>網站列表
         <div style="float: right;">
-          <button type="button" tabindex="0" mat-button (click)="testContentEditor()">Content(測試)</button>
           <button type="button" tabindex="0" mat-button (click)="testHtmlEditor()">Html(測試)</button>
         </div>
       </h1>
@@ -59,7 +58,7 @@
     <div class="page-content-container">
       <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="sitemaps" [nodeDisplayField]="'node_name'"
         [draggable]="true" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
-        (customEvent)="onCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
+        (customEvent)="onSiteMapTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
         (afterRender)="afterTreeRender($event)" (dragTo)="onTreeDragTo($event)"></cms-tree>
     </div>
   </div>

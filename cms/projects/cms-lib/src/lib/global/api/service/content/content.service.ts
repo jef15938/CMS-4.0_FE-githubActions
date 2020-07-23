@@ -54,4 +54,24 @@ export class ContentService {
     }
     return this.restAPIService.dispatchRestApi('GetTemplateByControlID', { controlID });
   }
+
+  /**
+   *
+   *
+   * @param {string} contentID // SiteMap:nodeID
+   * @param {ContentInfo} contentInfo
+   * @returns
+   * @memberof ContentService
+   */
+  updateContent(contentID: string, contentInfo: ContentInfo): Observable<any> {
+    if (!contentID) { throw new ParamsError('contentID', 'updateContent', 'string', contentID); }
+    if (!contentInfo) { throw new ParamsError('contentInfo', 'updateContent', 'ContentInfo', contentInfo); }
+
+    const params: { [k: string]: any } = {
+      contentID,
+      requestBody: contentInfo,
+    };
+
+    return this.restAPIService.dispatchRestApi('PutContentByContentID', params);
+  }
 }

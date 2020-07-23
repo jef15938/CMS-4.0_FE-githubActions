@@ -101,6 +101,8 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
       this.contentService.getTemplateByControlID(nodeId),
     ]).subscribe(([contentInfo, selectableTemplates]) => {
       this.contentEditorService.openEditor({
+        onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
+        contentID: nodeId,
         contentInfo,
         selectableTemplates,
         mode: EditorMode.EDIT,

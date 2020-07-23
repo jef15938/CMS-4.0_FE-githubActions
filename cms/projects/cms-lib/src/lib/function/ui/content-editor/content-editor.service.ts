@@ -34,9 +34,11 @@ export class ContentEditorService implements ContentEditorServiceInterface {
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
       componentInitData: {
+        contentID: config.contentID,
         contentInfo: config.contentInfo,
         mode: config.mode,
         selectableTemplates: config.selectableTemplates,
+        onSaved: config.onSaved
       },
       modalSetting
     });

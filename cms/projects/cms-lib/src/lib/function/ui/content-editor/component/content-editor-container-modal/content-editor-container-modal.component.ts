@@ -3,6 +3,7 @@ import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInf
 import { TemplateGetResponse } from './../../../../../global/api/neuxAPI/bean/TemplateGetResponse';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interface';
+import { ContentService } from '../../../../../global/api/service';
 
 @Component({
   selector: 'cms-content-editor-container-modal',
@@ -12,13 +13,17 @@ import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interfa
 export class ContentEditorContainerModalComponent extends CustomModalBase implements OnInit {
   actions: CustomModalActionButton[];
 
+  @Input() contentID: string;
   @Input() contentInfo: ContentInfo;
   @Input() mode: EditorMode = EditorMode.EDIT;
   @Input() selectableTemplates: TemplateGetResponse;
+  @Input() onSaved: () => void;
 
   title: string | (() => string) = () => this.mode === EditorMode.INFO ? '版型規範' : '';
 
-  constructor() { super(); }
+  constructor(
+    private contentService: ContentService,
+  ) { super(); }
 
   ngOnInit(): void {
     this.modalRef.addPanelClass('cms-content-editor-container-modal');
@@ -29,10 +34,19 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   }
 
   save(event: ContentEditorSaveEvent) {
+    if (!this.contentID) { return; }
     event.editorSave();
     console.warn('event.contentInfo = ', event.contentInfo);
     console.warn('event.contentInfo = ', JSON.stringify(event.contentInfo));
-    alert('saved');
+    this.contentService.updateContent(this.contentID, event.contentInfo).subscribe(_ => {
+      alert('內容儲存成功');
+      if (this.onSaved) {
+        this.onSaved();
+      }
+    }, err => {
+      alert('內容儲存失敗');
+      console.error('內容儲存失敗', err);
+    });
   }
 
 }
