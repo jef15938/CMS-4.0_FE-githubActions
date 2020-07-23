@@ -155,7 +155,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
         this.auditingData(category, event.rowData);
         break;
       case CmsFarmTableDataAction.OFF:
-        // TODO: CmsFarmTableDataAction.OFF
+        this.takeOffData(category, event.rowData);
         break;
       case CmsFarmTableDataAction.PREVIEW:
         this.openViewDataModal(category, event.rowData);
@@ -215,21 +215,30 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
+  private takeOffData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    this.farmService.takeOffFormData(category.category_id, rowData.data_id).subscribe(_ => {
+      alert(`資料已下架 : ${rowData.data_id}`);
+      this.getCategoryTableInfo(category).subscribe();
+    });
+  }
+
   private deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    alert(`Delete : ${rowData.data_id}`);
-    this.getCategoryTableInfo(category).subscribe();
+    // this.farmService.takeOffFormData(category.category_id, rowData.data_id).subscribe(_ => {
+    //   alert(`資料已刪除 : ${rowData.data_id}`);
+    //   this.getCategoryTableInfo(category).subscribe();
+    // });
+    // TODO: 刪除 Farm Table 資料
+    alert('功能準備中');
   }
 
   private auditingData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    of(undefined).pipe(
-      concatMap(_ => this.modalService.openComponent({
-        component: AuditingFarmDataModalComponent,
-        componentInitData: {
-          funcId: category.category_id,
-          dataId: rowData.data_id,
-        }
-      }))
-    ).subscribe(confirm => {
+    this.modalService.openComponent({
+      component: AuditingFarmDataModalComponent,
+      componentInitData: {
+        funcId: category.category_id,
+        dataId: rowData.data_id,
+      }
+    }).subscribe(confirm => {
       if (confirm) {
         this.getCategoryTableInfo(category).subscribe();
       }

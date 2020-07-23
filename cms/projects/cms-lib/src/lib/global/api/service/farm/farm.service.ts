@@ -135,27 +135,44 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  auditingFarmData(funcId: string, dataId: string, startTime: string, endTime: string, memo: string) {
-    if (!funcId) { throw new ParamsError('funcId', 'auditingFarmData', 'string', funcId); }
-    if (!dataId) { throw new ParamsError('dataId', 'auditingFarmData', 'string', dataId); }
+  auditingFarmData(funcID: string, dataID: string, startTime: string, endTime: string, memo: string) {
+    if (!funcID) { throw new ParamsError('funcID', 'auditingFarmData', 'string', funcID); }
+    if (!dataID) { throw new ParamsError('dataID', 'auditingFarmData', 'string', dataID); }
     if (!startTime) { throw new ParamsError('startTime', 'auditingFarmData', 'string', startTime); }
     if (!endTime) { throw new ParamsError('endTime', 'auditingFarmData', 'string', endTime); }
     if (!memo) { throw new ParamsError('memo', 'auditingFarmData', 'string', memo); }
 
     const requestBody: FarmAuditingRequest = {
-      data_id: dataId,
+      data_id: dataID,
       start_time: startTime,
       end_time: endTime,
       memo,
-      func_id: funcId
+      func_id: funcID
     };
 
     const params: { [k: string]: any } = {
-      funcId,
+      funcID,
       requestBody,
     };
 
     return this.restAPIService.dispatchRestApi('PostFarmAuditingByFuncId', params);
+  }
+
+  /**
+   *
+   * @returns
+   * @memberof FarmService
+   */
+  takeOffFormData(funcID: string, dataID: string) {
+    if (!funcID) { throw new ParamsError('funcID', 'takeOffFormData', 'string', funcID); }
+    if (!dataID) { throw new ParamsError('dataID', 'takeOffFormData', 'string', dataID); }
+
+    const params: { [k: string]: any } = {
+      funcID,
+      dataID,
+    };
+
+    return this.restAPIService.dispatchRestApi('GetFarmTakeOffByFuncID', params);
   }
 
 }
