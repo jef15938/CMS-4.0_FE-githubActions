@@ -1,5 +1,6 @@
 export * from './wrapper.module';
 // base components
+export * from './layout-base/layout-base.component';
 export * from './layout-base/common-template-base.component';
 export * from './layout-base/data-source-template-base.component';
 export * from './layout-base/group-template-base.component';
