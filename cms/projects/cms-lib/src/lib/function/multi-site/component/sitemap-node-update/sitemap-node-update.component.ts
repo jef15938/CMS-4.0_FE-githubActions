@@ -101,7 +101,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
       this.contentService.getTemplateByControlID(nodeId),
     ]).subscribe(([contentInfo, selectableTemplates]) => {
       this.contentEditorService.openEditor({
-        onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
+        // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
         contentID: nodeId,
         contentInfo,
         selectableTemplates,
@@ -117,9 +117,11 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
         siteId: this.siteId,
         sitemapNode: this.siteMapUpdateInfo.siteMap
       }
-    }).subscribe(_ => {
-      alert('送審成功');
-      this.update.emit(this.sitemapMaintainModel);
+    }).subscribe(res => {
+      if (res) {
+        alert('送審成功');
+        this.update.emit(this.sitemapMaintainModel);
+      }
     });
   }
 
