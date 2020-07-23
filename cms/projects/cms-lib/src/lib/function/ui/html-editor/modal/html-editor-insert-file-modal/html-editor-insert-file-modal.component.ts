@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
-import { GalleryService } from '../../../../../global/api/service';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 
 @Component({
@@ -26,7 +25,6 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
 
   constructor(
     private gallerySharedService: GallerySharedService,
-    private galleryService: GalleryService,
   ) {
     super();
     this.localUrl = this.getLocalUrl();
@@ -54,7 +52,7 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
   changeGallery() {
     this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
-        this.aTagConfig.href = this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id);
+        this.aTagConfig.href = selectedGallery.url;
         this.aTagConfig.text = selectedGallery.file_name;
         this.fileType = selectedGallery.file_type;
       }

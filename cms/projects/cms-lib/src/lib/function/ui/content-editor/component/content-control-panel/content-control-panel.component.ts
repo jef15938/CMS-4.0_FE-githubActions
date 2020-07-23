@@ -95,7 +95,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     this.contentEditorService.openEditor({
       contentID: null,
       contentInfo,
-      mode: EditorMode.INFO,
+      editorMode: EditorMode.INFO,
       selectableTemplates: {} as any
     }).subscribe();
   }

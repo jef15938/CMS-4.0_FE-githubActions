@@ -15,11 +15,11 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   @Input() contentID: string;
   @Input() contentInfo: ContentInfo;
-  @Input() mode: EditorMode = EditorMode.EDIT;
+  @Input() editorMode: EditorMode = EditorMode.EDIT;
   @Input() selectableTemplates: TemplateGetResponse;
   @Input() onSaved: () => void;
 
-  title: string | (() => string) = () => this.mode === EditorMode.INFO ? '版型規範' : '';
+  title: string | (() => string) = () => this.editorMode === EditorMode.INFO ? '版型規範' : '';
 
   constructor(
     private contentService: ContentService,

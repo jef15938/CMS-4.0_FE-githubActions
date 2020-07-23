@@ -18,14 +18,14 @@ export class ContentEditorService implements ContentEditorServiceInterface {
 
   openEditor(config: ContentEditorServiceConfig): Observable<any> {
     const modalSetting: ModalSetting = {
-      id: `content-editor-${config.mode}`,
+      id: `content-editor-${config.editorMode}`,
       width: '100%',
       maxWidth: '100%',
       height: '100%',
       closeOnNavigation: false,
     };
 
-    if (config.mode === EditorMode.INFO) {
+    if (config.editorMode === EditorMode.INFO) {
       modalSetting.width = '90%';
       modalSetting.maxWidth = '90%';
       modalSetting.height = '90%';
@@ -36,7 +36,7 @@ export class ContentEditorService implements ContentEditorServiceInterface {
       componentInitData: {
         contentID: config.contentID,
         contentInfo: config.contentInfo,
-        mode: config.mode,
+        editorMode: config.editorMode,
         selectableTemplates: config.selectableTemplates,
         onSaved: config.onSaved
       },

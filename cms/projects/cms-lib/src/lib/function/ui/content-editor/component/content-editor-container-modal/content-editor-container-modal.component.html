@@ -1,5 +1,5 @@
 <ng-container *ngIf="contentInfo&&selectableTemplates">
-  <cms-content-editor [mode]="mode" [contentInfo]="contentInfo" [selectableTemplates]="selectableTemplates"
-    (editorClose)="close($event)" (editorSave)="save($event)">
+  <cms-content-editor [editorMode]="editorMode" [contentID]="contentID" [contentInfo]="contentInfo"
+    [selectableTemplates]="selectableTemplates" (editorClose)="close($event)" (editorSave)="save($event)">
   </cms-content-editor>
 </ng-container>

@@ -236,13 +236,4 @@ export class GalleryService {
     };
   }
 
-  getGalleryShowUrl() {
-    return `${this.apiUrl}/Show`;
-  }
-
-  getGalleryShowUrlByGalleryID(galleryID: number) {
-    return `${this.getGalleryShowUrl()}/${galleryID}`;
-  }
-
-
 }

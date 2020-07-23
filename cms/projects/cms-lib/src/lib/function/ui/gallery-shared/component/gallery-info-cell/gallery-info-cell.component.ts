@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
-import { GalleryService } from '../../../../../global/api/service/gallery/gallery.service';
 import { CustomCellRenderer, CmsTable } from '../../../../ui/table';
 
 @Component({
@@ -10,15 +9,9 @@ import { CustomCellRenderer, CmsTable } from '../../../../ui/table';
 })
 export class GalleryInfoCellComponent implements CustomCellRenderer, OnInit {
 
-  galleryShowUrl: string;
-
   config: { data: GalleryInfo, table: CmsTable };
 
-  constructor(
-    galleryService: GalleryService,
-  ) {
-    this.galleryShowUrl = galleryService.getGalleryShowUrl();
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }

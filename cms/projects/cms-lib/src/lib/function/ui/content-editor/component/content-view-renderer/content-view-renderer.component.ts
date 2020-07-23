@@ -34,7 +34,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
   private addTemplateBtnMap: Map<TemplatesContainerComponent, AddTemplateBtn[]> = new Map();
 
-  @Input() mode: EditorMode = EditorMode.EDIT;
+  @Input() editorMode: EditorMode = EditorMode.EDIT;
   @Input() contentInfo: ContentInfo;
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
@@ -79,7 +79,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   }
 
   private renderAddTemplateButton(templatesContainer: TemplatesContainerComponent) {
-    if (this.mode !== EditorMode.EDIT) { return; }
+    if (this.editorMode !== EditorMode.EDIT) { return; }
     if (!templatesContainer) { return; }
 
     // 確認Map資料
@@ -120,12 +120,12 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     if (!templatesContainer) { return; }
 
     templatesContainer.layoutWrapperComponents?.forEach((lw) => {
-      if (this.mode !== EditorMode.INFO) { // EDIT or READ
+      if (this.editorMode !== EditorMode.INFO) { // EDIT or READ
         (lw?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `版型ID:${lw.templateInfo.templateId}`);
       }
 
       lw?.componentRef?.instance?.templateFieldDirectives?.forEach(field => {
-        if (this.mode !== EditorMode.INFO) { // EDIT or READ
+        if (this.editorMode !== EditorMode.INFO) { // EDIT or READ
           (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `${field.fieldInfo.fieldType}`);
         } else {
           (field?.elementRef?.nativeElement as HTMLElement)?.classList.add('edit-info');
@@ -184,7 +184,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   }
 
   onSelect(ev: LayoutWrapperSelectEvent) {
-    if (this.mode !== EditorMode.EDIT) { return; }
+    if (this.editorMode !== EditorMode.EDIT) { return; }
     const oldSelectedTarget = this.nowSelectedTarget;
     if (oldSelectedTarget) { oldSelectedTarget.classList.remove('now-edit'); }
 
@@ -197,12 +197,12 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   }
 
   onEnter(target: HTMLElement) {
-    if (this.mode !== EditorMode.EDIT) { return; }
+    if (this.editorMode !== EditorMode.EDIT) { return; }
     target.classList.add('now-hover');
   }
 
   onLeave(target: HTMLElement) {
-    if (this.mode !== EditorMode.EDIT) { return; }
+    if (this.editorMode !== EditorMode.EDIT) { return; }
     target.classList.remove('now-hover');
   }
 

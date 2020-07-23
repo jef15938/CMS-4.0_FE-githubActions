@@ -1,4 +1,4 @@
-<div class="view-container" [class.mode-info]="mode===EditorMode.INFO">
+<div class="view-container" [class.mode-info]="editorMode===EditorMode.INFO">
   <ng-container *ngFor="let language of contentInfo.languages">
     <rdr-templates-container [templates]="language.templates" mode="edit" (select)="select.next($event)"
       (enter)="onEnter($event)" (leave)="onLeave($event)">

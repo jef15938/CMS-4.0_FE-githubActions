@@ -6,7 +6,7 @@ import { CmsFarmFormColumnDisplayType } from './../../../../../global/enum';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm-shared.interface';
 import { ContentEditorService, EditorMode } from './../../../content-editor';
-import { ContentService, GalleryService, SitemapService } from '../../../../../global/api/service';
+import { ContentService, SitemapService } from '../../../../../global/api/service';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { HtmlEditorService } from '../../../html-editor';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
@@ -38,7 +38,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     private contentEditorService: ContentEditorService,
     private htmlEditorService: HtmlEditorService,
     private gallerySharedService: GallerySharedService,
-    private galleryService: GalleryService,
     private sitemapService: SitemapService,
     private cmsDateAdapter: CmsDateAdapter,
   ) { }
@@ -201,7 +200,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
         contentID: controlId,
         contentInfo,
         selectableTemplates,
-        mode: EditorMode.EDIT,
+        editorMode: EditorMode.EDIT,
       }).subscribe((res: ContentInfo) => {
         column.value = res ? JSON.stringify(res) : '';
       });
@@ -222,7 +221,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   changeGallery(col: CmsFarmFormColumn) {
     this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
-        col.value = this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id);
+        col.value = selectedGallery.url;
       }
     });
   }

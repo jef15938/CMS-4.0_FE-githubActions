@@ -232,7 +232,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
           );
           break;
         case event.ActionType.CopyUrl:
-          this.copyToClipBoard(`${this.galleryService.getGalleryShowUrlByGalleryID(event.data.gallery_id)}`);
+          this.copyToClipBoard(event.data.url);
           action = NEVER;
           break;
       }

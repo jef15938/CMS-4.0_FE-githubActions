@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ContentInfo } from '../../../global/api/neuxAPI/bean/ContentInfo';
 import { TemplateGetResponse } from '../../../global/api/neuxAPI/bean/TemplateGetResponse';
-import { ContentEditorSaveEvent, EditorMode } from './content-editor.interface';
+import { ContentEditorSaveEvent, EditorMode, ContentEditorActionMode } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
@@ -21,6 +21,7 @@ import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-gua
 })
 export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked, CmsCanDeactiveGuardian {
   EditorMode = EditorMode;
+  ContentEditorActionMode = ContentEditorActionMode;
 
   @ViewChild(ContentViewRendererComponent) contentViewRenderer: ContentViewRendererComponent;
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
@@ -29,16 +30,16 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   @ViewChildren('clickCapturelistenerBlock') clickCapturelistenerBlocks: QueryList<ElementRef>;
 
   // 使用模式
-  @Input() mode: EditorMode = EditorMode.EDIT;
+  @Input() editorMode: EditorMode = EditorMode.EDIT;
 
   // 編輯對象外部提供資料
   @Input() contentInfo: ContentInfo;
+  @Input() contentID: string;
 
   // 可選版面資料
   @Input() selectableTemplates: TemplateGetResponse;
 
   @Input() btnClose = true;
-  @Input() btnSave = true;
 
   @Output() editorClose = new EventEmitter<ContentInfo>();
   @Output() editorSave = new EventEmitter<ContentEditorSaveEvent>();
@@ -163,7 +164,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   onViewSelected($event) {
-    if (this.mode !== EditorMode.EDIT) { return; }
+    if (this.editorMode !== EditorMode.EDIT) { return; }
     this.resetSelected();
     this.manager.selectedViewElementEvent = $event;
   }

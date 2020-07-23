@@ -6,10 +6,14 @@ export enum EditorMode {
   EDIT, INFO, READ,
 }
 
+export enum ContentEditorActionMode {
+  LAYOUT, TEMPLATE
+}
+
 export interface ContentEditorServiceConfig {
   contentID: string;
   contentInfo: ContentInfo;
-  mode: EditorMode;
+  editorMode: EditorMode;
   selectableTemplates: TemplateGetResponse;
   onSaved?: () => void;
 }

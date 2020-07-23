@@ -105,7 +105,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
         contentID: nodeId,
         contentInfo,
         selectableTemplates,
-        mode: EditorMode.EDIT,
+        editorMode: EditorMode.EDIT,
       }).subscribe();
     });
   }

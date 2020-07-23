@@ -1,26 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
-import { GalleryService } from '../../../../global/api/service/gallery/gallery.service';
 
 @Pipe({
   name: 'gelleryImgSrc'
 })
 export class GelleryImgSrcPipe implements PipeTransform {
 
-  private galleryShowUrl: string;
-
-  constructor(
-    galleryService: GalleryService,
-  ) {
-    this.galleryShowUrl = galleryService.getGalleryShowUrl();
-  }
+  constructor() { }
 
   transform(data: GalleryInfo, args?: any): string {
     if (data) {
       const isImg = this.isImg(data);
       const path =
         isImg
-          ? `${this.galleryShowUrl}/${data.gallery_id}`
+          ? `${data.url}`
           : `${this.getLocalUrl()}/assets/img/icon/${data.file_type.toLowerCase()}.png`;
       return path;
     } else {

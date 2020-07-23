@@ -2,7 +2,6 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective, FieldInfo } from 'render';
 import { GallerySharedService } from '../../../../../../gallery-shared/service/gallery-shared.service';
-import { GalleryService } from '../../../../../../../../global/api/service/gallery/gallery.service';
 import { GalleryInfo } from '../../../../../../../../global/api/neuxAPI/bean/GalleryInfo';
 
 @Component({
@@ -20,7 +19,6 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
 
   constructor(
     private gallerySharedService: GallerySharedService,
-    private galleryService: GalleryService,
   ) {
     super();
   }
@@ -42,7 +40,7 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
   changeGallery() {
     this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
-        this.fieldInfo.fieldVal = this.galleryService.getGalleryShowUrlByGalleryID(selectedGallery.gallery_id);
+        this.fieldInfo.fieldVal = selectedGallery.url;
         this.change.emit();
       }
     });
