@@ -4,7 +4,7 @@ import {
   HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID
 } from '@angular/core';
 import { ContentTemplateInfo } from '../../../global/interface';
-import { LayoutBase } from '../layout-base/_base.interface';
+import { LayoutBase } from '../layout-base/layout-base.interface';
 import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
 import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';

@@ -1,4 +1,4 @@
-import { LayoutBaseComponent } from './_base';
+import { LayoutBaseComponent } from './layout-base.component';
 import { ContentTemplateInfo } from '../../../global/interface/content-template-info.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { Injector } from '@angular/core';

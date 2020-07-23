@@ -1,4 +1,4 @@
-import { LayoutBaseComponent } from './_base';
+import { LayoutBaseComponent } from './layout-base.component';
 import { GroupTemplateInfo } from '../../../global/interface/group-template-info.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { Injector } from '@angular/core';

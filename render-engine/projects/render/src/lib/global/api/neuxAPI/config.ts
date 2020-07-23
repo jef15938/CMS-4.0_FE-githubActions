@@ -1,3 +1,4 @@
+
 const BASE_URL = 'http://runtime.decoder.com.tw';
 const API_URL = {
   GetPageByPageID: `${BASE_URL}\/Page/{pageID}`,
@@ -16,11 +17,4 @@ const API_TYPE = {
   GetPreviewCompareByPageID: 'Restful',
   GetSiteMapDownloadByFormat: 'Restful',
 
-};
-
-export const environment = {
-  production: true,
-  apiBaseUrl: BASE_URL,
-  API_URL,
-  API_TYPE
 };

@@ -1,6 +1,6 @@
 import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector, OnDestroy, OnChanges, SimpleChanges, Directive } from '@angular/core';
 import { ContentTemplateInfo } from '../../../global/interface/content-template-info.interface';
-import { LayoutBase } from './_base.interface';
+import { LayoutBase } from './layout-base.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
 import { TemplateFieldDirective } from '../layout-wrapper/field-directive/template-field.directive';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
