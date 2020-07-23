@@ -5,7 +5,7 @@
       <input matInput [(ngModel)]="categoryName" name="categoryName" required #modelName="ngModel">
       <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error>
     </mat-form-field>
-    <hr>
+    <hr style="margin: 16px 0;">
     <div>
       <h3>選擇部門</h3>
       <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="depts" [checkedNodes]="checkedDepts"
