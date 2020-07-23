@@ -31,7 +31,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   columnTrigger = new Subject<CmsFarmFormColumn>();
 
   // TEST
-  sitemaps: any[];
+  sitemaps: any[] = [];
 
   constructor(
     private contentService: ContentService,
@@ -46,10 +46,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.rows = this.createRows(this.farmFormInfo);
     this.formGroup = this.createFormGroup(this.farmFormInfo);
 
-    // TODO: TEST
-    this.sitemapService.getUserSiteMapNodes('site1').subscribe(sitemap => {
-      this.sitemaps = sitemap;
-    });
+    // TODO: Farm Tree Test
+    // this.sitemapService.getUserSiteMapNodes('portal').subscribe(sitemap => {
+    //   this.sitemaps = sitemap;
+    // });
   }
 
   private createRows(farmFormInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
