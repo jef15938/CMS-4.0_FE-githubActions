@@ -141,9 +141,9 @@ export class SitemapService {
   updateSiteNode(
     nodeID: string, nodeName: string, nodeOrders: string, metaTitle: string,
     optional?: {
-      parentId?: string, contentPath?: string,
-      urlType?: string, urlLinkNodeId?: string, url?: string, urlBlank?: string,
-      metaDescription?: string, metaKeyword?: string, metaImage?: string,
+      parent_id?: string, content_path?: string,
+      url_type?: string, url_link_node_id?: string, url?: string, url_blank?: string,
+      meta_description?: string, meta_keyword?: string, meta_image?: string,
     }
   ) {
     if (!nodeID) { throw new ParamsError('nodeID', 'updateSiteNode', 'string', nodeID); }
@@ -154,16 +154,16 @@ export class SitemapService {
     const requestBody: UserSiteMapPutRequest = {
       node_name: nodeName,
       node_orders: nodeOrders,
-      parent_id: optional?.parentId,
-      url_type: optional?.contentPath,
-      url_link_node_id: optional?.urlLinkNodeId,
+      parent_id: optional?.parent_id,
+      content_path: optional?.content_path,
+      url_type: optional?.url_type,
+      url_link_node_id: optional?.url_link_node_id,
       url: optional?.url,
-      url_blank: optional?.urlBlank,
-      content_path: optional?.contentPath,
+      url_blank: optional?.url_blank,
       meta_title: metaTitle,
-      meta_description: optional?.metaDescription,
-      meta_keyword: optional?.metaKeyword,
-      meta_image: optional?.metaImage,
+      meta_description: optional?.meta_description,
+      meta_keyword: optional?.meta_keyword,
+      meta_image: optional?.meta_image,
     };
 
     const params: { [k: string]: any } = {

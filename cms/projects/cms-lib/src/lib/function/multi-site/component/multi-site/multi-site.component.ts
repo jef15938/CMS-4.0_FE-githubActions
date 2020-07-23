@@ -237,15 +237,15 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
             '0',
             nodeToUpdate.meta_title,
             {
-              parentId: to.node_id,
-              contentPath: nodeToUpdate.content_path,
-              urlType: nodeToUpdate.url_type,
-              urlLinkNodeId: nodeToUpdate.url_link_node_id,
+              parent_id: to.node_id,
+              content_path: nodeToUpdate.content_path,
+              url_type: nodeToUpdate.url_type,
+              url_link_node_id: nodeToUpdate.url_link_node_id,
               url: nodeToUpdate.url,
-              urlBlank: nodeToUpdate.url_blank,
-              metaDescription: nodeToUpdate.meta_description,
-              metaKeyword: nodeToUpdate.meta_keyword,
-              metaImage: nodeToUpdate.meta_image,
+              url_blank: nodeToUpdate.url_blank,
+              meta_description: nodeToUpdate.meta_description,
+              meta_keyword: nodeToUpdate.meta_keyword,
+              meta_image: nodeToUpdate.meta_image,
             }
           );
         }),
