@@ -11,7 +11,7 @@ import { RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS } from './global/const/render-
     AppComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
     RenderModule,

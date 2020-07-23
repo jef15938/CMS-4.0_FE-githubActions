@@ -17,6 +17,9 @@
     },
     {
       "path": "./projects/render/tsconfig.spec.json"
+    },
+    {
+      "path": "./tsconfig.server.json"
     }
   ]
 }
