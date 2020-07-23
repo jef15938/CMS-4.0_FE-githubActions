@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserSiteMapPostRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPostRequest';
-import { SitemapService } from '../../../../global/api/service';
+import { SitemapService, ContentService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
+import { LayoutInfo } from '../../../../global/api/neuxAPI/bean/LayoutInfo';
+import { tap } from 'rxjs/operators';
+import { MatCheckboxChange } from '@angular/material/checkbox/checkbox';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
 
@@ -57,7 +60,10 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   @Input() siteId: string;
   @Input() parentId: string;
 
+  activedLayoutID: string;
+
   sitemapMaintainModel: SiteMapCreateModel;
+  layouts: LayoutInfo[] = [];
 
   urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
     { value: SiteMapUrlType.Inside, name: '站內' },
@@ -77,10 +83,19 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
 
   constructor(
     private siteMapService: SitemapService,
+    private contentService: ContentService,
   ) { super(); }
 
   ngOnInit(): void {
+    // this.updateSize('960px');
     this.sitemapMaintainModel = new SiteMapCreateModel(this.parentId);
+    this.getLayouts().subscribe();
+  }
+
+  getLayouts() {
+    return this.contentService.getLayout().pipe(
+      tap(layouts => this.layouts = layouts)
+    );
   }
 
   confirm() {
@@ -92,6 +107,22 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     ).subscribe(_ => {
       this.close('Created');
     });
+  }
+
+  onSelectedLayoutCheckedChange(ev: MatCheckboxChange, layout: LayoutInfo) {
+    if (ev.checked) {
+      this.sitemapMaintainModel.layout_id = layout.layout_id;
+    } else {
+      this.sitemapMaintainModel.layout_id = undefined;
+    }
+  }
+
+  setActivedLayout(layout: LayoutInfo, actived: boolean) {
+    if (actived) {
+      this.activedLayoutID = layout.layout_id;
+    } else if (this.activedLayoutID === layout.layout_id) {
+      this.activedLayoutID = undefined;
+    }
   }
 
 }

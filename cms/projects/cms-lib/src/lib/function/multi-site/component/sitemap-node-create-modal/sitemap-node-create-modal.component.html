@@ -62,9 +62,39 @@
       </ng-container>
       <!-- CONTENT -->
       <ng-container *ngSwitchCase="NodeType.Content">
+
+        <div class="mat-form-field-wrapper layout-select">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>版面</mat-panel-title>
+              <mat-panel-description>
+                {{(sitemapMaintainModel.layout_id | getLayoutByLayoutID : this.layouts)?.layout_name}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="option">
+              <span class="list">
+                <div *ngFor="let option of layouts" [class.actived]="option.layout_id===activedLayoutID"
+                  (mouseenter)="setActivedLayout(option, true)" (mouseleave)="setActivedLayout(option, false)">
+                  <mat-checkbox [checked]="option.layout_id===sitemapMaintainModel.layout_id"
+                    (change)="onSelectedLayoutCheckedChange($event, option)">
+                    {{option.layout_name}}
+                  </mat-checkbox>
+                </div>
+              </span>
+              <span class="thumbnail">
+                <ng-container *ngIf="(activedLayoutID | getLayoutByLayoutID : this.layouts); let actived;">
+                  <img *ngIf="actived?.layout_thumbnail" [src]="actived.layout_thumbnail">
+                </ng-container>
+              </span>
+            </div>
+          </mat-expansion-panel>
+        </div>
+
         <mat-form-field appearance="outline">
           <mat-label>節點連結路徑</mat-label>
-          <input matInput [(ngModel)]="sitemapMaintainModel.content_path" name="content_path" #modelMetaTitle="ngModel">
+          <input matInput [(ngModel)]="sitemapMaintainModel.content_path" name="content_path"
+            #modelContentPath="ngModel">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Meta描述</mat-label>

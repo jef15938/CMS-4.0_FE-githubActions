@@ -6,6 +6,7 @@ import { MultiSiteNodeComponent } from './component/multi-site-node/multi-site-n
 import { SitemapNodeUpdateComponent } from './component/sitemap-node-update/sitemap-node-update.component';
 import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
 import { AuditingSitemapModalComponent } from './component/auditing-sitemap-modal/auditing-sitemap-modal.component';
+import { GetLayoutByLayoutIDPipe } from './pipe/get-layout-by-layout-id.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { AuditingSitemapModalComponent } from './component/auditing-sitemap-moda
     SitemapNodeUpdateComponent,
     SitemapNodeCreateModalComponent,
     AuditingSitemapModalComponent,
+    GetLayoutByLayoutIDPipe,
   ],
 })
 export class MultiSiteModule { }
