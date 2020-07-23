@@ -5,8 +5,7 @@ import {
 import { TemplateGetResponse } from './../../../../../global/api/neuxAPI/bean/TemplateGetResponse';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { TemplateInfo } from './../../../../../global/api/neuxAPI/bean/TemplateInfo';
-import { DynamicComponentFactoryService } from 'render';
-import { LayoutBaseComponent } from 'render/lib/function/wrapper/layout-base/_base';
+import { DynamicComponentFactoryService, LayoutBaseComponent } from 'render';
 import { ContentTemplateInfo } from '../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 
 @Component({
