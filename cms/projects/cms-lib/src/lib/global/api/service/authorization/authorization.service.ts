@@ -41,6 +41,7 @@ export class AuthorizationService {
     };
 
     return this.respAPIService.dispatchRestApi('PostLogin', { requestBody }).pipe(
+      concatMap(_ => this.getLoginInfo()),
       tap(_ => this.router.navigate([''])),
     );
   }

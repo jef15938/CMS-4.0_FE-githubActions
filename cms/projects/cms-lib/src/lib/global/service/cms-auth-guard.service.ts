@@ -17,11 +17,18 @@ export class CmsAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot, state: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    if (!localStorage.getItem('loginInfo')) {
+      return this.toLoginPage();
+    }
     return this.authorizationService.getLoginInfo().pipe(
       map(_ => true),
       catchError(err => {
-        return of(this.router.parseUrl('login'));
+        return this.toLoginPage();
       }),
     );
+  }
+
+  toLoginPage() {
+    return of(this.router.parseUrl('login'));
   }
 }
