@@ -5,7 +5,7 @@ import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
 import { LayoutInfo } from '../../../../global/api/neuxAPI/bean/LayoutInfo';
 import { tap } from 'rxjs/operators';
-import { MatCheckboxChange } from '@angular/material/checkbox/checkbox';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
 
