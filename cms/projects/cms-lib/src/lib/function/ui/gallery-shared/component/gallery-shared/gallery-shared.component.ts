@@ -41,6 +41,11 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   private categorySelected$ = new Subject<GalleryCategoryInfo>();
 
+  filter: { fileName: string, fileType: string } = {
+    fileName: '',
+    fileType: '',
+  };
+
   constructor(
     private galleryService: GalleryService,
     private authorizationService: AuthorizationService,
@@ -115,7 +120,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getGallery() {
+  getGallery(resetPage = false) {
 
     if (!this.selectedCategory?.category_id) {
       this.galleryPageInfo = undefined;
@@ -125,7 +130,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
     return this.galleryService.getGalleryByCategoryID(
       this.selectedCategory.category_id,
-      this.galleryPageInfo?.page
+      resetPage ? 1 : this.galleryPageInfo?.page,
+      this.filter
     ).pipe(
       tap(res => {
         this.galleryPageInfo = res.pageInfo;

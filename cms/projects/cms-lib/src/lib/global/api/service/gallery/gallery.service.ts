@@ -85,11 +85,22 @@ export class GalleryService {
    * @returns
    * @memberof GalleryService
    */
-  getGalleryByCategoryID(categoryID: string, page = 1): Observable<GalleryGetResponse> {
+  getGalleryByCategoryID(categoryID: string, page = 1, filter?: { fileName?: string, fileType?: string }): Observable<GalleryGetResponse> {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
-    return this.respAPIService.dispatchRestApi('GetGalleryByCategoryID', { categoryID, page });
+
+    const params: {
+      categoryID: string,
+      page: number,
+      fileName?: string,
+      fileType?: string,
+    } = { categoryID, page };
+
+    if (filter?.fileName) { params.fileName = filter.fileName; }
+    if (filter?.fileType) { params.fileType = filter.fileType; }
+
+    return this.respAPIService.dispatchRestApi('GetGalleryByCategoryID', params);
   }
 
   /**

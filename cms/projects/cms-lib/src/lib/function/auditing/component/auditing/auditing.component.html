@@ -8,7 +8,8 @@
   </ng-container>
   <cms-table [colDefs]="colDefs" [dataSource]="auditings" (customEvent)="onCustomEvent($event)"></cms-table>
   <ng-container *ngIf="pageInfo?.totalPageSize && pageInfo?.totalRecSize">
-    <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
+    <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)"
+      [pageIndex]="pageInfo.page-1">
     </mat-paginator>
   </ng-container>
 </div>

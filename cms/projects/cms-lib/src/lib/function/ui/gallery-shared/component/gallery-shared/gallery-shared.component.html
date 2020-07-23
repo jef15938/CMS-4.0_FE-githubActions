@@ -17,6 +17,24 @@
       <h1>媒體庫：{{selectedCategory?.category_name}}</h1>
     </div>
     <div class="page-content-container">
+
+      <div class="filter">
+        <div class="fields">
+          <mat-form-field appearance="outline" style="width: 50%">
+            <mat-label>檔案名稱</mat-label>
+            <input matInput [(ngModel)]="filter.fileName" name="fileName">
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="width: 50%">
+            <mat-label>檔案類型</mat-label>
+            <input matInput [(ngModel)]="filter.fileType" name="fileType">
+          </mat-form-field>
+        </div>
+
+        <button class="search-btn" type="button" mat-icon-button (click)="getGallery(true).subscribe()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+
       <ng-container *ngIf="galleryPageInfo?.page">
         <div>目前頁數:{{galleryPageInfo.page}}</div>
         <br>
@@ -26,7 +44,8 @@
           (rowClick)="onRowClick($event)"></cms-table>
       </ng-container>
       <ng-container *ngIf="galleryPageInfo?.totalPageSize && galleryPageInfo?.totalRecSize">
-        <mat-paginator [length]="galleryPageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)">
+        <mat-paginator [length]="galleryPageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)"
+          [pageIndex]="galleryPageInfo.page-1">
         </mat-paginator>
       </ng-container>
     </div>
