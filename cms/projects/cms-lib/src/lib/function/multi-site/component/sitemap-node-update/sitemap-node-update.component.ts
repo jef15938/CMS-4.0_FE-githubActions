@@ -117,7 +117,10 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
         siteId: this.siteId,
         sitemapNode: this.siteMapUpdateInfo.siteMap
       }
-    }).subscribe(_ => this.update.emit(this.sitemapMaintainModel));
+    }).subscribe(_ => {
+      alert('送審成功');
+      this.update.emit(this.sitemapMaintainModel);
+    });
   }
 
   save() {
@@ -128,6 +131,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
       this.sitemapMaintainModel.meta_title,
       this.sitemapMaintainModel
     ).subscribe(_ => {
+      alert('修改成功');
       this.update.emit(this.sitemapMaintainModel);
     });
   }
