@@ -174,6 +174,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
       // }),
     ).subscribe(selectedNode => {
       if (selectedNode) {
+        console.warn('selectedNode = ', selectedNode);
         this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id).pipe(
           catchError(err => {
             alert(`取得節點錯誤 : ${selectedNode.node_name}`);
@@ -193,13 +194,21 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onNodeUpdate(reset = false) {
-    console.warn('this.selectedNode = ', this.selectedNode);
     if (reset) {
       this.swichMode(EditModeType.Node);
     } else {
-      const selectedNode = this.selectedNode.siteMap as any;
+      const selectedNodeID = this.selectedNode.siteMap.node_id;
+      const selectedNode = this.getNodeFromSitemapsByNodeID(selectedNodeID, this.sitemaps);
       this.nodeSelected$.next(selectedNode);
     }
+  }
+
+  private getNodeFromSitemapsByNodeID(nodeID: string, sitemaps: SiteMapGetResponse[]): SiteMapGetResponse {
+    if (!sitemaps?.length) { return undefined; }
+    const found = sitemaps.find(node => node.node_id === nodeID);
+    if (found) { return found; }
+    const children: SiteMapGetResponse[] = sitemaps.reduce((a, b) => a.concat(b.children || []), []);
+    return this.getNodeFromSitemapsByNodeID(nodeID, children);
   }
 
   testHtmlEditor() {
