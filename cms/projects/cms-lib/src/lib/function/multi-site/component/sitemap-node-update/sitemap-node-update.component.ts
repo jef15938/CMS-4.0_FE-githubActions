@@ -117,7 +117,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
         siteId: this.siteId,
         sitemapNode: this.siteMapUpdateInfo.siteMap
       }
-    }).subscribe();
+    }).subscribe(_ => this.update.emit(this.sitemapMaintainModel));
   }
 
   save() {

@@ -192,8 +192,14 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onNodeUpdate(ev) {
-    this.swichMode(EditModeType.Node);
+  onNodeUpdate(reset = false) {
+    console.warn('this.selectedNode = ', this.selectedNode);
+    if (reset) {
+      this.swichMode(EditModeType.Node);
+    } else {
+      const selectedNode = this.selectedNode.siteMap as any;
+      this.nodeSelected$.next(selectedNode);
+    }
   }
 
   testHtmlEditor() {
@@ -235,7 +241,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
           );
         }),
       ).subscribe(_ => {
-        this.onNodeUpdate(undefined);
+        this.onNodeUpdate(true);
       });
     });
   }

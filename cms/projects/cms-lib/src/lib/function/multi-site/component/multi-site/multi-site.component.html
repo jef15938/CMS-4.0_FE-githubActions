@@ -64,7 +64,7 @@
   </div>
   <div *ngIf="selectedNode" style="width: 50%; float: right; border-left: 1px solid lightgray;">
     <cms-sitemap-node-update [siteId]="selectedSite?.site_id" [siteMapUpdateInfo]="selectedNode"
-      (update)="onNodeUpdate($event)">
+      (update)="onNodeUpdate()">
     </cms-sitemap-node-update>
   </div>
 </div>
