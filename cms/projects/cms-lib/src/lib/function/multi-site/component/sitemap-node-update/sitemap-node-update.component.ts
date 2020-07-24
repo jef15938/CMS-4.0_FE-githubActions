@@ -95,9 +95,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   }
 
   preview(languageID: string) {
-    const noteType = this.siteMapUpdateInfo.siteMap.node_type;
-    if (noteType !== SiteMapNodeType.CONTENT && noteType !== SiteMapNodeType.FARM) { return; }
-
+    if (!this.siteMapUpdateInfo.siteMap.canPreview) { return; }
     const nodeID = this.siteMapUpdateInfo.siteMap.node_id;
     this.sitemapService.getPreviewInfo(nodeID, languageID).subscribe(previewInfo => {
       switch (previewInfo.preview_type) {
@@ -112,24 +110,32 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   }
 
   editContent() {
-    const noteType = this.siteMapUpdateInfo.siteMap.node_type;
-    if (noteType === SiteMapNodeType.CONTENT) { return; }
+    if (!this.siteMapUpdateInfo.siteMap.canModify) { return; }
 
+    const noteType = this.siteMapUpdateInfo.siteMap.node_type;
     const nodeID = this.siteMapUpdateInfo.siteMap.node_id;
 
-    forkJoin([
-      this.contentService.getContentByContentID(nodeID),
-      this.contentService.getTemplateByControlID(nodeID),
-    ]).subscribe(([contentInfo, selectableTemplates]) => {
-      this.contentEditorService.openEditor({
-        // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
-        contentID: nodeID,
-        contentInfo,
-        selectableTemplates,
-        editorMode: EditorMode.EDIT,
-      }).subscribe();
-    });
-
+    switch (noteType) {
+      case SiteMapNodeType.CONTENT:
+        forkJoin([
+          this.contentService.getContentByContentID(nodeID),
+          this.contentService.getTemplateByControlID(nodeID),
+        ]).subscribe(([contentInfo, selectableTemplates]) => {
+          this.contentEditorService.openEditor({
+            // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
+            contentID: nodeID,
+            contentInfo,
+            selectableTemplates,
+            editorMode: EditorMode.EDIT,
+          }).subscribe();
+        });
+        break;
+      case SiteMapNodeType.FARM:
+        // TODO: 開啟網站管理
+        const funcID = this.siteMapUpdateInfo.siteMap.func_id;
+        this.farmSharedService.openFarm(funcID).subscribe();
+        break;
+    }
   }
 
   auditingSiteMap() {

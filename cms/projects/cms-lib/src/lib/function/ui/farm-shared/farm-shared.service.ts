@@ -4,6 +4,7 @@ import { ModalService } from '../modal';
 import { FarmService } from '../../../global/api/service';
 import { concatMap } from 'rxjs/operators';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
+import { FarmSharedContainerModalComponent } from './component/farm-shared-container-modal/farm-shared-container-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,19 @@ export class FarmSharedService {
     private farmService: FarmService,
     private modalService: ModalService,
   ) { }
+
+  openFarm(funcID: string): Observable<any> {
+    return this.modalService.openComponent({
+      component: FarmSharedContainerModalComponent,
+      componentInitData: {
+        funcID,
+      },
+      modalSetting: {
+        width: '1440px',
+        maxHeight: '90%',
+      }
+    });
+  }
 
   openFarmPreview(funcID: string, dataID: string): Observable<any> {
     return of(undefined).pipe(
@@ -27,6 +41,7 @@ export class FarmSharedService {
           },
           modalSetting: {
             width: '1440px',
+            maxHeight: '90%',
           }
         });
       })

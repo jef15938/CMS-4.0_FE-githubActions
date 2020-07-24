@@ -28,6 +28,7 @@ import { TreeModule } from '../tree/tree.module';
 import { PipeModule } from '../../../global/pipe/pipe.module';
 import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
 import { DatePickerModule } from '../date-picker/date-picker.module';
+import { FarmSharedContainerModalComponent } from './component/farm-shared-container-modal/farm-shared-container-modal.component';
 
 @NgModule({
   imports: [
@@ -63,6 +64,7 @@ import { DatePickerModule } from '../date-picker/date-picker.module';
     FarmFormViewDataModalComponent,
     FarmFormModifyDataModalComponent,
     FarmDynamicFormControlDirective,
+    FarmSharedContainerModalComponent,
   ],
   exports: [
     FarmSharedComponent

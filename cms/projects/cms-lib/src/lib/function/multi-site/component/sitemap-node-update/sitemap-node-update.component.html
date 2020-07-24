@@ -11,25 +11,28 @@
     ParentId={{siteMapUpdateInfo.parentId}}, NodeOrder={{siteMapUpdateInfo.nodeOrder}}
   </div>
 
-  <ng-container *ngIf="siteMapUpdateInfo?.siteMap?.node_type === SiteMapNodeType.CONTENT">
-    <div class="page-content-container" style="border-bottom: 1px solid lightgray;">
+  <ng-container *ngIf="siteMapUpdateInfo?.siteMap; let sitemapNode">
+    <div class="page-content-container" *ngIf="sitemapNode.canModify||sitemapNode.canPreview||sitemapNode.canSubmit"
+      style="border-bottom: 1px solid lightgray;">
       <div class="btn-group">
         <!-- <button type="button" tabindex="0" mat-button (click)="preview()">頁面預覽</button> -->
         <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"
-          (click)="editContent()">頁面編輯</button>
+          [ngSwitch]="sitemapNode.node_type" (click)="editContent()">
+          <ng-container *ngSwitchCase="SiteMapNodeType.CONTENT">
+            頁面編輯
+          </ng-container>
+          <ng-container *ngSwitchCase="SiteMapNodeType.FARM">
+            頁面管理
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            頁面編輯
+          </ng-container>
+        </button>
         <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canSubmit"
           (click)="auditingSiteMap()">頁面送審</button>
       </div>
     </div>
   </ng-container>
-
-  <!-- <ng-container *ngIf="siteMapUpdateInfo?.siteMap?.node_type === SiteMapNodeType.FARM">
-    <div class="page-content-container" style="border-bottom: 1px solid lightgray;">
-      <div class="btn-group">
-        <button type="button" tabindex="0" mat-button (click)="preview()">頁面管理</button>
-      </div>
-    </div>
-  </ng-container> -->
 
   <ng-container *ngIf="siteMapUpdateInfo.siteMap.publish_info; let publishInfo">
     <div *ngIf="publishInfo.draft || publishInfo.pending_published || publishInfo.published"
