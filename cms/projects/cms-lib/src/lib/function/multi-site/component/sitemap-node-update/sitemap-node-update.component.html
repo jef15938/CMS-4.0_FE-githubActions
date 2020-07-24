@@ -14,7 +14,7 @@
   <ng-container *ngIf="siteMapUpdateInfo?.siteMap?.node_type === SiteMapNodeType.CONTENT">
     <div class="page-content-container" style="border-bottom: 1px solid lightgray;">
       <div class="btn-group">
-        <button type="button" tabindex="0" mat-button (click)="preview()">頁面預覽</button>
+        <!-- <button type="button" tabindex="0" mat-button (click)="preview()">頁面預覽</button> -->
         <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"
           (click)="editContent()">頁面編輯</button>
         <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canSubmit"
@@ -23,13 +23,13 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="siteMapUpdateInfo?.siteMap?.node_type === SiteMapNodeType.FARM">
+  <!-- <ng-container *ngIf="siteMapUpdateInfo?.siteMap?.node_type === SiteMapNodeType.FARM">
     <div class="page-content-container" style="border-bottom: 1px solid lightgray;">
       <div class="btn-group">
         <button type="button" tabindex="0" mat-button (click)="preview()">頁面管理</button>
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
 
   <ng-container *ngIf="siteMapUpdateInfo.siteMap.publish_info; let publishInfo">
     <div *ngIf="publishInfo.draft || publishInfo.pending_published || publishInfo.published"

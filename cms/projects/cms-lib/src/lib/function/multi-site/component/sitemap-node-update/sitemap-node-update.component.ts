@@ -94,12 +94,12 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     }
   }
 
-  preview() {
+  preview(languageID: string) {
     const noteType = this.siteMapUpdateInfo.siteMap.node_type;
     if (noteType !== SiteMapNodeType.CONTENT && noteType !== SiteMapNodeType.FARM) { return; }
 
     const nodeID = this.siteMapUpdateInfo.siteMap.node_id;
-    this.sitemapService.getPreviewInfo(nodeID).subscribe(previewInfo => {
+    this.sitemapService.getPreviewInfo(nodeID, languageID).subscribe(previewInfo => {
       switch (previewInfo.preview_type) {
         case PreviewInfoType.ONE_PAGE:
           window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
