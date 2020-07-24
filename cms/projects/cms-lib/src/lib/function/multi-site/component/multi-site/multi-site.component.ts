@@ -13,7 +13,7 @@ import { SitemapNodeCreateModalComponent } from '../sitemap-node-create-modal/si
 import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from '../multi-site-node/multi-site-node.component';
 
 enum EditModeType {
-  Site, Node,
+  SITE, NODE,
 }
 
 class SiteInfoUpdateModel extends SiteInfo {
@@ -40,7 +40,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSite: SiteInfo;
   selectedSiteUpdateModel: SiteInfoUpdateModel;
 
-  editMode: EditModeType = EditModeType.Site;
+  editMode: EditModeType = EditModeType.SITE;
 
   sitemaps: SiteMapGetResponse[];
 
@@ -97,14 +97,14 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sitemaps = undefined;
     this.selectedNode = undefined;
     switch (mode) {
-      case EditModeType.Node:
+      case EditModeType.NODE:
         if (!this.selectedSite) { this.modalService.openMessage({ message: '尚未選擇網站' }); return; }
         this.sitemapService.getUserSiteMapNodes(this.selectedSite.site_id).subscribe(sitemap => {
           this.sitemaps = sitemap;
           this.editMode = mode;
         });
         break;
-      case EditModeType.Site:
+      case EditModeType.SITE:
         this.editMode = mode;
         break;
     }
@@ -140,7 +140,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       if (action) {
-        action.pipe(tap(res => res ? this.swichMode(EditModeType.Node) : null)).subscribe();
+        action.pipe(tap(res => res ? this.swichMode(EditModeType.NODE) : null)).subscribe();
       }
     }
   }
@@ -194,7 +194,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onNodeUpdate(reset = false) {
     if (reset) {
-      this.swichMode(EditModeType.Node);
+      this.swichMode(EditModeType.NODE);
     } else {
       const selectedNodeID = this.selectedNode.siteMap.node_id;
       const selectedNode = this.getNodeFromSitemapsByNodeID(selectedNodeID, this.sitemaps);

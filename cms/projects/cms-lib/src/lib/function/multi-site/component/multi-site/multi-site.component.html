@@ -1,5 +1,5 @@
 <!-- 網站編輯 -->
-<div #SiteBlock [hidden]="editMode===EditModeType.Node" style="height: 100%;">
+<div #SiteBlock [hidden]="editMode===EditModeType.NODE" style="height: 100%;">
   <div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer>
     <div class="page-title-container">
       <h1>網站列表
@@ -22,7 +22,7 @@
     <div class="page-title-container">
       <h1>網站設定
         <div style="float: right;">
-          <button type="button" tabindex="0" mat-button (click)="swichMode(EditModeType.Node)">編輯節點</button>
+          <button type="button" tabindex="0" mat-button (click)="swichMode(EditModeType.NODE)">編輯節點</button>
         </div>
       </h1>
     </div>
@@ -45,13 +45,13 @@
 </div>
 
 <!-- 節點編輯 -->
-<div [hidden]="editMode===EditModeType.Site" style="height: 100%;">
+<div [hidden]="editMode===EditModeType.SITE" style="height: 100%;">
   <div style="width: 50%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer
     [heightBase]="SiteBlock">
     <div class="page-title-container">
       <h1>{{selectedSite?.site_name}}
         <div style="float: right;">
-          <button type="button" tabindex="0" mat-button (click)="swichMode(EditModeType.Site)">返回</button>
+          <button type="button" tabindex="0" mat-button (click)="swichMode(EditModeType.SITE)">返回</button>
         </div>
       </h1>
     </div>
