@@ -1462,6 +1462,12 @@ paths:
                 $ref: '#/components/schemas/PreviewInfo'
       operationId: get-SitemapPreview-nodeID
       description: 節點預覽，分節點資訊預覽或整頁式預覽
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: language_id
+          description: 給語系，回傳URL也帶入語系
   '/AuditingPreview/{orderID}':
     parameters:
       - schema:
@@ -1884,97 +1890,6 @@ components:
         - status
       x-tags:
         - Model
-    SiteMapNodeInfo:
-      title: SiteMapInfo
-      type: object
-      x-tags:
-        - Model
-      properties:
-        node_id:
-          type: string
-          description: 節點流水號
-        node_name:
-          type: string
-          description: 節點名稱
-        layout_id:
-          type: string
-          description: 模版代碼
-        node_type:
-          type: string
-          enum:
-            - URL
-            - CONTENT
-            - FARM
-          description: 節點類型
-        func_id:
-          type: string
-          description: 若node_type為FARM，此欄位回傳功能ID
-        url_type:
-          type: string
-          enum:
-            - INSIDE
-            - OUTSIDE
-          description: URL類型
-        url_link_node_id:
-          type: string
-          description: |-
-            URL站內節點
-            有url_type為INSIDE才有
-        url:
-          type: string
-          description: |-
-            URL站外網址
-            有url_type為OUTSIDE才有
-        url_blank:
-          type: string
-          enum:
-            - 'Y'
-            - 'N'
-          description: URL是否另開視窗
-        content_path:
-          type: string
-          description: 節點連結路徑
-        meta_title:
-          type: string
-          description: SEO-Meta標題
-        meta_description:
-          type: string
-          description: SEO-Meta描述
-        meta_keyword:
-          type: string
-          description: SEO-Meta關鍵字
-        meta_image:
-          type: string
-          description: SEO-Meta縮圖
-        version:
-          type: string
-          description: 資料版本
-        canModify:
-          type: boolean
-          description: 是否能修改
-        canSubmit:
-          type: boolean
-          description: 是否能送審
-        create_by:
-          type: string
-        create_time:
-          type: string
-        update_by:
-          type: string
-        update_time:
-          type: string
-        publish_info:
-          $ref: '#/components/schemas/PublishInfo'
-      required:
-        - node_id
-        - node_name
-        - meta_title
-        - canModify
-        - canSubmit
-        - create_by
-        - create_time
-        - update_by
-        - update_time
     PublishInfo:
       title: PublishInfo
       type: object
@@ -2032,6 +1947,9 @@ components:
         canSubmit:
           type: boolean
           description: 是否能送審
+        canPreview:
+          type: boolean
+          description: 是否能預覽
         children:
           type: array
           items:
@@ -2041,16 +1959,96 @@ components:
         - node_name
         - canModify
         - canSubmit
+        - canPreview
+      description: ''
     SiteMapNodeGetResponse:
-      $ref: '#/components/schemas/SiteMapNodeInfo'
+      x-tags:
+        - Model
+      title: SiteMapNodeGetResponse
+      properties:
+        node_id:
+          type: string
+          description: 節點流水號
+        layout_id:
+          type: string
+          description: 模版代碼
+        node_type:
+          type: string
+          enum:
+            - URL
+            - CONTENT
+            - FARM
+          description: 節點類型
+        func_id:
+          type: string
+          description: 若node_type為FARM，此欄位回傳功能ID
+        url_type:
+          type: string
+          enum:
+            - INSIDE
+            - OUTSIDE
+          description: URL類型
+        url_link_node_id:
+          type: string
+          description: |-
+            URL站內節點
+            有url_type為INSIDE才有
+        url:
+          type: string
+          description: |-
+            URL站外網址
+            有url_type為OUTSIDE才有
+        url_blank:
+          type: string
+          enum:
+            - 'Y'
+            - 'N'
+          description: URL是否另開視窗
+        content_path:
+          type: string
+          description: 節點連結路徑
+        version:
+          type: string
+          description: 資料版本
+        canModify:
+          type: boolean
+          description: 是否能修改
+        canSubmit:
+          type: boolean
+          description: 是否能送審
+        canPreview:
+          type: boolean
+          description: 是否可以預覽
+        create_by:
+          type: string
+        create_time:
+          type: string
+        update_by:
+          type: string
+        update_time:
+          type: string
+        publish_info:
+          $ref: '#/components/schemas/PublishInfo'
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteNodeDetailInfo'
+      required:
+        - node_id
+        - canModify
+        - canSubmit
+        - create_by
+        - create_time
+        - update_by
+        - update_time
+        - details
+        - canPreview
     UserSiteMapPutRequest:
       title: UserSiteMapPutRequest
       type: object
+      x-tags:
+        - Model
       properties:
-        node_name:
-          type: string
-        node_orders:
-          type: string
         parent_id:
           type: string
         url_type:
@@ -2063,20 +2061,10 @@ components:
           type: string
         content_path:
           type: string
-        meta_title:
-          type: string
-        meta_description:
-          type: string
-        meta_keyword:
-          type: string
-        meta_image:
-          type: string
-      required:
-        - node_name
-        - node_orders
-        - meta_title
-      x-tags:
-        - Model
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteNodeDetailInfo'
     UserSiteMapPostRequest:
       title: UserSiteMapPostRequest
       type: object
@@ -2746,6 +2734,8 @@ components:
       title: PreviewInfo
       type: object
       description: 預覽model，分為整頁是預覽與FARM的欄位式預覽
+      x-tags:
+        - Model
       properties:
         preview_type:
           type: string
@@ -2759,8 +2749,34 @@ components:
         func_id:
           type: string
           description: 功能ID，當preview_type是FARM時呈現
+        data_id:
+          type: string
+          description: |
+            資料ID，當preview_type是FARM時呈現
       required:
         - preview_type
+    SiteNodeDetailInfo:
+      title: SiteNodeDetailInfo
+      type: object
       x-tags:
         - Model
+      properties:
+        lang_id:
+          type: string
+        lang_name:
+          type: string
+        node_name:
+          type: string
+        meta_title:
+          type: string
+        meta_description:
+          type: string
+        meta_keyword:
+          type: string
+        meta_image:
+          type: string
+      required:
+        - lang_id
+        - lang_name
+        - node_name
   securitySchemes: {}

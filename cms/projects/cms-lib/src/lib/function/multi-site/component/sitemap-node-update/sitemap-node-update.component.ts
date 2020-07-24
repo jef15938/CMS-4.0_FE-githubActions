@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, Output, 
 import { NgForm } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { UserSiteMapPutRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPutRequest';
-import { SiteMapNodeInfo } from '../../../../global/api/neuxAPI/bean/SiteMapNodeInfo';
+import { SiteMapNodeGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapNodeGetResponse';
 import { ModalService } from './../../../ui/modal';
 import { SitemapService, ContentService } from '../../../../global/api/service';
 import { ContentEditorService, EditorMode } from './../../../ui/content-editor';
@@ -10,12 +10,11 @@ import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../.
 import { SiteMapUpdateInfo } from './../../../../global/interface';
 import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
 import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
+import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
-  constructor(siteMapInfo: SiteMapNodeInfo, parentId: string, nodeOrders: string) {
+  constructor(siteMapInfo: SiteMapNodeGetResponse, parentId: string, nodeOrders: string) {
     super();
-    this.node_name = siteMapInfo.node_name;
-    this.node_orders = nodeOrders;
     this.parent_id = parentId;
     // URL
     this.url = siteMapInfo.url;
@@ -24,10 +23,8 @@ class SiteMapUpdateModel extends UserSiteMapPutRequest {
     this.url_type = siteMapInfo.url_type;
     // CONTENT
     this.content_path = siteMapInfo.content_path;
-    this.meta_description = siteMapInfo.meta_description;
-    this.meta_image = siteMapInfo.meta_image;
-    this.meta_keyword = siteMapInfo.meta_keyword;
-    this.meta_title = siteMapInfo.meta_title;
+    // detail
+    this.details = [].concat(siteMapInfo.details || []);
   }
 }
 
@@ -71,6 +68,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     private contentService: ContentService,
     private contentEditorService: ContentEditorService,
     private sitemapService: SitemapService,
+    private farmSharedService: FarmSharedService,
   ) { }
 
   ngOnInit(): void {
@@ -107,6 +105,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
           window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
           break;
         case PreviewInfoType.FARM:
+          this.farmSharedService.openFarmPreview(previewInfo.func_id, previewInfo.data_id).subscribe();
           break;
       }
     });
@@ -151,10 +150,7 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   save() {
     this.sitemapService.updateSiteNode(
       this.siteMapUpdateInfo.siteMap.node_id,
-      this.sitemapMaintainModel.node_name,
-      this.sitemapMaintainModel.node_orders,
-      this.sitemapMaintainModel.meta_title,
-      this.sitemapMaintainModel
+      this.sitemapMaintainModel.details
     ).subscribe(_ => {
       alert('修改成功');
       this.update.emit(this.sitemapMaintainModel);

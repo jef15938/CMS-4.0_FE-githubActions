@@ -225,33 +225,29 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     const target = ev.target;
     const to = ev.to;
     if (!target || !to || target === to || to.children.indexOf(target) > -1) { return; }
-    this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
-      if (!confirm) { return; }
-      of(undefined).pipe(
-        concatMap(_ => this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, target.node_id)),
-        concatMap(nodeToUpdate => {
-          return this.sitemapService.updateSiteNode(
-            nodeToUpdate.node_id,
-            nodeToUpdate.node_name,
-            '0',
-            nodeToUpdate.meta_title,
-            {
-              parent_id: to.node_id,
-              content_path: nodeToUpdate.content_path,
-              url_type: nodeToUpdate.url_type,
-              url_link_node_id: nodeToUpdate.url_link_node_id,
-              url: nodeToUpdate.url,
-              url_blank: nodeToUpdate.url_blank,
-              meta_description: nodeToUpdate.meta_description,
-              meta_keyword: nodeToUpdate.meta_keyword,
-              meta_image: nodeToUpdate.meta_image,
-            }
-          );
-        }),
-      ).subscribe(_ => {
-        this.onNodeUpdate(true);
-      });
-    });
+    // TODO: 移動節點 api
+    // this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
+    //   if (!confirm) { return; }
+    //   of(undefined).pipe(
+    //     concatMap(_ => this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, target.node_id)),
+    //     concatMap(nodeToUpdate => {
+    //       return this.sitemapService.updateSiteNode(
+    //         nodeToUpdate.node_id,
+    //         nodeToUpdate.details,
+    //         {
+    //           parent_id: to.node_id,
+    //           content_path: nodeToUpdate.content_path,
+    //           url_type: nodeToUpdate.url_type,
+    //           url_link_node_id: nodeToUpdate.url_link_node_id,
+    //           url: nodeToUpdate.url,
+    //           url_blank: nodeToUpdate.url_blank,
+    //         }
+    //       );
+    //     }),
+    //   ).subscribe(_ => {
+    //     this.onNodeUpdate(true);
+    //   });
+    // });
   }
 
 }

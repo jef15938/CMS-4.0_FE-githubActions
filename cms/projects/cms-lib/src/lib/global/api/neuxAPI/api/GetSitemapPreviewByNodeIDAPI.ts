@@ -9,7 +9,8 @@ import { StringUtils } from '@neux/core';
 export class GetSitemapPreviewByNodeIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
-    
+    public language_id: string;
+
 
     constructor() { }
 
@@ -20,7 +21,9 @@ export class GetSitemapPreviewByNodeIDAPI implements Api, MockApi, RestfulApi {
     public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
         let requestData = new ApiRequest();
-        
+        queryParams = queryParams.set('language_id', 
+                      StringUtils.coerceStringProperty(this.language_id));
+
         requestData.type = 'GET';
         requestData.params = queryParams;
         requestData.url = this.url;

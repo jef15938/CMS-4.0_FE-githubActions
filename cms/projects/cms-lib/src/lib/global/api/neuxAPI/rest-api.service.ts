@@ -70,7 +70,7 @@ import { FarmTableInfo } from './bean/FarmTableInfo';
 import { FarmFormInfo } from './bean/FarmFormInfo';
 import { PreviewInfo } from './bean/PreviewInfo';
 import { SiteGetResponse } from './bean/SiteGetResponse';
-import { SiteMapNodeInfo } from './bean/SiteMapNodeInfo';
+import { SiteMapNodeGetResponse } from './bean/SiteMapNodeGetResponse';
 import { GroupMenuGetResponse } from './bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
@@ -114,7 +114,7 @@ GetFarmDetailInfoByFuncID: FarmFormInfo,
 GetFarmPreviewByFuncID: PreviewInfo,
 GetSite: SiteGetResponse,
 GetSiteBySiteID: SiteMapGetResponse,
-GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
+GetSiteBySiteIDAndNodeID: SiteMapNodeGetResponse,
 GetGroupMenuByGroupID: GroupMenuGetResponse,
 GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
 GetTemplateByControlID: TemplateGetResponse,

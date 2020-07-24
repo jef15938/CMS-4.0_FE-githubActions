@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver,
+  OnChanges, SimpleChanges
+} from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subject, of, throwError, NEVER } from 'rxjs';
 import { tap, takeUntil, concatMap, catchError } from 'rxjs/operators';
@@ -8,9 +11,9 @@ import { CmsFarmTableDataAction } from '../../../global/enum';
 import { ModalService } from '../modal';
 import { FarmFormComp } from './farm-shared.interface';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
-import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
+import { FarmSharedService } from './farm-shared.service';
 
 @Component({
   selector: 'cms-farm-shared',
@@ -40,6 +43,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   private destroy$ = new Subject();
 
   constructor(
+    private farmSharedService: FarmSharedService,
     private farmService: FarmService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private modalService: ModalService,
@@ -167,22 +171,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    const title = `預覽 : ${rowData.data_id}`;
-    of(undefined).pipe(
-      concatMap(_ => this.farmService.getFarmDetailInfoByFuncID(category.category_id, rowData.data_id)),
-      concatMap(farmFormInfo => {
-        return this.modalService.openComponent({
-          component: FarmFormViewDataModalComponent,
-          componentInitData: {
-            title,
-            farmFormInfo,
-          },
-          modalSetting: {
-            width: '1440px',
-          }
-        });
-      })
-    ).subscribe();
+    this.farmSharedService.openFarmPreview(category.category_id, rowData.data_id).subscribe();
   }
 
   private openModifyDataModal(action: 'create' | 'edit', category: CmsFarmInfoCategory, rowData?: CmsFarmTableDataInfo) {

@@ -6,10 +6,11 @@ import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { SiteMapGetResponse } from '../../neuxAPI/bean/SiteMapGetResponse';
 import { SiteGetResponse } from '../../neuxAPI/bean/SiteGetResponse';
 import { SiteInfo } from '../../neuxAPI/bean/SiteInfo';
-import { SiteMapNodeInfo } from '../../neuxAPI/bean/SiteMapNodeInfo';
+import { SiteMapNodeGetResponse } from '../../neuxAPI/bean/SiteMapNodeGetResponse';
 import { UserSiteMapPutRequest } from '../../neuxAPI/bean/UserSiteMapPutRequest';
 import { SitemapAuditingRequest } from '../../neuxAPI/bean/SitemapAuditingRequest';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
+import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -107,11 +108,11 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeInfo> {
+  getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeGetResponse> {
     return this.restAPIService.dispatchRestApi('GetSiteBySiteIDAndNodeID', { siteID, nodeID });
   }
 
-  private findNodeByNodeID(sources: SiteMapGetResponse[], nodeID: string): SiteMapNodeInfo {
+  private findNodeByNodeID(sources: SiteMapGetResponse[], nodeID: string): SiteMapNodeGetResponse {
     if (!sources?.length || !nodeID) { return null; }
 
     const node = sources.find(s => s.node_id === nodeID);
@@ -140,31 +141,22 @@ export class SitemapService {
    * @memberof SitemapService
    */
   updateSiteNode(
-    nodeID: string, nodeName: string, nodeOrders: string, metaTitle: string,
+    nodeID: string, details: SiteNodeDetailInfo[],
     optional?: {
       parent_id?: string, content_path?: string,
       url_type?: string, url_link_node_id?: string, url?: string, url_blank?: string,
-      meta_description?: string, meta_keyword?: string, meta_image?: string,
     }
   ) {
     if (!nodeID) { throw new ParamsError('nodeID', 'updateSiteNode', 'string', nodeID); }
-    if (!nodeName) { throw new ParamsError('nodeName', 'updateSiteNode', 'string', nodeName); }
-    if (!nodeOrders) { throw new ParamsError('nodeOrders', 'updateSiteNode', 'string', nodeOrders); }
-    if (!metaTitle) { throw new ParamsError('metaTitle', 'updateSiteNode', 'string', metaTitle); }
 
     const requestBody: UserSiteMapPutRequest = {
-      node_name: nodeName,
-      node_orders: nodeOrders,
       parent_id: optional?.parent_id,
       content_path: optional?.content_path,
       url_type: optional?.url_type,
       url_link_node_id: optional?.url_link_node_id,
       url: optional?.url,
       url_blank: optional?.url_blank,
-      meta_title: metaTitle,
-      meta_description: optional?.meta_description,
-      meta_keyword: optional?.meta_keyword,
-      meta_image: optional?.meta_image,
+      details
     };
 
     const params: { [k: string]: any } = {

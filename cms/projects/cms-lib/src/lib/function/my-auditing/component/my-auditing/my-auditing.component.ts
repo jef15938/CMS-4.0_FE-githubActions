@@ -9,6 +9,7 @@ import { ModalService } from '../../../ui/modal';
 import { MyAuditingActionCellComponent, MyAuditingActionCellCustomEvent } from '../my-auditing-action-cell/my-auditing-action-cell.component';
 import { MyAuditingDetailModalComponent } from '../my-auditing-detail-modal/my-auditing-detail-modal.component';
 import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
+import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 
 @Component({
   selector: 'cms-my-auditing',
@@ -59,6 +60,7 @@ export class MyAuditingComponent implements OnInit {
   constructor(
     private auditingService: AuditingService,
     private modalService: ModalService,
+    private farmSharedService: FarmSharedService,
   ) { }
 
   ngOnInit(): void {
@@ -115,6 +117,7 @@ export class MyAuditingComponent implements OnInit {
           window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
           break;
         case PreviewInfoType.FARM:
+          this.farmSharedService.openFarmPreview(previewInfo.func_id, previewInfo.data_id).subscribe();
           break;
       }
     });

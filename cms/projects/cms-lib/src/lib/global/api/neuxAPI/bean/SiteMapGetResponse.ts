@@ -14,6 +14,8 @@ public node_name: string;
 public canModify: boolean;
 @IsNotEmpty()
 public canSubmit: boolean;
+@IsNotEmpty()
+public canPreview: boolean;
 @Type(TypeFactory(SiteMapGetResponse))
 @ValidateNested()
 public children: Array<SiteMapGetResponse>;

@@ -15,6 +15,6 @@ export class PreviewInfo {
   public preview_type: PreviewInfoType;
   public url: string;
   public func_id: string;
-
+  public data_id: string;
 
 }
