@@ -39,8 +39,8 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   @ViewChild('form') form: NgForm;
 
-  NodeType = SiteMapNodeType;
-  UrlType = SiteMapUrlType;
+  SiteMapNodeType = SiteMapNodeType;
+  SiteMapUrlType = SiteMapUrlType;
 
   @Input() siteId: string;
   @Input() siteMapUpdateInfo: SiteMapUpdateInfo;
@@ -95,19 +95,30 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     }
   }
 
-  editContent(nodeId: string) {
-    forkJoin([
-      this.contentService.getContentByContentID(nodeId),
-      this.contentService.getTemplateByControlID(nodeId),
-    ]).subscribe(([contentInfo, selectableTemplates]) => {
-      this.contentEditorService.openEditor({
-        // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
-        contentID: nodeId,
-        contentInfo,
-        selectableTemplates,
-        editorMode: EditorMode.EDIT,
-      }).subscribe();
-    });
+  editContent() {
+    const noteType = this.siteMapUpdateInfo.siteMap.node_type;
+    const nodeID = this.siteMapUpdateInfo.siteMap.node_id;
+
+    if (noteType === SiteMapNodeType.CONTENT) {
+      forkJoin([
+        this.contentService.getContentByContentID(nodeID),
+        this.contentService.getTemplateByControlID(nodeID),
+      ]).subscribe(([contentInfo, selectableTemplates]) => {
+        this.contentEditorService.openEditor({
+          // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
+          contentID: nodeID,
+          contentInfo,
+          selectableTemplates,
+          editorMode: EditorMode.EDIT,
+        }).subscribe();
+      });
+      return;
+    }
+
+    if (noteType === SiteMapNodeType.FARM) {
+      return;
+    }
+
   }
 
   auditingSiteMap() {
