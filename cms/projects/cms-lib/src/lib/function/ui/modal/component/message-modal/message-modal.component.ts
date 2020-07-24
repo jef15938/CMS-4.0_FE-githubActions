@@ -10,7 +10,7 @@ export class MessageModalComponent extends CustomModalBase implements OnInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [
     {
-      text: '確定',
+      text: '關閉',
       onClick: () => this.close(),
     },
   ];
