@@ -50,8 +50,8 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
   sitemapMaintainModel: SiteMapUpdateModel;
 
   urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
-    { value: SiteMapUrlType.Inside, name: '站內' },
-    { value: SiteMapUrlType.Outside, name: '站外' },
+    { value: SiteMapUrlType.INSIDE, name: '站內' },
+    { value: SiteMapUrlType.OUTSIDE, name: '站外' },
   ];
 
   urlBlankTypeOptions: { value: SiteMapUrlBlankType, name: string }[] = [

@@ -66,8 +66,8 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   layouts: LayoutInfo[] = [];
 
   urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
-    { value: SiteMapUrlType.Inside, name: '站內' },
-    { value: SiteMapUrlType.Outside, name: '站外' },
+    { value: SiteMapUrlType.INSIDE, name: '站內' },
+    { value: SiteMapUrlType.OUTSIDE, name: '站外' },
   ];
 
   urlBlankTypeOptions: { value: SiteMapUrlBlankType, name: string }[] = [

@@ -50,14 +50,14 @@
           </mat-form-field>
           <ng-container [ngSwitch]="sitemapMaintainModel.url_type">
             <!-- 站內 -->
-            <ng-container *ngSwitchCase="UrlType.Inside">
+            <ng-container *ngSwitchCase="UrlType.INSIDE">
               <mat-form-field appearance="outline">
                 <mat-label>站內節點ID</mat-label>
                 <input matInput [(ngModel)]="sitemapMaintainModel.url_link_node_id" name="url_link_node_id">
               </mat-form-field>
             </ng-container>
             <!-- 站外 -->
-            <ng-container *ngSwitchCase="UrlType.Outside">
+            <ng-container *ngSwitchCase="UrlType.OUTSIDE">
               <mat-form-field appearance="outline">
                 <mat-label>站外網址</mat-label>
                 <input matInput [(ngModel)]="sitemapMaintainModel.url" name="url">

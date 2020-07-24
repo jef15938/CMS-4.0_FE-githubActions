@@ -6,8 +6,8 @@ export enum SiteMapNodeType {
 }
 
 export enum SiteMapUrlType {
-  Inside = 'INSIDE',
-  Outside = 'OUTSIDE',
+  INSIDE = 'INSIDE',
+  OUTSIDE = 'OUTSIDE',
 }
 
 export enum SiteMapUrlBlankType {
