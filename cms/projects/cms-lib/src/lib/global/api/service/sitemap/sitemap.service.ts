@@ -9,6 +9,7 @@ import { SiteInfo } from '../../neuxAPI/bean/SiteInfo';
 import { SiteMapNodeInfo } from '../../neuxAPI/bean/SiteMapNodeInfo';
 import { UserSiteMapPutRequest } from '../../neuxAPI/bean/UserSiteMapPutRequest';
 import { SitemapAuditingRequest } from '../../neuxAPI/bean/SitemapAuditingRequest';
+import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -210,6 +211,20 @@ export class SitemapService {
     };
 
     return this.restAPIService.dispatchRestApi('PostSitemapAuditingByNodeId', params);
+  }
+
+  /**
+   *
+   *
+   * @param {string} nodeID
+   * @returns
+   * @memberof SitemapService
+   */
+  getPreviewInfo(nodeID: string): Observable<PreviewInfo> {
+    if (!nodeID) {
+      throw new ParamsError('nodeID', 'getPreviewInfo', 'string', nodeID);
+    }
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreview', { nodeID });
   }
 
 }

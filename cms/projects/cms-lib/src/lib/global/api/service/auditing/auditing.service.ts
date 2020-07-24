@@ -8,6 +8,7 @@ import { MyAuditingDetailInfo } from '../../neuxAPI/bean/MyAuditingDetailInfo';
 import { MyAuditingGetResponse } from '../../neuxAPI/bean/MyAuditingGetResponse';
 import { AuditingGetResponse } from '../../neuxAPI/bean/AuditingGetResponse';
 import { AuditingSubmitRequest } from '../../neuxAPI/bean/AuditingSubmitRequest';
+import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -86,5 +87,19 @@ export class AuditingService {
     };
 
     return this.restAPIService.dispatchRestApi('PostAuditingByOrderID', params);
+  }
+
+  /**
+   *
+   *
+   * @param {string} orderID
+   * @returns
+   * @memberof AuditingService
+   */
+  getPreviewInfo(orderID: string): Observable<PreviewInfo> {
+    if (!orderID) {
+      throw new ParamsError('orderID', 'getPreviewInfo', 'string', orderID);
+    }
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetAuditingPreview', { orderID });
   }
 }

@@ -7,6 +7,7 @@ import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -173,6 +174,20 @@ export class FarmService {
     };
 
     return this.restAPIService.dispatchRestApi('GetFarmTakeOffByFuncID', params);
+  }
+
+  /**
+   *
+   *
+   * @param {string} funcID
+   * @returns
+   * @memberof FarmService
+   */
+  getPreviewInfo(funcID: string): Observable<PreviewInfo> {
+    if (!funcID) {
+      throw new ParamsError('funcID', 'getPreviewInfo', 'string', funcID);
+    }
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreview', { funcID });
   }
 
 }
