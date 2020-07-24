@@ -71,8 +71,8 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   ];
 
   urlBlankTypeOptions: { value: SiteMapUrlBlankType, name: string }[] = [
-    { value: SiteMapUrlBlankType.Yes, name: '是' },
-    { value: SiteMapUrlBlankType.No, name: '否' },
+    { value: SiteMapUrlBlankType.YES, name: '是' },
+    { value: SiteMapUrlBlankType.NO, name: '否' },
   ];
 
   nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
