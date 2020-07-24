@@ -3,7 +3,8 @@ import { CustomCellRenderer, CmsTable } from '../../../ui/table';
 import { MyAuditingInfo } from '../../../../global/api/neuxAPI/bean/MyAuditingInfo';
 
 enum ActionType {
-  Detail, PreviewPc, PreviewPadH, PreviewPadV, PreviewMobile
+  DETAIL, PREVIEW
+  // PreviewPc, PreviewPadH, PreviewPadV, PreviewMobile
 }
 
 export class MyAuditingActionCellCustomEvent {

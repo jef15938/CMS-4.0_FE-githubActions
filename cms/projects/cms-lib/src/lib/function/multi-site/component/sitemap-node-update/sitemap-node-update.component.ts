@@ -9,6 +9,7 @@ import { ContentEditorService, EditorMode } from './../../../ui/content-editor';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
 import { SiteMapUpdateInfo } from './../../../../global/interface';
 import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
+import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
 
 class SiteMapUpdateModel extends UserSiteMapPutRequest {
   constructor(siteMapInfo: SiteMapNodeInfo, parentId: string, nodeOrders: string) {
@@ -95,29 +96,40 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
     }
   }
 
+  preview() {
+    const noteType = this.siteMapUpdateInfo.siteMap.node_type;
+    if (noteType !== SiteMapNodeType.CONTENT && noteType !== SiteMapNodeType.FARM) { return; }
+
+    const nodeID = this.siteMapUpdateInfo.siteMap.node_id;
+    this.sitemapService.getPreviewInfo(nodeID).subscribe(previewInfo => {
+      switch (previewInfo.preview_type) {
+        case PreviewInfoType.ONE_PAGE:
+          window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
+          break;
+        case PreviewInfoType.FARM:
+          break;
+      }
+    });
+  }
+
   editContent() {
     const noteType = this.siteMapUpdateInfo.siteMap.node_type;
+    if (noteType === SiteMapNodeType.CONTENT) { return; }
+
     const nodeID = this.siteMapUpdateInfo.siteMap.node_id;
 
-    if (noteType === SiteMapNodeType.CONTENT) {
-      forkJoin([
-        this.contentService.getContentByContentID(nodeID),
-        this.contentService.getTemplateByControlID(nodeID),
-      ]).subscribe(([contentInfo, selectableTemplates]) => {
-        this.contentEditorService.openEditor({
-          // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
-          contentID: nodeID,
-          contentInfo,
-          selectableTemplates,
-          editorMode: EditorMode.EDIT,
-        }).subscribe();
-      });
-      return;
-    }
-
-    if (noteType === SiteMapNodeType.FARM) {
-      return;
-    }
+    forkJoin([
+      this.contentService.getContentByContentID(nodeID),
+      this.contentService.getTemplateByControlID(nodeID),
+    ]).subscribe(([contentInfo, selectableTemplates]) => {
+      this.contentEditorService.openEditor({
+        // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
+        contentID: nodeID,
+        contentInfo,
+        selectableTemplates,
+        editorMode: EditorMode.EDIT,
+      }).subscribe();
+    });
 
   }
 

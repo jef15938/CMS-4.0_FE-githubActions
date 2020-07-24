@@ -2,25 +2,29 @@
   <mat-icon class="pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
   <span>
     <mat-menu #appMenu="matMenu">
-      <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.Approve)">
+      <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.APPROVE)">
         <mat-icon>check</mat-icon>
         同意
       </button>
-      <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.Refuse)">
+      <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.REFUSE)">
         <mat-icon>reply</mat-icon>
         退回
       </button>
-      <button type="button" tabindex="0" mat-menu-item [matMenuTriggerFor]="subMenu">
+      <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.PREVIEW)">
         <mat-icon>visibility</mat-icon>
         預覽
       </button>
+      <!-- <button type="button" tabindex="0" mat-menu-item [matMenuTriggerFor]="subMenu">
+        <mat-icon>visibility</mat-icon>
+        預覽
+      </button> -->
     </mat-menu>
 
-    <mat-menu #subMenu="matMenu">
+    <!-- <mat-menu #subMenu="matMenu">
       <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.PreviewPc)">PC</button>
       <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.PreviewPadH)">Pad-H</button>
       <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.PreviewPadV)">Pad-V</button>
       <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.PreviewMobile)">Mobile</button>
-    </mat-menu>
+    </mat-menu> -->
   </span>
 </ng-container>

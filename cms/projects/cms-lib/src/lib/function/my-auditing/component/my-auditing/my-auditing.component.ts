@@ -8,6 +8,7 @@ import { ColDef } from '../../../ui/table';
 import { ModalService } from '../../../ui/modal';
 import { MyAuditingActionCellComponent, MyAuditingActionCellCustomEvent } from '../my-auditing-action-cell/my-auditing-action-cell.component';
 import { MyAuditingDetailModalComponent } from '../my-auditing-detail-modal/my-auditing-detail-modal.component';
+import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
 
 @Component({
   selector: 'cms-my-auditing',
@@ -83,7 +84,7 @@ export class MyAuditingComponent implements OnInit {
   onCustomEvent(event: MyAuditingActionCellCustomEvent) {
     if (event instanceof MyAuditingActionCellCustomEvent) {
       switch (event.action) {
-        case event.ActionType.Detail:
+        case event.ActionType.DETAIL:
           this.modalService.openComponent({
             component: MyAuditingDetailModalComponent,
             componentInitData: {
@@ -91,16 +92,32 @@ export class MyAuditingComponent implements OnInit {
             }
           });
           break;
-        case event.ActionType.PreviewPc:
+        case event.ActionType.PREVIEW:
+          this.preview(event.data);
           break;
-        case event.ActionType.PreviewPadH:
-          break;
-        case event.ActionType.PreviewPadV:
-          break;
-        case event.ActionType.PreviewMobile:
-          break;
+        // case event.ActionType.PreviewPc:
+        //   break;
+        // case event.ActionType.PreviewPadH:
+        //   break;
+        // case event.ActionType.PreviewPadV:
+        //   break;
+        // case event.ActionType.PreviewMobile:
+        //   break;
       }
     }
+  }
+
+  preview(auditingInfo: MyAuditingInfo) {
+    const orderID = auditingInfo.order_id;
+    this.auditingService.getPreviewInfo(orderID).subscribe(previewInfo => {
+      switch (previewInfo.preview_type) {
+        case PreviewInfoType.ONE_PAGE:
+          window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
+          break;
+        case PreviewInfoType.FARM:
+          break;
+      }
+    });
   }
 
   onPageChanged(event: { pageIndex: number }) {
