@@ -2,16 +2,29 @@
   <div *ngIf="siteMapUpdateInfo?.siteMap" class="page-title-container">
     <h1>{{siteMapUpdateInfo.siteMap.node_name}}</h1>
   </div>
-  <div class="page-content-container" *ngIf="siteMapUpdateInfo?.siteMap">
-    <div>NodeId：{{siteMapUpdateInfo.siteMap.node_id}}</div>
-    <div>ParentId：{{siteMapUpdateInfo.parentId}} / NodeOrder：{{siteMapUpdateInfo.nodeOrder}}</div>
-    <div class="btn-group" *ngIf="siteMapUpdateInfo?.siteMap?.node_type === NodeType.CONTENT">
-      <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"
-        (click)="editContent(siteMapUpdateInfo.siteMap.node_id)">編輯</button>
-      <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canSubmit"
-        (click)="auditingSiteMap()">送審</button>
+
+  <!-- debug 用 -->
+  <div
+    style="padding-left: 10px; font-size:12px; height:24px; line-height:24px; vertical-align: middle; border-bottom: 1px solid lightgray;">
+    [DEBUG]
+    NodeType={{siteMapUpdateInfo.siteMap.node_type}}, NodeID={{siteMapUpdateInfo.siteMap.node_id}},
+    ParentId={{siteMapUpdateInfo.parentId}}, NodeOrder={{siteMapUpdateInfo.nodeOrder}}
+  </div>
+
+  <ng-container *ngIf="siteMapUpdateInfo?.siteMap?.node_type === NodeType.CONTENT">
+    <div class="page-content-container" style="border-bottom: 1px solid lightgray;">
+      <div class="btn-group">
+        <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"
+          (click)="editContent(siteMapUpdateInfo.siteMap.node_id)">編輯</button>
+        <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canSubmit"
+          (click)="auditingSiteMap()">送審</button>
+      </div>
     </div>
-    <div *ngIf="siteMapUpdateInfo.siteMap.publish_info" style="color: gray;">
+  </ng-container>
+
+  <ng-container *ngIf="siteMapUpdateInfo.siteMap.publish_info; let publishInfo">
+    <div *ngIf="publishInfo.draft || publishInfo.pending_published || publishInfo.published"
+      class="page-content-container" style="color: gray; border-bottom: 1px solid lightgray;">
       <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.draft; let obj">
         後台草稿上下架：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
       </div>
@@ -21,7 +34,13 @@
       <div *ngIf="siteMapUpdateInfo.siteMap.publish_info.published; let obj">
         線上上下架：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
       </div>
-      <hr>
+    </div>
+  </ng-container>
+
+  <div class="page-content-container" *ngIf="siteMapUpdateInfo?.siteMap">
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-button (click)="save()" [disabled]="form.invalid"
+        style="float: right;">儲存節點</button>
     </div>
     <form #form="ngForm" style="margin-top: 10px;">
       <mat-form-field appearance="outline">
@@ -102,9 +121,6 @@
           </mat-form-field>
         </ng-container>
       </ng-container>
-      <div class="btn-group">
-        <button type="button" tabindex="0" mat-button (click)="save()" [disabled]="form.invalid">儲存</button>
-      </div>
     </form>
   </div>
 </ng-container>
