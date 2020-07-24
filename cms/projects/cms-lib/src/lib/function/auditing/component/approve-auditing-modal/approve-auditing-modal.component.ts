@@ -3,8 +3,8 @@ import { AuditingSubmitRequest } from '../../../../global/api/neuxAPI/bean/Audit
 import { CustomModalBase } from '../../../ui/modal';
 
 export enum AuditingApproveStatus {
-  Approve = 'APPROVED',
-  Reject = 'REJECT',
+  APPROVED = 'APPROVED',
+  REJECT = 'REJECT',
 }
 
 @Component({
@@ -27,14 +27,14 @@ export class ApproveAuditingModalComponent extends CustomModalBase implements On
     () => [
       '審核',
       this.batch ? '批次' : '',
-      this.status === AuditingApproveStatus.Approve ? '通過' : this.status === AuditingApproveStatus.Reject ? '退回' : ''
+      this.status === AuditingApproveStatus.APPROVED ? '通過' : this.status === AuditingApproveStatus.REJECT ? '退回' : ''
     ].join('')
 
   constructor() { super(); }
 
   ngOnInit(): void {
     this.approveRequest.status = this.status;
-    this.approveRequest.comment = this.status === AuditingApproveStatus.Approve ? '審核通過' : '';
+    this.approveRequest.comment = this.status === AuditingApproveStatus.APPROVED ? '審核通過' : '';
   }
 
   confirm() {

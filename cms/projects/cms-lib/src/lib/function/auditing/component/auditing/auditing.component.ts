@@ -92,10 +92,10 @@ export class AuditingComponent implements OnInit {
         let status: AuditingApproveStatus;
         switch (event.action) {
           case event.ActionType.Approve:
-            status = AuditingApproveStatus.Approve;
+            status = AuditingApproveStatus.APPROVED;
             break;
           case event.ActionType.Refuse:
-            status = AuditingApproveStatus.Reject;
+            status = AuditingApproveStatus.REJECT;
             break;
         }
         this.modalService.openComponent({
