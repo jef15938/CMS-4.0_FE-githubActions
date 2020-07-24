@@ -25,8 +25,8 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   @Input() selected: LayoutWrapperSelectEvent;
 
   @Output() needCheckView = new EventEmitter<CheckViewConfig>();
-  @Output() needScale = new EventEmitter<boolean>();
-  @Output() changePreserve = new EventEmitter();
+  @Output() templateMove = new EventEmitter<boolean>();
+  @Output() contentChange = new EventEmitter();
 
   LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
   FieldType = FieldType;
@@ -79,7 +79,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     }
     this.manager.stateManager.preserveState(action || `Change ${targetType} : ${target.join(' ')}`);
     this.hasChange = false;
-    this.changePreserve.emit();
+    this.contentChange.emit();
     this.needCheckView.emit();
   }
 
@@ -100,7 +100,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     }).subscribe();
   }
 
-  templateMove(direction: 'up' | 'down') {
+  moveTemplate(direction: 'up' | 'down') {
     const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
     const index = templateInfos.indexOf(selectedTemplateInfo);
@@ -122,7 +122,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
     this.hasChange = true;
     this.calCanTemplateMove();
-    this.needScale.emit(true);
+    this.templateMove.emit(true);
     this.needCheckView.emit();
     this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
   }
