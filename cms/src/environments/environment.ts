@@ -101,7 +101,7 @@ export const environment = {
     PutGalleryByGalleryID: 'Restful',
     DeleteGalleryByGalleryID: 'Restful',
     PostSitemapAuditingByNodeId: 'Restful',
-    GetLayout: 'Mock',
+    GetLayout: 'Restful',
     GetFarmTakeOffByFuncID: 'Restful',
     GetSitemapPreviewByNodeID: 'Restful',
     GetAuditingPreviewByOrderID: 'Restful',
