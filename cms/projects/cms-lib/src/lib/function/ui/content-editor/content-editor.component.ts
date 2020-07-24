@@ -60,20 +60,20 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   ngOnInit(): void {
     this.cmsCanDeactiveGuard.registerAsGuardian(this);
-    this.init(this.contentInfo);
+    this.resetSelected();
+    this.manager = new ContentEditorManager(this.contentInfo);
   }
 
   ngAfterViewInit(): void {
     this.registerClickCaptureListener('register');
+    this.manager.stateManager.stateChange.subscribe(_ => {
+      this.setEditorUnsaved();
+      this.contentViewRenderer.checkView();
+    });
   }
 
   ngAfterContentChecked(): void {
     this.changeDetectorRef.detectChanges();
-  }
-
-  private init(contentInfo: ContentInfo) {
-    this.resetSelected();
-    this.manager = new ContentEditorManager(contentInfo);
   }
 
   ngOnDestroy(): void {
@@ -99,8 +99,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         language.templates.length = 0;
       });
       this.manager.stateManager.preserveState('Clear Content');
-      this.setEditorUnsaved();
-      this.contentViewRenderer.checkView();
     }
   }
 

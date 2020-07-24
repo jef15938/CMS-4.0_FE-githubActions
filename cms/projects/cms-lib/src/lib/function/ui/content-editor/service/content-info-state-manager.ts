@@ -1,3 +1,5 @@
+import { Subject, Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { ContentInfo } from './../../../../global/api/neuxAPI/bean/ContentInfo';
 
 class ContentInfoState {
@@ -8,6 +10,10 @@ class ContentInfoState {
 }
 
 export class ContentInfoStateManager {
+
+  private stateChange$ = new Subject();
+  stateChange: Observable<ContentInfoState>;
+
   private originState: ContentInfoState;
 
   currentIndex = 0;
@@ -22,6 +28,7 @@ export class ContentInfoStateManager {
   constructor(
     originContentInfo: ContentInfo,
   ) {
+    this.stateChange = this.stateChange$.pipe(shareReplay<ContentInfoState>(1));
     this.originState = new ContentInfoState(JSON.parse(JSON.stringify(originContentInfo)), 'origin');
     this.currentState = this.getInitState();
   }
@@ -30,9 +37,14 @@ export class ContentInfoStateManager {
     return new ContentInfoState(JSON.parse(JSON.stringify(this.originState.snapShot)));
   }
 
+  private emitStateChange() {
+    this.stateChange$.next(this.currentState);
+  }
+
   resetState() {
     const previous = this.currentIndex === 0 ? this.originState : this.states[this.currentIndex - 1];
     this.currentState.snapShot = JSON.parse(JSON.stringify(previous.snapShot));
+    this.emitStateChange();
   }
 
   preserveState(action: string = 'Unknow') {
@@ -45,6 +57,7 @@ export class ContentInfoStateManager {
     // this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action);
     this.currentIndex++;
     this.calHasState();
+    this.emitStateChange();
   }
 
   back(step = 1) {
@@ -56,6 +69,7 @@ export class ContentInfoStateManager {
       this.currentIndex--;
       this.calHasState();
     }
+    this.emitStateChange();
   }
 
   forward(step = 1) {
@@ -67,6 +81,7 @@ export class ContentInfoStateManager {
       this.currentIndex++;
       this.calHasState();
     }
+    this.emitStateChange();
   }
 
   private calHasState() {

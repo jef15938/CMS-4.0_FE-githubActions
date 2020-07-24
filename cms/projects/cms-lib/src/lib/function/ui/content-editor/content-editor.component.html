@@ -1,11 +1,11 @@
 <div>
   <mat-menu #stateMenu="matMenu">
     <button type="button" tabindex="-1" mat-menu-item [class.current-state]="manager?.stateManager?.currentIndex === 0"
-      (click)="resetSelected(); manager?.stateManager?.back(manager?.stateManager?.currentIndex); setEditorUnsaved(); contentViewRenderer?.checkView();">Init</button>
+      (click)="resetSelected(); manager?.stateManager?.back(manager?.stateManager?.currentIndex);">Init</button>
     <button type="button" tabindex="-1" mat-menu-item
       *ngFor="let state of manager?.stateManager?.states; let i = index;"
       [class.current-state]="manager?.stateManager?.currentIndex === i+1"
-      (click)="resetSelected(); manager?.stateManager?.back(manager?.stateManager?.currentIndex - (i+1)); setEditorUnsaved(); contentViewRenderer?.checkView();">
+      (click)="resetSelected(); manager?.stateManager?.back(manager?.stateManager?.currentIndex - (i+1));">
       {{state.action}}</button>
   </mat-menu>
 </div>
@@ -17,11 +17,11 @@
       <mat-icon>save</mat-icon>
     </button>
     <button type="button" tabindex="-1" mat-icon-button alt="undo" [disabled]="!manager?.stateManager?.hasPreviousState"
-      (click)="resetSelected(); manager?.stateManager?.back(); setEditorUnsaved(); contentViewRenderer?.checkView();">
+      (click)="resetSelected(); manager?.stateManager?.back();">
       <mat-icon>undo</mat-icon>
     </button>
     <button type="button" tabindex="-1" mat-icon-button alt="redo" [disabled]="!manager?.stateManager?.hasNextState"
-      (click)="resetSelected(); manager?.stateManager?.forward(); setEditorUnsaved(); contentViewRenderer?.checkView();">
+      (click)="resetSelected(); manager?.stateManager?.forward();">
       <mat-icon>redo</mat-icon>
     </button>
     <button type="button" tabindex="-1" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger"
@@ -57,7 +57,7 @@
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
       <cms-layout-control-panel [selectedBtn]="manager.selectedTemplateAddBtn"
         [selectableTemplates]="selectableTemplates"
-        (templateAdd)="resetSelected(); manager.stateManager.preserveState('AddTemplate : '+$event); setEditorUnsaved(); contentViewRenderer?.checkView();">
+        (templateAdd)="resetSelected(); manager.stateManager.preserveState('AddTemplate : '+$event);">
       </cms-layout-control-panel>
     </div>
     <!-- 內容編輯 -->

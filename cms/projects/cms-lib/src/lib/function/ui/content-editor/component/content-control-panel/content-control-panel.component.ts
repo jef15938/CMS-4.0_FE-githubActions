@@ -26,7 +26,6 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   @Output() needCheckView = new EventEmitter<CheckViewConfig>();
   @Output() templateMove = new EventEmitter<boolean>();
-  @Output() contentChange = new EventEmitter();
 
   LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
   FieldType = FieldType;
@@ -79,8 +78,6 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     }
     this.manager.stateManager.preserveState(action || `Change ${targetType} : ${target.join(' ')}`);
     this.hasChange = false;
-    this.contentChange.emit();
-    this.needCheckView.emit();
   }
 
   /**
