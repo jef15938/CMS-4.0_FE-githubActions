@@ -92,14 +92,14 @@ export class AuditingService {
   /**
    *
    *
-   * @param {string} orderID
+   * @param {number} orderID
    * @returns
    * @memberof AuditingService
    */
-  getPreviewInfo(orderID: string): Observable<PreviewInfo> {
+  getPreviewInfo(orderID: number): Observable<PreviewInfo> {
     if (!orderID) {
-      throw new ParamsError('orderID', 'getPreviewInfo', 'string', orderID);
+      throw new ParamsError('orderID', 'getPreviewInfo', 'number', orderID);
     }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetAuditingPreview', { orderID });
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetAuditingPreviewByOrderID', { orderID });
   }
 }

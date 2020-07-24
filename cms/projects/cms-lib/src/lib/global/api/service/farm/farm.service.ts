@@ -187,7 +187,7 @@ export class FarmService {
     if (!funcID) {
       throw new ParamsError('funcID', 'getPreviewInfo', 'string', funcID);
     }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreview', { funcID });
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreviewByFuncID', { funcID });
   }
 
 }

@@ -224,7 +224,7 @@ export class SitemapService {
     if (!nodeID) {
       throw new ParamsError('nodeID', 'getPreviewInfo', 'string', nodeID);
     }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreview', { nodeID });
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreviewByNodeID', { nodeID });
   }
 
 }
