@@ -37,6 +37,7 @@ import { PostFarmFormInfoByFuncIDAPI } from './api/PostFarmFormInfoByFuncIDAPI';
 import { PutFarmFormInfoByFuncIDAPI } from './api/PutFarmFormInfoByFuncIDAPI';
 import { PostFarmAuditingByFuncIdAPI } from './api/PostFarmAuditingByFuncIdAPI';
 import { GetFarmDetailInfoByFuncIDAPI } from './api/GetFarmDetailInfoByFuncIDAPI';
+import { GetFarmPreviewByFuncIDAPI } from './api/GetFarmPreviewByFuncIDAPI';
 import { GetGalleryShowByGalleryIDAPI } from './api/GetGalleryShowByGalleryIDAPI';
 import { GetSiteAPI } from './api/GetSiteAPI';
 import { GetSiteBySiteIDAPI } from './api/GetSiteBySiteIDAPI';
@@ -49,6 +50,8 @@ import { DeleteGalleryByGalleryIDAPI } from './api/DeleteGalleryByGalleryIDAPI';
 import { PostSitemapAuditingByNodeIdAPI } from './api/PostSitemapAuditingByNodeIdAPI';
 import { GetLayoutAPI } from './api/GetLayoutAPI';
 import { GetFarmTakeOffByFuncIDAPI } from './api/GetFarmTakeOffByFuncIDAPI';
+import { GetSitemapPreviewByNodeIDAPI } from './api/GetSitemapPreviewByNodeIDAPI';
+import { GetAuditingPreviewByOrderIDAPI } from './api/GetAuditingPreviewByOrderIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GenerationHeader } from './bean/GenerationHeader';
@@ -65,6 +68,7 @@ import { MyAuditingGetResponse } from './bean/MyAuditingGetResponse';
 import { FarmInfoGetResponse } from './bean/FarmInfoGetResponse';
 import { FarmTableInfo } from './bean/FarmTableInfo';
 import { FarmFormInfo } from './bean/FarmFormInfo';
+import { PreviewInfo } from './bean/PreviewInfo';
 import { SiteGetResponse } from './bean/SiteGetResponse';
 import { SiteMapNodeInfo } from './bean/SiteMapNodeInfo';
 import { GroupMenuGetResponse } from './bean/GroupMenuGetResponse';
@@ -107,6 +111,7 @@ PostFarmFormInfoByFuncID: GenerationHeader,
 PutFarmFormInfoByFuncID: GenerationHeader,
 PostFarmAuditingByFuncId: GenerationHeader,
 GetFarmDetailInfoByFuncID: FarmFormInfo,
+GetFarmPreviewByFuncID: PreviewInfo,
 GetSite: SiteGetResponse,
 GetSiteBySiteID: SiteMapGetResponse,
 GetSiteBySiteIDAndNodeID: SiteMapNodeInfo,
@@ -118,6 +123,8 @@ DeleteGalleryByGalleryID: GenerationHeader,
 PostSitemapAuditingByNodeId: GenerationHeader,
 GetLayout: LayoutGetResponse,
 GetFarmTakeOffByFuncID: GenerationHeader,
+GetSitemapPreviewByNodeID: PreviewInfo,
+GetAuditingPreviewByOrderID: PreviewInfo,
 
 }
 
@@ -167,6 +174,7 @@ this.apiFactory.registerApi(new PostFarmFormInfoByFuncIDAPI());
 this.apiFactory.registerApi(new PutFarmFormInfoByFuncIDAPI());
 this.apiFactory.registerApi(new PostFarmAuditingByFuncIdAPI());
 this.apiFactory.registerApi(new GetFarmDetailInfoByFuncIDAPI());
+this.apiFactory.registerApi(new GetFarmPreviewByFuncIDAPI());
 this.apiFactory.registerApi(new GetGalleryShowByGalleryIDAPI());
 this.apiFactory.registerApi(new GetSiteAPI());
 this.apiFactory.registerApi(new GetSiteBySiteIDAPI());
@@ -179,6 +187,8 @@ this.apiFactory.registerApi(new DeleteGalleryByGalleryIDAPI());
 this.apiFactory.registerApi(new PostSitemapAuditingByNodeIdAPI());
 this.apiFactory.registerApi(new GetLayoutAPI());
 this.apiFactory.registerApi(new GetFarmTakeOffByFuncIDAPI());
+this.apiFactory.registerApi(new GetSitemapPreviewByNodeIDAPI());
+this.apiFactory.registerApi(new GetAuditingPreviewByOrderIDAPI());
 
     }
 

@@ -11,6 +11,7 @@ public language_name: string;
 @Type(TypeFactory(ContentTemplateInfo))
 @ValidateNested()
 public templates: Array<ContentTemplateInfo>;
+public is_default: boolean;
 
 
 }
