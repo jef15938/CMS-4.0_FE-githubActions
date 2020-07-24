@@ -212,11 +212,9 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getPreviewInfo(nodeID: string): Observable<PreviewInfo> {
-    if (!nodeID) {
-      throw new ParamsError('nodeID', 'getPreviewInfo', 'string', nodeID);
-    }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreviewByNodeID', { nodeID });
+  getPreviewInfo(nodeID: string, languageID?: string): Observable<PreviewInfo> {
+    if (!nodeID) { throw new ParamsError('nodeID', 'getPreviewInfo', 'string', nodeID); }
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreviewByNodeID', { nodeID, languageID });
   }
 
 }
