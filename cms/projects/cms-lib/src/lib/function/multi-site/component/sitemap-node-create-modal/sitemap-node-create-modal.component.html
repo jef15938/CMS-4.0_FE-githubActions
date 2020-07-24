@@ -25,7 +25,7 @@
 
     <ng-container [ngSwitch]="sitemapMaintainModel.node_type">
       <!-- URL -->
-      <ng-container *ngSwitchCase="NodeType.Url">
+      <ng-container *ngSwitchCase="NodeType.URL">
         <mat-form-field appearance="outline">
           <mat-label>連結類型</mat-label>
           <mat-select [(ngModel)]="sitemapMaintainModel.url_type" name="url_type" required>
@@ -61,7 +61,7 @@
         </ng-container>
       </ng-container>
       <!-- CONTENT -->
-      <ng-container *ngSwitchCase="NodeType.Content">
+      <ng-container *ngSwitchCase="NodeType.CONTENT">
 
         <div class="mat-form-field-wrapper layout-select">
           <mat-expansion-panel>

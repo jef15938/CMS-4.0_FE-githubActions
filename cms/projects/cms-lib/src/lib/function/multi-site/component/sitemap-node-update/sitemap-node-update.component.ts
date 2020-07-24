@@ -61,8 +61,8 @@ export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
 
   nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
     { value: null, name: '無' },
-    { value: SiteMapNodeType.Url, name: '連結' },
-    { value: SiteMapNodeType.Content, name: '頁面' },
+    { value: SiteMapNodeType.URL, name: '連結' },
+    { value: SiteMapNodeType.CONTENT, name: '頁面' },
   ];
 
   constructor(

@@ -35,10 +35,10 @@ class SiteMapCreateModel extends UserSiteMapPostRequest {
         this.clearLink();
         this.clearContent();
         break;
-      case SiteMapNodeType.Url:
+      case SiteMapNodeType.URL:
         this.clearContent();
         break;
-      case SiteMapNodeType.Content:
+      case SiteMapNodeType.CONTENT:
         this.clearLink();
         break;
     }
@@ -77,8 +77,8 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
 
   nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
     { value: null, name: '無' },
-    { value: SiteMapNodeType.Url, name: '連結' },
-    { value: SiteMapNodeType.Content, name: '頁面' },
+    { value: SiteMapNodeType.URL, name: '連結' },
+    { value: SiteMapNodeType.CONTENT, name: '頁面' },
   ];
 
   constructor(

@@ -1,7 +1,8 @@
 export enum SiteMapNodeType {
-  None = '',
-  Url = 'URL',
-  Content = 'CONTENT'
+  NONE = '',
+  URL = 'URL',
+  CONTENT = 'CONTENT',
+  FARM = 'FARM',
 }
 
 export enum SiteMapUrlType {
