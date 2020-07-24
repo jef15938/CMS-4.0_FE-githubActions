@@ -177,16 +177,16 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     if (event instanceof GalleryCategoryNodeCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
-        case event.ActionType.Upload:
+        case event.ActionType.UPLOAD:
           action = this.uploadFileToCategory(event.data);
           break;
-        case event.ActionType.Create:
+        case event.ActionType.CREATE:
           action = this.maintainCategory('Create', event.data);
           break;
-        case event.ActionType.Edit:
+        case event.ActionType.EDIT:
           action = this.maintainCategory('Update', event.data);
           break;
-        case event.ActionType.Delete:
+        case event.ActionType.DELETE:
           action = this.galleryService.deleteGalleryCategory(event.data.category_id).pipe(
             map(_ => 'Deleted')
           );
@@ -223,15 +223,15 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     if (event instanceof GalleryActionCellCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
-        case event.ActionType.Edit:
+        case event.ActionType.EDIT:
           action = this.updateGallery(event.data);
           break;
-        case event.ActionType.Delete:
+        case event.ActionType.DELETE:
           action = this.galleryService.deleteGallery(event.data.gallery_id).pipe(
             map(_ => 'Deleted')
           );
           break;
-        case event.ActionType.CopyUrl:
+        case event.ActionType.COPY_URL:
           this.copyToClipBoard(event.data.url);
           action = NEVER;
           break;

@@ -3,7 +3,7 @@ import { CustomCellRenderer, CmsTable } from '../../../ui/table';
 import { ChatbotReply } from '../../../../global/model/chatbot.model';
 
 enum ActionType {
-  Edit, Delete
+  EDIT, DELETE
 }
 
 export class ReplyActionCellCustomEvent {

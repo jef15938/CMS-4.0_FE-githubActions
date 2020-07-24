@@ -6,7 +6,7 @@ import { CmsTreeNodeRenderer, CmsTreeNode } from './../../../ui/tree';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 
 enum ActionType {
-  Create, Delete
+  CREATE, DELETE
 }
 
 export class MultiSiteNodeCustomEvent {

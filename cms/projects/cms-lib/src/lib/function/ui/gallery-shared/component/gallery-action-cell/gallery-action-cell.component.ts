@@ -3,7 +3,7 @@ import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo'
 import { CustomCellRenderer, CmsTable } from '../../../../ui/table';
 
 enum ActionType {
-  Edit, Delete, CopyUrl,
+  EDIT, DELETE, COPY_URL,
 }
 
 export class GalleryActionCellCustomEvent {

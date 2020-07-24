@@ -49,10 +49,10 @@ export class DeptComponent implements OnInit {
     if (event instanceof DeptNodeCustomEvent) {
       let action: 'Create' | 'Update';
       switch (event.action) {
-        case event.ActionType.Create:
+        case event.ActionType.CREATE:
           action = 'Create';
           break;
-        case event.ActionType.Edit:
+        case event.ActionType.EDIT:
           action = 'Update';
           break;
       }

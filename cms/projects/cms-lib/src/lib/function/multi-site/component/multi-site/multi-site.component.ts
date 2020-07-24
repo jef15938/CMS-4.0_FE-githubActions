@@ -123,7 +123,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     if (event instanceof MultiSiteNodeCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
-        case event.ActionType.Create:
+        case event.ActionType.CREATE:
           action = this.modalService.openComponent({
             component: SitemapNodeCreateModalComponent,
             componentInitData: {
@@ -132,7 +132,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           });
           break;
-        case event.ActionType.Delete:
+        case event.ActionType.DELETE:
           action = this.sitemapService.deleteUserSiteMap(event.data.node_id).pipe(
             map(_ => 'Deleted')
           );

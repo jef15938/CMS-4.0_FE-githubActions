@@ -57,10 +57,10 @@ export class ItemComponent implements OnInit {
     if (event instanceof ItemActionCellCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
-        case event.ActionType.Edit:
+        case event.ActionType.EDIT:
           action = this.updateItem(event.data);
           break;
-        case event.ActionType.Delete:
+        case event.ActionType.DELETE:
           action = this.chatbotService.deleteItem(event.data.value).pipe(
             map(_ => 'Deleted')
           );

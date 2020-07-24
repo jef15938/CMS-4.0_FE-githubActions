@@ -6,7 +6,7 @@ import { GalleryCategoryInfo } from '../../../../../global/api/neuxAPI/bean/Gall
 import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../../ui/tree';
 
 enum ActionType {
-  Create, Edit, Delete, Upload
+  CREATE, EDIT, DELETE, UPLOAD
 }
 
 export class GalleryCategoryNodeCustomEvent {

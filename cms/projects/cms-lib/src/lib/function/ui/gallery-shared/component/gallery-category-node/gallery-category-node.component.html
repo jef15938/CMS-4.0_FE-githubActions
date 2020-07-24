@@ -2,20 +2,20 @@
   <span class="pointer">{{node.data.category_id}}:{{node.data.category_name}}</span>
   <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
-      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.Upload)"
+      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.UPLOAD)"
         [disabled]="!node.data.can_upload">
         <mat-icon>file_upload</mat-icon>
         上傳
       </button>
-      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.Create)">
+      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.CREATE)">
         <mat-icon>add</mat-icon>
         新增
       </button>
-      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.Edit)">
+      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.EDIT)">
         <mat-icon>edit</mat-icon>
         修改
       </button>
-      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.Delete)">
+      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.DELETE)">
         <mat-icon>delete</mat-icon>
         刪除
       </button>

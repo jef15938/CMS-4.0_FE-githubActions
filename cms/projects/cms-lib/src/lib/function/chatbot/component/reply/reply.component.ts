@@ -57,10 +57,10 @@ export class ReplyComponent implements OnInit {
     if (event instanceof ReplyActionCellCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
-        case event.ActionType.Edit:
+        case event.ActionType.EDIT:
           action = this.updateReply(event.data);
           break;
-        case event.ActionType.Delete:
+        case event.ActionType.DELETE:
           action = this.chatbotService.deleteReply(event.data.id).pipe(
             map(_ => 'Deleted')
           );
