@@ -1,7 +1,17 @@
 <div class="view-container" [class.mode-info]="editorMode===EditorMode.INFO">
-  <ng-container *ngFor="let language of contentInfo.languages">
+  <mat-tab-group>
+    <mat-tab *ngFor="let language of contentInfo.languages" [label]="language.language_name">
+      <ng-template matTabContent>
+        <rdr-templates-container [templates]="language.templates" mode="edit" (select)="onSelect($event)"
+          (enter)="onEnter($event)" (leave)="onLeave($event)">
+        </rdr-templates-container>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+
+  <!-- <ng-container *ngFor="let language of contentInfo.languages">
     <rdr-templates-container [templates]="language.templates" mode="edit" (select)="onSelect($event)"
       (enter)="onEnter($event)" (leave)="onLeave($event)">
     </rdr-templates-container>
-  </ng-container>
+  </ng-container> -->
 </div>
