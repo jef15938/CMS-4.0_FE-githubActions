@@ -110,6 +110,13 @@
         </ng-template>
         <ng-template matTabContent>
           <div class="page-content-container">
+            <div>
+              <button type="button" tabindex="0" mat-button style="float: right;"
+                *ngIf="nodeInfo.node_type===SiteMapNodeType.CONTENT" [disabled]="!nodeInfo.canPreview"
+                [ngSwitch]="nodeInfo.node_type" (click)="preview(detail.language_id)">
+                預覽
+              </button>
+            </div>
             <mat-form-field appearance="outline">
               <mat-label>節點名稱</mat-label>
               <input matInput [value]="detail.node_name" name="node_name" readonly>
