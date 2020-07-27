@@ -1,0 +1,62 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+@mixin custom-reset() {
+  @include nx-reset();
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  * {
+    line-height: normal;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  :disabled,
+  [disabled] {
+    cursor: not-allowed !important;
+  }
+
+  .btn-group {
+    button+button {
+      margin-left: 20px;
+    }
+  }
+
+  .page-title-container {
+    padding: $page-container-custom-padding;
+    border-bottom: 1px solid $color-light-gray;
+
+    h1 {
+      margin-bottom: 0;
+    }
+  }
+
+
+  .page-content-container {
+    padding: $page-container-custom-padding;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .CMS-main-color {
+    color: $color-CIS;
+  }
+
+  .CMS-main-bgcolor {
+    background-color: $color-CIS;
+  }
+
+}

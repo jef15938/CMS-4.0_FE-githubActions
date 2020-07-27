@@ -1,84 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~@neux/ui/theme/theme-all";
-@import "~@neux/ui/theme/config-all";
-@import '~@neux/ui/global/style-import-app-global';
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import '~@neux/ui/tool-mixins/style-import-app-global';
+@import '../../cms/projects/cms-lib/src/lib/global/style/main';
 
-html,
-body {
-  height: 100%;
+@include custom-reset();
+
+
+.router-active {
+  background-color: $sidenav-actived-item-bg;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
 
 .dark-style {
-  background: #393939;
-  color: white;
+  background: $dark-style-bg;
+  color: $color-white;
 
   *[disabled="true"] {
     color: #6d6d6d !important;
   }
 }
 
-a {
-  @include on-event($conf:(self:true)) {
-    color: inherit;
-  }
-}
-
-.router-active {
-  background-color: rgba(255, 255, 255, 0.6);
-}
-
-.sidebar {
-  position: fixed;
-  height: 100%;
-  width: 200px;
-  background-color: lightgray;
-  padding: 10px;
-}
-
-
-
-button,
-.pointer {
-  cursor: pointer;
-}
-
 mat-form-field {
   width: 100%;
-}
-
-.p-10 {
-  padding: 10px !important;
-}
-
-.page-title-container {
-  @extend .p-10;
-  border-bottom: 1px solid lightgray;
-  height: 52px;
-
-  h1 {
-    margin-bottom: 0;
-  }
-}
-
-.page-content-container {
-  @extend .p-10;
-}
-
-:disabled,
-[disabled] {
-  cursor: not-allowed !important;
-}
-
-.btn-group {
-  >button:not(:first-child) {
-    margin-left: 20px;
-  }
 }
 
 .cms-resizer:hover {
