@@ -3,11 +3,11 @@ import { NgForm } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { UserSiteMapPutRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPutRequest';
 import { SiteMapNodeGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapNodeGetResponse';
-import { ModalService } from './../../../ui/modal';
+import { ModalService } from '../../../ui/modal';
 import { SitemapService, ContentService } from '../../../../global/api/service';
-import { ContentEditorService, EditorMode } from './../../../ui/content-editor';
+import { ContentEditorService, EditorMode } from '../../../ui/content-editor';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
-import { SiteMapUpdateInfo } from './../../../../global/interface';
+import { SiteMapUpdateInfo } from '../../../../global/interface';
 import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
 import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
@@ -29,11 +29,11 @@ class SiteMapUpdateModel extends UserSiteMapPutRequest {
 }
 
 @Component({
-  selector: 'cms-sitemap-node-update',
-  templateUrl: './sitemap-node-update.component.html',
-  styleUrls: ['./sitemap-node-update.component.scss']
+  selector: 'cms-sitemap-node-detail',
+  templateUrl: './sitemap-node-detail.component.html',
+  styleUrls: ['./sitemap-node-detail.component.scss']
 })
-export class SitemapNodeUpdateComponent implements OnInit, OnChanges {
+export class SitemapNodeDetailComponent implements OnInit, OnChanges {
 
   @ViewChild('form') form: NgForm;
 

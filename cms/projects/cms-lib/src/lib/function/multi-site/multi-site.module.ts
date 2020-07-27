@@ -3,7 +3,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MultiSiteRoutingModule } from './multi-site-routing.module';
 import { MultiSiteComponent } from './component/multi-site/multi-site.component';
 import { MultiSiteNodeComponent } from './component/multi-site-node/multi-site-node.component';
-import { SitemapNodeUpdateComponent } from './component/sitemap-node-update/sitemap-node-update.component';
+import { SitemapNodeDetailComponent } from './component/sitemap-node-detail/sitemap-node-detail.component';
 import { SitemapNodeCreateModalComponent } from './component/sitemap-node-create-modal/sitemap-node-create-modal.component';
 import { AuditingSitemapModalComponent } from './component/auditing-sitemap-modal/auditing-sitemap-modal.component';
 import { GetLayoutByLayoutIDPipe } from './pipe/get-layout-by-layout-id.pipe';
@@ -16,7 +16,7 @@ import { GetLayoutByLayoutIDPipe } from './pipe/get-layout-by-layout-id.pipe';
   declarations: [
     MultiSiteComponent,
     MultiSiteNodeComponent,
-    SitemapNodeUpdateComponent,
+    SitemapNodeDetailComponent,
     SitemapNodeCreateModalComponent,
     AuditingSitemapModalComponent,
     GetLayoutByLayoutIDPipe,

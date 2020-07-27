@@ -12,10 +12,9 @@
   </div>
 
   <ng-container *ngIf="siteMapUpdateInfo?.siteMap; let sitemapNode">
-    <div class="page-content-container" *ngIf="sitemapNode.canModify||sitemapNode.canPreview||sitemapNode.canSubmit"
-      style="border-bottom: 1px solid lightgray;">
+    <div class="page-content-container" style="border-bottom: 1px solid lightgray;">
       <div class="btn-group">
-        <!-- <button type="button" tabindex="0" mat-button (click)="preview()">頁面預覽</button> -->
+        <button type="button" tabindex="0" mat-button>編輯節點</button>
         <button type="button" tabindex="0" mat-button [disabled]="!siteMapUpdateInfo.siteMap.canModify"
           [ngSwitch]="sitemapNode.node_type" (click)="editContent()">
           <ng-container *ngSwitchCase="SiteMapNodeType.CONTENT">
