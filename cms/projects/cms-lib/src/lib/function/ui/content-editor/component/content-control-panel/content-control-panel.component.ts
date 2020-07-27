@@ -99,23 +99,31 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   }
 
   moveTemplate(direction: 'up' | 'down') {
-    const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
+    const currentLanguageTemplateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
-    const index = templateInfos.indexOf(selectedTemplateInfo);
+    const index = currentLanguageTemplateInfos.indexOf(selectedTemplateInfo);
 
     const up = direction === 'up' && index > 0;
-    const down = direction === 'down' && index !== templateInfos.length - 1;
+    const down = direction === 'down' && index !== currentLanguageTemplateInfos.length - 1;
 
     if (!(up || down)) { return; }
 
+    const contentInfo = this.manager.stateManager.currentState.snapShot;
+
     if (up) { // 資料與前一個交換位置
-      templateInfos[index] = templateInfos[index - 1];
-      templateInfos[index - 1] = selectedTemplateInfo;
+      contentInfo.languages.forEach(language => {
+        const templateInfos = language.templates;
+        templateInfos[index] = templateInfos[index - 1];
+        templateInfos[index - 1] = selectedTemplateInfo;
+      })
     }
 
     if (down) { // 資料與後一個交換位置
-      templateInfos[index] = templateInfos[index + 1];
-      templateInfos[index + 1] = selectedTemplateInfo;
+      contentInfo.languages.forEach(language => {
+        const templateInfos = language.templates;
+        templateInfos[index] = templateInfos[index + 1];
+        templateInfos[index + 1] = selectedTemplateInfo;
+      })
     }
 
     this.hasChange = true;
@@ -126,18 +134,23 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   }
 
   templateDelete() {
-    const templateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
+    const currentLanguageTemplateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
-    const index = templateInfos.indexOf(selectedTemplateInfo);
+    const index = currentLanguageTemplateInfos.indexOf(selectedTemplateInfo);
 
     if (index > -1) {
       // 處理畫面
       const templatesContainer = this.selected.wrapper.parentTemplatesContainer as TemplatesContainerComponent;
       const layoutWrapperComponents = Array.from(templatesContainer.layoutWrapperComponents);
-      const nextIndex = (index === templateInfos.length - 1) ? 0 : index + 1;
+      const nextIndex = (index === currentLanguageTemplateInfos.length - 1) ? 0 : index + 1;
       const next = layoutWrapperComponents[nextIndex];
       // 處理資料
-      templateInfos.splice(index, 1);
+      const contentInfo = this.manager.stateManager.currentState.snapShot;
+      contentInfo.languages.forEach(language => {
+        const templateInfos = language.templates;
+        templateInfos.splice(index, 1);
+      })
+
       this.hasChange = true;
       this.needCheckView.emit({ select: next });
     }
