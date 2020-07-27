@@ -61,7 +61,7 @@
     <!-- 版面控制 -->
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
       <cms-layout-control-panel [selectedBtn]="manager.selectedTemplateAddBtn"
-        [selectableTemplates]="selectableTemplates"
+        [contentInfo]="manager?.stateManager?.currentState?.snapShot" [selectableTemplates]="selectableTemplates"
         (templateAdd)="resetSelected(); manager.stateManager.preserveState('AddTemplate : '+$event);">
       </cms-layout-control-panel>
     </div>

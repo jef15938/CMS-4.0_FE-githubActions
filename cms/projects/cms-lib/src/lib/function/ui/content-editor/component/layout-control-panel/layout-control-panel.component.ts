@@ -7,6 +7,7 @@ import { AddTemplateButtonComponent } from '../add-template-button/add-template-
 import { TemplateInfo } from './../../../../../global/api/neuxAPI/bean/TemplateInfo';
 import { DynamicComponentFactoryService, LayoutBaseComponent } from 'render';
 import { ContentTemplateInfo } from '../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
+import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 
 @Component({
   selector: 'cms-layout-control-panel',
@@ -18,6 +19,8 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   @ViewChild('CreateTemplateContainer', { read: ViewContainerRef }) createTemplateContainer: ViewContainerRef;
 
   show = false;
+
+  @Input() contentInfo: ContentInfo;
 
   // 可選版面資料
   @Input() selectableTemplates: TemplateGetResponse;
@@ -45,11 +48,11 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
         template_name: 'Tab',
         template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
       },
-      // {
-      //   template_id: 'IconPage',
-      //   template_name: 'IconPage',
-      //   template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      // },
+      {
+        template_id: 'IconPage',
+        template_name: 'IconPage',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      },
     ];
   }
 
@@ -88,7 +91,10 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     }
 
     if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${templateInfo.template_id}`); return; }
-    this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
+    // this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
+    this.contentInfo?.languages?.forEach(language=>{
+      language.templates.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
+    })
     this.templateAdd.emit(templateInfo.template_id);
   }
 
