@@ -33,7 +33,7 @@ export class ModalService {
     modalConfig.minWidth = fullScreen ? '100%' : config.modalSetting?.minWidth || modalConfig.minWidth;
     modalConfig.minHeight = fullScreen ? '100%' : config.modalSetting?.minHeight || modalConfig.minHeight;
     modalConfig.maxWidth = fullScreen ? '100%' : config.modalSetting?.maxWidth || modalConfig.maxWidth;
-    modalConfig.maxHeight = fullScreen ? '100%' : config.modalSetting?.maxHeight || modalConfig.maxHeight;
+    modalConfig.maxHeight = fullScreen ? '100%' : config.modalSetting?.maxHeight || '90%';
     modalConfig.closeOnNavigation = config.modalSetting?.closeOnNavigation === false ? false : true;
     // https://material.angular.io/components/modal/overview
 

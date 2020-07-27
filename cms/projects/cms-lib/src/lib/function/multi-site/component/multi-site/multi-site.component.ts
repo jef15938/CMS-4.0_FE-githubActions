@@ -1,28 +1,18 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Observable, concat, Subject, forkJoin, of, NEVER, throwError } from 'rxjs';
-import { tap, takeUntil, concatMap, map, throttleTime, catchError, switchMap } from 'rxjs/operators';
+import { Observable, concat, Subject, throwError } from 'rxjs';
+import { tap, takeUntil, map, catchError } from 'rxjs/operators';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
-import { SitemapService, ContentService } from '../../../../global/api/service';
+import { SitemapService } from '../../../../global/api/service';
 import { ModalService } from '../../../ui/modal';
 import { CmsTree, TreeComponent } from '../../../ui/tree';
-import { ContentEditorService, EditorMode } from '../../../ui/content-editor';
 import { HtmlEditorService } from '../../../ui/html-editor';
-import { SiteMapUpdateInfo } from './../../../../global/interface';
 import { SitemapNodeCreateModalComponent } from '../sitemap-node-create-modal/sitemap-node-create-modal.component';
 import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from '../multi-site-node/multi-site-node.component';
+import { SiteMapNodeGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapNodeGetResponse';
 
 enum EditModeType {
   SITE, NODE,
-}
-
-class SiteInfoUpdateModel extends SiteInfo {
-  constructor(siteInfo: SiteInfo) {
-    super();
-    for (const k of Object.keys(siteInfo)) {
-      this[k] = siteInfo[k];
-    }
-  }
 }
 
 @Component({
@@ -38,14 +28,14 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sites: SiteInfo[] = [];
   selectedSite: SiteInfo;
-  selectedSiteUpdateModel: SiteInfoUpdateModel;
 
   editMode: EditModeType = EditModeType.SITE;
 
   sitemaps: SiteMapGetResponse[];
 
   customNodeRenderer = MultiSiteNodeComponent;
-  selectedNode: SiteMapUpdateInfo;
+  selectedNode: SiteMapNodeGetResponse;
+  selectedNodeParentID: string;
   private nodeSelected$ = new Subject<SiteMapGetResponse>();
 
   private destroy$ = new Subject();
@@ -54,8 +44,6 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private modalService: ModalService,
     private sitemapService: SitemapService,
-    private contentService: ContentService,
-    private contentEditorService: ContentEditorService,
     private htmlEditorService: HtmlEditorService,
   ) { }
 
@@ -88,9 +76,8 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectSite(site: SiteInfo) {
-    if (!site) { this.selectedSite = this.selectedSiteUpdateModel = undefined; return; }
+    if (!site) { this.selectedSite = undefined; return; }
     this.selectedSite = site;
-    this.selectedSiteUpdateModel = new SiteInfoUpdateModel(this.selectedSite);
   }
 
   swichMode(mode: EditModeType) {
@@ -148,30 +135,6 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   private registerSubjects() {
     this.nodeSelected$.pipe(
       takeUntil(this.destroy$),
-      throttleTime(750),
-      // switchMap(selectedNode => {
-      //   console.warn('selectedNode = ', selectedNode);
-      //   return (
-      //     selectedNode
-      //       ? this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id).pipe(
-      //         catchError(err => {
-      //           alert(`取得節點錯誤 : ${selectedNode.node_name}`);
-      //           return throwError(`取得節點錯誤 : ${selectedNode.node_name}`);
-      //         })
-      //       )
-      //       : of(undefined)
-      //   ).pipe(
-      //     tap(selectedSitemapNode => {
-      //       const parent = this.sitemapTree.findParent(selectedNode);
-      //       const order = (parent?.children || []).indexOf(selectedNode);
-      //       this.selectedNode = {
-      //         siteMap: selectedSitemapNode,
-      //         parentId: parent?.node_id,
-      //         nodeOrder: order > -1 ? `${order}` : '',
-      //       };
-      //     })
-      //   );
-      // }),
     ).subscribe(selectedNode => {
       if (selectedNode) {
         this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id).pipe(
@@ -180,13 +143,9 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
             return throwError(`取得節點錯誤 : ${selectedNode.node_name}`);
           })
         ).subscribe(selectedSitemapNode => {
+          this.selectedNode = selectedSitemapNode;
           const parent = this.sitemapTree.findParent(selectedNode);
-          const order = (parent?.children || []).indexOf(selectedNode);
-          this.selectedNode = {
-            siteMap: selectedSitemapNode,
-            parentId: parent?.node_id,
-            nodeOrder: order > -1 ? `${order}` : '',
-          };
+          this.selectedNodeParentID = parent?.node_id;
         });
       }
     });
@@ -196,7 +155,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     if (reset) {
       this.swichMode(EditModeType.NODE);
     } else {
-      const selectedNodeID = this.selectedNode.siteMap.node_id;
+      const selectedNodeID = this.selectedNode.node_id;
       const selectedNode = this.getNodeFromSitemapsByNodeID(selectedNodeID, this.sitemaps);
       this.nodeSelected$.next(selectedNode);
     }

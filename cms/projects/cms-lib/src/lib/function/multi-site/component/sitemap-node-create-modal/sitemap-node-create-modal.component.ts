@@ -82,12 +82,11 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   ];
 
   constructor(
-    private siteMapService: SitemapService,
+    private sitemapService: SitemapService,
     private contentService: ContentService,
   ) { super(); }
 
   ngOnInit(): void {
-    // this.updateSize('960px');
     this.sitemapMaintainModel = new SiteMapCreateModel(this.parentId);
     this.getLayouts().subscribe();
   }
@@ -99,7 +98,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   }
 
   confirm() {
-    this.siteMapService.createSiteNode(
+    this.sitemapService.createSiteNode(
       this.siteId,
       this.sitemapMaintainModel.node_name,
       this.sitemapMaintainModel.meta_title,
