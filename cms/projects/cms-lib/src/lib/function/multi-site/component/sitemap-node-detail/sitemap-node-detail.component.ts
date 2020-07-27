@@ -1,51 +1,33 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { forkJoin } from 'rxjs';
-import { UserSiteMapPutRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPutRequest';
 import { SiteMapNodeGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapNodeGetResponse';
 import { ModalService } from '../../../ui/modal';
 import { SitemapService, ContentService } from '../../../../global/api/service';
 import { ContentEditorService, EditorMode } from '../../../ui/content-editor';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
-import { SiteMapUpdateInfo } from '../../../../global/interface';
 import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
 import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
-
-class SiteMapUpdateModel extends UserSiteMapPutRequest {
-  constructor(siteMapInfo: SiteMapNodeGetResponse, parentId: string, nodeOrders: string) {
-    super();
-    this.parent_id = parentId;
-    // URL
-    this.url = siteMapInfo.url;
-    this.url_blank = siteMapInfo.url_blank;
-    this.url_link_node_id = siteMapInfo.url_link_node_id;
-    this.url_type = siteMapInfo.url_type;
-    // CONTENT
-    this.content_path = siteMapInfo.content_path;
-    // detail
-    this.details = [].concat(siteMapInfo.details || []);
-  }
-}
+import { SitemapNodeUpdateModalComponent } from '../sitemap-node-update-modal/sitemap-node-update-modal.component';
 
 @Component({
   selector: 'cms-sitemap-node-detail',
   templateUrl: './sitemap-node-detail.component.html',
   styleUrls: ['./sitemap-node-detail.component.scss']
 })
-export class SitemapNodeDetailComponent implements OnInit, OnChanges {
+export class SitemapNodeDetailComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
 
   SiteMapNodeType = SiteMapNodeType;
   SiteMapUrlType = SiteMapUrlType;
 
-  @Input() siteId: string;
-  @Input() siteMapUpdateInfo: SiteMapUpdateInfo;
+  @Input() siteID: string;
+  @Input() parentID: string;
+  @Input() nodeInfo: SiteMapNodeGetResponse;
 
-  @Output() update = new EventEmitter<UserSiteMapPutRequest>();
-
-  sitemapMaintainModel: SiteMapUpdateModel;
+  @Output() update = new EventEmitter<SiteMapNodeGetResponse>();
 
   urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
     { value: SiteMapUrlType.INSIDE, name: '站內' },
@@ -71,32 +53,11 @@ export class SitemapNodeDetailComponent implements OnInit, OnChanges {
     private farmSharedService: FarmSharedService,
   ) { }
 
-  ngOnInit(): void {
-    const info = this.siteMapUpdateInfo;
-    if (info?.siteMap) {
-      this.sitemapMaintainModel = new SiteMapUpdateModel(info.siteMap, info.parentId, info.nodeOrder);
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.siteMapUpdateInfo) {
-      const info: SiteMapUpdateInfo = changes.siteMapUpdateInfo.currentValue;
-      if (info?.siteMap) {
-        this.sitemapMaintainModel = new SiteMapUpdateModel(info.siteMap, info.parentId, info.nodeOrder);
-        if (this.form) {
-          for (const controlName of Object.keys(this.form.controls)) {
-            const c = this.form.controls[controlName];
-            c.markAsUntouched();
-            c.markAsPristine();
-          }
-        }
-      }
-    }
-  }
+  ngOnInit(): void { }
 
   preview(languageID: string) {
-    if (!this.siteMapUpdateInfo.siteMap.canPreview) { return; }
-    const nodeID = this.siteMapUpdateInfo.siteMap.node_id;
+    if (!this.nodeInfo.canPreview) { return; }
+    const nodeID = this.nodeInfo.node_id;
     this.sitemapService.getPreviewInfo(nodeID, languageID).subscribe(previewInfo => {
       switch (previewInfo.preview_type) {
         case PreviewInfoType.ONE_PAGE:
@@ -110,10 +71,10 @@ export class SitemapNodeDetailComponent implements OnInit, OnChanges {
   }
 
   editContent() {
-    if (!this.siteMapUpdateInfo.siteMap.canModify) { return; }
+    if (!this.nodeInfo.canModify) { return; }
 
-    const noteType = this.siteMapUpdateInfo.siteMap.node_type;
-    const nodeID = this.siteMapUpdateInfo.siteMap.node_id;
+    const noteType = this.nodeInfo.node_type;
+    const nodeID = this.nodeInfo.node_id;
 
     switch (noteType) {
       case SiteMapNodeType.CONTENT:
@@ -132,7 +93,7 @@ export class SitemapNodeDetailComponent implements OnInit, OnChanges {
         break;
       case SiteMapNodeType.FARM:
         // TODO: 開啟網站管理
-        const funcID = this.siteMapUpdateInfo.siteMap.func_id;
+        const funcID = this.nodeInfo.func_id;
         this.farmSharedService.openFarm(funcID).subscribe();
         break;
     }
@@ -142,24 +103,29 @@ export class SitemapNodeDetailComponent implements OnInit, OnChanges {
     this.modalService.openComponent({
       component: AuditingSitemapModalComponent,
       componentInitData: {
-        siteId: this.siteId,
-        sitemapNode: this.siteMapUpdateInfo.siteMap
+        siteId: this.siteID,
+        sitemapNode: this.nodeInfo
       }
     }).subscribe(res => {
       if (res) {
         alert('送審成功');
-        this.update.emit(this.sitemapMaintainModel);
+        this.update.emit(this.nodeInfo);
       }
     });
   }
 
-  save() {
-    this.sitemapService.updateSiteNode(
-      this.siteMapUpdateInfo.siteMap.node_id,
-      this.sitemapMaintainModel.details
-    ).subscribe(_ => {
-      alert('修改成功');
-      this.update.emit(this.sitemapMaintainModel);
+  editSitemapNode() {
+    this.modalService.openComponent({
+      component: SitemapNodeUpdateModalComponent,
+      componentInitData: {
+        parentID: this.parentID,
+        nodeInfo: this.nodeInfo
+      }
+    }).subscribe(res => {
+      if (res) {
+        alert('修改成功');
+        this.update.emit(this.nodeInfo);
+      }
     });
   }
 

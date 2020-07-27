@@ -24,6 +24,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatRippleModule } from '@angular/material/core';
+import { MatTabsModule } from '@angular/material/tabs';
 // @neux/core
 import { CoreModule } from '@neux/core';
 // cms-lib
@@ -67,6 +68,7 @@ import { DatePickerModule } from '../ui/date-picker';
     MatExpansionModule,
     MatRadioModule,
     MatRippleModule,
+    MatTabsModule,
     // @neux/core
     CoreModule,
     // cms-lib
