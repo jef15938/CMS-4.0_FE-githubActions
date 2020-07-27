@@ -8,27 +8,27 @@ import { StringUtils } from '@neux/core';
  */
 export class GetPreviewPageByPageIDAPI implements Api, MockApi, RestfulApi {
 
-  public url: string;
+    public url:string;
+    
 
+    constructor() { }
 
-  constructor() { }
+    public getApiName(): string {
+        return 'GetPreviewPageByPageID';
+    }
 
-  public getApiName(): string {
-    return 'GetPreviewPageByPageID';
-  }
+    public getRequestData(): ApiRequest {
+        let queryParams = new HttpParams();
+        let requestData = new ApiRequest();
+        
+        requestData.type = 'GET';
+        requestData.params = queryParams;
+        requestData.url = this.url;
+        return requestData;
+    }
 
-  public getRequestData(): ApiRequest {
-    const queryParams = new HttpParams();
-    const requestData = new ApiRequest();
-
-    requestData.type = 'GET';
-    requestData.params = queryParams;
-    requestData.url = this.url;
-    return requestData;
-  }
-
-  public getMockPath(): string {
-    return './assets/mock/GetPreviewPageByPageIDAPI.json';
-  }
+    public getMockPath(): string {
+        return './assets/mock/GetPreviewPageByPageIDAPI.json';
+    }
 
 }

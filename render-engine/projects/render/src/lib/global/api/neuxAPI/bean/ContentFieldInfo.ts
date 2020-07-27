@@ -4,12 +4,16 @@ import {IsNotEmpty} from 'class-validator';
 
 import { TypeFactory } from '../type-factory';
 
-export class ErrorInfo {
+export class ContentFieldInfo {
 
 @IsNotEmpty()
-public error_code: string;
+public fieldId: string;
 @IsNotEmpty()
-public error_message: string;
+public fieldType: string;
+@IsNotEmpty()
+public fieldVal: string;
+@IsNotEmpty()
+public extension: object;
 
 
 }

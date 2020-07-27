@@ -4,9 +4,9 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * GetPreviewCompareInfo
+ * GetPreviewSiteMap
  */
-export class GetPreviewCompareByPageIDAPI implements Api, MockApi, RestfulApi {
+export class GetPreviewSiteMapByNodeIdAndLangAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
     
@@ -14,7 +14,7 @@ export class GetPreviewCompareByPageIDAPI implements Api, MockApi, RestfulApi {
     constructor() { }
 
     public getApiName(): string {
-        return 'GetPreviewCompareByPageID';
+        return 'GetPreviewSiteMapByNodeIdAndLang';
     }
 
     public getRequestData(): ApiRequest {
@@ -28,7 +28,7 @@ export class GetPreviewCompareByPageIDAPI implements Api, MockApi, RestfulApi {
     }
 
     public getMockPath(): string {
-        return './assets/mock/GetPreviewCompareByPageIDAPI.json';
+        return './assets/mock/GetPreviewSiteMapByNodeIdAndLangAPI.json';
     }
 
 }

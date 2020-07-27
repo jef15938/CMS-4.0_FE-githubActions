@@ -1,33 +1,44 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { switchMap, tap, map, distinctUntilChanged, mapTo } from 'rxjs/operators';
 import { SitemapService } from '../service/sitemap.service';
+import { convertSitemapNode } from '../utils/object-converter';
+import { SitemapNode } from '../interface/sitemap-node.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonStoreService {
-  private sitemap: any = null;
+  private sitemap: object = {};
   private sitemapSubject: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(
     private sitemapService: SitemapService
   ) { }
 
-  getSitemap() {
-    if (!this.sitemap) {
-      return this.sitemapService.getSitemap().pipe(
-        tap(resp => this.setSitemap(resp)),
-        switchMap(() => this.sitemapSubject.asObservable())
+  getSitemap(root: string, lang: string): Observable<SitemapNode> {
+    const sitemap$ = this.sitemapSubject.asObservable().pipe(
+      tap((x) => console.log('siteMapSubject:', x)),
+      map(x => x[root][lang]),
+      distinctUntilChanged()
+    );
+    if (!this.sitemap[root] || !this.sitemap[root][lang]) {
+      return this.sitemapService.getSitemap(root, lang).pipe(
+        map(x => convertSitemapNode(x)),
+        tap(resp => this.setSitemap(root, lang, resp)),
+        switchMap(() => sitemap$)
       );
     }
     else {
-      return this.sitemapSubject.asObservable();
+      return sitemap$;
     }
   }
 
-  setSitemap(sitemap: any) {
-    this.sitemap = sitemap;
+  setSitemap(root: string, lang: string, sitemap: SitemapNode) {
+    if (!this.sitemap[root]) {
+      this.sitemap[root] = {};
+    }
+    this.sitemap[root][lang] = sitemap;
     this.sitemapSubject.next(this.sitemap);
   }
 }

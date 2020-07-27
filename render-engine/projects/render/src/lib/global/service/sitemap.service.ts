@@ -11,7 +11,10 @@ export class SitemapService {
     private apiService: RestApiService
   ) { }
 
-  getSitemap(): Observable<any> {
-    return this.apiService.dispatchRestApi('GetSiteMap', {});
+  getSitemap(root: string, lang: string = null): Observable<any> {
+    if (!!lang) {
+      return this.apiService.dispatchRestApi('GetSiteMapByNodeIdAndLang', { node_id: root, lang });
+    }
+    return this.apiService.dispatchRestApi('GetSiteMapByNodeId', { node_id: root });
   }
 }
