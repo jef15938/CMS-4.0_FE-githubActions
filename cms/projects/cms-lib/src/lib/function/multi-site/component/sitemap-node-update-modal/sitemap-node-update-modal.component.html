@@ -1,4 +1,4 @@
-<div class="page-content-container" style="border-bottom: 1px solid lightgray;">
+<div class="page-content-container">
   <form #form="ngForm" style="margin-top: 10px;">
 
     <mat-form-field appearance="outline" *ngIf="nodeInfo">
@@ -59,35 +59,39 @@
     <mat-tab-group>
       <mat-tab *ngFor="let detail of nodeInfo.details">
         <ng-template mat-tab-label>
+          <span *ngIf="detail.is_default" style="color: red; font-weight: bold;">* </span>
           {{detail.language_name}}
-          <span *ngIf="detail.is_default" style="color: red; font-weight: bold;">*</span>
         </ng-template>
         <ng-template matTabContent>
           <div style="margin-top: 10px;">
             <mat-form-field appearance="outline">
               <mat-label>節點名稱</mat-label>
-              <input matInput [value]="detail.node_name" name="node_name" readonly>
+              <input matInput [value]="detail.node_name" name="node_name">
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>meta_title</mat-label>
-              <input matInput [value]="detail.meta_title" name="meta_title" readonly>
+              <input matInput [value]="detail.meta_title" name="meta_title">
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>meta_keyword</mat-label>
-              <input matInput [value]="detail.meta_keyword" name="meta_keyword" readonly>
+              <input matInput [value]="detail.meta_keyword" name="meta_keyword">
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>meta_description</mat-label>
-              <input matInput [value]="detail.meta_description" name="meta_description" readonly>
+              <input matInput [value]="detail.meta_description" name="meta_description">
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>meta_image</mat-label>
-              <input matInput [value]="detail.meta_image" name="meta_image" readonly>
+              <input matInput [value]="detail.meta_image" name="meta_image">
             </mat-form-field>
           </div>
         </ng-template>
       </mat-tab>
     </mat-tab-group>
 
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    </div>
   </form>
 </div>

@@ -24,9 +24,11 @@
 
   <div class="page-content-container" style="border-bottom: 1px solid lightgray;">
     <div class="btn-group">
-      <button type="button" tabindex="0" mat-button (click)="editSitemapNode()">編輯節點</button>
-      <button type="button" tabindex="0" mat-button [disabled]="!nodeInfo.canModify" [ngSwitch]="nodeInfo.node_type"
-        (click)="editContent()">
+      <button type="button" tabindex="0" mat-button [disabled]="!nodeInfo.canModify"
+        (click)="editSitemapNode()">編輯節點</button>
+      <button type="button" tabindex="0" mat-button
+        *ngIf="nodeInfo.node_type===SiteMapNodeType.CONTENT || nodeInfo.node_type===SiteMapNodeType.FARM"
+        [disabled]="!nodeInfo.canModify" [ngSwitch]="nodeInfo.node_type" (click)="editContent()">
         <ng-container *ngSwitchCase="SiteMapNodeType.CONTENT">
           頁面編輯
         </ng-container>
@@ -37,8 +39,8 @@
           頁面編輯
         </ng-container>
       </button>
-      <button type="button" tabindex="0" mat-button [disabled]="!nodeInfo.canSubmit"
-        (click)="auditingSiteMap()">頁面送審</button>
+      <button type="button" tabindex="0" mat-button *ngIf="nodeInfo.node_type===SiteMapNodeType.CONTENT"
+        [disabled]="!nodeInfo.canSubmit" (click)="auditingSiteMap()">頁面送審</button>
     </div>
   </div>
 
@@ -103,8 +105,8 @@
     <mat-tab-group>
       <mat-tab *ngFor="let detail of nodeInfo.details">
         <ng-template mat-tab-label>
+          <span *ngIf="detail.is_default" style="color: red; font-weight: bold;">* </span>
           {{detail.language_name}}
-          <span *ngIf="detail.is_default" style="color: red; font-weight: bold;">*</span>
         </ng-template>
         <ng-template matTabContent>
           <div class="page-content-container">

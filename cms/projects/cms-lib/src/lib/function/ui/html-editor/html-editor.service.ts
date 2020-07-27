@@ -30,7 +30,7 @@ export class HtmlEditorService {
       component: HtmlEditorContainerModalComponent,
       componentInitData: { content, title },
       modalSetting
-    });
+    }, true);
   }
 
 }
