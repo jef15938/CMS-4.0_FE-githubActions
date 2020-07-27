@@ -27,6 +27,7 @@ class AddTemplateBtn {
 })
 export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnChanges {
   EditorMode = EditorMode;
+  ContentEditorActionMode = ContentEditorActionMode;
 
   @ViewChild(TemplatesContainerComponent) templatesContainer: TemplatesContainerComponent;
 
@@ -130,10 +131,11 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
       }
 
       lw?.componentRef?.instance?.templateFieldDirectives?.forEach(field => {
+        const element = field?.elementRef?.nativeElement as HTMLElement;
         if (this.editorMode !== EditorMode.INFO) { // EDIT or READ
-          (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `${field.fieldInfo.fieldType}`);
+          element?.setAttribute('hover-info', `${field.fieldInfo.fieldType}`);
         } else {
-          (field?.elementRef?.nativeElement as HTMLElement)?.classList.add('edit-info');
+          element?.classList.add('edit-info');
           const infos: string[] = [];
           if (field instanceof LayoutFieldTextDirective) {
             infos.push(field.maxLength > 1 ? `字數限制:${field.maxLength}` : '無字數限制');
@@ -157,7 +159,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
           }
           const info = infos.length ? infos.join('; ') : '';
-          (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('edit-info', `${field.fieldInfo.fieldType}${info ? ' : ' : ''}${info}`);
+          element?.setAttribute('edit-info', `${field.fieldInfo.fieldType}${info ? ' : ' : ''}${info}`);
         }
       });
     });
@@ -217,14 +219,16 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
   onEnter(target: HTMLElement) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
-    // if (this.editorActionMode === ContentEditorActionMode.LAYOUT) { return; }
     target.classList.add('now-hover');
   }
 
   onLeave(target: HTMLElement) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
-    // if (this.editorActionMode === ContentEditorActionMode.LAYOUT) { return; }
     target.classList.remove('now-hover');
+  }
+
+  onSelectedTabChange() {
+    setTimeout(_ => this.checkView(), 0);
   }
 
 }
