@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild,
-  ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef
+  ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef, OnChanges, SimpleChanges
 } from '@angular/core';
 import {
   LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperSelectedTargetType,
@@ -10,7 +10,7 @@ import {
 import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentTemplateInfo } from './../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
-import { EditorMode } from '../../content-editor.interface';
+import { EditorMode, ContentEditorActionMode } from '../../content-editor.interface';
 import { CheckViewConfig } from './content-view-renderer.interface';
 
 class AddTemplateBtn {
@@ -25,7 +25,7 @@ class AddTemplateBtn {
   templateUrl: './content-view-renderer.component.html',
   styleUrls: ['./content-view-renderer.component.scss']
 })
-export class ContentViewRendererComponent implements OnInit, AfterViewInit {
+export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnChanges {
   EditorMode = EditorMode;
 
   @ViewChild(TemplatesContainerComponent) templatesContainer: TemplatesContainerComponent;
@@ -35,6 +35,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   private addTemplateBtnMap: Map<TemplatesContainerComponent, AddTemplateBtn[]> = new Map();
 
   @Input() editorMode: EditorMode = EditorMode.EDIT;
+  @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.TEMPLATE;
   @Input() contentInfo: ContentInfo;
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
@@ -52,6 +53,12 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.checkView();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.editorActionMode) {
+      this.checkBtnsDisabled();
+    }
   }
 
   private createBtnContainer() {
@@ -162,11 +169,28 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     );
   }
 
+  private checkBtnsDisabled() {
+    const actionMode = this.editorActionMode;
+    this.addTemplateBtnMap?.forEach(btns => {
+      btns?.forEach(btn => {
+        switch (actionMode) {
+          case ContentEditorActionMode.TEMPLATE:
+            btn.container.classList.remove('disabled');
+            break;
+          case ContentEditorActionMode.LAYOUT:
+            btn.container.classList.add('disabled');
+            break;
+        }
+      });
+    });
+  }
+
   checkView(config?: CheckViewConfig) {
     this.changeDetectorRef.detectChanges();
     // TODO: 優化，有無可以不用setTimeout的方法
     setTimeout(() => {
       this.renderAddTemplateButton(this.templatesContainer);
+      this.checkBtnsDisabled();
       this.renderViewInfo(this.templatesContainer);
       if (config?.select) {
         const select = config.select;
