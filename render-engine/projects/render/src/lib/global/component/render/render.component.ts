@@ -4,6 +4,7 @@ import { concatMap, tap } from 'rxjs/operators';
 import { ContentInfo, ContentTemplateInfo } from '../../interface';
 import { RenderService } from '../../service/render.service';
 import { PageInfo } from '../../interface/page-info.interface';
+import { PageData } from '../../types';
 
 @Component({
   selector: 'lib-render',
@@ -20,9 +21,9 @@ export class RenderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const pageInfo: PageInfo = this.activatedRoute.snapshot.data.pageInfo;
-    const languageID: string = this.activatedRoute.snapshot.queryParams.lang;
-    this.templates = this.getTemplateInfoByLanguageId(pageInfo.content, languageID);
+
+    const { pageInfo, sitemap, contentInfo } = this.activatedRoute.snapshot.data as PageData;
+    this.templates = this.getTemplateInfoByLanguageId(contentInfo, pageInfo.lang);
   }
 
   /**
@@ -40,7 +41,7 @@ export class RenderComponent implements OnInit {
     const languageInfoList = contentInfo.languages;
     if (!languageInfoList?.length) { return []; }
 
-    const templatesByLanguage: ContentTemplateInfo[] = languageInfoList.find(lang => lang.language_id === languageID)?.templates;
+    const templatesByLanguage: ContentTemplateInfo[] = languageInfoList.find(lang => lang.languageID === languageID)?.templates;
     // 回傳對應 languageID 的資料 || []
     return templatesByLanguage || [];
   }

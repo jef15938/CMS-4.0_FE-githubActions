@@ -41,7 +41,7 @@ export class ContentEditorService implements ContentEditorServiceInterface {
         onSaved: config.onSaved
       },
       modalSetting
-    });
+    }, true);
   }
 
 }

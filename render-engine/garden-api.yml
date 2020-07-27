@@ -1,0 +1,567 @@
+openapi: 3.0.0
+info:
+  title: Garden Backend API
+  version: "4.0"
+  license:
+    name: neux-garden
+  description: Provider Garden Backend communication API
+servers:
+  - url: "http://runtime.decoder.com.tw"
+paths:
+  "/Page/{pageID}/{lang}":
+    get:
+      summary: GetPageInfo
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageInfoGetResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Page
+      description: 取得該節點內容以及Layout
+      tags:
+        - Garden
+    parameters:
+      - schema:
+          type: string
+        name: pageID
+        in: path
+        required: true
+        description: 頁面代碼
+      - schema:
+          type: string
+        name: lang
+        in: path
+        required: true
+        description: 語系
+  "/Page/{pageID}":
+    get:
+      summary: GetPageInfo
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageInfoGetResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Page
+      description: 取得該節點內容以及Layout
+      tags:
+        - Garden
+    parameters:
+      - schema:
+          type: string
+        name: pageID
+        in: path
+        required: true
+        description: 頁面代碼
+  "/SiteMap/{node_id}/{lang}":
+    get:
+      summary: GetSiteMap
+      tags:
+        - Garden
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteMapGetResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-SiteMap
+      description: 取得網站向下的SiteMap節點樹
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: node_id
+        in: path
+        required: true
+        description: 節點Root代碼
+      - schema:
+          type: string
+        name: lang
+        in: path
+        required: true
+        description: 語系
+  "/SiteMap/{node_id}":
+    get:
+      summary: GetSiteMap
+      tags:
+        - Garden
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteMapGetResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-SiteMap
+      description: 取得網站向下的SiteMap節點樹
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: node_id
+        in: path
+        required: true
+        description: 節點Root代碼
+  "/Preview/Page/{pageID}/{lang}":
+    get:
+      summary: GetPreviewPageInfo
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageInfoGetResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Preview-Page
+      description: CMS預覽使用取得Temp的PageInfo
+      tags:
+        - Preview
+    parameters:
+      - schema:
+          type: string
+        name: pageID
+        in: path
+        required: true
+        description: 頁面代碼
+      - schema:
+          type: string
+        name: lang
+        in: path
+        required: true
+        description: 語系
+  "/Preview/Page/{pageID}":
+    get:
+      summary: GetPreviewPageInfo
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageInfoGetResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Preview-Page
+      description: CMS預覽使用取得Temp的PageInfo
+      tags:
+        - Preview
+    parameters:
+      - schema:
+          type: string
+        name: pageID
+        in: path
+        required: true
+        description: 頁面代碼
+  "/Preview/SiteMap/{node_id}/{lang}":
+    get:
+      summary: GetPreviewSiteMap
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteMapGetResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Preview-SiteMap
+      description: 取得預覽網站向下的SiteMap節點樹
+      tags:
+        - Preview
+    parameters:
+      - schema:
+          type: string
+        name: node_id
+        in: path
+        required: true
+        description: 節點Root代碼
+      - schema:
+          type: string
+        name: lang
+        in: path
+        required: true
+        description: 語系
+  "/Preview/SiteMap/{node_id}/":
+    get:
+      summary: GetPreviewSiteMap
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteMapGetResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Preview-SiteMap
+      description: 取得預覽網站向下的SiteMap節點樹
+      tags:
+        - Preview
+    parameters:
+      - schema:
+          type: string
+        name: node_id
+        in: path
+        required: true
+        description: 節點Root代碼
+  "/Preview/Compare/{pageID}":
+    get:
+      summary: GetPreviewCompareInfo
+      tags:
+        - Preview
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Preview-Compare
+      description: 取得預覽時差異資訊
+    parameters:
+      - schema:
+          type: string
+        name: pageID
+        in: path
+        required: true
+        description: 頁面代碼
+  "/SiteMap/Download/{format}":
+    get:
+      summary: DownloadSiteMap
+      tags:
+        - Garden
+      responses:
+        "200":
+          description: OK
+          headers: {}
+          content:
+            application/xml:
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      operationId: get-SiteMap-Download
+      description: 下載SiteMap
+    parameters:
+      - schema:
+          type: string
+          enum:
+            - Google
+        name: format
+        in: path
+        required: true
+        description: 下載格式
+  "/Content/{contentID}":
+    get:
+      summary: GetContentInfo
+      tags:
+        - Garden
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentInfo"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Content
+      description: 取得編輯JSON內容
+    parameters:
+      - schema:
+          type: string
+        name: contentID
+        in: path
+        required: true
+        description: Content代碼
+  "/Preview/Content/{contentID}":
+    get:
+      summary: GetPreviewContent
+      tags:
+        - Content
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentInfo"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-Preview-Content
+    parameters:
+      - schema:
+          type: string
+        name: contentID
+        in: path
+        required: true
+        description: 內容代碼
+components:
+  schemas:
+    PageInfoGetResponse:
+      title: PageInfoGetResponse
+      type: object
+      x-tags:
+        - Model
+      description: 傳入content_path後取得頁面相關資訊
+      properties:
+        layout_id:
+          type: string
+          description: 主結構代碼(需對應前端套版)
+        meta_title:
+          type: string
+          description: SEO標題
+        meta_description:
+          type: string
+          description: SEO描述
+        meta_keyword:
+          type: string
+          description: SEO關鍵字
+        meta_image:
+          type: string
+          description: SEO分享圖
+        content_id:
+          type: string
+          description: 內文ContentID
+        lang:
+          type: string
+          description: 語系
+        node_root:
+          type: string
+          description: Sitemap根節點
+      required:
+        - layout_id
+        - meta_title
+        - content_id
+        - lang
+        - node_root
+    ErrorInfo:
+      title: ErrorInfo
+      type: object
+      properties:
+        error_code:
+          type: string
+        error_message:
+          type: string
+      required:
+        - error_code
+        - error_message
+      x-tags:
+        - Model
+    LanguageInfo:
+      title: LanguageInfo
+      type: object
+      description: ""
+      properties:
+        language_id:
+          type: string
+          description: 語言ID
+          example: zh-TW
+        language_name:
+          type: string
+          description: 語言名稱
+          example: 中文
+        templates:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentTemplateInfo"
+        galleries:
+          type: array
+          description: 使用的媒體庫檔案ID
+          items:
+            type: string
+    ContentInfo:
+      title: ContentInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        languages:
+          type: array
+          items:
+            $ref: "#/components/schemas/LanguageInfo"
+    ContentTemplateInfo:
+      title: ContentTemplateInfo
+      type: object
+      x-tags:
+        - Model
+      description: ""
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID
+        templateId:
+          type: string
+          description: 版型代碼
+        fields:
+          type: array
+          description: 版型中的欄位
+          items:
+            $ref: "#/components/schemas/ContentFieldInfo"
+        attributes:
+          type: object
+          description: 做Extension使用
+      required:
+        - id
+        - templateId
+        - fields
+        - attributes
+    ContentFieldInfo:
+      title: ContentFieldInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        fieldId:
+          type: string
+          description: 欄位代碼
+        fieldType:
+          type: string
+          description: 欄位型態
+          enum:
+            - TEXT
+            - TEXTAREA
+            - LINK
+            - IMG
+            - BGIMG
+            - HTMLDETAIL
+        fieldVal:
+          type: string
+          description: 屬性值
+        extension:
+          type: object
+          description: 用來extension使用
+      required:
+        - fieldId
+        - fieldType
+        - fieldVal
+        - extension
+    DepartmentDetailInfo:
+      title: DepartmentDetailInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        dept_id:
+          type: string
+        dept_name:
+          type: string
+      required:
+        - dept_id
+        - dept_name
+    SiteMapGetResponse:
+      type: object
+      title: SitemapGetResponse
+      x-tags:
+        - Model
+      description: ""
+      properties:
+        node_id:
+          type: string
+          description: 節點流水號
+        node_name:
+          type: string
+          description: 節點名稱
+        url:
+          type: string
+          description: |-
+            URL站外網址
+            有url_type為OUTSIDE才有
+        url_blank:
+          type: string
+          enum:
+            - "Y"
+            - "N"
+          description: URL是否另開視窗
+        children:
+          type: array
+          items:
+            $ref: "#/components/schemas/SiteMapGetResponse"
+        content_id:
+          type: string
+          description: Content代碼
+      required:
+        - node_id
+        - node_name
+        - content_id

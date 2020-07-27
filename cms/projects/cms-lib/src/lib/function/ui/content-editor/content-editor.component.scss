@@ -12,6 +12,16 @@
     button:not(:first-child) {
       margin-left: 5px;
     }
+
+    .action-mode.active {
+      color: yellow;
+    }
+
+    span {
+      display: inline-block;
+      width: 33.3333%;
+      height: 100%;
+    }
   }
 
   .main-block {

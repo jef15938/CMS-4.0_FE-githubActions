@@ -12,37 +12,42 @@
 <div class="cms-content-editor">
   <!-- 按鈕們 -->
   <div #clickCapturelistenerBlock class="btn-panel dark-style" *ngIf="editorMode===EditorMode.EDIT">
-    <button type="button" tabindex="-1" mat-icon-button alt="save" (click)="save()" *ngIf="!!contentID"
-      [disabled]="saved">
-      <mat-icon>save</mat-icon>
-    </button>
-    <button type="button" tabindex="-1" mat-icon-button alt="undo" [disabled]="!manager?.stateManager?.hasPreviousState"
-      (click)="resetSelected(); manager?.stateManager?.back();">
-      <mat-icon>undo</mat-icon>
-    </button>
-    <button type="button" tabindex="-1" mat-icon-button alt="redo" [disabled]="!manager?.stateManager?.hasNextState"
-      (click)="resetSelected(); manager?.stateManager?.forward();">
-      <mat-icon>redo</mat-icon>
-    </button>
-    <button type="button" tabindex="-1" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger"
-      [matMenuTriggerFor]="stateMenu">
-      <mat-icon>list</mat-icon>
-    </button>
-    <button type="button" tabindex="-1" mat-icon-button alt="clear" (click)="clear()">
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button type="button" tabindex="-1" mat-icon-button alt="close" (click)="close()" *ngIf="btnClose">
-      <mat-icon>clear</mat-icon>
-    </button>
-    <button type="button" tabindex="-1" mat-button alt="transtorm layout">
-      變更版面
-    </button>
-    <button type="button" tabindex="-1" mat-button alt="transtorm layout">
-      編輯內容
-    </button>
-    <button type="button" tabindex="-1" mat-button alt="transtorm layout">
-      預覽
-    </button>
+    <span>
+      <button type="button" tabindex="-1" mat-icon-button alt="save" (click)="save()" *ngIf="!!contentID"
+        [disabled]="saved">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="undo"
+        [disabled]="!manager?.stateManager?.hasPreviousState" (click)="resetSelected(); manager?.stateManager?.back();">
+        <mat-icon>undo</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="redo" [disabled]="!manager?.stateManager?.hasNextState"
+        (click)="resetSelected(); manager?.stateManager?.forward();">
+        <mat-icon>redo</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger"
+        [matMenuTriggerFor]="stateMenu">
+        <mat-icon>list</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="clear" (click)="clear()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="close" (click)="close()" *ngIf="btnClose">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </span>
+    <span style="text-align: center;">
+      <button type="button" tabindex="-1" mat-button alt="transtorm template" class="action-mode"
+        [class.active]="editorActionMode===ContentEditorActionMode.TEMPLATE"
+        (click)="editorActionMode=ContentEditorActionMode.TEMPLATE; this.resetSelected()">
+        變更版面
+      </button>
+      <button type="button" tabindex="-1" mat-button alt="transtorm layout" class="action-mode"
+        [class.active]="editorActionMode===ContentEditorActionMode.LAYOUT"
+        (click)="editorActionMode=ContentEditorActionMode.LAYOUT; this.resetSelected()">
+        編輯內容
+      </button>
+    </span>
   </div>
   <div tabindex="0" class="main-block" *ngIf="manager?.stateManager?.currentState?.snapShot"
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">

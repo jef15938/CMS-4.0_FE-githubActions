@@ -6,3 +6,6 @@ export * from './tab-info.interface';
 export * from './tab-template-info.interface';
 export * from './content-template-info.interface';
 export * from './render-component-mapping.interface';
+export * from './page-info.interface';
+export * from './language-info.interface';
+export * from './sitemap-node.interface';

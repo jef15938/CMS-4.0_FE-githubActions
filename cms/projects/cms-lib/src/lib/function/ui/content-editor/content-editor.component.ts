@@ -31,6 +31,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   // 使用模式
   @Input() editorMode: EditorMode = EditorMode.EDIT;
+  editorActionMode: ContentEditorActionMode = ContentEditorActionMode.TEMPLATE;
 
   // 編輯對象外部提供資料
   @Input() contentInfo: ContentInfo;
@@ -129,7 +130,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   /**
-   * TODO: 待檢討或優化．
+   * // TODO: 待檢討或優化．
    * 處理"選取Template/Field，與拷貝物件保存功能衝突"造成的問題．
    * 利用監聽Capture讓程式能在 "按下" -> "選取Template/Field" 中間階段做事．
    * ps 1. Angular Dom Event Binding Or fromEvent() 無法監聽 Capture 階段 ?
