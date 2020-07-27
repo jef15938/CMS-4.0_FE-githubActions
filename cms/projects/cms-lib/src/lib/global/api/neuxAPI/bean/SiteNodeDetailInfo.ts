@@ -7,15 +7,16 @@ import { TypeFactory } from '../type-factory';
 export class SiteNodeDetailInfo {
 
 @IsNotEmpty()
-public lang_id: string;
+public language_id: string;
 @IsNotEmpty()
-public lang_name: string;
+public language_name: string;
 @IsNotEmpty()
 public node_name: string;
 public meta_title: string;
 public meta_description: string;
 public meta_keyword: string;
 public meta_image: string;
+public is_default: boolean;
 
 
 }

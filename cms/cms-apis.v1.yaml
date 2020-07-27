@@ -2687,9 +2687,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContentTemplateInfo'
-        is_default:
-          type: boolean
-          description: 是否為預設語言
     LayoutGetResponse:
       title: LayoutGetResponse
       type: object
@@ -2761,9 +2758,9 @@ components:
       x-tags:
         - Model
       properties:
-        lang_id:
+        language_id:
           type: string
-        lang_name:
+        language_name:
           type: string
         node_name:
           type: string
@@ -2775,8 +2772,11 @@ components:
           type: string
         meta_image:
           type: string
+        is_default:
+          type: boolean
+          description: 是否為預設語言
       required:
-        - lang_id
-        - lang_name
+        - language_id
+        - language_name
         - node_name
   securitySchemes: {}

@@ -36,19 +36,13 @@ export class RenderComponent implements OnInit {
    */
   private getTemplateInfoByLanguageId(contentInfo: ContentInfo, languageID: string): ContentTemplateInfo[] {
     // 異常資料處理
-    if (!contentInfo) { return []; }
+    if (!contentInfo || !languageID) { return []; }
     const languageInfoList = contentInfo.languages;
     if (!languageInfoList?.length) { return []; }
 
-    if (languageID) {  // 有 languageID
-      const templatesByLanguage: ContentTemplateInfo[] = languageInfoList.find(lang => lang.language_id === languageID)?.templates;
-      // 回傳對應 languageID 的資料 || []
-      return templatesByLanguage || [];
-    } else { // 沒有 languageID
-      // 回傳 default language 的資料
-      const templatesByDefaultLanguage = languageInfoList.find(lang => lang.is_default)?.templates;
-      return templatesByDefaultLanguage || languageInfoList[0]?.templates || [];
-    }
+    const templatesByLanguage: ContentTemplateInfo[] = languageInfoList.find(lang => lang.language_id === languageID)?.templates;
+    // 回傳對應 languageID 的資料 || []
+    return templatesByLanguage || [];
   }
 
 }
