@@ -12,6 +12,7 @@ import { ContentTemplateInfo } from './../../../../../global/api/neuxAPI/bean/Co
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { EditorMode, ContentEditorActionMode } from '../../content-editor.interface';
 import { CheckViewConfig } from './content-view-renderer.interface';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 class AddTemplateBtn {
   constructor(
@@ -39,6 +40,8 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
   @Output() addTemplateBtnClick = new EventEmitter<AddTemplateButtonComponent>();
+
+  tabIndex = 0;
 
   constructor(
     private injector: Injector,
@@ -227,7 +230,8 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
     target.classList.remove('now-hover');
   }
 
-  onSelectedTabChange() {
+  onSelectedTabChange(ev: MatTabChangeEvent) {
+    this.tabIndex = ev.index;
     setTimeout(_ => this.checkView(), 0);
   }
 

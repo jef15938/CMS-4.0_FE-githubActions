@@ -1,8 +1,8 @@
 <div class="view-container" [class.mode-info]="editorMode===EditorMode.INFO">
-  <mat-tab-group (selectedTabChange)="onSelectedTabChange()">
-    <mat-tab #Tab *ngFor="let language of contentInfo.languages" [label]="language.language_name"
+  <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
+    <mat-tab *ngFor="let language of contentInfo.languages;let i=index;" [label]="language.language_name"
       [disabled]="editorActionMode===ContentEditorActionMode.TEMPLATE">
-      <ng-container *ngIf="Tab.isActive">
+      <ng-container *ngIf="tabIndex===i">
         <rdr-templates-container [templates]="language.templates" mode="edit" (select)="onSelect($event)"
           (enter)="onEnter($event)" (leave)="onLeave($event)">
         </rdr-templates-container>
