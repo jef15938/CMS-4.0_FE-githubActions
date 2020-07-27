@@ -79,7 +79,7 @@ export const environment = {
     PostUserSiteMapBySiteID: 'Restful',
     PutUserSiteMapByNodeID: 'Restful',
     DeleteUserSiteMapByNodeID: 'Restful',
-    GetContentByContentID: 'Mock',
+    GetContentByContentID: 'Restful',
     PutContentByContentID: 'Restful',
     GetMyAuditingByOrderID: 'Restful',
     GetMyAuditing: 'Restful',
