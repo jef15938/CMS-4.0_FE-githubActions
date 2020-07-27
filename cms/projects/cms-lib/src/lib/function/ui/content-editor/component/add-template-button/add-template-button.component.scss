@@ -1,10 +1,16 @@
 :host {
   display: block;
   width: 100%;
-  cursor: pointer;
+}
+
+.add-template-btn.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .add-template-btn {
+  cursor: pointer;
   text-align: center;
   background-color: #c5f07b;
   height: 24px;
@@ -12,7 +18,8 @@
   vertical-align: middle;
   color: black;
 
-  &.is-selected, &:hover {
+  &.is-selected,
+  &:hover {
     background-color: green;
     color: white;
   }

@@ -37,14 +37,14 @@
       </button>
     </span>
     <span style="text-align: center;">
-      <button type="button" tabindex="-1" mat-button alt="transtorm template" class="action-mode"
-        [class.active]="editorActionMode===ContentEditorActionMode.TEMPLATE"
-        (click)="editorActionMode=ContentEditorActionMode.TEMPLATE; this.resetSelected()">
-        變更版面
-      </button>
       <button type="button" tabindex="-1" mat-button alt="transtorm layout" class="action-mode"
         [class.active]="editorActionMode===ContentEditorActionMode.LAYOUT"
         (click)="editorActionMode=ContentEditorActionMode.LAYOUT; this.resetSelected()">
+        變更版面
+      </button>
+      <button type="button" tabindex="-1" mat-button alt="transtorm template" class="action-mode"
+        [class.active]="editorActionMode===ContentEditorActionMode.TEMPLATE"
+        (click)="editorActionMode=ContentEditorActionMode.TEMPLATE; this.resetSelected()">
         編輯內容
       </button>
     </span>
@@ -54,7 +54,7 @@
     <!-- 頁面內容 -->
     <div #clickCapturelistenerBlock class="content-panel" [class.scale]="isScaleContent">
       <cms-content-view-renderer [contentInfo]="manager?.stateManager?.currentState?.snapShot" [editorMode]="editorMode"
-        (select)="onViewSelected($event)"
+        [editorActionMode]="editorActionMode" (select)="onViewSelected($event)"
         (addTemplateBtnClick)="resetSelected();manager.selectedTemplateAddBtn=$event;">
       </cms-content-view-renderer>
     </div>
@@ -68,8 +68,9 @@
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
       <cms-content-control-panel [manager]="manager" [selected]="manager.selectedViewElementEvent"
-        (templateMove)="isScaleContent=$event;" (contentChange)="setEditorUnsaved();"
-        (needCheckView)="contentViewRenderer?.checkView($event);"></cms-content-control-panel>
+        [editorActionMode]="editorActionMode" (templateMove)="isScaleContent=$event;"
+        (contentChange)="setEditorUnsaved();" (needCheckView)="contentViewRenderer?.checkView($event);">
+      </cms-content-control-panel>
     </div>
   </div>
 </div>

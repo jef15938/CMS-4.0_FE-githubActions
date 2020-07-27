@@ -30,12 +30,10 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
   @ViewChild(TemplatesContainerComponent) templatesContainer: TemplatesContainerComponent;
 
-  private nowSelectedTarget: HTMLElement;
-
   private addTemplateBtnMap: Map<TemplatesContainerComponent, AddTemplateBtn[]> = new Map();
 
   @Input() editorMode: EditorMode = EditorMode.EDIT;
-  @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.TEMPLATE;
+  @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
   @Input() contentInfo: ContentInfo;
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
@@ -174,11 +172,11 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
     this.addTemplateBtnMap?.forEach(btns => {
       btns?.forEach(btn => {
         switch (actionMode) {
-          case ContentEditorActionMode.TEMPLATE:
-            btn.container.classList.remove('disabled');
-            break;
           case ContentEditorActionMode.LAYOUT:
-            btn.container.classList.add('disabled');
+            btn.componentRef.instance.disabled = false;
+            break;
+          case ContentEditorActionMode.TEMPLATE:
+            btn.componentRef.instance.disabled = true;
             break;
         }
       });
@@ -209,24 +207,23 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
   onSelect(ev: LayoutWrapperSelectEvent) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
-    const oldSelectedTarget = this.nowSelectedTarget;
-    if (oldSelectedTarget) { oldSelectedTarget.classList.remove('now-edit'); }
-
-    const newSelectedTarget = ev.selectedTarget;
-    if (newSelectedTarget) { newSelectedTarget.classList.add('now-edit'); }
-
-    this.nowSelectedTarget = newSelectedTarget;
+    if (
+      this.editorActionMode === ContentEditorActionMode.LAYOUT
+      && ev.selectedTargetType === LayoutWrapperSelectedTargetType.FIELD
+    ) { return; }
 
     this.select.emit(ev);
   }
 
   onEnter(target: HTMLElement) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
+    // if (this.editorActionMode === ContentEditorActionMode.LAYOUT) { return; }
     target.classList.add('now-hover');
   }
 
   onLeave(target: HTMLElement) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
+    // if (this.editorActionMode === ContentEditorActionMode.LAYOUT) { return; }
     target.classList.remove('now-hover');
   }
 

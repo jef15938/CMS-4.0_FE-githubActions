@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from 'render';
 import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentEditorManager } from '../../service/content-editor-manager';
-import { EditorMode } from '../../content-editor.interface';
+import { EditorMode, ContentEditorActionMode } from '../../content-editor.interface';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 import { ContentEditorService } from '../../content-editor.service';
 import { LanguageInfo } from '../../../../../global/api/neuxAPI/bean/LanguageInfo';
@@ -13,7 +13,7 @@ import { LanguageInfo } from '../../../../../global/api/neuxAPI/bean/LanguageInf
   styleUrls: ['./content-control-panel.component.scss']
 })
 export class ContentControlPanelComponent implements OnInit, OnChanges {
-
+  ContentEditorActionMode = ContentEditorActionMode;
   TemplateType = TemplateType;
 
   readonly scrollIntoViewOptions: ScrollIntoViewOptions = {
@@ -23,6 +23,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   @Input() manager: ContentEditorManager;
   @Input() selected: LayoutWrapperSelectEvent;
+  @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
 
   @Output() needCheckView = new EventEmitter<CheckViewConfig>();
   @Output() templateMove = new EventEmitter<boolean>();
