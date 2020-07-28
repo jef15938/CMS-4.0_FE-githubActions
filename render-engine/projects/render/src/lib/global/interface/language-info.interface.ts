@@ -4,5 +4,4 @@ export interface LanguageInfo {
   languageID: string;
   languageName: string;
   templates: ContentTemplateInfo[];
-  galleries: string[];
 }

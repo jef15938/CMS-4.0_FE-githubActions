@@ -19,6 +19,14 @@ export class RenderService {
     private apiService: RestApiService
   ) { }
 
+  /**
+   * 依據page ID跟language取得PageInfo,若無語系,後台自動回預設語系
+   *
+   * @param {string} pageID
+   * @param {string} [lang=null]
+   * @returns {Observable<PageInfo>}
+   * @memberof RenderService
+   */
   getPageInfo(pageID: string, lang: string = null): Observable<PageInfo> {
 
     if (!!lang) {
@@ -31,11 +39,15 @@ export class RenderService {
         map((x: PageInfoGetResponse) => convertPageInfo(x))
       );
     }
-    // const content = CONTENT;
-    // // tslint:disable-next-line: no-string-literal
-    // return of(content['default']);
   }
 
+  /**
+   * 依據content ID取得Content
+   *
+   * @param {string} contentID
+   * @returns {Observable<ContentInfo>}
+   * @memberof RenderService
+   */
   getContentInfo(contentID: string): Observable<ContentInfo> {
     return this.apiService.dispatchRestApi('GetContentByContentID', { contentID }).pipe(
       map((x: ApiContentInfo) => convertContentInfo(x))

@@ -11,6 +11,14 @@ export class SitemapService {
     private apiService: RestApiService
   ) { }
 
+  /**
+   * 根據root node 跟language取得sitemap
+   *
+   * @param {string} root
+   * @param {string} [lang=null]
+   * @returns {Observable<any>}
+   * @memberof SitemapService
+   */
   getSitemap(root: string, lang: string = null): Observable<any> {
     if (!!lang) {
       return this.apiService.dispatchRestApi('GetSiteMapByNodeIdAndLang', { node_id: root, lang });
