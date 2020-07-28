@@ -172,7 +172,6 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   onClick(ev: MouseEvent) {
-    this.evPreventDefaultAndStopPropagation(ev);
     if (ev.target === this.editorContainer) {
       return;
     }
@@ -183,6 +182,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'a');
     if (special) {
+      this.evPreventDefaultAndStopPropagation(ev);
       this.simpleWysiwygService.setSelectionOnNode(special);
       return;
     }
