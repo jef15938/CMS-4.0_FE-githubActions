@@ -46,7 +46,7 @@ export class SimpleWysiwygService {
         if (node.nodeType === Node.TEXT_NODE) {
           node = node.parentNode;
         }
-        if (!containerNode.contains(node)) {
+        if (!this.isChildOf(node, containerNode as any)) {
           return null;
         }
         return node;
@@ -144,8 +144,12 @@ export class SimpleWysiwygService {
 
   setSelectionOnNode(node: Node, start = 0, end = 0) {
     const range = document.createRange();
-    range.setStart(node, start);
-    range.setEnd(node, end);
+
+    const parent = node.parentNode;
+    const children: any[] = Array.from(parent.childNodes);
+    const index = children.indexOf(node);
+    range.setStart(parent, index);
+    range.setEnd(parent, index + 1);
     this.restoreSelection(range);
   }
 
@@ -161,6 +165,12 @@ export class SimpleWysiwygService {
     }
     return false;
   };
+
+  isChildOf(child: Node, parent: HTMLElement): boolean {
+    if (!child || child === parent) { return false; }
+    if (parent.contains(child)) { return true; }
+    return this.isChildOf(child.parentNode, parent);
+  }
 
   isSelectionInside(containerNode: Node, force?: boolean) {
     // selection inside editor?
@@ -298,7 +308,7 @@ export class SimpleWysiwygService {
     const possibleTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'];
     let el = from;
     while (el) {
-      if (el === containerNode || !containerNode.contains(el)) {
+      if (el === containerNode || !this.isChildOf(el, containerNode as any)) {
         el = undefined;
         break;
       }

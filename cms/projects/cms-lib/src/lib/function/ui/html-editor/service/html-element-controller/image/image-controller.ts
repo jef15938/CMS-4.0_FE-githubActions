@@ -11,7 +11,6 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
 
   private controllers: HTMLDivElement[];
   private subscriptions: Subscription[] = [];
-  private mutationObserver: MutationObserver;
 
   protected onAddToEditor(): void {
     if (this.el[IS_FAKE]) { return; }
@@ -29,9 +28,6 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
   protected onRemovedFromEditor(): void {
     if (this.el[IS_FAKE]) { return; }
 
-    this.mutationObserver?.disconnect();
-    this.mutationObserver = undefined;
-
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
@@ -43,22 +39,30 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
   private subscribeEvents() {
     if (this.el[IS_FAKE]) { return; }
 
-    const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
-      this.checkSelected();
-    });
+    const selectionchange$ = fromEvent(document, 'selectionchange')
+      .subscribe(_ => setTimeout(() => this.checkSelected(), 0));
     this.subscriptions.push(selectionchange$);
   }
 
   private checkSelected() {
     if (!this.context.isSelectionInsideEditorContainer) { return; }
+    if (!this.context.editorContainer.contains(this.el)) { return; }
+    const parent = this.el.parentNode;
+    const children = Array.from(parent.childNodes);
+    const index = children.indexOf(this.el);
 
-    const range = this.context.simpleWysiwygService.getRange();
-
-    if (range.commonAncestorContainer === this.el) {
+    const sel = window.getSelection();
+    if (
+      sel.anchorNode === parent
+      && sel.focusNode === parent
+      && sel.anchorOffset === index
+      && sel.focusOffset === index + 1
+    ) {
       this.onSelected();
-    } else {
-      this.onUnselected();
+      return;
     }
+
+    this.onUnselected();
   }
 
   private findParent(): HTMLElement {
@@ -85,7 +89,7 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 5}px`;
     bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 5}px`;
     this.controllers?.forEach(c => {
-      if (!editorContainer.contains(c)) {
+      if (!this.context.simpleWysiwygService.isChildOf(c, editorContainer)) {
         editorContainer.appendChild(c);
       }
     });
@@ -98,7 +102,7 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
 
     const editorContainer = this.context.editorContainer;
     this.controllers?.forEach(c => {
-      if (editorContainer.contains(c)) {
+      if (this.context.simpleWysiwygService.isChildOf(c, editorContainer)) {
         editorContainer.removeChild(c);
       }
     });
@@ -109,7 +113,7 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
 
     const editorContainer = this.context.editorContainer;
     this.controllers?.forEach(c => {
-      if (editorContainer.contains(c)) {
+      if (this.context.simpleWysiwygService.isChildOf(c, editorContainer)) {
         c.removeEventListener('click', this.evPreventDefaultAndStopPropagation);
         editorContainer.removeChild(c);
       }

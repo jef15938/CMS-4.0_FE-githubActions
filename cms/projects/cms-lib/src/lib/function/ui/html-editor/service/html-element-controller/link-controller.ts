@@ -29,9 +29,8 @@ export class HtmlEditorLinkController extends HtmlEditorElementController<HTMLIm
   }
 
   private subscribeEvents() {
-    const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
-      this.checkSelected();
-    });
+    const selectionchange$ = fromEvent(document, 'selectionchange')
+      .subscribe(_ => setTimeout(() => this.checkSelected(), 0));
     this.subscriptions.push(selectionchange$);
   }
 
@@ -39,8 +38,7 @@ export class HtmlEditorLinkController extends HtmlEditorElementController<HTMLIm
     if (!this.context.isSelectionInsideEditorContainer) { return; }
 
     const range = this.context.simpleWysiwygService.getRange();
-
-    if (this.el.contains(range.commonAncestorContainer)) {
+    if (this.context.simpleWysiwygService.isChildOf(range.commonAncestorContainer, this.el)) {
       this.onSelected();
     } else {
       this.onUnselected();

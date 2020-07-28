@@ -140,7 +140,7 @@ export class RippleScreen {
   debounce(func, delay) {
     let timer = null;
     const $this: any = this;
-    return () => {
+    return function() {
       const context = $this;
       const args = arguments;
       clearTimeout(timer);

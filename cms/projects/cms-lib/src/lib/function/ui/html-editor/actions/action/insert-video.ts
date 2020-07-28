@@ -30,7 +30,9 @@ export class InsertVideo extends HtmlEditorActionBase {
         if (!image) {
           this.context.simpleWysiwygService.execCommand(editorContainer, 'insertImage', config.src);
           const nowRange = this.context.simpleWysiwygService.getRange();
-          const imgElement = nowRange.commonAncestorContainer.childNodes[nowRange.startOffset - 1] as HTMLImageElement;
+          const parent = nowRange.commonAncestorContainer;
+          const children = Array.from(parent.childNodes) as HTMLElement[];
+          const imgElement = children.find(child => child.tagName?.toLowerCase() === 'img' && !child.getAttribute('width') && !child.getAttribute('height')) as HTMLImageElement;
           if (imgElement && imgElement.tagName.toLowerCase() === 'img') {
             imgElement.setAttribute('frameId', config.frameId);
             imgElement.src = config.src;

@@ -29,11 +29,13 @@ export class InsertImage extends HtmlEditorActionBase {
     const editorContainer = this.context.editorContainer;
     this.context.simpleWysiwygService.execCommand(editorContainer, 'insertImage', config.src);
     const nowRange = this.context.simpleWysiwygService.getRange();
-    const imgElement = nowRange.commonAncestorContainer.childNodes[nowRange.startOffset - 1] as HTMLImageElement;
-    if (imgElement && imgElement.tagName.toLowerCase() === 'img') {
-      imgElement.height = config.height;
-      imgElement.width = config.width;
-      imgElement.alt = config.alt;
+    const parent = nowRange.commonAncestorContainer;
+    const children = Array.from(parent.childNodes) as HTMLElement[];
+    const imgElement = children.find(child => child.tagName?.toLowerCase() === 'img' && !child.getAttribute('width') && !child.getAttribute('height')) as HTMLImageElement;
+    if (imgElement) {
+      imgElement.setAttribute('height', `${config.height}`);
+      imgElement.setAttribute('width', `${config.width}`);
+      imgElement.setAttribute('alt', `${config.alt}`);
       return imgElement;
     }
     return undefined;

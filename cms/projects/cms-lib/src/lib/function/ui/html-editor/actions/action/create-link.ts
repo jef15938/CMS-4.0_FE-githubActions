@@ -37,12 +37,12 @@ export class CreateLink extends DomCmdAction {
         aTagToModify.target = configATag.target;
 
         if (isCreate) { // 新增
-          const commonAncestorContainer = range.commonAncestorContainer as HTMLElement;
-          const isCreateOnImg =
-            commonAncestorContainer.tagName?.toLowerCase() === 'img' && !commonAncestorContainer.getAttribute('frameId');
+          const editorContainerCommonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
+          const isCreateOnImg = editorContainerCommonAncestorContainer.tagName?.toLowerCase() === 'img'
+            && !editorContainerCommonAncestorContainer.getAttribute('frameId');
 
           if (isCreateOnImg) {
-            aTagToModify.appendChild(range.commonAncestorContainer);
+            aTagToModify.appendChild(editorContainerCommonAncestorContainer);
           } else {
             if (canModifyText) {
               aTagToModify.text = configATag.text || configATag.href;

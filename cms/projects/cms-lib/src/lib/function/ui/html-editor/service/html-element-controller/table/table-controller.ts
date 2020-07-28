@@ -148,14 +148,16 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
   private subscribeEvents() {
     const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
-      if (!this.context.isSelectionInsideEditorContainer) { return; }
+      setTimeout(__ => {
+        if (!this.context.isSelectionInsideEditorContainer) { return; }
 
-      const range = this.context.simpleWysiwygService.getRange();
-      if (this.el.contains(range?.commonAncestorContainer)) {
-        this.onSelected();
-      } else {
-        this.onUnselected();
-      }
+        const range = this.context.simpleWysiwygService.getRange();
+        if (this.context.simpleWysiwygService.isChildOf(range?.commonAncestorContainer, this.el)) {
+          this.onSelected();
+        } else {
+          this.onUnselected();
+        }
+      }, 0)
     });
     this.subscriptions.push(selectionchange$);
   }

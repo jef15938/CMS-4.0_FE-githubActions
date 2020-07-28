@@ -46,7 +46,7 @@
   </button>
 </mat-menu>
 <div class="html-editor-container">
-  <div #EditorContainer contenteditable id='editor' class="neux-editor" cmsRightClickHandler (click)="onClick($event)"
+  <div #EditorContainer contenteditable id='editor' class="neux-editor" cmsRightClickHandler (mousedown)="onClick($event)"
     (rightClick)="onRightClick($event)">
   </div>
 </div>

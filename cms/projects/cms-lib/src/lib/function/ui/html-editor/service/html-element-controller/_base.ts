@@ -32,7 +32,7 @@ export abstract class HtmlEditorElementController<TElement extends HTMLElement> 
   }
 
   removeFromEditor(editorContainer: HTMLDivElement) {
-    if (this.isDeleted || !editorContainer.contains(this.el)) { return; }
+    if (this.isDeleted || !this.context.simpleWysiwygService.isChildOf(this.el, editorContainer)) { return; }
     this.onRemovedFromEditor();
     this.isDeleted = true;
     this.el[HTML_EDITOR_ELEMENT_CONTROLLER] = undefined;
