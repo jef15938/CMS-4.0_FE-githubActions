@@ -3,7 +3,7 @@
 @import "~@neux/ui/component-customizing-mixins/theme-all";
 @import "~@neux/ui/component-customizing-mixins/config-all";
 @import '~@neux/ui/tool-mixins/style-import-app-global';
-@import '../../cms/projects/cms-lib/src/lib/global/style/main';
+@import '../projects/cms-lib/src/lib/global/style/main';
 
 @include custom-reset();
 

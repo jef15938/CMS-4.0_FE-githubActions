@@ -8,7 +8,7 @@ services:
     volumes:
       - ./cms:/usr/src/app
     ports:
-      - 5010:3000
+      - 5010:3001
 
   render-frontend:
     build: ./render-engine/.
@@ -16,4 +16,4 @@ services:
     volumes:
       - ./render-engine:/usr/src/app
     ports:
-      - 5011:3000
+      - 5011:4000

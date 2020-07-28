@@ -15,7 +15,6 @@ RUN npm install
 
 COPY . .
 
-RUN npm run pack-cms
-RUN npm run install-cms
+RUN npm run build-cms-lib
 CMD [ "npm", "run","start:prod" ]
 EXPOSE 3000

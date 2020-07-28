@@ -14,6 +14,6 @@ RUN npm install
 # RUN npm ci --only=production
 
 COPY . .
-RUN npm run pack-render
+RUN npm run build-render-lib
 RUN npm run build:ssr
 CMD [ "npm", "run","serve:ssr" ]
