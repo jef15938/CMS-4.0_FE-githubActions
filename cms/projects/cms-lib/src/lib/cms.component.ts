@@ -35,7 +35,7 @@ export class CmsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const menuContainerEle = this.menuContainer.nativeElement;
-    const rippleFx = new RippleScreen(menuContainerEle);
+    // const rippleFx = new RippleScreen(menuContainerEle);
   }
 
   logout() {

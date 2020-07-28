@@ -34,26 +34,37 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
     this.mouseMove = fromEvent(document, 'mousemove').pipe(takeUntil(this.destroy$));
     this.mouseUp = fromEvent(document, 'mouseup').pipe(takeUntil(this.destroy$));
 
-    this.mouseDown.subscribe(e => {
-      const curCol = e.target['parentElement'];
+    this.mouseDown.subscribe((e: any) => {
+      const curCol = e.target.parentElement;
       const nxtCol = curCol.nextElementSibling;
-      const pageX = e['pageX'];
+      const pageX = e.pageX;
       const curColWidth = curCol.offsetWidth;
       const nxtColWidth = nxtCol ? nxtCol.offsetWidth : undefined;
       const params = {
         curCol, nxtCol, pageX, curColWidth, nxtColWidth
       };
+
       this.params = params;
     });
 
-    this.mouseMove.subscribe(e => {
+    this.mouseMove.subscribe((e: any) => {
       if (this.params) {
         const params = this.params;
-        const diffX = e['pageX'] - params.pageX;
-        if (params.nxtCol && params.nxtColWidth) {
-          params.nxtCol.style.width = (params.nxtColWidth - (diffX)) + 'px';
+        const diffX = e.pageX - params.pageX;
+        // 改成抓百分比
+        const containerWidth = params.nxtCol.parentElement.getBoundingClientRect().width;
+        // 防止過度縮小
+        const limit = 30;
+        const  curWidthPercentAfter = 100 * (params.curColWidth + (diffX)) / containerWidth;
+        const notExceedCondition1  = curWidthPercentAfter > limit;
+        const notExceedCondition2 = curWidthPercentAfter < 100 - limit;
+        console.log(curWidthPercentAfter);
+        const notExceed = notExceedCondition1 && notExceedCondition2;
+        if (params.nxtCol && params.nxtColWidth && notExceed) {
+          params.nxtCol.style.width =  100 * (params.nxtColWidth - diffX) / containerWidth + '%';
+          params.curCol.style.width = 100 * (params.curColWidth + diffX) / containerWidth + '%';
         }
-        params.curCol.style.width = (params.curColWidth + diffX) + 'px';
+
       }
     });
 

@@ -1,3 +1,41 @@
+.multi-site {
+  height: 100%;
+  font-size: 0;
+
+  &__block {
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    font-size: 14px;
+
+    &__inner {
+      height: 100%;
+    }
+  }
+
+}
+
+.site-block {
+  border-right: 1px solid grey;
+  width: 30%;
+
+  &__inner {}
+}
+
+.set-block {
+  width: 70%;
+
+  &__inner {}
+}
+
+.multi-site-wrapper {
+  width: 30%;
+  height: 100%;
+  float: left;
+  border-right: 1px solid lightgray;
+
+}
+
 .selected-site {
-    background-color: lightgreen;
+  background-color: lightgreen;
 }

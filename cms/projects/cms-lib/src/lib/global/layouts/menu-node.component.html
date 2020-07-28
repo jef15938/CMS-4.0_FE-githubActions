@@ -5,8 +5,8 @@
       {{menu.func_name}}
     </a>
   </div>
-  <mat-expansion-panel *ngIf="menu.children?.length">
-    <mat-expansion-panel-header class="menu__item item">
+  <mat-expansion-panel *ngIf="menu.children?.length" class="menu__item item">
+    <mat-expansion-panel-header>
       <a matRipple class="item__link"
         [routerLink]="[(isAppMenu?'extension/':'')+(category?category+'/':'')+menu.func_id]"
         routerLinkActive="router-active" [class.disabled]="menu.children?.length">
