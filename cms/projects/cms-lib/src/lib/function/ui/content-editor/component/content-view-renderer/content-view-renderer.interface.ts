@@ -1,4 +1,4 @@
-import { LayoutWrapperComponent } from 'render';
+import { LayoutWrapperComponent } from '@neux/render';
 
 export interface CheckViewConfig {
   select?: LayoutWrapperComponent;

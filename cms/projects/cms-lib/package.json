@@ -9,7 +9,7 @@
     "cropperjs": "^1.5.7",
     "angular-cropperjs": "^1.0.2",
     "@neux/core": "^0.1.9",
-    "render": "^0.0.1"
+    "@neux/render": "^0.0.1"
   },
   "dependencies": {
     "tslib": "^2.0.0"

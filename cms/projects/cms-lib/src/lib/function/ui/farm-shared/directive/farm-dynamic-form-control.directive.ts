@@ -3,7 +3,7 @@ import {
   Optional, Host, SkipSelf, ComponentFactoryResolver, ViewContainerRef, OnDestroy, Inject, Input, ChangeDetectorRef, Self
 } from '@angular/core';
 import { NgControl, FormControl, ControlContainer, ValidatorFn, AsyncValidatorFn, Validator, AbstractControl, NG_VALIDATORS, Validators } from '@angular/forms';
-import { DynamicComponentFactoryService } from 'render';
+import { DynamicComponentFactoryService } from '@neux/render';
 
 function normalizeValidator(validator: ValidatorFn | Validator): ValidatorFn {
   if ((validator as Validator).validate) {

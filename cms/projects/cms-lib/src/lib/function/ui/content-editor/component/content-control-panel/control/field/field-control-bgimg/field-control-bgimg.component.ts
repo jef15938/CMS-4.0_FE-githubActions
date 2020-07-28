@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective, FieldInfo } from 'render';
+import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective, FieldInfo } from '@neux/render';
 import { GallerySharedService } from '../../../../../../gallery-shared/service/gallery-shared.service';
 import { GalleryInfo } from '../../../../../../../../global/api/neuxAPI/bean/GalleryInfo';
 

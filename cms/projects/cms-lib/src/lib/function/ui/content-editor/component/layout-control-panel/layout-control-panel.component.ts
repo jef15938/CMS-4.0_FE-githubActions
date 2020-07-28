@@ -5,7 +5,7 @@ import {
 import { TemplateGetResponse } from './../../../../../global/api/neuxAPI/bean/TemplateGetResponse';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { TemplateInfo } from './../../../../../global/api/neuxAPI/bean/TemplateInfo';
-import { DynamicComponentFactoryService, LayoutBaseComponent } from 'render';
+import { DynamicComponentFactoryService, LayoutBaseComponent } from '@neux/render';
 import { ContentTemplateInfo } from '../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 
@@ -92,7 +92,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
     if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${templateInfo.template_id}`); return; }
     // this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
-    this.contentInfo?.languages?.forEach(language=>{
+    this.contentInfo?.languages?.forEach(language => {
       language.templates.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
     })
     this.templateAdd.emit(templateInfo.template_id);
