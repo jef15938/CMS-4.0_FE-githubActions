@@ -2,13 +2,13 @@
 version: "3.1"
 
 services:
-  # cms-frontend:
-  #   build: ./cms/.
-  #   restart: always
-  #   volumes:
-  #     - ./cms:/usr/src/app
-  #   ports:
-  #     - 5010:3000
+  cms-frontend:
+    build: ./cms/.
+    restart: always
+    volumes:
+      - ./cms:/usr/src/app
+    ports:
+      - 5010:3000
 
   render-frontend:
     build: ./render-engine/.

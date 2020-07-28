@@ -13,7 +13,7 @@ RUN npm install
 # RUN npm ci --only=production
 
 COPY . .
-RUN npm run install-render
+
 RUN npm run pack-cms
 RUN npm run install-cms
 CMD [ "npm", "run","start:prod" ]

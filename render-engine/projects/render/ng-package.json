@@ -5,7 +5,9 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
       "ngx-swiper-wrapper": "ngx-swiper-wrapper",
-      "@neux/core": "@neux/core"
+      "@neux/core": "@neux/core",
+      "class-transformer": "class-transformer",
+      "class-validator": "class-validator"
     }
   }
 }
