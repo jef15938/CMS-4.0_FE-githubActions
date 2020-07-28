@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, NEVER, throwError } from 'rxjs';
 import { AuthorizationService } from '../api/service';
 import { Router } from '@angular/router';
-import { catchError, tap, concatMap } from 'rxjs/operators';
+import { catchError, concatMap } from 'rxjs/operators';
 import { ModalService } from '../../function/ui';
 
 // https://weblog.west-wind.com/posts/2019/Apr/07/Creating-a-custom-HttpInterceptor-to-handle-withCredentials
@@ -20,9 +20,35 @@ export class WithCredentialsInterceptor implements HttpInterceptor {
 
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
+export class HttpErrorInterceptor implements HttpInterceptor {
+
+  constructor(
+    private modalService: ModalService,
+  ) { }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status >= 400) {
+          const message = error?.error?.error_message;
+          this.showLogoutMessage(message).subscribe();
+          return NEVER;
+        } else {
+          return throwError(error);
+        }
+      })
+    );
+  }
+
+  private showLogoutMessage(message: string) {
+    return this.modalService.openMessage({ message });
+  }
+
+}
+
+
+@Injectable()
 export class HttpError401Interceptor implements HttpInterceptor {
 
   private isLogouting = false;
