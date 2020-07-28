@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
@@ -42,6 +43,7 @@ import { TemplateControlDataSourceComponent } from './component/content-control-
     MatInputModule,
     MatRadioModule,
     MatFormFieldModule,
+    MatTabsModule,
     DragDropModule,
     WrapperModule,
   ],

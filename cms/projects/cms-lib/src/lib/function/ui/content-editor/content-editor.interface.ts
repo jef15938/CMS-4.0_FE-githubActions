@@ -7,7 +7,8 @@ export enum EditorMode {
 }
 
 export enum ContentEditorActionMode {
-  LAYOUT, TEMPLATE
+  LAYOUT = 'LAYOUT',
+  TEMPLATE = 'TEMPLATE',
 }
 
 export interface ContentEditorServiceConfig {

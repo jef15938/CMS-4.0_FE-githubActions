@@ -15,6 +15,7 @@ export class AddTemplateButtonComponent implements OnInit {
   @Input() position: number;
   @Input() componentRef: ComponentRef<AddTemplateButtonComponent>;
   @Input() contextEventEmitter: EventEmitter<AddTemplateButtonComponent>;
+  @Input() disabled = false;
 
   constructor() { }
 

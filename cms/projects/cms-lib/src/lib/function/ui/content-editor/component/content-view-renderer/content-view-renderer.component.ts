@@ -12,6 +12,7 @@ import { ContentTemplateInfo } from './../../../../../global/api/neuxAPI/bean/Co
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { EditorMode, ContentEditorActionMode } from '../../content-editor.interface';
 import { CheckViewConfig } from './content-view-renderer.interface';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 class AddTemplateBtn {
   constructor(
@@ -27,19 +28,20 @@ class AddTemplateBtn {
 })
 export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnChanges {
   EditorMode = EditorMode;
+  ContentEditorActionMode = ContentEditorActionMode;
 
   @ViewChild(TemplatesContainerComponent) templatesContainer: TemplatesContainerComponent;
-
-  private nowSelectedTarget: HTMLElement;
 
   private addTemplateBtnMap: Map<TemplatesContainerComponent, AddTemplateBtn[]> = new Map();
 
   @Input() editorMode: EditorMode = EditorMode.EDIT;
-  @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.TEMPLATE;
+  @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
   @Input() contentInfo: ContentInfo;
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
   @Output() addTemplateBtnClick = new EventEmitter<AddTemplateButtonComponent>();
+
+  tabIndex = 0;
 
   constructor(
     private injector: Injector,
@@ -132,10 +134,11 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
       }
 
       lw?.componentRef?.instance?.templateFieldDirectives?.forEach(field => {
+        const element = field?.elementRef?.nativeElement as HTMLElement;
         if (this.editorMode !== EditorMode.INFO) { // EDIT or READ
-          (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `${field.fieldInfo.fieldType}`);
+          element?.setAttribute('hover-info', `${field.fieldInfo.fieldType}`);
         } else {
-          (field?.elementRef?.nativeElement as HTMLElement)?.classList.add('edit-info');
+          element?.classList.add('edit-info');
           const infos: string[] = [];
           if (field instanceof LayoutFieldTextDirective) {
             infos.push(field.maxLength > 1 ? `字數限制:${field.maxLength}` : '無字數限制');
@@ -159,7 +162,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
           }
           const info = infos.length ? infos.join('; ') : '';
-          (field?.elementRef?.nativeElement as HTMLElement)?.setAttribute('edit-info', `${field.fieldInfo.fieldType}${info ? ' : ' : ''}${info}`);
+          element?.setAttribute('edit-info', `${field.fieldInfo.fieldType}${info ? ' : ' : ''}${info}`);
         }
       });
     });
@@ -174,11 +177,11 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
     this.addTemplateBtnMap?.forEach(btns => {
       btns?.forEach(btn => {
         switch (actionMode) {
-          case ContentEditorActionMode.TEMPLATE:
-            btn.container.classList.remove('disabled');
-            break;
           case ContentEditorActionMode.LAYOUT:
-            btn.container.classList.add('disabled');
+            btn.componentRef.instance.disabled = false;
+            break;
+          case ContentEditorActionMode.TEMPLATE:
+            btn.componentRef.instance.disabled = true;
             break;
         }
       });
@@ -209,13 +212,10 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
   onSelect(ev: LayoutWrapperSelectEvent) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
-    const oldSelectedTarget = this.nowSelectedTarget;
-    if (oldSelectedTarget) { oldSelectedTarget.classList.remove('now-edit'); }
-
-    const newSelectedTarget = ev.selectedTarget;
-    if (newSelectedTarget) { newSelectedTarget.classList.add('now-edit'); }
-
-    this.nowSelectedTarget = newSelectedTarget;
+    if (
+      this.editorActionMode === ContentEditorActionMode.LAYOUT
+      && ev.selectedTargetType === LayoutWrapperSelectedTargetType.FIELD
+    ) { return; }
 
     this.select.emit(ev);
   }
@@ -228,6 +228,11 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
   onLeave(target: HTMLElement) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
     target.classList.remove('now-hover');
+  }
+
+  onSelectedTabChange(ev: MatTabChangeEvent) {
+    this.tabIndex = ev.index;
+    setTimeout(_ => this.checkView(), 0);
   }
 
 }

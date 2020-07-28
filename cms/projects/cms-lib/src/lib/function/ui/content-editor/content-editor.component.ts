@@ -31,7 +31,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   // 使用模式
   @Input() editorMode: EditorMode = EditorMode.EDIT;
-  editorActionMode: ContentEditorActionMode = ContentEditorActionMode.TEMPLATE;
+  editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
 
   // 編輯對象外部提供資料
   @Input() contentInfo: ContentInfo;
