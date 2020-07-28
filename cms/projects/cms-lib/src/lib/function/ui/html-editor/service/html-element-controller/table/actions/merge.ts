@@ -25,12 +25,12 @@ export class Merge extends HtmlEditorActionBase {
 
     const table = this.controller.el;
     selectedCols.forEach(col => {
-      if (!table.contains(col)) { return; }
+      if (!this.context.simpleWysiwygService.isChildOf(col, table)) { return; }
       const previous = col.previousElementSibling as HtmlEditorTableCell;
       if (
         previous
         && selectedCols.indexOf(previous) > -1
-        && table.contains(previous)
+        && this.context.simpleWysiwygService.isChildOf(previous, table)
         && previous.rowSpan === col.rowSpan
       ) {
         previous.colSpan += col.colSpan;
@@ -38,9 +38,9 @@ export class Merge extends HtmlEditorActionBase {
       }
     });
 
-    selectedCols = selectedCols.filter(col => table.contains(col));
+    selectedCols = selectedCols.filter(col => this.context.simpleWysiwygService.isChildOf(col, table));
     selectedCols.forEach((col) => {
-      if (!table.contains(col)) { return; }
+      if (!this.context.simpleWysiwygService.isChildOf(col, table)) { return; }
       const startEnd = this.controller.tableControllerService.getCellStartEnd(col);
 
       const previous = selectedCols.find((c: HtmlEditorTableCell) => {

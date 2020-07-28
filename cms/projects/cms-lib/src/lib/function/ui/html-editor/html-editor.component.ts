@@ -124,12 +124,12 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
       let acturallyAddedNodes = allAddedNodes
         .filter(node => allRemovedNodes.indexOf(node) < 0)
-        .filter(node => editorContainer.contains(node));
+        .filter(node => this.simpleWysiwygService.isChildOf(node, editorContainer));
       // console.log('acturallyAddedNodes = ', acturallyAddedNodes);
 
       const acturallyRemovedNodes = allRemovedNodes
         .filter(node => allAddedNodes.indexOf(node) < 0)
-        .filter(node => !editorContainer.contains(node));
+        .filter(node => this.simpleWysiwygService.isChildOf(node, editorContainer));
       // console.log('acturallyRemovedNodes = ', acturallyRemovedNodes);
 
       const changedNodes = []
@@ -173,13 +173,11 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
   onClick(ev: MouseEvent) {
     this.evPreventDefaultAndStopPropagation(ev);
-
     if (ev.target === this.editorContainer) {
       return;
     }
 
     const target = ev.target as HTMLElement;
-
     const special =
       this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')

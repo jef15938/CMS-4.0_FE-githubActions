@@ -85,7 +85,7 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 5}px`;
     bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 5}px`;
     this.controllers?.forEach(c => {
-      if (!editorContainer.contains(c)) {
+      if (!this.context.simpleWysiwygService.isChildOf(c, editorContainer)) {
         editorContainer.appendChild(c);
       }
     });
@@ -98,7 +98,7 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
 
     const editorContainer = this.context.editorContainer;
     this.controllers?.forEach(c => {
-      if (editorContainer.contains(c)) {
+      if (this.context.simpleWysiwygService.isChildOf(c, editorContainer)) {
         editorContainer.removeChild(c);
       }
     });
@@ -109,7 +109,7 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
 
     const editorContainer = this.context.editorContainer;
     this.controllers?.forEach(c => {
-      if (editorContainer.contains(c)) {
+      if (this.context.simpleWysiwygService.isChildOf(c, editorContainer)) {
         c.removeEventListener('click', this.evPreventDefaultAndStopPropagation);
         editorContainer.removeChild(c);
       }
