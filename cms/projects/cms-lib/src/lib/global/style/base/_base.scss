@@ -14,6 +14,13 @@
     line-height: normal;
   }
 
+  a {
+    @include on-event() {
+      color: inherit
+    }
+
+  }
+
   img {
     width: 100%;
   }

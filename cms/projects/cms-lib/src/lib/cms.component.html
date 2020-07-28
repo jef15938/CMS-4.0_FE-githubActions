@@ -1,6 +1,9 @@
-<mat-sidenav-container class="example-container">
+<mat-sidenav-container class="menu-container-shell">
   <mat-sidenav mode="side" opened #SideNav>
     <div class="menu-container" #MenuContainer>
+      <div class="menu-container__CI">
+        <img src="assets/img/CMS-logo-vertical.png">
+      </div>
       <ul class="menu-container__menu">
         <li class="menu-container__item" *ngFor="let menu of cmsMenus">
           <cms-menu-node [menu]="menu"></cms-menu-node>
