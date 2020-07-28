@@ -12,7 +12,7 @@ import { LoginInfo } from './global/api/neuxAPI/bean/LoginInfo';
 })
 export class CmsComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('MenuContainer') menuContainer: ElementRef;
+  // @ViewChild('MenuContainer') menuContainer: ElementRef;
 
   cmsMenus = [];
   appMenus = [];
@@ -34,8 +34,8 @@ export class CmsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const menuContainerEle = this.menuContainer.nativeElement;
-    const rippleFx = new RippleScreen(menuContainerEle);
+    // const menuContainerEle = this.menuContainer.nativeElement;
+    // const rippleFx = new RippleScreen(menuContainerEle);
   }
 
   logout() {
