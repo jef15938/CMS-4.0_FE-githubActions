@@ -29,9 +29,8 @@ export class HtmlEditorLinkController extends HtmlEditorElementController<HTMLIm
   }
 
   private subscribeEvents() {
-    const selectionchange$ = fromEvent(document, 'selectionchange').subscribe(_ => {
-      this.checkSelected();
-    });
+    const selectionchange$ = fromEvent(document, 'selectionchange')
+      .subscribe(_ => setTimeout(() => this.checkSelected(), 0));
     this.subscriptions.push(selectionchange$);
   }
 

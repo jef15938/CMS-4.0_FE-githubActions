@@ -144,8 +144,12 @@ export class SimpleWysiwygService {
 
   setSelectionOnNode(node: Node, start = 0, end = 0) {
     const range = document.createRange();
-    range.setStart(node, start);
-    range.setEnd(node, end);
+
+    const parent = node.parentNode;
+    const children: any[] = Array.from(parent.childNodes);
+    const index = children.indexOf(node);
+    range.setStart(parent, index);
+    range.setEnd(parent, index + 1);
     this.restoreSelection(range);
   }
 

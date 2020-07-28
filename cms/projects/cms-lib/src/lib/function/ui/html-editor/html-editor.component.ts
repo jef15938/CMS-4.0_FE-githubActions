@@ -99,12 +99,31 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     fromEvent(document, 'selectionchange').pipe(
       takeUntil(this.destroy$),
     ).subscribe(_ => {
-      const range = this.simpleWysiwygService.getRange();
-      // console.warn('document:selectionchange,  range = ', range);
-      if (!this.editorContainer) { return; }
-      if (!this.isSelectionInsideEditorContainer) { return; }
+      setTimeout(__ => {
+        if (!this.editorContainer) { return; }
+        if (!this.isSelectionInsideEditorContainer) { return; }
 
-      this.commonAncestorContainer = range.commonAncestorContainer;
+        const range = this.simpleWysiwygService.getRange();
+        const sel = window.getSelection();
+
+        if (sel.anchorNode === sel.focusNode && sel.anchorOffset + 1 === sel.focusOffset) {
+          const parent = sel.anchorNode;
+          const children = Array.from(parent.childNodes);
+          const target = children[sel.anchorOffset] as HTMLElement;
+          const special =
+            this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
+            || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
+            || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
+            || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'a')
+            ;
+          if (special) {
+            this.commonAncestorContainer = special;
+            return;
+          }
+        }
+        // console.warn('document:selectionchange,  range = ', range);
+        this.commonAncestorContainer = range.commonAncestorContainer;
+      }, 0);
     });
   }
 
@@ -175,7 +194,6 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     if (ev.target === this.editorContainer) {
       return;
     }
-
     const target = ev.target as HTMLElement;
     const special =
       this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
