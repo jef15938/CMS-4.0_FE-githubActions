@@ -58,10 +58,9 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
     this.categorySelected$.pipe(
       debounceTime(200),
-      takeUntil(this.destroy$),
       tap(selectedCategory => this.selectedCategory = selectedCategory),
-      concatMap(_ => this.getGallery()),
-    ).subscribe();
+      takeUntil(this.destroy$),
+    ).subscribe(_ => this.getGallery().subscribe());
   }
 
   ngOnDestroy(): void {
