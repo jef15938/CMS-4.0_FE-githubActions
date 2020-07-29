@@ -13,6 +13,8 @@ import { ContentControlPanelComponent } from './component/content-control-panel/
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactive-guardian.interface';
 import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
+import { ContentTemplateInfo } from '../../../global/api/neuxAPI/bean/ContentTemplateInfo';
+import { FieldType } from '@neux/render';
 
 @Component({
   selector: 'cms-content-editor',
@@ -112,8 +114,32 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   save() {
+    const contentInfo: ContentInfo = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
+    let galleryIds: string[] = [];
+
+    const templates: ContentTemplateInfo[] = contentInfo.languages.reduce((a, b) => a.concat(b.templates || []), []);
+
+    while (templates.length) {
+      templates.forEach(template => {
+        template.fields.forEach(field => {
+          switch (field.fieldType) {
+            case FieldType.HTMLEDITOR:
+              const htmlString = field.fieldVal || '';
+              const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
+              const matches = htmlString.match(galleryIdRegex);
+              const ids = matches.map(str => str.replace('gallery-id="', '').replace('"', ''));
+              galleryIds = [...galleryIds, ...ids];
+              break;
+          }
+        });
+      });
+
+      templates.length = 0;
+    }
+
+    contentInfo.galleries = [...new Set(galleryIds)].sort();
     this.editorSave.emit({
-      contentInfo: this.manager.stateManager.contentInfoEditModel,
+      contentInfo,
       editorSave: this.setEditorSaved.bind(this),
     });
   }

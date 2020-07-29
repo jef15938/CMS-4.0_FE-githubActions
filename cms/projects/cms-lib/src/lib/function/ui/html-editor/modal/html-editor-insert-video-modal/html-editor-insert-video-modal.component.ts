@@ -1,10 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
-
-const YOUTUBE_EMBED_VIDEO_URL = 'https://www.youtube.com/embed/';
-const YOUTUBE_EMBED_IMAGE_URL = (videoId: string) => {
-  return `https://img.youtube.com/vi/${videoId}/0.jpg`;
-};
+import { YoutubeUtil } from '../../service/youtube-util';
 
 @Component({
   selector: 'cms-html-editor-insert-video-modal',
@@ -47,11 +43,8 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
 
   checkSrc() {
     const frameId = this.frameId;
-    if (this.frameId.indexOf(YOUTUBE_EMBED_VIDEO_URL) > -1) {
-      const videoId = frameId.replace(YOUTUBE_EMBED_VIDEO_URL, '');
-      return YOUTUBE_EMBED_IMAGE_URL(videoId);
-    }
-    return '';
+    const videoId = YoutubeUtil.findVideoIdFromVideoUrl(frameId);
+    return YoutubeUtil.getImageUrlFromVideoId(videoId);
   }
 
 }
