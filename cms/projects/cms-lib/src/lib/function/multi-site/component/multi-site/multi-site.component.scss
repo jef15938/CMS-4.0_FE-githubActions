@@ -1,3 +1,5 @@
+@import "../../../../global/style/main";
+
 .multi-site {
   height: 100%;
   font-size: 0;
@@ -11,15 +13,40 @@
     &__inner {
       height: 100%;
     }
+
+    &__title {
+      display: flex;
+      justify-content: space-between;
+
+      &::ng-deep {
+        .mat-raised-button {
+          background-color: $color-CIS;
+          color: $color-white;
+        }
+      }
+    }
   }
 
 }
 
 .site-block {
-  border-right: 1px solid grey;
+  border-right: 1px solid $color-light-gray;
   width: 30%;
 
-  &__inner {}
+
+  &__list {
+    padding-top: 0;
+
+    &__item {
+      &--selected {
+        background-color: $color-CIS-light;
+      }
+    }
+  }
+
+  &__tree {}
+
+
 }
 
 .set-block {
@@ -34,8 +61,4 @@
   float: left;
   border-right: 1px solid lightgray;
 
-}
-
-.selected-site {
-  background-color: lightgreen;
 }
