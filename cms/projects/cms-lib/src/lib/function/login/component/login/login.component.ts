@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AuthorizationService } from '../../../../global/api/service';
+import { CMS_ENVIROMENT_TOKEN } from '../../../../global/injection-token';
+import { CmsEnviroment } from '../../../../global/interface';
 
 @Component({
   selector: 'cms-login',
@@ -14,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authorizationService: AuthorizationService,
+    @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
   ) { }
 
   ngOnInit(): void {

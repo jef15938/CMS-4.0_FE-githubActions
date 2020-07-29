@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('@render').then(m => m.RenderModule)
+    loadChildren: () => import('@neux/render').then(m => m.RenderModule)
     // loadChildren: () => Promise.resolve(RenderModule)
   },
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     initialNavigation: 'enabled'
-})],
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

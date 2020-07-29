@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, tap } from 'rxjs/operators';
 import { ContentInfo, ContentTemplateInfo } from '../../interface';
-import { RenderService } from '../../service/render.service';
-import { PageInfo } from '../../interface/page-info.interface';
 import { PageData } from '../../types';
+import { LayoutInfo } from '../../interface/layout-info.interface';
 
 @Component({
-  selector: 'lib-render',
+  selector: 'rdr-render',
   templateUrl: './render.component.html',
   styles: [
   ]
 })
 export class RenderComponent implements OnInit {
 
-  templates: ContentTemplateInfo[];
+  templates: LayoutInfo[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,8 +20,18 @@ export class RenderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const { pageInfo, sitemap, contentInfo } = this.activatedRoute.snapshot.data as PageData;
-    this.templates = this.getTemplateInfoByLanguageId(contentInfo, pageInfo.lang);
+    const { pageInfo, sitemap, contentInfo } = this.activatedRoute.snapshot.data.data as PageData;
+    const templateList = this.getTemplateInfoByLanguageId(contentInfo, pageInfo.lang);
+    // 把最外層Layout也放入TemplateList中，sitemap當作Data
+    this.templates = [{
+      id: '',
+      templateId: pageInfo.layoutID,
+      fields: [],
+      children: templateList,
+      attributes: {
+        sitemap
+      }
+    }];
   }
 
   /**

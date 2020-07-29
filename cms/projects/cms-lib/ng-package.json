@@ -8,7 +8,7 @@
       "class-validator": "class-validator",
       "angular-cropperjs": "angular-cropperjs",
       "@neux/core": "@neux/core",
-      "render": "render"
+      "@neux/render": "@neux/render"
     }
   }
 }

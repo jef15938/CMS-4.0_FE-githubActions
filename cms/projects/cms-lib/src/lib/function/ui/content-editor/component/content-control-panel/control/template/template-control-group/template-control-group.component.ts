@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, GroupTemplateInfo, FieldInfo, GroupTemplateBaseComponent } from 'render';
+import { LayoutWrapperSelectEvent, GroupTemplateInfo, FieldInfo, GroupTemplateBaseComponent } from '@neux/render';
 import { ContentControlBase } from '../../_base';
 
 @Component({

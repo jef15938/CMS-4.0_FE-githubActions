@@ -2,8 +2,7 @@ import { DomCmdAction } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorCreateLinkModalComponent } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
-
-const CLASS_NAME_EDITOR_LINK = 'editor-link';
+import { ATTRIBUTE_FRAME_ID, CLASS_NAME_EDITOR_LINK } from '../../const/html-editor-container.const';
 
 export class CreateLink extends DomCmdAction {
   commandId = 'createLink';
@@ -39,7 +38,7 @@ export class CreateLink extends DomCmdAction {
         if (isCreate) { // 新增
           const editorContainerCommonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
           const isCreateOnImg = editorContainerCommonAncestorContainer.tagName?.toLowerCase() === 'img'
-            && !editorContainerCommonAncestorContainer.getAttribute('frameId');
+            && !editorContainerCommonAncestorContainer.getAttribute(ATTRIBUTE_FRAME_ID);
 
           if (isCreateOnImg) {
             aTagToModify.appendChild(editorContainerCommonAncestorContainer);
@@ -67,7 +66,7 @@ export class CreateLink extends DomCmdAction {
     const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
     const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLocaleLowerCase();
 
-    if (commonAncestorContainerTagName === 'img' && !commonAncestorContainer.getAttribute('frameId')) { return false; }
+    if (commonAncestorContainerTagName === 'img' && !commonAncestorContainer.getAttribute(ATTRIBUTE_FRAME_ID)) { return false; }
     if (range.collapsed) { return true; }
     return true;
   }

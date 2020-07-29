@@ -3,7 +3,7 @@ import { RenderService } from './render.service';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 import { PageInfo } from '../interface/page-info.interface';
-import { shareReplay, switchMap } from 'rxjs/operators';
+import { shareReplay, switchMap, take } from 'rxjs/operators';
 import { CommonStoreService } from '../store/common-store.service';
 import { ContentInfo, SitemapNode } from '../interface';
 import { PageData } from '../types';
@@ -20,13 +20,20 @@ export class PageInfoResolverService {
     private storeService: CommonStoreService
   ) { }
 
+  /**
+   * 再進入route前，先把pageInfo,sitemap,contentInfo撈完
+   *
+   * @param {ActivatedRouteSnapshot} route 當下route snapshot
+   * @returns {Observable<PageData>}
+   * @memberof PageInfoResolverService
+   */
   resolve(route: ActivatedRouteSnapshot): Observable<PageData> {
     const pageID = route.params.pageID;
     const lang = route.params.languageID;
 
     const pageInfo$: Observable<PageInfo> = this.renderService.getPageInfo(pageID, lang).pipe(shareReplay(1));
     const sitemap$: Observable<SitemapNode> = pageInfo$.pipe(
-      switchMap((x) => this.storeService.getSitemap(x.nodeRoot, x.lang))
+      switchMap((x) => this.storeService.getSitemap(x.nodeRoot, x.lang).pipe(take(1)))
     );
     const contentInfo$: Observable<ContentInfo> = pageInfo$.pipe(
       switchMap((x) => this.renderService.getContentInfo(x.contentID))

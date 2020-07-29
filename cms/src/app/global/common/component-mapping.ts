@@ -1,4 +1,4 @@
-import { RenderComponentMapping } from 'render';
+import { RenderComponentMapping } from '@neux/render';
 import { Test1Component } from '../../function/test/test1.component';
 import { Test2Component } from '../../function/test/test2.component';
 import { FarmCustomFormControlComponent } from '../../function/farm-custom-form-control/farm-custom-form-control.component';

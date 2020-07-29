@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldTextDirective } from 'render';
+import { TemplateFieldSelectEvent, LayoutFieldTextDirective } from '@neux/render';
 
 @Component({
   selector: 'cms-field-control-text',

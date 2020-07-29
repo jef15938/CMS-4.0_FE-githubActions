@@ -22,6 +22,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   @Input() alt = '';
   @Input() width: number = null;
   @Input() height: number = null;
+  @Input() galleryID: number = null;
 
   private srcChange$ = new Subject();
   private destroy$ = new Subject();
@@ -36,6 +37,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
     this.alt = this.alt || '';
     this.width = this.width || null;
     this.height = this.height || null;
+    this.galleryID = this.height || null;
 
     this.srcChange$.pipe(
       takeUntil(this.destroy$),
@@ -62,6 +64,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   changeGallery() {
     this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
+        this.galleryID = selectedGallery.gallery_id;
         this.src = selectedGallery.url;
         this.checkImgSize();
       }
@@ -74,6 +77,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
       alt: this.alt || '',
       width: this.width || 200,
       height: this.height || 200,
+      galleryID: this.galleryID || 200,
     });
   }
 

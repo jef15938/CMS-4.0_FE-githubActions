@@ -4,5 +4,5 @@ export interface ContentTemplateInfo {
   id: string;
   templateId: string;
   fields: FieldInfo[];
-  attributes: { [key: string]: string };
+  attributes: { [key: string]: any };
 }

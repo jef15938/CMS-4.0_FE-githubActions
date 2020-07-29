@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "build-render-lib": "ng build render --prod",
     "pack-render": "ng build render --prod && cd dist/render && npm pack && cd ../..",
     "dev:ssr": "ng run render-engine:serve-ssr",
     "serve:ssr": "node dist/render-engine/server/main.js",

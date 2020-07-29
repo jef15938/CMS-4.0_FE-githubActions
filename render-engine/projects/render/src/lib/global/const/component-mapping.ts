@@ -2,6 +2,7 @@ import { RenderComponentMapping } from '../interface';
 import {
   TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, NewsComponent
 } from '../component';
+import { LayoutComponent } from '../component/layout/layout.component';
 
 export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = [
   {
@@ -27,5 +28,9 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'News',
     component: NewsComponent,
+  },
+  {
+    component_id: 'full',
+    component: LayoutComponent
   }
 ];

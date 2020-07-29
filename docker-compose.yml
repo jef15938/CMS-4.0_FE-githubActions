@@ -1,0 +1,19 @@
+# Use root/example as user/password credentials
+version: "3.1"
+
+services:
+  cms-frontend:
+    build: ./cms/.
+    restart: always
+    volumes:
+      - ./cms:/usr/src/app
+    ports:
+      - 5010:3001
+
+  render-frontend:
+    build: ./render-engine/.
+    restart: always
+    volumes:
+      - ./render-engine:/usr/src/app
+    ports:
+      - 5011:4000

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DynamicWrapperComponent } from '@neux/core';
 import { CmsUserMenuResolver } from '../../../global/service';
 import { MenuInfo } from '../../../global/api/neuxAPI/bean/MenuInfo';
-import { DynamicComponentFactoryService } from 'render';
+import { DynamicComponentFactoryService } from '@neux/render';
 
 @Component({
   selector: 'cms-extension',

@@ -16,6 +16,14 @@ export class CommonStoreService {
     private sitemapService: SitemapService
   ) { }
 
+  /**
+   * 取得sitemap,若當前無該節點/語系的sitemap則重撈，有則直接回傳
+   *
+   * @param {string} root
+   * @param {string} lang
+   * @returns {Observable<SitemapNode>}
+   * @memberof CommonStoreService
+   */
   getSitemap(root: string, lang: string): Observable<SitemapNode> {
     const sitemap$ = this.sitemapSubject.asObservable().pipe(
       tap((x) => console.log('siteMapSubject:', x)),
@@ -34,6 +42,14 @@ export class CommonStoreService {
     }
   }
 
+  /**
+   * sitemap存入store 中
+   *
+   * @param {string} root
+   * @param {string} lang
+   * @param {SitemapNode} sitemap
+   * @memberof CommonStoreService
+   */
   setSitemap(root: string, lang: string, sitemap: SitemapNode) {
     if (!this.sitemap[root]) {
       this.sitemap[root] = {};

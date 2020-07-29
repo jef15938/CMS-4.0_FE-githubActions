@@ -13,6 +13,7 @@ import { GroupTemplateDemoComponent } from './global/component/group-template-de
 import { NewsComponent } from './global/component/news/news.component';
 import { RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN } from './global/injection-token/injection-token';
 import { RENDER_DEFAULT_COMPONENT_MAPPINGS } from './global/const/component-mapping';
+import { LayoutComponent } from './global/component/layout/layout.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -34,6 +35,7 @@ const COMPONENTS = [
   declarations: [
     RenderComponent,
     ...COMPONENTS,
+    LayoutComponent,
   ],
   exports: [
     RenderComponent,

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { API_CONFIG_TOKEN, API_HEADER_TOKEN } from '@neux/core';
-import { RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN, RenderModule } from 'render';
+import { RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN, RenderModule } from '@neux/render';
 import {
   CmsModule, CMS_ENVIROMENT_TOKEN, CMS_EXTENSION_MENU_RESOLVER_TOKEN
 } from '@neux/cms-core';

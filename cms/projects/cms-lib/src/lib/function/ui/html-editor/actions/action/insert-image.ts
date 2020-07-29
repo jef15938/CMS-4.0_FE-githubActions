@@ -1,12 +1,14 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
+import { ATTRIBUTE_GALLERY_ID } from '../../const/html-editor-container.const';
 
 export interface InsertImageConfig {
   src: string;
   alt: string;
   width: number;
   height: number;
+  galleryID: number;
 }
 
 export class InsertImage extends HtmlEditorActionBase {
@@ -31,12 +33,16 @@ export class InsertImage extends HtmlEditorActionBase {
     const nowRange = this.context.simpleWysiwygService.getRange();
     const parent = nowRange.commonAncestorContainer;
     const children = Array.from(parent.childNodes) as HTMLElement[];
-    const imgElement = children.find(child => child.tagName?.toLowerCase() === 'img' && !child.getAttribute('width') && !child.getAttribute('height')) as HTMLImageElement;
-    if (imgElement) {
-      imgElement.setAttribute('height', `${config.height}`);
-      imgElement.setAttribute('width', `${config.width}`);
-      imgElement.setAttribute('alt', `${config.alt}`);
-      return imgElement;
+    const img = children.find(child => child.tagName?.toLowerCase() === 'img' && !child.getAttribute('width') && !child.getAttribute('height')) as HTMLImageElement;
+    if (img) {
+      img.setAttribute('gallery-id', `${config.galleryID}`);
+      img.setAttribute('height', `${config.height}`);
+      img.setAttribute('width', `${config.width}`);
+      img.setAttribute('alt', `${config.alt}`);
+      if (config.galleryID) {
+        img.setAttribute(ATTRIBUTE_GALLERY_ID, `${config.galleryID}`);
+      }
+      return img;
     }
     return undefined;
   }

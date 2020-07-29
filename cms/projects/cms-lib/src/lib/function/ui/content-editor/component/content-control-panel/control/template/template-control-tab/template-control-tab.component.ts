@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo, TabTemplateBaseComponent } from 'render';
+import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo, TabTemplateBaseComponent } from '@neux/render';
 import { ContentControlBase } from '../../_base';
 
 @Component({
