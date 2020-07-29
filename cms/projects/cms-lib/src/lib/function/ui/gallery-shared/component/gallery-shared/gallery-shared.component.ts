@@ -41,6 +41,18 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   private categorySelected$ = new Subject<GalleryCategoryInfo>();
 
+  filterFileTypeOptions = [
+    { value: '', display: '無', },
+    { value: 'pdf', display: 'pdf', },
+    { value: 'doc', display: 'doc', },
+    { value: 'docx', display: 'docx', },
+    { value: 'xls', display: 'xls', },
+    { value: 'xlsx', display: 'xlsx', },
+    { value: 'png', display: 'png', },
+    { value: 'jpg', display: 'jpg', },
+    { value: 'jpeg', display: 'jpeg', },
+    { value: 'gif', display: 'gif', }
+  ];
   filter: { fileName: string, fileType: string } = {
     fileName: '',
     fileType: '',

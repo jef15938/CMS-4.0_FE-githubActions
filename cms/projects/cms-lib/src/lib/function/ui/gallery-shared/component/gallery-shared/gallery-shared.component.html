@@ -26,7 +26,11 @@
           </mat-form-field>
           <mat-form-field appearance="outline" style="width: 50%">
             <mat-label>檔案類型</mat-label>
-            <input matInput [(ngModel)]="filter.fileType" name="fileType">
+            <mat-select [(ngModel)]="filter.fileType" name="fileType">
+              <mat-option *ngFor="let option of filterFileTypeOptions" [value]="option.value">
+                {{option.display}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
 
