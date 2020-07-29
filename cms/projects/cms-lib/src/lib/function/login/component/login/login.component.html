@@ -29,10 +29,10 @@
                 class="CMS-login__form__item__input CMS-login__form__item__input--short" placeholder="驗證碼" required=""
                 autofocus="" [(ngModel)]="validationCode" #modelValidationCode="ngModel"
                 [class.has-error]="modelValidationCode.invalid">
-              <img [src]="environment.apiBaseUrl + '/validImage'" id="validNumberImg"
+              <img #validImage [src]="environment.apiBaseUrl + '/validImage?version=' + validImageVersion" id="validNumberImg"
                 class="CMS-login__form__item__verification">
-              <a href="#" id="validNumberRefresh" class="CMS-login__form__item__refresh">
-                <img class="CMS-login__form__item__refresh__img" src="assets/img/CMS-reload.png">
+              <a id="validNumberRefresh" class="CMS-login__form__item__refresh">
+                <img class="CMS-login__form__item__refresh__img" src="assets/img/CMS-reload.png" (click)="refreshValidImageVersion()">
               </a>
             </div>
             <div class="CMS-login__form__item">
