@@ -25,6 +25,8 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   title: string | (() => string);
   actions: CustomModalActionButton[];
 
+  readonly fileUploadInputIdentifier = 'fileUpload';
+
   @Input() categoryName: string;
   @Input() categoryId: string;
   @Input() galleryId: number;
@@ -86,11 +88,14 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   addFiles() {
-    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+    const fileUpload = document.getElementById(this.fileUploadInputIdentifier) as HTMLInputElement;
     fileUpload.onchange = fileUpload.onchange || (() => {
-      this.files = this.files.concat(
-        Array.from(fileUpload.files).map(file => this.galleryService.mapFileToFileUploadModel(file))
-      );
+      const files = Array.from(fileUpload.files);
+      if (files.length > 5) {
+        alert('一次最多上傳 5 個');
+        return;
+      }
+      this.files = Array.from(fileUpload.files).map(file => this.galleryService.mapFileToFileUploadModel(file));
     });
     fileUpload.click();
   }
@@ -136,7 +141,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   create() {
-    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+    const fileUpload = document.getElementById(this.fileUploadInputIdentifier) as HTMLInputElement;
     fileUpload.value = '';
 
     forkJoin(this.files.map(file => this.uploadFile(file))).subscribe(results => {
@@ -149,7 +154,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   update() {
-    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+    const fileUpload = document.getElementById(this.fileUploadInputIdentifier) as HTMLInputElement;
     fileUpload.value = '';
 
     const file = this.files[0];

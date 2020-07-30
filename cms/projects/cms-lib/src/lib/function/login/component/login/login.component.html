@@ -17,22 +17,24 @@
           <div class="CMS-login__form__content">
             <div class="CMS-login__form__item">
               <input type="text" name="username" class="CMS-login__form__item__input" placeholder="使用者帳號" required=""
-                autofocus="" [(ngModel)]="username" #modelUsername="ngModel" [class.has-error]="modelUsername.invalid">
+                autofocus="" [(ngModel)]="username" #modelUsername="ngModel"
+                [class.has-error]="modelUsername.touched && modelUsername.invalid">
             </div>
             <div class="CMS-login__form__item">
               <input type="password" name="password" class="CMS-login__form__item__input" placeholder="使用者密碼"
                 required="" autocomplete="off" [(ngModel)]="password" #modelPassword="ngModel"
-                [class.has-error]="modelPassword.invalid">
+                [class.has-error]="modelPassword.touched && modelPassword.invalid">
             </div>
             <div class="CMS-login__form__item">
-              <input type="text" autocomplete="off" name="validNumber"
+              <input type="number" autocomplete="off" name="validNumber"
                 class="CMS-login__form__item__input CMS-login__form__item__input--short" placeholder="驗證碼" required=""
                 autofocus="" [(ngModel)]="validationCode" #modelValidationCode="ngModel"
-                [class.has-error]="modelValidationCode.invalid">
-              <img #validImage [src]="environment.apiBaseUrl + '/validImage?version=' + validImageVersion" id="validNumberImg"
-                class="CMS-login__form__item__verification">
+                [class.has-error]="modelValidationCode.touched &&  modelValidationCode.invalid">
+              <img #validImage [src]="environment.apiBaseUrl + '/validImage?version=' + validImageVersion"
+                id="validNumberImg" class="CMS-login__form__item__verification">
               <a id="validNumberRefresh" class="CMS-login__form__item__refresh">
-                <img class="CMS-login__form__item__refresh__img" src="assets/img/CMS-reload.png" (click)="refreshValidImageVersion()">
+                <img class="CMS-login__form__item__refresh__img" src="assets/img/CMS-reload.png"
+                  (click)="refreshValidImageVersion()">
               </a>
             </div>
             <div class="CMS-login__form__item">

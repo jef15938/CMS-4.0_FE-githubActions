@@ -56,7 +56,7 @@ export class DeptComponent implements OnInit {
           action = 'Update';
           break;
       }
-      this.openModal(action, event.data).subscribe(res => {
+      this.openDeptMaintainModal(action, event.data).subscribe(res => {
         if (res) {
           this.initPage().subscribe();
         }
@@ -64,7 +64,7 @@ export class DeptComponent implements OnInit {
     }
   }
 
-  openModal(action: 'Create' | 'Update', selectedDept: DepartmentInfo) {
+  openDeptMaintainModal(action: 'Create' | 'Update', selectedDept: DepartmentInfo) {
     const parent = this.findParentDept(selectedDept);
     return this.modalService.openComponent({
       component: DeptMaintainModalComponent,

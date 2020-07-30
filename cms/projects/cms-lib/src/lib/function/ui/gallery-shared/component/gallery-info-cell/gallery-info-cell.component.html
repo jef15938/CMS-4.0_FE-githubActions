@@ -1,7 +1,7 @@
 <ng-container *ngIf="config?.data">
   <div>
     <div class="image-container">
-      <a [href]="config.data.url" target="_blank" rel="noreferrer noopener">
+      <a [href]="environment.apiBaseUrl + config.data.url" target="_blank" rel="noreferrer noopener">
         <img [src]="config.data | gelleryImgSrc | safeResource">
       </a>
     </div>

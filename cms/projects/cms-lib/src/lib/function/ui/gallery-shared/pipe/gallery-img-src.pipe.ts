@@ -17,7 +17,7 @@ export class GelleryImgSrcPipe implements PipeTransform {
       const isImg = this.isImg(data);
       const path =
         isImg
-          ? `${this.environment.apiBaseUrl}/${data.url}`
+          ? `${this.environment.apiBaseUrl}${data.url}`
           : `${this.getLocalUrl()}/assets/img/icon/${data.file_type.toLowerCase()}.png`;
       return path;
     } else {
