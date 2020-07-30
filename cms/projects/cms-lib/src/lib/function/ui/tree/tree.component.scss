@@ -2,46 +2,74 @@
 
 :host {
   display: block;
-
+  height: 100%;
+  background-color: $color-white;
 }
 
 .cms-tree {
-  &__body {}
+  height: 100%;
+  overflow: hidden;
+  margin-left: -1em;
 
+  &__body {
+    margin-top: -20px;
+  }
 
   &__node {
     display: block;
     min-height: 40px;
+    border-left: 1px dashed $color-gray;
 
+    &:last-child {
+      >.cms-tree__node__head {
+        &:before {
+          border-bottom: 1px solid $color-white;
+          z-index: 99;
+          width: 1em;
+        }
+      }
+    }
 
     &__head {
-      padding-left: 10px;
       min-height: 40px;
+      transform: translate(0, 50%);
       position: relative;
+      z-index: 99;
 
       &:before {
         content: '';
-        display: block;
-        border-bottom: 1px dashed $color-gray;
-        width: 27px;
         position: absolute;
+        border-bottom: 1px dashed $color-gray;
         top: 50%;
-        transform: translate(-150%, -50%) translateX(-10px)
+        transform: translateY(-50%) translateY(1.5px);
+        width: 2em;
       }
 
       &--selected {
-        background-color: $color-CIS-light;
+        .cms-tree__node__head__checkbox {
+          background-color: $color-CIS-light;
+        }
+
       }
 
       &:not(.cms-tree__node__head--selected):hover {
-        background-color: transparentize($color: $color-CIS-light, $amount: .75);
+        .cms-tree__node__head__checkbox {
+          background-color: $color-CIS-extra-light;
+        }
       }
 
       &__checkbox {
-        margin-left: 8px;
+        position: absolute;
+        width: calc(100% - 1em);
+        margin-left: 1em;
+        height: 100%;
+        padding-left: 1em;
+        background-color: $color-white;
       }
 
       &::ng-deep {
+
+
         mat-checkbox.cms-tree__node__head__checkbox--unactive {
           .mat-checkbox-inner-container {
             display: none;
@@ -63,32 +91,23 @@
 
     &__body {
       position: relative;
-
-      &:before {
-        content: '';
-        display: block;
-        border-left: 1px dashed $color-gray;
-        height: calc(100% + 10px);
-        position: absolute;
-        left: -15px;
-        top: -30px;
-      }
+      border-bottom: 1px dashed grey;
+      margin-left: 2em;
+      transform: translateY(1px);
 
       &--invisible {
         display: none;
       }
 
-      .cms-tree__node {
-        margin-left: 2em;
-      }
 
       &::ng-deep {
         mat-tree-node.cms-tree__node {
           .cms-tree__node__head {
-
             margin-top: 10px;
-            padding-top: 10px;
+
+
           }
+
         }
 
       }
@@ -97,6 +116,24 @@
 
 
 
+  }
+
+  &::ng-deep {
+    mat-nested-tree-node {
+      .cms-tree__node__head__checkbox {
+        .mat-checkbox-layout {
+          position: absolute;
+          width: calc(100% - 1em);
+          height: 100%;
+        }
+
+        .mat-checkbox-label {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
   }
 }
 

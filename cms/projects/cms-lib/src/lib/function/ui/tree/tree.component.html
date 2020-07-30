@@ -33,7 +33,8 @@
         (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);" (dblclick)="onRowDbClicked($event, node)"
         (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
 
-        <mat-checkbox [checked]="checkedNodes.indexOf(node)>-1" (change)="onNodeCheckboxChange($event, node)"
+        <mat-checkbox class="cms-tree__node__head__checkbox" [checked]="checkedNodes.indexOf(node)>-1"
+          (change)="onNodeCheckboxChange($event, node)"
           [class.cms-tree__node__head__checkbox--unactive]="!checkbox || (checkbox && node|nodeCheckboxDisabled:checkboxDisabled)">
           <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
             [onComponentLoad]="this | nodeRenderOnload:node:context">
