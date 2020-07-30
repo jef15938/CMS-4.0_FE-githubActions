@@ -6,17 +6,35 @@
 }
 
 .filter {
-  &>* {
-    display: inline-block;
+  display: flex;
+
+  &__fields {
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: calc(100% - 40px);
+    align-items: center;
   }
 
-  .search-btn {
-    width: 40px;
+  &__field {
+    +.filter__field {
+      margin-left: 20px;
+    }
+
+    &::ng-deep {
+      .mat-form-field-infix {
+        height: 60px;
+      }
+    }
   }
 
-  .fields {
-    width: calc(100% - 40px);
+  &__search-btn {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 40px;
+    margin-top: 10px;
   }
+
 }
 
 @include site-layout();

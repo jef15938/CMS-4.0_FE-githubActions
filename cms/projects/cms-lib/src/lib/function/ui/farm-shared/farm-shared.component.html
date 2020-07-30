@@ -27,7 +27,7 @@
                 (farmFormInfoCompEmit)="onSearchInfoFarmFormInfoCompEmit(category, $event)"></cms-farm-search-info>
             </div>
             <hr>
-            <div class="table-info-container" *ngIf="category.tableInfo">
+            <div class="table-info-container page-content-container" *ngIf="category.tableInfo">
               <cms-farm-table-info [tableInfo]="category.tableInfo" (actionClick)="onTableActionClick(category, $event)"
                 (pageChange)="onTablePageChange(category, $event)">
               </cms-farm-table-info>

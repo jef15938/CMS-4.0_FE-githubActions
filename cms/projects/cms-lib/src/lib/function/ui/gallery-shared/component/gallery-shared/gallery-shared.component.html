@@ -19,12 +19,12 @@
     <div class="page-content-container">
 
       <div class="filter">
-        <div class="fields">
-          <mat-form-field appearance="outline" style="width: 50%">
+        <div class="filter__fields">
+          <mat-form-field appearance="outline" class="filter__field">
             <mat-label>檔案名稱</mat-label>
             <input matInput [(ngModel)]="filter.fileName" name="fileName">
           </mat-form-field>
-          <mat-form-field appearance="outline" style="width: 50%">
+          <mat-form-field appearance="outline" class="filter__field">
             <mat-label>檔案類型</mat-label>
             <mat-select [(ngModel)]="filter.fileType" name="fileType">
               <mat-option *ngFor="let option of filterFileTypeOptions" [value]="option.value">
@@ -34,7 +34,7 @@
           </mat-form-field>
         </div>
 
-        <button class="search-btn" type="button" mat-icon-button (click)="getGallery(true).subscribe()">
+        <button class="filter__search-btn" type="button" mat-icon-button (click)="getGallery(true).subscribe()">
           <mat-icon>search</mat-icon>
         </button>
       </div>
