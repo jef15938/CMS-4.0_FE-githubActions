@@ -39,7 +39,7 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
   }
 
   changeGallery() {
-    this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openGallery(['png', 'jpg', 'jpeg', 'gif']).subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         this.fieldInfo.fieldVal = selectedGallery.url;
         this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${selectedGallery.gallery_id}`;

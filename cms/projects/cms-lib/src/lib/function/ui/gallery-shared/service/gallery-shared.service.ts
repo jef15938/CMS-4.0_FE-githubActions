@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ModalService } from '../../../ui/modal';
 import { GallerySharedContainerModalComponent } from '../component/gallery-shared-container-modal/gallery-shared-container-modal.component';
+import { GalleryFileType } from '../type/gallery-shared.type';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,8 @@ export class GallerySharedService {
   ) { }
 
   openGallery(
-    config?: { title?: string }
+    allowedFileTypes?: GalleryFileType[]
   ): Observable<any> {
-    const title = config?.title;
-    // const content = config?.content;
 
     const modalSetting = {
       id: `gallery-shared`,
@@ -27,7 +26,7 @@ export class GallerySharedService {
 
     return this.modalService.openComponent({
       component: GallerySharedContainerModalComponent,
-      componentInitData: { title },
+      componentInitData: { allowedFileTypes },
       modalSetting
     });
   }

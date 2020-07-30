@@ -13,6 +13,7 @@ import { GalleryCategoryMaintainModalComponent } from '../gallery-category-maint
 import { UploadGalleryModalComponent } from '../upload-gallery-modal/upload-gallery-modal.component';
 import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from '../gallery-action-cell/gallery-action-cell.component';
 import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell.component';
+import { GalleryFileType } from '../../type/gallery-shared.type';
 
 @Component({
   selector: 'cms-gallery-shared',
@@ -22,6 +23,7 @@ import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell
 export class GallerySharedComponent implements OnInit, OnDestroy {
 
   @Input() mode: 'page' | 'modal' = 'page';
+  @Input() allowedFileTypes: GalleryFileType[] = [];
 
   @Output() galleryClick = new EventEmitter<GalleryInfo>();
 
@@ -41,22 +43,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   private categorySelected$ = new Subject<GalleryCategoryInfo>();
 
-  filterFileTypeOptions = [
-    { value: '', display: '無', },
-    { value: 'pdf', display: 'pdf', },
-    { value: 'doc', display: 'doc', },
-    { value: 'docx', display: 'docx', },
-    { value: 'xls', display: 'xls', },
-    { value: 'xlsx', display: 'xlsx', },
-    { value: 'png', display: 'png', },
-    { value: 'jpg', display: 'jpg', },
-    { value: 'jpeg', display: 'jpeg', },
-    { value: 'gif', display: 'gif', }
-  ];
-  filter: { fileName: string, fileType: string } = {
-    fileName: '',
-    fileType: '',
-  };
+  filterFileTypeOptions: { value: string, display: string }[] = [];
+  filter: { fileName: string, fileType: string } = { fileName: '', fileType: '', };
 
   constructor(
     private galleryService: GalleryService,
@@ -66,6 +54,9 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.colDefs = this.createColDefs(this.mode);
+    this.filterFileTypeOptions = this.createFilterFileTypeOptions();
+    this.filter.fileType = this.filterFileTypeOptions[0].value;
+
     this.init().subscribe();
 
     this.categorySelected$.pipe(
@@ -116,6 +107,27 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     }
 
     return colDefs;
+  }
+
+  private createFilterFileTypeOptions(): { value: GalleryFileType, display: string }[] {
+    let filterFileTypeOptions: { value: GalleryFileType, display: string }[] = [
+      { value: '', display: '無', },
+      { value: 'pdf', display: 'pdf', },
+      { value: 'doc', display: 'doc', },
+      { value: 'docx', display: 'docx', },
+      { value: 'xls', display: 'xls', },
+      { value: 'xlsx', display: 'xlsx', },
+      { value: 'png', display: 'png', },
+      { value: 'jpg', display: 'jpg', },
+      { value: 'jpeg', display: 'jpeg', },
+      { value: 'gif', display: 'gif', }
+    ];
+
+    if (this.allowedFileTypes.length) {
+      filterFileTypeOptions = filterFileTypeOptions.filter(option => this.allowedFileTypes.indexOf(option.value) > -1);
+    }
+
+    return filterFileTypeOptions;
   }
 
   private init() {

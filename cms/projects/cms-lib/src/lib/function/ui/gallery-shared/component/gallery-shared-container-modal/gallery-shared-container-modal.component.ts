@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
 import { GallerySharedComponent } from '../gallery-shared/gallery-shared.component';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { GalleryFileType } from '../../type/gallery-shared.type';
 
 @Component({
   selector: 'cms-gallery-shared-container-modal',
@@ -12,7 +13,9 @@ export class GallerySharedContainerModalComponent extends CustomModalBase implem
 
   @ViewChild(GallerySharedComponent) gallerySharedComponent: GallerySharedComponent;
 
-  @Input() title: string | (() => string) = '';
+  @Input() title = '';
+  @Input() allowedFileTypes: GalleryFileType[] = [];
+
   actions: CustomModalActionButton[];
 
   constructor() { super(); }
