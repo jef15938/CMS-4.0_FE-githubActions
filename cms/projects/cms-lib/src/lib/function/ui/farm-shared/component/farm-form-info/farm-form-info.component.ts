@@ -222,6 +222,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         col.value = selectedGallery.url;
+        col.setting.file_name = selectedGallery.file_name;
       }
     });
   }
