@@ -3,14 +3,16 @@
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node class="cms-tree__node pointer" *matTreeNodeDef="let node" matTreeNodeToggle>
       <div class="cms-tree__node__head " [class.cms-tree__node__head--selected]="node===selectedNode"
-        [draggable]="draggable" [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
-        (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
-        (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);" (dblclick)="onRowDbClicked($event, node)"
-        (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
+        (dblclick)="onRowDbClicked($event, node)" (click)="onRowClicked($event, node)" cmsRightClickHandler
+        (rightClick)="onRowRightClicked(node)">
 
         <mat-checkbox class="cms-tree__node__head__checkbox" [checked]="checkedNodes.indexOf(node)>-1"
           (change)="onNodeCheckboxChange($event, node)"
-          [class.cms-tree__node__head__checkbox--unactive]="!checkbox || (checkbox && node|nodeCheckboxDisabled:checkboxDisabled)">
+          [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
+          [class.cms-tree__node__head__checkbox--unactive]="!checkbox || (checkbox && node|nodeCheckboxDisabled:checkboxDisabled)"
+          [draggable]="draggable" [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
+          (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
+          (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);">
 
           <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
             [onComponentLoad]="this | nodeRenderOnload:node:context">
@@ -28,14 +30,16 @@
     <mat-nested-tree-node class="cms-tree__node" *matTreeNodeDef="let node; when: hasChild">
 
       <div class="cms-tree__node__head pointer" [class.cms-tree__node__head--selected]="node===selectedNode"
-        [draggable]="draggable" [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
-        (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
-        (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);" (dblclick)="onRowDbClicked($event, node)"
-        (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
+        (dblclick)="onRowDbClicked($event, node)" (click)="onRowClicked($event, node)" cmsRightClickHandler
+        (rightClick)="onRowRightClicked(node)">
 
         <mat-checkbox class="cms-tree__node__head__checkbox" [checked]="checkedNodes.indexOf(node)>-1"
           (change)="onNodeCheckboxChange($event, node)"
-          [class.cms-tree__node__head__checkbox--unactive]="!checkbox || (checkbox && node|nodeCheckboxDisabled:checkboxDisabled)">
+          [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
+          [class.cms-tree__node__head__checkbox--unactive]="!checkbox || (checkbox && node|nodeCheckboxDisabled:checkboxDisabled)"
+          [draggable]="draggable" [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
+          (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
+          (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);">
           <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
             [onComponentLoad]="this | nodeRenderOnload:node:context">
           </span>

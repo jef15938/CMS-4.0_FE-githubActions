@@ -62,7 +62,7 @@ export const environment = {
     GetGalleryCategory: 'Restful',
     PostGalleryCategory: 'Restful',
     PostLogin: 'Restful',
-    GetDepartment: 'Mock',
+    GetDepartment: 'Restful',
     DeleteGalleryCategoryByCategoryID: 'Restful',
     PutGalleryCategoryByCategoryID: 'Restful',
     GetUserMenu: 'Mock',
