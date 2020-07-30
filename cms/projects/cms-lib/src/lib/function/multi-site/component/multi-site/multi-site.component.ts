@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Observable, concat, Subject, throwError } from 'rxjs';
-import { tap, takeUntil, map, catchError } from 'rxjs/operators';
+import { Observable, concat, Subject, throwError, of } from 'rxjs';
+import { tap, takeUntil, map, catchError, concatMap } from 'rxjs/operators';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
 import { SitemapService } from '../../../../global/api/service';
@@ -185,28 +185,28 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     const to = ev.to;
     if (!target || !to || target === to || to.children.indexOf(target) > -1) { return; }
     // TODO: 移動節點 api
-    // this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
-    //   if (!confirm) { return; }
-    //   of(undefined).pipe(
-    //     concatMap(_ => this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, target.node_id)),
-    //     concatMap(nodeToUpdate => {
-    //       return this.sitemapService.updateSiteNode(
-    //         nodeToUpdate.node_id,
-    //         nodeToUpdate.details,
-    //         {
-    //           parent_id: to.node_id,
-    //           content_path: nodeToUpdate.content_path,
-    //           url_type: nodeToUpdate.url_type,
-    //           url_link_node_id: nodeToUpdate.url_link_node_id,
-    //           url: nodeToUpdate.url,
-    //           url_blank: nodeToUpdate.url_blank,
-    //         }
-    //       );
-    //     }),
-    //   ).subscribe(_ => {
-    //     this.onNodeUpdate(true);
-    //   });
-    // });
+    this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
+      if (!confirm) { return; }
+      of(undefined).pipe(
+        concatMap(_ => this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, target.node_id)),
+        concatMap(nodeToUpdate => {
+          return this.sitemapService.updateSiteNode(
+            nodeToUpdate.node_id,
+            nodeToUpdate.details,
+            {
+              parent_id: to.node_id,
+              content_path: nodeToUpdate.content_path,
+              url_type: nodeToUpdate.url_type,
+              url_link_node_id: nodeToUpdate.url_link_node_id,
+              url: nodeToUpdate.url,
+              url_blank: nodeToUpdate.url_blank,
+            }
+          );
+        }),
+      ).subscribe(_ => {
+        this.onNodeUpdate(true);
+      });
+    });
   }
 
 }

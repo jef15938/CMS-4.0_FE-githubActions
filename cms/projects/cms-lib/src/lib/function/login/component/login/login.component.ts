@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { AuthorizationService } from '../../../../global/api/service';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../global/injection-token';
 import { CmsEnviroment } from '../../../../global/interface';
@@ -10,9 +10,13 @@ import { CmsEnviroment } from '../../../../global/interface';
 })
 export class LoginComponent implements OnInit {
 
+  validImageVersion = 0;
+
+  @ViewChild('validImage') validImage: ElementRef;
+
   username = '';
   password = '';
-  validationCode = 1234;
+  validationCode;
 
   constructor(
     private authorizationService: AuthorizationService,
@@ -26,4 +30,7 @@ export class LoginComponent implements OnInit {
     this.authorizationService.login(this.username, this.password, this.validationCode).subscribe();
   }
 
+  refreshValidImageVersion() {
+    this.validImageVersion++;
+  }
 }

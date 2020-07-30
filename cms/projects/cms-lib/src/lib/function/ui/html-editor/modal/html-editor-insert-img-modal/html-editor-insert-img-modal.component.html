@@ -7,7 +7,8 @@
     </div>
     <mat-form-field appearance="outline">
       <mat-label>圖片網址</mat-label>
-      <input matInput [(ngModel)]="src" name="src" required #modelSrc="ngModel" (ngModelChange)="checkImgSize()">
+      <input matInput [(ngModel)]="src" name="src" required #modelSrc="ngModel" (ngModelChange)="checkImgSize()"
+        readonly>
       <mat-error *ngIf="modelSrc.invalid">請輸入連結</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">

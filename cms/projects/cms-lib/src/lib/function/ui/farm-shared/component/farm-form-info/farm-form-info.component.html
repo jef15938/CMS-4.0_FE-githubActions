@@ -71,7 +71,7 @@
               </ng-container>
               <!-- GALLERY -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.GALLERY">
-                <button type="button" mat-button (click)="changeGallery(col)">媒體庫</button>
+                <button type="button" mat-button (click)="changeGallery(col)">媒體庫</button> {{col.setting.file_name}}
               </ng-container>
               <!-- EDITOR -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.EDITOR">

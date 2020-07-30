@@ -14,7 +14,11 @@ import { ContentViewRendererComponent } from './component/content-view-renderer/
 import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactive-guardian.interface';
 import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
 import { ContentTemplateInfo } from '../../../global/api/neuxAPI/bean/ContentTemplateInfo';
-import { FieldType } from '@neux/render';
+import { FieldType, TabTemplateInfo } from '@neux/render';
+
+const isTabTemplateInfo = (templateInfo: ContentTemplateInfo): boolean => {
+  return !!(templateInfo as any).tabList;
+};
 
 @Component({
   selector: 'cms-content-editor',
@@ -117,9 +121,12 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     const contentInfo: ContentInfo = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
     let galleryIds: string[] = [];
 
-    const templates: ContentTemplateInfo[] = contentInfo.languages.reduce((a, b) => a.concat(b.templates || []), []);
+    let templates: ContentTemplateInfo[] = contentInfo.languages.reduce((a, b) => a.concat(b.templates || []), []);
 
+    // 循環檢查 TemplateInfo 內是否用到 gallery 檔案，找出 galleryID
     while (templates.length) {
+      let children: ContentTemplateInfo[] = [];
+
       templates.forEach(template => {
         template.fields.forEach(field => {
           switch (field.fieldType) {
@@ -127,14 +134,33 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
               const htmlString = field.fieldVal || '';
               const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
               const matches = htmlString.match(galleryIdRegex);
-              const ids = matches.map(str => str.replace('gallery-id="', '').replace('"', ''));
+              const ids = matches?.map(str => str.replace('gallery-id="', '').replace('"', '')) || [];
               galleryIds = [...galleryIds, ...ids];
+              break;
+            case FieldType.IMG:
+              const imgGalleryID = field.extension['gallery-id'];
+              if (imgGalleryID) {
+                galleryIds.push(imgGalleryID);
+              }
+              break;
+            case FieldType.BGIMG:
+              const bgimgGalleryID = field.extension['gallery-id'];
+              if (bgimgGalleryID) {
+                galleryIds.push(bgimgGalleryID);
+              }
               break;
           }
         });
+
+        if (isTabTemplateInfo(template)) {
+          children = [
+            ...children,
+            ...(template as TabTemplateInfo).tabList.reduce<ContentTemplateInfo[]>((a, b) => [...a, ...(b.children)], [])
+          ];
+        }
       });
 
-      templates.length = 0;
+      templates = children;
     }
 
     contentInfo.galleries = [...new Set(galleryIds)].sort();

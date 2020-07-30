@@ -28,22 +28,23 @@ export class PageInfoResolverService {
    * @memberof PageInfoResolverService
    */
   resolve(route: ActivatedRouteSnapshot): Observable<PageData> {
+    const context: 'preview' | 'runtime' = route.data.context;
     const pageID = route.params.pageID;
     const lang = route.params.languageID;
 
-    const pageInfo$: Observable<PageInfo> = this.renderService.getPageInfo(pageID, lang).pipe(shareReplay(1));
+    const pageInfo$: Observable<PageInfo> = this.renderService.getPageInfo(context, pageID, lang).pipe(shareReplay(1));
     const sitemap$: Observable<SitemapNode> = pageInfo$.pipe(
-      switchMap((x) => this.storeService.getSitemap(x.nodeRoot, x.lang).pipe(take(1)))
+      switchMap((x) => this.storeService.getSitemap(context, x.nodeRoot, x.lang).pipe(take(1)))
     );
     const contentInfo$: Observable<ContentInfo> = pageInfo$.pipe(
-      switchMap((x) => this.renderService.getContentInfo(x.contentID))
+      switchMap((x) => this.renderService.getContentInfo(context, x.contentID))
     );
 
     return forkJoin({
       pageInfo: pageInfo$,
       sitemap: sitemap$,
       contentInfo: contentInfo$
-    });
+    }) as any;
 
   }
 }

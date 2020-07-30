@@ -88,13 +88,13 @@ export class SitemapNodeDetailComponent implements OnInit {
             contentInfo,
             selectableTemplates,
             editorMode: EditorMode.EDIT,
-          }).subscribe();
+          }).subscribe(_ => this.update.emit(this.nodeInfo));
         });
         break;
       case SiteMapNodeType.FARM:
         // TODO: 開啟網站管理
         const funcID = this.nodeInfo.func_id;
-        this.farmSharedService.openFarm(funcID).subscribe();
+        this.farmSharedService.openFarm(funcID).subscribe(_ => this.update.emit(this.nodeInfo));
         break;
     }
   }
