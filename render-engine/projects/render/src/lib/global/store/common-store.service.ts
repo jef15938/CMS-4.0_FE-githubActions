@@ -24,14 +24,14 @@ export class CommonStoreService {
    * @returns {Observable<SitemapNode>}
    * @memberof CommonStoreService
    */
-  getSitemap(root: string, lang: string): Observable<SitemapNode> {
+  getSitemap(context: 'preview' | 'runtime', root: string, lang: string): Observable<SitemapNode> {
     const sitemap$ = this.sitemapSubject.asObservable().pipe(
       tap((x) => console.log('siteMapSubject:', x)),
       map(x => x[root][lang]),
       distinctUntilChanged()
     );
     if (!this.sitemap[root] || !this.sitemap[root][lang]) {
-      return this.sitemapService.getSitemap(root, lang).pipe(
+      return this.sitemapService.getSitemap(context, root, lang).pipe(
         map(x => convertSitemapNode(x)),
         tap(resp => this.setSitemap(root, lang, resp)),
         switchMap(() => sitemap$)

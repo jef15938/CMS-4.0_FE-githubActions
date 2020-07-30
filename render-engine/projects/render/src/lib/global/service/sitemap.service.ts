@@ -19,10 +19,14 @@ export class SitemapService {
    * @returns {Observable<any>}
    * @memberof SitemapService
    */
-  getSitemap(root: string, lang: string = null): Observable<any> {
+  getSitemap(context: 'preview' | 'runtime', root: string, lang: string = null): Observable<any> {
     if (!!lang) {
-      return this.apiService.dispatchRestApi('GetSiteMapByNodeIdAndLang', { node_id: root, lang });
+      return context === 'preview'
+        ? this.apiService.dispatchRestApi('GetPreviewSiteMapByNodeIdAndLang', { node_id: root, lang })
+        : this.apiService.dispatchRestApi('GetSiteMapByNodeIdAndLang', { node_id: root, lang });
     }
-    return this.apiService.dispatchRestApi('GetSiteMapByNodeId', { node_id: root });
+    return context === 'preview'
+      ? this.apiService.dispatchRestApi('GetPreviewSiteMapByNodeId', { node_id: root })
+      : this.apiService.dispatchRestApi('GetSiteMapByNodeId', { node_id: root });
   }
 }
