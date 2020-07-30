@@ -60,7 +60,6 @@ export class DepartmentService {
       throw new ParamsError('deptID', 'createDepartment', 'string', deptID);
     }
 
-    return of(undefined);
     return this.restAPIService.dispatchRestApi('DeleteDepartmentByDeptID', { deptID });
   }
 
