@@ -73,14 +73,18 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     return of(undefined).pipe(
       concatMap(_ => this.searchInfoFormComponentMap.get(category)?.requestFormInfo() || throwError('No Category in Map.')),
       concatMap(searchFormInfo => { // TODO: 查詢 table 時帶 search 表單
-        return this.farmService.getFarmTableInfoByFuncID(category.category_id, page).pipe(
+        const queryParams: { [key: string]: string } = {};
+        searchFormInfo.columns.forEach(column => {
+          if (column.value) { queryParams[column.column_id] = `${column.value}`; }
+        });
+        return this.farmService.getFarmTableInfoByFuncID(category.category_id, page, queryParams).pipe(
           tap(farmTableInfo => {
             category.tableInfo = farmTableInfo;
           })
         );
       }),
       catchError(err => {
-        console.error('err = ', err);
+        console.error('getCategoryTableInfo() err = ', err);
         return NEVER;
       }),
     );
