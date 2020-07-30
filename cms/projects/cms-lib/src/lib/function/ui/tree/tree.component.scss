@@ -2,17 +2,15 @@
 
 :host {
   display: block;
-  height: 100%;
-  background-color: $color-white;
+  background-color: $color-CIS-white;
 }
 
 .cms-tree {
-  height: 100%;
-  overflow: hidden;
   margin-left: -1em;
 
   &__body {
     margin-top: -20px;
+    background-color: $color-CIS-white;
   }
 
   &__node {
@@ -23,7 +21,7 @@
     &:last-child {
       >.cms-tree__node__head {
         &:before {
-          border-bottom: 1px solid $color-white;
+          border-bottom: 1px solid $color-CIS-white;
           z-index: 99;
           width: 1em;
         }
@@ -64,7 +62,7 @@
         margin-left: 1em;
         height: 100%;
         padding-left: 1em;
-        background-color: $color-white;
+        background-color: $color-CIS-white;
       }
 
       &::ng-deep {

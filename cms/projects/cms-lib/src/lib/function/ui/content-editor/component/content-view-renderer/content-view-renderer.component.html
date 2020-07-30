@@ -1,5 +1,5 @@
 <div class="view-container" [class.mode-info]="editorMode===EditorMode.INFO">
-  <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
+  <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)" animationDuration="0ms">
     <mat-tab *ngFor="let language of contentInfo.languages;let i=index;" [label]="language.language_name">
       <ng-container *ngIf="tabIndex===i">
         <rdr-templates-container [templates]="language.templates" mode="edit" (select)="onSelect($event)"

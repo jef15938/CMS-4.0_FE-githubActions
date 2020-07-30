@@ -1,3 +1,5 @@
+@import '../../../global/style/main';
+
 .current-state {
   background-color: gold;
 }
@@ -76,8 +78,8 @@
       bottom: 0;
       position: absolute;
       overflow: auto;
-      border: 3px solid purple;
-      background-color: white;
+      border: 3px solid $color-purple;
+      background-color: $color-white;
     }
 
   }

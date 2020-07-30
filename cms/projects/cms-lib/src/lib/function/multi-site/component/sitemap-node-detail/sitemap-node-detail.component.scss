@@ -1,0 +1,10 @@
+.site-node-detail {}
+
+.page-title-container {
+  height: 52px;
+}
+
+.page-content-container {
+  height: calc(100% - 52px);
+  overflow: auto;
+}

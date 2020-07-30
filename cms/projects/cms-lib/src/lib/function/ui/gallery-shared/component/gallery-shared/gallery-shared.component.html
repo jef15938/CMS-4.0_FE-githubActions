@@ -1,5 +1,5 @@
-<ng-container *ngIf="colDefs">
-  <div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer>
+<div class="gallery-shared" *ngIf="colDefs">
+  <div class="gallery-shared__block list-block" cmsResizer>
     <div class="page-title-container">
       <h1>
         媒體庫群組
@@ -12,7 +12,7 @@
       </cms-tree>
     </div>
   </div>
-  <div style="width: 70%; height: 100%; float: right; border-right: 1px solid lightgray;">
+  <div class="gallery-shared__block set-block">
     <div class="page-title-container">
       <h1>媒體庫：{{selectedCategory?.category_name}}</h1>
     </div>
@@ -55,4 +55,4 @@
     </div>
     <input type="hidden" [id]="clipBoardInputId">
   </div>
-</ng-container>
+</div>

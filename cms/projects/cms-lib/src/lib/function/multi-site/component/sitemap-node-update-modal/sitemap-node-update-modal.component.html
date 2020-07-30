@@ -56,7 +56,7 @@
       </ng-container>
     </ng-container>
 
-    <mat-tab-group>
+    <mat-tab-group animationDuration="0ms">
       <mat-tab *ngFor="let detail of nodeInfo.details">
         <ng-template mat-tab-label>
           <span *ngIf="detail.is_default" style="color: red; font-weight: bold;">* </span>

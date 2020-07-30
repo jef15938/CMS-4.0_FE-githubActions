@@ -1,11 +1,8 @@
+@import '../../../../../global/style/main';
+
 :host {
   display: block;
   height: 100%;
-}
-
-.page-content-container {
-  height: calc(100% - 52px);
-  overflow: auto;
 }
 
 .filter {
@@ -20,4 +17,23 @@
   .fields {
     width: calc(100% - 40px);
   }
+}
+
+@include site-layout();
+
+.gallery-shared {
+  height: 100%;
+
+  &__block {
+    @include inb-vertical-align();
+  }
+}
+
+.list-block {
+  height: 100%;
+}
+
+
+.set-block {
+  height: 100%;
 }

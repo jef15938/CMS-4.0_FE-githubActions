@@ -1,3 +1,5 @@
+@import '../../../../../global/style/main';
+
 :host {
   display: block;
   width: 100%;
@@ -21,6 +23,6 @@
   &.is-selected,
   &:hover {
     background-color: green;
-    color: white;
+    color: $color-white;
   }
 }

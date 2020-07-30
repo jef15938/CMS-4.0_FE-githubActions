@@ -1,14 +1,14 @@
 <!-- 網站編輯 -->
 <div class="multi-site">
-  <div #SiteBlock [hidden]="editMode===EditModeType.NODE" class="multi-site__block site-block" cmsResizer>
-    <div class="site-block__inner multi-site__block__inner">
+  <div #SiteBlock [hidden]="editMode===EditModeType.NODE" class="multi-site__block list-block" cmsResizer>
+    <div class="list-block__inner multi-site__block__inner">
       <div class="multi-site__block__title page-title-container">
         <h1>網站列表</h1>
         <button type="button" tabindex="0" mat-raised-button (click)="testHtmlEditor()">Html(測試)</button>
       </div>
-      <mat-list class="site-block__list">
+      <mat-list class="list-block__list">
         <ng-container *ngFor="let site of sites">
-          <mat-list-item class="site-block__list__item" [class.site-block__list__item--selected]="selectedSite===site"
+          <mat-list-item class="list-block__list__item" [class.list-block__list__item--selected]="selectedSite===site"
             (click)="selectSite(site)">{{site.site_name}}
           </mat-list-item>
         </ng-container>
@@ -41,16 +41,19 @@
 
 <!-- 節點編輯 -->
 <div [hidden]="editMode===EditModeType.SITE" class="multi-site multi-site_cover">
-  <div class="multi-site__block site-block" cmsResizer [heightBase]="SiteBlock">
-    <div class="site-block__inner multi-site__block__inner">
+  <div class="multi-site__block list-block" cmsResizer [heightBase]="SiteBlock">
+    <div class="list-block__inner multi-site__block__inner">
       <div class="page-title-container multi-site__block__title">
         <h1>{{selectedSite?.site_name}}</h1>
         <button type="button" tabindex="0" mat-raised-button (click)="swichMode(EditModeType.SITE)">返回</button>
       </div>
-      <cms-tree #sitemapTree class="site-block__tree" [context]="this" [nodeDatas]="sitemaps"
-        [nodeDisplayField]="'node_name'" [draggable]="true" [customNodeRenderer]="customNodeRenderer"
-        [defaultExpandLevel]="-1" (customEvent)="onSiteMapTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
-        (afterRender)="afterTreeRender($event)" (dragTo)="onTreeDragTo($event)"></cms-tree>
+      <div class="page-content-container multi-site__block__content">
+        <cms-tree #sitemapTree class="list-block__tree" [context]="this" [nodeDatas]="sitemaps"
+          [nodeDisplayField]="'node_name'" [draggable]="true" [customNodeRenderer]="customNodeRenderer"
+          [defaultExpandLevel]="-1" (customEvent)="onSiteMapTreeCustomEvent($event)"
+          (nodeSelect)="onNodeSelected($event)" (afterRender)="afterTreeRender($event)" (dragTo)="onTreeDragTo($event)">
+        </cms-tree>
+      </div>
     </div>
   </div>
   <div *ngIf="selectedNode" class="multi-site__block set-block">

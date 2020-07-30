@@ -12,7 +12,7 @@
       <button type="button" tabindex="0" mat-button (click)="destroySelf()">回上層</button>
     </div>
     <div>
-      <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
+      <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)" animationDuration="0ms">
         <mat-tab *ngFor="let category of farm.category"
           [label]="(categoryName ? categoryName + ' > ' : '') + category.category_name">
           <ng-template matTabContent>

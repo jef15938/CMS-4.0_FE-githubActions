@@ -9,7 +9,7 @@
 .multi-site {
   height: 100%;
   font-size: 0;
-  background-color: $color-white;
+  background-color: $color-CIS-white;
 
   &_cover {
     position: absolute;
@@ -21,8 +21,7 @@
   }
 
   &__block {
-    display: inline-block;
-    vertical-align: middle;
+    @include inb-vertical-align();
     height: 100%;
     font-size: 14px;
 
@@ -37,18 +36,21 @@
       &::ng-deep {
         .mat-raised-button {
           background-color: $color-CIS;
-          color: $color-white;
+          color: $color-CIS-white;
         }
       }
+    }
+
+    &__content {
+      height: calc(100% - 53px);
     }
   }
 
 }
 
-.site-block {
-  border-right: 1px solid $color-light-gray;
-  width: 30%;
+@include site-layout();
 
+.list-block {
 
   &__list {
     padding-top: 0;
@@ -66,7 +68,6 @@
 }
 
 .set-block {
-  width: 70%;
 
   &__inner {}
 }
@@ -75,6 +76,6 @@
   width: 30%;
   height: 100%;
   float: left;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid $color-light-gray;
 
 }

@@ -1,3 +1,5 @@
+@import '../../../global/style/main';
+
 ::ng-deep .editor-menu {
   mat-form-field {
     .mat-form-field-wrapper {
@@ -186,7 +188,7 @@ $top-height: 72px;
   position: absolute;
   width: 120px;
   background-color: black;
-  color: #fff;
+  color: $color-white;
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;

@@ -1,8 +1,12 @@
 @import 'global/style/main';
 
-
+:host {
+  overflow: auto;
+}
 
 .header {
+  min-width: 1240px;
+
   mat-toolbar {
     height: 40px;
     min-height: 40px;
@@ -10,7 +14,7 @@
     mat-toolbar-row {
       height: 40px;
       color: black;
-      background-color: white;
+      background-color: $color-white;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
       z-index: 99;
       position: relative;
@@ -50,6 +54,7 @@
 }
 
 .content {
+  min-width: 1240px;
   height: calc(100% - 40px);
   overflow: auto;
 }
