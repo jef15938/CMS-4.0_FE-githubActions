@@ -1,19 +1,23 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, Inject } from '@angular/core';
 import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { CMS_ENVIROMENT_TOKEN } from '../../../../global/injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../../global/interface';
 
 @Pipe({
   name: 'gelleryImgSrc'
 })
 export class GelleryImgSrcPipe implements PipeTransform {
 
-  constructor() { }
+  constructor(
+    @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
+  ) { }
 
   transform(data: GalleryInfo, args?: any): string {
     if (data) {
       const isImg = this.isImg(data);
       const path =
         isImg
-          ? `${data.url}`
+          ? `${this.environment.apiBaseUrl}/${data.url}`
           : `${this.getLocalUrl()}/assets/img/icon/${data.file_type.toLowerCase()}.png`;
       return path;
     } else {
