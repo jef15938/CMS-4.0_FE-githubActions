@@ -25,6 +25,6 @@ export class CropperService {
       component: CropperComponent,
       componentInitData: { imgUrl, title },
       modalSetting
-    });
+    }, true);
   }
 }
