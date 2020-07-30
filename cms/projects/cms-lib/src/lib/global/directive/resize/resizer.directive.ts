@@ -58,7 +58,6 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
         const curWidthPercentAfter = 100 * (params.curColWidth + (diffX)) / containerWidth;
         const notExceedCondition1 = curWidthPercentAfter > limit;
         const notExceedCondition2 = curWidthPercentAfter < 100 - limit;
-        console.log(curWidthPercentAfter);
         const notExceed = notExceedCondition1 && notExceedCondition2;
         if (params.nxtCol && params.nxtColWidth && notExceed) {
           const nextColWidth = Math.round(100 * (params.nxtColWidth - diffX) / containerWidth);
