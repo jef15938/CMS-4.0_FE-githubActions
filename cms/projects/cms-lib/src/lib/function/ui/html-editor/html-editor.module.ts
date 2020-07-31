@@ -19,6 +19,7 @@ import { EditorToolbarComponent } from './components/editor-toolbar/editor-toolb
 import { HtmlEditorInsertTableModalComponent } from './modal/html-editor-insert-table-modal/html-editor-insert-table-modal.component';
 import { HtmlEditorInsertVideoModalComponent } from './modal/html-editor-insert-video-modal/html-editor-insert-video-modal.component';
 import { HtmlEditorInsertFileModalComponent } from './modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
+import { HtmlEditorDescriptionComponent } from './modal/html-editor-description/html-editor-description.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { HtmlEditorInsertFileModalComponent } from './modal/html-editor-insert-f
     HtmlEditorInsertTableModalComponent,
     HtmlEditorInsertVideoModalComponent,
     HtmlEditorInsertFileModalComponent,
+    HtmlEditorDescriptionComponent,
   ],
   exports: [
     // HtmlEditorComponent
