@@ -6,8 +6,8 @@
   <mat-form-field appearance="outline">
     <mat-label>資料來源</mat-label>
     <mat-select [(ngModel)]="templateInfo.source" (selectionChange)="change.emit()">
-      <mat-option *ngFor="let source of souces" [value]="source.value">
-        {{source.display}}
+      <mat-option *ngFor="let source of souces" [value]="source.id">
+        {{source.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>

@@ -32,7 +32,7 @@
         right: 1.5em;
 
         &:after {
-          color: transparentize($color: $color-white, $amount: 0.5);
+          color: transparentize($color: $color-CIS-white, $amount: 0.5);
         }
       }
     }
@@ -41,7 +41,7 @@
 
 .item {
 
-  color: $color-white;
+  color: $color-CIS-white;
 
   &__link {
     text-decoration: none;
@@ -75,7 +75,7 @@
           width: 5px;
           height: 5px;
           border-radius: 50%;
-          background-color: $color-white;
+          background-color: $color-CIS-white;
           top: 50%;
           margin-right: 1em;
           position: absolute;

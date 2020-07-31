@@ -2,8 +2,7 @@ import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertFileModalComponent } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
-
-const CLASS_NAME_GALLERY_FILE = 'gallery-file';
+import { CLASS_NAME_GALLERY_FILE, ATTRIBUTE_GALLERY_ID } from '../../const/html-editor-container.const';
 
 export class ModifyFile extends HtmlEditorActionBase {
 
@@ -12,17 +11,24 @@ export class ModifyFile extends HtmlEditorActionBase {
     if (!range) { return of(undefined); }
 
     const existingFileLink = this.getExistingFileLink(range);
+    const galleryID = +existingFileLink.getAttribute(ATTRIBUTE_GALLERY_ID);
 
     return this.context.modalService.openComponent({
       component: HtmlEditorInsertFileModalComponent,
-      componentInitData: { fileLink: existingFileLink }
+      componentInitData: {
+        fileLink: existingFileLink,
+        galleryID
+      }
     }).pipe(
       tap(_ => this.context.simpleWysiwygService.restoreSelection(range)),
-      tap((configATag: HTMLAnchorElement) => {
+      tap((configATag: { href: string; text: string; galleyID: number; }) => {
         if (!configATag) { return; }
         existingFileLink.href = configATag.href;
         existingFileLink.text = configATag.text;
         existingFileLink.target = '_blank';
+        if (configATag.galleyID) {
+          existingFileLink.setAttribute(ATTRIBUTE_GALLERY_ID, `${configATag.galleyID}`);
+        }
       }),
     );
 

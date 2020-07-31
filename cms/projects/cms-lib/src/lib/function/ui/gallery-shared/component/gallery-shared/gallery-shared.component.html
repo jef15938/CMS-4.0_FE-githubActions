@@ -1,5 +1,5 @@
-<ng-container *ngIf="colDefs">
-  <div style="width: 30%; height: 100%; float: left; border-right: 1px solid lightgray;" cmsResizer>
+<div class="gallery-shared" *ngIf="colDefs">
+  <div class="gallery-shared__block list-block" cmsResizer>
     <div class="page-title-container">
       <h1>
         媒體庫群組
@@ -12,25 +12,29 @@
       </cms-tree>
     </div>
   </div>
-  <div style="width: 70%; height: 100%; float: right; border-right: 1px solid lightgray;">
+  <div class="gallery-shared__block set-block">
     <div class="page-title-container">
       <h1>媒體庫：{{selectedCategory?.category_name}}</h1>
     </div>
     <div class="page-content-container">
 
       <div class="filter">
-        <div class="fields">
-          <mat-form-field appearance="outline" style="width: 50%">
+        <div class="filter__fields">
+          <mat-form-field appearance="outline" class="filter__field">
             <mat-label>檔案名稱</mat-label>
             <input matInput [(ngModel)]="filter.fileName" name="fileName">
           </mat-form-field>
-          <mat-form-field appearance="outline" style="width: 50%">
+          <mat-form-field appearance="outline" class="filter__field">
             <mat-label>檔案類型</mat-label>
-            <input matInput [(ngModel)]="filter.fileType" name="fileType">
+            <mat-select [(ngModel)]="filter.fileType" name="fileType">
+              <mat-option *ngFor="let option of filterFileTypeOptions" [value]="option.value">
+                {{option.display}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
 
-        <button class="search-btn" type="button" mat-icon-button (click)="getGallery(true).subscribe()">
+        <button class="filter__search-btn" type="button" mat-icon-button (click)="getGallery(true).subscribe()">
           <mat-icon>search</mat-icon>
         </button>
       </div>
@@ -51,4 +55,4 @@
     </div>
     <input type="hidden" [id]="clipBoardInputId">
   </div>
-</ng-container>
+</div>

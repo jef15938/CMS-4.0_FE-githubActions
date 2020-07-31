@@ -14,10 +14,12 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
   actions: CustomModalActionButton[];
 
   @Input() fileLink: HTMLAnchorElement;
+  @Input() galleryID: number = null;
 
   aTagConfig: {
     href: string;
     text: string;
+    galleyID: number;
   };
 
   fileType = '';
@@ -32,8 +34,9 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
 
   ngOnInit(): void {
     this.aTagConfig = {
-      href: this.fileLink?.href || '',
+      href: this.fileLink?.getAttribute('href') || '',
       text: this.fileLink?.innerText || '',
+      galleyID: this.galleryID || null,
     };
 
     const splitTexts = this.aTagConfig?.text?.split('.');
@@ -50,10 +53,11 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
   }
 
   changeGallery() {
-    this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openGallery(['pdf', 'doc', 'docx', 'xls', 'xlsx']).subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         this.aTagConfig.href = selectedGallery.url;
         this.aTagConfig.text = selectedGallery.file_name;
+        this.aTagConfig.galleyID = selectedGallery.gallery_id;
         this.fileType = selectedGallery.file_type;
       }
     });

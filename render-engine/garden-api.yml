@@ -376,6 +376,39 @@ paths:
         in: path
         required: true
         description: 內容代碼
+  "/DataSource/{typeID}/{id}":
+    parameters:
+      - schema:
+          type: string
+        name: typeID
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: ListDataSourceData
+      tags:
+        - Garden
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListDataSourceDataResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "./cms-apis.v1.yaml#/components/schemas/ErrorInfo"
+        "500":
+          description: Internal Server Error
+      operationId: get-typeID-data-id
+      description: 依照不同資料來源取得實際Raw Data
 components:
   schemas:
     PageInfoGetResponse:
@@ -445,11 +478,9 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ContentTemplateInfo"
-        galleries:
-          type: array
-          description: 使用的媒體庫檔案ID
-          items:
-            type: string
+      required:
+        - language_id
+        - language_name
     ContentInfo:
       title: ContentInfo
       type: object
@@ -565,3 +596,13 @@ components:
         - node_id
         - node_name
         - content_id
+    ListDataSourceDataResponse:
+      title: ListDataSourceDataResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            type: string

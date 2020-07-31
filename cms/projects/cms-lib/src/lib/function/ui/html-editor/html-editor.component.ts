@@ -7,6 +7,8 @@ import { HtmlEditorContext, HtmlEditorContextMenuItem } from './html-editor.inte
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
+import { ATTRIBUTE_FRAME_ID } from './const/html-editor-container.const';
+import { YoutubeUtil } from './service/youtube-util';
 
 @Component({
   selector: 'cms-html-editor',
@@ -14,6 +16,8 @@ import { HtmlEditorAction } from './actions/action.interface';
   styleUrls: ['./html-editor.component.scss'],
 })
 export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterViewInit, OnDestroy {
+
+  private readonly defaultContent = '<p>請輸入內容</p>';
 
   @Input() content = '';
 
@@ -60,23 +64,28 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   private initContentAndContainer(content: string, container: HTMLDivElement) {
-    content = content
-      || [
-        '<p>',
-        '請輸入',
-        '<a href="https://www.google.com.tw" target="_blank" rel="noreferrer noopener">',
-        '<span><strong>google</strong></span>谷歌</a>',
-        '  123  ',
-        '<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="400" height="210">',
-        '  456  ',
-        '[a]1234567890[b]1234567890[c]1234567890[d]1234567890[e]1234567890[f]1234567890',
-        '<img src="https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230" alt="" width="400" height="210">',
-        '  789  ',
-        '</p>'
-      ].join('');
-
+    content = this.convertToEditorContent(content);
     this.editorContainer.innerHTML = content;
     this.checkInnerHtml();
+  }
+
+  private convertToEditorContent(htmlString: string) {
+    htmlString = htmlString || '';
+    const div = document.createElement('div');
+    div.innerHTML = htmlString;
+    const iframes = Array.from(div.querySelectorAll('iframe'));
+    iframes.forEach(iframe => {
+      const parent = iframe.parentElement;
+      const videoUrl = iframe.src;
+      const img = document.createElement('img');
+      img.setAttribute(ATTRIBUTE_FRAME_ID, videoUrl);
+      img.src = YoutubeUtil.convertVideoUrlToImageUrl(videoUrl);
+      img.style.width = '100%';
+      img.style.height = 'auto';
+      parent.insertBefore(img, iframe);
+      parent.removeChild(iframe);
+    });
+    return div.innerHTML;
   }
 
   checkInnerHtml(): void {
@@ -110,15 +119,17 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
           const parent = sel.anchorNode;
           const children = Array.from(parent.childNodes);
           const target = children[sel.anchorOffset] as HTMLElement;
-          const special =
-            this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
-            || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
-            || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
-            || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'a')
-            ;
-          if (special) {
-            this.commonAncestorContainer = special;
-            return;
+          if (target) {
+            const special =
+              this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
+              || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
+              || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
+              || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'a')
+              ;
+            if (special) {
+              this.commonAncestorContainer = special;
+              return;
+            }
           }
         }
         // console.warn('document:selectionchange,  range = ', range);
@@ -172,6 +183,9 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         }, []);
       }
 
+      if (!editorContainer.innerHTML) {
+        editorContainer.innerHTML = this.defaultContent;
+      }
     });
 
     mutationObserver.observe(editorContainer, {
@@ -256,8 +270,8 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       nodes.forEach(node => {
         node.classList?.remove('selected');
         node.style?.removeProperty('outline');
-        if (node.tagName?.toLowerCase() === 'img' && node.getAttribute('frameId')) {
-          const frameId = node.getAttribute('frameId');
+        if (node.tagName?.toLowerCase() === 'img' && node.getAttribute(ATTRIBUTE_FRAME_ID)) {
+          const frameId = node.getAttribute(ATTRIBUTE_FRAME_ID);
           const iframe = document.createElement('iframe');
           iframe.src = frameId;
           iframe.setAttribute('style', 'width: 100%; height: 100%;');
@@ -269,6 +283,12 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         return a.concat(Array.from(b.childNodes || []));
       }, []);
     }
-    return container.innerHTML;
+
+    let htmlString = container.innerHTML || '';
+
+    const regDivStart = new RegExp(/<div/, 'g');
+    const regDivEnd = new RegExp(/<\/div>/, 'g');
+    htmlString = htmlString.replace(regDivStart, '<p').replace(regDivEnd, '</p>');
+    return htmlString;
   }
 }

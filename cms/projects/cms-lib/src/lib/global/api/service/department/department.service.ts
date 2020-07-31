@@ -32,15 +32,19 @@ export class DepartmentService {
       throw new ParamsError('deptName', 'createDepartment', 'string', deptName);
     }
 
-    const params: { [k: string]: any } = {
-      deptID,
-      dept_name: deptName
+    const requestBody: { [k: string]: any } = {
+      dept_name: deptName,
     };
+
     if (parentID) {
-      params.parent_id = parentID;
+      requestBody.parent_id = parentID;
     }
 
-    return of(undefined);
+    const params: { [k: string]: any } = {
+      deptID,
+      requestBody,
+    };
+
     return this.restAPIService.dispatchRestApi('PostDepartmentByDeptID', params);
   }
 
@@ -56,7 +60,6 @@ export class DepartmentService {
       throw new ParamsError('deptID', 'createDepartment', 'string', deptID);
     }
 
-    return of(undefined);
     return this.restAPIService.dispatchRestApi('DeleteDepartmentByDeptID', { deptID });
   }
 
@@ -116,15 +119,19 @@ export class DepartmentService {
       throw new ParamsError('deptName', 'updateDepartment', 'string', deptName);
     }
 
-    const params: { [k: string]: any } = {
-      deptID,
-      dept_name: deptName
+    const requestBody: { [k: string]: any } = {
+      dept_name: deptName,
     };
+
     if (parentID) {
-      params.parent_id = parentID;
+      requestBody.parent_id = parentID;
     }
 
-    return of(undefined);
+    const params: { [k: string]: any } = {
+      deptID,
+      requestBody,
+    };
+
     return this.restAPIService.dispatchRestApi('PutDepartmentByDeptID', params);
   }
 }

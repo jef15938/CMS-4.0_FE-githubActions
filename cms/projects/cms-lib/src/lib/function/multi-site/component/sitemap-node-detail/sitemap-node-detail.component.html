@@ -1,4 +1,4 @@
-<ng-container *ngIf="nodeInfo">
+<div class="sitemap-node-detail" *ngIf="nodeInfo">
   <!-- debug 用 -->
   <!-- <div
     style="padding-left: 10px; font-size:12px; height:24px; line-height:24px; vertical-align: middle; border-bottom: 1px solid lightgray;">
@@ -7,11 +7,11 @@
     ParentId={{parentID}}
   </div> -->
 
-  <div class="page-content-container" style="border-bottom: 1px solid lightgray; height: 52px;">
+  <div class="page-title-container">
     <div class="btn-group">
-      <button type="button" tabindex="0" mat-button [disabled]="!nodeInfo.canModify"
+      <button type="button" tabindex="0" mat-raised-button [disabled]="!nodeInfo.canModify"
         (click)="editSitemapNode()">編輯節點</button>
-      <button type="button" tabindex="0" mat-button
+      <button type="button" tabindex="0" mat-raised-button
         *ngIf="nodeInfo.node_type===SiteMapNodeType.CONTENT || nodeInfo.node_type===SiteMapNodeType.FARM"
         [disabled]="!nodeInfo.canModify" [ngSwitch]="nodeInfo.node_type" (click)="editContent()">
         <ng-container *ngSwitchCase="SiteMapNodeType.CONTENT">
@@ -24,123 +24,128 @@
           頁面編輯
         </ng-container>
       </button>
-      <button type="button" tabindex="0" mat-button *ngIf="nodeInfo.node_type===SiteMapNodeType.CONTENT"
+      <button type="button" tabindex="0" mat-raised-button *ngIf="nodeInfo.node_type===SiteMapNodeType.CONTENT"
         [disabled]="!nodeInfo.canSubmit" (click)="auditingSiteMap()">頁面送審</button>
     </div>
   </div>
+  <div class="page-content-container">
 
-  <ng-container *ngIf="nodeInfo.publish_info; let publishInfo">
-    <div *ngIf="publishInfo.draft || publishInfo.pending_published || publishInfo.published"
-      class="page-content-container" style="color: gray; border-bottom: 1px solid lightgray;">
-      <div *ngIf="nodeInfo.publish_info.draft; let obj">
-        後台草稿上下架：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
+    <ng-container *ngIf="nodeInfo.publish_info; let publishInfo">
+      <div *ngIf="publishInfo.draft || publishInfo.pending_published || publishInfo.published" class="info">
+        <div *ngIf="nodeInfo.publish_info.draft; let obj"
+          class="info__item info__item--small-texted  info__item--alpha info__item--align-right">
+          後台草稿上下架：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
+        </div>
+        <div *ngIf="nodeInfo.publish_info.pending_published; let obj"
+          class="info__item info__item--small-texted  info__item--alpha info__item--align-right">
+          等待發布：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
+        </div>
+        <div *ngIf="nodeInfo.publish_info.published; let obj"
+          class="info__item info__item--small-texted  info__item--alpha info__item--align-right">
+          線上上下架：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
+        </div>
       </div>
-      <div *ngIf="nodeInfo.publish_info.pending_published; let obj">
-        等待發布：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
-      </div>
-      <div *ngIf="nodeInfo.publish_info.published; let obj">
-        線上上下架：{{ obj.start_time | dateStringFormat:'DATETIME' }} / {{ obj.end_time | dateStringFormat:'DATETIME' }}
-      </div>
-    </div>
-  </ng-container>
+    </ng-container>
 
-  <form #form="ngForm" style="margin-top: 10px;">
-    <div class="page-content-container" style="border-bottom: 1px solid lightgray;">
-      <mat-form-field appearance="outline" *ngIf="nodeInfo">
-        <mat-label>節點類型</mat-label>
-        <mat-select [(ngModel)]="nodeInfo.node_type" name="node_type" disabled>
-          <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
-            {{option.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <ng-container [ngSwitch]="nodeInfo.node_type">
-        <!-- URL -->
-        <ng-container *ngSwitchCase="SiteMapNodeType.URL">
-          <mat-form-field appearance="outline">
-            <mat-label>連結類型</mat-label>
-            <mat-select [(ngModel)]="nodeInfo.url_type" name="url_type" disabled>
-              <mat-option *ngFor="let option of urlTypeOptions" [value]="option.value">
-                {{option.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <ng-container [ngSwitch]="nodeInfo.url_type">
-            <!-- 站內 -->
-            <ng-container *ngSwitchCase="SiteMapUrlType.INSIDE">
-              <mat-form-field appearance="outline">
-                <mat-label>站內節點ID</mat-label>
-                <input matInput [value]="nodeInfo.url_link_node_id" name="url_link_node_id" readonly>
-              </mat-form-field>
-            </ng-container>
-            <!-- 站外 -->
-            <ng-container *ngSwitchCase="SiteMapUrlType.OUTSIDE">
-              <mat-form-field appearance="outline">
-                <mat-label>站外網址</mat-label>
-                <input matInput [value]="nodeInfo.url" name="url" readonly>
-              </mat-form-field>
-            </ng-container>
-            <!-- 共通 -->
+    <form #form="ngForm" class="form">
+      <div class="form__top">
+        <mat-form-field appearance="outline" *ngIf="nodeInfo">
+          <mat-label>節點類型</mat-label>
+          <mat-select [(ngModel)]="nodeInfo.node_type" name="node_type" disabled>
+            <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
+              {{option.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <ng-container [ngSwitch]="nodeInfo.node_type">
+          <!-- URL -->
+          <ng-container *ngSwitchCase="SiteMapNodeType.URL">
             <mat-form-field appearance="outline">
-              <mat-label>另開視窗</mat-label>
-              <mat-select [(ngModel)]="nodeInfo.url_blank" name="url_blank" disabled>
-                <mat-option *ngFor="let option of urlBlankTypeOptions" [value]="option.value">
+              <mat-label>連結類型</mat-label>
+              <mat-select [(ngModel)]="nodeInfo.url_type" name="url_type" disabled>
+                <mat-option *ngFor="let option of urlTypeOptions" [value]="option.value">
                   {{option.name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <ng-container [ngSwitch]="nodeInfo.url_type">
+              <!-- 站內 -->
+              <ng-container *ngSwitchCase="SiteMapUrlType.INSIDE">
+                <mat-form-field appearance="outline">
+                  <mat-label>站內節點ID</mat-label>
+                  <input matInput [value]="nodeInfo.url_link_node_id" name="url_link_node_id" readonly>
+                </mat-form-field>
+              </ng-container>
+              <!-- 站外 -->
+              <ng-container *ngSwitchCase="SiteMapUrlType.OUTSIDE">
+                <mat-form-field appearance="outline">
+                  <mat-label>站外網址</mat-label>
+                  <input matInput [value]="nodeInfo.url" name="url" readonly>
+                </mat-form-field>
+              </ng-container>
+              <!-- 共通 -->
+              <mat-form-field appearance="outline">
+                <mat-label>另開視窗</mat-label>
+                <mat-select [(ngModel)]="nodeInfo.url_blank" name="url_blank" disabled>
+                  <mat-option *ngFor="let option of urlBlankTypeOptions" [value]="option.value">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+          </ng-container>
+
+          <!-- CONTENT -->
+          <ng-container *ngSwitchCase="SiteMapNodeType.CONTENT">
+            <mat-form-field appearance="outline">
+              <mat-label>節點連結路徑</mat-label>
+              <input matInput [value]="nodeInfo.content_path" name="content_path" readonly>
+            </mat-form-field>
           </ng-container>
         </ng-container>
+      </div>
 
-        <!-- CONTENT -->
-        <ng-container *ngSwitchCase="SiteMapNodeType.CONTENT">
-          <mat-form-field appearance="outline">
-            <mat-label>節點連結路徑</mat-label>
-            <input matInput [value]="nodeInfo.content_path" name="content_path" readonly>
-          </mat-form-field>
-        </ng-container>
-      </ng-container>
-    </div>
-
-    <mat-tab-group>
-      <mat-tab *ngFor="let detail of nodeInfo.details">
-        <ng-template mat-tab-label>
-          <span *ngIf="detail.is_default" style="color: red; font-weight: bold;">* </span>
-          {{detail.language_name}}
-        </ng-template>
-        <ng-template matTabContent>
-          <div class="page-content-container">
-            <div>
-              <button type="button" tabindex="0" mat-button style="float: right;"
-                *ngIf="nodeInfo.node_type===SiteMapNodeType.CONTENT" [disabled]="!nodeInfo.canPreview"
-                [ngSwitch]="nodeInfo.node_type" (click)="preview(detail.language_id)">
-                預覽
-              </button>
-            </div>
-            <mat-form-field appearance="outline">
-              <mat-label>節點名稱</mat-label>
-              <input matInput [value]="detail.node_name" name="node_name" readonly>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Meta標題</mat-label>
-              <input matInput [value]="detail.meta_title" name="meta_title" readonly>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Meta描述</mat-label>
-              <input matInput [value]="detail.meta_description" name="meta_description" readonly>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Meta關鍵字</mat-label>
-              <input matInput [value]="detail.meta_keyword" name="meta_keyword" readonly>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Meta圖片</mat-label>
-              <input matInput [value]="detail.meta_image" name="meta_image" readonly>
-            </mat-form-field>
-          </div>
-        </ng-template>
-      </mat-tab>
-    </mat-tab-group>
-
-  </form>
-</ng-container>
+      <div class="form__bot">
+        <mat-tab-group animationDuration="0ms">
+          <mat-tab *ngFor="let detail of nodeInfo.details">
+            <ng-template mat-tab-label>
+              <span *ngIf="detail.is_default" style="color: red; font-weight: bold;">* </span>
+              {{detail.language_name}}
+            </ng-template>
+            <ng-template matTabContent>
+              <div class="tab-content">
+                <div class="tab-content__btn-row tab-content__btn-row--align-right">
+                  <button type="button" tabindex="0" mat-raised-button
+                    *ngIf="nodeInfo.node_type===SiteMapNodeType.CONTENT" [disabled]="!nodeInfo.canPreview"
+                    [ngSwitch]="nodeInfo.node_type" (click)="preview(detail.language_id)">
+                    預覽
+                  </button>
+                </div>
+                <mat-form-field appearance="outline">
+                  <mat-label>節點名稱</mat-label>
+                  <input matInput [value]="detail.node_name" name="node_name" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Meta標題</mat-label>
+                  <input matInput [value]="detail.meta_title" name="meta_title" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Meta描述</mat-label>
+                  <input matInput [value]="detail.meta_description" name="meta_description" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Meta關鍵字</mat-label>
+                  <input matInput [value]="detail.meta_keyword" name="meta_keyword" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Meta圖片</mat-label>
+                  <input matInput [value]="detail.meta_image" name="meta_image" readonly>
+                </mat-form-field>
+              </div>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </form>
+  </div>
+</div>

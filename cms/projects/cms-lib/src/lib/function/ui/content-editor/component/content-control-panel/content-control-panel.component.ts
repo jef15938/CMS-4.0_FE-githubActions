@@ -115,7 +115,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
         const templateInfos = language.templates;
         templateInfos[index] = templateInfos[index - 1];
         templateInfos[index - 1] = selectedTemplateInfo;
-      })
+      });
     }
 
     if (down) { // 資料與後一個交換位置
@@ -123,7 +123,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
         const templateInfos = language.templates;
         templateInfos[index] = templateInfos[index + 1];
         templateInfos[index + 1] = selectedTemplateInfo;
-      })
+      });
     }
 
     this.hasChange = true;
@@ -149,7 +149,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       contentInfo.languages.forEach(language => {
         const templateInfos = language.templates;
         templateInfos.splice(index, 1);
-      })
+      });
 
       this.hasChange = true;
       this.needCheckView.emit({ select: next });

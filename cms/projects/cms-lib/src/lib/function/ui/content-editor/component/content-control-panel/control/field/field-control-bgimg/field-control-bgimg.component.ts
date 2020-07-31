@@ -3,6 +3,7 @@ import { ContentControlBase } from '../../_base';
 import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective, FieldInfo } from '@neux/render';
 import { GallerySharedService } from '../../../../../../gallery-shared/service/gallery-shared.service';
 import { GalleryInfo } from '../../../../../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
 
 @Component({
   selector: 'cms-field-control-bgimg',
@@ -38,9 +39,10 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
   }
 
   changeGallery() {
-    this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openGallery(['png', 'jpg', 'jpeg', 'gif']).subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         this.fieldInfo.fieldVal = selectedGallery.url;
+        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${selectedGallery.gallery_id}`;
         this.change.emit();
       }
     });

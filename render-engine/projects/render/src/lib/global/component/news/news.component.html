@@ -3,15 +3,6 @@
     *ngIf="mode==='edit'">
     資料呈現區域
   </div>
-  <!-- <div style="background-color: lightgrey; overflow-y: auto;" *ngIf="mode==='preview'">
-    <table style="width: 100%; vertical-align: middle;">
-      <tr *ngFor="let data of sourceData">
-        <td>{{data.date}}</td>
-        <td>{{data.title}}</td>
-        <td>{{data.url}}</td>
-      </tr>
-    </table>
-  </div> -->
   <div class="transglobe-source-news-002" *ngIf="mode==='preview'">
     <div class="api-template garden-news-type2">
       <div class="page-block">
@@ -33,19 +24,19 @@
                 <div class="monnth">
                   <p ga-edit-maxlength="3" ga-edit-maxlength-pad="3" ga-edit-maxlength-mobile="3" ga-edit="text"
                     gaid="ga-1">
-                    {{month[data.date.substr(4,2)]}}
+                    {{month[data.createTime.substr(5,2)]}}
                   </p>
                 </div>
                 <div class="yeaar">
                   <p ga-edit-maxlength="4" ga-edit-maxlength-pad="4" ga-edit-maxlength-mobile="4" ga-edit="text"
                     gaid="ga-2">
-                    {{data.date.substr(0,4)}}
+                    {{data.createTime.substr(0,4)}}
                   </p>
                 </div>
               </div>
               <div class="txt">
                 <p ga-edit-maxlength="2" ga-edit-maxlength-pad="2" ga-edit-maxlength-mobile="2">
-                  {{data.date.substr(6,2)}}
+                  {{data.createTime.substr(8,2)}}
                 </p>
               </div>
             </div>

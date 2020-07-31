@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HtmlEditorContext } from '../../html-editor.interface';
 import { HtmlEditorActions } from '../../actions/actions';
 import { HtmlEditorAction } from '../../actions/action.interface';
+import { ModalService } from '../../../modal';
+import { HtmlEditorDescriptionComponent } from '../../modal/html-editor-description/html-editor-description.component';
 
 @Component({
   selector: 'cms-editor-toolbar',
@@ -14,7 +16,9 @@ export class EditorToolbarComponent implements OnInit {
 
   htmlEditorActions: HtmlEditorActions;
 
-  constructor() { }
+  constructor(
+    private modalService: ModalService,
+  ) { }
 
   ngOnInit(): void {
     this.htmlEditorActions = new HtmlEditorActions(this.context);
@@ -22,6 +26,10 @@ export class EditorToolbarComponent implements OnInit {
 
   doAction(action: HtmlEditorAction) {
     this.context.doAction(action);
+  }
+
+  openDescription() {
+    this.modalService.openComponent({ component: HtmlEditorDescriptionComponent }).subscribe();
   }
 
 }

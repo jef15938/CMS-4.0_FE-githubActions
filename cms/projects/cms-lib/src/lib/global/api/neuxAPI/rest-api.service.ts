@@ -52,6 +52,7 @@ import { GetLayoutAPI } from './api/GetLayoutAPI';
 import { GetFarmTakeOffByFuncIDAPI } from './api/GetFarmTakeOffByFuncIDAPI';
 import { GetSitemapPreviewByNodeIDAPI } from './api/GetSitemapPreviewByNodeIDAPI';
 import { GetAuditingPreviewByOrderIDAPI } from './api/GetAuditingPreviewByOrderIDAPI';
+import { GetContentDataSourceByTypeIDAPI } from './api/GetContentDataSourceByTypeIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GenerationHeader } from './bean/GenerationHeader';
@@ -75,6 +76,7 @@ import { GroupMenuGetResponse } from './bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
 import { LayoutGetResponse } from './bean/LayoutGetResponse';
+import { ListContentDataSourceResponse } from './bean/ListContentDataSourceResponse';
 
 
 const APIResponseMap= {
@@ -125,6 +127,7 @@ GetLayout: LayoutGetResponse,
 GetFarmTakeOffByFuncID: GenerationHeader,
 GetSitemapPreviewByNodeID: PreviewInfo,
 GetAuditingPreviewByOrderID: PreviewInfo,
+GetContentDataSourceByTypeID: ListContentDataSourceResponse,
 
 }
 
@@ -189,6 +192,7 @@ this.apiFactory.registerApi(new GetLayoutAPI());
 this.apiFactory.registerApi(new GetFarmTakeOffByFuncIDAPI());
 this.apiFactory.registerApi(new GetSitemapPreviewByNodeIDAPI());
 this.apiFactory.registerApi(new GetAuditingPreviewByOrderIDAPI());
+this.apiFactory.registerApi(new GetContentDataSourceByTypeIDAPI());
 
     }
 

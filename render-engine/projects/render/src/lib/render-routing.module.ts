@@ -5,32 +5,36 @@ import { PageInfoResolverService } from './global/service/page-info-resolver.ser
 
 const routes: Routes = [
   {
-    path: ':pageID', component: RenderComponent, // runtime
-    resolve: {
-      data: PageInfoResolverService
-    }
-  },
-  {
-    path: ':pageID/:languageID', component: RenderComponent, // runtime
-    resolve: {
-      data: PageInfoResolverService
-    }
-  },
-  {
-    path: 'preview/:pageID', component: RenderComponent, // preview
+    path: 'preview/:pageID', component: RenderComponent, // preview，放前面才不會被當作是 :pageID/:languageID
+    data: { context: 'preview' },
     resolve: {
       data: PageInfoResolverService
     }
   },
   {
     path: 'preview/:pageID/:languageID', component: RenderComponent, // preview
+    data: { context: 'preview' },
+    resolve: {
+      data: PageInfoResolverService
+    }
+  },
+  {
+    path: ':pageID', component: RenderComponent, // runtime
+    data: { context: 'runtime' },
+    resolve: {
+      data: PageInfoResolverService
+    }
+  },
+  {
+    path: ':pageID/:languageID', component: RenderComponent, // runtime
+    data: { context: 'runtime' },
     resolve: {
       data: PageInfoResolverService
     }
   },
   {
     path: '**',
-    redirectTo: 'need-to-change-to-home-router-when-finishing-developing'
+    redirectTo: 'error'
   }
 ];
 

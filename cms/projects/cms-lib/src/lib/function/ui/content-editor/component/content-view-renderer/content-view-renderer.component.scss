@@ -1,3 +1,5 @@
+@import '../../../../../global/style/main';
+
 .view-container {
   &.mode-info {
     padding: 30px;
@@ -15,7 +17,7 @@
     left: -1px;
     background-color: #71d306 !important;
     border: 1px solid #71d306 !important;
-    color: white !important;
+    color: $color-white !important;
     height: 24px;
     line-height: 24px;
     vertical-align: middle;
@@ -34,7 +36,7 @@
     left: -1px;
     background-color: red !important;
     border: 1px solid red !important;
-    color: white !important;
+    color: $color-white !important;
     height: 24px;
     line-height: 24px;
     vertical-align: middle;
@@ -51,17 +53,18 @@
 }
 
 .add-template-btn {
-  > button {
+  >button {
     background-color: lightgreen;
     color: black;
-    width: 100%; 
+    width: 100%;
     text-align: center;
   }
-  
-  &:hover, &.active {
-    > button {
+
+  &:hover,
+  &.active {
+    >button {
       background-color: darkgreen;
-      color: white;
+      color: $color-white;
     }
   }
 }

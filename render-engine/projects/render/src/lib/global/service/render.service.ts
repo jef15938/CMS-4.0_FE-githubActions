@@ -27,15 +27,23 @@ export class RenderService {
    * @returns {Observable<PageInfo>}
    * @memberof RenderService
    */
-  getPageInfo(pageID: string, lang: string = null): Observable<PageInfo> {
+  getPageInfo(context: 'preview' | 'runtime', pageID: string, lang: string = null): Observable<PageInfo> {
 
     if (!!lang) {
-      return this.apiService.dispatchRestApi('GetPageByPageIDAndLang', { pageID, lang }).pipe(
+      return (
+        context === 'preview'
+          ? this.apiService.dispatchRestApi('GetPreviewPageByPageIDAndLang', { pageID, lang })
+          : this.apiService.dispatchRestApi('GetPageByPageIDAndLang', { pageID, lang })
+      ).pipe(
         map((x: PageInfoGetResponse) => convertPageInfo(x))
       );
     }
     else {
-      return this.apiService.dispatchRestApi('GetPageByPageID', { pageID }).pipe(
+      return (
+        context === 'preview'
+          ? this.apiService.dispatchRestApi('GetPreviewPageByPageID', { pageID })
+          : this.apiService.dispatchRestApi('GetPageByPageID', { pageID })
+      ).pipe(
         map((x: PageInfoGetResponse) => convertPageInfo(x))
       );
     }
@@ -48,8 +56,12 @@ export class RenderService {
    * @returns {Observable<ContentInfo>}
    * @memberof RenderService
    */
-  getContentInfo(contentID: string): Observable<ContentInfo> {
-    return this.apiService.dispatchRestApi('GetContentByContentID', { contentID }).pipe(
+  getContentInfo(context: 'preview' | 'runtime', contentID: string): Observable<ContentInfo> {
+    return (
+      context === 'preview'
+        ? this.apiService.dispatchRestApi('GetPreviewContentByContentID', { contentID })
+        : this.apiService.dispatchRestApi('GetContentByContentID', { contentID })
+    ).pipe(
       map((x: ApiContentInfo) => convertContentInfo(x))
     );
   }

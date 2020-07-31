@@ -1,23 +1,57 @@
+@import '../../../../../global/style/main';
+
 :host {
   display: block;
   height: 100%;
 }
 
-.page-content-container {
-  height: calc(100% - 52px);
-  overflow: auto;
+.filter {
+  display: flex;
+
+  &__fields {
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: calc(100% - 40px);
+    align-items: center;
+  }
+
+  &__field {
+    +.filter__field {
+      margin-left: 20px;
+    }
+
+    &::ng-deep {
+      .mat-form-field-infix {
+        height: 60px;
+      }
+    }
+  }
+
+  &__search-btn {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 40px;
+    margin-top: 10px;
+  }
+
 }
 
-.filter {
-  &>* {
-    display: inline-block;
-  }
+@include site-layout();
 
-  .search-btn {
-    width: 40px;
-  }
+.gallery-shared {
+  height: 100%;
 
-  .fields {
-    width: calc(100% - 40px);
+  &__block {
+    @include inb-vertical-align();
   }
+}
+
+.list-block {
+  height: 100%;
+}
+
+
+.set-block {
+  height: 100%;
 }

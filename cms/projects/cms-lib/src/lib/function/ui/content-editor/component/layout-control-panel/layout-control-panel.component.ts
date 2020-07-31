@@ -39,6 +39,11 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.mainTemplates = [
       {
+        template_id: 'News',
+        template_name: 'News',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      },
+      {
         template_id: 'Slide',
         template_name: 'Slide',
         template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
@@ -53,6 +58,16 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
         template_name: 'IconPage',
         template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
       },
+      // {
+      //   template_id: 'FieldsDemo',
+      //   template_name: 'FieldsDemo',
+      //   template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      // },
+      // {
+      //   template_id: 'GroupDemo',
+      //   template_name: 'GroupDemo',
+      //   template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      // },
     ];
   }
 
@@ -94,7 +109,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     // this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
     this.contentInfo?.languages?.forEach(language => {
       language.templates.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
-    })
+    });
     this.templateAdd.emit(templateInfo.template_id);
   }
 

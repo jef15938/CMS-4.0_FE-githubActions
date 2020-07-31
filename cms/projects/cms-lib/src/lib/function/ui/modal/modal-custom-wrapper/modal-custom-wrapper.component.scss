@@ -5,6 +5,26 @@
   position: relative;
 }
 
+.modal-custom {
+
+  &__head {
+    +.modal-custom__content {
+      margin-top: 20px;
+    }
+  }
+
+  &__content {
+    min-height: 50px;
+
+    +.modal-custom__tail {
+      margin-top: 20px;
+    }
+  }
+
+  &__tail {}
+}
+
+
 .mat-modal-actions {
   margin-top: 20px;
 }

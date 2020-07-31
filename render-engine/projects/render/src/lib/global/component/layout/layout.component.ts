@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper';
-import { ContentTemplateInfo } from '../../interface';
+import { ContentTemplateInfo, SitemapNode } from '../../interface';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 
 @Component({
@@ -19,6 +19,11 @@ export class LayoutComponent extends CommonTemplateBaseComponent implements OnIn
   }
 
   ngOnInit(): void {
+
+  }
+
+  get siteMap(): SitemapNode {
+    return this.templateInfo?.attributes?.sitemap;
   }
 
 }

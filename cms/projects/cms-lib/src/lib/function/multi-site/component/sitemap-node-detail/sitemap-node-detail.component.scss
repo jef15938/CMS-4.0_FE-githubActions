@@ -1,0 +1,68 @@
+@import '../../../../global/style/main';
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sitemap-node-detail {
+  height: 100%;
+}
+
+.page-title-container {
+  height: 52px;
+  display: flex;
+
+  &::ng-deep {
+    .mat-raised-button {
+      height: 31px;
+      line-height: normal;
+      background-color: $color-CIS;
+      color: $color-CIS-white;
+
+      &[disabled="true"] {
+        opacity: 0.75;
+      }
+    }
+  }
+}
+
+.page-content-container {
+  height: calc(100% - 52px);
+  overflow: auto;
+}
+
+.info {
+  &__item {
+    padding: 10px 0;
+
+    &--small-texted {
+      font-size: 12px;
+    }
+
+    &--align-right {
+      text-align: right;
+    }
+
+    &--alpha {
+      opacity: 0.5;
+    }
+  }
+}
+
+.form {
+  &__top {}
+
+  &__bot {}
+}
+
+.tab-content {
+  &__btn-row {
+    display: flex;
+    padding: 10px 0;
+
+    &--align-right {
+      justify-content: flex-end;
+    }
+  }
+}

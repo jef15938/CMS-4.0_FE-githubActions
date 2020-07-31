@@ -4,30 +4,27 @@
     <button type="button" tabindex="0" mat-button (click)="cleanFiles()">清除檔案</button>
   </div>
   <br />
-  <!-- <div>
-    <cms-table [colDefs]="colDefs" [dataSource]="files"></cms-table>
-  </div> -->
-  <ul>
-    <li *ngFor="let file of files" [@fadeInOut]="file.state">
+  <ul style="display: table; width: 100%;">
+    <li style="display: table-row;" *ngFor="let file of files" [@fadeInOut]="file.state">
       <mat-progress-bar [value]="file.progress"></mat-progress-bar>
-      <span id="file-label">
-        {{file.data.name}} : [{{file.progress}}]
-        <a title="crop" (click)="cropFile(file)">
-          <mat-icon>open_in_new</mat-icon>
-        </a>
-        <!-- <a title="refresh" (click)="retryFile(file)" *ngIf="file.canRetry">
-          <mat-icon>refresh</mat-icon>
-        </a> -->
-        <!-- <a title="cancel" (click)="cancelFile(file)" *ngIf="file.canCancel">
-          <mat-icon>cancel</mat-icon>
-        </a> -->
-        <a title="cancel" (click)="removeFile(file)">
-          <mat-icon>delete</mat-icon>
-        </a>
+      <span class="file-label">
+        [{{file.fileType?.indexOf('image')<0 ? '檔案' : '圖片'}}] {{file.data.name}} ({{file.progress}})%
+        <span>
+          <button type="button" tabindex="0" mat-button (click)="cropFile(file)"
+            [disabled]="file.fileType?.indexOf('image')<0">
+            <mat-icon>open_in_new</mat-icon>
+            裁切
+          </button>
+          <button type="button" tabindex="0" mat-button (click)="removeFile(file)">
+            <mat-icon>delete</mat-icon>
+            刪除
+          </button>
+        </span>
       </span>
     </li>
   </ul>
-  <input type="file" id="fileUpload" name="fileUpload" [multiple]="isCreate" [accept]="accept" style="display:none;" />
+  <input type="file" [id]="fileUploadInputIdentifier" [name]="fileUploadInputIdentifier" [multiple]="isCreate"
+    [accept]="accept" style="display:none;" maxlength="5" />
   <br>
   <div>
     <button type="button" tabindex="0" mat-button (click)="create()" *ngIf="isCreate"

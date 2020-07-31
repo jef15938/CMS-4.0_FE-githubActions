@@ -1,46 +1,157 @@
-.example-tree-invisible {
-  display: none;
+@import '../../../global/style/main';
+
+:host {
+  display: block;
+  background-color: $color-CIS-white;
 }
 
-.example-tree ul,
-.example-tree li {
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 20px;
-  list-style-type: none;
+.cms-tree {
+  margin-left: -1em;
 
-  .node-expand-btn {
-    margin-left: 10px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-  }
-}
-
-.mat-tree-node {
-  &.selected {
-    background-color: lightgreen;
+  &__body {
+    margin-top: -20px;
+    background-color: $color-CIS-white;
   }
 
-  &:not(.selected):hover {
-    background-color: rgb(191, 244, 191);
+  &__node {
+    display: block;
+    min-height: 40px;
+    border-left: 1px dashed $color-gray;
+
+    &:last-child {
+      >.cms-tree__node__head {
+        &:before {
+          border-bottom: 1px solid $color-CIS-white;
+          z-index: 99;
+          width: 1em;
+        }
+      }
+    }
+
+    &__head {
+      min-height: 40px;
+      transform: translate(0, 50%);
+      position: relative;
+      z-index: 99;
+
+      &:before {
+        content: '';
+        position: absolute;
+        border-bottom: 1px dashed $color-gray;
+        top: 50%;
+        transform: translateY(-50%) translateY(1.5px);
+        width: 2em;
+      }
+
+      &--selected {
+        .cms-tree__node__head__checkbox {
+          background-color: $color-CIS-light;
+        }
+
+      }
+
+      &:not(.cms-tree__node__head--selected):hover {
+        .cms-tree__node__head__checkbox {
+          background-color: $color-CIS-extra-light;
+        }
+      }
+
+      &__checkbox {
+        position: absolute;
+        width: calc(100% - 1em);
+        margin-left: 1em;
+        height: 100%;
+        padding-left: 1em;
+        background-color: $color-CIS-white;
+      }
+
+      &::ng-deep {
+
+
+        mat-checkbox.cms-tree__node__head__checkbox--unactive {
+          .mat-checkbox-inner-container {
+            display: none;
+          }
+
+          .mat-checkbox-label {
+            display: flex;
+            align-items: center;
+          }
+        }
+
+      }
+
+    }
+
+    >.cms-tree__node__body {
+      margin-top: 10px;
+    }
+
+    &__body {
+      position: relative;
+      border-bottom: 1px dashed grey;
+      margin-left: 2em;
+      transform: translateY(1px);
+
+      &--invisible {
+        display: none;
+      }
+
+
+      &::ng-deep {
+        mat-tree-node.cms-tree__node {
+          .cms-tree__node__head {
+            margin-top: 10px;
+
+
+          }
+
+        }
+
+      }
+    }
+
+
+
+
   }
 
-  &>mat-checkbox {
-    margin-left: 8px;
-  }
+  &::ng-deep {
+    mat-nested-tree-node {
+      .cms-tree__node__head__checkbox {
+        .mat-checkbox-layout {
+          position: absolute;
+          width: calc(100% - 1em);
+          height: 100%;
+        }
 
-  ::ng-deep mat-checkbox.unactive {
-    .mat-checkbox-inner-container {
-      display: none;
+        .mat-checkbox-label {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
   }
 }
 
-.tree-children {
-  padding-top: 10px;
+
+.node-expand-btn {
+  margin-left: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  &::ng-deep {
+    .mat-button-wrapper {}
+
+
+  }
+
 }
 
+
+
 .drag-over {
-  background-color: rgb(191, 244, 191) !important;
+  background-color: $color-CIS-light !important;
 }

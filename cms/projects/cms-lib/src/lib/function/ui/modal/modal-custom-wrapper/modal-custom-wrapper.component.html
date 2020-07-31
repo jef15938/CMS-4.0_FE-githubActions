@@ -1,19 +1,20 @@
 <!-- header -->
-<ng-container *ngIf="instanceTitle">
-  <span matModalTitle>{{instanceTitle}}</span>
-</ng-container>
-<!-- content -->
-<div mat-modal-content style="display: block; height: 100%;">
-  <!-- <span cmsModalCustomWrapper></span> -->
-  <span neuxDynamicWrapper [componentClass]="config?.component" [onComponentLoad]="onComponentLoad">
-  </span>
-</div>
-<!-- footer -->
-<ng-container *ngIf="instance&&instance.actions&&instance.actions.length">
-  <div mat-modal-actions>
+<div class="modal-custom">
+  <div class="modal-custom__head" *ngIf="instanceTitle">
+    <span matModalTitle>{{instanceTitle}}</span>
+  </div>
+  <!-- content -->
+  <div class="modal-custom__content" mat-modal-content>
+    <!-- <span cmsModalCustomWrapper></span> -->
+    <span neuxDynamicWrapper [componentClass]="config?.component" [onComponentLoad]="onComponentLoad">
+    </span>
+  </div>
+  <!-- footer -->
+  <div class="modal-custom__tail" mat-modal-actions *ngIf="instance&&instance.actions&&instance.actions.length">
     <span class="btn-group">
       <button type="button" tabindex="0" mat-button *ngFor="let action of instance.actions"
         (click)="action.onClick($event)">{{action.text}}</button>
     </span>
+
   </div>
-</ng-container>
+</div>

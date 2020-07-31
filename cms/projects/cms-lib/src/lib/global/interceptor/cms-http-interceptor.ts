@@ -30,13 +30,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status >= 400) {
+        if (error.status !== 401) {
           const message = error?.error?.error_message;
           this.showLogoutMessage(message).subscribe();
-          return NEVER;
-        } else {
-          return throwError(error);
         }
+        return throwError(error);
       })
     );
   }

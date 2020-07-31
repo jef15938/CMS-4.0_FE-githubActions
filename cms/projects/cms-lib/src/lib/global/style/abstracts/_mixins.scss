@@ -2,3 +2,32 @@
 // This file contains all application-wide Sass mixins.
 // -----------------------------------------------------------------------------
 
+
+@mixin site-layout() {
+  .list-block {
+    border-right: 1px solid $color-light-gray;
+    width: 30%;
+    height: 100%;
+  }
+
+  .set-block {
+    width: 70%;
+    height: 100%;
+  }
+
+  .page-title-container {
+    height: 52px;
+  }
+
+  .page-content-container {
+    overflow: auto;
+    height: calc(100% - 52px);
+    background-color: $color-CIS-white;
+  }
+
+}
+
+@mixin inb-vertical-align () {
+  display: inline-block;
+  vertical-align: middle;
+}

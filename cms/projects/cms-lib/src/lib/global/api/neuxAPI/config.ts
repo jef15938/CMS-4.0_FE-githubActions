@@ -49,6 +49,7 @@ GetLayout: `${BASE_URL}\/Layout`,
 GetFarmTakeOffByFuncID: `${BASE_URL}\/FarmTakeOff/{funcID}`,
 GetSitemapPreviewByNodeID: `${BASE_URL}\/SitemapPreview/{nodeID}`,
 GetAuditingPreviewByOrderID: `${BASE_URL}\/AuditingPreview/{orderID}`,
+GetContentDataSourceByTypeID: `${BASE_URL}\/ContentDataSource/{typeID}`,
 
 };
 const API_TYPE = {
@@ -100,5 +101,6 @@ GetLayout: 'Restful',
 GetFarmTakeOffByFuncID: 'Restful',
 GetSitemapPreviewByNodeID: 'Restful',
 GetAuditingPreviewByOrderID: 'Restful',
+GetContentDataSourceByTypeID: 'Restful',
 
 };

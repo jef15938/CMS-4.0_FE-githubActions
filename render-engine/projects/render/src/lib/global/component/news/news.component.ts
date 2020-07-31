@@ -1,8 +1,8 @@
 import { Component, Injector } from '@angular/core';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { NewsData } from './news.interface';
-import { MOCK_NEWS_DATA } from './news.mock';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
+import { DataSourceType } from '../../enum';
 
 @Component({
   selector: 'rdr-news',
@@ -21,10 +21,10 @@ export class NewsComponent extends DataSourceTemplateBaseComponent<NewsData> {
     '07': 'JUL',
     '08': 'AUG',
     '09': 'SEP',
-    '10': 'OCT',
-    '11': 'NOV',
-    '12': 'DEC',
-  }
+    10: 'OCT',
+    11: 'NOV',
+    12: 'DEC',
+  };
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
@@ -36,12 +36,12 @@ export class NewsComponent extends DataSourceTemplateBaseComponent<NewsData> {
     }
   };
 
-  sourceType = 'news';
+  sourceType = DataSourceType.News;
 
   constructor(
     injector: Injector,
   ) {
-    super(injector, MOCK_NEWS_DATA);
+    super(injector);
   }
 
 

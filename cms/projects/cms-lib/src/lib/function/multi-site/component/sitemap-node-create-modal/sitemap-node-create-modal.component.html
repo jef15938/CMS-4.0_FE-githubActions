@@ -64,14 +64,16 @@
       <ng-container *ngSwitchCase="NodeType.CONTENT">
 
         <div class="mat-form-field-wrapper layout-select">
-          <mat-expansion-panel>
+          <input [(ngModel)]="sitemapMaintainModel.layout_id" name="layout_id" style="display:none;" required
+            #modelLayoutID="ngModel">
+          <mat-expansion-panel [class.has-error]="modelLayoutID.touched && modelLayoutID.invalid">
             <mat-expansion-panel-header>
-              <mat-panel-title>版面</mat-panel-title>
+              <mat-panel-title>版面<span style="color:red;">*</span></mat-panel-title>
               <mat-panel-description>
+                <span style="color:red;" *ngIf="modelLayoutID.invalid">請選擇版面</span>
                 {{(sitemapMaintainModel.layout_id | getLayoutByLayoutID : this.layouts)?.layout_name}}
               </mat-panel-description>
             </mat-expansion-panel-header>
-
             <div class="option">
               <span class="list">
                 <div *ngFor="let option of layouts" [class.actived]="option.layout_id===activedLayoutID"
