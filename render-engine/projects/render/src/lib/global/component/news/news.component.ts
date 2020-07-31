@@ -1,7 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { NewsData } from './news.interface';
-import { MOCK_NEWS_DATA } from './news.mock';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
 import { DataSourceType } from '../../enum';
 
@@ -42,7 +41,7 @@ export class NewsComponent extends DataSourceTemplateBaseComponent<NewsData> {
   constructor(
     injector: Injector,
   ) {
-    super(injector, MOCK_NEWS_DATA);
+    super(injector);
   }
 
 

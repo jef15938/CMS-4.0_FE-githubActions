@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../api/neuxAPI/rest-api.service';
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { ListDataSourceDataResponse } from '../api/neuxAPI/bean/ListDataSourceDataResponse';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,24 +10,20 @@ import { of, Observable } from 'rxjs';
 export class DataSourceService {
 
   constructor(
-    private apiService: RestApiService
+    private restAPIService: RestApiService
   ) { }
 
-  getData(type: string, id: string): Observable<any> {
-    const r: any[] = [];
-
-    for (let i = 0, l = 10; i < l; ++i) {
-      const seq = i + 1;
-      r.push({
-        id: `d${seq}`,
-        title: `公告事項(${seq})`,
-        content: `測試公告事項內文${seq}`,
-        date: '2020-06-01',
-      });
-    }
-
-    return of(r);
-
+  /**
+   *
+   *
+   * @param {string} type
+   * @param {string} id
+   * @returns
+   * @memberof DataSourceService
+   */
+  getDataSourceByTypeIDAndId(typeID: string, id: string): Observable<any> {
+    return this.restAPIService.dispatchRestApi<ListDataSourceDataResponse>('GetDataSourceByTypeIDAndId', { typeID, id })
+      .pipe(map(res => res.datas));
   }
 
 }
