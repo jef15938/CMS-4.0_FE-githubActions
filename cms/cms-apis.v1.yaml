@@ -1489,6 +1489,37 @@ paths:
                 $ref: '#/components/schemas/PreviewInfo'
       operationId: get-AuditingPreview-orderID
       description: 取得審核單號的預覽畫面，分整頁式與FARM欄位預覽
+  '/ContentDataSource/{typeID}':
+    get:
+      summary: ListContentDataSource
+      tags:
+        - Content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListContentDataSourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-ContentDataSource
+      description: 取得編輯器消息版型的下拉選單
+    parameters:
+      - schema:
+          type: string
+        name: typeID
+        in: path
+        required: true
+        description: 類型代碼
 components:
   schemas:
     LoginRequest:
@@ -2779,4 +2810,31 @@ components:
         - language_id
         - language_name
         - node_name
+    ListContentDataSourceResponse:
+      title: ListContentDataSourceResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentDataSource'
+      required:
+        - datas
+    ContentDataSource:
+      title: ContentDataSource
+      type: object
+      x-tags:
+        - Model
+      properties:
+        id:
+          type: string
+          description: 分類代碼
+        name:
+          type: string
+          description: 分類名稱
+      required:
+        - id
+        - name
   securitySchemes: {}
