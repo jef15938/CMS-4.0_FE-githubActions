@@ -7,3 +7,5 @@ export * from './tab/tab-demo/tab-demo.component';
 export * from './tab/tab-frame/tab-frame.component';
 export * from './tab/tab-item/tab-item.component';
 export * from './tab/tab.module';
+export * from './layout-full/layout-full.component';
+export * from './layout-full/mega-menu/mega-menu.component';

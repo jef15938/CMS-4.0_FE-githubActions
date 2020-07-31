@@ -14,6 +14,8 @@ import { NewsComponent } from './global/component/news/news.component';
 import { RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN } from './global/injection-token/injection-token';
 import { RENDER_DEFAULT_COMPONENT_MAPPINGS } from './global/const/component-mapping';
 import { LayoutComponent } from './global/component/layout/layout.component';
+import { LayoutFullComponent } from './global/component/layout-full/layout-full.component';
+import { MegaMenuComponent } from './global/component/layout-full/mega-menu/mega-menu.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -21,6 +23,8 @@ const COMPONENTS = [
   IconPageComponent,
   FieldsDemoComponent,
   GroupTemplateDemoComponent,
+  LayoutFullComponent,
+  MegaMenuComponent
 ];
 
 @NgModule({
@@ -35,7 +39,7 @@ const COMPONENTS = [
   declarations: [
     RenderComponent,
     ...COMPONENTS,
-    LayoutComponent,
+    LayoutComponent
   ],
   exports: [
     RenderComponent,
