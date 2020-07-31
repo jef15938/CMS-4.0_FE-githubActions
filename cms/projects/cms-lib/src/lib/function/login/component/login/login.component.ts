@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.authorizationService.login(this.username, this.password, this.validationCode).pipe(
       catchError(err => {
+        this.validationCode = null;
         this.refreshValidImageVersion();
         return NEVER;
       })
