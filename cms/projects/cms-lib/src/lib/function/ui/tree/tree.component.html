@@ -3,8 +3,7 @@
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node class="cms-tree__node pointer" *matTreeNodeDef="let node" matTreeNodeToggle>
       <div class="cms-tree__node__head " [class.cms-tree__node__head--selected]="node===selectedNode"
-        (dblclick)="onRowDbClicked($event, node)" (click)="onRowClicked($event, node)" cmsRightClickHandler
-        (rightClick)="onRowRightClicked(node)">
+        (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
 
         <mat-checkbox class="cms-tree__node__head__checkbox" [checked]="checkedNodes.indexOf(node)>-1"
           (change)="onNodeCheckboxChange($event, node)"
@@ -30,8 +29,7 @@
     <mat-nested-tree-node class="cms-tree__node" *matTreeNodeDef="let node; when: hasChild">
 
       <div class="cms-tree__node__head pointer" [class.cms-tree__node__head--selected]="node===selectedNode"
-        (dblclick)="onRowDbClicked($event, node)" (click)="onRowClicked($event, node)" cmsRightClickHandler
-        (rightClick)="onRowRightClicked(node)">
+        (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
 
         <mat-checkbox class="cms-tree__node__head__checkbox" [checked]="checkedNodes.indexOf(node)>-1"
           (change)="onNodeCheckboxChange($event, node)"
@@ -47,7 +45,7 @@
             {{node[nodeDisplayField]}}
           </span>
           <button type="button" tabindex="-1" mat-icon-button class="node-expand-btn"
-            [attr.aria-label]="'toggle ' + node[nodeDisplayField]">
+            [attr.aria-label]="'toggle ' + node[nodeDisplayField]" (click)="treeControl.toggle(node);">
             <mat-icon class="mat-icon-rtl-mirror">
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
