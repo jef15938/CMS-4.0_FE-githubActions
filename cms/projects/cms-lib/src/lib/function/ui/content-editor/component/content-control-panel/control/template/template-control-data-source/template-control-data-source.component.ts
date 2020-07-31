@@ -1,6 +1,8 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { DataSourceTemplateInfo, LayoutWrapperSelectEvent, DataSourceTemplateBaseComponent } from '@neux/render';
+import { ContentService } from '../../../../../../../../global/api/service/content/content.service';
+import { ContentDataSource } from '../../../../../../../../global/api/neuxAPI/bean/ContentDataSource';
 
 @Component({
   selector: 'cms-template-control-data-source',
@@ -12,13 +14,13 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
   templateInfo: DataSourceTemplateInfo;
   sourceType: string;
 
-  souces: { value: string, display: string }[] = [
-    { value: '1', display: '來源1' },
-    { value: '2', display: '來源2' },
-    { value: '3', display: '來源3' },
-    { value: '4', display: '來源4' },
-    { value: '5', display: '來源5' },
-  ];
+  souces: ContentDataSource[] = [];
+
+  constructor(
+    private contentService: ContentService,
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
   }
@@ -28,6 +30,7 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
       const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as DataSourceTemplateInfo;
       this.sourceType = (event.componentRef.instance as DataSourceTemplateBaseComponent<any>).sourceType;
+      this.contentService.getContentDataSourceByTypeID(this.sourceType).subscribe(sources => this.souces = sources);
     }
   }
 

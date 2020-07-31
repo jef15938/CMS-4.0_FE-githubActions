@@ -7,6 +7,8 @@ import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
 import { LayoutInfo } from '../../neuxAPI/bean/LayoutInfo';
 import { LayoutGetResponse } from '../../neuxAPI/bean/LayoutGetResponse';
 import { map } from 'rxjs/operators';
+import { ListContentDataSourceResponse } from '../../neuxAPI/bean/ListContentDataSourceResponse';
+import { ContentDataSource } from '../../neuxAPI/bean/ContentDataSource';
 
 @Injectable({
   providedIn: 'root'
@@ -73,5 +75,21 @@ export class ContentService {
     };
 
     return this.restAPIService.dispatchRestApi('PutContentByContentID', params);
+  }
+
+
+  /**
+   *
+   *
+   * @param {string} typeID // SiteMapGetResponse.layout_id
+   * @returns
+   * @memberof ContentService
+   */
+  getContentDataSourceByTypeID(typeID: string): Observable<ContentDataSource[]> {
+    if (!typeID) {
+      throw new ParamsError('typeID', 'getContentDataSourceByTypeID', 'string', typeID);
+    }
+    return this.restAPIService.dispatchRestApi<ListContentDataSourceResponse>('GetContentDataSourceByTypeID', { typeID })
+      .pipe(map(res => res.datas));
   }
 }
