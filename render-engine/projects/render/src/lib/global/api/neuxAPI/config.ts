@@ -13,6 +13,7 @@ const API_URL = {
   GetSiteMapDownloadByFormat: `${BASE_URL}\/SiteMap/Download/{format}`,
   GetContentByContentID: `${BASE_URL}\/Content/{contentID}`,
   GetPreviewContentByContentID: `${BASE_URL}\/Preview/Content/{contentID}`,
+  GetDataSourceByTypeIDAndId: `${BASE_URL}\/DataSource/{typeID}/{id}`,
 
 };
 const API_TYPE = {
@@ -28,5 +29,6 @@ const API_TYPE = {
   GetSiteMapDownloadByFormat: 'Restful',
   GetContentByContentID: 'Restful',
   GetPreviewContentByContentID: 'Restful',
+  GetDataSourceByTypeIDAndId: 'Restful',
 
 };

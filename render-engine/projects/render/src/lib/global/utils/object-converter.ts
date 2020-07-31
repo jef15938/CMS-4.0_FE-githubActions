@@ -35,7 +35,7 @@ export const convertSitemapNode: (origin: SiteMapGetResponse) => SitemapNode = (
 
 export const convertContentInfo: (origin: ApiContentInfo) => ContentInfo = (origin: ApiContentInfo) => {
   return {
-    languages: origin.languages.map(x => convertLanguageInfo(x))
+    languages: origin.languages.map(x => convertLanguageInfo(x)),
   };
 };
 
@@ -44,7 +44,7 @@ export const convertLanguageInfo: (origin: ApiLanguageInfo) => LanguageInfo = (o
     languageID: origin.language_id,
     languageName: origin.language_name,
     templates: origin.templates.map(x => convertTemplateInfo(x)),
-    galleries: origin.galleries
+
   };
 };
 

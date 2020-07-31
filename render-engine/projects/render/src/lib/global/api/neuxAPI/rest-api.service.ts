@@ -16,10 +16,12 @@ import { GetPreviewCompareByPageIDAPI } from './api/GetPreviewCompareByPageIDAPI
 import { GetSiteMapDownloadByFormatAPI } from './api/GetSiteMapDownloadByFormatAPI';
 import { GetContentByContentIDAPI } from './api/GetContentByContentIDAPI';
 import { GetPreviewContentByContentIDAPI } from './api/GetPreviewContentByContentIDAPI';
+import { GetDataSourceByTypeIDAndIdAPI } from './api/GetDataSourceByTypeIDAndIdAPI';
 
 import { PageInfoGetResponse } from './bean/PageInfoGetResponse';
 import { SiteMapGetResponse } from './bean/SiteMapGetResponse';
 import { ContentInfo } from './bean/ContentInfo';
+import { ListDataSourceDataResponse } from './bean/ListDataSourceDataResponse';
 
 
 const APIResponseMap = {
@@ -33,6 +35,7 @@ const APIResponseMap = {
   GetPreviewSiteMapByNodeId: SiteMapGetResponse,
   GetContentByContentID: ContentInfo,
   GetPreviewContentByContentID: ContentInfo,
+  GetDataSourceByTypeIDAndId: ListDataSourceDataResponse,
 
 };
 
@@ -61,6 +64,7 @@ export class RestApiService {
     this.apiFactory.registerApi(new GetSiteMapDownloadByFormatAPI());
     this.apiFactory.registerApi(new GetContentByContentIDAPI());
     this.apiFactory.registerApi(new GetPreviewContentByContentIDAPI());
+    this.apiFactory.registerApi(new GetDataSourceByTypeIDAndIdAPI());
 
   }
 
