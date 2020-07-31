@@ -34,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'need-to-change-to-home-router-when-finishing-developing'
+    redirectTo: 'error'
   }
 ];
 

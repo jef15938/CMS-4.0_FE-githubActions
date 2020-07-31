@@ -9,10 +9,12 @@ import { API_CONFIG_TOKEN, API_HEADER_TOKEN } from '@neux/core';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalHeader } from 'src/app/global/common/global-header';
+import { ErrorPageComponent } from 'src/app/global/component/error-page/error-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
