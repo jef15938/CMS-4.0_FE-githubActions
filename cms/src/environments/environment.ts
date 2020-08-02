@@ -56,6 +56,9 @@ export const environment = {
     GetSitemapPreviewByNodeID: `${BASE_URL}\/SitemapPreview/{nodeID}`,
     GetAuditingPreviewByOrderID: `${BASE_URL}\/AuditingPreview/{orderID}`,
     GetContentDataSourceByTypeID: `${BASE_URL}\/ContentDataSource/{typeID}`,
+    GetContentVersionByContentID: `${BASE_URL}\/ContentVersion/{contentID}`,
+    PutReOrderSiteMapByNodeID: `${BASE_URL}\/ReOrderSiteMap/{nodeID}`,
+    GetFarmTriggerByTriggerID: `${BASE_URL}\/FarmTrigger/{triggerID}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -107,6 +110,9 @@ export const environment = {
     GetSitemapPreviewByNodeID: 'Restful',
     GetAuditingPreviewByOrderID: 'Restful',
     GetContentDataSourceByTypeID: 'Restful',
+    GetContentVersionByContentID: 'Restful',
+    PutReOrderSiteMapByNodeID: 'Restful',
+    GetFarmTriggerByTriggerID: 'Restful',
   },
   chatbot: {
     apiUrl: 'https://labs.decoder.com.tw/chatbot-api'

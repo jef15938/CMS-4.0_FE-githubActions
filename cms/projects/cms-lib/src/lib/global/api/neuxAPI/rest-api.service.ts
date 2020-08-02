@@ -53,6 +53,9 @@ import { GetFarmTakeOffByFuncIDAPI } from './api/GetFarmTakeOffByFuncIDAPI';
 import { GetSitemapPreviewByNodeIDAPI } from './api/GetSitemapPreviewByNodeIDAPI';
 import { GetAuditingPreviewByOrderIDAPI } from './api/GetAuditingPreviewByOrderIDAPI';
 import { GetContentDataSourceByTypeIDAPI } from './api/GetContentDataSourceByTypeIDAPI';
+import { GetContentVersionByContentIDAPI } from './api/GetContentVersionByContentIDAPI';
+import { PutReOrderSiteMapByNodeIDAPI } from './api/PutReOrderSiteMapByNodeIDAPI';
+import { GetFarmTriggerByTriggerIDAPI } from './api/GetFarmTriggerByTriggerIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GenerationHeader } from './bean/GenerationHeader';
@@ -77,6 +80,8 @@ import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
 import { LayoutGetResponse } from './bean/LayoutGetResponse';
 import { ListContentDataSourceResponse } from './bean/ListContentDataSourceResponse';
+import { ListContentVersionResponse } from './bean/ListContentVersionResponse';
+import { ListFarmTriggerDataResponse } from './bean/ListFarmTriggerDataResponse';
 
 
 const APIResponseMap= {
@@ -128,6 +133,9 @@ GetFarmTakeOffByFuncID: GenerationHeader,
 GetSitemapPreviewByNodeID: PreviewInfo,
 GetAuditingPreviewByOrderID: PreviewInfo,
 GetContentDataSourceByTypeID: ListContentDataSourceResponse,
+GetContentVersionByContentID: ListContentVersionResponse,
+PutReOrderSiteMapByNodeID: GenerationHeader,
+GetFarmTriggerByTriggerID: ListFarmTriggerDataResponse,
 
 }
 
@@ -193,6 +201,9 @@ this.apiFactory.registerApi(new GetFarmTakeOffByFuncIDAPI());
 this.apiFactory.registerApi(new GetSitemapPreviewByNodeIDAPI());
 this.apiFactory.registerApi(new GetAuditingPreviewByOrderIDAPI());
 this.apiFactory.registerApi(new GetContentDataSourceByTypeIDAPI());
+this.apiFactory.registerApi(new GetContentVersionByContentIDAPI());
+this.apiFactory.registerApi(new PutReOrderSiteMapByNodeIDAPI());
+this.apiFactory.registerApi(new GetFarmTriggerByTriggerIDAPI());
 
     }
 
