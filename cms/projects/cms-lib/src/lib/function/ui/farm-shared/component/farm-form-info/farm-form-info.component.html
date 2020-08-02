@@ -9,7 +9,7 @@
               <!-- TEXT -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXT">
                 <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                  <input matInput [formControlName]="col.column_id" [maxLength]="col.setting?.max_length||-1"
+                  <input matInput [formControlName]="col.column_id" [maxLength]="col.setting?.max_length||null"
                     [placeholder]="col.setting?.placeholder||''" (keydown)="columnTrigger.next(col)">
                   <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
@@ -21,7 +21,7 @@
               <!-- TEXTAREA -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXTAREA">
                 <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                  <textarea matInput [formControlName]="col.column_id" [maxLength]="col.setting?.max_length||-1"
+                  <textarea matInput [formControlName]="col.column_id" [maxLength]="col.setting?.max_length||null"
                     [placeholder]="col.setting?.placeholder||''" rows="1"
                     (keydown)="columnTrigger.next(col)"></textarea>
                   <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
@@ -75,7 +75,7 @@
               </ng-container>
               <!-- EDITOR -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.EDITOR">
-                <button type="button" mat-button (click)="openContentEditor(col)">編輯 Content</button>
+                <button type="button" mat-button (click)="openContentEditor(col)">編輯{{col.display_text}}</button>
               </ng-container>
               <!-- HTMLEDITOR -->
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.HTMLEDITOR">
