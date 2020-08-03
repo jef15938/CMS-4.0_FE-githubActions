@@ -1,17 +1,18 @@
-<div class="header__menu" [ngClass]="getLevelClass()">
-  <div *ngFor="let item of menu" class="header__menu-item" [ngClass]="getLevelClass()">
-    <a class="header__menu-link" [ngClass]="getLevelClass()" href="#">
+<div class="header__menu" [ngClass]="classObj">
+  <div *ngFor="let item of menu" class="header__menu-item">
+    <a class="header__menu-link" [ngClass]="classObj" href="#">
       <span>{{item.nodeName}}</span>
     </a>
-    <ng-container *ngIf="currentLevel === 1; else children">
+
+    <ng-container *ngIf="level === 1; else children">
       <div class="menu-dropdown">
         <ng-container *ngTemplateOutlet="children"></ng-container>
       </div>
     </ng-container>
 
     <ng-template #children>
-      <ng-container *ngIf="item.children.length > 0 && currentLevel <= maxLavel">
-        <rdr-mega-menu [menu]="item.children" [level]="nextLevel" [maxLavel]="maxLavel-1"></rdr-mega-menu>
+      <ng-container *ngIf="item.children.length > 0 && level <= maxLavel">
+        <rdr-mega-menu [menu]="item.children" [level]="level + 1" [maxLavel]="maxLavel"></rdr-mega-menu>
       </ng-container>
     </ng-template>
   </div>

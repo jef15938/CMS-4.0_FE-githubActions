@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { SitemapNode } from '../../../interface';
 
 @Component({
@@ -6,31 +6,21 @@ import { SitemapNode } from '../../../interface';
   templateUrl: './mega-menu.component.html',
   styleUrls: ['./mega-menu.component.scss']
 })
-export class MegaMenuComponent implements OnInit {
+export class MegaMenuComponent implements OnInit, OnChanges {
 
   @Input() menu: SitemapNode;
   @Input() level = 1;
   @Input() maxLavel: number;
 
-  currentLevel = 0;
-  nextLevel = 0;
+  classObj = {};
 
   constructor() { }
-
-  ngOnInit(): void {
-    this.currentLevel = this.level;
-    this.nextLevel = this.currentLevel + 1;
-  }
-
-  /**
-   * 取得判斷各level class name
-   * @returns {Object}
-   * @memberof HeaderMenuComponent
-   */
-  getLevelClass() {
-    return {
-      firstLevel: this.currentLevel === 1,
-      lastLevel: this.currentLevel > this.maxLavel
+  ngOnChanges() {
+    this.classObj = {
+      firstLevel: this.level === 1,
+      lastLevel: this.level === this.maxLavel
     };
   }
+
+  ngOnInit(): void { }
 }
