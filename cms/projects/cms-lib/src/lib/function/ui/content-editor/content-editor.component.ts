@@ -269,7 +269,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     }).subscribe((version: ContentVersionInfo) => {
       if (version) {
         this.contentService.getContentById(this.contentID, version.version).subscribe(contentInfo => {
-
+          this.manager.stateManager.currentState.snapShot = contentInfo;
+          this.manager.stateManager.preserveState(`Recover Version : ${version.version}`);
         });
       }
     });
