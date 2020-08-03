@@ -184,8 +184,8 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     if (!this.draggable) { return; }
     // Required by Firefox (https://stackoverflow.com/questions/19055264/why-doesnt-html5-drag-and-drop-work-in-firefox)
     event.dataTransfer.setData('foo', 'bar');
+    console.log(event.target);
     const ghost = this.createDragGhost(event.target);
-    event.dataTransfer.setDragImage(ghost, -25, -25);
     this.dragEvent = event;
     this.dragNode = node;
     this.treeControl.collapse(node);
@@ -208,6 +208,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   handleDrop(event, node) {
+    console.log(node);
     if (!this.draggable) { return; }
     event.preventDefault();
     if (node !== this.dragNode) {
@@ -246,4 +247,11 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     return [].concat(this.checkedNodes);
   }
 
+  prevOrNextDragOver(event){
+    event.target.classList.add('cms-tree__node__head__anchor--drag-overed');
+  }
+
+  prevOrNextDragLeave(event){
+    event.target.classList.remove('cms-tree__node__head__anchor--drag-overed');
+  }
 }
