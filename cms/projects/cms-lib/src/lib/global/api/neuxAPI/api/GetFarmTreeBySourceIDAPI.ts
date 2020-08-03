@@ -4,26 +4,23 @@ import { StringUtils } from '@neux/core';
 
 
 /**
- * GetContent
+ * GetFarmTree
  */
-export class GetContentByContentIDAPI implements Api, MockApi, RestfulApi {
+export class GetFarmTreeBySourceIDAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
-    public version: number;
-
+    
 
     constructor() { }
 
     public getApiName(): string {
-        return 'GetContentByContentID';
+        return 'GetFarmTreeBySourceID';
     }
 
     public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
         let requestData = new ApiRequest();
-        queryParams = queryParams.set('version', 
-                      StringUtils.coerceStringProperty(this.version));
-
+        
         requestData.type = 'GET';
         requestData.params = queryParams;
         requestData.url = this.url;
@@ -31,7 +28,7 @@ export class GetContentByContentIDAPI implements Api, MockApi, RestfulApi {
     }
 
     public getMockPath(): string {
-        return './assets/mock/GetContentByContentIDAPI.json';
+        return './assets/mock/GetFarmTreeBySourceIDAPI.json';
     }
 
 }

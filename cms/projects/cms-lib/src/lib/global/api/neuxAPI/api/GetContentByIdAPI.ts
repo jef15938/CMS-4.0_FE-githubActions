@@ -1,37 +1,37 @@
 import { Api, MockApi, RestfulApi, ApiRequest } from '@neux/core';
 import { HttpParams } from '@angular/common/http';
 import { StringUtils } from '@neux/core';
-import {ContentInfo} from '../bean/ContentInfo';
 
 
 /**
- * UpdateContent
+ * GetContent
  */
-export class PutContentByContentIDAPI implements Api, MockApi, RestfulApi {
+export class GetContentByIdAPI implements Api, MockApi, RestfulApi {
 
     public url:string;
-    public requestBody: ContentInfo;
+    public version: number;
 
 
     constructor() { }
 
     public getApiName(): string {
-        return 'PutContentByContentID';
+        return 'GetContentById';
     }
 
     public getRequestData(): ApiRequest {
         let queryParams = new HttpParams();
         let requestData = new ApiRequest();
-        requestData.body = this.requestBody;
+        queryParams = queryParams.set('version', 
+                      StringUtils.coerceStringProperty(this.version));
 
-        requestData.type = 'PUT';
+        requestData.type = 'GET';
         requestData.params = queryParams;
         requestData.url = this.url;
         return requestData;
     }
 
     public getMockPath(): string {
-        return './assets/mock/PutContentByContentIDAPI.json';
+        return './assets/mock/GetContentByIdAPI.json';
     }
 
 }

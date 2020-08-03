@@ -691,7 +691,7 @@ paths:
           description: Internal Server Error
       tags:
         - SiteMap
-  '/Content/{contentID}':
+  '/Content/{id}':
     get:
       summary: GetContent
       tags:
@@ -752,7 +752,7 @@ paths:
     parameters:
       - schema:
           type: string
-        name: contentID
+        name: id
         in: path
         required: true
   '/MyAuditing/{orderID}':
@@ -1622,6 +1622,36 @@ paths:
         '500':
           description: Internal Server Error
       operationId: get-FarmTrigger-triggerID
+      description: ''
+  '/Farm/Tree/{sourceID}':
+    get:
+      summary: GetFarmTree
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFarmTreeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Farm-Tree
+    parameters:
+      - schema:
+          type: string
+        name: sourceID
+        in: path
+        required: true
 components:
   schemas:
     LoginRequest:
@@ -1737,6 +1767,8 @@ components:
     GalleryCategoryInfo:
       title: GalleryCategoryInfo
       type: object
+      x-tags:
+        - Model
       properties:
         category_id:
           type: string
@@ -1765,8 +1797,6 @@ components:
         - category_id
         - category_name
         - can_upload
-      x-tags:
-        - Model
     GalleryCategoryPushResponse:
       title: GalleryCategoryPushResponse
       type: object
@@ -2098,6 +2128,7 @@ components:
       x-tags:
         - Model
       title: SiteMapNodeGetResponse
+      type: object
       properties:
         node_id:
           type: string
@@ -2115,6 +2146,9 @@ components:
         func_id:
           type: string
           description: 若node_type為FARM，此欄位回傳功能ID
+        content_id:
+          type: string
+          description: 若node_type為CONTENT，此欄位回傳編輯內容ID
         url_type:
           type: string
           enum:
@@ -2170,12 +2204,12 @@ components:
         - node_id
         - canModify
         - canSubmit
+        - canPreview
         - create_by
         - create_time
         - update_by
         - update_time
         - details
-        - canPreview
     UserSiteMapPutRequest:
       title: UserSiteMapPutRequest
       type: object
@@ -2433,48 +2467,19 @@ components:
         required:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Field ID
-              setting:
-                type: object
-            required:
-              - id
+            type: string
         email:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-              setting:
-                type: object
-            required:
-              - id
+            type: string
         alphanumeric:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-              setting:
-                type: object
-            required:
-              - id
+            type: string
         number:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-              setting:
-                type: object
-            required:
-              - id
+            type: string
         range:
           type: array
           items:
@@ -2981,4 +2986,40 @@ components:
             $ref: '#/components/schemas/FarmOptionInfo'
       required:
         - datas
+    GetFarmTreeResponse:
+      title: GetFarmTreeResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        check_type:
+          type: string
+          enum:
+            - SINGLE
+            - MULTIPLE
+          description: "\b挑選方式(單選/多選)"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FarmTreeInfo'
+      required:
+        - check_type
+    FarmTreeInfo:
+      title: FarmTreeInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/FarmTreeInfo'
+      required:
+        - id
+        - name
+        - children
   securitySchemes: {}

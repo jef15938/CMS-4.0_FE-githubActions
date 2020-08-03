@@ -26,8 +26,8 @@ import { GetUserSiteMapBySiteIDAPI } from './api/GetUserSiteMapBySiteIDAPI';
 import { PostUserSiteMapBySiteIDAPI } from './api/PostUserSiteMapBySiteIDAPI';
 import { PutUserSiteMapByNodeIDAPI } from './api/PutUserSiteMapByNodeIDAPI';
 import { DeleteUserSiteMapByNodeIDAPI } from './api/DeleteUserSiteMapByNodeIDAPI';
-import { GetContentByContentIDAPI } from './api/GetContentByContentIDAPI';
-import { PutContentByContentIDAPI } from './api/PutContentByContentIDAPI';
+import { GetContentByIdAPI } from './api/GetContentByIdAPI';
+import { PutContentByIdAPI } from './api/PutContentByIdAPI';
 import { GetMyAuditingByOrderIDAPI } from './api/GetMyAuditingByOrderIDAPI';
 import { GetMyAuditingAPI } from './api/GetMyAuditingAPI';
 import { GetFarmByFuncIDAPI } from './api/GetFarmByFuncIDAPI';
@@ -56,6 +56,7 @@ import { GetContentDataSourceByTypeIDAPI } from './api/GetContentDataSourceByTyp
 import { GetContentVersionByContentIDAPI } from './api/GetContentVersionByContentIDAPI';
 import { PutReOrderSiteMapByNodeIDAPI } from './api/PutReOrderSiteMapByNodeIDAPI';
 import { GetFarmTriggerByTriggerIDAPI } from './api/GetFarmTriggerByTriggerIDAPI';
+import { GetFarmTreeBySourceIDAPI } from './api/GetFarmTreeBySourceIDAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GenerationHeader } from './bean/GenerationHeader';
@@ -82,6 +83,7 @@ import { LayoutGetResponse } from './bean/LayoutGetResponse';
 import { ListContentDataSourceResponse } from './bean/ListContentDataSourceResponse';
 import { ListContentVersionResponse } from './bean/ListContentVersionResponse';
 import { ListFarmTriggerDataResponse } from './bean/ListFarmTriggerDataResponse';
+import { GetFarmTreeResponse } from './bean/GetFarmTreeResponse';
 
 
 const APIResponseMap= {
@@ -107,8 +109,8 @@ GetUserSiteMapBySiteID: SiteMapGetResponse,
 PostUserSiteMapBySiteID: GenerationHeader,
 PutUserSiteMapByNodeID: GenerationHeader,
 DeleteUserSiteMapByNodeID: GenerationHeader,
-GetContentByContentID: ContentInfo,
-PutContentByContentID: GenerationHeader,
+GetContentById: ContentInfo,
+PutContentById: GenerationHeader,
 GetMyAuditingByOrderID: MyAuditingDetailGetResponse,
 GetMyAuditing: MyAuditingGetResponse,
 GetFarmByFuncID: FarmInfoGetResponse,
@@ -136,6 +138,7 @@ GetContentDataSourceByTypeID: ListContentDataSourceResponse,
 GetContentVersionByContentID: ListContentVersionResponse,
 PutReOrderSiteMapByNodeID: GenerationHeader,
 GetFarmTriggerByTriggerID: ListFarmTriggerDataResponse,
+GetFarmTreeBySourceID: GetFarmTreeResponse,
 
 }
 
@@ -174,8 +177,8 @@ this.apiFactory.registerApi(new GetUserSiteMapBySiteIDAPI());
 this.apiFactory.registerApi(new PostUserSiteMapBySiteIDAPI());
 this.apiFactory.registerApi(new PutUserSiteMapByNodeIDAPI());
 this.apiFactory.registerApi(new DeleteUserSiteMapByNodeIDAPI());
-this.apiFactory.registerApi(new GetContentByContentIDAPI());
-this.apiFactory.registerApi(new PutContentByContentIDAPI());
+this.apiFactory.registerApi(new GetContentByIdAPI());
+this.apiFactory.registerApi(new PutContentByIdAPI());
 this.apiFactory.registerApi(new GetMyAuditingByOrderIDAPI());
 this.apiFactory.registerApi(new GetMyAuditingAPI());
 this.apiFactory.registerApi(new GetFarmByFuncIDAPI());
@@ -204,6 +207,7 @@ this.apiFactory.registerApi(new GetContentDataSourceByTypeIDAPI());
 this.apiFactory.registerApi(new GetContentVersionByContentIDAPI());
 this.apiFactory.registerApi(new PutReOrderSiteMapByNodeIDAPI());
 this.apiFactory.registerApi(new GetFarmTriggerByTriggerIDAPI());
+this.apiFactory.registerApi(new GetFarmTreeBySourceIDAPI());
 
     }
 
