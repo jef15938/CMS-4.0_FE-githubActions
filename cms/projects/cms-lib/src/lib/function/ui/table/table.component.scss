@@ -1,7 +1,17 @@
-td, th {
+td,
+th {
   vertical-align: middle;
 }
 
-th.mat-header-cell, td.mat-cell {
+th.mat-header-cell,
+td.mat-cell {
   position: relative;
+}
+
+tr.select-row {
+  cursor: pointer;
+}
+
+tr.select-row:hover {
+  background-color: yellow;
 }

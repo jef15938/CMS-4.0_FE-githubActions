@@ -48,6 +48,11 @@
         編輯內容
       </button>
     </span>
+    <span style="text-align: right;">
+      <button type="button" tabindex="-1" mat-button alt="recover version" (click)="openVersionRecoverModal()">
+        版本清單
+      </button>
+    </span>
   </div>
   <div tabindex="0" class="main-block" *ngIf="manager?.stateManager?.currentState?.snapShot"
     [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">

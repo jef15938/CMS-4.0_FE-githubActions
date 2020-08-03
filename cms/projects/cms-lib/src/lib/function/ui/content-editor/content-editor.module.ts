@@ -29,6 +29,8 @@ import { FieldControlGroupComponent } from './component/content-control-panel/co
 import { TemplateControlGroupComponent } from './component/content-control-panel/control/template/template-control-group/template-control-group.component';
 import { ContentEditorContainerModalComponent } from './component/content-editor-container-modal/content-editor-container-modal.component';
 import { TemplateControlDataSourceComponent } from './component/content-control-panel/control/template/template-control-data-source/template-control-data-source.component';
+import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
+import { TableModule } from '../table';
 
 @NgModule({
   imports: [
@@ -46,6 +48,7 @@ import { TemplateControlDataSourceComponent } from './component/content-control-
     MatTabsModule,
     DragDropModule,
     WrapperModule,
+    TableModule,
   ],
   declarations: [
     ContentEditorContainerModalComponent,
@@ -64,6 +67,7 @@ import { TemplateControlDataSourceComponent } from './component/content-control-
     FieldControlHtmlEditorComponent,
     FieldControlGroupComponent,
     TemplateControlDataSourceComponent,
+    ContentVersionRecoverModalComponent,
   ],
   exports: [
     // ContentEditorComponent,

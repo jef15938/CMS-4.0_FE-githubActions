@@ -35,6 +35,7 @@ export class ContentEditorService implements ContentEditorServiceInterface {
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
       componentInitData: {
+        title: config.title || '',
         contentID: config.contentID,
         contentInfo: config.contentInfo,
         editorMode: config.editorMode,

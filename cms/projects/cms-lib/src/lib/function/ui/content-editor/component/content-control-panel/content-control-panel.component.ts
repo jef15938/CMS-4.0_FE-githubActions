@@ -91,6 +91,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     contentInfo.languages = [languageInfo];
 
     this.contentEditorService.openEditor({
+      title: '版型規範',
       contentID: null,
       contentInfo,
       editorMode: EditorMode.INFO,

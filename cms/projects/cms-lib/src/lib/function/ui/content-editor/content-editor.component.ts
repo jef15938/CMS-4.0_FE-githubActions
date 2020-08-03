@@ -15,6 +15,10 @@ import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactiv
 import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
 import { ContentTemplateInfo } from '../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 import { FieldType, TabTemplateInfo } from '@neux/render';
+import { ModalService } from '../modal';
+import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
+import { ContentService } from '../../../global/api/service';
+import { ContentVersionInfo } from '../../../global/api/neuxAPI/bean/ContentVersionInfo';
 
 const isTabTemplateInfo = (templateInfo: ContentTemplateInfo): boolean => {
   return !!(templateInfo as any).tabList;
@@ -61,6 +65,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private cmsCanDeactiveGuard: CmsCanDeactiveGuard,
+    private modalService: ModalService,
+    private contentService: ContentService,
   ) {
 
   }
@@ -252,6 +258,21 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       return false;
     }
     return true;
+  }
+
+  openVersionRecoverModal() {
+    this.modalService.openComponent({
+      component: ContentVersionRecoverModalComponent,
+      componentInitData: {
+        contentID: this.contentID,
+      }
+    }).subscribe((version: ContentVersionInfo) => {
+      if (version) {
+        this.contentService.getContentByContentID(this.contentID, version.version).subscribe(contentInfo => {
+
+        });
+      }
+    });
   }
 
 }

@@ -12,6 +12,7 @@ export enum ContentEditorActionMode {
 }
 
 export interface ContentEditorServiceConfig {
+  title?: string;
   contentID: string;
   contentInfo: ContentInfo;
   editorMode: EditorMode;

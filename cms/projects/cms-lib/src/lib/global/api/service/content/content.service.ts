@@ -9,6 +9,8 @@ import { LayoutGetResponse } from '../../neuxAPI/bean/LayoutGetResponse';
 import { map } from 'rxjs/operators';
 import { ListContentDataSourceResponse } from '../../neuxAPI/bean/ListContentDataSourceResponse';
 import { ContentDataSource } from '../../neuxAPI/bean/ContentDataSource';
+import { ListContentVersionResponse } from '../../neuxAPI/bean/ListContentVersionResponse';
+import { ContentVersionInfo } from '../../neuxAPI/bean/ContentVersionInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +28,11 @@ export class ContentService {
    * @returns
    * @memberof ContentService
    */
-  getContentByContentID(contentID: string): Observable<ContentInfo> {
+  getContentByContentID(contentID: string, version?: number): Observable<ContentInfo> {
     if (!contentID) {
       throw new ParamsError('contentID', 'getContentByContentID', 'string', contentID);
     }
-    return this.restAPIService.dispatchRestApi('GetContentByContentID', { contentID });
+    return this.restAPIService.dispatchRestApi('GetContentByContentID', { contentID, version });
   }
 
   /**
@@ -81,7 +83,7 @@ export class ContentService {
   /**
    *
    *
-   * @param {string} typeID // SiteMapGetResponse.layout_id
+   * @param {string} typeID
    * @returns
    * @memberof ContentService
    */
@@ -90,6 +92,21 @@ export class ContentService {
       throw new ParamsError('typeID', 'getContentDataSourceByTypeID', 'string', typeID);
     }
     return this.restAPIService.dispatchRestApi<ListContentDataSourceResponse>('GetContentDataSourceByTypeID', { typeID })
+      .pipe(map(res => res.datas));
+  }
+
+  /**
+   *
+   *
+   * @param {string} contentID
+   * @returns
+   * @memberof ContentService
+   */
+  getContentVersionByContentID(contentID: string): Observable<ContentVersionInfo[]> {
+    if (!contentID) {
+      throw new ParamsError('contentID', 'getContentVersionByContentID', 'string', contentID);
+    }
+    return this.restAPIService.dispatchRestApi<ListContentVersionResponse>('GetContentVersionByContentID', { contentID })
       .pipe(map(res => res.datas));
   }
 }
