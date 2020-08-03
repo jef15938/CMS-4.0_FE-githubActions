@@ -37,33 +37,6 @@ export class SimpleWysiwygService {
     return true;
   };
 
-  getSelectionHtmlElement(containerNode: Node) {
-    if (window.getSelection) {
-      const sel = window.getSelection();
-      if (sel.rangeCount) {
-        const range = sel.getRangeAt(0);
-        let node = range.commonAncestorContainer;
-        if (node.nodeType === Node.TEXT_NODE) {
-          node = node.parentNode;
-        }
-        if (!this.isChildOf(node, containerNode as any)) {
-          return null;
-        }
-        return node;
-      }
-    }
-    // tslint:disable-next-line: no-string-literal
-    else if (document['selection']) {
-      // TODO: ie 11
-      // const sel = document['selection'];
-      // if (sel.type == 'Text') {
-      //   const range = sel['createRange']();
-      //   return range.htmlText;
-      // }
-    }
-    return null;
-  }
-
   // http://stackoverflow.com/questions/4652734/return-html-from-a-user-selected-text/4652824#4652824
   getSelectionHtml(containerNode: Node) {
     if (this.getSelectionCollapsed(containerNode)) {

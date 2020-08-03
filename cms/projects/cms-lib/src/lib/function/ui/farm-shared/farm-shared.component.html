@@ -8,8 +8,7 @@
         <mat-tab *ngFor="let category of farm.category"
           [label]="(categoryName ? categoryName + ' > ' : '') + category.category_name">
           <ng-template matTabContent>
-            <!-- TODO: 正式程式 isSub 要拿掉，現在是為了展示 -->
-            <div class="detail-info-container" *ngIf="isSub && farm.detailInfo">
+            <div class="detail-info-container" *ngIf="farm.detailInfo">
               <cms-farm-detail-info [detailInfo]="farm.detailInfo"></cms-farm-detail-info>
               <hr>
             </div>

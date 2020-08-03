@@ -92,7 +92,6 @@ export class SitemapNodeDetailComponent implements OnInit {
         });
         break;
       case SiteMapNodeType.FARM:
-        // TODO: 開啟網站管理
         const funcID = this.nodeInfo.func_id;
         this.farmSharedService.openFarm(funcID).subscribe(_ => this.update.emit(this.nodeInfo));
         break;

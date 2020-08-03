@@ -42,7 +42,6 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
     of(undefined).pipe(
       concatMap(_ => this.farmFormInfoComponent.requestFormInfo()),
       concatMap(formInfo => {
-        // TODO: 新增/修改
         const formData = new FormData();
         formInfo.columns.forEach(col => {
           formData.append(col.column_id, col.value);

@@ -72,7 +72,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     const page = this.currentTablePage;
     return of(undefined).pipe(
       concatMap(_ => this.searchInfoFormComponentMap.get(category)?.requestFormInfo() || throwError('No Category in Map.')),
-      concatMap(searchFormInfo => { // TODO: 查詢 table 時帶 search 表單
+      concatMap(searchFormInfo => {
         const queryParams: { [key: string]: string } = {};
         searchFormInfo.columns.forEach(column => {
           if (column.value) { queryParams[column.column_id] = `${column.value}`; }
@@ -82,10 +82,6 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
             category.tableInfo = farmTableInfo;
           })
         );
-      }),
-      catchError(err => {
-        console.error('getCategoryTableInfo() err = ', err);
-        return NEVER;
       }),
     );
   }
@@ -216,10 +212,6 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private deleteData(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    // this.farmService.takeOffFormData(category.category_id, rowData.data_id).subscribe(_ => {
-    //   alert(`資料已刪除 : ${rowData.data_id}`);
-    //   this.getCategoryTableInfo(category).subscribe();
-    // });
     // TODO: 刪除 Farm Table 資料
     alert('功能準備中');
   }

@@ -101,7 +101,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   clear() {
     const yes = window.confirm('確定清空此頁面？');
     if (yes) {
-      // TODO: 清空所有版面
       this.manager.stateManager.currentState.snapShot.languages.forEach(language => {
         language.templates.length = 0;
       });
