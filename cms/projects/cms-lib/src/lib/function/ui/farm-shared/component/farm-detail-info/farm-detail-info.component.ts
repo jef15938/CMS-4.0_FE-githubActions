@@ -8,6 +8,7 @@ import { CmsFarmFormInfo } from './../../../../../global/model';
 })
 export class FarmDetailInfoComponent implements OnInit {
 
+  @Input() funcID = '';
   @Input() detailInfo: CmsFarmFormInfo;
 
   constructor() { }

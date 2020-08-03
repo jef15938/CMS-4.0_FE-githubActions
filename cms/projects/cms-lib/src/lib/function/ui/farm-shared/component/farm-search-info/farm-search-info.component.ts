@@ -12,6 +12,7 @@ export class FarmSearchInfoComponent implements OnInit, AfterContentChecked, OnD
 
   @ViewChild(FarmFormInfoComponent) farmFormInfoComponent: FarmFormInfoComponent;
 
+  @Input() funcID = '';
   @Input() searchInfo: CmsFarmFormInfo;
 
   @Output() farmFormInfoCompEmit = new EventEmitter<FarmFormComp>();

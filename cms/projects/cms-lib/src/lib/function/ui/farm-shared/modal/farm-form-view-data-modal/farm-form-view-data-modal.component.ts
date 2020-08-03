@@ -12,6 +12,7 @@ export class FarmFormViewDataModalComponent extends CustomModalBase implements O
   title: string | (() => string);
   actions: CustomModalActionButton[] = [];
 
+  @Input() funcID: string;
   @Input() farmFormInfo: CmsFarmFormInfo;
 
   constructor() {

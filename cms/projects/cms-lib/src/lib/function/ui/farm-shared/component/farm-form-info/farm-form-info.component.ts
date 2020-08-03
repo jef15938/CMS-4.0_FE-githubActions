@@ -1,17 +1,23 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
-import { Observable, throwError, of, Subject } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../../global/model';
-import { CmsFarmFormColumnDisplayType } from './../../../../../global/enum';
+import { CmsFarmFormColumnDisplayType, CmsFarmFormColumnTriggerType } from './../../../../../global/enum';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm-shared.interface';
 import { ContentEditorService, EditorMode } from './../../../content-editor';
-import { ContentService, SitemapService } from '../../../../../global/api/service';
+import { ContentService, FarmService } from '../../../../../global/api/service';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { HtmlEditorService } from '../../../html-editor';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
+
+interface FormColumnSetting {
+  enable: boolean;
+  readonly: boolean;
+  required: boolean;
+}
 
 @Component({
   selector: 'cms-farm-form-info',
@@ -24,11 +30,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   @Input() farmFormInfo: CmsFarmFormInfo;
   @Input() useValidation = false;
+  @Input() funcID = '';
 
-  rows: CmsFarmFormColumn[][];
   formGroup: FormGroup;
-
-  columnTrigger = new Subject<CmsFarmFormColumn>();
+  formColumnSettingMap: Map<string, FormColumnSetting>;
 
   // TEST
   sitemaps: any[] = [];
@@ -38,36 +43,16 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     private contentEditorService: ContentEditorService,
     private htmlEditorService: HtmlEditorService,
     private gallerySharedService: GallerySharedService,
-    private sitemapService: SitemapService,
+    private farmService: FarmService,
     private cmsDateAdapter: CmsDateAdapter,
   ) { }
 
   ngOnInit(): void {
-    this.rows = this.createRows(this.farmFormInfo);
     this.formGroup = this.createFormGroup(this.farmFormInfo);
-
-    // TODO: Farm Tree Test
-    // this.sitemapService.getUserSiteMapNodes('portal').subscribe(sitemap => {
-    //   this.sitemaps = sitemap;
-    // });
-  }
-
-  private createRows(farmFormInfo: CmsFarmFormInfo): CmsFarmFormColumn[][] {
-    const split_size = farmFormInfo.split_size;
-
-    let rowCounts = farmFormInfo.columns.length / split_size;
-    const floor = Math.floor(rowCounts);
-    rowCounts = rowCounts > floor ? floor + 1 : rowCounts;
-
-    const rows: CmsFarmFormColumn[][] = [];
-    for (let i = 0, l = rowCounts; i < l; ++i) {
-      const min = i * split_size;
-      const max = min + split_size;
-      const columnsInRow = farmFormInfo.columns.filter((_, index) => index >= min && index < max);
-      rows.push(columnsInRow);
-    }
-
-    return rows;
+    this.formColumnSettingMap = this.createFormColumnSettingMap(this.farmFormInfo);
+    this.farmFormInfo.columns.forEach(column => {
+      this.checkColumnTrigger(column);
+    });
   }
 
   private createFormGroup(farmFormInfo: CmsFarmFormInfo): FormGroup {
@@ -150,6 +135,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     return formGroup;
   }
 
+  private createFormColumnSettingMap(farmFormInfo: CmsFarmFormInfo): Map<string, FormColumnSetting> {
+    const map = new Map<string, FormColumnSetting>();
+    farmFormInfo?.columns?.forEach(column => {
+      map.set(column.column_id, { required: false, readonly: false, enable: true, });
+    });
+    return map;
+  }
+
   clearForm() {
     // TODO: 清除時怎麼帶預設值 ?
     this.formGroup.reset();
@@ -183,18 +176,56 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     return of(info);
   }
 
-  private checkColumnTrigger(column: CmsFarmFormColumn) {
+  checkColumnTrigger(column: CmsFarmFormColumn) {
     const triggers = column?.triggers;
-    if (triggers) {
-      // TODO: Farm checkColumnTrigger
+    if (!triggers?.length) { return; }
+    triggers.forEach(trigger => {
+      const affectedColumns = trigger.trigger_target; // 受影響的所有 column
+      if (trigger.trigger_type === CmsFarmFormColumnTriggerType.DATATRIGGER) {
+        const triggerID = trigger.trigger_setting.triggerId;
+        this.farmService.listFarmTriggerData(triggerID).subscribe(options => {
+          trigger.trigger_target.forEach(target => {
+            const targetColumnSetting = this.farmFormInfo.columns.find(c => c.column_id === target)?.setting;
+            if (targetColumnSetting) { targetColumnSetting.options = options; }
+          });
+        });
+      } else {
+        const columnValue = this.formGroup?.get(column.column_id).value;
+        const triggeredColumn = trigger.trigger_setting[columnValue]; // 當前 trigger 的 column
+        affectedColumns.forEach(affectedColumn => {
+          const columnSetting = this.formColumnSettingMap.get(affectedColumn);
 
-    }
+          switch (trigger.trigger_type) {
+            case CmsFarmFormColumnTriggerType.ENABLETRIGGER:
+              affectedColumn === triggeredColumn
+                ? columnSetting.enable = true
+                : columnSetting.enable = false;
+              break;
+            case CmsFarmFormColumnTriggerType.READONLYTRIGGER:
+              affectedColumn === triggeredColumn
+                ? columnSetting.readonly = true
+                : columnSetting.readonly = false;
+              break;
+            case CmsFarmFormColumnTriggerType.REQUIREDTRIGGER:
+              affectedColumn === triggeredColumn
+                ? columnSetting.required = true
+                : columnSetting.required = false;
+              break;
+          }
+        });
+      }
+    });
   }
 
   openContentEditor(column: CmsFarmFormColumn) {
-    const contentInfo = JSON.parse(column.value);
+    let contentInfo;
+    try {
+      contentInfo = JSON.parse(column.value);
+    } catch (error) {
+
+    }
     // TODO: fake
-    const controlId = 'farm-control-id';
+    const controlId = this.funcID;
     this.contentService.getTemplateByControlID(controlId).subscribe(selectableTemplates => {
       this.contentEditorService.openEditor({
         contentID: controlId,

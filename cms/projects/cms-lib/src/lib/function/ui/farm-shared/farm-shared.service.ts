@@ -37,6 +37,7 @@ export class FarmSharedService {
           component: FarmFormViewDataModalComponent,
           componentInitData: {
             title: '預覽',
+            funcID,
             farmFormInfo,
           },
           modalSetting: {

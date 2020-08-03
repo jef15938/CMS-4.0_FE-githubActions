@@ -24,6 +24,7 @@ import { CmsFormValidator } from '../../../global/util/form-validator';
 })
 export class DatePickerComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
 
+  @Input() readonly = false;
   @Input() formControlName = '';
   @Input() label = '';
   @Input() appearance: any = 'legacy';
@@ -88,7 +89,7 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
     this.form.valueChanges.subscribe(values => {
       const innerControl = this.form.get(this.formControlName);
       if (innerControl.valid) {
-        fn(values[this.formControlName])
+        fn(values[this.formControlName]);
       } else {
         this.ngControl.control.setErrors(innerControl.errors);
       }

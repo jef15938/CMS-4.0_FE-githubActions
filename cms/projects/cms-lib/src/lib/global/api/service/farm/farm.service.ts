@@ -6,8 +6,11 @@ import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
 import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/model';
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
+import { ListFarmTriggerDataResponse } from '../../neuxAPI/bean/ListFarmTriggerDataResponse';
+import { FarmOptionInfo } from '../../neuxAPI/bean/FarmOptionInfo';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,6 @@ import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 export class FarmService {
 
   constructor(
-    private httpClient: HttpClient,
     private restAPIService: RestApiService,
     @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
   ) { }
@@ -32,7 +34,7 @@ export class FarmService {
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
-    return this.restAPIService.dispatchRestApi('GetFarmByFuncID', { funcID });
+    return this.restAPIService.dispatchRestApi<FarmInfo>('GetFarmByFuncID', { funcID });
   }
 
   /**
@@ -79,7 +81,7 @@ export class FarmService {
     console.warn('getFarmFormInfoByFuncID() funcID = ', funcID);
     console.warn('                            dataID = ', dataID);
     if (!funcID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', funcID); }
-    return this.restAPIService.dispatchRestApi('GetFarmFormInfoByFuncID', { funcID, dataID });
+    return this.restAPIService.dispatchRestApi<CmsFarmFormInfo>('GetFarmFormInfoByFuncID', { funcID, dataID });
   }
 
   /**
@@ -98,8 +100,6 @@ export class FarmService {
     });
 
     const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}`;
-    // return this.httpClient.post(url, formData, { headers: header });
-
     return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header });
   }
 
@@ -122,9 +122,6 @@ export class FarmService {
     formData.forEach((v, k) => {
       console.log('formData ' + k + ' = ' + v);
     });
-
-    const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}?dataID=${dataID}`;
-    // return this.httpClient.put(url, formData, { headers: header });
 
     return this.restAPIService.dispatchRestApi('PutFarmFormInfoByFuncID', { funcID, dataID, requestBody: formData }, { header });
   }
@@ -188,4 +185,18 @@ export class FarmService {
     return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreviewByFuncID', { funcID });
   }
 
+  /**
+   *
+   *
+   * @param {string} triggerID
+   * @returns
+   * @memberof FarmService
+   */
+  listFarmTriggerData(triggerID: string): Observable<FarmOptionInfo[]> {
+    if (!triggerID) {
+      throw new ParamsError('triggerID', 'listFarmTriggerData', 'string', triggerID);
+    }
+    return this.restAPIService.dispatchRestApi<ListFarmTriggerDataResponse>('GetFarmTriggerByTriggerID', { triggerID })
+      .pipe(map(res => res.datas));
+  }
 }

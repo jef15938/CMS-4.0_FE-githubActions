@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, NEVER } from 'rxjs';
 import { ModalService, ModalSetting } from '../modal';
 import { ContentEditorServiceInterface, ContentEditorServiceConfig, EditorMode } from './content-editor.interface';
 import { ContentEditorContainerModalComponent } from './component/content-editor-container-modal/content-editor-container-modal.component';
@@ -17,6 +17,7 @@ export class ContentEditorService implements ContentEditorServiceInterface {
   }
 
   openEditor(config: ContentEditorServiceConfig): Observable<any> {
+    if (!config?.contentInfo) { alert('資料異常：無 ContentInfo'); return NEVER; }
     const modalSetting: ModalSetting = {
       id: `content-editor-${config.editorMode}`,
       width: '100%',

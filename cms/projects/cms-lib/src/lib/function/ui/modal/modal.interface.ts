@@ -28,6 +28,7 @@ export interface ModalSetting {
    * Note that this usually doesn't include clicking on links (unless the user is using the HashLocationStrategy).
    */
   closeOnNavigation?: false;
+  autoFocus?: boolean;
 }
 
 export interface ModalOpenComponentConfig<TComponent extends CustomModalBase> {

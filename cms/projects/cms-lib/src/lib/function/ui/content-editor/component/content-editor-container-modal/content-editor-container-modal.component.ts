@@ -36,8 +36,6 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   save(event: ContentEditorSaveEvent) {
     if (!this.contentID) { return; }
     event.editorSave();
-    console.warn('event.contentInfo = ', event.contentInfo);
-    console.warn('event.contentInfo = ', JSON.stringify(event.contentInfo));
     this.contentService.updateContent(this.contentID, event.contentInfo).subscribe(_ => {
       alert('內容儲存成功');
       if (this.onSaved) {
