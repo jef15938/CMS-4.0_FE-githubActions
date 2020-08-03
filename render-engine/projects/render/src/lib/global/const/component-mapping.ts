@@ -1,6 +1,6 @@
 import { RenderComponentMapping } from '../interface';
 import {
-  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, NewsComponent
+  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, NewsComponent, LayoutFullComponent
 } from '../component';
 import { LayoutComponent } from '../component/layout/layout.component';
 
@@ -8,6 +8,10 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'Tab',
     component: TabDemoComponent,
+  },
+  {
+    component_id: 'full',
+    component: LayoutFullComponent,
   },
   {
     component_id: 'IconPage',
