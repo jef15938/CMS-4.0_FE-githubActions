@@ -17,7 +17,8 @@ export class ContentEditorService implements ContentEditorServiceInterface {
   }
 
   openEditor(config: ContentEditorServiceConfig): Observable<any> {
-    if (!config?.contentInfo) { alert('資料異常：無 ContentInfo'); return NEVER; }
+    if (!config?.contentID && !config.content) { alert('資料異常：無 ContentID'); return NEVER; }
+    let fullScreen = true;
     const modalSetting: ModalSetting = {
       id: `content-editor-${config.editorMode}`,
       width: '100%',
@@ -30,20 +31,21 @@ export class ContentEditorService implements ContentEditorServiceInterface {
       modalSetting.width = '90%';
       modalSetting.maxWidth = '90%';
       modalSetting.height = '90%';
+      fullScreen = false;
     }
 
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
       componentInitData: {
         title: config.title || '',
+        controlID: config.controlID,
         contentID: config.contentID,
-        contentInfo: config.contentInfo,
+        content: config.content,
         editorMode: config.editorMode,
-        selectableTemplates: config.selectableTemplates,
         onSaved: config.onSaved
       },
       modalSetting
-    }, true);
+    }, fullScreen);
   }
 
 }

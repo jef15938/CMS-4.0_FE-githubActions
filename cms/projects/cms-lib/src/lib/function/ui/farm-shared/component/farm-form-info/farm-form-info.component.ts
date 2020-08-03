@@ -218,24 +218,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   openContentEditor(column: CmsFarmFormColumn) {
-    let contentInfo;
-    try {
-      contentInfo = JSON.parse(column.value);
-    } catch (error) {
-
-    }
-    // TODO: fake
-    const controlId = this.funcID;
-    this.contentService.getTemplateByControlID(controlId).subscribe(selectableTemplates => {
-      this.contentEditorService.openEditor({
-        contentID: controlId,
-        contentInfo,
-        selectableTemplates,
-        editorMode: EditorMode.EDIT,
-      }).subscribe((res: ContentInfo) => {
-        column.value = res ? JSON.stringify(res) : '';
-      });
-    });
+    const controlID = this.funcID;
+    const contentID = column.value;
+    this.contentEditorService.openEditor({
+      controlID,
+      contentID,
+      editorMode: EditorMode.EDIT,
+    }).subscribe();
   }
 
   openHtmlEditor(column: CmsFarmFormColumn) {

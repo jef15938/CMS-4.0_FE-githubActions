@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { ContentInfo } from './../../../global/api/neuxAPI/bean/ContentInfo';
-import { TemplateGetResponse } from './../../../global/api/neuxAPI/bean/TemplateGetResponse';
 
 export enum EditorMode {
   EDIT, INFO, READ,
@@ -13,10 +12,10 @@ export enum ContentEditorActionMode {
 
 export interface ContentEditorServiceConfig {
   title?: string;
+  controlID: string;
   contentID: string;
-  contentInfo: ContentInfo;
+  content?: ContentInfo;
   editorMode: EditorMode;
-  selectableTemplates: TemplateGetResponse;
   onSaved?: () => void;
 }
 

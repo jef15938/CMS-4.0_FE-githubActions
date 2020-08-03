@@ -74,22 +74,17 @@ export class SitemapNodeDetailComponent implements OnInit {
     if (!this.nodeInfo.canModify) { return; }
 
     const noteType = this.nodeInfo.node_type;
-    const nodeID = this.nodeInfo.node_id;
+    const controlID = this.nodeInfo.node_id;
+    const contentID = this.nodeInfo.content_id || controlID;
 
     switch (noteType) {
       case SiteMapNodeType.CONTENT:
-        forkJoin([
-          this.contentService.getContentByContentID(nodeID),
-          this.contentService.getTemplateByControlID(nodeID),
-        ]).subscribe(([contentInfo, selectableTemplates]) => {
-          this.contentEditorService.openEditor({
-            // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
-            contentID: nodeID,
-            contentInfo,
-            selectableTemplates,
-            editorMode: EditorMode.EDIT,
-          }).subscribe(_ => this.update.emit(this.nodeInfo));
-        });
+        this.contentEditorService.openEditor({
+          // onSaved: () => { this.update.emit(this.sitemapMaintainModel); },
+          contentID,
+          controlID,
+          editorMode: EditorMode.EDIT,
+        }).subscribe(_ => this.update.emit(this.nodeInfo));
         break;
       case SiteMapNodeType.FARM:
         const funcID = this.nodeInfo.func_id;

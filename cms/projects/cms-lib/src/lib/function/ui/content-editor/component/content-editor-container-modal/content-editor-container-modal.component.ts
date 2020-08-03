@@ -11,15 +11,16 @@ import { ContentService } from '../../../../../global/api/service';
   styleUrls: ['./content-editor-container-modal.component.scss']
 })
 export class ContentEditorContainerModalComponent extends CustomModalBase implements OnInit {
+  title = '';
   actions: CustomModalActionButton[];
 
   @Input() contentID: string;
-  @Input() contentInfo: ContentInfo;
+  @Input() controlID: string;
+  @Input() content: ContentInfo;
   @Input() editorMode: EditorMode = EditorMode.EDIT;
-  @Input() selectableTemplates: TemplateGetResponse;
   @Input() onSaved: () => void;
 
-  title: string | (() => string) = () => this.editorMode === EditorMode.INFO ? '版型規範' : '';
+  templates: TemplateGetResponse;
 
   constructor(
     private contentService: ContentService,
@@ -27,6 +28,15 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   ngOnInit(): void {
     this.modalRef.addPanelClass('cms-content-editor-container-modal');
+    console.warn('this.content = ', this.content);
+    if (!this.content) {
+      this.contentService.getContentById(this.contentID).subscribe(content => this.content = content);
+    }
+
+    if (this.editorMode === EditorMode.EDIT) {
+      this.contentService.getTemplateByControlID(this.controlID).subscribe(templates => this.templates = templates);
+    }
+
   }
 
   close(currentContentInfo: ContentInfo) {

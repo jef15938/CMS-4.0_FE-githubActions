@@ -24,15 +24,15 @@ export class ContentService {
   /**
    *
    *
-   * @param {string} contentID // SiteMapGetResponse.layout_id
+   * @param {string} contentID // SiteMapNodeGetResponse.content_id
    * @returns
    * @memberof ContentService
    */
-  getContentByContentID(contentID: string, version?: number): Observable<ContentInfo> {
-    if (!contentID) {
-      throw new ParamsError('contentID', 'getContentByContentID', 'string', contentID);
+  getContentById(id: string, version?: number): Observable<ContentInfo> {
+    if (!id) {
+      throw new ParamsError('id', 'getContentById', 'string', id);
     }
-    return this.restAPIService.dispatchRestApi('GetContentByContentID', { contentID, version });
+    return this.restAPIService.dispatchRestApi('GetContentById', { id, version });
   }
 
   /**
@@ -62,7 +62,7 @@ export class ContentService {
   /**
    *
    *
-   * @param {string} contentID // SiteMap:nodeID
+   * @param {string} contentID // SiteMapNodeGetResponse.content_id
    * @param {ContentInfo} contentInfo
    * @returns
    * @memberof ContentService
@@ -98,7 +98,7 @@ export class ContentService {
   /**
    *
    *
-   * @param {string} contentID
+   * @param {string} contentID // SiteMapNodeGetResponse.content_id
    * @returns
    * @memberof ContentService
    */
