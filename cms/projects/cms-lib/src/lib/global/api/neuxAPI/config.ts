@@ -50,6 +50,9 @@ GetFarmTakeOffByFuncID: `${BASE_URL}\/FarmTakeOff/{funcID}`,
 GetSitemapPreviewByNodeID: `${BASE_URL}\/SitemapPreview/{nodeID}`,
 GetAuditingPreviewByOrderID: `${BASE_URL}\/AuditingPreview/{orderID}`,
 GetContentDataSourceByTypeID: `${BASE_URL}\/ContentDataSource/{typeID}`,
+GetContentVersionByContentID: `${BASE_URL}\/ContentVersion/{contentID}`,
+PutReOrderSiteMapByNodeID: `${BASE_URL}\/ReOrderSiteMap/{nodeID}`,
+GetFarmTriggerByTriggerID: `${BASE_URL}\/FarmTrigger/{triggerID}`,
 
 };
 const API_TYPE = {
@@ -102,5 +105,8 @@ GetFarmTakeOffByFuncID: 'Restful',
 GetSitemapPreviewByNodeID: 'Restful',
 GetAuditingPreviewByOrderID: 'Restful',
 GetContentDataSourceByTypeID: 'Restful',
+GetContentVersionByContentID: 'Restful',
+PutReOrderSiteMapByNodeID: 'Restful',
+GetFarmTriggerByTriggerID: 'Restful',
 
 };
