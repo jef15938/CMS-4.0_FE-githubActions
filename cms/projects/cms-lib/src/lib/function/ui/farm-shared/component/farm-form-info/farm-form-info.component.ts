@@ -90,7 +90,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
         const validatorFns: ValidatorFn[] = [];
         const validation = farmFormInfo.validation;
         // required
-        const required = validation.required?.find(col => col.id === column.column_id);
+        const required = validation.required?.find(col => col === column.column_id);
         if (required) {
           validatorFns.push((control: AbstractControl) => {
             if (!CmsValidator.hasValue(control.value)) {
@@ -102,7 +102,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
           });
         }
         // email
-        const email = validation.email?.find(col => col.id === column.column_id);
+        const email = validation.email?.find(col => col === column.column_id);
         if (email) {
           validatorFns.push((control: AbstractControl) => {
             return Validators.email(control) ? {
@@ -111,14 +111,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
           });
         }
         // alphanumeric TODO: 等 api 改為 regex
-        const alphanumeric = validation.alphanumeric?.find(col => col.id === column.column_id);
+        const alphanumeric = validation.alphanumeric?.find(col => col === column.column_id);
         if (alphanumeric) {
           validatorFns.push((control: AbstractControl) => {
             return null;
           });
         }
         // number
-        const num = validation.number?.find(col => col.id === column.column_id);
+        const num = validation.number?.find(col => col === column.column_id);
         if (num) {
           validatorFns.push((control: AbstractControl) => {
             if (!CmsValidator.isNumber(control.value)) {

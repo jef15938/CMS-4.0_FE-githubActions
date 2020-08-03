@@ -9,22 +9,10 @@ import { FarmValidationInfo } from './../../global/api/neuxAPI/bean/FarmValidati
 import { TypeFactory } from './../../global/api/neuxAPI/type-factory';
 
 export class CmsFarmValidationInfo extends FarmValidationInfo {
-  public required: {
-    id: string; // Field ID
-    setting: { [key: string]: any }
-  }[];
-  public email: {
-    id: string;
-    setting: { [key: string]: any }
-  }[];
-  public alphanumeric: {
-    id: string;
-    setting: { [key: string]: any }
-  }[];
-  public number: {
-    id: string;
-    setting: { [key: string]: any }
-  }[];
+  public required: [];
+  public email: string[];
+  public alphanumeric: string[];
+  public number: string[];
   public range: {
     start_column: string;
     end_column: string;
