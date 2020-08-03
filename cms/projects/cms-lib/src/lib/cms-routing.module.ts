@@ -33,29 +33,46 @@ const routes: Routes = [
     canActivate: [CmsAuthGuard],
     children: [
       {
-        path: 'multi-site', canDeactivate: [CmsCanDeactiveGuard],
-        // loadChildren: () => import('./function-module/multi-site/multi-site.module').then(m => m.MultiSiteModule)
-        loadChildren: getMultiSiteModule
-      },
-      {
-        path: 'my-auditing', canDeactivate: [CmsCanDeactiveGuard],
-        // loadChildren: () => import('./function-module/my-auditing/my-auditing.module').then(m => m.MyAuditingModule)
-        loadChildren: getMyAuditingModule
-      },
-      {
-        path: 'gallery', canDeactivate: [CmsCanDeactiveGuard],
-        // loadChildren: () => import('./function-module/gallery/gallery.module').then(m => m.GalleryModule)
-        loadChildren: getGalleryModule
-      },
-      {
-        path: 'auditing', canDeactivate: [CmsCanDeactiveGuard],
-        // loadChildren: () => import('./function-module/auditing/auditing.module').then(m => m.AuditingModule)
-        loadChildren: getAuditingModule
-      },
-      {
-        path: 'system', canDeactivate: [CmsCanDeactiveGuard],
-        // loadChildren: () => import('./function-module/system/system.module').then(m => m.SystemModule)
-        loadChildren: getSystemModule
+        path: 'base', canDeactivate: [CmsCanDeactiveGuard],
+        children: [
+          {
+            path: 'multi-site', canDeactivate: [CmsCanDeactiveGuard],
+            // loadChildren: () => import('./function-module/multi-site/multi-site.module').then(m => m.MultiSiteModule)
+            loadChildren: getMultiSiteModule
+          },
+          {
+            path: 'my-auditing', canDeactivate: [CmsCanDeactiveGuard],
+            // loadChildren: () => import('./function-module/my-auditing/my-auditing.module').then(m => m.MyAuditingModule)
+            loadChildren: getMyAuditingModule
+          },
+          {
+            path: 'gallery', canDeactivate: [CmsCanDeactiveGuard],
+            // loadChildren: () => import('./function-module/gallery/gallery.module').then(m => m.GalleryModule)
+            loadChildren: getGalleryModule
+          },
+          {
+            path: 'auditing', canDeactivate: [CmsCanDeactiveGuard],
+            // loadChildren: () => import('./function-module/auditing/auditing.module').then(m => m.AuditingModule)
+            loadChildren: getAuditingModule
+          },
+          {
+            path: 'system', canDeactivate: [CmsCanDeactiveGuard],
+            // loadChildren: () => import('./function-module/system/system.module').then(m => m.SystemModule)
+            loadChildren: getSystemModule
+          },
+          {
+            path: ':funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+          },
+          {
+            path: ':category1/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+          },
+          {
+            path: ':category1/:category2/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+          },
+          {
+            path: ':category1/:category2/:category3/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+          }
+        ]
       },
       {
         path: 'chatbot', canDeactivate: [CmsCanDeactiveGuard],
