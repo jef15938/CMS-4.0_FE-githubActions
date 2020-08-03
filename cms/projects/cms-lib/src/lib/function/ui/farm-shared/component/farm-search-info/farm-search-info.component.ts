@@ -35,7 +35,7 @@ export class FarmSearchInfoComponent implements OnInit, AfterContentChecked, OnD
     this.intersectionObserver = new IntersectionObserver((entries, observer) => {
       this.farmFormInfoCompEmit.emit(this.farmFormInfoComponent);
     }, options);
-
+    this.intersectionObserver['USE_MUTATION_OBSERVER'] = false;
     this.intersectionObserver.observe(this.elementRef.nativeElement);
   }
 
