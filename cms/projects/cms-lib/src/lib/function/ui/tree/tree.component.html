@@ -4,7 +4,8 @@
     <mat-tree-node class="cms-tree__node pointer" *matTreeNodeDef="let node" matTreeNodeToggle>
       <div class="cms-tree__node__head " [class.cms-tree__node__head--selected]="node===selectedNode"
         (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
-
+        <div class="cms-tree__node__head__anchor cms-tree__node__head__anchor--prev"
+          (dragover)="prevOrNextDragOver($event)" (dragleave)="prevOrNextDragLeave($event)"></div>
         <mat-checkbox class="cms-tree__node__head__checkbox" [checked]="checkedNodes.indexOf(node)>-1"
           (change)="onNodeCheckboxChange($event, node)"
           [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
@@ -22,15 +23,19 @@
           </span>
 
         </mat-checkbox>
+        <div class="cms-tree__node__head__anchor cms-tree__node__head__anchor--next"
+          (dragover)="prevOrNextDragOver($event)" (dragleave)="prevOrNextDragLeave($event)"></div>
       </div>
     </mat-tree-node>
 
 
-    <mat-nested-tree-node class="cms-tree__node" *matTreeNodeDef="let node; when: hasChild">
+    <mat-nested-tree-node class="cms-tree__node pointer" *matTreeNodeDef="let node; when: hasChild">
 
-      <div class="cms-tree__node__head pointer" [class.cms-tree__node__head--selected]="node===selectedNode"
+      <div class="cms-tree__node__head " [class.cms-tree__node__head--selected]="node===selectedNode"
         (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
-
+        <div class="cms-tree__node__head__anchor cms-tree__node__head__anchor--prev"
+          (dragover)="prevOrNextDragOver($event)" (dragleave)="prevOrNextDragLeave($event)">
+        </div>
         <mat-checkbox class="cms-tree__node__head__checkbox" [checked]="checkedNodes.indexOf(node)>-1"
           (change)="onNodeCheckboxChange($event, node)"
           [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
@@ -51,6 +56,9 @@
             </mat-icon>
           </button>
         </mat-checkbox>
+        <div class="cms-tree__node__head__anchor cms-tree__node__head__anchor--next"
+          (dragover)="prevOrNextDragOver($event)" (dragleave)="prevOrNextDragLeave($event)">
+        </div>
       </div>
       <div class="cms-tree__node__body" [class.cms-tree__node__body--invisible]="!treeControl.isExpanded(node)">
         <ng-container matTreeNodeOutlet></ng-container>

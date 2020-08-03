@@ -6,7 +6,9 @@
 }
 
 .cms-tree {
-  margin-left: -1em;
+  margin-left: -2em;
+  width: calc(100% + 3em);
+  margin-top: calc(0.5em + 0px);
 
   &__body {
     margin-top: -20px;
@@ -16,31 +18,104 @@
   &__node {
     display: block;
     min-height: 40px;
-    border-left: 1px dashed $color-gray;
+    position: relative;
+
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0px;
+      left: 0;
+      display: block;
+      height: calc(100% + 10px);
+      border-left: 1px dashed $color-gray;
+    }
 
     &:last-child {
-      >.cms-tree__node__head {
-        &:before {
-          border-bottom: 1px solid $color-CIS-white;
-          z-index: 99;
-          width: 1em;
-        }
+      &:after {
+        height: calc(100% - 20px);
       }
     }
+
+    &.mat-nested-tree-node {
+
+
+      &:last-child {
+        &:before {
+          content: '';
+          display: block;
+          background-color: $color-CIS-white;
+          width: 1em;
+          position: absolute;
+          height: calc(100% - 20px);
+          left: -1px;
+          bottom: 0;
+          pointer-events: none;
+          z-index: 99;
+        }
+
+
+
+        .cms-tree__node__head {
+          transform: none;
+        }
+      }
+
+
+
+    }
+
+    &:only-child {
+      &:before {
+        content: '';
+        display: block;
+        background-color: $color-CIS-white;
+        width: 1em;
+        position: absolute;
+        height: calc(100% - 40px);
+        left: -1px;
+        bottom: 0;
+        pointer-events: none;
+
+      }
+    }
+
 
     &__head {
       min-height: 40px;
       transform: translate(0, 50%);
       position: relative;
       z-index: 99;
+      margin-top: 10px;
 
       &:before {
         content: '';
         position: absolute;
         border-bottom: 1px dashed $color-gray;
-        top: 50%;
+        top: calc(50%);
         transform: translateY(-50%) translateY(1.5px);
         width: 2em;
+        pointer-events: none;
+      }
+
+      &__anchor {
+        width: 100%;
+        height: 10px;
+        position: absolute;
+        z-index: 99;
+        transform: translateX(15px);
+        transition: 500ms;
+        background-color: transparent;
+
+        &--prev {}
+
+        &--next {
+          bottom: 0;
+        }
+
+        &--drag-overed {
+          background-color: grey;
+        }
       }
 
       &--selected {
@@ -57,10 +132,12 @@
       }
 
       &__checkbox {
-        position: absolute;
+        position: relative;
         width: calc(100% - 1em);
         margin-left: 1em;
         height: 100%;
+        display: block;
+        height: 40px;
         padding-left: 1em;
         background-color: $color-CIS-white;
       }
@@ -83,13 +160,10 @@
 
     }
 
-    >.cms-tree__node__body {
-      margin-top: 10px;
-    }
+    >.cms-tree__node__body {}
 
     &__body {
       position: relative;
-      border-bottom: 1px dashed grey;
       margin-left: 2em;
       transform: translateY(1px);
 
@@ -100,11 +174,7 @@
 
       &::ng-deep {
         mat-tree-node.cms-tree__node {
-          .cms-tree__node__head {
-            margin-top: 10px;
-
-
-          }
+          .cms-tree__node__head {}
 
         }
 
