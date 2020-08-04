@@ -1,5 +1,7 @@
 export * from './slider/slider.component';
 export * from './news/news.component';
+export * from './qa/qa.component';
+export * from './download/download.component';
 export * from './icon-page/icon-page.component';
 export * from './fields-demo/fields-demo.component';
 export * from './group-template-demo/group-template-demo.component';

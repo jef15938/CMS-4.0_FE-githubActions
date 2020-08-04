@@ -1,6 +1,6 @@
 import { RenderComponentMapping } from '../interface';
 import {
-  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, NewsComponent, LayoutFullComponent
+  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent
 } from '../component';
 import { LayoutComponent } from '../component/layout/layout.component';
 
@@ -14,13 +14,25 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
     component: LayoutFullComponent,
   },
   {
-    component_id: 'IconPage',
-    component: IconPageComponent,
-  },
-  {
     component_id: 'Slide',
     component: SliderComponent,
   },
+  {
+    component_id: 'News',
+    component: NewsComponent,
+  },
+  {
+    component_id: 'QA',
+    component: QaComponent,
+  },
+  {
+    component_id: 'Download',
+    component: DownloadComponent,
+  },
+  {
+    component_id: 'IconPage',
+    component: IconPageComponent,
+  },  
   {
     component_id: 'FieldsDemo',
     component: FieldsDemoComponent,
@@ -28,10 +40,6 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'GroupDemo',
     component: GroupTemplateDemoComponent,
-  },
-  {
-    component_id: 'News',
-    component: NewsComponent,
   },
   {
     component_id: 'full',
