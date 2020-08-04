@@ -70,7 +70,7 @@ export const environment = {
     GetDepartment: 'Restful',
     DeleteGalleryCategoryByCategoryID: 'Restful',
     PutGalleryCategoryByCategoryID: 'Restful',
-    GetUserMenu: 'Mock',
+    GetUserMenu: 'Restful',
     GetLogout: 'Restful',
     PutDepartmentByDeptID: 'Restful',
     DeleteDepartmentByDeptID: 'Restful',

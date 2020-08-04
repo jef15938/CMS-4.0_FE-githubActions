@@ -227,13 +227,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     }).subscribe();
   }
 
-  openHtmlEditor(column: CmsFarmFormColumn) {
+  openHtmlEditor(col: CmsFarmFormColumn) {
     this.htmlEditorService.openEditor({
       // title: `Html編輯`,
-      content: column.value
+      content: col.value
     }).subscribe(content => {
       if (content || content === '') {
-        column.value = content;
+        this.formGroup.get(col.column_id).setValue(content);
       }
     });
   }
@@ -241,13 +241,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   changeGallery(col: CmsFarmFormColumn) {
     this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
-        col.value = `${selectedGallery.gallery_id}`;
+        this.formGroup.get(col.column_id).setValue(`${selectedGallery.gallery_id}`);
         col.setting.file_name = selectedGallery.file_name;
       }
     });
   }
 
   onNodeCheckedChange(ev: { nodes: any[] }) {
+    // TODO: FarmFormTree
     console.warn('onNodeCheckedChange() ev = ', ev);
   }
 
