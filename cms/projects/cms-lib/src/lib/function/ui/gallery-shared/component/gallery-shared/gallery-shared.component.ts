@@ -123,7 +123,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
       { value: 'gif', display: 'gif', }
     ];
 
-    if (this.allowedFileTypes.length) {
+    if (this.allowedFileTypes?.length) {
       filterFileTypeOptions = filterFileTypeOptions.filter(option => this.allowedFileTypes.indexOf(option.value) > -1);
     }
 
