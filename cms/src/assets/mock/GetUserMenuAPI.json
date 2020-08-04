@@ -1,90 +1,93 @@
 {
   "datas": [{
+    "func_id": "base",
+    "func_name": "主功能",
+    "component_id": null,
+    "children": [{
       "func_id": "multi-site",
       "func_name": "多網站管理",
-      "component_id ": "",
+      "component_id": "multi-site",
       "children": []
-    },
-    {
-      "func_id": "my-auditing",
-      "func_name": "我的申請單",
-      "component_id ": "",
-      "children": []
-    },
-    {
-      "func_id": "gallery",
-      "func_name": "媒體庫",
-      "component_id ": "",
-      "children": []
-    },
-    {
-      "func_id": "auditing",
-      "func_name": "審核/放行管理",
-      "component_id ": "",
-      "children": []
-    },
-    {
+    }, {
       "func_id": "web",
       "func_name": "網站管理",
-      "component_id ": "",
+      "component_id": null,
       "children": [{
         "func_id": "news",
         "func_name": "最新消息管理",
-        "component_id": "",
-        "children": []
-      }]
-    },
-    {
-      "func_id": "system",
-      "func_name": "中央權限管理",
-      "component_id ": "",
-      "children": [{
-        "func_id": "admin_user",
-        "func_name": "帳號管理",
-        "component_id": "",
+        "component_id": null,
         "children": []
       }, {
-        "func_id": "dept",
-        "func_name": "部門管理",
-        "component_id": "",
+        "func_id": "news_type",
+        "func_name": "最新消息分類管理",
+        "component_id": null,
         "children": []
       }]
-    },
-    {
+    }, {
+      "func_id": "my-auditing",
+      "func_name": "我的申請單",
+      "component_id": "my-auditing",
+      "children": []
+    }, {
+      "func_id": "gallery",
+      "func_name": "媒體庫",
+      "component_id": "gallery",
+      "children": []
+    }, {
+      "func_id": "auditing",
+      "func_name": "審核/放行管理",
+      "component_id": "auditing",
+      "children": []
+    }, {
+      "func_id": "system",
+      "func_name": "中央權限管理",
+      "component_id": null,
+      "children": [{
+        "func_id": "dept",
+        "func_name": "部門管理",
+        "component_id": "dept",
+        "children": []
+      }, {
+        "func_id": "admin_user",
+        "func_name": "帳號管理",
+        "component_id": null,
+        "children": []
+      }, {
+        "func_id": "admin_group",
+        "func_name": "群組管理",
+        "component_id": null,
+        "children": []
+      }]
+    }, {
       "func_id": "chatbot",
       "func_name": "智慧助手",
-      "component_id ": "",
+      "component_id": null,
       "children": [{
-          "func_id": "item",
-          "func_name": "項目設定",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "reply",
-          "func_name": "回覆設定",
-          "component_id": "",
-          "children": []
-        }
-      ]
-    },
-    {
+        "func_id": "item",
+        "func_name": "項目設定",
+        "component_id": null,
+        "children": []
+      }, {
+        "func_id": "reply",
+        "func_name": "回覆設定",
+        "component_id": null,
+        "children": []
+      }]
+    }, {
       "func_id": "cms-chatbot",
       "func_name": "CMS 助手",
-      "component_id ": "",
+      "component_id": null,
       "children": [{
-          "func_id": "cms-item",
-          "func_name": "項目設定",
-          "component_id": "",
-          "children": []
-        },
-        {
-          "func_id": "cms-reply",
-          "func_name": "回覆設定",
-          "component_id": "",
-          "children": []
-        }
-      ]
-    }
-  ]
+        "func_id": "cms-item",
+        "func_name": "項目設定",
+        "component_id": null,
+        "children": []
+      }, {
+        "func_id": "cms-reply",
+        "func_name": "回覆設定",
+        "component_id": null,
+        "children": []
+      }]
+    }]
+  }]
 }

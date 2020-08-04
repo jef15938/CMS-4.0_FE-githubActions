@@ -1,19 +1,19 @@
 import { Component, Injector } from '@angular/core';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
-import { NewsData } from './news.interface';
+import { DownloadData } from './download.interface';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
 import { DataSourceType } from '../../enum';
 
 @Component({
-  selector: 'rdr-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.scss']
+  selector: 'rdr-download',
+  templateUrl: './download.component.html',
+  styleUrls: ['./download.component.scss']
 })
-export class NewsComponent extends DataSourceTemplateBaseComponent<NewsData> {
+export class DownloadComponent extends DataSourceTemplateBaseComponent<DownloadData> {
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
-    templateId: 'News',
+    templateId: 'Download',
     fields: [],
     source: '',
     attributes: {
@@ -21,22 +21,7 @@ export class NewsComponent extends DataSourceTemplateBaseComponent<NewsData> {
     }
   };
 
-  sourceType = DataSourceType.News;
-
-  month = {
-    '01': 'JAN',
-    '02': 'FEB',
-    '03': 'MAR',
-    '04': 'APR',
-    '05': 'MAY',
-    '06': 'JUN',
-    '07': 'JUL',
-    '08': 'AUG',
-    '09': 'SEP',
-    10: 'OCT',
-    11: 'NOV',
-    12: 'DEC',
-  };
+  sourceType = DataSourceType.Download;
 
   constructor(
     injector: Injector,

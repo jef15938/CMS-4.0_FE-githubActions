@@ -45,13 +45,14 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   /* Drag and drop */
   @Input() draggable = false;
-  @Output() dragTo = new EventEmitter<{ target: TData, to: TData }>();
+  @Output() dragTo = new EventEmitter<{ target: TData, to: TData, order: number }>();
   readonly dragGhostId = 'drag-ghost';
   dragNode: any;
   dragEvent: any;
   dragNodeExpandOverWaitTimeMs = 300;
   dragNodeExpandOverNode: any;
   dragNodeExpandOverTime: number;
+  private dragPosition: { node: TData, position: number } = null;
 
   /** Checkbox */
   @Input() checkbox = false;
@@ -202,30 +203,47 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
         }
       }
     } else {
+      this.dragPosition = { node, position: 0 };
       this.dragNodeExpandOverNode = node;
       this.dragNodeExpandOverTime = new Date().getTime();
     }
   }
 
-  handleDrop(event, node) {
-    console.log(node);
-    if (!this.draggable) { return; }
-    event.preventDefault();
-    if (node !== this.dragNode) {
-      this.dragTo.emit({ target: this.dragNode, to: this.dragNodeExpandOverNode || this.dragNode });
-    }
+  private resetDrag() {
     this.dragNode = null;
     this.dragNodeExpandOverNode = null;
     this.dragNodeExpandOverTime = 0;
+    this.dragPosition = null;
+  }
+
+  handleDrop(event, node) {
+    if (!this.draggable) { return; }
+    event.preventDefault();
+    if (node !== this.dragNode) {
+      this.dragTo.emit({ target: this.dragNode, to: this.dragNodeExpandOverNode || this.dragNode, order: 0 });
+    }
+    this.resetDrag();
+  }
+
+  private changeNodePosition(dragPosition: { node: TData, position: number }): void {
+    if (dragPosition.node === this.dragNode) { return; }
+    const parent = this.findParent(dragPosition.node);
+    if (!parent) { return; }
+    let order = (parent[this.nodeChildrenEntryField] as TData[]).indexOf(dragPosition.node) + 1; // 第一個位置是 1 不是 0
+    if (dragPosition.position > 0) { order++; }
+    this.dragTo.emit({ target: this.dragNode, to: parent, order });
   }
 
   handleDragEnd(event) {
     const ghost = document.getElementById(this.dragGhostId);
     if (ghost) { document.body.removeChild(ghost); }
     if (!this.draggable) { return; }
-    this.dragNode = null;
-    this.dragNodeExpandOverNode = null;
-    this.dragNodeExpandOverTime = 0;
+
+    if (this.dragPosition?.position) { // drop 在節點上下的 div
+      this.changeNodePosition(this.dragPosition);
+    }
+
+    this.resetDrag();
   }
 
   onNodeCheckboxChange(ev: MatCheckboxChange, node: TData) {
@@ -247,11 +265,17 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     return [].concat(this.checkedNodes);
   }
 
-  prevOrNextDragOver(event){
-    event.target.classList.add('cms-tree__node__head__anchor--drag-overed');
+  prevOrNextDragOver(event, node: TData, position: number) {
+    if (!this.draggable) { return; }
+
+    if (node !== this.dragNode) {
+      this.dragPosition = { node, position };
+      event.target.classList.add('cms-tree__node__head__anchor--drag-overed');
+    }
   }
 
-  prevOrNextDragLeave(event){
+  prevOrNextDragLeave(event) {
+    if (!this.draggable) { return; }
     event.target.classList.remove('cms-tree__node__head__anchor--drag-overed');
   }
 }

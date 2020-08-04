@@ -62,21 +62,21 @@ export class ContentService {
   /**
    *
    *
-   * @param {string} contentID // SiteMapNodeGetResponse.content_id
+   * @param {string} id // SiteMapNodeGetResponse.content_id
    * @param {ContentInfo} contentInfo
    * @returns
    * @memberof ContentService
    */
-  updateContent(contentID: string, contentInfo: ContentInfo): Observable<any> {
-    if (!contentID) { throw new ParamsError('contentID', 'updateContent', 'string', contentID); }
+  updateContent(id: string, contentInfo: ContentInfo): Observable<any> {
+    if (!id) { throw new ParamsError('id', 'updateContent', 'string', id); }
     if (!contentInfo) { throw new ParamsError('contentInfo', 'updateContent', 'ContentInfo', contentInfo); }
 
     const params: { [k: string]: any } = {
-      contentID,
+      id,
       requestBody: contentInfo,
     };
 
-    return this.restAPIService.dispatchRestApi('PutContentByContentID', params);
+    return this.restAPIService.dispatchRestApi('PutContentById', params);
   }
 
 

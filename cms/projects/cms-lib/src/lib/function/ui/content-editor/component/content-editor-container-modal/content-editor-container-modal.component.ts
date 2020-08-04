@@ -45,12 +45,13 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   save(event: ContentEditorSaveEvent) {
     if (!this.contentID) { return; }
-    event.editorSave();
+    
     this.contentService.updateContent(this.contentID, event.contentInfo).subscribe(_ => {
       alert('內容儲存成功');
       if (this.onSaved) {
         this.onSaved();
       }
+      event.editorSave();
     }, err => {
       alert('內容儲存失敗');
       console.error('內容儲存失敗', err);

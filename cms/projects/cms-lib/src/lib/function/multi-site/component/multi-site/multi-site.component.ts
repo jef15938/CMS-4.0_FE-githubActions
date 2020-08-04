@@ -180,29 +180,16 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onTreeDragTo(ev: { target: SiteMapGetResponse, to: SiteMapGetResponse }) {
+  onTreeDragTo(ev: { target: SiteMapGetResponse, to: SiteMapGetResponse, order: number }) {
     const target = ev.target;
     const to = ev.to;
-    if (!target || !to || target === to || to.children.indexOf(target) > -1) { return; }
+    const order = ev.order;
+    if (!target || !to || target === to) { return; }
     // TODO: 移動節點 api
     this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
       if (!confirm) { return; }
       of(undefined).pipe(
-        concatMap(_ => this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, target.node_id)),
-        concatMap(nodeToUpdate => {
-          return this.sitemapService.updateSiteNode(
-            nodeToUpdate.node_id,
-            nodeToUpdate.details,
-            {
-              parent_id: to.node_id,
-              content_path: nodeToUpdate.content_path,
-              url_type: nodeToUpdate.url_type,
-              url_link_node_id: nodeToUpdate.url_link_node_id,
-              url: nodeToUpdate.url,
-              url_blank: nodeToUpdate.url_blank,
-            }
-          );
-        }),
+        concatMap(_ => this.sitemapService.reOrderSiteNode(target.node_id, to.node_id, order))
       ).subscribe(_ => {
         this.onNodeUpdate(true);
       });

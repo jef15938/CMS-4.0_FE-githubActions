@@ -7,6 +7,7 @@ import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layou
 import { SliderData } from './slider.interface';
 import { MOCK_SLIDER_DATA } from './slider.mock';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
+import { DataSourceType } from '../../enum';
 
 @Component({
   selector: 'rdr-slider',
@@ -25,7 +26,7 @@ export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData>
     }
   };
 
-  sourceType = 'slider';
+  sourceType = DataSourceType.Slider;
 
   disabled = false;
 

@@ -17,7 +17,8 @@
     <div class=" item" *ngIf="menu.children?.length">
       <ul class="item__submenu">
         <li class="item__submenu__item" *ngFor="let child of menu.children">
-          <cms-menu-node [menu]="child" [category]="menu.func_id" [isAppMenu]="isAppMenu"></cms-menu-node>
+          <cms-menu-node [menu]="child" [category]="(category?category+'/':'')+menu.func_id" [isAppMenu]="isAppMenu">
+          </cms-menu-node>
         </li>
       </ul>
     </div>
