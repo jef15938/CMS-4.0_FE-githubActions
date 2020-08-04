@@ -11,10 +11,10 @@
   </div>
   <!-- footer -->
   <div class="modal-custom__tail" mat-modal-actions *ngIf="instance&&instance.actions&&instance.actions.length">
-    <span class="btn-group">
+    <div class="btn-group">
       <button type="button" tabindex="0" mat-button *ngFor="let action of instance.actions"
         (click)="action.onClick($event)">{{action.text}}</button>
-    </span>
+    </div>
 
   </div>
 </div>

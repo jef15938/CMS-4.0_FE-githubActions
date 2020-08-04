@@ -66,4 +66,10 @@
     box-shadow: 5px 5px 16px -1px rgb(126, 126, 126);
   }
 
+  .no-select {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    user-select: none;
+  }
+
 }

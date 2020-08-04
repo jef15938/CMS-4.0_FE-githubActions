@@ -1,1 +1,58 @@
+@import '../../../../../global/style/main';
 
+:host {
+  display: block;
+}
+
+.editor-toolbar {
+  &__btn {
+    color: $color-white;
+    font-size: 12px;
+
+    &__hint {
+      display: none;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 5px);
+      background-color: $color-black;
+      z-index: 99;
+      opacity: 0;
+      animation: fadeIn .5s forwards;
+      padding: 5px;
+      border-radius: 5px;
+
+      &:before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 5px 5px 5px;
+        border-color: transparent transparent $color-black transparent;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        transform: translateY(-100%);
+
+        margin: 0 auto;
+      }
+    }
+
+    &:hover {
+      .editor-toolbar__btn__hint {
+        display: block;
+
+      }
+    }
+  }
+
+  &__row {
+    padding: 0 64px 0 20px;
+    background-color: $dark-style-bg;
+
+    +.editor-toolbar__row {
+      border-top: 1px solid transparentize($color: $color-black, $amount: 0.5);
+    }
+  }
+}

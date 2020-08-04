@@ -1,7 +1,16 @@
-<div>
-  <cms-html-editor [content]="content"></cms-html-editor>
-</div>
-<div class="btn-group dark-style">
-  <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-  <button type="button" tabindex="0" mat-button (click)="confirm()">確定</button>
+<div class="html-editor-container">
+  <div class="html-editor-container__head">
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button>
+      <mat-icon aria-hidden="false">clear</mat-icon>
+    </button>
+  </div>
+  <div class="html-editor-container__editor">
+    <cms-html-editor [content]="content"></cms-html-editor>
+  </div>
+  <div class="html-editor-container__btn-group btn-group">
+    <button type="button" class="html-editor-container__btn" tabindex="0" mat-raised-button
+      (click)="close()">取消</button>
+    <button type="button" class="html-editor-container__btn" tabindex="0" mat-raised-button
+      (click)="confirm()">確定</button>
+  </div>
 </div>

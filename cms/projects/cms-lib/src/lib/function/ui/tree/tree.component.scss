@@ -3,15 +3,16 @@
 :host {
   display: block;
   background-color: $color-CIS-white;
+  overflow: hidden;
 }
 
 .cms-tree {
-  margin-left: -2em;
-  width: calc(100% + 3em);
-  margin-top: calc(0.5em + 0px);
+  margin-left: -1em;
+  width: calc(100% + 1em);
+  margin-top: 0.5em;
 
   &__body {
-    margin-top: -20px;
+    margin-top: -10px;
     background-color: $color-CIS-white;
   }
 

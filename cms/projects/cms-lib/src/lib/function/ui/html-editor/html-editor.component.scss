@@ -1,45 +1,48 @@
 @import '../../../global/style/main';
 
-::ng-deep .editor-menu {
-  mat-form-field {
-    .mat-form-field-wrapper {
-      padding-bottom: 0;
-    }
-  }
-}
+$toolbar-height: 72px;
 
 :host {
-  >div:not(:first-child) {
-    border-top: 1px solid black;
+  display: block;
+  height: 100%;
+}
+
+.html-editor {
+  height: 100%;
+
+  &__toolbar {}
+
+  &__re-edit {
+    visibility: hidden;
+    position: fixed;
+
+    &__menu {
+      &::ng-deep {
+        mat-form-field {
+          .mat-form-field-wrapper {
+            padding-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  &__main {
+    height: calc(100% - #{$toolbar-height});
+    max-height: calc(100% - #{$toolbar-height});
+    overflow: auto;
+    padding: 10px;
+  }
+
+  &__key-in {
+    height: 100%;
   }
 }
 
-$top-height: 72px;
 
-.html-editor-container {
-  position: absolute;
-  width: 100%;
-  top: $top-height;
-  height: calc(100% - #{$top-height});
-  max-height: calc(100% - #{$top-height});
-  overflow: auto;
-}
 
-.neux-noselect {
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently
-                        supported by Chrome, Edge, Opera and Firefox */
-}
+
+
 
 .neux-editor {
   ::ng-deep ol {

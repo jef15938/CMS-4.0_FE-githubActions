@@ -1,52 +1,63 @@
-<div class="neux-noselect">
-  <cms-editor-toolbar [context]="this"></cms-editor-toolbar>
-</div>
-<!-- <div class="neux-noselect">
-  <cms-editor-path [context]="this"></cms-editor-path>
-</div> -->
-<div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
-  [style.top]="contextMenuPosition.y" #MenuTrigger="matMenuTrigger" [matMenuTriggerFor]="EditorMenu">
-</div>
-<mat-menu #EditorMenu="matMenu" class="editor-menu">
-  <ng-container *ngFor="let item of contextMenuItems">
-    <ng-container *ngIf="item.type==='select'">
-      <mat-form-field appearance="outline">
-        <mat-label>{{item.text}}</mat-label>
-        <mat-select (click)="evPreventDefaultAndStopPropagation($event)"
-          (selectionChange)="item.selectionChange($event); MenuTrigger.closeMenu();" [value]="item.defaultValue">
-          <mat-option *ngFor="let option of item.selectionOptions" [value]="option.value" [disabled]="option.disabled">
-            {{option.text}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </ng-container>
-    <ng-container *ngIf="item.type!=='select'">
-      <ng-container *ngIf="!item.children?.length">
-        <button type="button" tabindex="0" mat-menu-item [disabled]="item.disabled" (click)="doAction(item.action)">
-          <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
-          {{item.text}}
-        </button>
+<div class="html-editor">
+  <div class="html-editor__toolbar no-select">
+    <cms-editor-toolbar [context]="this"></cms-editor-toolbar>
+  </div>
+  <!-- <div class="noSelect">
+    <cms-editor-path [context]="this"></cms-editor-path>
+  </div> -->
+
+  <!-- 選擇使用編輯器：增添連結/檔案/圖片/影片 功能時，因為需要一個功能可以讓USER及時修正連結/檔案/圖片/影片 內容, 所以這邊有安排一個 "即時修改(re-edit)插入內容Dialog" 元件 -->
+
+  <!-- 即時修改(re-edit)插入內容Dialog的容器 -->
+  <div class="html-editor__re-edit no-select" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y"
+    #MenuTrigger="matMenuTrigger" [matMenuTriggerFor]="EditorMenu">
+  </div>
+  <!-- 即時修改(re-edit)插入內容Dialog的容器:end -->
+
+  <!-- 即時修改(re-edit)插入內容Dialog的本體 -->
+  <mat-menu class="html-editor__re-edit__menu" #EditorMenu="matMenu">
+    <ng-container *ngFor="let item of contextMenuItems">
+      <ng-container *ngIf="item.type==='select'">
+        <mat-form-field appearance="outline">
+          <mat-label>{{item.text}}</mat-label>
+          <mat-select (click)="evPreventDefaultAndStopPropagation($event)"
+            (selectionChange)="item.selectionChange($event); MenuTrigger.closeMenu();" [value]="item.defaultValue">
+            <mat-option *ngFor="let option of item.selectionOptions" [value]="option.value"
+              [disabled]="option.disabled">
+              {{option.text}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </ng-container>
-      <ng-container *ngIf="item.children?.length">
-        <button type="button" tabindex="0" mat-menu-item [matMenuTriggerFor]="SubMenu" [disabled]="item.disabled">
-          <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
-          {{item.text}}
-        </button>
-        <mat-menu #SubMenu="matMenu">
-          <button type="button" tabindex="0" mat-menu-item *ngFor="let child of item.children"
-            [disabled]="child.disabled" (click)="doAction(child.action)">
-            <mat-icon *ngIf="child.icon">{{child.icon}}</mat-icon>
-            {{child.text}}
+      <ng-container *ngIf="item.type!=='select'">
+        <ng-container *ngIf="!item.children?.length">
+          <button type="button" tabindex="0" mat-menu-item [disabled]="item.disabled" (click)="doAction(item.action)">
+            <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+            {{item.text}}
           </button>
-        </mat-menu>
+        </ng-container>
+        <ng-container *ngIf="item.children?.length">
+          <button type="button" tabindex="0" mat-menu-item [matMenuTriggerFor]="SubMenu" [disabled]="item.disabled">
+            <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+            {{item.text}}
+          </button>
+          <mat-menu #SubMenu="matMenu">
+            <button type="button" tabindex="0" mat-menu-item *ngFor="let child of item.children"
+              [disabled]="child.disabled" (click)="doAction(child.action)">
+              <mat-icon *ngIf="child.icon">{{child.icon}}</mat-icon>
+              {{child.text}}
+            </button>
+          </mat-menu>
+        </ng-container>
       </ng-container>
     </ng-container>
-  </ng-container>
-  <button type="button" tabindex="0" mat-menu-item>
-    取消
-  </button>
-</mat-menu>
-<div class="html-editor-container">
-  <div #EditorContainer contenteditable id='editor' class="neux-editor" cmsRightClickHandler (mousedown)="onClick($event)"
-    (rightClick)="onRightClick($event)">
+    <button type="button" tabindex="0" mat-menu-item>
+      取消
+    </button>
+  </mat-menu>
+  <!-- 即時修改(re-edit)插入內容Dialog的本體 -->
+
+  <div class="html-editor__main">
+    <div class="html-editor__key-in neux-editor" #EditorContainer contenteditable id='editor' cmsRightClickHandler
+      (mousedown)="onClick($event)" (rightClick)="onRightClick($event)"></div>
   </div>
 </div>

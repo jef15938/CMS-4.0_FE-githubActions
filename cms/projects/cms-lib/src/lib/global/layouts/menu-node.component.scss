@@ -56,13 +56,24 @@
   }
 
   &__submenu {
-
     position: relative;
 
     &__item {
 
       .item__link {
         padding-left: 1.9em;
+
+      }
+
+      // 最大菜單層數: 3層
+      cms-menu-node {
+        &::ng-deep {
+          cms-menu-node {
+            .item__link {
+              padding-left: 2.9em;
+            }
+          }
+        }
       }
 
       .router-active {
@@ -77,8 +88,7 @@
           border-radius: 50%;
           background-color: $color-CIS-white;
           top: 50%;
-          margin-right: 1em;
-          position: absolute;
+          margin-right: .5em;
 
           left: 1em;
           transform: translate(0%, -50%);

@@ -1,9 +1,29 @@
-::ng-deep .cms-html-editor-container-modal mat-dialog-container {
-  padding: 0;
+@import "../../../../global/style/main";
+
+:host {
+  height: 100%;
+  display: block;
 }
 
-.btn-group {
-  position: absolute;
-  top: 36px;
-  right: 0;
+.html-editor-container {
+  height: 100%;
+
+  &__head {
+    background-color: $color-black;
+    color: $color-white;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0;
+  }
+
+  &__editor {
+    height: 100%;
+  }
+
+  &__btn-group {
+    margin-top: 36px;
+  }
+
+  &__btn {}
 }

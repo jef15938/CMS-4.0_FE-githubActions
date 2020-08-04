@@ -1,28 +1,153 @@
-<div class="dark-style">
-  <button type="button" tabindex="-1" mat-button (click)="openDescription()">編輯器說明</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.bold)">粗體</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.italic)">斜體</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.underline)">底線</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.justifyCenter)">居中</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.justifyFull)">左右對齊</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.justifyLeft)">置左</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.justifyRight)">置右</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.insertOrderedList)">有序</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.insertUnorderedList)">無序</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.indent)">向內縮排</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.outdent)">向外縮排</button>
-  <button type="button" tabindex="-1" mat-button
-    (click)="doAction(htmlEditorActions.highlight1)">標記文字_{{htmlEditorActions.highlight1?.order}}</button>
-  <button type="button" tabindex="-1" mat-button
-    (click)="doAction(htmlEditorActions.highlight2)">標記文字_{{htmlEditorActions.highlight2?.order}}</button>
-  <button type="button" tabindex="-1" mat-button
-    (click)="doAction(htmlEditorActions.highlight3)">標記文字_{{htmlEditorActions.highlight3?.order}}</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.unhighlight)">取消標記文字</button>
-</div>
-<div class="dark-style">
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.createLink)">插入連結</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.insertFile)">插入檔案</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.insertImage)">插入圖片</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.insertTable)">插入表格</button>
-  <button type="button" tabindex="-1" mat-button (click)="doAction(htmlEditorActions.insertVideo)">插入影片</button>
+<div class="editor-toolbar">
+  <div class="editor-toolbar__row">
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button (click)="openDescription()">
+      <mat-icon aria-hidden="false">description</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        編輯器說明
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.bold)">
+      <mat-icon aria-hidden="false">format_bold</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        粗體
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.italic)">
+      <mat-icon aria-hidden="false">format_italic</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        斜體
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.underline)">
+      <mat-icon aria-hidden="false">format_underline</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        底線
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.justifyCenter)">
+      <mat-icon aria-hidden="false">format_align_center</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        居中
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.justifyFull)">
+      <mat-icon aria-hidden="false">format_align_justify</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        左右對齊
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.justifyLeft)">
+      <mat-icon aria-hidden="false">format_align_left</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        置左
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.justifyRight)">
+      <mat-icon aria-hidden="false">format_align_right</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        置右
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.insertOrderedList)">
+      <mat-icon aria-hidden="false">format_list_numbered
+      </mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        有序
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.insertUnorderedList)">
+      <mat-icon aria-hidden="false">format_list_bulleted</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        無序
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.indent)">
+      <mat-icon aria-hidden="false">format_indent_decrease</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        向內縮排
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.outdent)">
+      <mat-icon aria-hidden="false">format_indent_increase</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        向外縮排
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.highlight1)">
+      <mat-icon aria-hidden="false">font_download</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        標記文字_{{htmlEditorActions.highlight1?.order}}
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.highlight2)">
+      <mat-icon aria-hidden="false">font_download</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        標記文字_{{htmlEditorActions.highlight2?.order}}
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.highlight3)">
+      <mat-icon aria-hidden="false">font_download</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        標記文字_{{htmlEditorActions.highlight3?.order}}
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.unhighlight)">
+      <mat-icon aria-hidden="false">cancel</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        取消標記文字
+      </div>
+    </button>
+  </div>
+  <div class="editor-toolbar__row">
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.createLink)">
+      <mat-icon aria-hidden="false">link</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        插入連結
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.insertFile)">
+      <mat-icon aria-hidden="false">attach_file</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        插入檔案
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.insertImage)">
+      <mat-icon aria-hidden="false">insert_photo</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        插入圖片
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.insertTable)">
+      <mat-icon aria-hidden="false">view_module</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        插入表格
+      </div>
+    </button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      (click)="doAction(htmlEditorActions.insertVideo)">
+      <mat-icon aria-hidden="false">movie</mat-icon>
+      <div class="editor-toolbar__btn__hint">
+        插入影片
+      </div>
+    </button>
+  </div>
 </div>
