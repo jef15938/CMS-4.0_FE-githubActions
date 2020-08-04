@@ -57,7 +57,7 @@ export class DepartmentService {
    */
   deleteDepartment(deptID: string) {
     if (!deptID) {
-      throw new ParamsError('deptID', 'createDepartment', 'string', deptID);
+      throw new ParamsError('deptID', 'deleteDepartment', 'string', deptID);
     }
 
     return this.restAPIService.dispatchRestApi('DeleteDepartmentByDeptID', { deptID });
@@ -86,9 +86,8 @@ export class DepartmentService {
     if (!deptID) {
       throw new ParamsError('deptID', 'getDepartmentByID', 'string', deptID);
     }
-    return this.getAllDepartment().pipe(
-      map(depts => this.getDeptFromAllById(deptID, depts))
-    );
+
+    return this.restAPIService.dispatchRestApi('GetDepartmentByDeptID', { deptID });
   }
 
   private getDeptFromAllById(id: string, all: DepartmentInfo[]): DepartmentInfo {

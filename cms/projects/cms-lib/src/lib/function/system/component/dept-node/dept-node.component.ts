@@ -6,7 +6,7 @@ import { DepartmentInfo } from '../../../../global/api/neuxAPI/bean/DepartmentIn
 import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../ui/tree';
 
 enum ActionType {
-  CREATE, EDIT
+  CREATE, EDIT, DELETE
 }
 
 export class DeptNodeCustomEvent {

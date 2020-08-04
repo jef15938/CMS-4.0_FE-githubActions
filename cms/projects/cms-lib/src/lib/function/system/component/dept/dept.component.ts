@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, concat } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, concat, of } from 'rxjs';
+import { tap, concatMap } from 'rxjs/operators';
 import { DepartmentInfo } from '../../../../global/api/neuxAPI/bean/DepartmentInfo';
 import { DepartmentService } from '../../../../global/api/service';
 import { CmsTree } from '../../../ui/tree';
@@ -47,21 +47,32 @@ export class DeptComponent implements OnInit {
 
   onCustomEvent(event: DeptNodeCustomEvent) {
     if (event instanceof DeptNodeCustomEvent) {
-      let action: 'Create' | 'Update';
+      let actionOb: Observable<any> = of(undefined);
       switch (event.action) {
         case event.ActionType.CREATE:
-          action = 'Create';
+          actionOb = this.openDeptMaintainModal('Create', event.data)
           break;
         case event.ActionType.EDIT:
-          action = 'Update';
+          actionOb = this.openDeptMaintainModal('Update', event.data)
+          break;
+        case event.ActionType.DELETE:
+          actionOb = this.deleteDepartment(event.data)
           break;
       }
-      this.openDeptMaintainModal(action, event.data).subscribe(res => {
+
+      actionOb.subscribe(res => {
         if (res) {
           this.initPage().subscribe();
         }
       });
     }
+  }
+
+  deleteDepartment(dept: DepartmentInfo) {
+    return this.modalService.openConfirm({ message: `${dept.dept_name}`, title: `確認刪除部門 ?` })
+      .pipe(
+        concatMap(confirm => confirm ? this.departmentService.deleteDepartment(dept.dept_id) : of(undefined))
+      );
   }
 
   openDeptMaintainModal(action: 'Create' | 'Update', selectedDept: DepartmentInfo) {
