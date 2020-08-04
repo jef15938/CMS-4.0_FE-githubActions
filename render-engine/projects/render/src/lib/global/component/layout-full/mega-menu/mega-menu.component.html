@@ -1,11 +1,11 @@
-<div class="header__menu" [ngClass]="classObj">
-  <div *ngFor="let item of menu" class="header__menu-item">
-    <a class="header__menu-link" [ngClass]="classObj" href="#">
+<div class="menu" [ngClass]="classObj">
+  <div *ngFor="let item of menu" class="menu__item" [ngClass]="classObj">
+    <a class="menu__item-link" href="#">
       <span>{{item.nodeName}}</span>
     </a>
 
     <ng-container *ngIf="level === 1; else children">
-      <div class="menu-dropdown">
+      <div class="menu__item-dropdown">
         <ng-container *ngTemplateOutlet="children"></ng-container>
       </div>
     </ng-container>

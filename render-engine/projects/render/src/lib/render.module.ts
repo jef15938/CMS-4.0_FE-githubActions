@@ -16,6 +16,7 @@ import { RENDER_DEFAULT_COMPONENT_MAPPINGS } from './global/const/component-mapp
 import { LayoutComponent } from './global/component/layout/layout.component';
 import { LayoutFullComponent } from './global/component/layout-full/layout-full.component';
 import { MegaMenuComponent } from './global/component/layout-full/mega-menu/mega-menu.component';
+import { MobileMegaMenuComponent } from './global/component/layout-full/mobile-mega-menu/mobile-mega-menu.component';
 import { QaComponent } from './global/component/qa/qa.component';
 import { DownloadComponent } from './global/component/download/download.component';
 
@@ -29,6 +30,7 @@ const COMPONENTS = [
   GroupTemplateDemoComponent,
   LayoutFullComponent,
   MegaMenuComponent,
+  MobileMegaMenuComponent
 ];
 
 @NgModule({
