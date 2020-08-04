@@ -39,6 +39,16 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.mainTemplates = [
       {
+        template_id: 'QA',
+        template_name: 'QA',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      },
+      {
+        template_id: 'Download',
+        template_name: 'Download',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      },
+      {
         template_id: 'News',
         template_name: 'News',
         template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
