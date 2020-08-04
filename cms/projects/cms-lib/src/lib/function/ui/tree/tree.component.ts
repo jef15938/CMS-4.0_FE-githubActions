@@ -267,8 +267,11 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   prevOrNextDragOver(event, node: TData, position: number) {
     if (!this.draggable) { return; }
-    this.dragPosition = { node, position };
-    event.target.classList.add('cms-tree__node__head__anchor--drag-overed');
+
+    if (node !== this.dragNode) {
+      this.dragPosition = { node, position };
+      event.target.classList.add('cms-tree__node__head__anchor--drag-overed');
+    }
   }
 
   prevOrNextDragLeave(event) {
