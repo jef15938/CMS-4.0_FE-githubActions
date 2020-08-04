@@ -217,4 +217,29 @@ export class SitemapService {
     return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreviewByNodeID', { nodeID, languageID });
   }
 
+  /**
+   *
+   *
+   * @param {string} nodeID required
+   * @param {string} nodeOrder required
+   * @param {string} parentID required
+   * @returns
+   * @memberof SitemapService
+   */
+  reOrderSiteNode(nodeID: string, parentID: string, nodeOrder: number) {
+    if (!nodeID) { throw new ParamsError('nodeID', 'reOrderSiteNode', 'string', nodeID); }
+    if (!parentID) { throw new ParamsError('parentID', 'reOrderSiteNode', 'string', parentID); }
+    if (!nodeOrder && nodeOrder !== 0) { throw new ParamsError('nodeOrder', 'reOrderSiteNode', 'number', nodeOrder); }
+
+    const requestBody = {};
+
+    const params: { [k: string]: any } = {
+      nodeID,
+      parent_id: parentID,
+      node_order: nodeOrder,
+      requestBody,
+    };
+
+    return this.restAPIService.dispatchRestApi('PutReOrderSiteMapByNodeID', params);
+  }
 }
