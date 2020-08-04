@@ -131,8 +131,8 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  auditingFarmData(funcID: string, dataID: string, startTime: string, endTime: string, memo: string) {
-    if (!funcID) { throw new ParamsError('funcID', 'auditingFarmData', 'string', funcID); }
+  auditingFarmData(funcId: string, dataID: string, startTime: string, endTime: string, memo: string) {
+    if (!funcId) { throw new ParamsError('funcId', 'auditingFarmData', 'string', funcId); }
     if (!dataID) { throw new ParamsError('dataID', 'auditingFarmData', 'string', dataID); }
     if (!startTime) { throw new ParamsError('startTime', 'auditingFarmData', 'string', startTime); }
     if (!endTime) { throw new ParamsError('endTime', 'auditingFarmData', 'string', endTime); }
@@ -143,11 +143,11 @@ export class FarmService {
       start_time: startTime,
       end_time: endTime,
       memo,
-      func_id: funcID
+      func_id: funcId
     };
 
     const params: { [k: string]: any } = {
-      funcID,
+      funcId,
       requestBody,
     };
 
