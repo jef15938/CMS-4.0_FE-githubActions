@@ -71,6 +71,13 @@
           cms-menu-node {
             .item__link {
               padding-left: 2.9em;
+
+              &.router-active {
+                &:before {
+                  content: '';
+                  left: 2em;
+                }
+              }
             }
           }
         }
@@ -89,7 +96,7 @@
           background-color: $color-CIS-white;
           top: 50%;
           margin-right: .5em;
-
+          position: absolute;
           left: 1em;
           transform: translate(0%, -50%);
         }

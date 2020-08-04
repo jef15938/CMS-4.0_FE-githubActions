@@ -55,11 +55,6 @@
           z-index: 99;
         }
 
-
-
-        .cms-tree__node__head {
-          transform: none;
-        }
       }
 
 
@@ -84,7 +79,6 @@
 
     &__head {
       min-height: 40px;
-      transform: translate(0, 50%);
       position: relative;
       z-index: 99;
       margin-top: 10px;

@@ -9,6 +9,11 @@
 
 
 .router-active {
+  &:before {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+
   background-color: $sidenav-actived-item-bg;
 }
 
