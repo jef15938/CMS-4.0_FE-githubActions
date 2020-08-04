@@ -1,374 +1,1548 @@
 openapi: 3.0.0
 info:
-  title: Garden Backend API
-  version: "4.0"
+  title: CMS Backend API
+  version: '4.0'
+  description: Provider CMS Backend communication API
   license:
     name: neux-garden
-  description: Provider Garden Backend communication API
 servers:
-  - url: "http://runtime.decoder.com.tw"
+  - url: 'https://cms.decoder.com.tw'
 paths:
-  "/Page/{pageID}/{lang}":
+  '/Gallery/{categoryID}':
     get:
-      summary: GetPageInfo
+      summary: GetGallery
+      tags:
+        - Gallery
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PageInfoGetResponse"
-        "400":
+                $ref: '#/components/schemas/GalleryGetResponse'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-Page
-      description: 取得該節點內容以及Layout
-      tags:
-        - Garden
+      operationId: get-gallery
+      description: 顯示該目錄底下的媒體清單，預設排序時間新到舊
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+        - schema:
+            type: number
+            default: 1
+            minimum: 1
+          in: query
+          name: page
+        - schema:
+            type: string
+          in: query
+          name: fileType
+          description: 副檔名篩選
+        - schema:
+            type: string
+          in: query
+          name: fileName
+          description: 檔名篩選，模糊搜尋
     parameters:
       - schema:
           type: string
-        name: pageID
+        name: categoryID
         in: path
         required: true
-        description: 頁面代碼
-      - schema:
-          type: string
-        name: lang
-        in: path
-        required: true
-        description: 語系
-  "/Page/{pageID}":
-    get:
-      summary: GetPageInfo
+    post:
+      summary: CreateGallery
+      operationId: post-Gallery-categoryID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PageInfoGetResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
-          description: Internal Server Error
-      operationId: get-Page
-      description: 取得該節點內容以及Layout
+                $ref: '#/components/schemas/GenerationHeader'
+      description: 新增一筆媒體庫資料與檔案
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              description: Form data格式
+        description: |-
+          用formData型式傳入
+          file:媒體庫檔案
+          description:檔案描述
       tags:
-        - Garden
-    parameters:
-      - schema:
-          type: string
-        name: pageID
-        in: path
-        required: true
-        description: 頁面代碼
-  "/SiteMap/{node_id}/{lang}":
+        - Gallery
+  /GalleryCategory:
     get:
-      summary: GetSiteMap
+      summary: GetGalleryCategory
       tags:
-        - Garden
+        - Gallery
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SiteMapGetResponse"
-        "400":
+                $ref: '#/components/schemas/GalleryCaregoryGetResponse'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-SiteMap
-      description: 取得網站向下的SiteMap節點樹
-      parameters: []
-    parameters:
-      - schema:
-          type: string
-        name: node_id
-        in: path
-        required: true
-        description: 節點Root代碼
-      - schema:
-          type: string
-        name: lang
-        in: path
-        required: true
-        description: 語系
-  "/SiteMap/{node_id}":
-    get:
-      summary: GetSiteMap
-      tags:
-        - Garden
+      operationId: get-GalleryCategory
+      description: 顯示該使用者可看到哪些媒體庫目錄
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+    parameters: []
+    post:
+      summary: CreateGalleryCategory
+      operationId: post-GalleryCategory
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SiteMapGetResponse"
-        "400":
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-SiteMap
-      description: 取得網站向下的SiteMap節點樹
-      parameters: []
-    parameters:
-      - schema:
-          type: string
-        name: node_id
-        in: path
-        required: true
-        description: 節點Root代碼
-  "/Preview/Page/{pageID}/{lang}":
-    get:
-      summary: GetPreviewPageInfo
+      description: 建立媒體庫目錄
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GalleryCategoryPutRequest'
+        description: ''
+      tags:
+        - Gallery
+  /Login:
+    post:
+      summary: Login
+      operationId: post-Login
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PageInfoGetResponse"
-        "400":
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '500':
           description: Internal Server Error
-      operationId: get-Preview-Page
-      description: CMS預覽使用取得Temp的PageInfo
       tags:
-        - Preview
-    parameters:
-      - schema:
-          type: string
-        name: pageID
-        in: path
-        required: true
-        description: 頁面代碼
-      - schema:
-          type: string
-        name: lang
-        in: path
-        required: true
-        description: 語系
-  "/Preview/Page/{pageID}":
+        - Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+      description: 登入CMS
+    parameters: []
+  /Department:
     get:
-      summary: GetPreviewPageInfo
+      summary: GetDepartment
+      tags:
+        - System
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PageInfoGetResponse"
-        "400":
+                $ref: '#/components/schemas/DepartmentGetResponse'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-Preview-Page
-      description: CMS預覽使用取得Temp的PageInfo
-      tags:
-        - Preview
+      operationId: get-Dept
+      description: 顯示所有部門樹狀結構
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          required: true
+          description: application/json
+    parameters: []
+  '/GalleryCategory/{categoryID}':
     parameters:
       - schema:
           type: string
-        name: pageID
+        name: categoryID
         in: path
+        description: ''
         required: true
-        description: 頁面代碼
-  "/Preview/SiteMap/{node_id}/{lang}":
-    get:
-      summary: GetPreviewSiteMap
+    delete:
+      summary: DeleteGalleryCategory
+      operationId: delete-GalleryCategory-categoryID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SiteMapGetResponse"
-        "400":
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-Preview-SiteMap
-      description: 取得預覽網站向下的SiteMap節點樹
       tags:
-        - Preview
-    parameters:
-      - schema:
-          type: string
-        name: node_id
-        in: path
-        required: true
-        description: 節點Root代碼
-      - schema:
-          type: string
-        name: lang
-        in: path
-        required: true
-        description: 語系
-  "/Preview/SiteMap/{node_id}/":
-    get:
-      summary: GetPreviewSiteMap
+        - Gallery
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+      description: 刪除媒體目錄
+    put:
+      summary: UpdateGalleryCategory
+      operationId: put-GalleryCategory-categoryID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SiteMapGetResponse"
-        "400":
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-Preview-SiteMap
-      description: 取得預覽網站向下的SiteMap節點樹
       tags:
-        - Preview
-    parameters:
-      - schema:
-          type: string
-        name: node_id
-        in: path
-        required: true
-        description: 節點Root代碼
-  "/Preview/Compare/{pageID}":
+        - Gallery
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GalleryCategoryPutRequest'
+        description: ''
+      description: 用於更新目錄名稱/移動父層使用
+  /UserMenu:
     get:
-      summary: GetPreviewCompareInfo
-      tags:
-        - Preview
+      summary: GetLoginUserCMSMenu
       responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
-          description: Internal Server Error
-      operationId: get-Preview-Compare
-      description: 取得預覽時差異資訊
-    parameters:
-      - schema:
-          type: string
-        name: pageID
-        in: path
-        required: true
-        description: 頁面代碼
-  "/SiteMap/Download/{format}":
-    get:
-      summary: DownloadSiteMap
-      tags:
-        - Garden
-      responses:
-        "200":
-          description: OK
-          headers: {}
-          content:
-            application/xml:
-              schema:
-                type: string
-        "400":
-          description: Bad Request
-        "500":
-          description: Internal Server Error
-      operationId: get-SiteMap-Download
-      description: 下載SiteMap
-    parameters:
-      - schema:
-          type: string
-          enum:
-            - Google
-        name: format
-        in: path
-        required: true
-        description: 下載格式
-  "/Content/{contentID}":
-    get:
-      summary: GetContentInfo
-      tags:
-        - Garden
-      responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ContentInfo"
-        "400":
+                $ref: '#/components/schemas/MenuGetResponse'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-Content
-      description: 取得編輯JSON內容
+      operationId: get-UserMenu
+      description: 取得User登入可存取的CMSMenu
+      tags:
+        - Menu
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+    parameters: []
+  /Logout:
+    get:
+      summary: Logout
+      tags:
+        - Authorization
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '500':
+          description: Internal Server Error
+      operationId: get-Logout
+      description: 登出CMS
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+  '/Department/{deptID}':
     parameters:
       - schema:
           type: string
-        name: contentID
+        name: deptID
         in: path
         required: true
-        description: Content代碼
-  "/Preview/Content/{contentID}":
+    put:
+      summary: UpdateDepartment
+      operationId: put-Department-deptID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: 更新部門節點
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentMaintainRequest'
+      tags:
+        - System
+    delete:
+      summary: DeleteDepartment
+      operationId: delete-Department-deptID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: 刪除部門節點
+      tags:
+        - System
+    post:
+      summary: CreateDepartment
+      operationId: post-Department-deptID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: 顯示所有部門樹狀結構
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentMaintainRequest'
+      tags:
+        - System
     get:
-      summary: GetPreviewContent
+      summary: GetDepartmentInfo
+      operationId: get-Department-deptID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentDetailInfo'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - System
+      description: 取得部門節點
+  /Auditing:
+    get:
+      summary: GetAuditingList
+      tags:
+        - Auditing
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditingGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Auditing
+      description: 取得主管待審清單
+      parameters:
+        - schema:
+            type: number
+            default: 1
+            minimum: 1
+          in: query
+          name: page
+          description: 沒有傳入預設就是1
+    parameters: []
+  '/Auditing/{orderID}':
+    parameters:
+      - schema:
+          type: number
+        name: orderID
+        in: path
+        required: true
+        description: ''
+    post:
+      summary: ApproveAuditing
+      operationId: post-Auditing-orderID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: 主管簽核
+      tags:
+        - Auditing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditingSubmitRequest'
+  /LoginInfo:
+    get:
+      summary: GetLoginInfo
+      tags:
+        - Authorization
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-LoginInfo
+      description: 取得登入者資料
+  /CMSMenu:
+    get:
+      summary: GetCMSAllMenu
+      tags:
+        - Menu
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuGetResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-CMSMenu
+      description: 取得CMS所有功能清單
+  '/UserSiteMap/{siteID}':
+    get:
+      summary: GetUserSiteMap
+      tags:
+        - SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMapGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-UserSiteMap
+      description: 取得登入者可存取SiteMap
+    post:
+      summary: CreateSiteNode
+      operationId: post-UserSiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - SiteMap
+      description: 建立節點
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSiteMapPostRequest'
+        description: ''
+    parameters:
+      - schema:
+          type: string
+        name: siteID
+        in: path
+        required: true
+        description: 網站代碼
+  '/UserSiteMap/{nodeID}':
+    put:
+      summary: UpdateUserSiteMap
+      operationId: put-UserSiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: 更新節點
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSiteMapPutRequest'
+      tags:
+        - SiteMap
+    parameters:
+      - schema:
+          type: string
+        name: nodeID
+        in: path
+        required: true
+    delete:
+      summary: DeleteUserSiteMap
+      operationId: delete-UserSiteMap-nodeID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - SiteMap
+  '/Content/{id}':
+    get:
+      summary: GetContent
       tags:
         - Content
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ContentInfo"
-        "400":
+                $ref: '#/components/schemas/ContentInfo'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-Preview-Content
+      operationId: get-Content
+      description: 取得該頁面的Content JSON
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: version
+          description: 版本，不給則取最新的
+    put:
+      summary: UpdateContent
+      operationId: put-Content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - Content
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentInfo'
+      description: 更新Content JSON資料
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+  '/MyAuditing/{orderID}':
+    get:
+      summary: GetMyAuditingDetail
+      tags:
+        - Auditing
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyAuditingDetailGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-MyAuditingDetail
+      description: 取得我的申請單明細資料
+    parameters:
+      - schema:
+          type: string
+        name: orderID
+        in: path
+        required: true
+  /MyAuditing:
+    get:
+      summary: GetMyAuditing
+      tags:
+        - Auditing
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyAuditingGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-MyAuditing
+      description: 取得我的申請單資料
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: page
+          description: 沒有傳入預設帶入1
+  '/Farm/{funcID}':
+    get:
+      summary: GetFarmInfo
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmInfoGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Farm
+      description: 客製化網站管理取得整頁資訊
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: funcID
+        in: path
+        required: true
+        description: 功能代碼
+  '/FarmTableInfo/{funcID}':
+    get:
+      summary: GetFarmTableInfo
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmTableInfo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FarmTableInfo
+      description: 點了換頁或搜尋時呼叫
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: page
+          description: 第幾頁
+    parameters:
+      - schema:
+          type: string
+        name: funcID
+        in: path
+        required: true
+        description: 功能代碼
+  '/FarmFormInfo/{funcID}':
+    get:
+      summary: GetFarmFormInfo
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmFormInfo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FarmFormInfo
+      description: 新增/修改時呼叫
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: dataID
+          description: 帶入TableDataInfo.data_id
+    parameters:
+      - schema:
+          type: string
+        name: funcID
+        in: path
+        required: true
+        description: 功能代碼
+    post:
+      summary: CreateFarmForm
+      operationId: post-FarmFormInfo-funcID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - Farm
+      description: 建立一筆網站管理資料
+      parameters:
+        - schema:
+            type: string
+            example: ''
+          in: header
+          name: content-type
+          description: multipart/form-data
+          required: true
+    put:
+      summary: UpdateFarmForm
+      operationId: put-FarmFormInfo-funcID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - Farm
+      description: 更新網站管理一筆資料
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: dataID
+          required: true
+          description: 帶入TableDataInfo.data_id
+        - schema:
+            type: string
+            example: ''
+          in: header
+          name: content-type
+          required: true
+          description: multipart/form-data
+  '/FarmAuditing/{funcId}':
+    post:
+      summary: AuditingFarmData
+      operationId: post-FarmAuditing-funcID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - Farm
+      description: 網站管理資料送審
+      parameters:
+        - schema:
+            type: string
+            example: ''
+          in: header
+          name: content-type
+          description: multipart/form-data
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FarmAuditingRequest'
+    parameters:
+      - schema:
+          type: string
+        name: funcId
+        in: path
+        required: true
+        description: 功能ID
+  '/FarmDetailInfo/{funcID}':
+    get:
+      summary: GetFarmDetailInfo
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmFormInfo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FarmDetailInfo
+      description: 取得某筆資料明細
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: dataID
+          required: true
+          description: 帶入TableDataInfo.data_id
+    parameters:
+      - schema:
+          type: string
+        name: funcID
+        in: path
+        required: true
+        description: 功能代碼
+  '/FarmPreview/{funcID}':
+    get:
+      summary: GetFarmPreview
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewInfo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FarmPreview
+      description: 取得某筆資料預覽畫面，分欄位式或整頁預覽
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: dataID
+          required: true
+          description: 帶入TableDataInfo.data_id
+    parameters:
+      - schema:
+          type: string
+        name: funcID
+        in: path
+        required: true
+        description: 功能代碼
+  '/Gallery/Show/{galleryID}':
+    get:
+      summary: GetGalleryShow
+      tags:
+        - Gallery
+      responses:
+        '200':
+          description: OK
+          headers: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Gallery-Show
+      description: 顯示媒體庫檔案(圖片的話直接將這個網址放入img src內，檔案的話另開視窗)
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+  /Site:
+    get:
+      summary: GetSiteList
+      tags:
+        - SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Sites
+      description: 取得多個網站清單
+  '/Site/{siteID}':
+    get:
+      summary: GetSiteMap
+      tags:
+        - SiteMap
+      operationId: get-SiteMap
+      description: 取得全站SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMapGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    parameters:
+      - schema:
+          type: string
+        name: siteID
+        in: path
+        required: true
+        description: 網站代碼
+  '/Site/{siteID}/{nodeID}':
+    get:
+      summary: GetSiteNode
+      tags:
+        - SiteMap
+      operationId: get-SiteNode
+      description: 取得特定site中的特定node資訊
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMapNodeGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    parameters:
+      - schema:
+          type: string
+        name: siteID
+        in: path
+        required: true
+        description: 網站代碼
+      - schema:
+          type: string
+        name: nodeID
+        in: path
+        required: true
+        description: 節點代碼
+  '/Group/Menu/{groupID}':
+    get:
+      summary: GetGroupMenuList
+      tags:
+        - System
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupMenuGetResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Group-Menu
+      description: 取得群組設定的後台功能
+    parameters:
+      - schema:
+          type: string
+        name: groupID
+        in: path
+        required: true
+  '/Group/SiteMap/{groupID}':
+    get:
+      summary: GetGroupSiteMapList
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupSiteMapGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Group-SiteMap
+      tags:
+        - System
+      description: 取得群組設定的前台功能
+    parameters:
+      - schema:
+          type: string
+        name: groupID
+        in: path
+        required: true
+  '/Template/{controlID}':
+    get:
+      summary: GetTemplate
+      tags:
+        - Content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Template
+      description: 取得編輯器所需的版型清單
+    parameters:
+      - schema:
+          type: string
+        name: controlID
+        in: path
+        required: true
+        description: 依照這個參數區分這次編輯時可以使用哪些版型，在節點管理中則帶入layout_id，網站管理的話會多一個欄位來控制controlid
+  '/Gallery/{galleryID}':
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+    put:
+      summary: UpdateGallery
+      operationId: put-Gallery-galleryID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      parameters: []
+      description: ''
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              description: Form data格式
+        description: |-
+          用formData型式傳入
+          file:媒體庫檔案
+          description:檔案描述
+      tags:
+        - Gallery
+    delete:
+      summary: DeleteGallery
+      operationId: delete-Gallery-galleryID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      tags:
+        - Gallery
+  '/SitemapAuditing/{nodeId}':
+    post:
+      summary: AuditingSitemap
+      operationId: post-SitemapAuditing
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SitemapAuditingRequest'
+      tags:
+        - SiteMap
+    parameters:
+      - schema:
+          type: string
+        name: nodeId
+        in: path
+        required: true
+        description: 節點流水號
+  /Layout:
+    get:
+      summary: GetLayout
+      tags:
+        - Content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LayoutGetResponse'
+      operationId: get-Layout
+      description: 取得版面佈局列表
+  '/FarmTakeOff/{funcID}':
+    parameters:
+      - schema:
+          type: string
+        name: funcID
+        in: path
+        required: true
+    get:
+      summary: TakeOffFarmData
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FarmTakeOff-funcID
+      description: 針對某一筆資料強制下架
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: dataID
+          required: true
+          description: 帶入TableDataInfo.data_id
+  '/SitemapPreview/{nodeID}':
+    parameters:
+      - schema:
+          type: string
+        name: nodeID
+        in: path
+        required: true
+        description: 節點ID
+    get:
+      summary: GetSitemapPreview
+      tags:
+        - SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewInfo'
+      operationId: get-SitemapPreview-nodeID
+      description: 節點預覽，分節點資訊預覽或整頁式預覽
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: language_id
+          description: 給語系，回傳URL也帶入語系
+  '/AuditingPreview/{orderID}':
+    parameters:
+      - schema:
+          type: string
+        name: orderID
+        in: path
+        required: true
+        description: 送審單號ID
+    get:
+      summary: GetAuditingPreview
+      tags:
+        - Auditing
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewInfo'
+      operationId: get-AuditingPreview-orderID
+      description: 取得審核單號的預覽畫面，分整頁式與FARM欄位預覽
+  '/ContentDataSource/{typeID}':
+    get:
+      summary: ListContentDataSource
+      tags:
+        - Content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListContentDataSourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-ContentDataSource
+      description: 取得編輯器消息版型的下拉選單
+    parameters:
+      - schema:
+          type: string
+        name: typeID
+        in: path
+        required: true
+        description: 類型代碼
+  '/ContentVersion/{contentID}':
+    get:
+      summary: ListContentVersion
+      tags:
+        - Content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListContentVersionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-ContentVersion
     parameters:
       - schema:
           type: string
@@ -376,111 +1550,1035 @@ paths:
         in: path
         required: true
         description: 內容代碼
-  "/DataSource/{typeID}/{id}":
+  '/ReOrderSiteMap/{nodeID}':
     parameters:
       - schema:
           type: string
-        name: typeID
+        name: nodeID
         in: path
         required: true
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-    get:
-      summary: ListDataSourceData
-      tags:
-        - Garden
+    put:
+      summary: ReOrderSitemap
+      operationId: put-ReOrderSiteMap-siteID
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListDataSourceDataResponse"
-        "400":
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "./cms-apis.v1.yaml#/components/schemas/ErrorInfo"
-        "500":
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
           description: Internal Server Error
-      operationId: get-typeID-data-id
-      description: 依照不同資料來源取得實際Raw Data
+      tags:
+        - SiteMap
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: node_order
+          description: 順序
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: parent_id
+          description: 父層代碼
+          required: true
+  '/FarmTrigger/{triggerID}':
+    parameters:
+      - schema:
+          type: string
+        name: triggerID
+        in: path
+        required: true
+        description: 帶入Trigger代碼
+    get:
+      summary: ListFarmTriggerData
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFarmTriggerDataResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FarmTrigger-triggerID
+      description: ''
+  '/Farm/Tree/{sourceID}':
+    get:
+      summary: GetFarmTree
+      tags:
+        - Farm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFarmTreeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Farm-Tree
+    parameters:
+      - schema:
+          type: string
+        name: sourceID
+        in: path
+        required: true
 components:
   schemas:
-    PageInfoGetResponse:
-      title: PageInfoGetResponse
+    LoginRequest:
+      title: LoginRequest
       type: object
       x-tags:
         - Model
-      description: 傳入content_path後取得頁面相關資訊
       properties:
+        username:
+          type: string
+          description: 帳號
+        password:
+          type: string
+          description: 密碼
+        validation_code:
+          type: number
+          description: 圖形驗證碼
+      required:
+        - username
+        - password
+        - validation_code
+    GenerationHeader:
+      title: GenerationHeader
+      type: object
+      x-tags:
+        - Model
+      properties:
+        success:
+          description: 成功或失敗
+          type: boolean
+        identity:
+          type: string
+          description: >-
+            若為新增或修改，回傳資料pk，經過base64編碼組合，ex編碼前:node=1(And符號打不出來)version=2，會回傳bm9kZT0xJnZlcnNpb249Mg==
+          example: bm9kZT0xJnZlcnNpb249Mg==
+      required:
+        - success
+    LoginResponse:
+      title: LoginResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        loginInfo:
+          $ref: '#/components/schemas/LoginInfo'
+      required:
+        - loginInfo
+    LoginInfo:
+      title: LoginInfo
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: 登入帳號
+        user_name:
+          type: string
+          description: 登入者姓名
+        dept_id:
+          type: string
+          description: 部門代碼
+      required:
+        - user_id
+        - user_name
+        - dept_id
+      x-tags:
+        - Model
+    MenuGetResponse:
+      title: MenuGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuInfo'
+    MenuInfo:
+      title: MenuInfo
+      type: object
+      properties:
+        func_id:
+          type: string
+          example: sitemanagement
+          description: 功能代碼
+        func_name:
+          type: string
+          example: 節點管理
+          description: 功能名稱
+        component_id:
+          type: string
+          description: 元件代碼
+        children:
+          type: array
+          description: 下層功能
+          items:
+            $ref: '#/components/schemas/MenuInfo'
+      required:
+        - func_id
+        - func_name
+        - children
+      x-tags:
+        - Model
+    GalleryCaregoryGetResponse:
+      title: GalleryCaregoryGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/GalleryCategoryInfo'
+    GalleryCategoryInfo:
+      title: GalleryCategoryInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        category_id:
+          type: string
+          example: '1'
+          description: 目錄代碼
+        category_name:
+          type: string
+          example: 個資相關PDF
+          description: 目錄名稱
+        can_upload:
+          type: boolean
+          example: 'true'
+          description: 是否能上傳至該目錄
+        assign_dept_id:
+          type: string
+          description: |-
+            指定給哪些部門使用(新增需帶入登入者部門且不能取消)
+
+            多個部門用半形(,)逗點分開
+        children:
+          type: array
+          description: 子層目錄
+          items:
+            $ref: '#/components/schemas/GalleryCategoryInfo'
+      required:
+        - category_id
+        - category_name
+        - can_upload
+    GalleryCategoryPushResponse:
+      title: GalleryCategoryPushResponse
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/GenerationHeader'
+        body:
+          $ref: '#/components/schemas/GalleryCategoryInfo'
+      x-tags:
+        - Model
+    GalleryGetResponse:
+      title: GalleryGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/GalleryInfo'
+    GalleryInfo:
+      title: GalleryInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        gallery_id:
+          type: number
+          description: 媒體代碼
+        file_name:
+          type: string
+          example: sample-1.png
+          description: 檔名
+        size:
+          type: string
+          description: 檔案大小(單位：kb)
+          example: '350'
+        file_type:
+          type: string
+          enum:
+            - PDF
+            - DOC
+            - DOCX
+            - XLS
+            - XLSX
+            - PNG
+            - JPG
+            - JPEG
+            - GIF
+          description: 檔案類型
+        create_time:
+          type: string
+          format: date-time
+          example: '2020-04-30 15:00:00'
+          description: 檔案建立時間
+        url:
+          type: string
+          description: 檔案URL
+      required:
+        - gallery_id
+        - file_name
+        - size
+        - file_type
+        - create_time
+        - url
+    PageInfo:
+      title: PageInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        totalPageSize:
+          type: number
+          description: 總頁數
+        totalRecSize:
+          type: number
+          description: 總筆數
+        page:
+          type: number
+          description: 目前頁數
+    DepartmentInfo:
+      title: DepartmentInfo
+      type: object
+      description: ''
+      x-tags:
+        - Model
+      properties:
+        dept_id:
+          type: string
+          description: 部門代碼
+        dept_name:
+          type: string
+          description: 部門名稱
+        children:
+          type: array
+          description: 子層部門
+          items:
+            $ref: '#/components/schemas/DepartmentInfo'
+      required:
+        - dept_id
+        - dept_name
+        - children
+    DepartmentGetResponse:
+      title: DepartmentGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/DepartmentInfo'
+    DepartmentMaintainRequest:
+      title: DepartmentMaintainRequest
+      type: object
+      description: ''
+      properties:
+        dept_name:
+          type: string
+          description: 部門名稱
+        parent_id:
+          type: string
+          description: 上層部門(若為第一層不需傳值)
+      required:
+        - dept_name
+      x-tags:
+        - Model
+    GalleryCategoryPutRequest:
+      title: GalleryCategoryPutRequest
+      type: object
+      properties:
+        category_name:
+          type: string
+          description: 目錄名稱
+        parent_id:
+          type: string
+          description: 上層代碼(若為第一層不需傳值)
+        assign_dept_id:
+          type: string
+          description: |-
+            指定給哪些部門使用(新增需帶入登入者部門且不能取消)
+
+            多個部門用半形(,)逗點分開
+      required:
+        - category_name
+        - assign_dept_id
+      x-tags:
+        - Model
+    AuditingInfo:
+      title: AuditingInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        order_id:
+          type: number
+          description: 審核單號
+        order_name:
+          type: string
+          description: 審核單名稱
+        version:
+          type: number
+          description: 資料版本
+        start_time:
+          type: string
+          format: date-time
+          description: 上架時間
+        end_time:
+          type: string
+          format: date-time
+          description: 下架時間
+        submit_comment:
+          type: string
+          description: 送審意見
+        create_name:
+          type: string
+          description: 送審姓名
+      required:
+        - order_id
+        - order_name
+        - version
+        - start_time
+        - end_time
+        - create_name
+    AuditingGetResponse:
+      title: AuditingGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditingInfo'
+    MyAuditingDetailInfo:
+      title: MyAuditingDetailInfo
+      type: object
+      properties:
+        auditing_group_name:
+          type: string
+          description: 簽核群組名稱
+        auditing_stage:
+          type: number
+          description: 簽核階段
+        auditing_name:
+          type: string
+          description: 簽核主管姓名
+        auditing_dept_name:
+          type: string
+          description: 簽核部門名稱
+        status:
+          type: string
+          description: 簽核狀態
+        auditing_time:
+          type: string
+          format: date-time
+          description: 簽核時間
+        auditing_comment:
+          type: string
+          description: 簽核意見
+      required:
+        - auditing_group_name
+        - auditing_stage
+      x-tags:
+        - Model
+    MyAuditingDetailGetResponse:
+      title: MyAuditingDetailGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyAuditingDetailInfo'
+    AuditingSubmitRequest:
+      title: AuditingSubmitRequest
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - REJECT
+            - APPROVED
+          description: 審核結果
+        comment:
+          type: string
+          description: 審核意見
+      required:
+        - status
+      x-tags:
+        - Model
+    PublishInfo:
+      title: PublishInfo
+      type: object
+      properties:
+        draft:
+          type: object
+          properties:
+            start_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+            end_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+        pending_published:
+          type: object
+          properties:
+            start_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+            end_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+        published:
+          type: object
+          properties:
+            start_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+            end_time:
+              type: string
+              format: date
+              example: '2020-01-01'
+      x-tags:
+        - Model
+    SiteMapGetResponse:
+      title: SiteMapGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        node_id:
+          type: string
+          description: 節點流水號
+        node_name:
+          type: string
+          description: 節點名稱
+        canModify:
+          type: boolean
+          description: 是否能修改
+        canSubmit:
+          type: boolean
+          description: 是否能送審
+        canPreview:
+          type: boolean
+          description: 是否能預覽
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteMapGetResponse'
+      required:
+        - node_id
+        - node_name
+        - canModify
+        - canSubmit
+        - canPreview
+      description: ''
+    SiteMapNodeGetResponse:
+      x-tags:
+        - Model
+      title: SiteMapNodeGetResponse
+      type: object
+      properties:
+        node_id:
+          type: string
+          description: 節點流水號
         layout_id:
           type: string
-          description: 主結構代碼(需對應前端套版)
-        meta_title:
+          description: 模版代碼
+        node_type:
           type: string
-          description: SEO標題
-        meta_description:
+          enum:
+            - URL
+            - CONTENT
+            - FARM
+          description: 節點類型
+        func_id:
           type: string
-          description: SEO描述
-        meta_keyword:
-          type: string
-          description: SEO關鍵字
-        meta_image:
-          type: string
-          description: SEO分享圖
+          description: 若node_type為FARM，此欄位回傳功能ID
         content_id:
           type: string
-          description: 內文ContentID
-        lang:
+          description: 若node_type為CONTENT，此欄位回傳編輯內容ID
+        url_type:
           type: string
-          description: 語系
-        node_root:
+          enum:
+            - INSIDE
+            - OUTSIDE
+          description: URL類型
+        url_link_node_id:
           type: string
-          description: Sitemap根節點
+          description: |-
+            URL站內節點
+            有url_type為INSIDE才有
+        url:
+          type: string
+          description: |-
+            URL站外網址
+            有url_type為OUTSIDE才有
+        url_blank:
+          type: string
+          enum:
+            - 'Y'
+            - 'N'
+          description: URL是否另開視窗
+        content_path:
+          type: string
+          description: 節點連結路徑
+        version:
+          type: string
+          description: 資料版本
+        canModify:
+          type: boolean
+          description: 是否能修改
+        canSubmit:
+          type: boolean
+          description: 是否能送審
+        canPreview:
+          type: boolean
+          description: 是否可以預覽
+        create_by:
+          type: string
+        create_time:
+          type: string
+        update_by:
+          type: string
+        update_time:
+          type: string
+        publish_info:
+          $ref: '#/components/schemas/PublishInfo'
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteNodeDetailInfo'
       required:
-        - layout_id
+        - node_id
+        - canModify
+        - canSubmit
+        - canPreview
+        - create_by
+        - create_time
+        - update_by
+        - update_time
+        - details
+    UserSiteMapPutRequest:
+      title: UserSiteMapPutRequest
+      type: object
+      x-tags:
+        - Model
+      properties:
+        parent_id:
+          type: string
+        url_type:
+          type: string
+        url_link_node_id:
+          type: string
+        url:
+          type: string
+        url_blank:
+          type: string
+        content_path:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/SiteNodeDetailInfo'
+    UserSiteMapPostRequest:
+      title: UserSiteMapPostRequest
+      type: object
+      x-tags:
+        - Model
+      properties:
+        node_name:
+          type: string
+        layout_id:
+          type: string
+        parent_id:
+          type: string
+        node_type:
+          type: string
+        url_type:
+          type: string
+        url_link_node_id:
+          type: string
+        url:
+          type: string
+        url_blank:
+          type: string
+        content_path:
+          type: string
+          description: 節點連結路徑
+        meta_title:
+          type: string
+        meta_description:
+          type: string
+        meta_keyword:
+          type: string
+        meta_image:
+          type: string
+      required:
+        - node_name
         - meta_title
-        - content_id
-        - lang
-        - node_root
     ErrorInfo:
       title: ErrorInfo
       type: object
+      x-tags:
+        - Model
       properties:
         error_code:
           type: string
+          description: 錯誤碼
         error_message:
           type: string
+          description: 錯誤訊息
       required:
         - error_code
         - error_message
-      x-tags:
-        - Model
-    LanguageInfo:
-      title: LanguageInfo
+    MyAuditingGetResponse:
+      title: MyAuditingGetResponse
       type: object
-      description: ""
       properties:
-        language_id:
-          type: string
-          description: 語言ID
-          example: zh-TW
-        language_name:
-          type: string
-          description: 語言名稱
-          example: 中文
-        templates:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        datas:
           type: array
           items:
-            $ref: "#/components/schemas/ContentTemplateInfo"
+            $ref: '#/components/schemas/MyAuditingInfo'
+      x-tags:
+        - Model
+    MyAuditingInfo:
+      title: MyAuditingInfo
+      type: object
+      properties:
+        order_id:
+          type: number
+        order_name:
+          type: string
+        status:
+          type: string
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        version:
+          type: string
       required:
-        - language_id
-        - language_name
+        - order_id
+        - order_name
+        - status
+        - start_time
+        - end_time
+        - version
+      x-tags:
+        - Model
+    FarmFormInfo:
+      title: FarmFormInfo
+      type: object
+      description: Search & Form & Detail共用的物件
+      x-tags:
+        - Model
+      properties:
+        split_size:
+          type: number
+          description: 控制一列多少欄
+        columns:
+          type: array
+          description: 欄位資料
+          items:
+            type: object
+            properties:
+              display_text:
+                type: string
+                description: 欄位顯示名稱
+              display_type:
+                type: string
+                description: 欄位顯示類型
+                enum:
+                  - TEXT
+                  - TEXTAREA
+                  - SELECT
+                  - RADIO
+                  - CHECKBOX
+                  - DATE
+                  - GALLERY
+                  - EDITOR
+                  - DATETIME
+                  - TREE
+                  - LABEL
+                  - LINK
+              value:
+                type: string
+                description: 欄位值
+              column_id:
+                type: string
+                description: 視為input的name
+              triggers:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FarmTriggerInfo'
+              setting:
+                type: object
+                description: 欄位設定
+                properties:
+                  max_length:
+                    type: number
+                    description: 最大長度(只有TEXT跟TEXTAREA才有)
+                  options:
+                    type: array
+                    description: 選單類內容
+                    items:
+                      $ref: '#/components/schemas/FarmOptionInfo'
+                  placeholder:
+                    type: string
+                    description: 輸入框的提醒文字
+                  tree_source:
+                    type: string
+                    description: Type為TREE才會有，主要放長TREE的API路徑
+                  file_name:
+                    type: string
+                    description: 上傳後的檔名
+                  url:
+                    type: string
+                    description: 當type是LINK時提供url網址
+              is_readonly:
+                type: boolean
+            required:
+              - display_text
+              - display_type
+              - column_id
+              - is_readonly
+        validation:
+          $ref: '#/components/schemas/FarmValidationInfo'
+      required:
+        - split_size
+    FarmOptionInfo:
+      title: FarmOptionInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        value:
+          type: string
+        text:
+          type: string
+      required:
+        - value
+        - text
+      description: 選單類內容物件
+    FarmTriggerInfo:
+      title: FarmTriggerInfo
+      type: object
+      description: 控制表單連動物件
+      x-tags:
+        - Model
+      properties:
+        trigger_type:
+          type: string
+          description: |-
+            驅動類型：
+
+            DataTrigger∶資料連動類型，驅動後需呼叫後台API取得option放入trigger_target。
+
+            EnableTrigger：顯示連動，把trigger_target欄位顯示出來
+
+            ReadOnlyTrigger：Readonly連動，把trigger_target欄位改為ReadOnly屬性
+          enum:
+            - DATATRIGGER
+            - ENABLETRIGGER
+            - READONLYTRIGGER
+            - REQUIRETRIGGER
+        trigger_target:
+          type: array
+          description: 放哪些欄位「被連動」
+          minItems: 1
+          items:
+            type: string
+        trigger_setting:
+          type: object
+          description: |-
+            依照不同的Trigger_type有不同的物件。
+
+            當Trigger_Type時會放：
+            trigger_id = xxx
+          properties:
+            '':
+              type: string
+      required:
+        - trigger_type
+        - trigger_target
+    FarmValidationInfo:
+      title: FarmValidationInfo
+      type: object
+      description: ''
+      x-tags:
+        - Model
+      properties:
+        required:
+          type: array
+          items:
+            type: string
+        email:
+          type: array
+          items:
+            type: string
+        alphanumeric:
+          type: array
+          items:
+            type: string
+        number:
+          type: array
+          items:
+            type: string
+        range:
+          type: array
+          items:
+            type: object
+            properties:
+              start_column:
+                type: string
+              end_column:
+                type: string
+            required:
+              - start_column
+              - end_column
+    FarmTableInfo:
+      title: FarmTableInfo
+      type: object
+      description: 基本表格物件
+      x-tags:
+        - Model
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        can_create:
+          type: boolean
+        can_checkbox:
+          type: boolean
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/FarmTableDataInfo'
+      required:
+        - pageInfo
+        - can_create
+        - can_checkbox
+    FarmTableDataInfo:
+      title: FarmTableDataInfo
+      type: object
+      x-tags:
+        - Model
+      description: ''
+      properties:
+        data_id:
+          type: string
+          description: 每一筆Raw的唯一值
+        is_checked:
+          type: boolean
+          description: 該筆是否已勾選
+        columns:
+          type: array
+          items:
+            type: object
+            properties:
+              display_type:
+                type: string
+                enum:
+                  - LABEL
+                  - LINK
+                description: 顯示類型
+              value:
+                type: string
+                description: 顯示值
+              display_text:
+                type: string
+                description: 顯示標題
+            required:
+              - display_type
+              - value
+              - display_text
+        actions:
+          type: array
+          description: 該筆可以做的操作(action)
+          items:
+            type: string
+            enum:
+              - MODIFY
+              - DELETE
+              - PUBLISH
+              - 'OFF'
+              - PREVIEW
+              - MORE
+      required:
+        - data_id
+        - is_checked
+        - actions
+    FarmInfoGetResponse:
+      title: FarmInfoGetResponse
+      type: object
+      x-tags:
+        - Model
+      description: ''
+      properties:
+        category:
+          type: array
+          description: 前台以tab方式區分不同資料分類
+          items:
+            $ref: '#/components/schemas/FarmCategoryInfo'
+        detailInfo:
+          $ref: '#/components/schemas/FarmFormInfo'
+      required:
+        - category
     ContentInfo:
       title: ContentInfo
       type: object
@@ -490,13 +2588,18 @@ components:
         languages:
           type: array
           items:
-            $ref: "#/components/schemas/LanguageInfo"
+            $ref: '#/components/schemas/LanguageInfo'
+        galleries:
+          type: array
+          description: 使用的媒體庫檔案ID
+          items:
+            type: string
     ContentTemplateInfo:
       title: ContentTemplateInfo
       type: object
       x-tags:
         - Model
-      description: ""
+      description: ''
       properties:
         id:
           type: string
@@ -509,7 +2612,7 @@ components:
           type: array
           description: 版型中的欄位
           items:
-            $ref: "#/components/schemas/ContentFieldInfo"
+            $ref: '#/components/schemas/ContentFieldInfo'
         attributes:
           type: object
           description: 做Extension使用
@@ -561,43 +2664,21 @@ components:
       required:
         - dept_id
         - dept_name
-    SiteMapGetResponse:
+    SiteInfo:
+      title: SiteInfo
       type: object
-      title: SitemapGetResponse
       x-tags:
         - Model
-      description: ""
       properties:
-        node_id:
+        site_id:
           type: string
-          description: 節點流水號
-        node_name:
+        site_name:
           type: string
-          description: 節點名稱
-        url:
-          type: string
-          description: |-
-            URL站外網址
-            有url_type為OUTSIDE才有
-        url_blank:
-          type: string
-          enum:
-            - "Y"
-            - "N"
-          description: URL是否另開視窗
-        children:
-          type: array
-          items:
-            $ref: "#/components/schemas/SiteMapGetResponse"
-        content_id:
-          type: string
-          description: Content代碼
       required:
-        - node_id
-        - node_name
-        - content_id
-    ListDataSourceDataResponse:
-      title: ListDataSourceDataResponse
+        - site_id
+        - site_name
+    SiteGetResponse:
+      title: SiteGetResponse
       type: object
       x-tags:
         - Model
@@ -605,4 +2686,340 @@ components:
         datas:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/SiteInfo'
+    GroupMenuGetResponse:
+      title: GroupMenuGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: object
+          required:
+            - func_id
+          properties:
+            func_id:
+              type: string
+      required:
+        - datas
+    GroupSiteMapGetResponse:
+      title: GroupSiteMapGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: object
+          required:
+            - node_id
+            - can_add
+            - can_modify
+            - can_delete
+          properties:
+            node_id:
+              type: string
+            can_add:
+              type: boolean
+            can_modify:
+              type: boolean
+            can_delete:
+              type: boolean
+      required:
+        - datas
+    TemplateGetResponse:
+      title: TemplateGetResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        static:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+        tab:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+        dynamic:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+        customize:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+    TemplateInfo:
+      title: TemplateInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        template_id:
+          type: string
+        template_name:
+          type: string
+        template_thumbnail:
+          type: string
+      required:
+        - template_id
+        - template_name
+        - template_thumbnail
+    FarmAuditingRequest:
+      title: FarmAuditingRequest
+      type: object
+      description: ''
+      properties:
+        data_id:
+          type: string
+          description: 資料id(tableInfo.data_id)
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        memo:
+          type: string
+        func_id:
+          type: string
+      required:
+        - data_id
+        - start_time
+        - end_time
+        - memo
+        - func_id
+    SitemapAuditingRequest:
+      title: SitemapAuditingRequest
+      type: object
+      description: ''
+      properties:
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        memo:
+          type: string
+        site_id:
+          type: string
+      required:
+        - start_time
+        - end_time
+        - memo
+        - site_id
+    LanguageInfo:
+      title: LanguageInfo
+      type: object
+      description: ''
+      properties:
+        language_id:
+          type: string
+          description: 語言ID
+          example: zh-TW
+        language_name:
+          type: string
+          description: 語言名稱
+          example: 中文
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentTemplateInfo'
+    LayoutGetResponse:
+      title: LayoutGetResponse
+      type: object
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/LayoutInfo'
+    LayoutInfo:
+      title: LayoutInfo
+      type: object
+      properties:
+        layout_id:
+          type: string
+          description: 版面佈局ID
+        layout_name:
+          type: string
+          description: 版面佈局名稱
+        layout_thumbnail:
+          type: string
+          description: 版面佈局縮圖
+    FarmCategoryInfo:
+      title: FarmCategoryInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        category_id:
+          type: string
+          description: 當如果該category點了更多，funcId帶入category_id
+        category_name:
+          type: string
+          description: 帶入前台tab顯示名稱
+        searchInfo:
+          $ref: '#/components/schemas/FarmFormInfo'
+        tableInfo:
+          $ref: '#/components/schemas/FarmTableInfo'
+      required:
+        - category_id
+        - category_name
+    PreviewInfo:
+      title: PreviewInfo
+      type: object
+      description: 預覽model，分為整頁是預覽與FARM的欄位式預覽
+      x-tags:
+        - Model
+      properties:
+        preview_type:
+          type: string
+          description: 預覽類型
+          enum:
+            - ONE_PAGE
+            - FARM
+        url:
+          type: string
+          description: 預覽URL，當preview_type是單頁式時呈現
+        func_id:
+          type: string
+          description: 功能ID，當preview_type是FARM時呈現
+        data_id:
+          type: string
+          description: |
+            資料ID，當preview_type是FARM時呈現
+      required:
+        - preview_type
+    SiteNodeDetailInfo:
+      title: SiteNodeDetailInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        language_id:
+          type: string
+        language_name:
+          type: string
+        node_name:
+          type: string
+        meta_title:
+          type: string
+        meta_description:
+          type: string
+        meta_keyword:
+          type: string
+        meta_image:
+          type: string
+        is_default:
+          type: boolean
+          description: 是否為預設語言
+      required:
+        - language_id
+        - language_name
+        - node_name
+    ListContentDataSourceResponse:
+      title: ListContentDataSourceResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentDataSource'
+      required:
+        - datas
+    ContentDataSource:
+      title: ContentDataSource
+      type: object
+      x-tags:
+        - Model
+      properties:
+        id:
+          type: string
+          description: 分類代碼
+        name:
+          type: string
+          description: 分類名稱
+      required:
+        - id
+        - name
+    ListContentVersionResponse:
+      title: ListContentVersionResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentVersionInfo'
+    ContentVersionInfo:
+      title: ContentVersionInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        version:
+          type: number
+          description: 版本號
+        create_time:
+          type: string
+          description: 建立帳號
+        create_by:
+          type: string
+          description: 建立時間
+      required:
+        - version
+        - create_time
+        - create_by
+    ListFarmTriggerDataResponse:
+      title: ListFarmTriggerDataResponse
+      type: object
+      x-tags:
+        - Model
+      description: ''
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/FarmOptionInfo'
+      required:
+        - datas
+    GetFarmTreeResponse:
+      title: GetFarmTreeResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        check_type:
+          type: string
+          enum:
+            - SINGLE
+            - MULTIPLE
+          description: "\b挑選方式(單選/多選)"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FarmTreeInfo'
+      required:
+        - check_type
+    FarmTreeInfo:
+      title: FarmTreeInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/FarmTreeInfo'
+      required:
+        - id
+        - name
+        - children
+  securitySchemes: {}
