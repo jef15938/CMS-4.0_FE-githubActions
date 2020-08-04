@@ -35,7 +35,7 @@ $toolbar-height: 72px;
   }
 
   &__key-in {
-    height: 100%;
+    height: calc(100% - 20px);
   }
 }
 

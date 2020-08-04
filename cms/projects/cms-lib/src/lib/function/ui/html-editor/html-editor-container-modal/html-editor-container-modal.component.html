@@ -1,16 +1,25 @@
 <div class="html-editor-container">
   <div class="html-editor-container__head">
-    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button>
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button (click)="showConfirm()">
       <mat-icon aria-hidden="false">clear</mat-icon>
     </button>
   </div>
   <div class="html-editor-container__editor">
     <cms-html-editor [content]="content"></cms-html-editor>
   </div>
-  <div class="html-editor-container__btn-group btn-group">
-    <button type="button" class="html-editor-container__btn" tabindex="0" mat-raised-button
-      (click)="close()">取消</button>
-    <button type="button" class="html-editor-container__btn" tabindex="0" mat-raised-button
-      (click)="confirm()">確定</button>
+
+  <div class="html-editor-container__confirm" *ngIf="confirmIsOn">
+    <div class="html-editor-container__confirm__dialog dialog">
+      <div class="dialog__description">
+        您即將離開編輯器，請問是否要採用本次編輯的內容?
+      </div>
+      <div class="dialog__btn-group btn-group">
+        <button type="button" class="dialog__btn" tabindex="0" mat-stroked-button (click)="editorClose()">否</button>
+        <button type="button" class="dialog__btn" tabindex="0" mat-stroked-button (click)="confirm()">是</button>
+      </div>
+    </div>
   </div>
+
+
+
 </div>

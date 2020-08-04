@@ -13,7 +13,7 @@ export class HtmlEditorContainerModalComponent extends CustomModalBase implement
 
   @Input() title: string | (() => string) = '';
   actions: CustomModalActionButton[];
-
+  confirmIsOn = false;
   @Input() content: string;
 
   constructor() { super(); }
@@ -24,7 +24,17 @@ export class HtmlEditorContainerModalComponent extends CustomModalBase implement
 
   confirm() {
     const content = this.htmlEditorComponent.getContent();
+    this.confirmIsOn = false;
     this.close(content);
+  }
+
+  editorClose(){
+    this.confirmIsOn = false;
+    this.close();
+  }
+
+  showConfirm(){
+    this.confirmIsOn = true;
   }
 
 }
