@@ -15,7 +15,7 @@ export class HtmlComponent extends CommonTemplateBaseComponent implements OnInit
     fields: [{
       fieldId: 'html',
       fieldType: FieldType.HTMLEDITOR,
-      fieldVal: '',
+      fieldVal: '<p>請輸入 HTML 內容</p>',
       extension: {},
     }],
     attributes: {},

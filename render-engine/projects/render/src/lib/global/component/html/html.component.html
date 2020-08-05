@@ -1,5 +1,5 @@
 <ng-container *ngIf="templateInfo">
   <div [libLayoutFieldHtmlEditor]="templateInfo?.fields | getFieldFromFieldsById:'html'" #fieldHtmlEditor="field"
-    [innerHTML]="fieldHtmlEditor.fieldInfo?.fieldVal||'<div></div>' | safeHtml">
+    [innerHTML]="(fieldHtmlEditor.fieldInfo?.fieldVal||'<p>無 HTML 內容</p>' )| safeHtml">
   </div>
 </ng-container>
