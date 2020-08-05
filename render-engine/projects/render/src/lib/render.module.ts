@@ -19,6 +19,7 @@ import { MegaMenuComponent } from './global/component/layout-full/mega-menu/mega
 import { MobileMegaMenuComponent } from './global/component/layout-full/mobile-mega-menu/mobile-mega-menu.component';
 import { QaComponent } from './global/component/qa/qa.component';
 import { DownloadComponent } from './global/component/download/download.component';
+import { HtmlComponent } from './global/component/html/html.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -30,7 +31,9 @@ const COMPONENTS = [
   GroupTemplateDemoComponent,
   LayoutFullComponent,
   MegaMenuComponent,
-  MobileMegaMenuComponent
+  MobileMegaMenuComponent,
+  LayoutComponent,
+  HtmlComponent,
 ];
 
 @NgModule({
@@ -45,7 +48,7 @@ const COMPONENTS = [
   declarations: [
     RenderComponent,
     ...COMPONENTS,
-    LayoutComponent
+
   ],
   exports: [
     RenderComponent,
