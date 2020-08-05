@@ -9,6 +9,13 @@
   height: 100%;
 
   &__head {
+    &__title {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 40px 20px 40px;
+      display: block;
+    }
+
     +.modal-custom__content {
       margin-top: 20px;
     }
