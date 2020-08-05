@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Inject } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { GalleryService } from '../../../../../global/api/service';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { Subject, fromEvent } from 'rxjs';
 import { switchMap, tap, takeUntil } from 'rxjs/operators';
+import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../../../global/interface';
 
 @Component({
   selector: 'cms-html-editor-insert-img-modal',
@@ -30,6 +32,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   constructor(
     private galleryService: GalleryService,
     private gallerySharedService: GallerySharedService,
+    @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
   ) { super(); }
 
   ngOnInit(): void {
