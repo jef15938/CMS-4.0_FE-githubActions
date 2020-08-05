@@ -1256,6 +1256,24 @@ paths:
         name: groupID
         in: path
         required: true
+    put:
+      summary: PutGroupMenuList
+      operationId: put-Group-Menu-groupID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      description: 更新該群組可使用的後台功能
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupMenuGetResponse'
+      tags:
+        - System
   '/Group/SiteMap/{groupID}':
     get:
       summary: GetGroupSiteMapList
@@ -1286,6 +1304,24 @@ paths:
         name: groupID
         in: path
         required: true
+    put:
+      summary: PutGroupSiteMapList
+      operationId: put-Group-SiteMap-groupID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+      description: 更新群組可使用的前台功能
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupSiteMapGetResponse'
+      tags:
+        - System
   '/Template/{controlID}':
     get:
       summary: GetTemplate
@@ -2694,14 +2730,9 @@ components:
         - Model
       properties:
         datas:
-          type: object
-          required:
-            - func_id
-          properties:
-            func_id:
-              type: string
-      required:
-        - datas
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMenuInfo'
     GroupSiteMapGetResponse:
       title: GroupSiteMapGetResponse
       type: object
@@ -2709,23 +2740,9 @@ components:
         - Model
       properties:
         datas:
-          type: object
-          required:
-            - node_id
-            - can_add
-            - can_modify
-            - can_delete
-          properties:
-            node_id:
-              type: string
-            can_add:
-              type: boolean
-            can_modify:
-              type: boolean
-            can_delete:
-              type: boolean
-      required:
-        - datas
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupSitemapInfo'
     TemplateGetResponse:
       title: TemplateGetResponse
       type: object
@@ -2997,7 +3014,7 @@ components:
           enum:
             - SINGLE
             - MULTIPLE
-          description: "\b挑選方式(單選/多選)"
+          description: 挑選方式(單選/多選)
         data:
           type: array
           items:
@@ -3022,4 +3039,29 @@ components:
         - id
         - name
         - children
+    GroupSitemapInfo:
+      title: GroupSitemapInfo
+      type: object
+      required:
+        - node_id
+        - can_add
+        - can_modify
+        - can_delete
+      properties:
+        node_id:
+          type: string
+        can_add:
+          type: boolean
+        can_modify:
+          type: boolean
+        can_delete:
+          type: boolean
+    GroupMenuInfo:
+      title: GroupMenuInfo
+      type: object
+      required:
+        - func_id
+      properties:
+        func_id:
+          type: string
   securitySchemes: {}
