@@ -59,6 +59,11 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
         template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
       },
       {
+        template_id: 'HTML',
+        template_name: 'HTML',
+        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      },
+      {
         template_id: 'Tab',
         template_name: 'Tab',
         template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
