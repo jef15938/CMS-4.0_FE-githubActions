@@ -6,3 +6,4 @@ export * from './farm/farm.service';
 export * from './gallery/gallery.service';
 export * from './menu/menu.service';
 export * from './sitemap/sitemap.service';
+export * from './group/group.service';

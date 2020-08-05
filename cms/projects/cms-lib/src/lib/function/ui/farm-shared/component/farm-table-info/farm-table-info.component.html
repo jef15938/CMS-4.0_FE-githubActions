@@ -3,6 +3,12 @@
     <div>目前頁數:{{pageInfo.page}}</div>
     <br>
   </ng-container>
+  <div *ngIf="tableInfo.can_create" style="text-align: right;">
+    <button type="button" tabindex="0" mat-button color="primary"
+      (click)="onActionClick(CmsFarmTableDataAction.CREATE)">
+      新增
+    </button>
+  </div>
   <table mat-table [dataSource]="tableInfo.datas" class="mat-elevation-z8" style="width: 100%;">
 
     <ng-container *ngFor="let col of (tableInfo|getFarmTableDisplayCols)" [matColumnDef]="col">
@@ -16,11 +22,7 @@
           </mat-checkbox>
         </ng-container>
         <ng-container *ngIf="col===ACTION_COLUMN">
-          <div *ngIf="tableInfo.can_create" style="text-align: center;">
-            <button type="button" tabindex="0" mat-icon-button (click)="onActionClick(CmsFarmTableDataAction.CREATE)">
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
+          <div style="text-align: center;">操作</div>
         </ng-container>
       </th>
       <td mat-cell *matCellDef="let element" [class.action-col]="col===ACTION_COLUMN">
@@ -64,6 +66,15 @@
                 </ng-container>
               </mat-icon>
             </button>
+          </ng-container>
+          <ng-container *ngIf="customAction">
+            <ng-container *ngFor="let btn of customAction.btns">
+              <button type="button" tabindex="0" mat-icon-button (click)="btn.click(element, tableInfo, injector)">
+                <mat-icon [fontSet]="btn.fontSet" [fontIcon]="btn.fontIcon">
+                  <ng-container *ngIf="btn.icon">{{btn.icon}}</ng-container>
+                </mat-icon>
+              </button>
+            </ng-container>
           </ng-container>
         </ng-container>
       </td>
