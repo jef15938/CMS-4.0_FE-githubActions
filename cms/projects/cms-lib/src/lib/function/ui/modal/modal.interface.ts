@@ -27,7 +27,7 @@ export interface ModalSetting {
    * Whether the dialog should close when the user goes backwards/forwards in history.
    * Note that this usually doesn't include clicking on links (unless the user is using the HashLocationStrategy).
    */
-  closeOnNavigation?: false;
+  closeOnNavigation?: boolean;
   autoFocus?: boolean;
 }
 

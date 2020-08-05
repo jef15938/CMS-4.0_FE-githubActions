@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input, ComponentRef } from '@angular/core';
 import { concat, Subject, of, Observable, NEVER } from 'rxjs';
-import { tap, takeUntil, debounceTime, concatMap, map } from 'rxjs/operators';
+import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../../global/api/service';
 import { PageInfo } from '../../../../../global/api/neuxAPI/bean/PageInfo';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
@@ -60,7 +60,6 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.init().subscribe();
 
     this.categorySelected$.pipe(
-      debounceTime(200),
       tap(selectedCategory => this.selectedCategory = selectedCategory),
       takeUntil(this.destroy$),
     ).subscribe(_ => this.getGallery().subscribe());

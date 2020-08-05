@@ -10,17 +10,8 @@ export enum ContentEditorActionMode {
   TEMPLATE = 'TEMPLATE',
 }
 
-export interface ContentEditorServiceConfig {
-  title?: string;
-  controlID: string;
-  contentID: string;
-  content?: ContentInfo;
-  editorMode: EditorMode;
+export interface ContentEditorConfig {
   onSaved?: () => void;
-}
-
-export interface ContentEditorServiceInterface {
-  openEditor(config: ContentEditorServiceConfig): Observable<any>;
 }
 
 export class ContentEditorSaveEvent {

@@ -39,7 +39,7 @@ export class CmsFarmTableInfo extends FarmTableInfo {
 export class CmsFarmFormColumn {
   display_text: string; // 欄位顯示名稱
   display_type: CmsFarmFormColumnDisplayType; // 欄位顯示類型
-  value: string; // 欄位值
+  value: any; // 欄位值
   column_id: string; // 視為 input 的 name
   triggers: {
     trigger_type: string; // 驅動類型

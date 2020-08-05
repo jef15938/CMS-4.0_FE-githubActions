@@ -1,7 +1,7 @@
 <form #form="ngForm">
   <div class="page-content-container">
     <div class="img-container">
-      <img [src]="src">
+      <img [src]="environment.apiBaseUrl+src" *ngIf="src">
       <button class="dark-style" type="button" tabindex="-1" mat-button (click)="changeGallery()"
         style="position: absolute; top: 0; right: 0">媒體庫</button>
     </div>

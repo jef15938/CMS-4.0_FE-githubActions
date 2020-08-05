@@ -48,9 +48,9 @@
         編輯內容
       </button>
     </span>
-    <span style="text-align: right;">
+    <span style="text-align: right;" *ngIf="contentID">
       <button type="button" tabindex="-1" mat-button alt="recover version" (click)="openVersionRecoverModal()">
-        版本清單
+        歷史版本
       </button>
     </span>
   </div>
