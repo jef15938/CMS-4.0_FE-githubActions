@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalActionButton, CustomModalBase } from '../../../ui';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { CustomModalActionButton, CustomModalBase, TreeComponent } from '../../../ui';
 import { SitemapService, GroupService, GroupSitemapInfo } from '../../../../global/api/service';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
@@ -18,6 +18,8 @@ class Node extends SiteMapGetResponse {
 export class AdminGroupSitemapSettingModalComponent extends CustomModalBase implements OnInit {
   title = '設定前台節點';
   actions: CustomModalActionButton[];
+
+  @ViewChild(TreeComponent) tree: TreeComponent<Node>;
 
   customNodeRenderer = AdminGroupSitemapSettingNodeComponent;
 
@@ -77,7 +79,8 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
   }
 
   confirm() {
-
+    const checkedNodes: Node[] = this.tree.getSelectedNodes();
+    console.warn('checkedNodes = ', checkedNodes);
   }
 
 }

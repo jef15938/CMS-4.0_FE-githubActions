@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../ui';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { CustomModalBase, CustomModalActionButton, TreeComponent } from '../../../ui';
 import { GroupService, MenuService, GroupMenuInfo } from '../../../../global/api/service';
 import { MenuInfo } from '../../../../global/api/neuxAPI/bean/MenuInfo';
 import { forkJoin } from 'rxjs';
@@ -12,6 +12,8 @@ import { forkJoin } from 'rxjs';
 export class AdminGroupMenuSettingModalComponent extends CustomModalBase implements OnInit {
   title = '設定後台功能';
   actions: CustomModalActionButton[];
+
+  @ViewChild(TreeComponent) tree: TreeComponent<MenuInfo>;
 
   @Input() groupID: string;
 
@@ -34,7 +36,8 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
   }
 
   confirm() {
-
+    const checkedNodes: MenuInfo[] = this.tree.getSelectedNodes();
+    console.warn('checkedNodes = ', checkedNodes);
   }
 
 }

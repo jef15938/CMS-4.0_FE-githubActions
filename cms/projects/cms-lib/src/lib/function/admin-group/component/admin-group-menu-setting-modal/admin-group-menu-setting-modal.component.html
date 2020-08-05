@@ -2,6 +2,11 @@
   <pre>{{menus|json}}</pre>
 </ng-container>
 
+<ng-container *ngIf="menus">
+  <cms-tree class="cms-tree" [context]="this" [nodeDatas]="menus" [checkbox]="true" [defaultExpandLevel]="-1">
+  </cms-tree>
+</ng-container>
+
 <div class="btn-group">
   <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
   <button type="button" tabindex="0" mat-button (click)="confirm()">儲存</button>
