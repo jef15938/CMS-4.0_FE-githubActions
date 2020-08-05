@@ -1,34 +1,45 @@
-<ng-container *ngIf="aTagConfig">
-  <form #form="ngForm">
-    <div class="page-content-container">
-      <mat-form-field appearance="outline">
-        <mat-label>URL</mat-label>
-        <input matInput [(ngModel)]="aTagConfig.href" name="url" required #modelUrl="ngModel">
-        <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
-      </mat-form-field>
-      <ng-container *ngIf="canModifyText">
-        <br>
-        <mat-form-field appearance="outline">
-          <mat-label>Text</mat-label>
-          <input matInput [(ngModel)]="aTagConfig.text" name="text">
-          <!-- <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error> -->
-        </mat-form-field>
-      </ng-container>
-      <br>
-      <mat-radio-group [(ngModel)]="aTagConfig.target" name="isTargetBlank">
-        <mat-radio-button value="_blank">
-          另開分頁
-        </mat-radio-button>
-        <br>
-        <br>
-        <mat-radio-button value="">
-          原頁開啟
-        </mat-radio-button>
-      </mat-radio-group>
+<div class="html-editor-insert-modal" *ngIf="aTagConfig">
+  <form #form="ngForm" class="html-editor-insert-modal__form">
+    <div class="html-editor-insert-modal__content ">
+      <div class="html-editor-insert-modal__row">
+        <div class="html-editor-insert-modal__col">
+          <mat-form-field appearance="outline">
+            <mat-label>URL</mat-label>
+            <input matInput [(ngModel)]="aTagConfig.href" name="url" required #modelUrl="ngModel">
+            <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="html-editor-insert-modal__row" *ngIf="canModifyText">
+        <div class="html-editor-insert-modal__col">
+          <mat-form-field appearance="outline">
+            <mat-label>Text</mat-label>
+            <input matInput [(ngModel)]="aTagConfig.text" name="text">
+            <!-- <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="html-editor-insert-modal__row">
+        <div class="html-editor-insert-modal__col">
+          <mat-radio-group [(ngModel)]="aTagConfig.target" name="isTargetBlank">
+            <mat-radio-button value="_blank">
+              另開分頁
+            </mat-radio-button>
+            <br>
+            <br>
+            <mat-radio-button value="">
+              原頁開啟
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
     </div>
-    <div class="btn-group">
-      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-      <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    <div class="html-editor-insert-modal__btn-group btn-group">
+      <button type="button" class="html-editor-insert-modal__btn" tabindex="0" mat-raised-button
+        (click)="close()">取消</button>
+      <button type="button" class="html-editor-insert-modal__btn" tabindex="0" mat-raised-button (click)="confirm()"
+        [disabled]="form.invalid">儲存</button>
     </div>
   </form>
-</ng-container>
+</div>

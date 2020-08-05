@@ -1,18 +1,30 @@
-<form #form="ngForm">
-  <div class="page-content-container">
-    <mat-form-field appearance="outline">
-      <mat-label>連結網址</mat-label>
-      <input matInput [(ngModel)]="frameId" name="frameId" required #modelFrameId="ngModel"
-        (ngModelChange)="checkSrc()">
-      <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
-    </mat-form-field>
-  </div>
-  <div *ngIf="frameId && isValidSrc" style="text-align: center;">
-    <iframe [src]="frameId | safeResource" style="width: 320px; height: 240px;"></iframe>
-  </div>
-  <div class="btn-group">
-    <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-    <button type="button" tabindex="0" mat-button (click)="confirm()"
-      [disabled]="form.invalid || !isValidSrc">儲存</button>
-  </div>
-</form>
+<div class="html-editor-insert-modal">
+  <form #form="ngForm" class="html-editor-insert-modal__form">
+
+    <div class="html-editor-insert-modal__content ">
+      <div class="html-editor-insert-modal__source-container">
+        <iframe class="html-editor-insert-modal__source-container__iframe" *ngIf="frameId && isValidSrc"
+          [src]="frameId | safeResource"></iframe>
+      </div>
+
+      <div class="html-editor-insert-modal__btn-group btn-group">
+        <button type="button" tabindex="0" class="html-editor-insert-modal__btn" mat-raised-button
+          (click)="close()">取消</button>
+        <button type="button" tabindex="0" class="html-editor-insert-modal__btn" mat-raised-button (click)="confirm()"
+          [disabled]="form.invalid || !isValidSrc">儲存</button>
+      </div>
+      <div class="html-editor-insert-modal__row">
+        <div class="html-editor-insert-modal__col">
+          <mat-form-field appearance="outline">
+            <mat-label>連結網址</mat-label>
+            <input matInput [(ngModel)]="frameId" name="frameId" required #modelFrameId="ngModel"
+              (ngModelChange)="checkSrc()">
+            <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+
+  </form>
+</div>

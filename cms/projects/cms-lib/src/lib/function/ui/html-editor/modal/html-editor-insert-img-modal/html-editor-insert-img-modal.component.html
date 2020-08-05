@@ -1,32 +1,50 @@
-<form #form="ngForm">
-  <div class="page-content-container">
-    <div class="img-container">
-      <img [src]="environment.apiBaseUrl+src" *ngIf="src">
-      <button class="dark-style" type="button" tabindex="-1" mat-button (click)="changeGallery()"
-        style="position: absolute; top: 0; right: 0">媒體庫</button>
+<div class="html-editor-insert-modal">
+  <form class="html-editor-insert-modal__form" #form="ngForm">
+    <div class="html-editor-insert-modal__content ">
+      <div class="html-editor-insert-modal__source-container">
+        <img class="html-editor-insert-modal__source-container__img" [src]="environment.apiBaseUrl+src" *ngIf="src">
+      </div>
+      <div class="html-editor-insert-modal__btn-group btn-group">
+        <button class="html-editor-insert-modal__btn dark-style" type="button" tabindex="-1" mat-raised-button
+          (click)="changeGallery()">媒體庫</button>
+        <button type="button" class="html-editor-insert-modal__btn" tabindex="0" mat-raised-button (click)="confirm()"
+          [disabled]="form.invalid">儲存</button>
+        <button type="button" class="html-editor-insert-modal__btn" tabindex="0" mat-raised-button
+          (click)="close()">取消</button>
+
+      </div>
+
+      <div class="html-editor-insert-modal__row">
+        <mat-form-field appearance="outline" class="html-editor-insert-modal__col">
+          <mat-label>圖片網址</mat-label>
+          <input matInput [(ngModel)]="src" name="src" required #modelSrc="ngModel" (ngModelChange)="checkImgSize()"
+            readonly>
+          <mat-error *ngIf="modelSrc.invalid">請輸入連結</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="html-editor-insert-modal__row">
+        <mat-form-field appearance="outline" class="html-editor-insert-modal__col">
+          <mat-label>圖片描述</mat-label>
+          <input matInput [(ngModel)]="alt" name="alt">
+        </mat-form-field>
+      </div>
+
+      <div class="html-editor-insert-modal__row">
+        <mat-form-field appearance="outline" class="html-editor-insert-modal__col">
+          <mat-label>寬</mat-label>
+          <input type="number" matInput [(ngModel)]="width" name="width">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="html-editor-insert-modal__col">
+          <mat-label>高</mat-label>
+          <input type="number" matInput [(ngModel)]="height" name="height">
+        </mat-form-field>
+      </div>
+
     </div>
-    <mat-form-field appearance="outline">
-      <mat-label>圖片網址</mat-label>
-      <input matInput [(ngModel)]="src" name="src" required #modelSrc="ngModel" (ngModelChange)="checkImgSize()"
-        readonly>
-      <mat-error *ngIf="modelSrc.invalid">請輸入連結</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>圖片描述</mat-label>
-      <input matInput [(ngModel)]="alt" name="alt">
-    </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 50%;">
-      <mat-label>寬</mat-label>
-      <input type="number" matInput [(ngModel)]="width" name="width">
-    </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 50%;">
-      <mat-label>高</mat-label>
-      <input type="number" matInput [(ngModel)]="height" name="height">
-    </mat-form-field>
-  </div>
-  <div class="btn-group">
-    <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-    <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
-  </div>
-</form>
+
+  </form>
+</div>
+<!-- 用來算寬高用的隱藏圖片 -->
 <img #Img [src]="src" style="display: none;">
+<!-- 用來算寬高用的隱藏圖片:end -->
