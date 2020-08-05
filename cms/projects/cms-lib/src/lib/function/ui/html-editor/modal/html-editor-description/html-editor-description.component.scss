@@ -1,0 +1,33 @@
+@import "../../../../../global/style/main";
+
+.html-editor-description {
+  &__block {
+    background-color: $color-gray;
+    border-radius: 10px;
+    padding: 10px;
+    color: $color-CIS-white;
+
+    +.html-editor-description__block {
+      margin-top: 20px;
+    }
+  }
+
+  // &__list {
+
+  //   &__item {
+
+  //   }
+  // }
+
+
+
+
+  &__title {
+    font-size: 16px;
+  }
+
+  &__img {
+    width: 100%;
+    border-radius: 10px;
+  }
+}

@@ -72,4 +72,10 @@
     user-select: none;
   }
 
+  .mat-raised-button {
+    background-color: $color-CIS;
+    color: $color-CIS-white;
+    line-height: normal;
+  }
+
 }

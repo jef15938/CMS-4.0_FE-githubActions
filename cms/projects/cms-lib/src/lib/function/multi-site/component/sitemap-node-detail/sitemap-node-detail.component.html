@@ -7,7 +7,7 @@
     ParentId={{parentID}}
   </div> -->
 
-  <div class="page-title-container">
+  <div class="sitemap-node-detail__title page-title-container">
     <div class="btn-group">
       <button type="button" tabindex="0" mat-raised-button [disabled]="!nodeInfo.canModify"
         (click)="editSitemapNode()">編輯節點</button>
@@ -28,7 +28,7 @@
         [disabled]="!nodeInfo.canSubmit" (click)="auditingSiteMap()">頁面送審</button>
     </div>
   </div>
-  <div class="page-content-container">
+  <div class="sitemap-node-detail__content page-content-container">
 
     <ng-container *ngIf="nodeInfo.publish_info; let publishInfo">
       <div *ngIf="publishInfo.draft || publishInfo.pending_published || publishInfo.published" class="info">

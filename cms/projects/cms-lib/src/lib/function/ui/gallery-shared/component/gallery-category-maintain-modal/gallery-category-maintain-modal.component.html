@@ -1,21 +1,24 @@
-<form #form="ngForm">
-  <div class="page-content-container">
-    <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="categoryName" name="categoryName" required #modelName="ngModel">
-      <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error>
-    </mat-form-field>
-    <hr style="margin: 16px 0;">
-    <div>
+<div class="gallery-category-maintain-modal">
+  <form #form="ngForm" class="gallery-category-maintain-modal__form">
+    <div class="gallery-category-maintain-modal__block">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="categoryName" name="categoryName" required #modelName="ngModel">
+        <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error>
+      </mat-form-field>
+    </div>
+    <hr class="gallery-category-maintain-modal__divider">
+    <div class="gallery-category-maintain-modal__block">
       <h3>選擇部門</h3>
       <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="depts" [checkedNodes]="checkedDepts"
         [checkboxDisabled]="deptDisabled" nodeDisplayField="dept_name" [checkbox]="true" [defaultExpandLevel]="-1"
         (nodeCheckedChange)="onNodeCheckedChange($event)">
       </cms-tree>
     </div>
-  </div>
-  <div class="btn-group">
-    <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-    <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
-  </div>
-</form>
+    <div class="gallery-category-maintain-modal__btn-group btn-group">
+      <button type="button" tabindex="0" mat-raised-button (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+
+</div>

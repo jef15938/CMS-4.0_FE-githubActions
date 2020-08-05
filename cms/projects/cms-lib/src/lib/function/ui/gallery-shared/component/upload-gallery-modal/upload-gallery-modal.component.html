@@ -1,15 +1,17 @@
-<div class="page-content-container" style="width: 1080px;">
-  <div class="btn-group">
-    <button type="button" tabindex="0" mat-button (click)="addFiles()">加入檔案</button>
-    <button type="button" tabindex="0" mat-button (click)="cleanFiles()">清除檔案</button>
+<div class="cms-upload-gallery-modal">
+  <div class="cms-upload-gallery-modal__btn-group btn-group">
+    <button type="button" tabindex="0" mat-raised-button (click)="addFiles()">加入檔案</button>
+    <button type="button" tabindex="0" mat-raised-button (click)="cleanFiles()">清除檔案</button>
   </div>
-  <br />
-  <ul style="display: table; width: 100%;">
-    <li style="display: table-row;" *ngFor="let file of files" [@fadeInOut]="file.state">
-      <mat-progress-bar [value]="file.progress"></mat-progress-bar>
-      <span class="file-label">
-        [{{file.fileType?.indexOf('image')<0 ? '檔案' : '圖片'}}] {{file.data.name}} ({{file.progress}})%
-        <span>
+
+  <ul class="cms-upload-gallery-modal__upload">
+    <li class="cms-upload-gallery-modal__upload__item" *ngFor="let file of files" [@fadeInOut]="file.state">
+      <mat-progress-bar class="cms-upload-gallery-modal__upload__progress" [value]="file.progress"></mat-progress-bar>
+      <div class="cms-upload-gallery-modal__upload__suffix">
+        <div class="cms-upload-gallery-modal__upload__suffix__ele">
+          [{{file.fileType?.indexOf('image')<0 ? '檔案' : '圖片'}}] {{file.data.name}} ({{file.progress}})%
+        </div>
+        <div class="cms-upload-gallery-modal__upload__suffix__ele btn-group">
           <button type="button" tabindex="0" mat-button (click)="cropFile(file)"
             [disabled]="file.fileType?.indexOf('image')<0">
             <mat-icon>open_in_new</mat-icon>
@@ -19,17 +21,17 @@
             <mat-icon>delete</mat-icon>
             刪除
           </button>
-        </span>
-      </span>
+        </div>
+      </div>
     </li>
   </ul>
   <input type="file" [id]="fileUploadInputIdentifier" [name]="fileUploadInputIdentifier" [multiple]="isCreate"
     [accept]="accept" style="display:none;" maxlength="5" />
   <br>
-  <div>
-    <button type="button" tabindex="0" mat-button (click)="create()" *ngIf="isCreate"
+  <div class="cms-upload-gallery-modal__btn-group btn-group">
+    <button type="button" tabindex="0" mat-raised-button (click)="create()" *ngIf="isCreate"
       [disabled]="!files.length">上傳檔案</button>
-    <button type="button" tabindex="0" mat-button (click)="update()" *ngIf="!isCreate"
+    <button type="button" tabindex="0" mat-raised-button (click)="update()" *ngIf="!isCreate"
       [disabled]="!files.length">修改檔案</button>
   </div>
 

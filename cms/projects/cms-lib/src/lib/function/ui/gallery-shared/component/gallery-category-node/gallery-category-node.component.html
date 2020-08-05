@@ -1,6 +1,6 @@
-<ng-container *ngIf="node">
-  <span class="pointer">{{node.data.category_name}}</span>
-  <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
+<div class="cms-gallery-category-node" *ngIf="node">
+  <span class="cms-gallery-category-node__title">{{node.data.category_name}}</span>
+  <span #menuTrigger="matMenuTrigger" class="cms-gallery-category-node__btn" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
       <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.UPLOAD)"
         [disabled]="!node.data.can_upload">
@@ -21,4 +21,4 @@
       </button>
     </mat-menu>
   </span>
-</ng-container>
+</div>

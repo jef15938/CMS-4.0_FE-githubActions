@@ -1,20 +1,19 @@
-<ng-container *ngIf="config?.data">
-  <div>
-    <div class="image-container">
-      <a [href]="environment.apiBaseUrl + config.data.url" target="_blank" rel="noreferrer noopener">
-        <img [src]="config.data | gelleryImgSrc | safeResource">
-      </a>
-    </div>
-    <div class="info-container">
-      <div>
-        {{config.data.file_name}}
-      </div>
-      <div style="color: gray;">
-        {{config.data.size}} byte
-      </div>
-      <div style="color: gray;">
-        {{config.data.create_time | dateStringFormat:'DATETIME'}}
-      </div>
-    </div>
+<div class="gallery-info-cell" *ngIf="config?.data">
+  <div class="gallery-info-cell__pic">
+    <a class="gallery-info-cell__link" [href]="environment.apiBaseUrl + config.data.url" target="_blank"
+      rel="noreferrer noopener">
+      <img class="gallery-info-cell__img" [src]="config.data | gelleryImgSrc | safeResource">
+    </a>
   </div>
-</ng-container>
+  <ul class="gallery-info-cell__info-list">
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.file_name}}
+    </li>
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.size}} byte
+    </li>
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.create_time | dateStringFormat:'DATETIME'}}
+    </li>
+  </ul>
+</div>

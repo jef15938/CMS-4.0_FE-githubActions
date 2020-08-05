@@ -7,29 +7,29 @@
 
 .sitemap-node-detail {
   height: 100%;
-}
 
-.page-title-container {
-  height: 52px;
-  display: flex;
+  &__title {
+    height: 52px;
+    display: flex;
 
-  &::ng-deep {
-    .mat-raised-button {
-      height: 31px;
-      line-height: normal;
-      background-color: $color-CIS;
-      color: $color-CIS-white;
+    &::ng-deep {
+      .mat-raised-button {
+        height: 31px;
+        line-height: normal;
+        background-color: $color-CIS;
+        color: $color-CIS-white;
 
-      &[disabled="true"] {
-        opacity: 0.75;
+        &[disabled="true"] {
+          opacity: 0.75;
+        }
       }
     }
   }
-}
 
-.page-content-container {
-  height: calc(100% - 52px);
-  overflow: auto;
+  &__content {
+    height: calc(100% - 52px);
+    overflow: auto;
+  }
 }
 
 .info {
@@ -50,12 +50,6 @@
   }
 }
 
-.form {
-  &__top {}
-
-  &__bot {}
-}
-
 .tab-content {
   &__btn-row {
     display: flex;
@@ -66,3 +60,9 @@
     }
   }
 }
+
+// .form {
+//   &__top {}
+
+//   &__bot {}
+// }

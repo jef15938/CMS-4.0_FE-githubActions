@@ -34,13 +34,7 @@
       display: flex;
       justify-content: space-between;
 
-      &::ng-deep {
-        .mat-raised-button {
-          background-color: $color-CIS;
-          color: $color-CIS-white;
-          line-height: normal;
-        }
-      }
+
     }
 
     &__content {

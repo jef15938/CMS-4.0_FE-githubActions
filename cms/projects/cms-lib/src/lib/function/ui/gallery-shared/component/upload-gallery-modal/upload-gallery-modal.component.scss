@@ -1,20 +1,31 @@
-ul,
-li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+.cms-upload-gallery-modal {
+  &__btn-group {}
 
-.file-label {
-  display: inline-flex;
-  vertical-align: middle;
-  line-height: 36px;
-}
+  &__upload {
+    display: table;
+    width: 100%;
+    margin-top: 10px;
 
-.file-label mat-icon {
-  text-align: center;
-}
+    &__progress {
+      margin-top: 10px;
+    }
 
-.file-label a {
-  cursor: pointer;
+    &__item {
+      display: table-row;
+    }
+
+    &__suffix {
+      display: flex;
+      margin-top: 10px;
+      line-height: 36px;
+      align-items: center;
+
+      &__ele {
+        mat-icon {
+          text-align: center;
+        }
+      }
+    }
+  }
+
 }

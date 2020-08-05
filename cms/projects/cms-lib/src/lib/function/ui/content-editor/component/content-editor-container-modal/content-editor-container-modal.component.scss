@@ -1,35 +1,37 @@
 ::ng-deep {
   .cms-content-editor-container-modal {
-
     mat-dialog-container {
       padding: 0;
       overflow-y: hidden;
 
       cms-modal-custom-wrapper {
-
         .modal-custom {
-
+          &__head {
+            margin-left: 20px;
+          }
 
           &__content {
-
             margin-top: 0;
+
 
             cms-content-editor-container-modal {
               background-color: red;
 
               cms-content-editor {
-                .cms-content-editor {
-                  .main-block {
-                    .content-panel {
-                      // padding: 0 !important;
+                &.editor-mode {
+                  .cms-content-editor {
+                    .main-block {
+                      .content-panel {
 
-                      cms-content-view-renderer {
-                        .view-container {
-                          padding-top: 0;
+                        // padding: 0 !important;
+                        cms-content-view-renderer {
+                          .view-container {
+                            padding-top: 0;
 
-                          mat-tab-group {
-                            mat-tab-header {
-                              display: none;
+                            mat-tab-group {
+                              mat-tab-header {
+                                display: none;
+                              }
                             }
                           }
                         }
@@ -37,8 +39,8 @@
                     }
                   }
                 }
-              }
 
+              }
             }
           }
         }

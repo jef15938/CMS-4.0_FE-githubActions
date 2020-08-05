@@ -1,6 +1,7 @@
-<ng-container *ngIf="config">
-  <mat-icon class="pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">list</mat-icon>
-  <span>
+<div class="cms-gallery-action-cell" *ngIf="config">
+  <mat-icon class="cms-gallery-action-cell__icon pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
+    list</mat-icon>
+  <div class="cms-gallery-action-cell__menu">
     <mat-menu #appMenu="matMenu">
       <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.EDIT)">
         <mat-icon>edit</mat-icon>
@@ -15,5 +16,5 @@
         複製連結
       </button>
     </mat-menu>
-  </span>
-</ng-container>
+  </div>
+</div>
