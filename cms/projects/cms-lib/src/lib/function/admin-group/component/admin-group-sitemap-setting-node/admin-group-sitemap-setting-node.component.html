@@ -1,0 +1,17 @@
+<div (click)="cancelEvent($event)">
+  <div>{{node.data.node_name}}</div>
+  <ng-container *ngIf="node.data.isChecked">
+    <div style="display: inline-block;">
+      <input type="checkbox" [checked]="node.data.groupSitemapInfo.can_add" (click)="changeCanAdd()">
+      <span (click)="changeCanAdd()">可新增</span>
+    </div>
+    <div style="display: inline-block;">
+      <input type="checkbox" [checked]="node.data.groupSitemapInfo.can_modify" (click)="changeCanModify()">
+      <span (click)="changeCanModify()">可修改</span>
+    </div>
+    <div style="display: inline-block;">
+      <input type="checkbox" [checked]="node.data.groupSitemapInfo.can_delete" (click)="changeCanDelete()">
+      <span (click)="changeCanDelete()">可刪除</span>
+    </div>
+  </ng-container>
+</div>

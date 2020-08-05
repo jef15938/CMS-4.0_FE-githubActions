@@ -246,9 +246,9 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     });
   }
 
-  onNodeCheckedChange(ev: { nodes: any[] }) {
+  onNodesCheckedChange(ev: { nodes: any[] }) {
     // TODO: FarmFormTree
-    console.warn('onNodeCheckedChange() ev = ', ev);
+    console.warn('onNodesCheckedChange() ev = ', ev);
   }
 
 }

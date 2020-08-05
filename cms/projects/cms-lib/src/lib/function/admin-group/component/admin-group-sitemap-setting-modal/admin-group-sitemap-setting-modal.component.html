@@ -10,10 +10,10 @@
   </mat-form-field>
 </div>
 
-<ng-container *ngIf="sitemaps">
-  <!-- <pre>{{sitemaps|json}}</pre> -->
-  <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="sitemaps" [checkbox]="true"
-    [nodeDisplayField]="'node_name'" [defaultExpandLevel]="-1">
+<ng-container *ngIf="nodes">
+  <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="nodes" [checkbox]="true"
+    [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
+    (nodeCheckedChange)="onNodeCheckedChange($event)">
   </cms-tree>
 </ng-container>
 
