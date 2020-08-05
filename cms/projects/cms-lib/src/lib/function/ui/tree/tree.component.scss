@@ -133,8 +133,27 @@
         height: 100%;
         display: block;
         height: 40px;
-        padding-left: 1em;
+        padding-left: 2.5em;
         background-color: $color-CIS-white;
+
+        &--unactive {
+          padding-left: 1em;
+        }
+
+        &::ng-deep {
+          .mat-checkbox-label {
+            display: flex;
+            align-items: center;
+          }
+
+          .mat-checkbox-inner-container {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-150%, -50%);
+
+          }
+        }
       }
 
       &::ng-deep {
@@ -145,10 +164,7 @@
             display: none;
           }
 
-          .mat-checkbox-label {
-            display: flex;
-            align-items: center;
-          }
+
         }
 
       }
