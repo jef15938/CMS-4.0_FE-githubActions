@@ -1,5 +1,7 @@
 <ng-container *ngIf="menus">
-  <pre>{{menus|json}}</pre>
+  <cms-tree class="cms-tree" [context]="this" [nodeDatas]="menus" [checkbox]="true" [defaultExpandLevel]="-1"
+    [nodeDisplayField]="'func_name'" [checkedNodes]="checkedNodes">
+  </cms-tree>
 </ng-container>
 
 <div class="btn-group">

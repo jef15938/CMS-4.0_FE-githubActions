@@ -1,13 +1,14 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {IsNotEmpty} from 'class-validator';
+import {GroupMenuInfo} from './GroupMenuInfo';
 
 import { TypeFactory } from '../type-factory';
 
 export class GroupMenuGetResponse {
 
-@IsNotEmpty()
-public datas: object;
+@Type(TypeFactory(GroupMenuInfo))
+@ValidateNested()
+public datas: Array<GroupMenuInfo>;
 
 
 }

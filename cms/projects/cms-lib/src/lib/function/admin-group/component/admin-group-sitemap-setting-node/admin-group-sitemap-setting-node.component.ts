@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../ui';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
-import { GroupSitemapInfo } from '../../../../global/api/service';
 import { Subject } from 'rxjs';
+import { GroupSitemapInfo } from '../../../../global/api/neuxAPI/bean/GroupSitemapInfo';
 
 interface Node extends SiteMapGetResponse {
   groupSitemapInfo: GroupSitemapInfo;

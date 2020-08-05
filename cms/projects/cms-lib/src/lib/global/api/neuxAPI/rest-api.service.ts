@@ -43,7 +43,9 @@ import { GetSiteAPI } from './api/GetSiteAPI';
 import { GetSiteBySiteIDAPI } from './api/GetSiteBySiteIDAPI';
 import { GetSiteBySiteIDAndNodeIDAPI } from './api/GetSiteBySiteIDAndNodeIDAPI';
 import { GetGroupMenuByGroupIDAPI } from './api/GetGroupMenuByGroupIDAPI';
+import { PutGroupMenuByGroupIDAPI } from './api/PutGroupMenuByGroupIDAPI';
 import { GetGroupSiteMapByGroupIDAPI } from './api/GetGroupSiteMapByGroupIDAPI';
+import { PutGroupSiteMapByGroupIDAPI } from './api/PutGroupSiteMapByGroupIDAPI';
 import { GetTemplateByControlIDAPI } from './api/GetTemplateByControlIDAPI';
 import { PutGalleryByGalleryIDAPI } from './api/PutGalleryByGalleryIDAPI';
 import { DeleteGalleryByGalleryIDAPI } from './api/DeleteGalleryByGalleryIDAPI';
@@ -125,7 +127,9 @@ GetSite: SiteGetResponse,
 GetSiteBySiteID: SiteMapGetResponse,
 GetSiteBySiteIDAndNodeID: SiteMapNodeGetResponse,
 GetGroupMenuByGroupID: GroupMenuGetResponse,
+PutGroupMenuByGroupID: GenerationHeader,
 GetGroupSiteMapByGroupID: GroupSiteMapGetResponse,
+PutGroupSiteMapByGroupID: GenerationHeader,
 GetTemplateByControlID: TemplateGetResponse,
 PutGalleryByGalleryID: GenerationHeader,
 DeleteGalleryByGalleryID: GenerationHeader,
@@ -194,7 +198,9 @@ this.apiFactory.registerApi(new GetSiteAPI());
 this.apiFactory.registerApi(new GetSiteBySiteIDAPI());
 this.apiFactory.registerApi(new GetSiteBySiteIDAndNodeIDAPI());
 this.apiFactory.registerApi(new GetGroupMenuByGroupIDAPI());
+this.apiFactory.registerApi(new PutGroupMenuByGroupIDAPI());
 this.apiFactory.registerApi(new GetGroupSiteMapByGroupIDAPI());
+this.apiFactory.registerApi(new PutGroupSiteMapByGroupIDAPI());
 this.apiFactory.registerApi(new GetTemplateByControlIDAPI());
 this.apiFactory.registerApi(new PutGalleryByGalleryIDAPI());
 this.apiFactory.registerApi(new DeleteGalleryByGalleryIDAPI());

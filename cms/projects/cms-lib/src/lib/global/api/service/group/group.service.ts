@@ -3,30 +3,10 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
-import { GroupMenuGetResponse as MenuResponse } from '../../neuxAPI/bean/GroupMenuGetResponse';
-import { GroupSiteMapGetResponse as SitemapResponse } from '../../neuxAPI/bean/GroupSiteMapGetResponse';
-
-export class GroupMenuInfo {
-  func_id: string;
-}
-
-export class GroupMenuGetResponse extends MenuResponse {
-  datas: GroupMenuInfo[];
-}
-
-
-
-export class GroupSitemapInfo {
-  node_id: string;
-  can_add: boolean;
-  can_modify: boolean;
-  can_delete: boolean;
-}
-
-export class GroupSitemapGetResponse extends SitemapResponse {
-  datas: GroupSitemapInfo[];
-}
-
+import { GroupMenuGetResponse } from '../../neuxAPI/bean/GroupMenuGetResponse';
+import { GroupSiteMapGetResponse } from '../../neuxAPI/bean/GroupSiteMapGetResponse';
+import { GroupMenuInfo } from '../../neuxAPI/bean/GroupMenuInfo';
+import { GroupSitemapInfo } from '../../neuxAPI/bean/GroupSitemapInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +45,61 @@ export class GroupService {
       throw new ParamsError('groupID', 'getGroupSiteMapList', 'string', groupID);
     }
 
-    return this.restAPIService.dispatchRestApi<GroupSitemapGetResponse>('GetGroupSiteMapByGroupID', { groupID })
+    return this.restAPIService.dispatchRestApi<GroupSiteMapGetResponse>('GetGroupSiteMapByGroupID', { groupID })
       .pipe(map(res => res.datas));
+  }
+
+  /**
+   *
+   *
+   * @param {string} groupID
+   * @returns
+   * @memberof DepartmentService
+   */
+  updateGroupMenu(groupID: string, menuInfos: GroupMenuInfo[]) {
+    if (!groupID) {
+      throw new ParamsError('groupID', 'updateGroupMenu', 'string', groupID);
+    }
+    if (!menuInfos) {
+      throw new ParamsError('menuInfos', 'updateGroupMenu', 'GroupMenuInfo[]', menuInfos);
+    }
+
+    const requestBody: { [k: string]: any } = {
+      datas: menuInfos
+    };
+
+    const params: { [k: string]: any } = {
+      groupID,
+      requestBody,
+    };
+
+    return this.restAPIService.dispatchRestApi('PutGroupMenuByGroupID', params);
+  }
+
+  /**
+   *
+   *
+   * @param {string} groupID
+   * @returns
+   * @memberof DepartmentService
+   */
+  updateGroupSitemap(groupID: string, sitemapInfos: GroupSitemapInfo[]) {
+    if (!groupID) {
+      throw new ParamsError('groupID', 'updateGroupSitemap', 'string', groupID);
+    }
+    if (!sitemapInfos) {
+      throw new ParamsError('sitemapInfos', 'updateGroupSitemap', 'GroupMenuInfo[]', sitemapInfos);
+    }
+
+    const requestBody: { [k: string]: any } = {
+      datas: sitemapInfos
+    };
+
+    const params: { [k: string]: any } = {
+      groupID,
+      requestBody,
+    };
+
+    return this.restAPIService.dispatchRestApi('PutGroupSiteMapByGroupID', params);
   }
 }
