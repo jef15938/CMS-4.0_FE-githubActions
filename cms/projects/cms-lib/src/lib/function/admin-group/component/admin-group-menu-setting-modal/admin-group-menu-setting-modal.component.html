@@ -3,7 +3,8 @@
 </ng-container>
 
 <ng-container *ngIf="menus">
-  <cms-tree class="cms-tree" [context]="this" [nodeDatas]="menus" [checkbox]="true" [defaultExpandLevel]="-1">
+  <cms-tree class="cms-tree" [context]="this" [nodeDatas]="menus" [checkbox]="true" [defaultExpandLevel]="-1"
+    [checkedNodes]="checkedNodes">
   </cms-tree>
 </ng-container>
 
