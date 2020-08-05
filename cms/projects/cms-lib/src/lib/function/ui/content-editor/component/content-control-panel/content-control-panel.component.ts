@@ -90,13 +90,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     const contentInfo = new ContentInfo();
     contentInfo.languages = [languageInfo];
 
-    this.contentEditorService.openEditor({
-      title: '版型規範',
-      contentID: null,
-      controlID: null,
-      content: contentInfo,
-      editorMode: EditorMode.INFO,
-    }).subscribe();
+    this.contentEditorService.openEditorInfo(contentInfo).subscribe();
   }
 
   moveTemplate(direction: 'up' | 'down') {

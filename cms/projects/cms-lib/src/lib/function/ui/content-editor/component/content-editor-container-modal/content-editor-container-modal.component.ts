@@ -14,9 +14,9 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   title = '';
   actions: CustomModalActionButton[];
 
-  @Input() contentID: string;
-  @Input() controlID: string;
-  @Input() content: ContentInfo;
+  @Input() contentID?: string;
+  @Input() controlID?: string;
+  @Input() content?: ContentInfo;
   @Input() editorMode: EditorMode = EditorMode.EDIT;
   @Input() onSaved: () => void;
 
@@ -28,8 +28,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   ngOnInit(): void {
     this.modalRef.addPanelClass('cms-content-editor-container-modal');
-    console.warn('this.content = ', this.content);
-    if (!this.content) {
+    if (this.contentID) {
       this.contentService.getContentById(this.contentID).subscribe(content => this.content = content);
     }
 
@@ -44,8 +43,12 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   }
 
   save(event: ContentEditorSaveEvent) {
-    if (!this.contentID) { return; }
-    
+    if (!this.contentID && this.content) {
+      event.editorSave();
+      this.close(this.content);
+      return;
+    }
+
     this.contentService.updateContent(this.contentID, event.contentInfo).subscribe(_ => {
       alert('內容儲存成功');
       if (this.onSaved) {

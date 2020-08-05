@@ -5,13 +5,14 @@ import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../../global/mode
 import { CmsFarmFormColumnDisplayType, CmsFarmFormColumnTriggerType } from './../../../../../global/enum';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm-shared.interface';
-import { ContentEditorService, EditorMode } from './../../../content-editor';
+import { ContentEditorService } from './../../../content-editor';
 import { FarmService } from '../../../../../global/api/service';
 import { HtmlEditorService } from '../../../html-editor';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
 import { GetFarmTreeResponse } from '../../../../../global/api/neuxAPI/bean/GetFarmTreeResponse';
+import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -220,12 +221,9 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   openContentEditor(column: CmsFarmFormColumn) {
     const controlID = this.funcID;
-    const contentID = column.value;
-    this.contentEditorService.openEditor({
-      controlID,
-      contentID,
-      editorMode: EditorMode.EDIT,
-    }).subscribe();
+    const content = (column.value) as ContentInfo;
+    // TODO: Farm.EDITOR
+    this.contentEditorService.openEditorByContent(content, controlID).subscribe();
   }
 
   openHtmlEditor(col: CmsFarmFormColumn) {
