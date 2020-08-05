@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'cms-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'cms';
+
+  constructor(private matIconRegistry: MatIconRegistry) {
+    this.matIconRegistry.registerFontClassAlias('fontawasome', 'fa');
+  }
 }

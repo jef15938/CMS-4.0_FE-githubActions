@@ -19,8 +19,8 @@
             </div>
             <hr>
             <div class="table-info-container page-content-container" *ngIf="category.tableInfo">
-              <cms-farm-table-info [tableInfo]="category.tableInfo" (actionClick)="onTableActionClick(category, $event)"
-                (pageChange)="onTablePageChange(category, $event)">
+              <cms-farm-table-info [funcID]="category.category_id" [tableInfo]="category.tableInfo"
+                (actionClick)="onTableActionClick(category, $event)" (pageChange)="onTablePageChange(category, $event)">
               </cms-farm-table-info>
             </div>
           </ng-template>

@@ -88,7 +88,7 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getCMSSiteMap(siteID: string): Observable<SiteMapGetResponse[]> {
-    return this.restAPIService.dispatchRestApi('GetCMSSiteMapBySiteID', { siteID });
+    return this.restAPIService.dispatchRestApi('GetSiteBySiteID', { siteID });
   }
 
   /**

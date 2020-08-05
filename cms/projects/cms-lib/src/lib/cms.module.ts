@@ -10,6 +10,9 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { CmsDateAdapter, CMS_DATE_FORMATS_DATETIME } from './global/util/mat-date/mat-date';
 import { DynamicRoutingComponent } from './global/component/dynamic-routing/dynamic-routing.component';
 import { CmsFarmDataResolver } from './global/service/cms-farm-data-resolver.service';
+import { FARM_TABLE_ACTION_TOKEN } from './function/ui/farm-shared/farm-shared-injection-token';
+import { AdminGroupTableAction } from './function/admin-group/admin-group-table-action';
+import { AdminGroupModule } from './function/admin-group/admin-group.module';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -19,6 +22,7 @@ const LAYOUTS = [
   imports: [
     CmsRoutingModule,
     SharedModule,
+    AdminGroupModule,
   ],
   exports: [
     // SharedModule
@@ -43,6 +47,10 @@ export class CmsModule {
         DialogFlowMessengerService,
         CmsUserMenuResolver,
         CmsFarmDataResolver,
+        {
+          provide: FARM_TABLE_ACTION_TOKEN, multi: true,
+          useValue: AdminGroupTableAction,
+        },
         {
           provide: HTTP_INTERCEPTORS, multi: true,
           useClass: WithCredentialsInterceptor
