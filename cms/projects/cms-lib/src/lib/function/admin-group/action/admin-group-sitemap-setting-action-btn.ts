@@ -9,12 +9,12 @@ export const AdminGroupSitemapSettingActionBtn: FarmTableActionBtn = {
   fontIcon: 'fa-tree',
   click: (row: CmsFarmTableDataInfo, table: CmsFarmTableInfo, injector: Injector) => {
     const modalService = injector.get(ModalService);
+    const groupID = row.columns[0]?.value;
     modalService.openComponent({
       component: AdminGroupSitemapSettingModalComponent,
       componentInitData: {
-        // TODO: Fake
-        siteID: 'portal'
+        groupID
       }
-    }).subscribe();
+    }, true).subscribe();
   },
 };

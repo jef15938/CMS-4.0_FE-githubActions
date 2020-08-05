@@ -9,8 +9,12 @@ export const AdminGroupMenuSettingActionBtn: FarmTableActionBtn = {
   fontIcon: 'fa-sitemap',
   click: (row: CmsFarmTableDataInfo, table: CmsFarmTableInfo, injector: Injector) => {
     const modalService = injector.get(ModalService);
+    const groupID = row.columns[0]?.value;
     modalService.openComponent({
       component: AdminGroupMenuSettingModalComponent,
-    }).subscribe();
+      componentInitData: {
+        groupID
+      }
+    }, true).subscribe();
   },
 };

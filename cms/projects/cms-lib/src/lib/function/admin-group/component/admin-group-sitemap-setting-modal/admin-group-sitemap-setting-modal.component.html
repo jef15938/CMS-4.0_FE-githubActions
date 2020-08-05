@@ -1,3 +1,23 @@
+<div style="text-align: center;">
+  <mat-form-field appearance="outline">
+    <mat-label>站台</mat-label>
+    <mat-select [(ngModel)]="siteID" name="siteID" (selectionChange)="onSelectionChange($event)">
+      <mat-option [value]="'none'">請選擇</mat-option>
+      <mat-option *ngFor="let site of sites" [value]="site.site_id">
+        {{site.site_name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 <ng-container *ngIf="sitemaps">
-  <pre>{{sitemaps|json}}</pre>
+  <!-- <pre>{{sitemaps|json}}</pre> -->
+  <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="sitemaps" [checkbox]="true"
+    [nodeDisplayField]="'node_name'" [defaultExpandLevel]="-1">
+  </cms-tree>
 </ng-container>
+
+<div class="btn-group">
+  <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
+  <button type="button" tabindex="0" mat-button (click)="confirm()">儲存</button>
+</div>
