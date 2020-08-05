@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy, Injector } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef, OnDestroy, Injector, Inject } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -7,8 +7,10 @@ import { HtmlEditorContext, HtmlEditorContextMenuItem } from './html-editor.inte
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
-import { ATTRIBUTE_FRAME_ID } from './const/html-editor-container.const';
+import { ATTRIBUTE_FRAME_ID, ATTRIBUTE_GALLERY_ID } from './const/html-editor-container.const';
 import { YoutubeUtil } from './service/youtube-util';
+import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../global/interface';
 
 @Component({
   selector: 'cms-html-editor',
@@ -43,6 +45,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     public simpleWysiwygService: SimpleWysiwygService,
     public modalService: ModalService,
     private changeDetectorRef: ChangeDetectorRef,
+    @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
   ) { }
 
   ngOnInit() {
@@ -73,6 +76,19 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     htmlString = htmlString || '';
     const div = document.createElement('div');
     div.innerHTML = htmlString;
+
+    // const imgs = Array.from(div.querySelectorAll('img'));
+    // imgs.forEach(img => {
+    //   const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+    //   if (galleryID) {
+    //     console.warn(img, img.getAttribute('src'));
+    //     const src = img.getAttribute('src');
+    //     if (src.indexOf(this.environment.apiBaseUrl) < 0) {
+    //       img.setAttribute('src', `${this.environment.apiBaseUrl}${src}`);
+    //     }
+    //   }
+    // });
+
     const iframes = Array.from(div.querySelectorAll('iframe'));
     iframes.forEach(iframe => {
       const parent = iframe.parentElement;
@@ -283,6 +299,18 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         return a.concat(Array.from(b.childNodes || []));
       }, []);
     }
+
+    // const imgs = Array.from(container.querySelectorAll('img'));
+    // imgs.forEach(img => {
+    //   const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+    //   if (galleryID) {
+    //     console.warn(img, img.getAttribute('src'));
+    //     const src = img.getAttribute('src');
+    //     if (src.indexOf(this.environment.apiBaseUrl) > -1) {
+    //       img.setAttribute('src', `${src.replace(this.environment.apiBaseUrl, '')}`);
+    //     }
+    //   }
+    // });
 
     let htmlString = container.innerHTML || '';
 

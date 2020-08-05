@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild,
-  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener
+  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener, Inject
 } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -19,6 +19,9 @@ import { ModalService } from '../modal';
 import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
 import { ContentService } from '../../../global/api/service';
 import { ContentVersionInfo } from '../../../global/api/neuxAPI/bean/ContentVersionInfo';
+import { ATTRIBUTE_GALLERY_ID } from '../html-editor/const/html-editor-container.const';
+import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
+import { CmsEnviroment } from '../../../global/interface';
 
 const isTabTemplateInfo = (templateInfo: ContentTemplateInfo): boolean => {
   return !!(templateInfo as any).tabList;
@@ -67,14 +70,16 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     private cmsCanDeactiveGuard: CmsCanDeactiveGuard,
     private modalService: ModalService,
     private contentService: ContentService,
+    @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
   ) {
 
   }
 
   ngOnInit(): void {
+    const contentInfo: ContentInfo = this.convertToEditorContent(this.contentInfo);
     this.cmsCanDeactiveGuard.registerAsGuardian(this);
     this.resetSelected();
-    this.manager = new ContentEditorManager(this.contentInfo);
+    this.manager = new ContentEditorManager(contentInfo);
   }
 
   ngAfterViewInit(): void {
@@ -94,6 +99,78 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     this.destroy$.complete();
     this.destroy$.unsubscribe();
     this.registerClickCaptureListener('unregister');
+  }
+
+  private convertToEditorContent(contentInfo: ContentInfo): ContentInfo {
+    const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfo;
+    info.languages.forEach(lang => {
+      let templates = lang.templates;
+      while (templates?.length) {
+        let tempTemplates: ContentTemplateInfo[] = [];
+        templates.forEach(template => {
+          template.fields.forEach(field => {
+            if (field.fieldType === FieldType.HTMLEDITOR) {
+              const htmlString = field.fieldVal;
+              const container = document.createElement('div');
+              container.innerHTML = htmlString;
+              const imgs = Array.from(container.querySelectorAll('img'));
+              imgs.forEach(img => {
+                const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+                if (galleryID) {
+                  console.warn(img, img.getAttribute('src'));
+                  const src = img.getAttribute('src');
+                  if (src.indexOf(this.environment.apiBaseUrl) < 0) {
+                    img.setAttribute('src', `${this.environment.apiBaseUrl}${src}`);
+                  }
+                }
+              });
+              field.fieldVal = container.innerHTML;
+            }
+          });
+          if (isTabTemplateInfo(template)) {
+            tempTemplates = tempTemplates.concat((template as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
+          }
+        });
+        templates = tempTemplates;
+      }
+    });
+    return info;
+  }
+
+  private convertEditorContentToData(contentInfo: ContentInfo): ContentInfo {
+    const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfo;
+    info.languages.forEach(lang => {
+      let templates = lang.templates;
+      while (templates?.length) {
+        let tempTemplates: ContentTemplateInfo[] = [];
+        templates.forEach(template => {
+          template.fields.forEach(field => {
+            if (field.fieldType === FieldType.HTMLEDITOR) {
+              const htmlString = field.fieldVal;
+              const container = document.createElement('div');
+              container.innerHTML = htmlString;
+              const imgs = Array.from(container.querySelectorAll('img'));
+              imgs.forEach(img => {
+                const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+                if (galleryID) {
+                  console.warn(img, img.getAttribute('src'));
+                  const src = img.getAttribute('src');
+                  if (src.indexOf(this.environment.apiBaseUrl) > -1) {
+                    img.setAttribute('src', `${src.replace(this.environment.apiBaseUrl, '')}`);
+                  }
+                }
+              });
+              field.fieldVal = container.innerHTML;
+            }
+          });
+          if (isTabTemplateInfo(template)) {
+            tempTemplates = tempTemplates.concat((template as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
+          }
+        });
+        templates = tempTemplates;
+      }
+    });
+    return info;
   }
 
   setEditorUnsaved() {
@@ -123,7 +200,9 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   save() {
-    const contentInfo: ContentInfo = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
+    const contentInfo: ContentInfo = this.convertEditorContentToData(
+      JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel))
+    );
     let galleryIds: string[] = [];
 
     let templates: ContentTemplateInfo[] = contentInfo.languages.reduce((a, b) => a.concat(b.templates || []), []);

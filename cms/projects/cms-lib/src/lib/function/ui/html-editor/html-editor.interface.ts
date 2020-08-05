@@ -4,9 +4,11 @@ import { ModalService } from '../modal';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
 import { Injector } from '@angular/core';
+import { CmsEnviroment } from '../../../global/interface';
 
 export interface HtmlEditorContext {
   injector: Injector;
+  environment: CmsEnviroment;
   simpleWysiwygService: SimpleWysiwygService;
   modalService: ModalService;
   editorContainer: HTMLDivElement;
