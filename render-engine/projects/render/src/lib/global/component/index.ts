@@ -12,3 +12,4 @@ export * from './tab/tab.module';
 export * from './layout-full/layout-full.component';
 export * from './layout-full/mega-menu/mega-menu.component';
 export * from './layout-full/mobile-mega-menu/mobile-mega-menu.component';
+export * from './html/html.component';

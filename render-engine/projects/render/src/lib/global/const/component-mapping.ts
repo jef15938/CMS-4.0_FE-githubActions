@@ -3,6 +3,7 @@ import {
   TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent
 } from '../component';
 import { LayoutComponent } from '../component/layout/layout.component';
+import { HtmlComponent } from '../component/html/html.component';
 
 export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = [
   {
@@ -12,6 +13,10 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'full',
     component: LayoutFullComponent,
+  },
+  {
+    component_id: 'HTML',
+    component: HtmlComponent,
   },
   {
     component_id: 'Slide',
@@ -32,7 +37,7 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'IconPage',
     component: IconPageComponent,
-  },  
+  },
   {
     component_id: 'FieldsDemo',
     component: FieldsDemoComponent,
