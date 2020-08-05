@@ -116,9 +116,11 @@
               <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TREE">
                 <input matInput [formControlName]="col.column_id" hidden
                   [required]="formColumnSettingMap.get(col.column_id).required">
-                <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="sitemaps" [checkbox]="true"
-                  [nodeDisplayField]="'node_name'" [defaultExpandLevel]="-1"
-                  (nodeCheckedChange)="onNodeCheckedChange($event)"></cms-tree>
+                <ng-container *ngIf="treeMap.get(col.column_id); let tree">
+                  <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="tree.data" [checkbox]="true"
+                    [checkMode]="tree.check_type" [nodeDisplayField]="'node_name'" [defaultExpandLevel]="-1"
+                    (nodeCheckedChange)="onNodeCheckedChange($event)"></cms-tree>
+                </ng-container>
                 <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
                   <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
                     {{err}}

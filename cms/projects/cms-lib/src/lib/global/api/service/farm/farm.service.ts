@@ -11,6 +11,7 @@ import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 import { ListFarmTriggerDataResponse } from '../../neuxAPI/bean/ListFarmTriggerDataResponse';
 import { FarmOptionInfo } from '../../neuxAPI/bean/FarmOptionInfo';
 import { map } from 'rxjs/operators';
+import { GetFarmTreeResponse } from '../../neuxAPI/bean/GetFarmTreeResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -198,5 +199,19 @@ export class FarmService {
     }
     return this.restAPIService.dispatchRestApi<ListFarmTriggerDataResponse>('GetFarmTriggerByTriggerID', { triggerID })
       .pipe(map(res => res.datas));
+  }
+
+  /**
+   *
+   *
+   * @param {string} funcID
+   * @returns
+   * @memberof FarmService
+   */
+  getFarmTree(sourceID: string): Observable<GetFarmTreeResponse> {
+    if (!sourceID) {
+      throw new ParamsError('sourceID', 'getFarmTree', 'string', sourceID);
+    }
+    return this.restAPIService.dispatchRestApi<GetFarmTreeResponse>('GetFarmTreeBySourceID', { sourceID });
   }
 }

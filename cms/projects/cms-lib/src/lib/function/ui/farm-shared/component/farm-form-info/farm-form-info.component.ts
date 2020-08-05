@@ -6,12 +6,12 @@ import { CmsFarmFormColumnDisplayType, CmsFarmFormColumnTriggerType } from './..
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm-shared.interface';
 import { ContentEditorService, EditorMode } from './../../../content-editor';
-import { ContentService, FarmService } from '../../../../../global/api/service';
-import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
+import { FarmService } from '../../../../../global/api/service';
 import { HtmlEditorService } from '../../../html-editor';
 import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
+import { GetFarmTreeResponse } from '../../../../../global/api/neuxAPI/bean/GetFarmTreeResponse';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -35,11 +35,9 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   formGroup: FormGroup;
   formColumnSettingMap: Map<string, FormColumnSetting>;
 
-  // TEST
-  sitemaps: any[] = [];
+  treeMap: Map<string, GetFarmTreeResponse> = new Map();
 
   constructor(
-    private contentService: ContentService,
     private contentEditorService: ContentEditorService,
     private htmlEditorService: HtmlEditorService,
     private gallerySharedService: GallerySharedService,
@@ -52,6 +50,9 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.formColumnSettingMap = this.createFormColumnSettingMap(this.farmFormInfo);
     this.farmFormInfo.columns.forEach(column => {
       this.checkColumnTrigger(column);
+      if (column.display_type === CmsFarmFormColumnDisplayType.TREE) {
+        this.farmService.getFarmTree(column.setting.tree_source).subscribe(tree => this.treeMap.set(column.column_id, tree));
+      }
     });
   }
 
