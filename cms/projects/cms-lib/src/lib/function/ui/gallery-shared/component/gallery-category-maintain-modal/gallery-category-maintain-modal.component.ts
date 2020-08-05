@@ -68,7 +68,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
     return null;
   }
 
-  onNodeCheckedChange(ev: { nodes: DepartmentInfo[] }) {
+  onNodesCheckedChange(ev: { nodes: DepartmentInfo[] }) {
     this.checkedDepts = ev.nodes;
   }
 

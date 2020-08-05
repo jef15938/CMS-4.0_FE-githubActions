@@ -12,7 +12,7 @@
       <h3>選擇部門</h3>
       <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="depts" [checkedNodes]="checkedDepts"
         [checkboxDisabled]="deptDisabled" nodeDisplayField="dept_name" [checkbox]="true" [defaultExpandLevel]="-1"
-        (nodeCheckedChange)="onNodeCheckedChange($event)">
+        (nodesCheckedChange)="onNodesCheckedChange($event)">
       </cms-tree>
     </div>
     <div class="gallery-category-maintain-modal__btn-group btn-group">

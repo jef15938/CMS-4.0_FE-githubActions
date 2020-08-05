@@ -1,0 +1,14 @@
+div {
+
+  &,
+  &>* {
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+  &:not(:first-child) {
+    margin-left: 10px;
+  }
+}
