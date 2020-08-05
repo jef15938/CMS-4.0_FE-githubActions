@@ -83,7 +83,7 @@ export class GroupService {
    * @returns
    * @memberof DepartmentService
    */
-  updateGroupSitemap(groupID: string, sitemapInfos: GroupMenuInfo[]) {
+  updateGroupSitemap(groupID: string, sitemapInfos: GroupSitemapInfo[]) {
     if (!groupID) {
       throw new ParamsError('groupID', 'updateGroupSitemap', 'string', groupID);
     }

@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { CustomModalActionButton, CustomModalBase, TreeComponent } from '../../../ui';
-import { SitemapService, GroupService, GroupSitemapInfo } from '../../../../global/api/service';
+import { SitemapService, GroupService } from '../../../../global/api/service';
 import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
 import { AdminGroupSitemapSettingNodeComponent } from '../admin-group-sitemap-setting-node/admin-group-sitemap-setting-node.component';
+import { GroupSitemapInfo } from '../../../../global/api/neuxAPI/bean/GroupSitemapInfo';
 
 class Node extends SiteMapGetResponse {
   groupSitemapInfo: GroupSitemapInfo;
@@ -81,6 +82,15 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
   confirm() {
     const checkedNodes: Node[] = this.tree.getSelectedNodes();
     console.warn('checkedNodes = ', checkedNodes);
+    const groupSitemapInfos: GroupSitemapInfo[] = checkedNodes.map(node => {
+      const info = new GroupSitemapInfo();
+      info.node_id = node.node_id;
+      info.can_add = node.groupSitemapInfo.can_add;
+      info.can_delete = node.groupSitemapInfo.can_delete;
+      info.can_modify = node.groupSitemapInfo.can_modify;
+      return info;
+    });
+    this.groupService.updateGroupSitemap(this.groupID, groupSitemapInfos).subscribe();
   }
 
 }

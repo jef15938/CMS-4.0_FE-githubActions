@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton, TreeComponent } from '../../../ui';
-import { GroupService, MenuService, GroupMenuInfo } from '../../../../global/api/service';
+import { GroupService, MenuService } from '../../../../global/api/service';
 import { MenuInfo } from '../../../../global/api/neuxAPI/bean/MenuInfo';
 import { forkJoin } from 'rxjs';
+import { GroupMenuInfo } from '../../../../global/api/neuxAPI/bean/GroupMenuInfo';
 
 @Component({
   selector: 'cms-admin-group-menu-setting-modal',
@@ -38,6 +39,12 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
   confirm() {
     const checkedNodes: MenuInfo[] = this.tree.getSelectedNodes();
     console.warn('checkedNodes = ', checkedNodes);
+    const groupMenuInfos: GroupMenuInfo[] = checkedNodes.map(node => {
+      const info = new GroupMenuInfo();
+      info.func_id = node.func_id;
+      return info;
+    });
+    this.groupService.updateGroupMenu(this.groupID, groupMenuInfos).subscribe();
   }
 
 }
