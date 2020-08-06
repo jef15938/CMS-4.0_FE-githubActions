@@ -51,4 +51,10 @@
       }
     }
   }
+
+  &__checkbox,
+  &__radio {
+    display: inline-block;
+    margin-left: 15px;
+  }
 }

@@ -54,8 +54,7 @@
                   <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;"
                     (change)="checkColumnTrigger(col)">
                     <ng-container *ngFor="let option of (col.setting?.options||[]); let i=index;">
-                      <mat-radio-button [value]="option.value" style="display: inline-block;"
-                        [style.marginLeft]="i===0?'0':'15px'">
+                      <mat-radio-button class="form__radio" [value]="option.value">
                         {{option.text}}
                       </mat-radio-button>
                     </ng-container>
@@ -63,8 +62,15 @@
                 </ng-container>
                 <!-- CHECKBOX -->
                 <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CHECKBOX">
-                  <mat-checkbox [formControlName]="col.column_id" (change)="checkColumnTrigger(col)">
-                  </mat-checkbox>
+                  <input matInput [formControlName]="col.column_id" hidden
+                    [required]="formColumnSettingMap.get(col.column_id).required">
+                  <ng-container *ngFor="let option of col.setting.options">
+                    <mat-checkbox class="form__checkbox"
+                      [checked]="formGroup.get(col.column_id).value|farmFormCheckboxOptionCheck:option.value"
+                      (change)="onCheckboxChange($event, col, option); checkColumnTrigger(col);">
+                      {{option.text}}
+                    </mat-checkbox>
+                  </ng-container>
                 </ng-container>
                 <!-- DATE -->
                 <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATE">

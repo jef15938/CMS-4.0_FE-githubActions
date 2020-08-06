@@ -29,6 +29,7 @@ import { PipeModule } from '../../../global/pipe/pipe.module';
 import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
 import { DatePickerModule } from '../date-picker/date-picker.module';
 import { FarmSharedContainerModalComponent } from './component/farm-shared-container-modal/farm-shared-container-modal.component';
+import { FarmFormCheckboxOptionCheckPipe } from './pipe/farm-form-checkbox-option-check';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { FarmSharedContainerModalComponent } from './component/farm-shared-conta
     GetFarmTableDisplayColsPipe,
     GetFarmTableColDataPipe,
     GetFarmTableDataActionsPipe,
+    FarmFormCheckboxOptionCheckPipe,
     FarmFormInfoComponent,
     AuditingFarmDataModalComponent,
     FarmFormViewDataModalComponent,

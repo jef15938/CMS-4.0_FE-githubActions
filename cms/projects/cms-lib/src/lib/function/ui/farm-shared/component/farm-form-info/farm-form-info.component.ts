@@ -13,6 +13,7 @@ import { GallerySharedService } from '../../../gallery-shared/service/gallery-sh
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
 import { GetFarmTreeResponse } from '../../../../../global/api/neuxAPI/bean/GetFarmTreeResponse';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -249,6 +250,18 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   onNodesCheckedChange(ev: { nodes: any[] }) {
     // TODO: FarmFormTree
     console.warn('onNodesCheckedChange() ev = ', ev);
+  }
+
+  onCheckboxChange(ev: MatCheckboxChange, col: CmsFarmFormColumn, option: { text: string, value: string }) {
+    const control = this.formGroup.get(col.column_id);
+    const controlValue = (control.value || '') as string;
+    const values = controlValue ? [...new Set(controlValue.split(','))] : [];
+    const index = values.indexOf(option.value);
+    if (index > -1) { values.splice(index, 1); }
+    if (ev.checked) { values.push(option.value); }
+
+    control.setValue(values.join(','));
+    control.updateValueAndValidity();
   }
 
 }
