@@ -1274,7 +1274,7 @@ paths:
               $ref: '#/components/schemas/GroupMenuGetResponse'
       tags:
         - System
-  '/Group/SiteMap/{groupID}':
+  '/Group/SiteMap/{siteID}/{groupID}':
     get:
       summary: GetGroupSiteMapList
       responses:
@@ -1304,6 +1304,13 @@ paths:
         name: groupID
         in: path
         required: true
+        description: 群組ID
+      - schema:
+          type: string
+        name: siteID
+        in: path
+        required: true
+        description: 網站ID
     put:
       summary: PutGroupSiteMapList
       operationId: put-Group-SiteMap-groupID
@@ -2133,6 +2140,7 @@ components:
       type: object
       x-tags:
         - Model
+      description: ''
       properties:
         node_id:
           type: string
@@ -2149,6 +2157,12 @@ components:
         canPreview:
           type: boolean
           description: 是否能預覽
+        canAdd:
+          type: boolean
+          description: 是否可新增節點
+        canDelete:
+          type: boolean
+          description: 是否可刪除
         children:
           type: array
           items:
@@ -2159,7 +2173,8 @@ components:
         - canModify
         - canSubmit
         - canPreview
-      description: ''
+        - canAdd
+        - canDelete
     SiteMapNodeGetResponse:
       x-tags:
         - Model

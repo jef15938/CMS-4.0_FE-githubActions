@@ -6,5 +6,5 @@
 
 <div class="btn-group">
   <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-  <button type="button" tabindex="0" mat-button (click)="confirm()">儲存</button>
+  <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="!menus">儲存</button>
 </div>

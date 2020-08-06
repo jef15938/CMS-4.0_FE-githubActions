@@ -16,6 +16,10 @@ public canModify: boolean;
 public canSubmit: boolean;
 @IsNotEmpty()
 public canPreview: boolean;
+@IsNotEmpty()
+public canAdd: boolean;
+@IsNotEmpty()
+public canDelete: boolean;
 @Type(TypeFactory(SiteMapGetResponse))
 @ValidateNested()
 public children: Array<SiteMapGetResponse>;

@@ -18,9 +18,8 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
 
   @Input() groupID: string;
 
-  checkedNodes: MenuInfo[] = [];
-  groupMenuInfos: GroupMenuInfo[] = [];
   menus: MenuInfo[];
+  checkedNodes: MenuInfo[] = [];
 
   constructor(
     private menuService: MenuService,
@@ -33,7 +32,6 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
       this.menuService.getCMSMenu()
     ]).subscribe(([groupMenuInfos, menus]) => {
       this.checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.func_id), menus);
-      this.groupMenuInfos = groupMenuInfos;
       this.menus = menus;
     });
   }
@@ -47,7 +45,6 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
 
   confirm() {
     const checkedNodes: MenuInfo[] = this.tree.getSelectedNodes();
-    console.warn('checkedNodes = ', checkedNodes);
     const groupMenuInfos: GroupMenuInfo[] = checkedNodes.map(node => {
       const info = new GroupMenuInfo();
       info.func_id = node.func_id;

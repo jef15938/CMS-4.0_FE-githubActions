@@ -2,11 +2,13 @@
   <div class="cms-multi-site-node__title pointer">{{node.data.node_name}}</div>
   <div class="cms-multi-site-node__menu " #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
-      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.CREATE)">
+      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.CREATE)"
+        [disabled]="!node.data.canAdd">
         <mat-icon>add</mat-icon>
         新增
       </button>
-      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.DELETE)">
+      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.DELETE)"
+        [disabled]="!node.data.canDelete">
         <mat-icon>delete</mat-icon>
         刪除
       </button>

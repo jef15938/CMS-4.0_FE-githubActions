@@ -38,22 +38,6 @@ export class GroupService {
    *
    * @param {string} groupID
    * @returns
-   * @memberof GroupService
-   */
-  getGroupSiteMapList(groupID: string): Observable<GroupSitemapInfo[]> {
-    if (!groupID) {
-      throw new ParamsError('groupID', 'getGroupSiteMapList', 'string', groupID);
-    }
-
-    return this.restAPIService.dispatchRestApi<GroupSiteMapGetResponse>('GetGroupSiteMapByGroupID', { groupID })
-      .pipe(map(res => res.datas));
-  }
-
-  /**
-   *
-   *
-   * @param {string} groupID
-   * @returns
    * @memberof DepartmentService
    */
   updateGroupMenu(groupID: string, menuInfos: GroupMenuInfo[]) {
@@ -79,27 +63,42 @@ export class GroupService {
   /**
    *
    *
+   * @param {string} siteID
+   * @param {string} groupID
+   * @returns
+   * @memberof GroupService
+   */
+  getGroupSiteMapList(siteID: string, groupID: string): Observable<GroupSitemapInfo[]> {
+    if (!siteID) { throw new ParamsError('siteID', 'getGroupSiteMapList', 'string', siteID); }
+    if (!groupID) { throw new ParamsError('groupID', 'getGroupSiteMapList', 'string', groupID); }
+
+    return this.restAPIService.dispatchRestApi<GroupSiteMapGetResponse>('GetGroupSiteMapBySiteIDAndGroupID', { siteID, groupID })
+      .pipe(map(res => res.datas));
+  }
+
+  /**
+   *
+   *
+   * @param {string} siteID
    * @param {string} groupID
    * @returns
    * @memberof DepartmentService
    */
-  updateGroupSitemap(groupID: string, sitemapInfos: GroupSitemapInfo[]) {
-    if (!groupID) {
-      throw new ParamsError('groupID', 'updateGroupSitemap', 'string', groupID);
-    }
-    if (!sitemapInfos) {
-      throw new ParamsError('sitemapInfos', 'updateGroupSitemap', 'GroupMenuInfo[]', sitemapInfos);
-    }
+  updateGroupSitemap(siteID: string, groupID: string, sitemapInfos: GroupSitemapInfo[]) {
+    if (!siteID) { throw new ParamsError('siteID', 'updateGroupSitemap', 'string', siteID); }
+    if (!groupID) { throw new ParamsError('groupID', 'updateGroupSitemap', 'string', groupID); }
+    if (!sitemapInfos) { throw new ParamsError('sitemapInfos', 'updateGroupSitemap', 'GroupMenuInfo[]', sitemapInfos); }
 
     const requestBody: { [k: string]: any } = {
       datas: sitemapInfos
     };
 
     const params: { [k: string]: any } = {
+      siteID,
       groupID,
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutGroupSiteMapByGroupID', params);
+    return this.restAPIService.dispatchRestApi('PutGroupSiteMapBySiteIDAndGroupID', params);
   }
 }
