@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CmsFarmTableDataInfo, CmsFarmTableInfo } from './../../../../../../global/model';
-import { ACTION_COLUMN, CHECKBOX_COLUMN } from '../farm-table-info.type';
+import { CmsFarmTableDataInfo, CmsFarmTableInfo } from './../../../../global/model';
+import { ACTION_COLUMN, CHECKBOX_COLUMN } from '../component/farm-table-info/farm-table-info.type';
+
 
 @Pipe({
   name: 'getFarmTableDisplayCols'

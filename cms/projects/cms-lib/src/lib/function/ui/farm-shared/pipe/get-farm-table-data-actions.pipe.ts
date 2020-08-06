@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CmsFarmTableDataInfo } from '../../../../../../global/model';
-import { CmsFarmTableDataAction } from '../../../../../../global/enum';
+import { CmsFarmTableDataInfo } from '../../../../global/model';
+import { CmsFarmTableDataAction } from '../../../../global/enum';
 
 @Pipe({
   name: 'getFarmTableDataActions'
