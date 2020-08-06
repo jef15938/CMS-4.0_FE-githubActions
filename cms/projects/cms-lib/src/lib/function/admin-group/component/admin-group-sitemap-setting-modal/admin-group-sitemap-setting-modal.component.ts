@@ -107,7 +107,7 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
       info.can_modify = node.groupSitemapInfo.can_modify;
       return info;
     });
-    this.groupService.updateGroupSitemap(this.groupID, groupSitemapInfos).subscribe();
+    this.groupService.updateGroupSitemap(this.groupID, groupSitemapInfos).subscribe(_ => this.close('Success'));
   }
 
 }

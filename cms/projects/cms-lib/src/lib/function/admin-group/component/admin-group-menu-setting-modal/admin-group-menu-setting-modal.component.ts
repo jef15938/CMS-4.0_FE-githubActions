@@ -53,7 +53,7 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
       info.func_id = node.func_id;
       return info;
     });
-    this.groupService.updateGroupMenu(this.groupID, groupMenuInfos).subscribe();
+    this.groupService.updateGroupMenu(this.groupID, groupMenuInfos).subscribe(_ => this.close('Success'));
   }
 
 }
