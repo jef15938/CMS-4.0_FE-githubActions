@@ -34,7 +34,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
   ];
 
   @Input() parentID: string;
-  @Input() nodeInfo: SiteMapNodeGetResponse;
+  @Input() sitemapNode: SiteMapNodeGetResponse;
 
   putRequest: UserSiteMapPutRequest;
 
@@ -43,27 +43,27 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
   ) { super(); }
 
   ngOnInit(): void {
-    this.putRequest = this.wrapSiteMapNodeGetResponseToUserSiteMapPutRequest(this.nodeInfo, this.parentID);
+    this.putRequest = this.wrapSiteMapNodeGetResponseToUserSiteMapPutRequest(this.sitemapNode, this.parentID);
   }
 
   private wrapSiteMapNodeGetResponseToUserSiteMapPutRequest(
-    nodeInfo: SiteMapNodeGetResponse,
+    sitemapNode: SiteMapNodeGetResponse,
     parentID: string
   ): UserSiteMapPutRequest {
     const model = new UserSiteMapPutRequest();
     model.parent_id = parentID || '';
-    model.content_path = nodeInfo.content_path;
-    model.details = JSON.parse(JSON.stringify(nodeInfo.details || []));
-    model.url = nodeInfo.url;
-    model.url_blank = nodeInfo.url_blank;
-    model.url_link_node_id = nodeInfo.url_link_node_id;
-    model.url_type = nodeInfo.url_type;
+    model.content_path = sitemapNode.content_path;
+    model.details = JSON.parse(JSON.stringify(sitemapNode.details || []));
+    model.url = sitemapNode.url;
+    model.url_blank = sitemapNode.url_blank;
+    model.url_link_node_id = sitemapNode.url_link_node_id;
+    model.url_type = sitemapNode.url_type;
     return model;
   }
 
   confirm() {
     this.sitemapService.updateSiteNode(
-      this.nodeInfo.node_id,
+      this.sitemapNode.node_id,
       this.putRequest.details,
       this.putRequest
     ).subscribe(_ => {

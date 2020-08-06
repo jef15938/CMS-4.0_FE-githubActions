@@ -22,7 +22,7 @@ enum EditModeType {
 })
 export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('sitemapTree') sitemapTree: TreeComponent<SiteMapGetResponse>;
+  @ViewChild('userSitemapTree') userSitemapTree: TreeComponent<SiteMapGetResponse>;
 
   EditModeType = EditModeType;
 
@@ -31,11 +31,13 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   editMode: EditModeType = EditModeType.SITE;
 
-  sitemaps: SiteMapGetResponse[];
+  userSitemaps: SiteMapGetResponse[];
+  selectedUserSitemap: SiteMapGetResponse; // from GetUserSiteMap
 
   customNodeRenderer = MultiSiteNodeComponent;
-  selectedNode: SiteMapNodeGetResponse;
-  selectedNodeParentID: string;
+
+  selectedSitemapNode: SiteMapNodeGetResponse; // from GetSiteBySiteIDAndNodeID
+  selectedSitemapNodeParentID: string;
   private nodeSelected$ = new Subject<SiteMapGetResponse>();
 
   private destroy$ = new Subject();
@@ -81,13 +83,13 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   swichMode(mode: EditModeType) {
-    this.sitemaps = undefined;
-    this.selectedNode = undefined;
+    this.userSitemaps = undefined;
+    this.selectedSitemapNode = undefined;
     switch (mode) {
       case EditModeType.NODE:
         if (!this.selectedSite) { this.modalService.openMessage({ message: '尚未選擇網站' }); return; }
-        this.sitemapService.getUserSiteMapNodes(this.selectedSite.site_id).subscribe(sitemap => {
-          this.sitemaps = sitemap;
+        this.sitemapService.getUserSiteMapNodes(this.selectedSite.site_id).subscribe(userSitemaps => {
+          this.userSitemaps = userSitemaps;
           this.editMode = mode;
         });
         break;
@@ -102,11 +104,11 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   afterTreeRender(tree: CmsTree<SiteMapGetResponse>) {
-    const defaultSelect = this.sitemaps ? this.sitemaps[0] : undefined;
+    const defaultSelect = this.userSitemaps ? this.userSitemaps[0] : undefined;
     tree.selectNode(defaultSelect);
   }
 
-  onSiteMapTreeCustomEvent(event: MultiSiteNodeCustomEvent) {
+  onUserSiteMapTreeCustomEvent(event: MultiSiteNodeCustomEvent) {
     if (event instanceof MultiSiteNodeCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
@@ -135,17 +137,21 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   private registerSubjects() {
     this.nodeSelected$.pipe(
       takeUntil(this.destroy$),
-    ).subscribe(selectedNode => {
-      if (selectedNode) {
-        this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedNode.node_id).pipe(
+    ).subscribe(selectedUserSitemap => {
+      this.selectedUserSitemap = selectedUserSitemap;
+      this.selectedSitemapNode = undefined;
+      this.selectedSitemapNodeParentID = undefined;
+
+      if (selectedUserSitemap) {
+        this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.site_id, selectedUserSitemap.node_id).pipe(
           catchError(err => {
-            alert(`取得節點錯誤 : ${selectedNode.node_name}`);
-            return throwError(`取得節點錯誤 : ${selectedNode.node_name}`);
+            alert(`取得節點錯誤 : ${selectedUserSitemap.node_name}`);
+            return throwError(`取得節點錯誤 : ${selectedUserSitemap.node_name}`);
           })
         ).subscribe(selectedSitemapNode => {
-          this.selectedNode = selectedSitemapNode;
-          const parent = this.sitemapTree.findParent(selectedNode);
-          this.selectedNodeParentID = parent?.node_id;
+          this.selectedSitemapNode = selectedSitemapNode;
+          const parent = this.userSitemapTree.findParent(selectedUserSitemap);
+          this.selectedSitemapNodeParentID = parent?.node_id;
         });
       }
     });
@@ -155,8 +161,8 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     if (reset) {
       this.swichMode(EditModeType.NODE);
     } else {
-      const selectedNodeID = this.selectedNode.node_id;
-      const selectedNode = this.getNodeFromSitemapsByNodeID(selectedNodeID, this.sitemaps);
+      const selectedNodeID = this.selectedSitemapNode.node_id;
+      const selectedNode = this.getNodeFromSitemapsByNodeID(selectedNodeID, this.userSitemaps);
       this.nodeSelected$.next(selectedNode);
     }
   }
@@ -170,10 +176,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   testHtmlEditor() {
-    this.htmlEditorService.openEditor({
-      // title: `Html編輯`,
-      content: ''
-    }).subscribe(content => {
+    this.htmlEditorService.openEditor({ content: '' }).subscribe(content => {
       if (content || content === '') {
         console.warn('content = ', content);
       }
