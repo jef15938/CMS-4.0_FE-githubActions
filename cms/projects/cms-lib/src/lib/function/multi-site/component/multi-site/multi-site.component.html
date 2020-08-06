@@ -48,10 +48,10 @@
         <button type="button" tabindex="0" mat-raised-button (click)="swichMode(EditModeType.SITE)">返回</button>
       </div>
       <div class="page-content-container multi-site__block__content">
-        <cms-tree #sitemapTree class="list-block__tree" [context]="this" [nodeDatas]="sitemaps"
-          [nodeDisplayField]="'node_name'" [draggable]="true" [customNodeRenderer]="customNodeRenderer"
-          [defaultExpandLevel]="-1" (customEvent)="onSiteMapTreeCustomEvent($event)"
-          (nodeSelect)="onNodeSelected($event)" (afterRender)="afterTreeRender($event)" (dragTo)="onTreeDragTo($event)">
+        <cms-tree #sitemapTree class="list-block__tree" [context]="this" [nodeDatas]="sitemaps" [draggable]="true"
+          [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
+          (customEvent)="onSiteMapTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
+          (afterRender)="afterTreeRender($event)" (dragTo)="onTreeDragTo($event)">
         </cms-tree>
       </div>
     </div>

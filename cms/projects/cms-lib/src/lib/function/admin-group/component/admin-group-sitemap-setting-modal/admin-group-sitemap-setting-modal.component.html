@@ -13,7 +13,7 @@
 <ng-container *ngIf="nodes">
   <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="nodes" [checkbox]="true"
     [checkedNodes]="checkedNodes" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
-    (nodeCheckedChange)="onNodeCheckedChange($event)">
+    [nodeDisplayField]="'node_name'" (nodeCheckedChange)="onNodeCheckedChange($event)">
   </cms-tree>
 </ng-container>
 

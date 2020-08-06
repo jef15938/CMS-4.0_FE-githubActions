@@ -69,6 +69,7 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
 
       const groupSitemapInfoByNodeID = groupSitemapInfos.find(info => info.node_id === sitemap.node_id);
       if (groupSitemapInfoByNodeID) {
+        node.isChecked = true;
         node.groupSitemapInfo.can_add = groupSitemapInfoByNodeID.can_add;
         node.groupSitemapInfo.can_delete = groupSitemapInfoByNodeID.can_delete;
         node.groupSitemapInfo.can_modify = groupSitemapInfoByNodeID.can_modify;

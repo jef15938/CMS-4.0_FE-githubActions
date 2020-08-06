@@ -14,15 +14,12 @@
           [draggable]="draggable" [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
           (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
           (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);">
-
+          <span *ngIf="nodeDisplayField">
+            {{node[nodeDisplayField]}}
+          </span>
           <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
             [onComponentLoad]="this | nodeRenderOnload:node:context">
           </span>
-
-          <span *ngIf="!customNodeRenderer">
-            {{node[nodeDisplayField]}}
-          </span>
-
         </mat-checkbox>
         <div class="cms-tree__node__head__anchor cms-tree__node__head__anchor--next"
           (dragover)="prevOrNextDragOver($event, node, 1)" (dragleave)="prevOrNextDragLeave($event)"></div>
@@ -44,11 +41,11 @@
           [draggable]="draggable" [class.drag-over]="draggable&&dragNodeExpandOverNode===node&&dragNode!==node"
           (dragstart)="handleDragStart($event, node);" (dragover)="handleDragOver($event, node);"
           (drop)="handleDrop($event, node);" (dragend)="handleDragEnd($event);">
+          <span *ngIf="nodeDisplayField">
+            {{node[nodeDisplayField]}}
+          </span>
           <span *ngIf="customNodeRenderer" neuxDynamicWrapper [componentClass]="customNodeRenderer"
             [onComponentLoad]="this | nodeRenderOnload:node:context">
-          </span>
-          <span *ngIf="!customNodeRenderer">
-            {{node[nodeDisplayField]}}
           </span>
           <button type="button" tabindex="-1" mat-icon-button class="node-expand-btn"
             [attr.aria-label]="'toggle ' + node[nodeDisplayField]" (click)="treeControl.toggle(node);">

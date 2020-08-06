@@ -4,7 +4,7 @@
   </div>
   <div class="page-content-container cms-dept__content">
     <cms-tree class="cms-tree" [defaultExpandLevel]="-1" [context]="this" [nodeDatas]="depts"
-      nodeDisplayField="dept_name" [customNodeRenderer]="customNodeRenderer" (customEvent)="onCustomEvent($event)"
+      [customNodeRenderer]="customNodeRenderer" (customEvent)="onCustomEvent($event)"
       (afterRender)="afterTreeRender($event)"></cms-tree>
   </div>
 </div>

@@ -1,14 +1,15 @@
 div {
+  margin-left: 15px;
+
+  &>span {
+    margin-left: 3px;
+  }
 
   &,
   &>* {
     height: 40px;
     line-height: 40px;
-    vertical-align: middle;
+    vertical-align: top;
     display: inline-block;
-  }
-
-  &:not(:first-child) {
-    margin-left: 10px;
   }
 }

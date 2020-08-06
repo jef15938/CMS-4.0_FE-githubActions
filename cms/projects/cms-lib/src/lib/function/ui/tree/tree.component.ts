@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, OnChanges, Output, EventEmitter,
-  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy, SimpleChanges,
+  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy, SimpleChanges, AfterViewChecked, ChangeDetectorRef,
 } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -15,7 +15,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss']
 })
-export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewInit, OnChanges, OnDestroy, AfterViewChecked {
 
   @ViewChildren(DynamicWrapperDirective) customRenderWrappers: QueryList<DynamicWrapperDirective<TData>>;
 
@@ -24,7 +24,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   @Input() context: any;
 
-  @Input() nodeDisplayField = 'name'; // 顯示欄位
+  @Input() nodeDisplayField; // 顯示欄位
   @Input() nodeChildrenEntryField = 'children'; // children的進入口欄位
   @Input() nodeDatas: TData[] = []; // 樹資料
   @Input() defaultExpandLevel = 0; // 預設展開層數：-1=全展開
@@ -62,7 +62,9 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Output() nodesCheckedChange = new EventEmitter<{ nodes: TData[] }>();
   @Input() checkboxDisabled = (node: TData) => false;
 
-  constructor() { }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
     this.treeControl = new NestedTreeControl<TData>(node => node[this.nodeChildrenEntryField]);
@@ -78,6 +80,10 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   ngAfterViewInit(): void {
     this.init();
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
