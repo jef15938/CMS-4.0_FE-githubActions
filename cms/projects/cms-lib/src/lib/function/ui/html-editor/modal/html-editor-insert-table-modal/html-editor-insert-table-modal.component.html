@@ -1,15 +1,15 @@
-<div class="html-editor-insert-modal">
-  <form class="html-editor-insert-modal__form" #form="ngForm">
-    <div class="html-editor-insert-modal__content ">
-      <div class="html-editor-insert-modal__row">
-        <div class="html-editor-insert-modal__col">
+<div class="modal-form-layout">
+  <form class="modal-form-layout__form" #form="ngForm">
+    <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>列數(橫列)</mat-label>
             <input matInput type="number" min="1" step="1" [(ngModel)]="cols" name="cols" required #modelcolC="ngModel">
             <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
           </mat-form-field>
         </div>
-        <div class="html-editor-insert-modal__col">
+        <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>行數(直行)</mat-label>
             <input matInput type="number" min="1" step="1" [(ngModel)]="rows" name="rows" required #modelRows="ngModel">
@@ -18,10 +18,10 @@
         </div>
       </div>
     </div>
-    <div class="html-editor-insert-modal__btn-group btn-group">
-      <button class="html-editor-insert-modal__btn" type="button" tabindex="0" mat-raised-button
+    <div class="modal-form-layout__btn-group btn-group">
+      <button class="modal-form-layout__btn" type="button" tabindex="0" mat-raised-button
         (click)="close()">取消</button>
-      <button class="html-editor-insert-modal__btn" type="button" tabindex="0" mat-raised-button (click)="confirm()"
+      <button class="modal-form-layout__btn" type="button" tabindex="0" mat-raised-button (click)="confirm()"
         [disabled]="form.invalid">儲存</button>
     </div>
   </form>

@@ -6,7 +6,7 @@
 @import '../projects/cms-lib/src/lib/global/style/main';
 
 @include custom-reset();
-
+@include modal-form-layout();
 
 .router-active {
   &:before {

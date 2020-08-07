@@ -1,12 +1,12 @@
-<ng-container *ngIf="formGroup">
-  <form class="form" [formGroup]="formGroup">
+<div class="farm-form-info" *ngIf="formGroup">
+  <form class="farm-form-info__form form" [formGroup]="formGroup">
     <ng-container *ngFor="let col of farmFormInfo.columns">
       <ng-container *ngIf="formColumnSettingMap?.get(col.column_id)?.enable">
         <div class="form__col" [style.width]="100/farmFormInfo.split_size + '%'">
           <div class="form__container">
             <div class="form__label">{{col.display_text}}</div>
             <div class="form__content"
-              [class.readonly]="col.is_readonly || formColumnSettingMap.get(col.column_id)?.readonly">
+              [class.form__content--readonly]="col.is_readonly || formColumnSettingMap.get(col.column_id)?.readonly">
               <ng-container [ngSwitch]="col.display_type">
                 <!-- TEXT -->
                 <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXT">
@@ -51,7 +51,7 @@
                 </ng-container>
                 <!-- RADIO -->
                 <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
-                  <mat-radio-group [formControlName]="col.column_id" style="width: 100%; display: block;"
+                  <mat-radio-group [formControlName]="col.column_id" class="form__radio-group"
                     (change)="checkColumnTrigger(col)">
                     <ng-container *ngFor="let option of (col.setting?.options||[]); let i=index;">
                       <mat-radio-button class="form__radio" [value]="option.value">
@@ -156,4 +156,4 @@
     </ng-container>
 
   </form>
-</ng-container>
+</div>

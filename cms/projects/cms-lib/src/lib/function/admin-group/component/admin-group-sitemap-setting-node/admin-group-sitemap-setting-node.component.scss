@@ -1,15 +1,23 @@
-div {
+.admin-group-sitemap-setting-node {
   margin-left: 15px;
 
-  &>span {
-    margin-left: 3px;
-  }
-
-  &,
-  &>* {
+  &__child {
+    margin-left: 15px;
     height: 40px;
     line-height: 40px;
     vertical-align: top;
     display: inline-block;
+
+    &__input {}
+
+    &__label {
+      display: inline-block;
+      margin-left: 3px;
+      height: 40px;
+      line-height: 40px;
+      vertical-align: top;
+      display: inline-block;
+    }
   }
+
 }

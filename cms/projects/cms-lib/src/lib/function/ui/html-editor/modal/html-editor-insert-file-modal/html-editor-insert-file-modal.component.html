@@ -1,29 +1,29 @@
-<div class="html-editor-insert-modal" *ngIf="aTagConfig">
-  <form class="html-editor-insert-modal__form" #form="ngForm">
-    <div class="html-editor-insert-modal__content ">
-      <div class="html-editor-insert-modal__source-container">
+<div class="modal-form-layout" *ngIf="aTagConfig">
+  <form class="modal-form-layout__form" #form="ngForm">
+    <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__source-container">
         <div class="filetype-icon" *ngIf="fileType">
           <img [src]="(localUrl+'/assets/img/icon/'+fileType+'.png') | safeResource">
         </div>
       </div>
-      <div class="html-editor-insert-modal__btn-group btn-group">
-        <button class="html-editor-insert-modal__btn dark-style" type="button" tabindex="-1" mat-button
+      <div class="modal-form-layout__btn-group btn-group">
+        <button class="modal-form-layout__btn dark-style" type="button" tabindex="-1" mat-button
           (click)="changeGallery()">媒體庫</button>
-        <button type="button" class="html-editor-insert-modal__btn" tabindex="0" mat-raised-button (click)="confirm()"
+        <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="confirm()"
           [disabled]="form.invalid">儲存</button>
-        <button type="button" class="html-editor-insert-modal__btn" tabindex="0" mat-raised-button
+        <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button
           (click)="close()">取消</button>
       </div>
-      <div class="html-editor-insert-modal__row">
-        <div class="html-editor-insert-modal__col">
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>{{aTagConfig.text ? '檔案' : '請從媒體庫選擇檔案'}}</mat-label>
             <input matInput [(ngModel)]="aTagConfig.text" name="text" readonly placeholder="請從媒體庫選擇檔案">
           </mat-form-field>
         </div>
       </div>
-      <div class="html-editor-insert-modal__row">
-        <div class="html-editor-insert-modal__col">
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
           <mat-form-field appearance="outline" style="display: none;">
             <mat-label>Url</mat-label>
             <input matInput [(ngModel)]="aTagConfig.href" name="url" required #modelUrl="ngModel" readonly>

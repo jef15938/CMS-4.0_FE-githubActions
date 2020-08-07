@@ -78,4 +78,23 @@
     line-height: normal;
   }
 
+  .mat-select-panel-wrap {
+    overflow: hidden;
+  }
+
+  .highlight1 {
+    color: $color-red
+  }
+
+  .float-right {
+    float: right;
+  }
+
+  .list {
+    &__item {
+      &--align-center {
+        text-align: center;
+      }
+    }
+  }
 }

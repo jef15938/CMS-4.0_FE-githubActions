@@ -1,21 +1,21 @@
-<div class="html-editor-insert-modal">
-  <form class="html-editor-insert-modal__form" #form="ngForm">
-    <div class="html-editor-insert-modal__content ">
-      <div class="html-editor-insert-modal__source-container">
-        <img class="html-editor-insert-modal__source-container__img" [src]="src" *ngIf="src">
+<div class="modal-form-layout">
+  <form class="modal-form-layout__form" #form="ngForm">
+    <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__source-container">
+        <img class="modal-form-layout__source-container__img" [src]="src" *ngIf="src">
       </div>
-      <div class="html-editor-insert-modal__btn-group btn-group">
-        <button class="html-editor-insert-modal__btn dark-style" type="button" tabindex="-1" mat-raised-button
+      <div class="modal-form-layout__btn-group btn-group">
+        <button class="modal-form-layout__btn dark-style" type="button" tabindex="-1" mat-raised-button
           (click)="changeGallery()">媒體庫</button>
-        <button type="button" class="html-editor-insert-modal__btn" tabindex="0" mat-raised-button (click)="confirm()"
+        <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="confirm()"
           [disabled]="form.invalid">儲存</button>
-        <button type="button" class="html-editor-insert-modal__btn" tabindex="0" mat-raised-button
+        <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button
           (click)="close()">取消</button>
 
       </div>
 
-      <div class="html-editor-insert-modal__row">
-        <mat-form-field appearance="outline" class="html-editor-insert-modal__col">
+      <div class="modal-form-layout__row">
+        <mat-form-field appearance="outline" class="modal-form-layout__col">
           <mat-label>圖片網址</mat-label>
           <input matInput [(ngModel)]="src" name="src" required #modelSrc="ngModel" (ngModelChange)="checkImgSize()"
             readonly>
@@ -23,19 +23,19 @@
         </mat-form-field>
       </div>
 
-      <div class="html-editor-insert-modal__row">
-        <mat-form-field appearance="outline" class="html-editor-insert-modal__col">
+      <div class="modal-form-layout__row">
+        <mat-form-field appearance="outline" class="modal-form-layout__col">
           <mat-label>圖片描述</mat-label>
           <input matInput [(ngModel)]="alt" name="alt">
         </mat-form-field>
       </div>
 
-      <div class="html-editor-insert-modal__row">
-        <mat-form-field appearance="outline" class="html-editor-insert-modal__col">
+      <div class="modal-form-layout__row">
+        <mat-form-field appearance="outline" class="modal-form-layout__col">
           <mat-label>寬</mat-label>
           <input type="number" matInput [(ngModel)]="width" name="width">
         </mat-form-field>
-        <mat-form-field appearance="outline" class="html-editor-insert-modal__col">
+        <mat-form-field appearance="outline" class="modal-form-layout__col">
           <mat-label>高</mat-label>
           <input type="number" matInput [(ngModel)]="height" name="height">
         </mat-form-field>

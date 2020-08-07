@@ -9,14 +9,14 @@
   height: 100%;
 
   .btn-panel {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 4px 0 transparentize($color-black, 0.88);
 
     button:not(:first-child) {
       margin-left: 5px;
     }
 
     .action-mode.active {
-      color: yellow;
+      color: $color-yellow;
     }
 
     span {

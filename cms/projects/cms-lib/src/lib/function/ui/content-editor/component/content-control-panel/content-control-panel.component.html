@@ -1,29 +1,28 @@
-<div *ngIf="show && selected" class="cms-content-control-panel" style="padding: 0 10px;"
-  (click)="$event.stopPropagation()">
-  <div>
-    editorActionMode = {{editorActionMode}}
-    <br>
-    版型種類 : {{selected.templateType}}
-    <br>
-    版型Id : {{selected.templateInfo?.templateId}}
-    <br>
-    Id : {{selected.templateInfo.id}}
+<div *ngIf="show && selected" class="cms-content-control-panel" (click)="$event.stopPropagation()">
+  <div class="cms-content-control-panel__info info">
+    <span class="info__text">editorActionMode = {{editorActionMode}}</span>
+    <span class="info__text">版型種類 : {{selected.templateType}}</span>
+    <span class="info__text">版型Id : {{selected.templateInfo?.templateId}}</span>
+    <span class="info__text">Id : {{selected.templateInfo.id}}</span>
   </div>
   <ng-container
     *ngIf="editorActionMode===ContentEditorActionMode.LAYOUT && (selected.selectedTargetType=== LayoutWrapperSelectedTargetType.TEMPLATE || selected.templateInfo.templateId==='HTML')">
     <hr>
-    <div class="btn-group">
-      <button type="button" tabindex="0" mat-icon-button (click)="templateShowInfo()">
+    <div class="cms-content-control-panel__btn-group btn-group">
+      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button
+        (click)="templateShowInfo()">
         <mat-icon>info</mat-icon>
       </button>
-      <button type="button" tabindex="0" mat-icon-button (click)="moveTemplate('up')" [disabled]="!canTemplateMoveUp">
+      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button
+        (click)="moveTemplate('up')" [disabled]="!canTemplateMoveUp">
         <mat-icon>keyboard_arrow_up</mat-icon>
       </button>
-      <button type="button" tabindex="0" mat-icon-button (click)="moveTemplate('down')"
-        [disabled]="!canTemplateMoveDown">
+      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button
+        (click)="moveTemplate('down')" [disabled]="!canTemplateMoveDown">
         <mat-icon>keyboard_arrow_down</mat-icon>
       </button>
-      <button type="button" tabindex="0" mat-icon-button (click)="templateDelete()">
+      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button
+        (click)="templateDelete()">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
@@ -79,6 +78,6 @@
     </div>
   </ng-container>
   <hr>
-  <button type="button" tabindex="0" mat-button style="width: 100%;" [disabled]="!hasChange"
-    (click)="preserveChanges()">套用變更</button>
+  <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-button style="width: 100%;"
+    [disabled]="!hasChange" (click)="preserveChanges()">套用變更</button>
 </div>

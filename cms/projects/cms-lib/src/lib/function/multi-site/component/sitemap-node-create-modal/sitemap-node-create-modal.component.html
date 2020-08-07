@@ -1,121 +1,168 @@
-<div class="page-content-container" *ngIf="sitemapMaintainModel">
-  <form #form="ngForm">
-    <mat-form-field appearance="outline">
-      <mat-label>節點名稱</mat-label>
-      <input matInput [(ngModel)]="sitemapMaintainModel.node_name" name="node_name" required #modelNodeName="ngModel">
-      <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Meta標題</mat-label>
-      <input matInput [(ngModel)]="sitemapMaintainModel.meta_title" name="meta_title" required
-        #modelMetaTitle="ngModel">
-      <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>節點類型</mat-label>
-      <mat-select [(ngModel)]="sitemapMaintainModel.node_type" name="node_type"
-        (selectionChange)="sitemapMaintainModel.checkFieldsByNodeType()">
-        <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
-          {{option.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <ng-container [ngSwitch]="sitemapMaintainModel.node_type">
-      <!-- URL -->
-      <ng-container *ngSwitchCase="NodeType.URL">
+<div class="sitemap-node-creat-modal modal-form-layout" *ngIf="sitemapMaintainModel">
+  <form class="modal-form-layout__form" #form="ngForm">
+    <div class="modal-form-layout__row">
+      <div class="modal-form-layout__col">
         <mat-form-field appearance="outline">
-          <mat-label>連結類型</mat-label>
-          <mat-select [(ngModel)]="sitemapMaintainModel.url_type" name="url_type" required>
-            <mat-option *ngFor="let option of urlTypeOptions" [value]="option.value">
+          <mat-label>節點名稱</mat-label>
+          <input matInput [(ngModel)]="sitemapMaintainModel.node_name" name="node_name" required
+            #modelNodeName="ngModel">
+          <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="modal-form-layout__row">
+      <div class="modal-form-layout__col">
+        <mat-form-field appearance="outline">
+          <mat-label>Meta標題</mat-label>
+          <input matInput [(ngModel)]="sitemapMaintainModel.meta_title" name="meta_title" required
+            #modelMetaTitle="ngModel">
+          <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="modal-form-layout__row">
+      <div class="modal-form-layout__col">
+        <mat-form-field appearance="outline">
+          <mat-label>節點類型</mat-label>
+          <mat-select [(ngModel)]="sitemapMaintainModel.node_type" name="node_type"
+            (selectionChange)="sitemapMaintainModel.checkFieldsByNodeType()">
+            <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
               {{option.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
+    </div>
+
+    <ng-container [ngSwitch]="sitemapMaintainModel.node_type">
+      <!-- URL -->
+      <ng-container *ngSwitchCase="NodeType.URL">
+        <div class="modal-form-layout__row">
+          <div class="modal-form-layout__col">
+            <mat-form-field appearance="outline">
+              <mat-label>連結類型</mat-label>
+              <mat-select [(ngModel)]="sitemapMaintainModel.url_type" name="url_type" required>
+                <mat-option *ngFor="let option of urlTypeOptions" [value]="option.value">
+                  {{option.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
         <ng-container [ngSwitch]="sitemapMaintainModel.url_type">
           <!-- 站內 -->
           <ng-container *ngSwitchCase="UrlType.INSIDE">
-            <mat-form-field appearance="outline">
-              <mat-label>站內節點ID</mat-label>
-              <input matInput [(ngModel)]="sitemapMaintainModel.url_link_node_id" name="url_link_node_id" required>
-            </mat-form-field>
+            <div class="modal-form-layout__row">
+              <div class="modal-form-layout__col">
+                <mat-form-field appearance="outline">
+                  <mat-label>站內節點ID</mat-label>
+                  <input matInput [(ngModel)]="sitemapMaintainModel.url_link_node_id" name="url_link_node_id" required>
+                </mat-form-field>
+              </div>
+            </div>
           </ng-container>
           <!-- 站外 -->
           <ng-container *ngSwitchCase="UrlType.OUTSIDE">
-            <mat-form-field appearance="outline">
-              <mat-label>站外網址</mat-label>
-              <input matInput [(ngModel)]="sitemapMaintainModel.url" name="url" required>
-            </mat-form-field>
+            <div class="modal-form-layout__row">
+              <div class="modal-form-layout__col">
+                <mat-form-field appearance="outline">
+                  <mat-label>站外網址</mat-label>
+                  <input matInput [(ngModel)]="sitemapMaintainModel.url" name="url" required>
+                </mat-form-field>
+              </div>
+            </div>
           </ng-container>
           <!-- 共通 -->
-          <mat-form-field appearance="outline">
-            <mat-label>另開視窗</mat-label>
-            <mat-select [(ngModel)]="sitemapMaintainModel.url_blank" name="url_blank" required>
-              <mat-option *ngFor="let option of urlBlankTypeOptions" [value]="option.value">
-                {{option.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div class="modal-form-layout__row">
+            <div class="modal-form-layout__col">
+              <mat-form-field appearance="outline">
+                <mat-label>另開視窗</mat-label>
+                <mat-select [(ngModel)]="sitemapMaintainModel.url_blank" name="url_blank" required>
+                  <mat-option *ngFor="let option of urlBlankTypeOptions" [value]="option.value">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
         </ng-container>
       </ng-container>
       <!-- CONTENT -->
       <ng-container *ngSwitchCase="NodeType.CONTENT">
-
-        <div class="mat-form-field-wrapper layout-select">
-          <input [(ngModel)]="sitemapMaintainModel.layout_id" name="layout_id" style="display:none;" required
-            #modelLayoutID="ngModel">
-          <mat-expansion-panel [class.has-error]="modelLayoutID.touched && modelLayoutID.invalid">
-            <mat-expansion-panel-header>
-              <mat-panel-title>版面<span style="color:red;">*</span></mat-panel-title>
+        <div class="sitemap-node-creat-modal__layout-select layout-select">
+          <input [(ngModel)]="sitemapMaintainModel.layout_id" class="layout-select__input" name="layout_id"
+            style="display:none;" required #modelLayoutID="ngModel">
+          <mat-expansion-panel class="layout-select__collapse"
+            [class.layout-select__collapse--has-error]="modelLayoutID.touched && modelLayoutID.invalid">
+            <mat-expansion-panel-header class="layout-select__collapse__header">
+              <mat-panel-title>版面<span class="highlight1">*</span></mat-panel-title>
               <mat-panel-description>
-                <span style="color:red;" *ngIf="modelLayoutID.invalid">請選擇版面</span>
+                <span class="highlight1" *ngIf="modelLayoutID.invalid">請選擇版面</span>
                 {{(sitemapMaintainModel.layout_id | getLayoutByLayoutID : this.layouts)?.layout_name}}
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <div class="option">
-              <span class="list">
-                <div *ngFor="let option of layouts" [class.actived]="option.layout_id===activedLayoutID"
+            <div class="layout-select__collapse__option">
+              <ul class="layout-select__collapse__list">
+                <li *ngFor="let option of layouts" class="layout-select__list__item"
+                  [class.layout-select__list__item--actived]="option.layout_id===activedLayoutID"
                   (mouseenter)="setActivedLayout(option, true)" (mouseleave)="setActivedLayout(option, false)">
                   <mat-checkbox [checked]="option.layout_id===sitemapMaintainModel.layout_id"
                     (change)="onSelectedLayoutCheckedChange($event, option)">
                     {{option.layout_name}}
                   </mat-checkbox>
-                </div>
-              </span>
-              <span class="thumbnail">
+                </li>
+              </ul>
+              <div class="layout-select__collapse__thumbnail">
                 <ng-container *ngIf="(activedLayoutID | getLayoutByLayoutID : this.layouts); let actived;">
                   <img *ngIf="actived?.layout_thumbnail" [src]="actived.layout_thumbnail">
                 </ng-container>
-              </span>
+              </div>
             </div>
           </mat-expansion-panel>
         </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>節點連結路徑</mat-label>
-          <input matInput [(ngModel)]="sitemapMaintainModel.content_path" name="content_path"
-            #modelContentPath="ngModel">
-        </mat-form-field>
+        <div class="modal-form-layout__row">
+          <div class="modal-form-layout__col">
+            <mat-form-field appearance="outline">
+              <mat-label>節點連結路徑</mat-label>
+              <input matInput [(ngModel)]="sitemapMaintainModel.content_path" name="content_path"
+                #modelContentPath="ngModel">
+            </mat-form-field>
+          </div>
+        </div>
       </ng-container>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Meta描述</mat-label>
-        <input matInput [(ngModel)]="sitemapMaintainModel.meta_description" name="meta_description">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Meta關鍵字</mat-label>
-        <input matInput [(ngModel)]="sitemapMaintainModel.meta_keyword" name="meta_keyword">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Meta圖片</mat-label>
-        <input matInput [(ngModel)]="sitemapMaintainModel.meta_image" name="meta_image">
-      </mat-form-field>
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>Meta描述</mat-label>
+            <input matInput [(ngModel)]="sitemapMaintainModel.meta_description" name="meta_description">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>Meta關鍵字</mat-label>
+            <input matInput [(ngModel)]="sitemapMaintainModel.meta_keyword" name="meta_keyword">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>Meta圖片</mat-label>
+            <input matInput [(ngModel)]="sitemapMaintainModel.meta_image" name="meta_image">
+          </mat-form-field>
+        </div>
+      </div>
     </ng-container>
-    <div class="btn-group">
-      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-      <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    <div class="modal-form-layout__btn-group  btn-group">
+      <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="close()">取消</button>
+      <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="confirm()"
+        [disabled]="form.invalid">儲存</button>
     </div>
   </form>
 </div>

@@ -1,7 +1,7 @@
-<div class="path-container dark-style" style="padding-left: 16px;">
-  Navigation :
+<div class="editor-path-container dark-style">
+  <span class="editor-path-container__text">Navigation :</span>
   <ng-container *ngFor="let path of paths; let i=index;">
-    <span>{{path.tagName || 'TEXT'}}</span>
-    <span *ngIf="i!==paths.length-1">></span>
+    <span class="editor-path-container__text">{{path.tagName || 'TEXT'}}</span>
+    <span class="editor-path-container__text" *ngIf="i!==paths.length-1">></span>
   </ng-container>
 </div>

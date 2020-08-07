@@ -1,20 +1,20 @@
-<div class="html-editor-insert-modal">
-  <form #form="ngForm" class="html-editor-insert-modal__form">
+<div class="modal-form-layout">
+  <form #form="ngForm" class="modal-form-layout__form">
 
-    <div class="html-editor-insert-modal__content ">
-      <div class="html-editor-insert-modal__source-container">
-        <iframe class="html-editor-insert-modal__source-container__iframe" *ngIf="frameId && isValidSrc"
+    <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__source-container">
+        <iframe class="modal-form-layout__source-container__iframe" *ngIf="frameId && isValidSrc"
           [src]="frameId | safeResource"></iframe>
       </div>
 
-      <div class="html-editor-insert-modal__btn-group btn-group">
-        <button type="button" tabindex="0" class="html-editor-insert-modal__btn" mat-raised-button
+      <div class="modal-form-layout__btn-group btn-group">
+        <button type="button" tabindex="0" class="modal-form-layout__btn" mat-raised-button
           (click)="close()">取消</button>
-        <button type="button" tabindex="0" class="html-editor-insert-modal__btn" mat-raised-button (click)="confirm()"
+        <button type="button" tabindex="0" class="modal-form-layout__btn" mat-raised-button (click)="confirm()"
           [disabled]="form.invalid || !isValidSrc">儲存</button>
       </div>
-      <div class="html-editor-insert-modal__row">
-        <div class="html-editor-insert-modal__col">
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>連結網址</mat-label>
             <input matInput [(ngModel)]="frameId" name="frameId" required #modelFrameId="ngModel"

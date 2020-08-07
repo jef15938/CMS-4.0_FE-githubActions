@@ -1,18 +1,21 @@
-<ng-container *ngIf="templateInfo">
-  <div>
-    個數限制 : {{maxItemCount}}
+<div class="template-control-tab" *ngIf="templateInfo">
+  <div class="template-control-tab__info info">
+    <span class="info__text">
+      <span class="info__text__title">個數限制 : </span>
+      <span class="info__text__content">{{maxItemCount}}</span>
+    </span>
   </div>
   <div>
-    <mat-list cdkDropList (cdkDropListDropped)="onListDropped($event)">
-      <mat-list-item *ngFor="let tabInfo of templateInfo.tabList" cdkDrag>
-        <div class="item-container">
+    <mat-list class="template-control-tab__list list" cdkDropList (cdkDropListDropped)="onListDropped($event)">
+      <mat-list-item class="list__item" *ngFor="let tabInfo of templateInfo.tabList" cdkDrag>
+        <div class="list__item__container">
           <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
           <input [(ngModel)]="tabInfo.tabId">
           <mat-icon class="pointer" (click)="removeTab(tabInfo)">remove_circle</mat-icon>
         </div>
       </mat-list-item>
-      <mat-list-item style="text-align: center;">
-        <div class="item-container" style="text-align: center;">
+      <mat-list-item class="list__item list__item--align-center">
+        <div class="list__item__container">
           <button type="button" tabindex="0" mat-icon-button (click)="addTab()"
             [disabled]="templateInfo.tabList.length>=parseInt(''+maxItemCount)">
             <mat-icon class="pointer">add_circle</mat-icon>
@@ -21,4 +24,4 @@
       </mat-list-item>
     </mat-list>
   </div>
-</ng-container>
+</div>

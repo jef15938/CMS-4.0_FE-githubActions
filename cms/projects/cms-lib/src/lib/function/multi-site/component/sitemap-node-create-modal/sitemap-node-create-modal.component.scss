@@ -1,11 +1,17 @@
-.has-error {
-  border: 1px solid red;
-}
+@import "../../../../global/style/main";
 
 .layout-select {
-  mat-expansion-panel-header {
-    padding: 0.75em;
+
+  &__collapse {
+    &--has-error {
+      border: 1px solid $color-red;
+    }
+
+    &__header {
+      padding: 0.75em;
+    }
   }
+
 
   .option {
     height: 150px;
@@ -32,7 +38,7 @@
     }
 
     .actived {
-      background-color: yellow;
+      background-color: $color-yellow;
     }
   }
 }

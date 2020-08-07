@@ -4,8 +4,10 @@
   overflow: auto;
 }
 
+$site-content-width:824px;
+
 .header {
-  min-width: 1200px;
+  min-width: $site-content-width;
 
   mat-toolbar {
     height: 40px;
@@ -57,7 +59,7 @@
 }
 
 .content {
-  min-width: 1200px;
+  min-width: $site-content-width;
   height: calc(100% - 40px);
   overflow: auto;
 }
