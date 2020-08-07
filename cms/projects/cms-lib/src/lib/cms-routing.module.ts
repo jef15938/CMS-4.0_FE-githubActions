@@ -61,6 +61,15 @@ const routes: Routes = [
             loadChildren: getSystemModule
           },
           {
+            path: 'chatbot', canDeactivate: [CmsCanDeactiveGuard],
+            // loadChildren: () => import('./function-module/chatbot/chatbot.module').then(m => m.ChatbotModule)
+            loadChildren: getChatbotModule
+          },
+          {
+            path: 'cms-chatbot', canDeactivate: [CmsCanDeactiveGuard],
+            loadChildren: getChatbotModule
+          },
+          {
             path: ':funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
           },
           {
@@ -73,15 +82,6 @@ const routes: Routes = [
             path: ':category1/:category2/:category3/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
           }
         ]
-      },
-      {
-        path: 'chatbot', canDeactivate: [CmsCanDeactiveGuard],
-        // loadChildren: () => import('./function-module/chatbot/chatbot.module').then(m => m.ChatbotModule)
-        loadChildren: getChatbotModule
-      },
-      {
-        path: 'cms-chatbot', canDeactivate: [CmsCanDeactiveGuard],
-        loadChildren: getChatbotModule
       },
       {
         path: 'extension', canDeactivate: [CmsCanDeactiveGuard],
