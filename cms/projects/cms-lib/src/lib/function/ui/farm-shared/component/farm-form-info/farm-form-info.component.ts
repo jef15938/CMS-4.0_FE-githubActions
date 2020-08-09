@@ -235,11 +235,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     });
   }
 
-  openContentEditor(column: CmsFarmFormColumn) {
+  openContentEditor(col: CmsFarmFormColumn) {
     const controlID = this.funcID;
-    const content = (column.value) as ContentInfo;
-    // TODO: Farm.EDITOR
-    this.contentEditorService.openEditorByContent(content, controlID).subscribe();
+    const control = this.formGroup.get(col.column_id)
+    const content = JSON.parse((control.value) as string) as ContentInfo;
+    this.contentEditorService.openEditorByContent(content, controlID).subscribe(result => {
+      control.setValue(JSON.stringify(result));
+    });
   }
 
   openHtmlEditor(col: CmsFarmFormColumn) {
@@ -263,7 +265,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   onNodesCheckedChange(ev: { nodes: FarmTreeInfo[] }, columnID: string) {
-    // TODO: FarmFormTree
     const ids = ev.nodes.map(node => node.id);
     this.formGroup.get(columnID).setValue(ids.length ? ids.join(',') : '');
   }
