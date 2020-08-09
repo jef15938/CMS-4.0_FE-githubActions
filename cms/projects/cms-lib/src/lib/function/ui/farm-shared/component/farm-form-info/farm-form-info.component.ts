@@ -14,6 +14,7 @@ import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
 import { GetFarmTreeResponse } from '../../../../../global/api/neuxAPI/bean/GetFarmTreeResponse';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { FarmTreeInfo } from '../../../../../global/api/neuxAPI/bean/FarmTreeInfo';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -38,6 +39,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   formColumnSettingMap: Map<string, FormColumnSetting>;
 
   treeMap: Map<string, GetFarmTreeResponse> = new Map();
+  treeNodeSelectedMap: Map<string, FarmTreeInfo[]> = new Map();
 
   constructor(
     private contentEditorService: ContentEditorService,
@@ -53,7 +55,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.farmFormInfo.columns.forEach(column => {
       this.checkColumnTrigger(column);
       if (column.display_type === CmsFarmFormColumnDisplayType.TREE) {
-        this.farmService.getFarmTree(column.setting.tree_source).subscribe(tree => this.treeMap.set(column.column_id, tree));
+        this.farmService.getFarmTree(column.setting.tree_source).subscribe(tree => {
+          const idStrings = (column.value || '') as string;
+          const ids = idStrings.split(',').filter(id => !!id);
+          const selectedNode: FarmTreeInfo[] = this.getFarmTreeInfosByTreeIds(ids, tree.data);
+          this.treeNodeSelectedMap.set(column.column_id, selectedNode);
+          this.treeMap.set(column.column_id, tree);
+        });
       }
     });
   }
@@ -144,6 +152,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       map.set(column.column_id, { required: false, readonly: false, enable: true, });
     });
     return map;
+  }
+
+  private getFarmTreeInfosByTreeIds(funcIds: string[], sources: FarmTreeInfo[], results: FarmTreeInfo[] = []): FarmTreeInfo[] {
+    if (!sources?.length) { return results; }
+    results = results.concat(sources.filter(source => funcIds.indexOf(source.id) > -1));
+    sources = sources.reduce((a, b) => a.concat(b.children || []), []);
+    return this.getFarmTreeInfosByTreeIds(funcIds, sources, results);
   }
 
   clearForm() {
@@ -247,9 +262,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     });
   }
 
-  onNodesCheckedChange(ev: { nodes: any[] }) {
+  onNodesCheckedChange(ev: { nodes: FarmTreeInfo[] }, columnID: string) {
     // TODO: FarmFormTree
-    console.warn('onNodesCheckedChange() ev = ', ev);
+    const ids = ev.nodes.map(node => node.id);
+    this.formGroup.get(columnID).setValue(ids.length ? ids.join(',') : '');
   }
 
   onCheckboxChange(ev: MatCheckboxChange, col: CmsFarmFormColumn, option: { text: string, value: string }) {
