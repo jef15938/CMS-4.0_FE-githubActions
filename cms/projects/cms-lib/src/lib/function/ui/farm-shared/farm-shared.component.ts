@@ -55,6 +55,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
       this.destroySub();
       this.farm = changes.farm.currentValue;
       this.activedCategory = this.farm?.category[0];
+      this.currentTablePage = 1;
     }
   }
 
