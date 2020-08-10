@@ -8,7 +8,7 @@ export class CmsFormValidator {
     if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
       return null;
     }
-    return { invalidDate: '格式錯誤', }
+    return { invalidDate: '格式錯誤', };
   }
 
   static startTimeEndTime(startFormControlName: string, endFormControlName: string): ValidatorFn {

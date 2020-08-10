@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { NativeDateAdapter } from '@angular/material/core';
+import { NativeDateAdapter, DateAdapter } from '@angular/material/core';
 import { MatDateFormats } from '@angular/material/core';
+import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class CmsDateAdapter extends NativeDateAdapter {
       return new Date(value);
     }
 
-    const dateStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])?$/g)
+    const dateStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])?$/g);
     if (dateStringTester.test(value)) {
       const date = new Date(value);
       date.setHours(0);
@@ -110,3 +111,131 @@ export const CMS_DATE_FORMATS_DATE: MatDateFormats = {
     monthYearA11yLabel: { year: 'numeric', month: 'long' },
   }
 };
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CmsDateTimeAdapter extends NgxMatDateAdapter<Date> {
+
+  constructor(private dateAdapter: DateAdapter<Date>, ) { super(); }
+
+  parse(value: any, parseFormat: any): Date {
+    return this.dateAdapter.parse(value, parseFormat);
+  }
+
+  format(date: Date, displayFormat: any): string {
+    return this.dateAdapter.format(date, displayFormat);
+  }
+
+  getHour(date: Date): number {
+    return date?.getHours() || 0;
+  }
+
+  getMinute(date: Date): number {
+    return date?.getMinutes() || 0;
+  }
+
+  getSecond(date: Date): number {
+    return date?.getSeconds() || 0;
+  }
+
+  setHour(date: Date, value: number): void {
+    date.setHours(value);
+  }
+
+  setMinute(date: Date, value: number): void {
+    date.setMinutes(value);
+  }
+
+  setSecond(date: Date, value: number): void {
+    date.setSeconds(value);
+  }
+
+  getYear(date: Date): number {
+    return this.dateAdapter.getYear(date);
+  }
+
+  getMonth(date: Date): number {
+    return this.dateAdapter.getMonth(date);
+  }
+
+  getDate(date: Date): number {
+    return this.dateAdapter.getDate(date);
+  }
+
+  getDayOfWeek(date: Date): number {
+    return this.dateAdapter.getDayOfWeek(date);
+  }
+
+  getMonthNames(style: 'short' | 'long' | 'narrow'): string[] {
+    return style === 'narrow' ?
+      ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
+      : ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+  }
+
+  getDateNames(): string[] {
+    return [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+      11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+    ].map(dateString => `${dateString}`);
+  }
+
+  getDayOfWeekNames(style: 'short' | 'long' | 'narrow'): string[] {
+    return style === 'narrow' ?
+      ['一', '二', '三', '四', '五', '六', '日']
+      : ['週一', '週二', '週三', '週四', '週五', '週六', '週日'];
+  }
+
+  getYearName(date: Date): string {
+    return this.dateAdapter.getYearName(date);
+  }
+
+  getFirstDayOfWeek(): number {
+    return this.dateAdapter.getFirstDayOfWeek();
+  }
+
+  getNumDaysInMonth(date: Date): number {
+    return this.dateAdapter.getNumDaysInMonth(date);
+  }
+
+  clone(date: Date): Date {
+    return this.dateAdapter.clone(date);
+  }
+
+  createDate(year: number, month: number, date: number): Date {
+    return this.dateAdapter.createDate(year, month, date);
+  }
+
+  today(): Date {
+    return this.dateAdapter.today();
+  }
+
+  addCalendarYears(date: Date, years: number): Date {
+    return this.dateAdapter.addCalendarYears(date, years);
+  }
+
+  addCalendarMonths(date: Date, months: number): Date {
+    return this.dateAdapter.addCalendarYears(date, months);
+  }
+
+  addCalendarDays(date: Date, days: number): Date {
+    return this.dateAdapter.addCalendarYears(date, days);
+  }
+
+  toIso8601(date: Date): string {
+    return this.dateAdapter.toIso8601(date);
+  }
+
+  isDateInstance(obj: any): boolean {
+    return this.dateAdapter.isDateInstance(obj);
+  }
+
+  isValid(date: Date): boolean {
+    return this.dateAdapter.isValid(date);
+  }
+
+  invalid(): Date {
+    return this.dateAdapter.invalid();
+  }
+}

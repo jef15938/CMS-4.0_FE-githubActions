@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,6 +46,7 @@ import { FarmFormCheckboxOptionCheckPipe } from './pipe/farm-form-checkbox-optio
     MatTabsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgxMatDatetimePickerModule,
     MatIconModule,
     MatPaginatorModule,
     MatButtonModule,

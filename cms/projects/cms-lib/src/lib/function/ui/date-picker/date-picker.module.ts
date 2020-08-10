@@ -4,6 +4,7 @@ import { DatePickerComponent, DatePickerDatetimeComponent } from './date-picker.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PipeModule } from '../../../global/pipe';
@@ -17,6 +18,7 @@ import { PipeModule } from '../../../global/pipe';
     MatInputModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    NgxMatDatetimePickerModule,
     PipeModule,
   ],
   declarations: [DatePickerComponent, DatePickerDatetimeComponent],

@@ -1,8 +1,12 @@
 import { Component, OnInit, forwardRef, Output, EventEmitter, Input, OnChanges, SimpleChanges, Injector } from '@angular/core';
-import { ControlValueAccessor, Validator, FormGroup, FormBuilder, AbstractControl, ValidationErrors, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, NgControl } from '@angular/forms';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
+import {
+  Validator, FormGroup, FormBuilder, AbstractControl, ValidationErrors,
+  ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, NgControl
+} from '@angular/forms';
+import { MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core';
 import { CMS_DATE_FORMATS_DATE, CMS_DATE_FORMATS_DATETIME } from '../../../global/util/mat-date/mat-date';
 import { CmsFormValidator } from '../../../global/util/form-validator';
+import { NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 
 @Component({
   selector: 'cms-date-picker',
@@ -19,7 +23,8 @@ import { CmsFormValidator } from '../../../global/util/form-validator';
       useExisting: forwardRef(() => DatePickerComponent),
       multi: true
     },
-    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATE }
+    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATE },
+    { provide: NGX_MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATE },
   ]
 })
 export class DatePickerComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
@@ -31,9 +36,22 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
   @Input() errors;
   @Output() dateChange = new EventEmitter();
 
+  // ngx-datetime-picker
+  showSpinners = true;
+  showSeconds = false;
+  disableMinute = false;
+  defaultTime = [0, 0, 0];
+  stepHour = 1;
+  stepMinute = 15;
+  stepSecond = 1;
+  color: ThemePalette = 'primary';
+  enableMeridian = false;
+  hideTime = true;
+  touchUi = true;
+
   form: FormGroup;
 
-  model = {};
+  model = null;
 
   // 用來接收 setDisabledState 的狀態
   disabled = false;
@@ -41,7 +59,7 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
   onTouched: () => {};
   onValidatorChange: () => void;
 
-  ngControl: NgControl;;
+  ngControl: NgControl;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -151,7 +169,10 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
       useExisting: forwardRef(() => DatePickerDatetimeComponent),
       multi: true
     },
-    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME }
+    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME },
+    { provide: NGX_MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME },
   ]
 })
-export class DatePickerDatetimeComponent extends DatePickerComponent { }
+export class DatePickerDatetimeComponent extends DatePickerComponent {
+  hideTime = false;
+}
