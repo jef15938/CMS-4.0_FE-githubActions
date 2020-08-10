@@ -91,6 +91,12 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sitemapService.getUserSiteMapNodes(this.selectedSite.site_id).subscribe(userSitemaps => {
           this.userSitemaps = userSitemaps;
           this.editMode = mode;
+
+          if (this.selectedUserSitemap) {
+            const newNode = this.getNodeFromSitemapsByNodeID(this.selectedUserSitemap.node_id, this.userSitemaps);
+            this.selectedUserSitemap = newNode;
+            this.userSitemapTree.selectNode(newNode);
+          }
         });
         break;
       case EditModeType.SITE:
@@ -103,9 +109,11 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.nodeSelected$.next(event.node);
   }
 
-  afterTreeRender(tree: CmsTree<SiteMapGetResponse>) {
-    const defaultSelect = this.userSitemaps ? this.userSitemaps[0] : undefined;
-    tree.selectNode(defaultSelect);
+  afterTreeRender(ev: { tree: CmsTree<any>, firstTime: boolean }) {
+    if (!this.selectedUserSitemap) {
+      const defaultSelect = this.userSitemaps ? this.userSitemaps[0] : undefined;
+      ev.tree.selectNode(defaultSelect);
+    }
   }
 
   onUserSiteMapTreeCustomEvent(event: MultiSiteNodeCustomEvent) {
@@ -157,14 +165,8 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onNodeUpdate(reset = false) {
-    if (reset) {
-      this.swichMode(EditModeType.NODE);
-    } else {
-      const selectedNodeID = this.selectedSitemapNode.node_id;
-      const selectedNode = this.getNodeFromSitemapsByNodeID(selectedNodeID, this.userSitemaps);
-      this.nodeSelected$.next(selectedNode);
-    }
+  onNodeUpdate() {
+    this.swichMode(EditModeType.NODE);
   }
 
   private getNodeFromSitemapsByNodeID(nodeID: string, sitemaps: SiteMapGetResponse[]): SiteMapGetResponse {
@@ -194,7 +196,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
       of(undefined).pipe(
         concatMap(_ => this.sitemapService.reOrderSiteNode(target.node_id, to.node_id, order))
       ).subscribe(_ => {
-        this.onNodeUpdate(true);
+        this.onNodeUpdate();
       });
     });
   }

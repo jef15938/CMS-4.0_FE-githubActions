@@ -40,9 +40,9 @@ export class DeptComponent implements OnInit {
     );
   }
 
-  afterTreeRender(tree: CmsTree<DepartmentInfo>) {
+  afterTreeRender(ev: { tree: CmsTree<DepartmentInfo>, firstTime: boolean }) {
     const defaultSelect = this.depts ? this.depts[0] : undefined;
-    tree.selectNode(defaultSelect);
+    ev.tree.selectNode(defaultSelect);
   }
 
   onCustomEvent(event: DeptNodeCustomEvent) {

@@ -35,7 +35,9 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Input() customNodeRenderer; // 客製的節點Template
   @Input() onCustomNodeRendererInit: (customRender: any) => void;
 
-  @Output() afterRender = new EventEmitter<TreeComponent<any>>();
+  private firstTimeRender = true;
+  @Output() afterRender = new EventEmitter<{ tree: TreeComponent<any>, firstTime: boolean }>();
+
   @Output() nodeSelect = new EventEmitter<{ node: TData }>();
   @Output() customEvent = new EventEmitter<CmsTreeCustomCellEvent>();
 
@@ -105,10 +107,10 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   private init() {
-    this.selectedNode = undefined;
     // this.renderCustom();
     this.expandLevel(this.defaultExpandLevel);
-    this.afterRender.emit(this);
+    this.afterRender.emit({ tree: this, firstTime: this.firstTimeRender });
+    this.firstTimeRender = false;
   }
 
   private expandLevel(level: number) {
