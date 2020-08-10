@@ -4,6 +4,7 @@ import { CmsFarmTableDataAction, CmsFarmTableColumnDisplayType } from './../../.
 import { ACTION_COLUMN, CHECKBOX_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type';
 import { FARM_TABLE_ACTION_TOKEN } from '../../farm-shared-injection-token';
 import { FarmTableAction } from '../../farm-shared.interface';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'cms-farm-table-info',
@@ -26,6 +27,8 @@ export class FarmTableInfoComponent implements OnInit {
   totalChecked = false;
   customAction: FarmTableAction;
 
+  sortedData: CmsFarmTableDataInfo[];
+
   constructor(
     public injector: Injector,
     @Inject(FARM_TABLE_ACTION_TOKEN) private farmTableActions: FarmTableAction[],
@@ -33,6 +36,7 @@ export class FarmTableInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.customAction = this.farmTableActions.reverse().find(action => action.funcID === this.funcID);
+    this.sortData();
     this.onRowCheckChange();
   }
 
@@ -57,6 +61,27 @@ export class FarmTableInfoComponent implements OnInit {
   passDateStringFormat(value): boolean {
     if (!isNaN(+value)) { return true; }
     return false;
+  }
+
+  sortData(sort?: Sort) {
+    const data = [...(this.tableInfo?.datas || [])];
+    if (!sort?.active || !sort?.direction) {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      return this.compare(
+        a.columns.find(col => col.display_text === sort.active).value,
+        b.columns.find(col => col.display_text === sort.active).value,
+        isAsc
+      );
+    });
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
 }

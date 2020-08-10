@@ -9,22 +9,27 @@
       新增
     </button>
   </div>
-  <table mat-table [dataSource]="tableInfo.datas" class="mat-elevation-z8" style="width: 100%;">
+  <table mat-table matSort [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;"
+    (matSortChange)="sortData($event)">
 
     <ng-container *ngFor="let col of (tableInfo|getFarmTableDisplayCols)" [matColumnDef]="col">
-      <th mat-header-cell *matHeaderCellDef cmsResizer>
-        <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN">
+      <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN;">
+        <th mat-header-cell *matHeaderCellDef cmsResizer mat-sort-header>
           {{col}}
-        </ng-container>
-        <ng-container *ngIf="col===CHECKBOX_COLUMN">
-          <mat-checkbox [(ngModel)]="totalChecked" (change)="onTotalCheckChange()"
-            [ngModelOptions]="{standalone: true}">
-          </mat-checkbox>
-        </ng-container>
-        <ng-container *ngIf="col===ACTION_COLUMN">
-          <div style="text-align: center;">操作</div>
-        </ng-container>
-      </th>
+        </th>
+      </ng-container>
+      <ng-container *ngIf="col===ACTION_COLUMN||col===CHECKBOX_COLUMN;">
+        <th mat-header-cell *matHeaderCellDef cmsResizer>
+          <ng-container *ngIf="col===CHECKBOX_COLUMN">
+            <mat-checkbox [(ngModel)]="totalChecked" (change)="onTotalCheckChange()"
+              [ngModelOptions]="{standalone: true}">
+            </mat-checkbox>
+          </ng-container>
+          <ng-container *ngIf="col===ACTION_COLUMN">
+            <div style="text-align: center;">操作</div>
+          </ng-container>
+        </th>
+      </ng-container>
       <td mat-cell *matCellDef="let element" [class.action-col]="col===ACTION_COLUMN">
         <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN">
           <ng-container *ngIf="element|getFarmTableColData:col; let colData;">

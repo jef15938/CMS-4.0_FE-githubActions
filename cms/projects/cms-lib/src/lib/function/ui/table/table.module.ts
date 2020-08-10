@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { DynamicWrapperModule } from '@neux/core';
@@ -15,6 +16,7 @@ import { CellRenderOnloadPipe } from './pipe/cell-render-onload.pipe';
     CommonModule,
     DynamicWrapperModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
     DirectiveModule,

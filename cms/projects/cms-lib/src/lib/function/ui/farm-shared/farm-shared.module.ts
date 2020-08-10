@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -43,6 +44,7 @@ import { FarmFormCheckboxOptionCheckPipe } from './pipe/farm-form-checkbox-optio
     MatCheckboxModule,
     MatRadioModule,
     MatTableModule,
+    MatSortModule,
     MatTabsModule,
     MatDatepickerModule,
     MatNativeDateModule,
