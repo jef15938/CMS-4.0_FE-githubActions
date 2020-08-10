@@ -7,12 +7,13 @@ import { MenuNodeComponent } from './global/layouts/menu-node.component';
 import { WithCredentialsInterceptor, HttpErrorInterceptor, HttpError401Interceptor } from './global/interceptor/cms-http-interceptor';
 import { CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './global/service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { CmsDateAdapter, CMS_DATE_FORMATS_DATETIME } from './global/util/mat-date/mat-date';
+import { CmsDateAdapter, CMS_DATE_FORMATS_DATETIME, CmsDateTimeAdapter } from './global/util/mat-date/mat-date';
 import { DynamicRoutingComponent } from './global/component/dynamic-routing/dynamic-routing.component';
 import { CmsFarmDataResolver } from './global/service/cms-farm-data-resolver.service';
 import { FARM_TABLE_ACTION_TOKEN } from './function/ui/farm-shared/farm-shared-injection-token';
 import { AdminGroupTableAction } from './function/admin-group/admin-group-table-action';
 import { AdminGroupModule } from './function/admin-group/admin-group.module';
+import { NgxMatDateAdapter, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -34,7 +35,9 @@ const LAYOUTS = [
   ],
   providers: [
     { provide: DateAdapter, useClass: CmsDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME }
+    { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME },
+    { provide: NgxMatDateAdapter, useClass: CmsDateTimeAdapter, deps: [DateAdapter] },
+    { provide: NGX_MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME },
   ]
 })
 export class CmsModule {
@@ -64,7 +67,9 @@ export class CmsModule {
           useClass: HttpError401Interceptor
         },
         { provide: DateAdapter, useClass: CmsDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME }
+        { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME },
+        { provide: NgxMatDateAdapter, useClass: CmsDateTimeAdapter, deps: [DateAdapter] },
+        { provide: NGX_MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME },
       ]
     };
   }

@@ -19,6 +19,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -64,6 +65,7 @@ import { DatePickerModule } from '../ui/date-picker';
     MatToolbarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgxMatDatetimePickerModule,
     MatProgressBarModule,
     MatExpansionModule,
     MatRadioModule,
