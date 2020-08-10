@@ -192,6 +192,11 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   close() {
+    if (!this.contentID) {
+      this.editorClose.emit(this.manager.stateManager.contentInfoEditModel);
+      return;
+    }
+
     if (!this.saved || this.contentControlPanel?.hasChange) {
       const yes = window.confirm('有尚未儲存的變更，確定關閉？');
       if (!yes) { return; }

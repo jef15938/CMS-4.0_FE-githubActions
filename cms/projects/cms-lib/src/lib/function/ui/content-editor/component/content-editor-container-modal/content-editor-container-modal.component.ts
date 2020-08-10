@@ -43,9 +43,10 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   }
 
   save(event: ContentEditorSaveEvent) {
-    if (!this.contentID && this.content) {
+    if (!this.contentID) {
       event.editorSave();
-      this.close(this.content);
+      alert('內容儲存成功');
+      this.close(event.contentInfo);
       return;
     }
 
