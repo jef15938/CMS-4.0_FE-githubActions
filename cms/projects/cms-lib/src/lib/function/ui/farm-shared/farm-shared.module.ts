@@ -32,6 +32,7 @@ import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal
 import { DatePickerModule } from '../date-picker/date-picker.module';
 import { FarmSharedContainerModalComponent } from './component/farm-shared-container-modal/farm-shared-container-modal.component';
 import { FarmFormCheckboxOptionCheckPipe } from './pipe/farm-form-checkbox-option-check';
+import { DirectiveModule } from '../../../global/directive';
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { FarmFormCheckboxOptionCheckPipe } from './pipe/farm-form-checkbox-optio
     PipeModule,
     TreeModule,
     DatePickerModule,
+    DirectiveModule,
   ],
   declarations: [
     FarmSharedComponent,

@@ -14,12 +14,12 @@
 
     <ng-container *ngFor="let col of (tableInfo|getFarmTableDisplayCols)" [matColumnDef]="col">
       <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN;">
-        <th mat-header-cell *matHeaderCellDef cmsResizer mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef cmsTableResizer mat-sort-header>
           {{col}}
         </th>
       </ng-container>
       <ng-container *ngIf="col===ACTION_COLUMN||col===CHECKBOX_COLUMN;">
-        <th mat-header-cell *matHeaderCellDef cmsResizer>
+        <th mat-header-cell *matHeaderCellDef cmsTableResizer>
           <ng-container *ngIf="col===CHECKBOX_COLUMN">
             <mat-checkbox [(ngModel)]="totalChecked" (change)="onTotalCheckChange()"
               [ngModelOptions]="{standalone: true}">
