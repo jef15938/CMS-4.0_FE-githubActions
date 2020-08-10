@@ -7,8 +7,8 @@
 }
 
 .cms-tree {
-  // margin-left: -1em;
-  // width: calc(100% + 1em);
+  margin-left: -1em;
+  width: calc(100% + 1em);
   margin-top: 0.5em;
 
   &__body {
@@ -198,7 +198,9 @@
   }
 
   &::ng-deep {
-    mat-nested-tree-node {
+
+    mat-nested-tree-node,
+    mat-tree-node {
       .cms-tree__node__head__checkbox {
         .mat-checkbox-layout {
           position: absolute;
