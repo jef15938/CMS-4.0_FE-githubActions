@@ -60,9 +60,11 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.init().subscribe();
 
     this.categorySelected$.pipe(
-      tap(selectedCategory => this.selectedCategory = selectedCategory),
+      tap(selectedCategory => {
+        this.selectedCategory = selectedCategory;
+      }),
       takeUntil(this.destroy$),
-    ).subscribe(_ => this.getGallery().subscribe());
+    ).subscribe(_ => this.getGallery(true).subscribe());
   }
 
   ngOnDestroy(): void {
@@ -191,6 +193,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
       componentInitData: {
         galleryId: gallery.gallery_id,
         galleryType: gallery.file_type,
+        galleryName: gallery.file_name
       }
     });
   }

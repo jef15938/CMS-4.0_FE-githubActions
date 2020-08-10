@@ -1,6 +1,9 @@
 <div class="cms-upload-gallery-modal">
   <div class="cms-upload-gallery-modal__btn-group btn-group">
-    <button type="button" tabindex="0" mat-raised-button (click)="addFiles()">加入檔案</button>
+    <button type="button" tabindex="0" mat-raised-button (click)="addFiles()">
+      <ng-container *ngIf="isCreate">加入檔案</ng-container>
+      <ng-container *ngIf="!isCreate">新增檔案</ng-container>
+    </button>
     <button type="button" tabindex="0" mat-raised-button (click)="cleanFiles()">清除檔案</button>
   </div>
 
@@ -32,7 +35,7 @@
     <button type="button" tabindex="0" mat-raised-button (click)="create()" *ngIf="isCreate"
       [disabled]="!files.length">上傳檔案</button>
     <button type="button" tabindex="0" mat-raised-button (click)="update()" *ngIf="!isCreate"
-      [disabled]="!files.length">修改檔案</button>
+      [disabled]="!files.length">確定取代</button>
   </div>
 
 </div>

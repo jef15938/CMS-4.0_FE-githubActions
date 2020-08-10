@@ -10,18 +10,6 @@
         </mat-form-field>
       </div>
     </div>
-
-    <div class="modal-form-layout__row">
-      <div class="modal-form-layout__col">
-        <mat-form-field appearance="outline">
-          <mat-label>Meta標題</mat-label>
-          <input matInput [(ngModel)]="sitemapMaintainModel.meta_title" name="meta_title" required
-            #modelMetaTitle="ngModel">
-          <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
-        </mat-form-field>
-      </div>
-    </div>
-
     <div class="modal-form-layout__row">
       <div class="modal-form-layout__col">
         <mat-form-field appearance="outline">
@@ -133,6 +121,17 @@
           </div>
         </div>
       </ng-container>
+
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>Meta標題</mat-label>
+            <input matInput [(ngModel)]="sitemapMaintainModel.meta_title" name="meta_title" required
+              #modelMetaTitle="ngModel">
+            <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
 
       <div class="modal-form-layout__row">
         <div class="modal-form-layout__col">

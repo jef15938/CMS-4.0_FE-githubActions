@@ -48,7 +48,6 @@ export class CmsDateAdapter extends NativeDateAdapter {
     // TODO: for 目前的錯誤資料格式
     const tempTester1 = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][01]\d[0-5]\d)?$/g);
     if (tempTester1.test(dateString)) {
-      console.warn(1);
       dateString = dateString.substr(0, dateString.lastIndexOf(':'));
       dateString = dateString.replace('T', ' ');
     }
@@ -56,7 +55,6 @@ export class CmsDateAdapter extends NativeDateAdapter {
     // TODO: for 目前的錯誤資料格式
     const tempTester2 = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9]) (2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])\.0?$/g);
     if (tempTester2.test(dateString)) {
-      console.warn(2);
       dateString = dateString.substr(0, dateString.lastIndexOf(':'));
     }
 

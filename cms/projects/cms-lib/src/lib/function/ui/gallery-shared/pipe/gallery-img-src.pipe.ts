@@ -18,7 +18,7 @@ export class GelleryImgSrcPipe implements PipeTransform {
       const path =
         isImg
           ? `${this.environment.apiBaseUrl}${data.url}`
-          : `${this.getLocalUrl()}/assets/img/icon/${data.file_type.toLowerCase()}.png`;
+          : `./assets/img/icon/${data.file_type.toLowerCase()}.png`;
       return path;
     } else {
       return '';
@@ -31,11 +31,6 @@ export class GelleryImgSrcPipe implements PipeTransform {
     const imgFileExtensionNames = ['PNG', 'JPG', 'JPEG', 'GIF'];
     const extensionName = data.file_type.toUpperCase();
     return imgFileExtensionNames.indexOf(extensionName) > -1;
-  }
-
-  private getLocalUrl() {
-    const urlFragments = window.location.href.split('/');
-    return `${urlFragments[0]}//${urlFragments[2]}`;
   }
 
 }

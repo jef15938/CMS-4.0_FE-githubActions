@@ -30,6 +30,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   @Input() categoryName: string;
   @Input() categoryId: string;
   @Input() galleryId: number;
+  @Input() galleryName: string;
   @Input() galleryType: string;
   @Input() accept: string;
 
@@ -78,7 +79,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       this.accept = '.pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif';
     } else if (this.galleryId && this.galleryType) {
       this.isCreate = false;
-      this.title = `修改檔案：${this.galleryId}`;
+      this.title = `修改檔案：${this.galleryName}`;
       this.accept = `.${this.galleryType.toLowerCase()}`;
     }
   }
