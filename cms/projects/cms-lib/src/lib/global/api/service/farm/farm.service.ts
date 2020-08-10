@@ -31,7 +31,6 @@ export class FarmService {
    * @memberof FarmService
    */
   getFarmByFuncID(funcID: string): Observable<FarmInfo> {
-    console.warn('getFarmByFuncID() funcID = ', funcID);
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
@@ -79,8 +78,6 @@ export class FarmService {
    * @memberof FarmService
    */
   getFarmFormInfoByFuncID(funcID: string, dataID?: string): Observable<CmsFarmFormInfo> {
-    console.warn('getFarmFormInfoByFuncID() funcID = ', funcID);
-    console.warn('                            dataID = ', dataID);
     if (!funcID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', funcID); }
     return this.restAPIService.dispatchRestApi<CmsFarmFormInfo>('GetFarmFormInfoByFuncID', { funcID, dataID });
   }

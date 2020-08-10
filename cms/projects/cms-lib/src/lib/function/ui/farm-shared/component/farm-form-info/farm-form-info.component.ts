@@ -72,9 +72,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     farmFormInfo.columns.forEach((column, index) => {
       // parse DATE & DATETIME
       let value: any = column.value;
-      if (column.display_type === CmsFarmFormColumnDisplayType.DATE) {
-        value = this.cmsDateAdapter.convertDateStringToDate(value);
-      } else if (column.display_type === CmsFarmFormColumnDisplayType.DATETIME) {
+      if (
+        column.display_type === CmsFarmFormColumnDisplayType.DATE
+        || column.display_type === CmsFarmFormColumnDisplayType.DATETIME
+      ) {
         value = this.cmsDateAdapter.convertDateStringToDate(value);
       } else if (column.display_type === CmsFarmFormColumnDisplayType.LABEL) {
         value = this.cmsDateAdapter.convertDateString(value, CmsFarmFormColumnDisplayType.DATETIME);
@@ -237,7 +238,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   openContentEditor(col: CmsFarmFormColumn) {
     const controlID = this.funcID;
-    const control = this.formGroup.get(col.column_id)
+    const control = this.formGroup.get(col.column_id);
     const content = JSON.parse((control.value) as string) as ContentInfo;
     this.contentEditorService.openEditorByContent(content, controlID).subscribe(result => {
       control.setValue(JSON.stringify(result));

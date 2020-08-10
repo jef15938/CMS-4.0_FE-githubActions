@@ -8,27 +8,21 @@ import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker'
 })
 export class CmsDateAdapter extends NativeDateAdapter {
 
+  static getClosestMinute(minute: number): number {
+    if (!minute) { return 0; }
+    const minutes = [0, 15, 30, 45, 60];
+    const diffs = minutes.map(m => Math.abs(minute - m));
+    const min = minutes[diffs.indexOf(Math.min(...diffs))];
+    return min;
+  }
+
   parse(value: string): Date | null {
-    if (!value) { return null; }
-
-    const dateTimeStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9]) (2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?$/g);
-    if (dateTimeStringTester.test(value)) {
-      return new Date(value);
-    }
-
-    const dateStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])?$/g);
-    if (dateStringTester.test(value)) {
-      const date = new Date(value);
-      date.setHours(0);
-      return date;
-    }
-
-    return new Date('Invalid Date');
+    return this.convertDateStringToDate(value);
   }
 
   convertDateString(dateString: string, type: 'DATE' | 'DATETIME'): string {
     const date = this.convertDateStringToDate(dateString);
-    const result = date ? this.convertDateToDateString(date, type) : dateString;
+    const result = date && !isNaN(+date.getTime()) ? this.convertDateToDateString(date, type) : dateString;
     return result;
   }
 
@@ -41,34 +35,50 @@ export class CmsDateAdapter extends NativeDateAdapter {
     const year = date.getFullYear();
     const hh = date.getHours();
     const mm = date.getMinutes();
-    const ss = date.getSeconds();
     let result = `${year}-${month}-${day}`;
     if (type === 'DATETIME') {
-      result = `${result} ${hh > 9 ? '' : '0'}${hh}:${mm > 9 ? '' : '0'}${mm}:${ss > 9 ? '' : '0'}${ss}`;
+      result = `${result} ${hh > 9 ? '' : '0'}${hh}:${mm > 9 ? '' : '0'}${mm}`;
     }
     return result;
   }
 
   convertDateStringToDate(dateString: string): Date {
     if (!dateString) { return null; }
-    if (!isNaN(+dateString)) { return new Date(+dateString * 1000); }
-    const dateTimeStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][01]\d[0-5]\d)?$/g);
+
+    // TODO: for 目前的錯誤資料格式
+    const tempTester1 = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][01]\d[0-5]\d)?$/g);
+    if (tempTester1.test(dateString)) {
+      console.warn(1);
+      dateString = dateString.substr(0, dateString.lastIndexOf(':'));
+      dateString = dateString.replace('T', ' ');
+    }
+
+    // TODO: for 目前的錯誤資料格式
+    const tempTester2 = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9]) (2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])\.0?$/g);
+    if (tempTester2.test(dateString)) {
+      console.warn(2);
+      dateString = dateString.substr(0, dateString.lastIndexOf(':'));
+    }
+
+    const dateTimeStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9]) (2[0-3]|[01][0-9]):([0-5][0-9])?$/g);
     if (dateTimeStringTester.test(dateString)) {
-      const [date, time] = dateString.substr(0, 19).split('T');
+      const [date, time] = dateString.substr(0, 19).split(' ');
       const [yyyy, mm, dd] = date.split('-');
-      const [HH, MM, SS] = time.split(':');
+      const [HH, MM] = time.split(':');
       const d = new Date(`${yyyy}/${+mm}/${dd}`);
-      d.setHours(+HH);
-      d.setMinutes(+MM);
-      d.setSeconds(+SS);
+      const closestMinute = CmsDateAdapter.getClosestMinute(+MM);
+      d.setHours(+HH, CmsDateAdapter.getClosestMinute(closestMinute), 0, 0);
       return d;
     }
-    const dateStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])/g);
+
+    const dateStringTester = new RegExp(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])?$/g);
     if (dateStringTester.test(dateString)) {
       const [yyyy, mm, dd] = dateString.split('-');
-      return new Date(`${yyyy}/${+mm}/${dd}`);
+      const d = new Date(`${yyyy}/${+mm}/${dd}`);
+      d.setHours(0, 0, 0, 0);
+      return d;
     }
-    return null;
+    return new Date('Invalid Date');
   }
 
   format(date: Date, displayFormat = 'DATETIME'): string {
@@ -144,7 +154,7 @@ export class CmsDateTimeAdapter extends NgxMatDateAdapter<Date> {
   }
 
   setMinute(date: Date, value: number): void {
-    date.setMinutes(value);
+    date.setMinutes(CmsDateAdapter.getClosestMinute(value));
   }
 
   setSecond(date: Date, value: number): void {
