@@ -41,7 +41,7 @@ export class SitemapNodeDetailComponent implements OnInit {
   ];
 
   nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
-    { value: null, name: '無' },
+    { value: SiteMapNodeType.NONE, name: '無' },
     { value: SiteMapNodeType.URL, name: '連結' },
     { value: SiteMapNodeType.CONTENT, name: '頁面' },
   ];
@@ -55,6 +55,11 @@ export class SitemapNodeDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void { }
+
+  compareOptionWithModel(optionValue: any, modelValue: any): boolean {
+    console.warn({ optionValue, modelValue });
+    return optionValue === modelValue || (!optionValue && !modelValue);
+  }
 
   preview(languageID: string) {
     if (!this.userSitemap.canPreview) { return; }

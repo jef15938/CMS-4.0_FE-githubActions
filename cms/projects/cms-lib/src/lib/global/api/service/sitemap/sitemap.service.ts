@@ -60,7 +60,7 @@ export class SitemapService {
 
     if (optional) {
       for (const key of Object.keys(optional)) {
-        requestBody[key] = optional[key];
+        requestBody[key] = optional[key] || null;
       }
     }
 
@@ -109,16 +109,7 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeGetResponse> {
-    return this.restAPIService.dispatchRestApi('GetSiteBySiteIDAndNodeID', { siteID, nodeID });
-  }
-
-  private findNodeByNodeID(sources: SiteMapGetResponse[], nodeID: string): SiteMapNodeGetResponse {
-    if (!sources?.length || !nodeID) { return null; }
-
-    const node = sources.find(s => s.node_id === nodeID);
-    if (node) { return node as any; }
-
-    return sources.map(s => this.findNodeByNodeID(s.children, nodeID)).find(s => s.node_id === nodeID);
+    return this.restAPIService.dispatchRestApi<SiteMapNodeGetResponse>('GetSiteBySiteIDAndNodeID', { siteID, nodeID });
   }
 
   /**

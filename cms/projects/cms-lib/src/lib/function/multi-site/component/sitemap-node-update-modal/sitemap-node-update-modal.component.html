@@ -5,7 +5,8 @@
       <div class="modal-form-layout__col">
         <mat-form-field appearance="outline" *ngIf="putRequest">
           <mat-label>節點類型</mat-label>
-          <mat-select [(ngModel)]="sitemapNode.node_type" name="node_type" disabled>
+          <mat-select [(ngModel)]="sitemapNode.node_type" name="node_type" disabled
+            [compareWith]="compareOptionWithModel">
             <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
               {{option.name}}
             </mat-option>

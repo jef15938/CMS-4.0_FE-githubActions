@@ -76,7 +76,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   ];
 
   nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
-    { value: null, name: '無' },
+    { value: SiteMapNodeType.NONE, name: '無' },
     { value: SiteMapNodeType.URL, name: '連結' },
     { value: SiteMapNodeType.CONTENT, name: '頁面' },
   ];
@@ -106,6 +106,10 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     ).subscribe(_ => {
       this.close('Created');
     });
+  }
+
+  compareOptionWithModel(optionValue: any, modelValue: any): boolean {
+    return optionValue === modelValue || (!optionValue && !modelValue);
   }
 
   onSelectedLayoutCheckedChange(ev: MatCheckboxChange, layout: LayoutInfo) {

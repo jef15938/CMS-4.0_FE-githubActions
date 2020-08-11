@@ -15,7 +15,7 @@
         <mat-form-field appearance="outline">
           <mat-label>節點類型</mat-label>
           <mat-select [(ngModel)]="sitemapMaintainModel.node_type" name="node_type"
-            (selectionChange)="sitemapMaintainModel.checkFieldsByNodeType()">
+            [compareWith]="compareOptionWithModel" (selectionChange)="sitemapMaintainModel.checkFieldsByNodeType()">
             <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
               {{option.name}}
             </mat-option>

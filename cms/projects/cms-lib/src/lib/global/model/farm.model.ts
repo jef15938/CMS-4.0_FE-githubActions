@@ -9,7 +9,7 @@ import { FarmValidationInfo } from './../../global/api/neuxAPI/bean/FarmValidati
 import { TypeFactory } from './../../global/api/neuxAPI/type-factory';
 
 export class CmsFarmValidationInfo extends FarmValidationInfo {
-  public required: [];
+  public required: string[];
   public email: string[];
   public alphanumeric: string[];
   public number: string[];

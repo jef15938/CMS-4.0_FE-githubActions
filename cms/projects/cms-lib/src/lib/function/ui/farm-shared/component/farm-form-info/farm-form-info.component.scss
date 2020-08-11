@@ -30,6 +30,10 @@
     text-align: right;
   }
 
+  &__atrisk {
+    color: red;
+  }
+
   &__content {
     flex-grow: 0;
     flex-basis: 400px;

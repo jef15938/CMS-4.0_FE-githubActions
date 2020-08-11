@@ -28,7 +28,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
   ];
 
   nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
-    { value: null, name: '無' },
+    { value: SiteMapNodeType.NONE, name: '無' },
     { value: SiteMapNodeType.URL, name: '連結' },
     { value: SiteMapNodeType.CONTENT, name: '頁面' },
   ];
@@ -44,6 +44,10 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
 
   ngOnInit(): void {
     this.putRequest = this.wrapSiteMapNodeGetResponseToUserSiteMapPutRequest(this.sitemapNode, this.parentID);
+  }
+
+  compareOptionWithModel(optionValue: any, modelValue: any): boolean {
+    return optionValue === modelValue || (!optionValue && !modelValue);
   }
 
   private wrapSiteMapNodeGetResponseToUserSiteMapPutRequest(
