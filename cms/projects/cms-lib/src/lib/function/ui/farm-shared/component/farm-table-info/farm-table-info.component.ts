@@ -29,6 +29,8 @@ export class FarmTableInfoComponent implements OnInit {
 
   sortedData: CmsFarmTableDataInfo[];
 
+  error = false;
+
   constructor(
     public injector: Injector,
     @Inject(FARM_TABLE_ACTION_TOKEN) private farmTableActions: FarmTableAction[],

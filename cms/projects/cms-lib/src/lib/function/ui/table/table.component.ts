@@ -21,6 +21,8 @@ export class TableComponent<TData> implements OnChanges {
 
   sortedData: TData[] = [];
 
+  error = false;
+
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {

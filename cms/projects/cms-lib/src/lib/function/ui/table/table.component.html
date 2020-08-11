@@ -31,5 +31,18 @@
     <tr mat-header-row *matHeaderRowDef="colDefs | getTableDisplayCols"></tr>
     <tr mat-row [class.select-row]="selectRow" *matRowDef="let row; columns: (colDefs | getTableDisplayCols)"
       (click)="onRowClick(row)"></tr>
+
+    <ng-container matColumnDef="noData">
+      <td mat-footer-cell *matFooterCellDef [attr.colspan]="colDefs.length">
+        <ng-container *ngIf="error; else noDataBlock">
+          查詢錯誤
+        </ng-container>
+        <ng-template #noDataBlock>
+          查無資料
+        </ng-template>
+      </td>
+    </ng-container>
+    <tr mat-footer-row *matFooterRowDef="['noData']" [hidden]="(dataSource?.length)"></tr>
+
   </table>
 </ng-container>
