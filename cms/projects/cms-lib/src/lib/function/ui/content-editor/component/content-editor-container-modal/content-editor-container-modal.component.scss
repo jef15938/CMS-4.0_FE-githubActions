@@ -1,7 +1,12 @@
 ::ng-deep {
-  .cms-content-editor-container-modal {
+  .cms-content-editor-container-modal.mode-0 {
     mat-dialog-container {
       padding: 0;
+    }
+  }
+
+  .cms-content-editor-container-modal {
+    mat-dialog-container {
       overflow-y: hidden;
 
       cms-modal-custom-wrapper {

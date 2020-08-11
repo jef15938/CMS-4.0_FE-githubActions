@@ -7,6 +7,7 @@ import { MessageModalComponent } from './component/message-modal/message-modal.c
 import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DynamicWrapperModule } from '@neux/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DynamicWrapperModule } from '@neux/core';
     CommonModule,
     MatDialogModule,
     MatButtonModule,
+    MatIconModule,
     PipeModule,
     DynamicWrapperModule,
   ],

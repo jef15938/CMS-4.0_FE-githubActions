@@ -21,7 +21,7 @@ export class ModalCustomWrapperComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public config: ModalOpenComponentConfig<any>,
-    private modalRef: MatDialogRef<ModalCustomWrapperComponent>,
+    public modalRef: MatDialogRef<ModalCustomWrapperComponent>,
   ) { }
 
   onComponentLoad = (componentRef: ComponentRef<CustomModalBase>) => {

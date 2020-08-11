@@ -29,6 +29,7 @@ export interface ModalSetting {
    */
   closeOnNavigation?: boolean;
   autoFocus?: boolean;
+  hideCloseBtn?: boolean;
 }
 
 export interface ModalOpenComponentConfig<TComponent extends CustomModalBase> {

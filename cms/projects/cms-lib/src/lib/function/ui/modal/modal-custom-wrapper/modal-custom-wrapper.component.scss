@@ -8,16 +8,23 @@
 .modal-custom {
   height: 100%;
 
+  &__close {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+  }
+
   &__head {
     &__title {
       font-size: 24px;
       font-weight: bold;
-      margin: 20px 0px 20px 0px;
+      // margin: 20px 0px 20px 0px;
+      margin: 0 0px 20px 0px;
       display: block;
     }
 
     +.modal-custom__content {
-      margin-top: 20px;
+      // margin-top: 20px;
     }
   }
 

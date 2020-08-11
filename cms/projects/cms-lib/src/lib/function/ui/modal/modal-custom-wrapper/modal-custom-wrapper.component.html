@@ -1,3 +1,7 @@
+<button type="button" mat-mini-fab *ngIf="!config?.modalSetting?.hideCloseBtn" class="modal-custom__close" color="warn"
+  (click)="modalRef.close()">
+  <mat-icon>close</mat-icon>
+</button>
 <!-- header -->
 <div class="modal-custom">
   <div class="modal-custom__head" *ngIf="instanceTitle">

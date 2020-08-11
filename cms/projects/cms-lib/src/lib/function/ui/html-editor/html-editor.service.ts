@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ModalService } from '../modal';
+import { ModalService, ModalSetting } from '../modal';
 import { HtmlEditorContainerModalComponent } from './html-editor-container-modal/html-editor-container-modal.component';
 
 @Injectable({
@@ -19,12 +19,13 @@ export class HtmlEditorService {
     const title = config?.title;
     const content = config?.content;
 
-    const modalSetting = {
+    const modalSetting: ModalSetting = {
       id: `html-editor`,
       width: '100%',
       maxWidth: '100%',
       height: '100%',
       autoFocus: true,
+      hideCloseBtn: true,
     };
 
     return this.modalService.openComponent({

@@ -27,7 +27,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   ) { super(); }
 
   ngOnInit(): void {
-    this.modalRef.addPanelClass('cms-content-editor-container-modal');
+    this.modalRef.addPanelClass([`cms-content-editor-container-modal`, `mode-${this.editorMode}`]);
     if (this.contentID) {
       this.contentService.getContentById(this.contentID).subscribe(content => this.content = content);
     }

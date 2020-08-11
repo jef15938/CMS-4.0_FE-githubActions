@@ -13,14 +13,15 @@ export class ContentEditorService {
 
   private modalID = 1;
 
-  private getDefaultModalSetting(editorMode) {
+  private getDefaultModalSetting(editorMode): ModalSetting {
     return {
       id: `content-editor-${editorMode}-${this.modalID++}`,
       width: '90%',
       maxWidth: '90%',
       height: '90%',
       closeOnNavigation: false,
-    };
+      hideCloseBtn: editorMode === EditorMode.EDIT || false,
+    } as ModalSetting;
   }
 
   constructor(
