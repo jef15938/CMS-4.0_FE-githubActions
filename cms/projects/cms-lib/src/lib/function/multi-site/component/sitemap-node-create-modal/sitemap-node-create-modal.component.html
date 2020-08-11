@@ -79,7 +79,40 @@
       </ng-container>
       <!-- CONTENT -->
       <ng-container *ngSwitchCase="NodeType.CONTENT">
-        <div class="sitemap-node-creat-modal__layout-select layout-select">
+        <div class="modal-form-layout__row">
+          <div class="modal-form-layout__col">
+            <mat-form-field appearance="outline">
+              <mat-label>版面元件</mat-label>
+              <mat-select #layoutSelect [(ngModel)]="sitemapMaintainModel.layout_id" name="layout_id" required
+                panelClass="layout-id-select-panel">
+                <mat-option *ngFor="let layout of layouts" [value]="layout.layout_id" style="display: none;">
+                  {{layout.layout_name}}
+                </mat-option>
+                <mat-option #layoutOption class="layout-id-select-panel-option">
+                  <div class="layout-select__collapse__option" (click)="cancelEvent($event)">
+                    <ul class="layout-select__collapse__list">
+                      <li *ngFor="let option of layouts" class="layout-select__list__item"
+                        [class.layout-select__list__item--actived]="option.layout_id===activedLayoutID"
+                        (mouseenter)="setActivedLayout(option, true)" (mouseleave)="setActivedLayout(option, false)">
+                        <mat-checkbox [checked]="option.layout_id===sitemapMaintainModel.layout_id"
+                          (click)="selectedLayout(option)">
+                          {{option.layout_name}}
+                        </mat-checkbox>
+                      </li>
+                    </ul>
+                    <div class="layout-select__collapse__thumbnail">
+                      <ng-container *ngIf="(activedLayoutID | getLayoutByLayoutID : this.layouts); let actived;">
+                        <ng-container *ngIf="!actived?.layout_thumbnail">沒有版面縮圖</ng-container>
+                        <img *ngIf="actived?.layout_thumbnail" [src]="actived.layout_thumbnail">
+                      </ng-container>
+                    </div>
+                  </div>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- <div class="sitemap-node-creat-modal__layout-select layout-select">
           <input [(ngModel)]="sitemapMaintainModel.layout_id" class="layout-select__input" name="layout_id"
             style="display:none;" required #modelLayoutID="ngModel">
           <mat-expansion-panel class="layout-select__collapse"
@@ -109,7 +142,7 @@
               </div>
             </div>
           </mat-expansion-panel>
-        </div>
+        </div> -->
 
         <div class="modal-form-layout__row">
           <div class="modal-form-layout__col">

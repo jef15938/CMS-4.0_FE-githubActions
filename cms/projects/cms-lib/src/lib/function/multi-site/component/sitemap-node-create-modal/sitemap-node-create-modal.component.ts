@@ -128,4 +128,13 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     }
   }
 
+  selectedLayout(layout: LayoutInfo) {
+    this.sitemapMaintainModel.layout_id = layout.layout_id;
+  }
+
+  cancelEvent(ev: MouseEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+  }
+
 }

@@ -57,7 +57,6 @@ export class SitemapNodeDetailComponent implements OnInit {
   ngOnInit(): void { }
 
   compareOptionWithModel(optionValue: any, modelValue: any): boolean {
-    console.warn({ optionValue, modelValue });
     return optionValue === modelValue || (!optionValue && !modelValue);
   }
 
