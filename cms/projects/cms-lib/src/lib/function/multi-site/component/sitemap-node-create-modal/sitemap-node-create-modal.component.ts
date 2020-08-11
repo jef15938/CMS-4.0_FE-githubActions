@@ -6,6 +6,7 @@ import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../.
 import { LayoutInfo } from '../../../../global/api/neuxAPI/bean/LayoutInfo';
 import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatSelect } from '@angular/material/select';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
 
@@ -128,8 +129,9 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     }
   }
 
-  selectedLayout(layout: LayoutInfo) {
+  selectedLayout(layout: LayoutInfo, layoutSelect: MatSelect) {
     this.sitemapMaintainModel.layout_id = layout.layout_id;
+    layoutSelect.close();
   }
 
   cancelEvent(ev: MouseEvent) {

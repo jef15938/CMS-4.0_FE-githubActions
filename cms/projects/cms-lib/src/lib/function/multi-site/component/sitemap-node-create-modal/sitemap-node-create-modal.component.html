@@ -95,7 +95,7 @@
                         [class.layout-select__list__item--actived]="option.layout_id===activedLayoutID"
                         (mouseenter)="setActivedLayout(option, true)" (mouseleave)="setActivedLayout(option, false)">
                         <mat-checkbox [checked]="option.layout_id===sitemapMaintainModel.layout_id"
-                          (click)="selectedLayout(option)">
+                          (click)="selectedLayout(option, layoutSelect)">
                           {{option.layout_name}}
                         </mat-checkbox>
                       </li>
