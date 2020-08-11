@@ -5,8 +5,8 @@ import { UserSiteMapPutRequest } from '../../../../global/api/neuxAPI/bean/UserS
 import { SitemapService } from '../../../../global/api/service/sitemap/sitemap.service';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
-import { GalleryInfo } from 'projects/cms-lib/src/lib/global/api/neuxAPI/bean/GalleryInfo';
-import { SiteNodeDetailInfo } from 'projects/cms-lib/src/lib/global/api/neuxAPI/bean/SiteNodeDetailInfo';
+import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { SiteNodeDetailInfo } from '../../../../global/api/neuxAPI/bean/SiteNodeDetailInfo';
 
 @Component({
   selector: 'cms-sitemap-node-update-modal',
