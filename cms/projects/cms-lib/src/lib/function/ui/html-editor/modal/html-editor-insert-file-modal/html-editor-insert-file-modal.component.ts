@@ -53,7 +53,7 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
   }
 
   changeGallery() {
-    this.gallerySharedService.openGallery(['pdf', 'doc', 'docx', 'xls', 'xlsx']).subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openFileGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         this.aTagConfig.href = selectedGallery.url;
         this.aTagConfig.text = selectedGallery.file_name;

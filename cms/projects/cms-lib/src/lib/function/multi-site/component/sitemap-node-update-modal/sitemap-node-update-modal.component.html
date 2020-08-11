@@ -122,11 +122,13 @@
             </div>
           </div>
           <div class="modal-form-layout__row">
-            <div class="modal-form-layout__col">
+            <div class="modal-form-layout__col gallery-btn-container">
               <mat-form-field appearance="outline">
                 <mat-label>Meta圖片</mat-label>
-                <input matInput [(ngModel)]="detail.meta_image" name="meta_image">
+                <input matInput [value]="detail.meta_image_name" name="meta_image" readonly>
               </mat-form-field>
+              <button class="modal-form-layout__btn gallery-btn" type="button" tabindex="0" mat-button
+                (click)="openGallery(detail)">媒體庫</button>
             </div>
           </div>
         </ng-template>

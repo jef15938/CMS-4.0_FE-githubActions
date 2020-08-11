@@ -182,11 +182,13 @@
         </div>
       </div>
       <div class="modal-form-layout__row">
-        <div class="modal-form-layout__col">
+        <div class="modal-form-layout__col gallery-btn-container">
           <mat-form-field appearance="outline">
             <mat-label>Meta圖片</mat-label>
-            <input matInput [(ngModel)]="sitemapMaintainModel.meta_image" name="meta_image">
+            <input matInput [value]="metaImageName" name="meta_image" readonly>
           </mat-form-field>
+          <button class="modal-form-layout__btn gallery-btn" type="button" tabindex="0" mat-button
+            (click)="openGallery()">媒體庫</button>
         </div>
       </div>
     </ng-container>

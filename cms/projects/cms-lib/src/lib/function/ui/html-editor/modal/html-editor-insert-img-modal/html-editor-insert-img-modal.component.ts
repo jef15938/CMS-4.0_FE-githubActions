@@ -65,7 +65,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   }
 
   changeGallery() {
-    this.gallerySharedService.openGallery(['png', 'jpg', 'jpeg', 'gif']).subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openImgGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         this.galleryID = selectedGallery.gallery_id;
         this.src = `${this.environment.apiBaseUrl}${selectedGallery.url}`;

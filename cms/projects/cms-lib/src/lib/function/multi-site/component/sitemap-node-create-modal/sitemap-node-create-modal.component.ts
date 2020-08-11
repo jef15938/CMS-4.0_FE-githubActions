@@ -7,6 +7,8 @@ import { LayoutInfo } from '../../../../global/api/neuxAPI/bean/LayoutInfo';
 import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
+import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
+import { GalleryInfo } from 'projects/cms-lib/src/lib/global/api/neuxAPI/bean/GalleryInfo';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
 
@@ -82,9 +84,12 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     { value: SiteMapNodeType.CONTENT, name: '頁面' },
   ];
 
+  metaImageName = '';
+
   constructor(
     private sitemapService: SitemapService,
     private contentService: ContentService,
+    private gallerySharedService: GallerySharedService,
   ) { super(); }
 
   ngOnInit(): void {
@@ -137,6 +142,15 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   cancelEvent(ev: MouseEvent) {
     ev.stopPropagation();
     ev.preventDefault();
+  }
+
+  openGallery() {
+    return this.gallerySharedService.openImgGallery().subscribe((selected: GalleryInfo) => {
+      if (selected) {
+        this.metaImageName = selected.file_name;
+        this.sitemapMaintainModel.meta_image = `${selected.gallery_id}`;
+      }
+    });
   }
 
 }

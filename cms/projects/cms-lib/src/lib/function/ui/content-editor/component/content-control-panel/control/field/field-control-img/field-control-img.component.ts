@@ -42,7 +42,7 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
   }
 
   changeGallery() {
-    this.gallerySharedService.openGallery(['png', 'jpg', 'jpeg', 'gif']).subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openImgGallery().subscribe((selectedGallery: GalleryInfo) => {
       if (selectedGallery) {
         this.fieldInfo.fieldVal = selectedGallery.url;
         this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${selectedGallery.gallery_id}`;

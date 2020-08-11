@@ -43,6 +43,16 @@
   }
 }
 
+.gallery-btn-container {
+  position: relative;
+
+  .gallery-btn {
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
+}
+
 ::ng-deep .layout-id-select-panel {
   height: 300px;
   min-width: 100% !important;

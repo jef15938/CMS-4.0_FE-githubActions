@@ -4,6 +4,9 @@ import { SiteMapNodeGetResponse } from '../../../../global/api/neuxAPI/bean/Site
 import { UserSiteMapPutRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPutRequest';
 import { SitemapService } from '../../../../global/api/service/sitemap/sitemap.service';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum';
+import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
+import { GalleryInfo } from 'projects/cms-lib/src/lib/global/api/neuxAPI/bean/GalleryInfo';
+import { SiteNodeDetailInfo } from 'projects/cms-lib/src/lib/global/api/neuxAPI/bean/SiteNodeDetailInfo';
 
 @Component({
   selector: 'cms-sitemap-node-update-modal',
@@ -40,6 +43,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
 
   constructor(
     private sitemapService: SitemapService,
+    private gallerySharedService: GallerySharedService,
   ) { super(); }
 
   ngOnInit(): void {
@@ -72,6 +76,15 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
       this.putRequest
     ).subscribe(_ => {
       this.close('Updated');
+    });
+  }
+
+  openGallery(detail: SiteNodeDetailInfo) {
+    return this.gallerySharedService.openImgGallery().subscribe((selected: GalleryInfo) => {
+      if (selected) {
+        detail.meta_image_name = selected.file_name;
+        detail.meta_image = `${selected.gallery_id}`;
+      }
     });
   }
 

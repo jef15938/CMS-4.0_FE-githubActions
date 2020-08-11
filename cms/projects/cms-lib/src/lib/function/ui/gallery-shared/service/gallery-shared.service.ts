@@ -13,7 +13,19 @@ export class GallerySharedService {
     private modalService: ModalService,
   ) { }
 
-  openGallery(
+  openImgGallery() {
+    return this.openGalleryWithFileTypes(['png', 'jpg', 'jpeg', 'gif']);
+  }
+
+  openFileGallery() {
+    return this.openGalleryWithFileTypes(['pdf', 'doc', 'docx', 'xls', 'xlsx']);
+  }
+
+  openGallery() {
+    return this.openGalleryWithFileTypes();
+  }
+
+  private openGalleryWithFileTypes(
     allowedFileTypes?: GalleryFileType[]
   ): Observable<any> {
 
