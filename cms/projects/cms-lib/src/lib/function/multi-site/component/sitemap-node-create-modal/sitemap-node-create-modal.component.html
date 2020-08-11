@@ -102,8 +102,7 @@
                     </ul>
                     <div class="layout-select__collapse__thumbnail">
                       <ng-container *ngIf="(activedLayoutID | getLayoutByLayoutID : this.layouts); let actived;">
-                        <ng-container *ngIf="!actived?.layout_thumbnail">沒有版面縮圖</ng-container>
-                        <img *ngIf="actived?.layout_thumbnail" [src]="actived.layout_thumbnail">
+                        <img [src]="actived.layout_thumbnail || '/'">
                       </ng-container>
                     </div>
                   </div>
