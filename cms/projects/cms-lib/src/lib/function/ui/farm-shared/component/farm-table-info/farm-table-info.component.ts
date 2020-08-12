@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject, Injector } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject, Injector, OnChanges, SimpleChanges } from '@angular/core';
 import { CmsFarmTableInfo, CmsFarmTableDataInfo } from './../../../../../global/model';
 import { CmsFarmTableDataAction, CmsFarmTableColumnDisplayType } from './../../../../../global/enum';
 import { ACTION_COLUMN, CHECKBOX_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type';
@@ -11,7 +11,7 @@ import { Sort } from '@angular/material/sort';
   templateUrl: './farm-table-info.component.html',
   styleUrls: ['./farm-table-info.component.scss']
 })
-export class FarmTableInfoComponent implements OnInit {
+export class FarmTableInfoComponent implements OnInit, OnChanges {
 
   CHECKBOX_COLUMN = CHECKBOX_COLUMN;
   ACTION_COLUMN = ACTION_COLUMN;
@@ -36,10 +36,15 @@ export class FarmTableInfoComponent implements OnInit {
     @Inject(FARM_TABLE_ACTION_TOKEN) private farmTableActions: FarmTableAction[],
   ) { }
 
+
   ngOnInit(): void {
     this.customAction = this.farmTableActions.reverse().find(action => action.funcID === this.funcID);
     this.sortData();
     this.onRowCheckChange();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.sortData();
   }
 
   onActionClick(action: CmsFarmTableDataAction, rowData?: CmsFarmTableDataInfo) {
