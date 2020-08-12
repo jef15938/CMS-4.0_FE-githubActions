@@ -15,6 +15,14 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
     component: LayoutFullComponent,
   },
   {
+    component_id: 'content-left',
+    component: LayoutFullComponent,
+  },
+  {
+    component_id: 'content-margin',
+    component: LayoutFullComponent,
+  },
+  {
     component_id: 'HTML',
     component: HtmlComponent,
   },
@@ -45,9 +53,5 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'GroupDemo',
     component: GroupTemplateDemoComponent,
-  },
-  {
-    component_id: 'full',
-    component: LayoutComponent
   }
 ];
