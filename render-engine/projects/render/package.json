@@ -1,9 +1,9 @@
 {
   "name": "@neux/render",
-  "version": "0.0.2-next.11",
+  "version": "0.0.2-next.12",
   "peerDependencies": {
-    "@angular/common": "^9.1.1",
-    "@angular/core": "^9.1.1",
+    "@angular/common": "^10.0.1",
+    "@angular/core": "^10.0.1",
     "@neux/core": "^0.1.9",
     "ngx-swiper-wrapper": "^9.0.1"
   },
