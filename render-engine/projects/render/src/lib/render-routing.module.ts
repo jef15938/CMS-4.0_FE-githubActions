@@ -12,7 +12,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'preview/:pageID/:languageID', component: RenderComponent, // preview
+    path: 'preview/:languageID/:pageID', component: RenderComponent, // preview
     data: { context: 'preview' },
     resolve: {
       data: PageInfoResolverService
@@ -26,7 +26,7 @@ const routes: Routes = [
     }
   },
   {
-    path: ':pageID/:languageID', component: RenderComponent, // runtime
+    path: ':languageID/:pageID', component: RenderComponent, // runtime
     data: { context: 'runtime' },
     resolve: {
       data: PageInfoResolverService
