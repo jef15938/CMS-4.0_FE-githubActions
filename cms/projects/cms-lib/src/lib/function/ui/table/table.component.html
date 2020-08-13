@@ -1,10 +1,12 @@
 <ng-container *ngIf="colDefs">
-  <table mat-table matSort [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;"
-    (matSortChange)="sortData($event)">
+  <!-- <table mat-table matSort [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;"
+    (matSortChange)="sortData($event)"> -->
+  <table mat-table [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;">
 
     <ng-container *ngFor="let col of colDefs" [matColumnDef]="col.colId">
       <ng-container *ngIf="!col.cellRenderer;">
-        <th mat-header-cell *matHeaderCellDef cmsTableResizer mat-sort-header> {{col.title}} </th>
+        <!-- <th mat-header-cell *matHeaderCellDef cmsTableResizer mat-sort-header> {{col.title}} </th> -->
+        <th mat-header-cell *matHeaderCellDef cmsTableResizer> {{col.title}} </th>
       </ng-container>
       <ng-container *ngIf="col.cellRenderer;">
         <th mat-header-cell *matHeaderCellDef cmsTableResizer> {{col.title}} </th>

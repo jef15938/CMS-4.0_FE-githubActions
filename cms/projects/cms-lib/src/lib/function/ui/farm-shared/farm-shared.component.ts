@@ -14,6 +14,7 @@ import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
 import { FarmSharedService } from './farm-shared.service';
+import { PreviewInfoType } from '../../../global/api/neuxAPI/bean/PreviewInfo';
 
 @Component({
   selector: 'cms-farm-shared',
@@ -163,7 +164,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
         this.takeOffData(category, event.rowData);
         break;
       case CmsFarmTableDataAction.PREVIEW:
-        this.openViewDataModal(category, event.rowData);
+        this.preview(category, event.rowData);
         break;
       case CmsFarmTableDataAction.MORE:
         this.createSub(category);
@@ -171,8 +172,19 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private openViewDataModal(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
-    this.farmSharedService.openFarmPreview(category.category_id, rowData.data_id).subscribe();
+  private preview(category: CmsFarmInfoCategory, rowData: CmsFarmTableDataInfo) {
+    const funcID = category.category_id;
+    const dataID = rowData.data_id;
+    this.farmService.getPreviewInfo(funcID, dataID).subscribe(previewInfo => {
+      switch (previewInfo.preview_type) {
+        case PreviewInfoType.ONE_PAGE:
+          window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
+          break;
+        case PreviewInfoType.FARM:
+          this.farmSharedService.openFarmPreview(previewInfo.func_id, previewInfo.data_id).subscribe();
+          break;
+      }
+    });
   }
 
   private openModifyDataModal(action: 'create' | 'edit', category: CmsFarmInfoCategory, rowData?: CmsFarmTableDataInfo) {
