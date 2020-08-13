@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, NEVER } from 'rxjs';
 import { ModalService, ModalSetting } from '../modal';
 import { EditorMode, ContentEditorConfig } from './content-editor.interface';
 import { ContentEditorContainerModalComponent } from './component/content-editor-container-modal/content-editor-container-modal.component';

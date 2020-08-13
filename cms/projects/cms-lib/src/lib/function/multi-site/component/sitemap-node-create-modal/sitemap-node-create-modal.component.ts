@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserSiteMapPostRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPostRequest';
-import { SitemapService, ContentService } from '../../../../global/api/service';
+import { SitemapService, ContentService, GroupService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
 import { LayoutInfo } from '../../../../global/api/neuxAPI/bean/LayoutInfo';
@@ -9,6 +9,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
+import { GroupInfo } from '../../../../global/api/neuxAPI/bean/GroupInfo';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
 
@@ -67,6 +68,8 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
 
   sitemapMaintainModel: SiteMapCreateModel;
   layouts: LayoutInfo[] = [];
+  groups: GroupInfo[] = [];
+  assignGroupIds: string[] = [];
 
   urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
     { value: SiteMapUrlType.INSIDE, name: '站內' },
@@ -90,11 +93,19 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     private sitemapService: SitemapService,
     private contentService: ContentService,
     private gallerySharedService: GallerySharedService,
+    private groupService: GroupService,
   ) { super(); }
 
   ngOnInit(): void {
     this.sitemapMaintainModel = new SiteMapCreateModel(this.parentId);
     this.getLayouts().subscribe();
+    this.getGroups().subscribe();
+  }
+
+  getGroups() {
+    return this.groupService.getGroupList().pipe(
+      tap(groups => this.groups = groups)
+    );
   }
 
   getLayouts() {
@@ -104,6 +115,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   }
 
   confirm() {
+    this.sitemapMaintainModel.assign_group_id = this.assignGroupIds.join(',');
     this.sitemapService.createSiteNode(
       this.siteId,
       this.sitemapMaintainModel.node_name,

@@ -192,6 +192,19 @@
         </div>
       </div>
     </ng-container>
+
+    <div class="modal-form-layout__row">
+      <div class="modal-form-layout__col">
+        <mat-form-field appearance="outline">
+          <mat-label>可選擇群組</mat-label>
+          <mat-select [(ngModel)]="assignGroupIds" name="assign_group_id" required multiple>
+            <mat-option *ngFor="let group of groups" [value]="group.group_id">
+              {{group.group_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
     <div class="modal-form-layout__btn-group  btn-group">
       <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="close()">取消</button>
       <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="confirm()"

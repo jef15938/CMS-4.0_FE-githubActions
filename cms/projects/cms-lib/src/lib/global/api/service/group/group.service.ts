@@ -7,6 +7,8 @@ import { GroupMenuGetResponse } from '../../neuxAPI/bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from '../../neuxAPI/bean/GroupSiteMapGetResponse';
 import { GroupMenuInfo } from '../../neuxAPI/bean/GroupMenuInfo';
 import { GroupSitemapInfo } from '../../neuxAPI/bean/GroupSitemapInfo';
+import { GroupInfo } from '../../neuxAPI/bean/GroupInfo';
+import { ListGroupResponst } from '../../neuxAPI/bean/ListGroupResponst';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,17 @@ export class GroupService {
   constructor(
     private restAPIService: RestApiService
   ) { }
+
+  /**
+   *
+   *
+   * @returns
+   * @memberof GroupService
+   */
+  getGroupList(): Observable<GroupInfo[]> {
+    return this.restAPIService.dispatchRestApi<ListGroupResponst>('GetGroup', {})
+      .pipe(map(res => res.datas));
+  }
 
   /**
    *
