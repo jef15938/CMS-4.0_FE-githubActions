@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
-import { GalleryInfo } from 'projects/cms-lib/src/lib/global/api/neuxAPI/bean/GalleryInfo';
+import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
 
 class SiteMapCreateModel extends UserSiteMapPostRequest {
 

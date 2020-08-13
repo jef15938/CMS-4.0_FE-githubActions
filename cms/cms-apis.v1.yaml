@@ -2316,9 +2316,13 @@ components:
           type: string
         meta_image:
           type: string
+        assign_group_id:
+          type: string
+          description: '指定給哪些群組使用，多個用半形(,)逗點分開'
       required:
         - node_name
         - meta_title
+        - assign_group_id
     ErrorInfo:
       title: ErrorInfo
       type: object
@@ -2942,6 +2946,10 @@ components:
           type: string
         meta_image:
           type: string
+          description: meta圖檔對應媒體庫ID
+        meta_image_name:
+          type: string
+          description: meta圖檔媒體庫檔名
         is_default:
           type: boolean
           description: 是否為預設語言

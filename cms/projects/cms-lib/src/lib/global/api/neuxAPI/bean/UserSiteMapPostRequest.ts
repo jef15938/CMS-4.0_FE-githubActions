@@ -21,6 +21,8 @@ public meta_title: string;
 public meta_description: string;
 public meta_keyword: string;
 public meta_image: string;
+@IsNotEmpty()
+public assign_group_id: string;
 
 
 }
