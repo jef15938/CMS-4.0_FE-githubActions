@@ -5,7 +5,9 @@
     "@angular/common": "^10.0.1",
     "@angular/core": "^10.0.1",
     "@neux/core": "^0.1.9",
-    "ngx-swiper-wrapper": "^9.0.1"
+    "ngx-swiper-wrapper": "^9.0.1",
+    "@ngrx/store": "^10.0.0",
+    "@ngrx/effects": "^10.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"

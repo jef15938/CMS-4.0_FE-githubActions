@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ContentInfo } from '../interface';
+import { ContentInfo, SitemapNode } from '../interface';
 import * as CONTENT from './render.service.mock-data.json';
 import { RestApiService } from '../api/neuxAPI/rest-api.service';
 import { PageInfo } from '../interface/page-info.interface';
 import { map } from 'rxjs/operators';
-import { convertPageInfo, convertContentInfo } from '../utils/object-converter';
+import { convertPageInfo, convertContentInfo, convertSitemapNode } from '../utils/object-converter';
 import { PageInfoGetResponse } from '../api/neuxAPI/bean/PageInfoGetResponse';
 import { ContentInfo as ApiContentInfo } from '../api/neuxAPI/bean/ContentInfo';
 
@@ -63,6 +63,30 @@ export class RenderService {
         : this.apiService.dispatchRestApi('GetContentByContentID', { contentID })
     ).pipe(
       map((x: ApiContentInfo) => convertContentInfo(x))
+    );
+  }
+
+  /**
+   * 根據root node 跟language取得sitemap
+   *
+   * @param {string} root
+   * @param {string} [lang=null]
+   * @returns {Observable<any>}
+   * @memberof RenderService
+   */
+  getSitemap(context: 'preview' | 'runtime', root: string, lang: string = null): Observable<SitemapNode> {
+    let request: Observable<any>;
+    if (!!lang) {
+      request = context === 'preview'
+        ? this.apiService.dispatchRestApi('GetPreviewSiteMapByNodeIdAndLang', { node_id: root, lang })
+        : this.apiService.dispatchRestApi('GetSiteMapByNodeIdAndLang', { node_id: root, lang });
+    }
+    request = context === 'preview'
+      ? this.apiService.dispatchRestApi('GetPreviewSiteMapByNodeId', { node_id: root })
+      : this.apiService.dispatchRestApi('GetSiteMapByNodeId', { node_id: root });
+
+    return request.pipe(
+      map(x => convertSitemapNode(x)),
     );
   }
 

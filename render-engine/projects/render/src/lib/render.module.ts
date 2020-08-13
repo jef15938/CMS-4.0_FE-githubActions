@@ -20,6 +20,10 @@ import { MobileMegaMenuComponent } from './global/component/layout-full/mobile-m
 import { QaComponent } from './global/component/qa/qa.component';
 import { DownloadComponent } from './global/component/download/download.component';
 import { HtmlComponent } from './global/component/html/html.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { RenderEffects } from './global/store/effects/render.effects';
+import * as fromRenderStore from './global/store/reducers/render.reducer';
 
 const COMPONENTS = [
   SliderComponent,
@@ -44,6 +48,8 @@ const COMPONENTS = [
     TabModule,
     WrapperModule,
     SwiperModule,
+    StoreModule.forFeature(fromRenderStore.renderFeatureKey, fromRenderStore.reducer),
+    EffectsModule.forFeature([RenderEffects])
   ],
   declarations: [
     RenderComponent,

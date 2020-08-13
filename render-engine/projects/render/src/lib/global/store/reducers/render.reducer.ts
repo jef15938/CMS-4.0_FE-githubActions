@@ -42,6 +42,6 @@ export const renderReducer = createReducer(
 
 
 export function reducer(state: RenderState | undefined, action: Action) {
-  return reducer(state, action);
+  return renderReducer(state, action);
 }
 

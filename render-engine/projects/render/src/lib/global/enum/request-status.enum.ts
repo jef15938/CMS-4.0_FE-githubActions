@@ -1,5 +1,5 @@
 export enum RequestStatus {
-  Success,
-  Fail
+  Success = 'Success',
+  Fail = 'Fail'
 }
 

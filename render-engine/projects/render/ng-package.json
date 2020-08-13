@@ -7,7 +7,9 @@
       "ngx-swiper-wrapper": "ngx-swiper-wrapper",
       "@neux/core": "@neux/core",
       "class-transformer": "class-transformer",
-      "class-validator": "class-validator"
+      "class-validator": "class-validator",
+      "@ngrx/store": "@ngrx/store",
+      "@ngrx/effects": "@ngrx/effects"
     }
   }
 }

@@ -10,6 +10,9 @@ import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalHeader } from 'src/app/global/common/global-header';
 import { ErrorPageComponent } from 'src/app/global/component/error-page/error-page.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -20,9 +23,12 @@ import { ErrorPageComponent } from 'src/app/global/component/error-page/error-pa
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
     RenderModule,
     HttpClientModule,
     WrapperModule,
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [
     ...RenderModule.forRoot().providers,
