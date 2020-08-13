@@ -31,7 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   providers: [
     ...RenderModule.forRoot().providers,
     { provide: CMS_ENVIROMENT_TOKEN, useValue: environment },
-    { provide: CMS_EXTENSION_MENU_RESOLVER_TOKEN, useClass: MenuService },
+    // { provide: CMS_EXTENSION_MENU_RESOLVER_TOKEN, useClass: MenuService },
     { provide: RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN, useValue: COMPONENT_MAPPINGS },
     { provide: API_CONFIG_TOKEN, useValue: environment },
     { provide: API_HEADER_TOKEN, useExisting: GlobalHeader },

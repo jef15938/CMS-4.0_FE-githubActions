@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, Optional } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class CmsUserMenuResolver implements Resolve<any> {
 
   constructor(
     private menuService: MenuService,
-    @Inject(CMS_EXTENSION_MENU_RESOLVER_TOKEN) private cmsExtensionMenuProvidor: CmsExtensionMenuResolver,
+    @Optional() @Inject(CMS_EXTENSION_MENU_RESOLVER_TOKEN) private cmsExtensionMenuProvidor: CmsExtensionMenuResolver,
   ) { }
 
   getMenus() {
@@ -38,7 +38,7 @@ export class CmsUserMenuResolver implements Resolve<any> {
 
         menus.cmsMenus = cmsMenus;
 
-        if (!this.cmsExtensionMenuProvidor) { return of(cmsMenus); }
+        if (!this.cmsExtensionMenuProvidor) { return of(menus); }
         return this.cmsExtensionMenuProvidor.resolve().pipe(
           map(extensionMenus => {
             menus.appMenus = extensionMenus || [];

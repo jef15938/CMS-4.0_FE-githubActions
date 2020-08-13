@@ -9,12 +9,14 @@
       新增
     </button>
   </div>
-  <table mat-table matSort [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;"
-    (matSortChange)="sortData($event)">
+  <!-- <table mat-table matSort [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;"
+    (matSortChange)="sortData($event)"> -->
+  <table mat-table [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;">
 
     <ng-container *ngFor="let col of (tableInfo|getFarmTableDisplayCols)" [matColumnDef]="col">
       <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN;">
-        <th mat-header-cell *matHeaderCellDef cmsTableResizer mat-sort-header>
+        <!-- <th mat-header-cell *matHeaderCellDef cmsTableResizer mat-sort-header> -->
+        <th mat-header-cell *matHeaderCellDef cmsTableResizer>
           {{col}}
         </th>
       </ng-container>

@@ -56,6 +56,7 @@ GetContentVersionByContentID: `${BASE_URL}\/ContentVersion/{contentID}`,
 PutReOrderSiteMapByNodeID: `${BASE_URL}\/ReOrderSiteMap/{nodeID}`,
 GetFarmTriggerByTriggerID: `${BASE_URL}\/FarmTrigger/{triggerID}`,
 GetFarmTreeBySourceID: `${BASE_URL}\/Farm/Tree/{sourceID}`,
+GetGroup: `${BASE_URL}\/Group`,
 
 };
 const API_TYPE = {
@@ -114,5 +115,6 @@ GetContentVersionByContentID: 'Restful',
 PutReOrderSiteMapByNodeID: 'Restful',
 GetFarmTriggerByTriggerID: 'Restful',
 GetFarmTreeBySourceID: 'Restful',
+GetGroup: 'Restful',
 
 };

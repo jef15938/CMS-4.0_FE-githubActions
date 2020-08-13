@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ModalService } from '../../../ui/modal';
+import { ModalService, ModalSetting } from '../../../ui/modal';
 import { GallerySharedContainerModalComponent } from '../component/gallery-shared-container-modal/gallery-shared-container-modal.component';
 import { GalleryFileType } from '../type/gallery-shared.type';
 
@@ -29,11 +29,12 @@ export class GallerySharedService {
     allowedFileTypes?: GalleryFileType[]
   ): Observable<any> {
 
-    const modalSetting = {
+    const modalSetting: ModalSetting = {
       id: `gallery-shared`,
       width: '80%',
       maxWidth: '80%',
       height: '80%',
+      hideCloseBtn: true,
     };
 
     return this.modalService.openComponent({

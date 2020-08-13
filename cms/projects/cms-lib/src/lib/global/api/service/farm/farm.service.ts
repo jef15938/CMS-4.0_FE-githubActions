@@ -176,11 +176,10 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  getPreviewInfo(funcID: string): Observable<PreviewInfo> {
-    if (!funcID) {
-      throw new ParamsError('funcID', 'getPreviewInfo', 'string', funcID);
-    }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreviewByFuncID', { funcID });
+  getPreviewInfo(funcID: string, dataID: string): Observable<PreviewInfo> {
+    if (!funcID) { throw new ParamsError('funcID', 'getPreviewInfo', 'string', funcID); }
+    if (!dataID) { throw new ParamsError('dataID', 'getPreviewInfo', 'string', dataID); }
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreviewByFuncID', { funcID, dataID });
   }
 
   /**

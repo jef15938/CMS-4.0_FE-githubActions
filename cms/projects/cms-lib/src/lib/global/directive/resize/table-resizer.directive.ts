@@ -76,7 +76,6 @@ export class TableResizerDirective implements AfterViewInit, OnDestroy, AfterVie
   }
 
   ngOnDestroy(): void {
-    console.warn('destroy');
     this.destroy$.next();
     this.destroy$.complete();
     this.destroy$.unsubscribe();

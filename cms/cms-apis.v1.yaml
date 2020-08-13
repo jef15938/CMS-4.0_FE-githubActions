@@ -1695,6 +1695,30 @@ paths:
         name: sourceID
         in: path
         required: true
+  /Group:
+    get:
+      summary: GetGroupList
+      tags:
+        - System
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListGroupResponst'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Group
+      description: 取得群組清單
 components:
   schemas:
     LoginRequest:
@@ -2316,9 +2340,13 @@ components:
           type: string
         meta_image:
           type: string
+        assign_group_id:
+          type: string
+          description: '指定給哪些群組使用，多個用半形(,)逗點分開'
       required:
         - node_name
         - meta_title
+        - assign_group_id
     ErrorInfo:
       title: ErrorInfo
       type: object
@@ -2942,6 +2970,10 @@ components:
           type: string
         meta_image:
           type: string
+          description: meta圖檔對應媒體庫ID
+        meta_image_name:
+          type: string
+          description: meta圖檔媒體庫檔名
         is_default:
           type: boolean
           description: 是否為預設語言
@@ -3079,4 +3111,29 @@ components:
       properties:
         func_id:
           type: string
+    ListGroupResponst:
+      title: ListGroupResponst
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupInfo'
+    GroupInfo:
+      title: GroupInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        group_id:
+          type: string
+          description: 群組代碼
+        group_name:
+          type: string
+          description: 群組名稱
+      required:
+        - group_id
+        - group_name
   securitySchemes: {}
