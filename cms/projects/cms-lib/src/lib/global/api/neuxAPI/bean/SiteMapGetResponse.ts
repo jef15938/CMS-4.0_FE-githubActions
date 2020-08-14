@@ -20,6 +20,7 @@ public canPreview: boolean;
 public canAdd: boolean;
 @IsNotEmpty()
 public canDelete: boolean;
+public canOrder: boolean;
 @Type(TypeFactory(SiteMapGetResponse))
 @ValidateNested()
 public children: Array<SiteMapGetResponse>;

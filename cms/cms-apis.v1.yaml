@@ -83,10 +83,13 @@ paths:
           multipart/form-data:
             schema:
               description: Form data格式
-        description: |-
+        description: >-
           用formData型式傳入
-          file:媒體庫檔案
-          description:檔案描述
+
+          file:媒體庫檔案(filename max length:300)，要擋副檔名只能有png / jpg / jpeg / gif /
+          pdf / xls / xlsx / doc / docx(建議挖成extension)
+
+          description:檔案描述(Max length:300)
       tags:
         - Gallery
   /GalleryCategory:
@@ -1384,10 +1387,13 @@ paths:
           multipart/form-data:
             schema:
               description: Form data格式
-        description: |-
+        description: >-
           用formData型式傳入
-          file:媒體庫檔案
-          description:檔案描述
+
+          file:媒體庫檔案(filename max length:300)，要擋副檔名只能有png / jpg / jpeg / gif /
+          pdf / xls / xlsx / doc / docx(建議挖成extension)
+
+          description:檔案描述(Max length:300)
       tags:
         - Gallery
     delete:
@@ -1730,9 +1736,11 @@ components:
         username:
           type: string
           description: 帳號
+          maxLength: 50
         password:
           type: string
           description: 密碼
+          maxLength: 50
         validation_code:
           type: number
           description: 圖形驗證碼
@@ -1982,24 +1990,29 @@ components:
       title: DepartmentMaintainRequest
       type: object
       description: ''
+      x-tags:
+        - Model
       properties:
         dept_name:
           type: string
           description: 部門名稱
+          maxLength: 100
         parent_id:
           type: string
           description: 上層部門(若為第一層不需傳值)
+          maxLength: 100
       required:
         - dept_name
-      x-tags:
-        - Model
     GalleryCategoryPutRequest:
       title: GalleryCategoryPutRequest
       type: object
+      x-tags:
+        - Model
       properties:
         category_name:
           type: string
           description: 目錄名稱
+          maxLength: 50
         parent_id:
           type: string
           description: 上層代碼(若為第一層不需傳值)
@@ -2012,8 +2025,6 @@ components:
       required:
         - category_name
         - assign_dept_id
-      x-tags:
-        - Model
     AuditingInfo:
       title: AuditingInfo
       type: object
@@ -2106,6 +2117,8 @@ components:
     AuditingSubmitRequest:
       title: AuditingSubmitRequest
       type: object
+      x-tags:
+        - Model
       properties:
         status:
           type: string
@@ -2116,10 +2129,9 @@ components:
         comment:
           type: string
           description: 審核意見
+          maxLength: 500
       required:
         - status
-      x-tags:
-        - Model
     PublishInfo:
       title: PublishInfo
       type: object
@@ -2183,10 +2195,13 @@ components:
           description: 是否能預覽
         canAdd:
           type: boolean
-          description: 是否可新增節點
+          description: 是否可新增節點，及是否可移動到此節點的下層
         canDelete:
           type: boolean
           description: 是否可刪除
+        canOrder:
+          type: boolean
+          description: 可進行排序(可移動及可移動到此節點上下位置)
         children:
           type: array
           items:
@@ -2299,10 +2314,13 @@ components:
           type: string
         url:
           type: string
+          maxLength: 500
         url_blank:
           type: string
         content_path:
           type: string
+          maxLength: 100
+          description: 節點連結路徑(僅能英數字及「-」、「_」)
         details:
           type: array
           items:
@@ -2315,6 +2333,7 @@ components:
       properties:
         node_name:
           type: string
+          maxLength: 50
         layout_id:
           type: string
         parent_id:
@@ -2327,17 +2346,22 @@ components:
           type: string
         url:
           type: string
+          maxLength: 500
         url_blank:
           type: string
         content_path:
           type: string
-          description: 節點連結路徑
+          description: 節點連結路徑(僅能英數字及「-」、「_」)
+          maxLength: 100
         meta_title:
           type: string
+          maxLength: 500
         meta_description:
           type: string
+          maxLength: 500
         meta_keyword:
           type: string
+          maxLength: 500
         meta_image:
           type: string
         assign_group_id:
@@ -2840,6 +2864,7 @@ components:
           format: date-time
         memo:
           type: string
+          maxLength: 500
         func_id:
           type: string
       required:
@@ -2861,6 +2886,7 @@ components:
           format: date-time
         memo:
           type: string
+          maxLength: 500
         site_id:
           type: string
       required:
@@ -2962,18 +2988,23 @@ components:
           type: string
         node_name:
           type: string
+          maxLength: 50
         meta_title:
           type: string
+          maxLength: 500
         meta_description:
           type: string
+          maxLength: 500
         meta_keyword:
           type: string
+          maxLength: 500
         meta_image:
           type: string
           description: meta圖檔對應媒體庫ID
         meta_image_name:
           type: string
           description: meta圖檔媒體庫檔名
+          maxLength: 300
         is_default:
           type: boolean
           description: 是否為預設語言
