@@ -8,6 +8,29 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
+// ssr DOM
+const domino = require('domino');
+// for mock global window by domino
+const win = domino.createWindow();
+const nodeJsGlobal = global as any;
+// mock
+nodeJsGlobal.window = win;
+// not implemented property and functions
+Object.defineProperty(win.document.body.style, 'transform', {
+  value: () => {
+    return {
+      enumerable: true,
+      configurable: true,
+    };
+  },
+});
+// mock documnet
+nodeJsGlobal.document = win.document;
+// othres mock
+// nodeJsGlobal.CSS = null;
+// global['XMLHttpRequest'] = require('xmlhttprequest').XMLHttpRequest;
+// nodeJsGlobal.Prism = null;
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
