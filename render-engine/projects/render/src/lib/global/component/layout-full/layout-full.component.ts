@@ -14,19 +14,22 @@ export class LayoutFullComponent extends CommonTemplateBaseComponent implements 
   templateInfo: LayoutInfo;
   isShowMenu: boolean;
   isMobile = false;
-  windowWidth = window.innerWidth;
+  // windowWidth = window.innerWidth;
 
-  constructor(injector: Injector) {
+  constructor(
+    injector: Injector,
+    // private window: Window,
+    ) {
     super(injector);
   }
 
   ngOnInit(): void {
-    fromEvent(window, 'resize').pipe(
-      debounceTime(200),
-      map(e => (e.target as Window).innerWidth),
-      startWith(this.windowWidth),
-      tap((width) => this.isMobile = width <= 991)
-    ).subscribe(() => { });
+    // fromEvent(window, 'resize').pipe(
+    //   debounceTime(200),
+    //   map(e => (e.target as Window).innerWidth),
+    //   startWith(this.windowWidth),
+    //   tap((width) => this.isMobile = width <= 991)
+    // ).subscribe(() => { });
   }
 
   /**
