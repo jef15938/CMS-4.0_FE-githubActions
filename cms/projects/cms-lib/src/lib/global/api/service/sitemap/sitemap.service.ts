@@ -227,7 +227,7 @@ export class SitemapService {
     const params: { [k: string]: any } = {
       nodeID,
       parent_id: parentID,
-      node_order: nodeOrder,
+      node_order: nodeOrder + 1, // 從 1 開始
       requestBody,
     };
 

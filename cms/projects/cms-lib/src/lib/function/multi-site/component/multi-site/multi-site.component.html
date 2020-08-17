@@ -51,7 +51,9 @@
         <cms-tree #userSitemapTree class="list-block__tree" [context]="this" [nodeDatas]="userSitemaps"
           [draggable]="true" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
           (customEvent)="onUserSiteMapTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
-          (afterRender)="afterTreeRender($event)" (dragTo)="onTreeDragTo($event)">
+          (afterRender)="afterTreeRender($event)" (dragToNode)="onTreeDragToNode($event)"
+          (dragToPosition)="onTreeDragToPosition($event)" [canDragNode]="canDragNode" [canDropOnNode]="canDropOnNode"
+          [canDropOnNodePreviousNext]="canDropOnNodePreviousNext">
         </cms-tree>
       </div>
     </div>

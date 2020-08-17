@@ -6,9 +6,11 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CmsTree, CmsTreeCustomCellEvent } from './tree.interface';
+import { CmsTree, CmsTreeCustomCellEvent, CmsTreeDropPosition } from './tree.interface';
 import { DynamicWrapperDirective } from '@neux/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+
+
 
 @Component({
   selector: 'cms-tree',
@@ -47,14 +49,18 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   /* Drag and drop */
   @Input() draggable = false;
-  @Output() dragTo = new EventEmitter<{ target: TData, to: TData, order: number }>();
+  @Input() canDragNode: (node: TData) => boolean;
+  @Input() canDropOnNode: (node: TData) => boolean;
+  @Input() canDropOnNodePreviousNext: (node: TData) => boolean;
+  @Output() dragToNode = new EventEmitter<{ target: TData, to: TData }>();
+  @Output() dragToPosition = new EventEmitter<{ target: TData, to: TData, order: number }>();
   readonly dragGhostId = 'drag-ghost';
   dragNode: any;
   dragEvent: any;
   dragNodeExpandOverWaitTimeMs = 300;
   dragNodeExpandOverNode: any;
   dragNodeExpandOverTime: number;
-  private dragPosition: { node: TData, position: number } = null;
+  dropPosition: CmsTreeDropPosition<TData> = null;
 
   /** Checkbox */
   @Input() checkbox = false;
@@ -194,7 +200,6 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     if (!this.draggable) { return; }
     // Required by Firefox (https://stackoverflow.com/questions/19055264/why-doesnt-html5-drag-and-drop-work-in-firefox)
     event.dataTransfer.setData('foo', 'bar');
-    console.log(event.target);
     const ghost = this.createDragGhost(event.target);
     this.dragEvent = event;
     this.dragNode = node;
@@ -212,7 +217,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
         }
       }
     } else {
-      this.dragPosition = { node, position: 0 };
+      this.dropPosition = { node, position: 0 };
       this.dragNodeExpandOverNode = node;
       this.dragNodeExpandOverTime = new Date().getTime();
     }
@@ -222,25 +227,29 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.dragNode = null;
     this.dragNodeExpandOverNode = null;
     this.dragNodeExpandOverTime = 0;
-    this.dragPosition = null;
+    this.dropPosition = null;
   }
 
   handleDrop(event, node) {
     if (!this.draggable) { return; }
     event.preventDefault();
+    if (this.canDropOnNode && !this.canDropOnNode(node)) { return; }
+    console.warn(1, node);
     if (node !== this.dragNode) {
-      this.dragTo.emit({ target: this.dragNode, to: this.dragNodeExpandOverNode || this.dragNode, order: 0 });
+      this.dragToNode.emit({ target: this.dragNode, to: this.dragNodeExpandOverNode || this.dragNode });
     }
     this.resetDrag();
   }
 
-  private changeNodePosition(dragPosition: { node: TData, position: number }): void {
-    if (dragPosition.node === this.dragNode) { return; }
-    const parent = this.findParent(dragPosition.node);
+  private changeNodePosition(dropPosition: { node: TData, position: number }): void {
+    if (dropPosition.node === this.dragNode) { return; }
+    if (this.canDropOnNodePreviousNext && !this.canDropOnNodePreviousNext(dropPosition.node)) { return; }
+    const parent = this.findParent(dropPosition.node);
     if (!parent) { return; }
-    let order = (parent[this.nodeChildrenEntryField] as TData[]).indexOf(dragPosition.node) + 1; // 第一個位置是 1 不是 0
-    if (dragPosition.position > 0) { order++; }
-    this.dragTo.emit({ target: this.dragNode, to: parent, order });
+    console.warn(2, dropPosition.node);
+    let order = (parent[this.nodeChildrenEntryField] as TData[]).indexOf(dropPosition.node);
+    if (dropPosition.position > 0) { order++; }
+    this.dragToPosition.emit({ target: this.dragNode, to: parent, order });
   }
 
   handleDragEnd(event) {
@@ -248,8 +257,8 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     if (ghost) { document.body.removeChild(ghost); }
     if (!this.draggable) { return; }
 
-    if (this.dragPosition?.position) { // drop 在節點上下的 div
-      this.changeNodePosition(this.dragPosition);
+    if (this.dropPosition?.position) { // drop 在節點上下的 div
+      this.changeNodePosition(this.dropPosition);
     }
 
     this.resetDrag();
@@ -277,15 +286,15 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   prevOrNextDragOver(event, node: TData, position: number) {
     if (!this.draggable) { return; }
+    if (this.canDropOnNodePreviousNext && !this.canDropOnNodePreviousNext(node)) { return; }
 
     if (node !== this.dragNode) {
-      this.dragPosition = { node, position };
+      this.dropPosition = { node, position };
       event.target.classList.add('cms-tree__node__head__anchor--drag-overed');
     }
   }
 
   prevOrNextDragLeave(event) {
-    if (!this.draggable) { return; }
     event.target.classList.remove('cms-tree__node__head__anchor--drag-overed');
   }
 }

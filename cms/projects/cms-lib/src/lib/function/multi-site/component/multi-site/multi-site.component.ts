@@ -5,7 +5,7 @@ import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapG
 import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
 import { SitemapService } from '../../../../global/api/service';
 import { ModalService } from '../../../ui/modal';
-import { CmsTree, TreeComponent } from '../../../ui/tree';
+import { CmsTree, TreeComponent, CmsTreeDropPosition } from '../../../ui/tree';
 import { HtmlEditorService } from '../../../ui/html-editor';
 import { SitemapNodeCreateModalComponent } from '../sitemap-node-create-modal/sitemap-node-create-modal.component';
 import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from '../multi-site-node/multi-site-node.component';
@@ -185,7 +185,34 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onTreeDragTo(ev: { target: SiteMapGetResponse, to: SiteMapGetResponse, order: number }) {
+  canDragNode(node: SiteMapGetResponse): boolean {
+    return node.canOrder;
+  }
+
+  canDropOnNode(node: SiteMapGetResponse): boolean {
+    return node.canAdd;
+  }
+
+  canDropOnNodePreviousNext(node: SiteMapGetResponse): boolean {
+    return node.canOrder;
+  }
+
+  onTreeDragToNode(ev: { target: SiteMapGetResponse, to: SiteMapGetResponse }) {
+    const target = ev.target;
+    const to = ev.to;
+    if (!target || !to || target === to) { return; }
+    // TODO: 移動節點 api
+    this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
+      if (!confirm) { return; }
+      of(undefined).pipe(
+        concatMap(_ => this.sitemapService.reOrderSiteNode(target.node_id, to.node_id, 0))
+      ).subscribe(_ => {
+        this.onNodeUpdate();
+      });
+    });
+  }
+
+  onTreeDragToPosition(ev: { target: SiteMapGetResponse, to: SiteMapGetResponse, order: number }) {
     const target = ev.target;
     const to = ev.to;
     const order = ev.order;

@@ -9,6 +9,7 @@ import { DirectiveModule } from './../../../global/directive';
 import { TreeComponent } from './tree.component';
 import { NodeRenderOnloadPipe } from './pipe/node-render-onload.pipe';
 import { NodeCheckboxDisabledPipe } from './pipe/node-checkbox-disabled';
+import { NodeCanDragPipe, NodeCanDropPipe } from './pipe/node-can-move.pipe';
 
 @NgModule({
   imports: [
@@ -24,6 +25,8 @@ import { NodeCheckboxDisabledPipe } from './pipe/node-checkbox-disabled';
     TreeComponent,
     NodeRenderOnloadPipe,
     NodeCheckboxDisabledPipe,
+    NodeCanDragPipe,
+    NodeCanDropPipe,
   ],
   exports: [
     TreeComponent

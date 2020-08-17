@@ -22,3 +22,8 @@ export interface CmsTreeNode<TData> {
 export interface CmsTreeNodeRenderer<TData> {
   compInit: (node: CmsTreeNode<TData>) => any;
 }
+
+export interface CmsTreeDropPosition<TData> {
+  node: TData;
+  position: number;
+}

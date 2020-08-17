@@ -100,7 +100,8 @@
         z-index: 99;
         transform: translateX(15px);
         transition: 500ms;
-        background-color: transparent;
+        // background-color: transparent;
+        background-color: grey;
 
         &--prev {}
 
@@ -109,7 +110,8 @@
         }
 
         &--drag-overed {
-          background-color: grey;
+          // background-color: grey;
+          background-color: yellow;
         }
       }
 
@@ -233,8 +235,20 @@
 
 }
 
-
-
 .drag-over {
   background-color: $color-CIS-light !important;
+}
+
+.cannot-drag {
+
+  &,
+  ::ng-deep * {
+    // cursor: not-allowed !important;
+  }
+}
+
+.cannot-drop {
+  mat-checkbox {
+    opacity: 0.5 !important;
+  }
 }
