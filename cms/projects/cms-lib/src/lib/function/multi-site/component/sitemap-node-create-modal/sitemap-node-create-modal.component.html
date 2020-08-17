@@ -102,7 +102,7 @@
                     </ul>
                     <div class="layout-select__collapse__thumbnail">
                       <ng-container *ngIf="(activedLayoutID | getLayoutByLayoutID : this.layouts); let actived;">
-                        <img [src]="actived.layout_thumbnail || '/'">
+                        <img [src]="'./assets/img/layout/'+actived.layout_id+'.png'">
                       </ng-container>
                     </div>
                   </div>
@@ -111,38 +111,6 @@
             </mat-form-field>
           </div>
         </div>
-        <!-- <div class="sitemap-node-creat-modal__layout-select layout-select">
-          <input [(ngModel)]="sitemapMaintainModel.layout_id" class="layout-select__input" name="layout_id"
-            style="display:none;" required #modelLayoutID="ngModel">
-          <mat-expansion-panel class="layout-select__collapse"
-            [class.layout-select__collapse--has-error]="modelLayoutID.touched && modelLayoutID.invalid">
-            <mat-expansion-panel-header class="layout-select__collapse__header">
-              <mat-panel-title>版面<span class="highlight1">*</span></mat-panel-title>
-              <mat-panel-description>
-                <span class="highlight1" *ngIf="modelLayoutID.invalid">請選擇版面</span>
-                {{(sitemapMaintainModel.layout_id | getLayoutByLayoutID : this.layouts)?.layout_name}}
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="layout-select__collapse__option">
-              <ul class="layout-select__collapse__list">
-                <li *ngFor="let option of layouts" class="layout-select__list__item"
-                  [class.layout-select__list__item--actived]="option.layout_id===activedLayoutID"
-                  (mouseenter)="setActivedLayout(option, true)" (mouseleave)="setActivedLayout(option, false)">
-                  <mat-checkbox [checked]="option.layout_id===sitemapMaintainModel.layout_id"
-                    (change)="onSelectedLayoutCheckedChange($event, option)">
-                    {{option.layout_name}}
-                  </mat-checkbox>
-                </li>
-              </ul>
-              <div class="layout-select__collapse__thumbnail">
-                <ng-container *ngIf="(activedLayoutID | getLayoutByLayoutID : this.layouts); let actived;">
-                  <img *ngIf="actived?.layout_thumbnail" [src]="actived.layout_thumbnail">
-                </ng-container>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </div> -->
-
         <div class="modal-form-layout__row">
           <div class="modal-form-layout__col">
             <mat-form-field appearance="outline">
