@@ -77,7 +77,7 @@
             <mat-form-field appearance="outline">
               <mat-label>節點連結路徑</mat-label>
               <textarea matInput [(ngModel)]="putRequest.content_path" name="content_path" maxlength="100" rows="1"
-                pattern="^[A-Za-z][A-Za-z0-9\-\_]*$" #modelContentPath="ngModel"></textarea>
+                pattern="^[A-Za-z0-9\-\_]*$" #modelContentPath="ngModel"></textarea>
               <mat-error *ngIf="modelContentPath?.errors?.required">限英數字和-_</mat-error>
             </mat-form-field>
           </div>
