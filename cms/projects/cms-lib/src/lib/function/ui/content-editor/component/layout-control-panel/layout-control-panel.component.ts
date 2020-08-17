@@ -110,7 +110,6 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     const btnLayoutWrapper = this.selectedBtn.targetLayoutWrapper;
     const templateInfo = btnLayoutWrapper?.templateInfo;
 
-    console.warn({ btnTemplatesContainer, btnRootTemplatesContainer, btnLayoutWrapper, templateInfo, isRoot });
     const yes = window.confirm(`確定加入${selectedTemplateInfo.template_name}:${selectedTemplateInfo.template_id}？`);
     if (!yes) { return; }
     const component = this.dynamicComponentFactoryService.getComponent(selectedTemplateInfo.template_id);
