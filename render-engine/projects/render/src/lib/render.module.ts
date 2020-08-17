@@ -24,6 +24,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RenderEffects } from './global/store/effects/render.effects';
 import * as fromRenderStore from './global/store/reducers/render.reducer';
+import { FixedWrapperComponent } from './global/component/fixed-wrapper/fixed-wrapper.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -38,6 +39,7 @@ const COMPONENTS = [
   MobileMegaMenuComponent,
   LayoutComponent,
   HtmlComponent,
+  FixedWrapperComponent,
 ];
 
 @NgModule({
@@ -54,7 +56,6 @@ const COMPONENTS = [
   declarations: [
     RenderComponent,
     ...COMPONENTS,
-
   ],
   exports: [
     RenderComponent,

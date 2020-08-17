@@ -41,11 +41,11 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.mainTemplates = [
-      // {
-      //   template_id: 'QA',
-      //   template_name: 'QA',
-      //   template_thumbnail: ''
-      // },
+      {
+        template_id: 'FixedWrapper',
+        template_name: '固定式外框',
+        template_thumbnail: ''
+      },
       // {
       //   template_id: 'Download',
       //   template_name: 'Download',

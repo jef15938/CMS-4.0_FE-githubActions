@@ -1,11 +1,15 @@
 import { RenderComponentMapping } from '../interface';
 import {
-  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent, NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent
+  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent,
+  NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent, FixedWrapperComponent
 } from '../component';
-import { LayoutComponent } from '../component/layout/layout.component';
 import { HtmlComponent } from '../component/html/html.component';
 
 export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = [
+  {
+    component_id: 'FixedWrapper',
+    component: FixedWrapperComponent,
+  },
   {
     component_id: 'Tab',
     component: TabDemoComponent,

@@ -5,7 +5,7 @@ import {
 import {
   LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperSelectedTargetType,
   LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective,
-  LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective, LayoutWrapperComponent
+  LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective, LayoutWrapperComponent, FixedWrapperComponent
 } from '@neux/render';
 import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentTemplateInfo } from './../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
@@ -111,21 +111,37 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
     });
     btns.length = 0;
 
-    // 產生
-    templatesContainer.layoutWrapperComponents.forEach((lw, i) => {
-      const btnContainer = this.createBtnContainer();
-      templatesContainerNativeElement.insertBefore(btnContainer, lw.elementRef.nativeElement);
-      this.createBtn(btns, btnContainer, i, lw, templatesContainer, rootTemplatesContainer);
-    });
+    if ( // 如果有固定式版面，跳過
+      !Array.from(templatesContainer.layoutWrapperComponents || [])
+        .some(lw => lw.componentRef.instance instanceof FixedWrapperComponent)
+    ) {
+      // 產生
+      templatesContainer.layoutWrapperComponents.forEach((lw, i) => {
+        const btnContainer = this.createBtnContainer();
+        templatesContainerNativeElement.insertBefore(btnContainer, lw.elementRef.nativeElement);
+        this.createBtn(btns, btnContainer, i, lw, templatesContainer, rootTemplatesContainer);
+      });
 
-    // 產生最後一個
-    const container = this.createBtnContainer();
-    templatesContainerNativeElement.appendChild(container);
-    this.createBtn(btns, container, templatesContainer.layoutWrapperComponents.length, null, templatesContainer, rootTemplatesContainer);
+      // 產生最後一個
+      const container = this.createBtnContainer();
+      templatesContainerNativeElement.appendChild(container);
+      this.createBtn(btns, container, templatesContainer.layoutWrapperComponents.length, null, templatesContainer, rootTemplatesContainer);
+    }
 
     // 子節點的templatesContainer繼續產生
     templatesContainer.layoutWrapperComponents.forEach(lw => {
-      return lw?.componentRef?.instance?.templatesContainerComponents?.map(t => this.renderAddTemplateButton(t, rootTemplatesContainer))
+      let children: TemplatesContainerComponent[] = Array.from(lw.componentRef.instance.templatesContainerComponents || []);
+
+      if (lw.dynamicWrapperComponent.componentRef.instance instanceof FixedWrapperComponent) {
+        children = children.map(childTemplatesContainer =>
+          Array.from(childTemplatesContainer.layoutWrapperComponents || [])
+            .reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[])
+            .map(childLayoutWrapper => Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || []))
+            .reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[])
+        ).reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[]);
+      }
+
+      return children.map(t => this.renderAddTemplateButton(t, rootTemplatesContainer))
         || undefined;
     });
   }
