@@ -48,7 +48,8 @@
               <div class="modal-form-layout__col">
                 <mat-form-field appearance="outline">
                   <mat-label>站外網址</mat-label>
-                  <input matInput [(ngModel)]="putRequest.url" name="url">
+                  <input matInput [(ngModel)]="putRequest.url" name="url" required maxlength="500" #modelUrl="ngModel">
+                  <mat-error *ngIf="modelUrl?.errors?.required">必填欄位</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -75,7 +76,9 @@
           <div class="modal-form-layout__col">
             <mat-form-field appearance="outline">
               <mat-label>節點連結路徑</mat-label>
-              <input matInput [(ngModel)]="putRequest.content_path" name="content_path" #modelMetaTitle="ngModel">
+              <textarea matInput [(ngModel)]="putRequest.content_path" name="content_path" maxlength="100" rows="1"
+                pattern="^[A-Za-z][A-Za-z0-9\-\_]*$" #modelContentPath="ngModel"></textarea>
+              <mat-error *ngIf="modelContentPath?.errors?.required">限英數字和-_</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -93,7 +96,9 @@
             <div class="modal-form-layout__col">
               <mat-form-field appearance="outline">
                 <mat-label>節點名稱</mat-label>
-                <input matInput [(ngModel)]="detail.node_name" name="node_name">
+                <input matInput [(ngModel)]="detail.node_name" name="node_name" required maxlength="50"
+                  #modelNodeName="ngModel">
+                <mat-error *ngIf="modelNodeName?.errors?.required">必填欄位</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -101,7 +106,9 @@
             <div class="modal-form-layout__col">
               <mat-form-field appearance="outline">
                 <mat-label>Meta標題</mat-label>
-                <input matInput [(ngModel)]="detail.meta_title" name="meta_title">
+                <textarea matInput [(ngModel)]="detail.meta_title" name="meta_title" required maxlength="500" rows="1"
+                  #modelMetaTitle="ngModel"></textarea>
+                <mat-error *ngIf="modelNodeName?.errors?.required">必填欄位</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -109,7 +116,8 @@
             <div class="modal-form-layout__col">
               <mat-form-field appearance="outline">
                 <mat-label>Meta描述</mat-label>
-                <input matInput [(ngModel)]="detail.meta_description" name="meta_description">
+                <textarea matInput [(ngModel)]="detail.meta_description" name="meta_description" rows="1"
+                  maxlength="500"></textarea>
               </mat-form-field>
             </div>
           </div>
@@ -117,14 +125,15 @@
             <div class="modal-form-layout__col">
               <mat-form-field appearance="outline">
                 <mat-label>Meta關鍵字</mat-label>
-                <input matInput [(ngModel)]="detail.meta_keyword" name="meta_keyword">
+                <textarea matInput [(ngModel)]="detail.meta_keyword" name="meta_keyword" rows="1"
+                  maxlength="500"></textarea>
               </mat-form-field>
             </div>
           </div>
           <div class="modal-form-layout__row">
             <div class="modal-form-layout__col gallery-btn-container">
               <mat-form-field appearance="outline">
-                <mat-label>Meta圖片</mat-label>
+                <mat-label>Meta圖片(1200x628)</mat-label>
                 <input matInput [value]="detail.meta_image_name" name="meta_image" readonly>
               </mat-form-field>
               <button class="modal-form-layout__btn gallery-btn" type="button" tabindex="0" mat-button

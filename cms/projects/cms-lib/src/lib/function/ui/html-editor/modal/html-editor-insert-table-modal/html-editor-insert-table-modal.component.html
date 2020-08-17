@@ -6,21 +6,20 @@
           <mat-form-field appearance="outline">
             <mat-label>列數(橫列)</mat-label>
             <input matInput type="number" min="1" step="1" [(ngModel)]="cols" name="cols" required #modelcolC="ngModel">
-            <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+            <mat-error *ngIf="modelcolC?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
         </div>
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>行數(直行)</mat-label>
             <input matInput type="number" min="1" step="1" [(ngModel)]="rows" name="rows" required #modelRows="ngModel">
-            <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+            <mat-error *ngIf="modelRows?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
         </div>
       </div>
     </div>
     <div class="modal-form-layout__btn-group btn-group">
-      <button class="modal-form-layout__btn" type="button" tabindex="0" mat-raised-button
-        (click)="close()">取消</button>
+      <button class="modal-form-layout__btn" type="button" tabindex="0" mat-raised-button (click)="close()">取消</button>
       <button class="modal-form-layout__btn" type="button" tabindex="0" mat-raised-button (click)="confirm()"
         [disabled]="form.invalid">儲存</button>
     </div>

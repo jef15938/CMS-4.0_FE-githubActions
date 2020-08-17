@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgModel } from '@angular/forms';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DepartmentInfo } from '../../../../global/api/neuxAPI/bean/DepartmentInfo';
@@ -56,11 +55,6 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
     this.save().subscribe(_ => {
       this.close('Confirm');
     });
-  }
-
-  getErrorMessage(model: NgModel) {
-    if (model.hasError('required')) { return 'Required'; }
-    return null;
   }
 
 }

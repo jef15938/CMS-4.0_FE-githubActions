@@ -38,50 +38,50 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.mainTemplates = [
-      {
-        template_id: 'QA',
-        template_name: 'QA',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      },
-      {
-        template_id: 'Download',
-        template_name: 'Download',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      },
-      {
-        template_id: 'News',
-        template_name: 'News',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      },
-      {
-        template_id: 'Slide',
-        template_name: 'Slide',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      },
-      {
-        template_id: 'HTML',
-        template_name: 'HTML',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      },
-      {
-        template_id: 'Tab',
-        template_name: 'Tab',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      },
-      {
-        template_id: 'IconPage',
-        template_name: 'IconPage',
-        template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
-      },
+      // {
+      //   template_id: 'QA',
+      //   template_name: 'QA',
+      //   template_thumbnail: ''
+      // },
+      // {
+      //   template_id: 'Download',
+      //   template_name: 'Download',
+      //   template_thumbnail: ''
+      // },
+      // {
+      //   template_id: 'News',
+      //   template_name: 'News',
+      //   template_thumbnail: ''
+      // },
+      // {
+      //   template_id: 'Slide',
+      //   template_name: 'Slide',
+      //   template_thumbnail: ''
+      // },
+      // {
+      //   template_id: 'HTML',
+      //   template_name: 'HTML',
+      //   template_thumbnail: ''
+      // },
+      // {
+      //   template_id: 'Tab',
+      //   template_name: 'Tab',
+      //   template_thumbnail: ''
+      // },
+      // {
+      //   template_id: 'IconPage',
+      //   template_name: 'IconPage',
+      //   template_thumbnail: ''
+      // },
       // {
       //   template_id: 'FieldsDemo',
       //   template_name: 'FieldsDemo',
-      //   template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      //   template_thumbnail: ''
       // },
       // {
       //   template_id: 'GroupDemo',
       //   template_name: 'GroupDemo',
-      //   template_thumbnail: 'https://garden.decoder.com.tw/demo_cms/edit_cms?action=getThemePicture&themeId=transglobe-main-052'
+      //   template_thumbnail: ''
       // },
     ];
   }

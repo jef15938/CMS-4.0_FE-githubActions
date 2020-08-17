@@ -9,7 +9,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Memo</mat-label>
-    <textarea matInput formControlName="memo"></textarea>
+    <textarea matInput formControlName="memo" maxlength="500" rows="1" required></textarea>
     <mat-error *ngIf="form.controls.memo.errors?.required">請輸入Memo</mat-error>
   </mat-form-field>
 

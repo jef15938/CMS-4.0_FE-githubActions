@@ -2,9 +2,9 @@
   <form #form="ngForm" class="gallery-category-maintain-modal__form">
     <div class="gallery-category-maintain-modal__block">
       <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput [(ngModel)]="categoryName" name="categoryName" required #modelName="ngModel">
-        <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error>
+        <mat-label>目錄名稱</mat-label>
+        <input matInput [(ngModel)]="categoryName" name="categoryName" required maxlength="50" #modelName="ngModel">
+        <mat-error *ngIf="modelName?.errors?.required">必填欄位</mat-error>
       </mat-form-field>
     </div>
     <hr class="gallery-category-maintain-modal__divider">

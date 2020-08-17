@@ -3,11 +3,12 @@
     <div class="page-content-container">
       <mat-form-field appearance="outline">
         <mat-label>意見</mat-label>
-        <input matInput [(ngModel)]="approveRequest.comment" name="comment" required #modelComment="ngModel">
-        <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+        <textarea matInput [(ngModel)]="approveRequest.comment" name="comment" required maxlength="500" rows="1"
+          #modelComment="ngModel"></textarea>
+        <mat-error *ngIf="modelComment?.errors?.required">必填欄位</mat-error>
       </mat-form-field>
     </div>
-    <div class="btn-group">
+    <div class=" btn-group">
       <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
       <button type="button" tabindex="0" mat-button *ngIf="status" (click)="confirm()" [disabled]="form.invalid">
         {{status===AuditingApproveStatus.APPROVED?'通過':'退回'}}

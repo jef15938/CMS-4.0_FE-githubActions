@@ -17,12 +17,12 @@
           <div class="CMS-login__form__content">
             <div class="CMS-login__form__item">
               <input type="text" name="username" class="CMS-login__form__item__input" placeholder="使用者帳號" required=""
-                autofocus="" [(ngModel)]="username" #modelUsername="ngModel"
+                autofocus="" maxlength="50" [(ngModel)]="username" #modelUsername="ngModel"
                 [class.has-error]="modelUsername.touched && modelUsername.invalid">
             </div>
             <div class="CMS-login__form__item">
               <input type="password" name="password" class="CMS-login__form__item__input" placeholder="使用者密碼"
-                required="" autocomplete="off" [(ngModel)]="password" #modelPassword="ngModel"
+                required="" autocomplete="off" maxlength="50" [(ngModel)]="password" #modelPassword="ngModel"
                 [class.has-error]="modelPassword.touched && modelPassword.invalid">
             </div>
             <div class="CMS-login__form__item">

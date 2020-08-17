@@ -19,7 +19,7 @@
             <mat-label>連結網址</mat-label>
             <input matInput [(ngModel)]="frameId" name="frameId" required #modelFrameId="ngModel"
               (ngModelChange)="checkSrc()">
-            <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+            <mat-error *ngIf="modelFrameId?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
         </div>
       </div>

@@ -6,7 +6,7 @@
           <mat-form-field appearance="outline">
             <mat-label>URL</mat-label>
             <input matInput [(ngModel)]="aTagConfig.href" name="url" required #modelUrl="ngModel">
-            <!-- <mat-error *ngIf="modelId.invalid">{{getErrorMessage(modelId)}}</mat-error> -->
+            <mat-error *ngIf="modelUrl?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -15,7 +15,6 @@
           <mat-form-field appearance="outline">
             <mat-label>Text</mat-label>
             <input matInput [(ngModel)]="aTagConfig.text" name="text">
-            <!-- <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error> -->
           </mat-form-field>
         </div>
       </div>
@@ -36,8 +35,7 @@
 
     </div>
     <div class="modal-form-layout__btn-group btn-group">
-      <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button
-        (click)="close()">取消</button>
+      <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="close()">取消</button>
       <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="confirm()"
         [disabled]="form.invalid">儲存</button>
     </div>

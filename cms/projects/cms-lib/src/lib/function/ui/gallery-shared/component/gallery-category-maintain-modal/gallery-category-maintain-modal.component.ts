@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgModel } from '@angular/forms';
 import { GalleryService, DepartmentService } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
 import { DepartmentInfo } from '../../../../../global/api/neuxAPI/bean/DepartmentInfo';
@@ -61,11 +60,6 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
     this.save().subscribe(_ => {
       this.close('Success');
     });
-  }
-
-  getErrorMessage(model: NgModel) {
-    if (model.hasError('required')) { return 'Required'; }
-    return null;
   }
 
   onNodesCheckedChange(ev: { nodes: DepartmentInfo[] }) {

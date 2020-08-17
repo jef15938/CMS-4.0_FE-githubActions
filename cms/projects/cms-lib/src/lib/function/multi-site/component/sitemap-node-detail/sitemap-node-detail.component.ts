@@ -79,8 +79,8 @@ export class SitemapNodeDetailComponent implements OnInit {
     if (!this.userSitemap.canModify) { return; }
 
     const noteType = this.sitemapNode.node_type;
-    const controlID = this.sitemapNode.node_id;
-    const contentID = this.sitemapNode.content_id || controlID;
+    const controlID = this.sitemapNode.layout_id;
+    const contentID = this.sitemapNode.content_id || this.sitemapNode.node_id;
 
     switch (noteType) {
       case SiteMapNodeType.CONTENT:
