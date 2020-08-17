@@ -65,14 +65,14 @@
     </div>
     <!-- 版面控制 -->
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
-      <cms-layout-control-panel [selectedBtn]="manager.selectedTemplateAddBtn"
+      <cms-layout-control-panel [context]="this" [selectedBtn]="manager.selectedTemplateAddBtn"
         [contentInfo]="manager?.stateManager?.currentState?.snapShot" [selectableTemplates]="selectableTemplates"
         (templateAdd)="resetSelected(); manager.stateManager.preserveState('AddTemplate : '+$event);">
       </cms-layout-control-panel>
     </div>
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
-      <cms-content-control-panel [manager]="manager" [selected]="manager.selectedViewElementEvent"
+      <cms-content-control-panel [context]="this" [manager]="manager" [selected]="manager.selectedViewElementEvent"
         [editorActionMode]="editorActionMode" (templateMove)="isScaleContent=$event;"
         (contentChange)="setEditorUnsaved();" (needCheckView)="contentViewRenderer?.checkView($event);">
       </cms-content-control-panel>

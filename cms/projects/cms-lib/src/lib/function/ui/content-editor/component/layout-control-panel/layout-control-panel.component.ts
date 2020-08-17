@@ -8,6 +8,7 @@ import { TemplateInfo } from './../../../../../global/api/neuxAPI/bean/TemplateI
 import { DynamicComponentFactoryService, LayoutBaseComponent } from '@neux/render';
 import { ContentTemplateInfo } from '../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
+import { ContentEditorContext } from '../../content-editor.interface';
 
 @Component({
   selector: 'cms-layout-control-panel',
@@ -17,6 +18,8 @@ import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo'
 export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
   @ViewChild('CreateTemplateContainer', { read: ViewContainerRef }) createTemplateContainer: ViewContainerRef;
+
+  @Input() context: ContentEditorContext;
 
   show = false;
 
@@ -100,11 +103,18 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     }
   }
 
-  selectTemplate(templateInfo: TemplateInfo) {
-    const yes = window.confirm(`確定加入${templateInfo.template_name}:${templateInfo.template_id}？`);
+  selectTemplate(selectedTemplateInfo: TemplateInfo) {
+    const btnTemplatesContainer = this.selectedBtn.templatesContainer;
+    const btnRootTemplatesContainer = this.selectedBtn.rootTemplatesContainer;
+    const isRoot = btnTemplatesContainer === btnRootTemplatesContainer;
+    const btnLayoutWrapper = this.selectedBtn.targetLayoutWrapper;
+    const templateInfo = btnLayoutWrapper?.templateInfo;
+
+    console.warn({ btnTemplatesContainer, btnRootTemplatesContainer, btnLayoutWrapper, templateInfo, isRoot });
+    const yes = window.confirm(`確定加入${selectedTemplateInfo.template_name}:${selectedTemplateInfo.template_id}？`);
     if (!yes) { return; }
-    const component = this.dynamicComponentFactoryService.getComponent(templateInfo.template_id);
-    if (!component) { alert(`找不到指定id的版面元件 : ${templateInfo.template_id}`); return; }
+    const component = this.dynamicComponentFactoryService.getComponent(selectedTemplateInfo.template_id);
+    if (!component) { alert(`找不到指定id的版面元件 : ${selectedTemplateInfo.template_id}`); return; }
 
     let defaultTemplateInfo: ContentTemplateInfo;
 
@@ -113,19 +123,62 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       viewContainerRef.clear();
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
       const componentRef = viewContainerRef.createComponent(componentFactory) as ComponentRef<LayoutBaseComponent<any>>;
-      defaultTemplateInfo = componentRef.instance.defaultTemplateInfo;
+      defaultTemplateInfo = JSON.parse(JSON.stringify(componentRef.instance.defaultTemplateInfo));
+      defaultTemplateInfo.id = `${new Date().getTime()}`;
       componentRef.destroy();
       viewContainerRef.clear();
     } catch (error) {
 
     }
 
-    if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${templateInfo.template_id}`); return; }
-    // this.selectedBtn.targetArray.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
-    this.contentInfo?.languages?.forEach(language => {
-      language.templates.splice(this.selectedBtn.position, 0, defaultTemplateInfo);
-    });
-    this.templateAdd.emit(templateInfo.template_id);
+    if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${selectedTemplateInfo.template_id}`); return; }
+
+    const rootTemplatesContainers = this.context.getRootTemplatesContainerComponents();
+
+    if (isRoot) {
+      rootTemplatesContainers.forEach(rootTemplatesContainer => {
+        rootTemplatesContainer.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
+      });
+    } else {
+      const btnParentLayoutWrapper =
+        this.context.findParentLayoutWrapperOfTemplatesContainer(btnTemplatesContainer, btnRootTemplatesContainer);
+
+      if (!btnParentLayoutWrapper) {
+        alert('系統異常 : 無 btnLayoutWrapper');
+        return;
+      }
+
+      const btnLayoutWrapperTemplatesContainerComponents =
+        Array.from(btnParentLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
+
+      const templatesContainerIndex = btnLayoutWrapperTemplatesContainerComponents.indexOf(btnTemplatesContainer);
+
+      const allLangTargetTemplatesContainers = rootTemplatesContainers.map(rootTemplatesContainer => {
+        if (rootTemplatesContainer === btnRootTemplatesContainer) {
+          return btnTemplatesContainer;
+        } else {
+          const templateInfoId = btnParentLayoutWrapper.templateInfo.id;
+          const layoutWrapper = this.context.findLayoutWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
+          if (!layoutWrapper) { return null; }
+          return Array.from(
+            layoutWrapper.componentRef.instance.templatesContainerComponents
+          )[templatesContainerIndex];
+        }
+      });
+
+      if (allLangTargetTemplatesContainers.some(v => !v)) {
+        alert('系統異常 : allLangTargetTemplatesContainers 不完全');
+        return;
+      }
+
+      allLangTargetTemplatesContainers.forEach(target => {
+        target.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
+      });
+    }
+
+    this.templateAdd.emit(selectedTemplateInfo.template_id);
   }
+
+
 
 }

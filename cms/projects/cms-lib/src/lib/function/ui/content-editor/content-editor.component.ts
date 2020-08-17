@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ContentInfo } from '../../../global/api/neuxAPI/bean/ContentInfo';
 import { TemplateGetResponse } from '../../../global/api/neuxAPI/bean/TemplateGetResponse';
-import { ContentEditorSaveEvent, EditorMode, ContentEditorActionMode } from './content-editor.interface';
+import { ContentEditorSaveEvent, EditorMode, ContentEditorActionMode, ContentEditorContext } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
@@ -14,7 +14,7 @@ import { ContentViewRendererComponent } from './component/content-view-renderer/
 import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactive-guardian.interface';
 import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
 import { ContentTemplateInfo } from '../../../global/api/neuxAPI/bean/ContentTemplateInfo';
-import { FieldType, TabTemplateInfo } from '@neux/render';
+import { FieldType, TabTemplateInfo, TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 import { ModalService } from '../modal';
 import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
 import { ContentService } from '../../../global/api/service';
@@ -32,7 +32,8 @@ const isTabTemplateInfo = (templateInfo: ContentTemplateInfo): boolean => {
   templateUrl: './content-editor.component.html',
   styleUrls: ['./content-editor.component.scss']
 })
-export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked, CmsCanDeactiveGuardian {
+export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked,
+  CmsCanDeactiveGuardian, ContentEditorContext {
   EditorMode = EditorMode;
   ContentEditorActionMode = ContentEditorActionMode;
 
@@ -117,7 +118,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
               imgs.forEach(img => {
                 const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
                 if (galleryID) {
-                  console.warn(img, img.getAttribute('src'));
                   const src = img.getAttribute('src');
                   if (src.indexOf(this.environment.apiBaseUrl) < 0) {
                     img.setAttribute('src', `${this.environment.apiBaseUrl}${src}`);
@@ -153,7 +153,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
               imgs.forEach(img => {
                 const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
                 if (galleryID) {
-                  console.warn(img, img.getAttribute('src'));
                   const src = img.getAttribute('src');
                   if (src.indexOf(this.environment.apiBaseUrl) > -1) {
                     img.setAttribute('src', `${src.replace(this.environment.apiBaseUrl, '')}`);
@@ -358,6 +357,57 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         });
       }
     });
+  }
+
+  getRootTemplatesContainerComponents() {
+    return Array.from(this.contentViewRenderer.templatesContainers);
+  }
+
+  findLayoutWrapperByTemplateInfoId(
+    templateInfoId: string,
+    source: TemplatesContainerComponent
+  ): LayoutWrapperComponent {
+    if (!templateInfoId || !source) { return null; }
+    const layoutWrappers = Array.from(source.layoutWrapperComponents || []);
+    const target = layoutWrappers.find(lw => lw.templateInfo.id === templateInfoId);
+    if (target) { return target; }
+    return layoutWrappers.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
+      .reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[])
+      .map(templatesContainer => this.findLayoutWrapperByTemplateInfoId(templateInfoId, templatesContainer))
+      .find(v => !!v);
+  }
+
+  findParentLayoutWrapperOfTemplatesContainer(
+    templatesContainer: TemplatesContainerComponent,
+    source: TemplatesContainerComponent,
+    parent?: LayoutWrapperComponent,
+  ): LayoutWrapperComponent {
+    if (!templatesContainer || !source) { return null; }
+    if (templatesContainer === source) { return parent; }
+
+    let target: LayoutWrapperComponent;
+    const childLayoutWrappers = Array.from(source.layoutWrapperComponents || []);
+    childLayoutWrappers.forEach(childLayoutWrapper => {
+      const childTemplatesContainerComponents = Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
+      if (childTemplatesContainerComponents.indexOf(templatesContainer) > -1) {
+        target = childLayoutWrapper;
+      }
+    });
+    if (target) { return target; }
+
+    const grandsonLayoutWrappers = childLayoutWrappers
+      .map(childLayoutWrapper =>
+        Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || [])
+          .map(templatesContainerComponent => Array.from(templatesContainerComponent.layoutWrapperComponents))
+          .reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[])
+      ).reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[]);
+
+    return grandsonLayoutWrappers.map(grandsonLayoutWrapper => {
+      return grandsonLayoutWrapper.componentRef.instance.templatesContainerComponents
+        .map(templatesContainerComponent => {
+          return this.findParentLayoutWrapperOfTemplatesContainer(templatesContainer, templatesContainerComponent, grandsonLayoutWrapper);
+        }).find(v => !!v);
+    }).find(v => !!v);
   }
 
 }

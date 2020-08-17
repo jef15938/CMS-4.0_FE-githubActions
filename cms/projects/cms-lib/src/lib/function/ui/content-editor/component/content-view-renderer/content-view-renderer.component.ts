@@ -1,11 +1,11 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild,
-  ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef, OnChanges, SimpleChanges
+  ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef, OnChanges, SimpleChanges, ViewChildren, QueryList
 } from '@angular/core';
 import {
   LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperSelectedTargetType,
   LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective,
-  LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective
+  LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective, LayoutWrapperComponent
 } from '@neux/render';
 import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentTemplateInfo } from './../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
@@ -30,7 +30,8 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
   EditorMode = EditorMode;
   ContentEditorActionMode = ContentEditorActionMode;
 
-  @ViewChild(TemplatesContainerComponent) templatesContainer: TemplatesContainerComponent;
+  // @ViewChild(TemplatesContainerComponent) templatesContainer: TemplatesContainerComponent;
+  @ViewChildren(TemplatesContainerComponent) templatesContainers: QueryList<TemplatesContainerComponent>;
 
   private addTemplateBtnMap: Map<TemplatesContainerComponent, AddTemplateBtn[]> = new Map();
 
@@ -72,22 +73,26 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
   private createBtn(
     btns: AddTemplateBtn[],
     container: HTMLDivElement,
-    targetArray: ContentTemplateInfo[],
     position: number,
+    targetLayoutWrapper: LayoutWrapperComponent,
+    templatesContainer: TemplatesContainerComponent,
+    rootTemplatesContainer: TemplatesContainerComponent,
   ) {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AddTemplateButtonComponent);
     const ref = componentFactory.create(this.injector, [], container);
     const instance = ref.instance;
-    instance.targetArray = targetArray;
     instance.position = position;
     instance.componentRef = ref;
+    instance.targetLayoutWrapper = targetLayoutWrapper;
+    instance.templatesContainer = templatesContainer;
+    instance.rootTemplatesContainer = rootTemplatesContainer;
     instance.contextEventEmitter = this.addTemplateBtnClick;
     btns.push(new AddTemplateBtn(container, ref));
     this.applicationRef.attachView(ref.hostView);
     return ref;
   }
 
-  private renderAddTemplateButton(templatesContainer: TemplatesContainerComponent) {
+  private renderAddTemplateButton(templatesContainer: TemplatesContainerComponent, rootTemplatesContainer: TemplatesContainerComponent) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
     if (!templatesContainer) { return; }
 
@@ -110,17 +115,17 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
     templatesContainer.layoutWrapperComponents.forEach((lw, i) => {
       const btnContainer = this.createBtnContainer();
       templatesContainerNativeElement.insertBefore(btnContainer, lw.elementRef.nativeElement);
-      this.createBtn(btns, btnContainer, templatesContainer.templates, i);
+      this.createBtn(btns, btnContainer, i, lw, templatesContainer, rootTemplatesContainer);
     });
 
     // 產生最後一個
     const container = this.createBtnContainer();
     templatesContainerNativeElement.appendChild(container);
-    this.createBtn(btns, container, templatesContainer.templates, templatesContainer.layoutWrapperComponents.length);
+    this.createBtn(btns, container, templatesContainer.layoutWrapperComponents.length, null, templatesContainer, rootTemplatesContainer);
 
     // 子節點的templatesContainer繼續產生
     templatesContainer.layoutWrapperComponents.forEach(lw => {
-      return lw?.componentRef?.instance?.templatesContainerComponents?.map(t => this.renderAddTemplateButton(t))
+      return lw?.componentRef?.instance?.templatesContainerComponents?.map(t => this.renderAddTemplateButton(t, rootTemplatesContainer))
         || undefined;
     });
   }
@@ -192,9 +197,14 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
     this.changeDetectorRef.detectChanges();
     // TODO: 優化，有無可以不用setTimeout的方法
     setTimeout(() => {
-      this.renderAddTemplateButton(this.templatesContainer);
+      // console.warn('this.templatesContainer = ', this.templatesContainer);
+      Array.from(this.templatesContainers).forEach(templatesContainer => {
+        this.renderAddTemplateButton(templatesContainer, templatesContainer);
+        this.renderViewInfo(templatesContainer);
+      });
+      // this.renderAddTemplateButton(this.templatesContainer);
       this.checkBtnsDisabled();
-      this.renderViewInfo(this.templatesContainer);
+      // this.renderViewInfo(this.templatesContainer);
       if (config?.select) {
         const select = config.select;
         const event: LayoutWrapperSelectEvent = {

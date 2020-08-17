@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from '@neux/render';
 import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentEditorManager } from '../../service/content-editor-manager';
-import { EditorMode, ContentEditorActionMode } from '../../content-editor.interface';
+import { EditorMode, ContentEditorActionMode, ContentEditorContext } from '../../content-editor.interface';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 import { ContentEditorService } from '../../content-editor.service';
 import { LanguageInfo } from '../../../../../global/api/neuxAPI/bean/LanguageInfo';
@@ -24,6 +24,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   @Input() manager: ContentEditorManager;
   @Input() selected: LayoutWrapperSelectEvent;
   @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
+  @Input() context: ContentEditorContext;
 
   @Output() needCheckView = new EventEmitter<CheckViewConfig>();
   @Output() templateMove = new EventEmitter<boolean>();
@@ -97,29 +98,30 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     const currentLanguageTemplateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
     const index = currentLanguageTemplateInfos.indexOf(selectedTemplateInfo);
+    const selectedTemplateInfoId = selectedTemplateInfo.id;
 
     const up = direction === 'up' && index > 0;
     const down = direction === 'down' && index !== currentLanguageTemplateInfos.length - 1;
 
     if (!(up || down)) { return; }
 
-    const contentInfo = this.manager.stateManager.currentState.snapShot;
+    const rootTemplatesContainers = this.context.getRootTemplatesContainerComponents();
+    const layoutWrappers = rootTemplatesContainers
+      .map(rootTemplatesContainer => this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer));
 
-    if (up) { // 資料與前一個交換位置
-      contentInfo.languages.forEach(language => {
-        const templateInfos = language.templates;
-        templateInfos[index] = templateInfos[index - 1];
-        templateInfos[index - 1] = selectedTemplateInfo;
-      });
-    }
+    layoutWrappers.forEach(layoutWrapper => {
+      const templateInfo = layoutWrapper.templateInfo;
+      const belongedTemplates = layoutWrapper.parentTemplatesContainer.templates;
 
-    if (down) { // 資料與後一個交換位置
-      contentInfo.languages.forEach(language => {
-        const templateInfos = language.templates;
-        templateInfos[index] = templateInfos[index + 1];
-        templateInfos[index + 1] = selectedTemplateInfo;
-      });
-    }
+      if (up) { // 資料與前一個交換位置
+        belongedTemplates[index] = belongedTemplates[index - 1];
+        belongedTemplates[index - 1] = templateInfo;
+      }
+      if (down) { // 資料與後一個交換位置
+        belongedTemplates[index] = belongedTemplates[index + 1];
+        belongedTemplates[index + 1] = templateInfo;
+      }
+    });
 
     this.hasChange = true;
     this.calCanTemplateMove();
@@ -128,10 +130,11 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     this.selected.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
   }
 
-  templateDelete() {
+  deleteTemplate() {
     const currentLanguageTemplateInfos = this.selected.wrapper.parentTemplatesContainer.templates;
     const selectedTemplateInfo = this.selected.templateInfo;
     const index = currentLanguageTemplateInfos.indexOf(selectedTemplateInfo);
+    const selectedTemplateInfoId = selectedTemplateInfo.id;
 
     if (index > -1) {
       // 處理畫面
@@ -140,11 +143,14 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       const nextIndex = (index === currentLanguageTemplateInfos.length - 1) ? 0 : index + 1;
       const next = layoutWrapperComponents[nextIndex];
       // 處理資料
-      const contentInfo = this.manager.stateManager.currentState.snapShot;
-      contentInfo.languages.forEach(language => {
-        const templateInfos = language.templates;
-        templateInfos.splice(index, 1);
-      });
+      const rootTemplatesContainers = this.context.getRootTemplatesContainerComponents();
+      const layoutWrappers = rootTemplatesContainers
+        .map(rootTemplatesContainer => this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer));
+
+      layoutWrappers.forEach(layoutWrapper =>
+        layoutWrapper.parentTemplatesContainer.templates.splice(
+          layoutWrapper.parentTemplatesContainer.templates.indexOf(layoutWrapper.templateInfo), 1)
+      );
 
       this.hasChange = true;
       this.needCheckView.emit({ select: next });

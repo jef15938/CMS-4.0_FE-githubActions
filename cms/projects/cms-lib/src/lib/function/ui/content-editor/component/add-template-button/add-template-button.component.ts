@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ComponentRef, HostListener, Output, EventEmitter } from '@angular/core';
-import { ContentTemplateInfo } from './../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
+import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 
 @Component({
   selector: 'cms-add-template-button',
@@ -11,10 +11,12 @@ export class AddTemplateButtonComponent implements OnInit {
   isHover = false;
   isSelected = false;
 
-  @Input() targetArray: ContentTemplateInfo[];
   @Input() position: number;
   @Input() componentRef: ComponentRef<AddTemplateButtonComponent>;
   @Input() contextEventEmitter: EventEmitter<AddTemplateButtonComponent>;
+  @Input() targetLayoutWrapper: LayoutWrapperComponent;
+  @Input() templatesContainer: TemplatesContainerComponent;
+  @Input() rootTemplatesContainer: TemplatesContainerComponent;
   @Input() disabled = false;
 
   constructor() { }
