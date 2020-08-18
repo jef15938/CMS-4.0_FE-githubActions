@@ -226,6 +226,7 @@ export class TableControllerService {
     // console.warn('baseTds = ', baseTds);
     const container = document.createElement('div');
     container.classList.add('col-resizer-container');
+    container.setAttribute('contenteditable', 'false');
     container.style.setProperty('position', 'relative');
     container.style.setProperty('height', '0');
 
@@ -249,6 +250,7 @@ export class TableControllerService {
 
       const div = document.createElement('div');
       div.classList.add('col-resizer');
+      div.setAttribute('contenteditable', 'false');
       div.style.setProperty('cursor', 'ew-resize');
       div.style.setProperty('position', 'absolute');
       div.style.setProperty('top', '0');
