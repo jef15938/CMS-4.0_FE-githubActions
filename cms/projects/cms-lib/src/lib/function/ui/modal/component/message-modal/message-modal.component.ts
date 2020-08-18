@@ -9,10 +9,10 @@ import { CustomModalActionButton, CustomModalBase } from '../../base/custom-moda
 export class MessageModalComponent extends CustomModalBase implements OnInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [
-    {
-      text: '關閉',
-      onClick: () => this.close(),
-    },
+    // {
+    //   text: '關閉',
+    //   onClick: () => this.close(),
+    // },
   ];
 
   message = '';

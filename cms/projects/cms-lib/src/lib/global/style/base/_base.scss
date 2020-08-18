@@ -103,3 +103,14 @@
   width: 20px;
   vertical-align: middle;
 }
+
+button.mat-mini-fab {
+  width: 30px;
+  height: 30px;
+
+  & span.mat-button-wrapper {
+    padding: 0;
+    top: -3px;
+    position: relative;
+  }
+}
