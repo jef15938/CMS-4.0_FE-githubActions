@@ -67,7 +67,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   private initContentAndContainer(content: string, container: HTMLDivElement) {
-    content = this.convertToEditorContent(content);
+    content = this.convertToEditorContent(content) || this.defaultContent;
     this.editorContainer.innerHTML = content;
     this.checkInnerHtml();
   }
@@ -294,5 +294,18 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     const regDivEnd = new RegExp(/<\/div>/, 'g');
     htmlString = htmlString.replace(regDivStart, '<p').replace(regDivEnd, '</p>');
     return htmlString;
+  }
+
+  onFocus() {
+    if (this.editorContainer.innerHTML === this.defaultContent) {
+      const p = this.editorContainer.querySelector('p');
+      p.innerText = '';
+    }
+  }
+
+  onBlur() {
+    if (!this.editorContainer.innerHTML || this.editorContainer.innerHTML === '<p></p>') {
+      this.editorContainer.innerHTML = this.defaultContent;
+    }
   }
 }

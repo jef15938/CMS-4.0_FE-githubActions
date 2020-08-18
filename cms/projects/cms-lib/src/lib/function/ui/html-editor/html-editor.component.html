@@ -58,6 +58,6 @@
 
   <div class="html-editor__main">
     <div class="html-editor__key-in neux-editor" #EditorContainer contenteditable id='editor' cmsRightClickHandler
-      (mousedown)="onClick($event)" (rightClick)="onRightClick($event)"></div>
+      (mousedown)="onClick($event)" (rightClick)="onRightClick($event)" (focus)="onFocus()" (blur)="onBlur()"></div>
   </div>
 </div>

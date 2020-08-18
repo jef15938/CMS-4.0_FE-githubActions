@@ -24,7 +24,7 @@ export class HtmlEditorService {
       width: '100%',
       maxWidth: '100%',
       height: '100%',
-      autoFocus: true,
+      autoFocus: false,
       hideCloseBtn: true,
     };
 
