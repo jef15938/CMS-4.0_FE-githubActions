@@ -24,6 +24,7 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
     scalable: true,
     zoomable: true,
     autoCropArea: 1,
+    viewMode: 0,
   };
 
   constructor(
