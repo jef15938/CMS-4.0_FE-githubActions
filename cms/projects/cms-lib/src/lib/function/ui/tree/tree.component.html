@@ -55,7 +55,7 @@
             [onComponentLoad]="this | nodeRenderOnload:node:context">
           </span>
           <button type="button" tabindex="-1" mat-icon-button class="node-expand-btn"
-            [attr.aria-label]="'toggle ' + node[nodeDisplayField]" (click)="treeControl.toggle(node);">
+            [attr.aria-label]="'toggle ' + node[nodeDisplayField]" (click)="toggleTreeNodeExpand($event, node)">
             <mat-icon class="mat-icon-rtl-mirror">
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>

@@ -297,4 +297,10 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   prevOrNextDragLeave(event) {
     event.target.classList.remove('cms-tree__node__head__anchor--drag-overed');
   }
+
+  toggleTreeNodeExpand(ev: MouseEvent, node: TData) {
+    this.treeControl.toggle(node);
+    ev.stopPropagation();
+    ev.preventDefault();
+  }
 }
