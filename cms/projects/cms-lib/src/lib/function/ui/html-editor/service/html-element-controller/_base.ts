@@ -32,8 +32,12 @@ export abstract class HtmlEditorElementController<TElement extends HTMLElement> 
   }
 
   removeFromEditor(editorContainer: HTMLDivElement) {
-    if (this.isDeleted || !this.context.simpleWysiwygService.isChildOf(this.el, editorContainer)) { return; }
-    this.onRemovedFromEditor();
+    if (this.isDeleted) { return; }
+    try {
+      this.onRemovedFromEditor();
+    } catch (error) {
+      console.error('removeFromEditor()', error);
+    }
     this.isDeleted = true;
     this.el[HTML_EDITOR_ELEMENT_CONTROLLER] = undefined;
     this.el = undefined;

@@ -162,8 +162,8 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       // console.log('acturallyAddedNodes = ', acturallyAddedNodes);
 
       const acturallyRemovedNodes = allRemovedNodes
-        .filter(node => allAddedNodes.indexOf(node) < 0)
-        .filter(node => this.simpleWysiwygService.isChildOf(node, editorContainer));
+        .filter(node => allAddedNodes.indexOf(node) < 0);
+      // .filter(node => this.simpleWysiwygService.isChildOf(node, editorContainer));
       // console.log('acturallyRemovedNodes = ', acturallyRemovedNodes);
 
       const changedNodes = []

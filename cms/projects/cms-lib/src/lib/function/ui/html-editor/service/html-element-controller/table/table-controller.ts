@@ -122,6 +122,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.checkTableState();
     this.subscribeEvents();
     this.subscribeCellSelection();
+    this.tableControllerService.registerColResizer(this.context.editorContainer, this.el);
   }
 
   protected onRemovedFromEditor(): void {
@@ -131,6 +132,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.subscriptions = [];
     this.contextMenuItemsTemp = undefined;
     this.unsubscribeCellSelection();
+    this.tableControllerService.unregisterColResizer(this.context.editorContainer);
   }
 
   private getTableStyle(): TableStyle {
@@ -157,7 +159,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         } else {
           this.onUnselected();
         }
-      }, 0)
+      }, 0);
     });
     this.subscriptions.push(selectionchange$);
   }
@@ -294,7 +296,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.el.classList.remove('selected');
     this.unsubscribeCellSelection();
     this.checkTableState();
-    this.tableControllerService.unregisterColResizer(this.context.editorContainer);
+    this.tableControllerService.registerColResizer(this.context.editorContainer, this.el);
   }
 
   private evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {

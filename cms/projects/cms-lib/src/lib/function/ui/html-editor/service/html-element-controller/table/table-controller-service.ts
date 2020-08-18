@@ -124,9 +124,9 @@ export class TableControllerService {
     tds.forEach(td => {
       if (isAdjustingColWidth) {
         const startEnd = this.getCellStartEnd(td);
-        td.setAttribute('style', `width: ${this.getColWidthByColStartEnd(table, startEnd.colStart, startEnd.colEnd)}px;`);
+        td.style.width = `${this.getColWidthByColStartEnd(table, startEnd.colStart, startEnd.colEnd)}px`;
       } else {
-        td.setAttribute('style', `width: ${td.offsetWidth}px;`);
+        td.style.width = `width: ${td.offsetWidth}px`;
       }
     });
   }
