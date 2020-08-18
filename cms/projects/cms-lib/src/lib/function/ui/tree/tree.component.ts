@@ -230,11 +230,16 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.dropPosition = null;
   }
 
+  handleDragleave(event, node) {
+    this.dragNodeExpandOverNode = null;
+    this.dragNodeExpandOverTime = 0;
+    this.dropPosition = null;
+  }
+
   handleDrop(event, node) {
     if (!this.draggable) { return; }
     event.preventDefault();
     if (this.canDropOnNode && !this.canDropOnNode(node)) { return; }
-    console.warn(1, node);
     if (node !== this.dragNode) {
       this.dragToNode.emit({ target: this.dragNode, to: this.dragNodeExpandOverNode || this.dragNode });
     }
@@ -246,7 +251,6 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     if (this.canDropOnNodePreviousNext && !this.canDropOnNodePreviousNext(dropPosition.node)) { return; }
     const parent = this.findParent(dropPosition.node);
     if (!parent) { return; }
-    console.warn(2, dropPosition.node);
     let order = (parent[this.nodeChildrenEntryField] as TData[]).indexOf(dropPosition.node);
     if (dropPosition.position > 0) { order++; }
     this.dragToPosition.emit({ target: this.dragNode, to: parent, order });

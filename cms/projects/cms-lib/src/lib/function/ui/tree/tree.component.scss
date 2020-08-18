@@ -239,16 +239,15 @@
   background-color: $color-CIS-light !important;
 }
 
-.cannot-drag {
+.can-drag {
 
   &,
   ::ng-deep * {
-    // cursor: not-allowed !important;
+    cursor: move;
   }
 }
 
 .cannot-drop {
-  mat-checkbox {
-    opacity: 0.5 !important;
-  }
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -60,8 +60,6 @@ export class FarmService {
    * @memberof FarmService
    */
   getFarmDetailInfoByFuncID(funcID: string, dataID: string): Observable<CmsFarmFormInfo> {
-    console.warn('getFarmDetailInfoByFuncID() funcID = ', funcID);
-    console.warn('                            dataID = ', dataID);
     if (!funcID) { throw new ParamsError('funcID', 'GetFarmDetailInfoByFuncID', 'string', funcID); }
     if (!dataID) {
       throw new ParamsError('dataID', 'GetFarmDetailInfoByFuncID', 'string', dataID);
