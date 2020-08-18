@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModalService, ModalSetting } from '../modal';
-import { EditorMode, ContentEditorConfig } from './content-editor.interface';
+import { EditorMode } from './content-editor.interface';
 import { ContentEditorContainerModalComponent } from './component/content-editor-container-modal/content-editor-container-modal.component';
 import { ContentInfo } from '../../../global/api/neuxAPI/bean/ContentInfo';
 
@@ -18,6 +18,7 @@ export class ContentEditorService {
       width: '90%',
       maxWidth: '90%',
       height: '90%',
+      maxHeight: '100%',
       closeOnNavigation: false,
       hideCloseBtn: editorMode === EditorMode.EDIT || false,
     } as ModalSetting;
@@ -30,7 +31,7 @@ export class ContentEditorService {
   }
 
   openEditorInfo(content: ContentInfo) {
-    const editorMode = EditorMode.INFO;
+    const editorMode = EditorMode.READ;
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
       componentInitData: {
@@ -42,7 +43,20 @@ export class ContentEditorService {
     }, false);
   }
 
-  openEditorByContent(content: ContentInfo, controlID: string, config?: ContentEditorConfig) {
+  openEditorPreview(content: ContentInfo, controlID: string) {
+    const editorMode = EditorMode.INFO;
+    return this.modalService.openComponent({
+      component: ContentEditorContainerModalComponent,
+      componentInitData: {
+        title: '預覽',
+        content,
+        editorMode,
+      },
+      modalSetting: this.getDefaultModalSetting(editorMode)
+    }, false);
+  }
+
+  openEditorByContent(content: ContentInfo, controlID: string) {
     const editorMode = EditorMode.EDIT;
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
@@ -50,13 +64,12 @@ export class ContentEditorService {
         content,
         controlID,
         editorMode,
-        onSaved: config?.onSaved
       },
       modalSetting: this.getDefaultModalSetting(editorMode)
     }, true);
   }
 
-  openEditorByContentID(contentID: string, controlID: string, config?: ContentEditorConfig) {
+  openEditorByContentID(contentID: string, controlID: string) {
     const editorMode = EditorMode.EDIT;
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
@@ -64,7 +77,6 @@ export class ContentEditorService {
         contentID,
         controlID,
         editorMode,
-        onSaved: config?.onSaved
       },
       modalSetting: this.getDefaultModalSetting(editorMode)
     }, true);

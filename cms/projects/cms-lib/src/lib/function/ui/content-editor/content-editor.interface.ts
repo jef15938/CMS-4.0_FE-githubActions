@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { ContentInfo } from './../../../global/api/neuxAPI/bean/ContentInfo';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 
@@ -9,10 +8,6 @@ export enum EditorMode {
 export enum ContentEditorActionMode {
   LAYOUT = 'LAYOUT',
   TEMPLATE = 'TEMPLATE',
-}
-
-export interface ContentEditorConfig {
-  onSaved?: () => void;
 }
 
 export class ContentEditorSaveEvent {

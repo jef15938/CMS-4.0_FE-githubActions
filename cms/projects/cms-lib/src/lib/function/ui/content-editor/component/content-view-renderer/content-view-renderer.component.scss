@@ -1,11 +1,5 @@
 @import '../../../../../global/style/main';
 
-.view-container {
-  &.mode-info {
-    padding: 30px;
-  }
-}
-
 ::ng-deep .now-hover {
   box-shadow: inset 0 0 0 1px #71d306 !important;
   position: relative;
