@@ -27,21 +27,25 @@ export class AuditingComponent implements OnInit {
       colId: 'order_id',
       field: 'order_id',
       title: '單號',
+      width: '80px',
     },
     {
       colId: 'order_name',
       field: 'order_name',
       title: '資料頁面',
+      width: '40%',
     },
     {
       colId: 'create_name',
       field: 'create_name',
       title: '送審人',
+      width: '120px',
     },
     {
       colId: 'submit_comment',
       field: 'submit_comment',
       title: '意見',
+      width: '60%',
     },
     // {
     //   colId: 'start_time',
@@ -60,6 +64,7 @@ export class AuditingComponent implements OnInit {
       field: 'action',
       title: '操作',
       cellRenderer: AuditingActionCellComponent,
+      width: '80px',
     }
   ];
 

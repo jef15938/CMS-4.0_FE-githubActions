@@ -8,6 +8,7 @@ export interface ColDef {
   cellRenderer?: Type<any>;
   headClass?: string;
   format?: 'DATE' | 'DATETIME';
+  width?: string;
 }
 
 export interface CmsTableCustomCellEvent {

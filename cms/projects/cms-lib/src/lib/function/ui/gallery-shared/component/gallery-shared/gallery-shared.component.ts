@@ -104,6 +104,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
         field: 'action',
         title: '操作',
         cellRenderer: GalleryActionCellComponent,
+        width: '80px',
       });
     }
 

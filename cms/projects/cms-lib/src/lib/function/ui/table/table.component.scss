@@ -1,3 +1,7 @@
+table {
+  table-layout: fixed;
+}
+
 td,
 th {
   vertical-align: middle;
@@ -7,6 +11,8 @@ th {
 th.mat-header-cell,
 td.mat-cell {
   position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 tr.select-row {

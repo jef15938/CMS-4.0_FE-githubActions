@@ -26,6 +26,7 @@ export class MyAuditingComponent implements OnInit {
       colId: 'order_id',
       field: 'order_id',
       title: '序號',
+      width: '80px',
     },
     {
       colId: 'order_name',
@@ -36,24 +37,28 @@ export class MyAuditingComponent implements OnInit {
       colId: 'status',
       field: 'status',
       title: '狀態',
+      width: '100px',
     },
     {
       colId: 'start_time',
       field: 'start_time',
       title: '上架時間',
       format: 'DATETIME',
+      width: '100px',
     },
     {
       colId: 'end_time',
       field: 'end_time',
       title: '下架時間',
       format: 'DATETIME',
+      width: '100px',
     },
     {
       colId: 'action',
       field: 'action',
       title: '操作',
       cellRenderer: MyAuditingActionCellComponent,
+      width: '80px',
     }
   ];
 

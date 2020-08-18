@@ -22,26 +22,31 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
       colId: 'status',
       field: 'status',
       title: '狀態',
+      width: '100px',
     },
     {
       colId: 'auditing_group_name',
       field: 'auditing_group_name',
       title: '群組',
+      width: '120px',
     },
     {
       colId: 'auditing_dept_name',
       field: 'auditing_dept_name',
       title: '部門',
+      width: '120px',
     },
     {
       colId: 'auditing_name',
       field: 'auditing_name',
       title: '主管',
+      width: '120px',
     },
     {
       colId: 'auditing_stage',
       field: 'auditing_stage',
       title: '階段',
+      width: '80px',
     },
 
     {
@@ -49,6 +54,7 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
       field: 'auditing_time',
       title: '時間',
       format: 'DATETIME',
+      width: '100px',
     },
     {
       colId: 'auditing_comment',
