@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
@@ -9,7 +9,7 @@ import { GroupMenuInfo } from '../../neuxAPI/bean/GroupMenuInfo';
 import { GroupSitemapInfo } from '../../neuxAPI/bean/GroupSitemapInfo';
 import { GroupInfo } from '../../neuxAPI/bean/GroupInfo';
 import { ListGroupResponst } from '../../neuxAPI/bean/ListGroupResponst';
-import { rxMapTo, mapTo } from '../../data-model/mapper';
+import { ModelMapper } from '../../data-model/model-mapper';
 import { GroupMenuInfoModel } from '../../data-model/models/group-menu-info.model';
 import { GroupMenuGetResponseModel } from '../../data-model/models/group-menu-get-response.model';
 
@@ -46,7 +46,7 @@ export class GroupService {
     }
 
     return this.restAPIService.dispatchRestApi<GroupMenuGetResponse>('GetGroupMenuByGroupID', { groupID }).pipe(
-      rxMapTo(GroupMenuGetResponseModel),
+      ModelMapper.rxMapModelTo(GroupMenuGetResponseModel),
       map(res => res.datas)
     );
   }
@@ -67,7 +67,7 @@ export class GroupService {
     }
 
     const requestBody: { [k: string]: any } = {
-      datas: menuInfoModels.map(menuInfoModel => mapTo(GroupMenuInfo, menuInfoModel))
+      datas: menuInfoModels.map(menuInfoModel => ModelMapper.mapModelTo(GroupMenuInfo, menuInfoModel))
     };
 
     const params: { [k: string]: any } = {

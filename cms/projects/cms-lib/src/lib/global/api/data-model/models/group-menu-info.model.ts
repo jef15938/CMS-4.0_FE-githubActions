@@ -1,16 +1,16 @@
 import { IsNotEmpty } from 'class-validator';
 import { GroupMenuInfo } from '../../neuxAPI/bean/GroupMenuInfo';
-import { Mapping } from '../mapper';
+import { ModelMapping } from '../model-mapper';
 
 // @dynamic
-@Mapping(
+@ModelMapping(
   GroupMenuInfo, GroupMenuInfoModel,
   (bean, model) => {
     model.funcId = bean.func_id;
   }
 )
 // @dynamic
-@Mapping(
+@ModelMapping(
   GroupMenuInfoModel, GroupMenuInfo,
   (model, bean) => {
     bean.func_id = model.funcId;

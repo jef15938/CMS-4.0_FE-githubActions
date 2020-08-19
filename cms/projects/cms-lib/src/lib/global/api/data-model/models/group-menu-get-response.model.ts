@@ -1,13 +1,13 @@
 import { ValidateNested } from 'class-validator';
 import { GroupMenuInfoModel } from './group-menu-info.model';
 import { GroupMenuGetResponse } from '../../neuxAPI/bean/GroupMenuGetResponse';
-import { Mapping, mapTo } from '../mapper';
+import { ModelMapping, ModelMapper } from '../model-mapper';
 
 // @dynamic
-@Mapping<GroupMenuGetResponse, GroupMenuGetResponseModel>(
+@ModelMapping<GroupMenuGetResponse, GroupMenuGetResponseModel>(
   GroupMenuGetResponse, GroupMenuGetResponseModel,
   (bean, model) => {
-    model.datas = bean.datas.map(d => mapTo(GroupMenuInfoModel, d));
+    model.datas = bean.datas.map(d => ModelMapper.mapModelTo(GroupMenuInfoModel, d));
   }
 )
 export class GroupMenuGetResponseModel {
