@@ -99,7 +99,12 @@
                 <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.EDITOR">
                   <input matInput [formControlName]="col.column_id" hidden
                     [required]="formColumnSettingMap.get(col.column_id).required">
-                  <button type="button" mat-button (click)="openContentEditor(col)">編輯{{col.display_text}}</button>
+                  <ng-container *ngIf="mode==='edit'||(mode==='preview'&&col.value)">
+                    <button type="button" mat-button
+                      (click)="openContentEditor(col)">{{mode==='preview'?'預覽':'編輯'}}{{col.display_text}}</button>
+                  </ng-container>
+                  <ng-container *ngIf="mode==='preview'&&!col.value;">無內容</ng-container>
+
                   <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
                       {{err}}

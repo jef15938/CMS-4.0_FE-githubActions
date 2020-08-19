@@ -34,6 +34,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   @Input() farmFormInfo: CmsFarmFormInfo;
   @Input() useValidation = false;
   @Input() funcID = '';
+  @Input() mode: 'preview' | 'edit' = 'preview';
 
   formGroup: FormGroup;
   formColumnSettingMap: Map<string, FormColumnSetting>;
@@ -240,9 +241,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     const controlID = this.funcID;
     const control = this.formGroup.get(col.column_id);
     const content = JSON.parse((control.value) as string) as ContentInfo;
-    this.contentEditorService.openEditorByContent(content, controlID).subscribe(result => {
-      control.setValue(JSON.stringify(result));
-    });
+    if (this.mode === 'preview') {
+      this.contentEditorService.openEditorPreview(content, controlID).subscribe();
+    } else {
+      this.contentEditorService.openEditorByContent(content, controlID).subscribe(result => {
+        control.setValue(JSON.stringify(result));
+      });
+    }
   }
 
   openHtmlEditor(col: CmsFarmFormColumn) {
