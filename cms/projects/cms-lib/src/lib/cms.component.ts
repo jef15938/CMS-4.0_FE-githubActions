@@ -4,7 +4,7 @@ import { DialogFlowMessengerService } from './global/service';
 import { RippleScreen } from './global/util/cfx';
 import { AuthorizationService } from './global/api/service';
 import { LoginInfo } from './global/api/neuxAPI/bean/LoginInfo';
-import { MenuInfo } from './global/api/neuxAPI/bean/MenuInfo';
+import { MenuInfoModel } from './global/api/data-model/models/menu-info.model';
 
 @Component({
   selector: 'cms-cms',
@@ -15,8 +15,8 @@ export class CmsComponent implements OnInit, AfterViewInit {
 
   // @ViewChild('MenuContainer') menuContainer: ElementRef;
 
-  cmsMenus = [];
-  appMenus = [];
+  cmsMenus: MenuInfoModel[] = [];
+  appMenus: MenuInfoModel[] = [];
 
   loginInfo: LoginInfo;
 
@@ -51,10 +51,10 @@ export class CmsComponent implements OnInit, AfterViewInit {
     this.authorizationService.logout().subscribe();
   }
 
-  getFirstMenuPath(menus: MenuInfo[], path = ''): string {
+  getFirstMenuPath(menus: MenuInfoModel[], path = ''): string {
     if (!menus?.length) { return path; }
     const first = menus[0];
-    path += `/${first.func_id}`;
+    path += `/${first.funcId}`;
     return this.getFirstMenuPath(first.children, path);
   }
 

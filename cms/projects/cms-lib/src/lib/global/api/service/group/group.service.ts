@@ -9,6 +9,9 @@ import { GroupMenuInfo } from '../../neuxAPI/bean/GroupMenuInfo';
 import { GroupSitemapInfo } from '../../neuxAPI/bean/GroupSitemapInfo';
 import { GroupInfo } from '../../neuxAPI/bean/GroupInfo';
 import { ListGroupResponst } from '../../neuxAPI/bean/ListGroupResponst';
+import { Mapper } from '../../data-model/mapper';
+import { GroupMenuInfoModel } from '../../data-model/models/group-menu-info.model';
+import { GroupMenuGetResponseModel } from '../../data-model/models/group-menu-get-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,13 +40,15 @@ export class GroupService {
    * @returns
    * @memberof GroupService
    */
-  getGroupMenuList(groupID: string): Observable<GroupMenuInfo[]> {
+  getGroupMenuList(groupID: string): Observable<GroupMenuInfoModel[]> {
     if (!groupID) {
       throw new ParamsError('groupID', 'getGroupMenuList', 'string', groupID);
     }
 
-    return this.restAPIService.dispatchRestApi<GroupMenuGetResponse>('GetGroupMenuByGroupID', { groupID })
-      .pipe(map(res => res.datas));
+    return this.restAPIService.dispatchRestApi<GroupMenuGetResponse>('GetGroupMenuByGroupID', { groupID }).pipe(
+      Mapper.rxMapTo(GroupMenuGetResponseModel),
+      map(res => res.datas)
+    );
   }
 
   /**
@@ -53,16 +58,16 @@ export class GroupService {
    * @returns
    * @memberof DepartmentService
    */
-  updateGroupMenu(groupID: string, menuInfos: GroupMenuInfo[]) {
+  updateGroupMenu(groupID: string, menuInfoModels: GroupMenuInfoModel[]) {
     if (!groupID) {
       throw new ParamsError('groupID', 'updateGroupMenu', 'string', groupID);
     }
-    if (!menuInfos) {
-      throw new ParamsError('menuInfos', 'updateGroupMenu', 'GroupMenuInfo[]', menuInfos);
+    if (!menuInfoModels) {
+      throw new ParamsError('menuInfoModels', 'updateGroupMenu', 'GroupMenuInfo[]', menuInfoModels);
     }
 
     const requestBody: { [k: string]: any } = {
-      datas: menuInfos
+      datas: menuInfoModels.map(menuInfoModel => Mapper.mapTo(GroupMenuInfo, menuInfoModel))
     };
 
     const params: { [k: string]: any } = {

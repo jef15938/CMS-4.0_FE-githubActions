@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuInfo } from '../api/neuxAPI/bean/MenuInfo';
+import { MenuInfoModel } from '../api/data-model/models/menu-info.model';
 
 @Component({
   selector: 'cms-menu-node',
@@ -9,7 +9,7 @@ import { MenuInfo } from '../api/neuxAPI/bean/MenuInfo';
 export class MenuNodeComponent implements OnInit {
 
   @Input() isAppMenu = false;
-  @Input() menu: MenuInfo;
+  @Input() menu: MenuInfoModel;
   @Input() category = '';
 
   constructor() { }

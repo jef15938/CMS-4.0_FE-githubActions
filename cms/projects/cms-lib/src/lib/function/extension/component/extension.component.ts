@@ -4,8 +4,8 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { DynamicWrapperComponent } from '@neux/core';
 import { CmsUserMenuResolver } from '../../../global/service';
-import { MenuInfo } from '../../../global/api/neuxAPI/bean/MenuInfo';
 import { DynamicComponentFactoryService } from '@neux/render';
+import { MenuInfoModel } from '../../../global/api/data-model/models/menu-info.model';
 
 @Component({
   selector: 'cms-extension',
@@ -61,7 +61,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const component = this.dynamicComponentFactoryService.getComponent(menu.func_id);
+    const component = this.dynamicComponentFactoryService.getComponent(menu.funcId);
     if (!component) {
       this.errorMsg = `沒有提供擴充功能元件, func_id=[${this.funcId}]`;
       return;
@@ -70,10 +70,10 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
     this.dynamicWrapperComponent?.loadWithComponent(component);
   }
 
-  private findMenuByFuncId(funcId: string, sources: MenuInfo[]): MenuInfo {
+  private findMenuByFuncId(funcId: string, sources: MenuInfoModel[]): MenuInfoModel {
     if (!funcId || !sources?.length) { return null; }
-    const menu = sources.find(m => m?.func_id === `${this.funcId}`);
-    return menu || sources.map(s => this.findMenuByFuncId(funcId, s.children)).find(m => m?.func_id === `${this.funcId}`);
+    const menu = sources.find(m => m?.funcId === `${this.funcId}`);
+    return menu || sources.map(s => this.findMenuByFuncId(funcId, s.children)).find(m => m?.funcId === `${this.funcId}`);
   }
 
 }

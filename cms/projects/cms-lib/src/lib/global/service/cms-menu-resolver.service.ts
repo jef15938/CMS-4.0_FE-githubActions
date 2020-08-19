@@ -4,16 +4,15 @@ import { of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { CmsExtensionMenuResolver } from '../../global/interface';
 import { CMS_EXTENSION_MENU_RESOLVER_TOKEN } from '../../global/injection-token';
-import { MenuInfo } from '../api/neuxAPI/bean/MenuInfo';
 import { MenuService } from '../api/service';
+import { MenuInfoModel } from '../api/data-model/models/menu-info.model';
 
 @Injectable()
 export class CmsUserMenuResolver implements Resolve<any> {
 
-  // private menus: MenuInfo[] = [];
   private menus: {
-    cmsMenus: MenuInfo[],
-    appMenus: MenuInfo[],
+    cmsMenus: MenuInfoModel[],
+    appMenus: MenuInfoModel[],
   } = {
       cmsMenus: [],
       appMenus: [],
