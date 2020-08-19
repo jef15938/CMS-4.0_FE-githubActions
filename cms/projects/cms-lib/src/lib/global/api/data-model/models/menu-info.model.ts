@@ -1,14 +1,15 @@
 import { IsNotEmpty, ValidateNested } from 'class-validator';
 import { MenuInfo } from '../../neuxAPI/bean/MenuInfo';
-import { Mapper, Mapping } from '../mapper';
+import { Mapping, mapTo } from '../mapper';
 
+// @dynamic
 @Mapping(
   MenuInfo, MenuInfoModel,
   (bean, model) => {
     model.funcId = bean.func_id;
     model.funcName = bean.func_name;
     model.componentId = bean.component_id;
-    model.children = bean.children.map(c => Mapper.mapTo(MenuInfoModel, c));
+    model.children = bean.children.map(c => mapTo(MenuInfoModel, c));
   }
 )
 export class MenuInfoModel {

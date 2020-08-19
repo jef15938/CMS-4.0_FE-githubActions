@@ -1,12 +1,13 @@
 import { ValidateNested } from 'class-validator';
 import { MenuInfoModel } from './menu-info.model';
 import { MenuGetResponse } from '../../neuxAPI/bean/MenuGetResponse';
-import { Mapper, Mapping } from '../mapper';
+import { Mapping, mapTo } from '../mapper';
 
+// @dynamic
 @Mapping<MenuGetResponse, MenuGetResponseModel>(
   MenuGetResponse, MenuGetResponseModel,
   (bean, model) => {
-    model.datas = bean.datas.map(d => Mapper.mapTo(MenuInfoModel, d));
+    model.datas = bean.datas.map(d => mapTo(MenuInfoModel, d));
   }
 )
 export class MenuGetResponseModel {
