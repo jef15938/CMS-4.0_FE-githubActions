@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Inject, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RenderModule, WrapperModule, RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN } from '@neux/render';
@@ -13,6 +13,7 @@ import { ErrorPageComponent } from 'src/app/global/component/error-page/error-pa
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { GTagService } from './global/service/gtag.service';
 
 @NgModule({
   declarations: [
@@ -38,4 +39,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(
+    @Inject(PLATFORM_ID) platformId: any,
+    gTagService: GTagService,
+  ) {
+    gTagService.init(platformId, environment?.google?.GA_TRACKING_ID);
+  }
+}

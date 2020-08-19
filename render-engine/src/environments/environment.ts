@@ -41,7 +41,10 @@ export const environment = {
   production: false,
   apiBaseUrl: BASE_URL,
   API_URL,
-  API_TYPE
+  API_TYPE,
+  google: {
+    GA_TRACKING_ID: 'UA-175666152-1',
+  },
 };
 
 /*
