@@ -1,13 +1,13 @@
 <ng-container *ngIf="tableInfo">
-  <ng-container *ngIf="tableInfo.pageInfo; let pageInfo">
-    <div>目前頁數:{{pageInfo.page}}</div>
-    <br>
-  </ng-container>
-  <div *ngIf="tableInfo.can_create" style="text-align: right;">
-    <button type="button" tabindex="0" mat-raised-button color="primary"
-      (click)="onActionClick(CmsFarmTableDataAction.CREATE)">
-      新增
-    </button>
+  <div class="farm-table-top">
+    <div>目前頁數:<ng-container *ngIf="tableInfo.pageInfo; let pageInfo">{{pageInfo.page}}</ng-container>
+    </div>
+    <div style="text-align: right;">
+      <button type="button" tabindex="0" mat-raised-button color="primary" *ngIf="tableInfo.can_create"
+        (click)="onActionClick(CmsFarmTableDataAction.CREATE)">
+        新增
+      </button>
+    </div>
   </div>
   <!-- <table mat-table matSort [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;"
     (matSortChange)="sortData($event)"> -->
