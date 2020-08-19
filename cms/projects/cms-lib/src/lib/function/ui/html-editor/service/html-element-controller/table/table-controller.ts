@@ -13,6 +13,8 @@ import { DeleteTable } from './actions/delete-table';
 import { MarkCol } from './actions/mark-col';
 import { AddCol } from './actions/add-col';
 
+let tableIndex = 0;
+
 export class HtmlEditorTableController extends HtmlEditorElementController<HTMLTableElement> implements HtmlEditorTableControllerInterface {
 
   private contextMenuItemsTemp: HtmlEditorContextMenuItem[];
@@ -67,6 +69,8 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
 
   private selectCellSubscription: Subscription;
 
+  tableIndex = tableIndex++;
+
   constructor(
     el: HTMLTableElement,
     context: HtmlEditorContext,
@@ -112,7 +116,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         selectionChange: (ev) => {
           this.el.setAttribute(TABLE_STYLE_ATTR, ev.value);
           this.tableControllerService.checkTableColsWidth(this.el);
-          this.tableControllerService.registerColResizer(this.context.editorContainer, this.el);
+          this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
         }
       },
       {
@@ -122,7 +126,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.checkTableState();
     this.subscribeEvents();
     this.subscribeCellSelection();
-    this.tableControllerService.registerColResizer(this.context.editorContainer, this.el);
+    this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
   }
 
   protected onRemovedFromEditor(): void {
@@ -132,7 +136,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.subscriptions = [];
     this.contextMenuItemsTemp = undefined;
     this.unsubscribeCellSelection();
-    this.tableControllerService.unregisterColResizer(this.context.editorContainer);
+    this.tableControllerService.unregisterColResizer(this.tableIndex, this.context.editorContainer);
   }
 
   private getTableStyle(): TableStyle {
@@ -289,14 +293,14 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     }
     this.checkTableState();
     this.subscribeCellSelection();
-    this.tableControllerService.registerColResizer(this.context.editorContainer, this.el);
+    this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
   }
 
   private onUnselected(): void {
     this.el.classList.remove('selected');
     this.unsubscribeCellSelection();
     this.checkTableState();
-    this.tableControllerService.registerColResizer(this.context.editorContainer, this.el);
+    this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
   }
 
   private evPreventDefaultAndStopPropagation = (ev: MouseEvent) => {

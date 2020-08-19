@@ -11,6 +11,7 @@ export interface HtmlEditorTableCell extends HTMLTableDataCellElement {
 
 export interface HtmlEditorTableControllerInterface {
   el: HTMLTableElement;
+  tableIndex: number;
   tableControllerService: TableControllerService;
   selectedCols: HTMLTableDataCellElement[];
   selectedRows: HTMLTableRowElement[];

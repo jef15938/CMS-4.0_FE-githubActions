@@ -218,13 +218,14 @@ export class TableControllerService {
     ev.stopPropagation();
   }
 
-  registerColResizer(editorContainer: HTMLDivElement, table: HTMLTableElement) {
+  registerColResizer(tableIndex: number, editorContainer: HTMLDivElement, table: HTMLTableElement) {
     if (!editorContainer || !table.parentNode) { return; }
-    this.unregisterColResizer(editorContainer);
+    this.unregisterColResizer(tableIndex, editorContainer);
 
     const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as HtmlEditorTableCell[];
     // console.warn('baseTds = ', baseTds);
     const container = document.createElement('div');
+    container.classList.add(`table-${tableIndex}`);
     container.classList.add('col-resizer-container');
     container.setAttribute('contenteditable', 'false');
     container.style.setProperty('position', 'relative');
@@ -322,7 +323,7 @@ export class TableControllerService {
                   this.evPreventDefaultAndStopPropagation(end);
                   div.style.removeProperty('border-left');
                   this.checkTBodyTdsWidth(table);
-                  this.registerColResizer(editorContainer, table);
+                  this.registerColResizer(tableIndex, editorContainer, table);
                 })
               ))
             );
@@ -338,8 +339,8 @@ export class TableControllerService {
     table.parentNode.insertBefore(container, table);
   }
 
-  unregisterColResizer(editorContainer: HTMLDivElement) {
-    const containers = Array.from(editorContainer.querySelectorAll('.col-resizer-container')) as HTMLElement[];
+  unregisterColResizer(tableIndex: number, editorContainer: HTMLDivElement) {
+    const containers = Array.from(editorContainer.querySelectorAll(`.table-${tableIndex}.col-resizer-container`)) as HTMLElement[];
     containers.forEach(container => {
       const resizers = Array.from(container.children) as HTMLElement[];
       resizers.forEach(resizer => {

@@ -137,7 +137,7 @@ export class AddCol extends HtmlEditorActionBase {
     });
 
     this.controller.checkTableState();
-    this.controller.tableControllerService.registerColResizer(this.context.editorContainer, this.controller.el);
+    this.controller.tableControllerService.registerColResizer(this.controller.tableIndex, this.context.editorContainer, this.controller.el);
     return of(undefined);
   }
 }
