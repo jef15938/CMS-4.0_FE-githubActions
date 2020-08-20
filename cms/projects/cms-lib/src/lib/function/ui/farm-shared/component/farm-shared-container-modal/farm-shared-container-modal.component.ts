@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { FarmService } from '../../../../../global/api/service';
-import { FarmInfo } from '../../../../../global/model/farm.model';
+import { FarmInfoGetResponseModel } from '../../../../../global/api/data-model/models/farm-info-get-response.model';
 
 @Component({
   selector: 'cms-farm-shared-container-modal',
@@ -15,7 +15,7 @@ export class FarmSharedContainerModalComponent extends CustomModalBase implement
 
   @Input() funcID: string;
 
-  farm: FarmInfo;
+  farm: FarmInfoGetResponseModel;
 
   constructor(
     private farmService: FarmService,

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
-import { CmsFarmFormInfo } from './../../../../../global/model';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { FarmFormInfoComponent } from '../../component/farm-form-info/farm-form-info.component';
 import { FarmService } from '../../../../../global/api/service';
+import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/farm-form-info.model';
 
 @Component({
   selector: 'cms-farm-form-modify-data-modal',
@@ -18,7 +18,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
   title: string | (() => string);
   actions: CustomModalActionButton[] = [];
 
-  @Input() farmFormInfo: CmsFarmFormInfo;
+  @Input() farmFormInfo: FarmFormInfoModel;
   @Input() action: 'create' | 'edit';
   @Input() funcID: string;
   @Input() dataID: string;
@@ -44,7 +44,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
       concatMap(formInfo => {
         const formData = new FormData();
         formInfo.columns.forEach(col => {
-          formData.append(col.column_id, col.value);
+          formData.append(col.columnId, col.value);
         });
         if (this.action === 'create') {
           return this.farmService.createFarmForm(this.funcID, formData);

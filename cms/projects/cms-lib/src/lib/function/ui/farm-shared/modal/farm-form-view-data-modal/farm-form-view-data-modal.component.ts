@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
-import { CmsFarmFormInfo } from './../../../../../global/model';
+import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/farm-form-info.model';
 
 @Component({
   selector: 'cms-farm-form-view-data-modal',
@@ -13,7 +13,7 @@ export class FarmFormViewDataModalComponent extends CustomModalBase implements O
   actions: CustomModalActionButton[] = [];
 
   @Input() funcID: string;
-  @Input() farmFormInfo: CmsFarmFormInfo;
+  @Input() farmFormInfo: FarmFormInfoModel;
 
   constructor() {
     super();

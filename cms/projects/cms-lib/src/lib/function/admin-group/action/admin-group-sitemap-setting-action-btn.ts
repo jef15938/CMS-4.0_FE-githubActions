@@ -1,13 +1,14 @@
 import { FarmTableActionBtn, ModalService } from '../../ui';
-import { CmsFarmTableDataInfo, CmsFarmTableInfo } from '../../../global/model';
 import { Injector } from '@angular/core';
 import { AdminGroupSitemapSettingModalComponent } from '../component/admin-group-sitemap-setting-modal/admin-group-sitemap-setting-modal.component';
+import { FarmTableDataInfoModel } from '../../../global/api/data-model/models/farm-table-data-info.model';
+import { FarmTableInfoModel } from '../../../global/api/data-model/models/farm-table-info.model';
 
 export const AdminGroupSitemapSettingActionBtn: FarmTableActionBtn = {
   icon: '',
   fontSet: 'fontawasome',
   fontIcon: 'fa-tree',
-  click: (row: CmsFarmTableDataInfo, table: CmsFarmTableInfo, injector: Injector) => {
+  click: (row: FarmTableDataInfoModel, table: FarmTableInfoModel, injector: Injector) => {
     const modalService = injector.get(ModalService);
     const groupID = row.columns[0]?.value;
     modalService.openComponent({

@@ -3,17 +3,24 @@ import { Observable } from 'rxjs';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
-import { FarmInfo, CmsFarmTableInfo, CmsFarmFormInfo } from '../../../../global/model';
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface';
 import { HttpHeaders } from '@angular/common/http';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 import { ListFarmTriggerDataResponse } from '../../neuxAPI/bean/ListFarmTriggerDataResponse';
-import { FarmOptionInfo } from '../../neuxAPI/bean/FarmOptionInfo';
 import { map } from 'rxjs/operators';
 import { GetFarmTreeResponse } from '../../neuxAPI/bean/GetFarmTreeResponse';
 import { ModelMapper } from '../../data-model/model-mapper';
 import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
+import { FarmOptionInfoModel } from '../../data-model/models/farm-option-info.model';
+import { ListFarmTriggerDataResponseModel } from '../../data-model/models/list-farm-trigger-data-response.model';
+import { GetFarmTreeResponseModel } from '../../data-model/models/get-farm-tree-response.model';
+import { FarmFormInfoModel } from '../../data-model/models/farm-form-info.model';
+import { FarmFormInfo } from '../../neuxAPI/bean/FarmFormInfo';
+import { FarmInfoGetResponse } from '../../neuxAPI/bean/FarmInfoGetResponse';
+import { FarmInfoGetResponseModel } from '../../data-model/models/farm-info-get-response.model';
+import { FarmTableInfoModel } from '../../data-model/models/farm-table-info.model';
+import { FarmTableInfo } from '../../neuxAPI/bean/FarmTableInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +39,13 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  getFarmByFuncID(funcID: string): Observable<FarmInfo> {
+  getFarmByFuncID(funcID: string): Observable<FarmInfoGetResponseModel> {
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
-    return this.restAPIService.dispatchRestApi<FarmInfo>('GetFarmByFuncID', { funcID });
+    return this.restAPIService.dispatchRestApi<FarmInfoGetResponse>('GetFarmByFuncID', { funcID }).pipe(
+      ModelMapper.rxMapModelTo(FarmInfoGetResponseModel)
+    );
   }
 
   /**
@@ -47,10 +56,12 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  getFarmTableInfoByFuncID(funcID: string, page: number, extraQueryParams: { [key: string]: string }): Observable<CmsFarmTableInfo> {
+  getFarmTableInfoByFuncID(funcID: string, page: number, extraQueryParams: { [key: string]: string }): Observable<FarmTableInfoModel> {
     if (!funcID) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'string', funcID); }
     if (!page) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page); }
-    return this.restAPIService.dispatchRestApi('GetFarmTableInfoByFuncID', { funcID, page }, { extraQueryParams });
+    return this.restAPIService.dispatchRestApi<FarmTableInfo>('GetFarmTableInfoByFuncID', { funcID, page }, { extraQueryParams }).pipe(
+      ModelMapper.rxMapModelTo(FarmTableInfoModel)
+    );
   }
 
   /**
@@ -61,12 +72,14 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  getFarmDetailInfoByFuncID(funcID: string, dataID: string): Observable<CmsFarmFormInfo> {
+  getFarmDetailInfoByFuncID(funcID: string, dataID: string): Observable<FarmFormInfoModel> {
     if (!funcID) { throw new ParamsError('funcID', 'GetFarmDetailInfoByFuncID', 'string', funcID); }
     if (!dataID) {
       throw new ParamsError('dataID', 'GetFarmDetailInfoByFuncID', 'string', dataID);
     }
-    return this.restAPIService.dispatchRestApi('GetFarmDetailInfoByFuncID', { funcID, dataID });
+    return this.restAPIService.dispatchRestApi<FarmFormInfo>('GetFarmDetailInfoByFuncID', { funcID, dataID }).pipe(
+      ModelMapper.rxMapModelTo(FarmFormInfoModel),
+    );
   }
 
   /**
@@ -77,9 +90,11 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  getFarmFormInfoByFuncID(funcID: string, dataID?: string): Observable<CmsFarmFormInfo> {
+  getFarmFormInfoByFuncID(funcID: string, dataID?: string): Observable<FarmFormInfoModel> {
     if (!funcID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', funcID); }
-    return this.restAPIService.dispatchRestApi<CmsFarmFormInfo>('GetFarmFormInfoByFuncID', { funcID, dataID });
+    return this.restAPIService.dispatchRestApi<FarmFormInfo>('GetFarmFormInfoByFuncID', { funcID, dataID }).pipe(
+      ModelMapper.rxMapModelTo(FarmFormInfoModel),
+    );
   }
 
   /**
@@ -191,12 +206,14 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  listFarmTriggerData(triggerID: string): Observable<FarmOptionInfo[]> {
+  listFarmTriggerData(triggerID: string): Observable<FarmOptionInfoModel[]> {
     if (!triggerID) {
       throw new ParamsError('triggerID', 'listFarmTriggerData', 'string', triggerID);
     }
-    return this.restAPIService.dispatchRestApi<ListFarmTriggerDataResponse>('GetFarmTriggerByTriggerID', { triggerID })
-      .pipe(map(res => res.datas));
+    return this.restAPIService.dispatchRestApi<ListFarmTriggerDataResponse>('GetFarmTriggerByTriggerID', { triggerID }).pipe(
+      ModelMapper.rxMapModelTo(ListFarmTriggerDataResponseModel),
+      map(res => res.datas)
+    );
   }
 
   /**
@@ -206,10 +223,12 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  getFarmTree(sourceID: string): Observable<GetFarmTreeResponse> {
+  getFarmTree(sourceID: string): Observable<GetFarmTreeResponseModel> {
     if (!sourceID) {
       throw new ParamsError('sourceID', 'getFarmTree', 'string', sourceID);
     }
-    return this.restAPIService.dispatchRestApi<GetFarmTreeResponse>('GetFarmTreeBySourceID', { sourceID });
+    return this.restAPIService.dispatchRestApi<GetFarmTreeResponse>('GetFarmTreeBySourceID', { sourceID }).pipe(
+      ModelMapper.rxMapModelTo(GetFarmTreeResponseModel),
+    );
   }
 }

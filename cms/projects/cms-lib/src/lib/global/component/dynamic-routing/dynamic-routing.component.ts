@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FarmInfo } from '../../model/farm.model';
+import { FarmInfoGetResponseModel } from '../../api/data-model/models/farm-info-get-response.model';
 
 @Component({
   selector: 'cms-dynamic-routing',
@@ -13,7 +13,7 @@ export class DynamicRoutingComponent implements OnInit, OnDestroy {
   componentId: string;
   funcId: string;
 
-  farm: FarmInfo;
+  farm: FarmInfoGetResponseModel;
 
   subscription: Subscription;
 

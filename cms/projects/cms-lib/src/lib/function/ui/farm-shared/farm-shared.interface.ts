@@ -1,16 +1,18 @@
 import { Observable } from 'rxjs';
-import { CmsFarmFormInfo, CmsFarmTableInfo, CmsFarmTableDataInfo } from '../../../global/model';
 import { Injector } from '@angular/core';
+import { FarmFormInfoModel } from '../../../global/api/data-model/models/farm-form-info.model';
+import { FarmTableDataInfoModel } from '../../../global/api/data-model/models/farm-table-data-info.model';
+import { FarmTableInfoModel } from '../../../global/api/data-model/models/farm-table-info.model';
 
 export interface FarmFormComp {
-  requestFormInfo(): Observable<CmsFarmFormInfo>;
+  requestFormInfo(): Observable<FarmFormInfoModel>;
 }
 
 export interface FarmTableActionBtn {
   icon?: string;
   fontSet?: string;
   fontIcon?: string;
-  click: (row: CmsFarmTableDataInfo, table: CmsFarmTableInfo, injector: Injector) => void;
+  click: (row: FarmTableDataInfoModel, table: FarmTableInfoModel, injector: Injector) => void;
 }
 
 

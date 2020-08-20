@@ -44,7 +44,7 @@ export class ContentEditorService {
   }
 
   openEditorPreview(content: ContentInfo, controlID: string) {
-    const editorMode = EditorMode.INFO;
+    const editorMode = EditorMode.READ;
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
       componentInitData: {

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject, Injector, OnChanges, SimpleChanges } from '@angular/core';
-import { CmsFarmTableInfo, CmsFarmTableDataInfo } from './../../../../../global/model';
-import { CmsFarmTableDataAction, CmsFarmTableColumnDisplayType } from './../../../../../global/enum';
 import { ACTION_COLUMN, CHECKBOX_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type';
 import { FARM_TABLE_ACTION_TOKEN } from '../../farm-shared-injection-token';
 import { FarmTableAction } from '../../farm-shared.interface';
 import { Sort } from '@angular/material/sort';
+import { FarmTableDataInfoModel, FarmTableDataInfoAction, FarmTableDataInfoColumnDisplayType } from '../../../../../global/api/data-model/models/farm-table-data-info.model';
+import { FarmTableInfoModel } from '../../../../../global/api/data-model/models/farm-table-info.model';
 
 @Component({
   selector: 'cms-farm-table-info',
@@ -15,11 +15,11 @@ export class FarmTableInfoComponent implements OnInit, OnChanges {
 
   CHECKBOX_COLUMN = CHECKBOX_COLUMN;
   ACTION_COLUMN = ACTION_COLUMN;
-  CmsFarmTableDataAction = CmsFarmTableDataAction;
-  CmsFarmTableColumnDisplayType = CmsFarmTableColumnDisplayType;
+  FarmTableDataInfoAction = FarmTableDataInfoAction;
+  FarmTableDataInfoColumnDisplayType = FarmTableDataInfoColumnDisplayType;
 
   @Input() funcID: string;
-  @Input() tableInfo: CmsFarmTableInfo;
+  @Input() tableInfo: FarmTableInfoModel;
 
   @Output() actionClick = new EventEmitter<FarmTableInfoActionEvent>();
   @Output() pageChange = new EventEmitter<number>();
@@ -27,7 +27,7 @@ export class FarmTableInfoComponent implements OnInit, OnChanges {
   totalChecked = false;
   customAction: FarmTableAction;
 
-  sortedData: CmsFarmTableDataInfo[];
+  sortedData: FarmTableDataInfoModel[];
 
   error = false;
 
@@ -47,7 +47,7 @@ export class FarmTableInfoComponent implements OnInit, OnChanges {
     this.sortData();
   }
 
-  onActionClick(action: CmsFarmTableDataAction, rowData?: CmsFarmTableDataInfo) {
+  onActionClick(action: FarmTableDataInfoAction, rowData?: FarmTableDataInfoModel) {
     this.actionClick.emit(new FarmTableInfoActionEvent(action, rowData));
   }
 
@@ -57,12 +57,12 @@ export class FarmTableInfoComponent implements OnInit, OnChanges {
 
   onTotalCheckChange() {
     this.tableInfo.datas.forEach(data => {
-      data.is_checked = this.totalChecked;
+      data.isChecked = this.totalChecked;
     });
   }
 
   onRowCheckChange() {
-    this.totalChecked = this.tableInfo.datas.map(_ => _.is_checked).every(checked => !!checked);
+    this.totalChecked = this.tableInfo.datas.map(_ => _.isChecked).every(checked => !!checked);
   }
 
   passDateStringFormat(value): boolean {
@@ -80,8 +80,8 @@ export class FarmTableInfoComponent implements OnInit, OnChanges {
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       return this.compare(
-        a.columns.find(col => col.display_text === sort.active).value,
-        b.columns.find(col => col.display_text === sort.active).value,
+        a.columns.find(col => col.displayText === sort.active).value,
+        b.columns.find(col => col.displayText === sort.active).value,
         isAsc
       );
     });

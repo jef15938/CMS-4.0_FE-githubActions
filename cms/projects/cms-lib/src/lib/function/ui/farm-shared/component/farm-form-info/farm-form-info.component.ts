@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
 import { Observable, throwError, of } from 'rxjs';
-import { CmsFarmFormInfo, CmsFarmFormColumn } from './../../../../../global/model';
-import { CmsFarmFormColumnDisplayType, CmsFarmFormColumnTriggerType } from './../../../../../global/enum';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp } from '../../farm-shared.interface';
 import { ContentEditorService } from './../../../content-editor';
@@ -10,10 +8,11 @@ import { FarmService } from '../../../../../global/api/service';
 import { HtmlEditorService } from '../../../html-editor';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
-import { GetFarmTreeResponse } from '../../../../../global/api/neuxAPI/bean/GetFarmTreeResponse';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { FarmTreeInfo } from '../../../../../global/api/neuxAPI/bean/FarmTreeInfo';
+import { GetFarmTreeResponseModel } from '../../../../../global/api/data-model/models/get-farm-tree-response.model';
+import { FarmTreeInfoModel } from '../../../../../global/api/data-model/models/farm-tree-info.model';
+import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType } from '../../../../../global/api/data-model/models/farm-form-info.model';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -28,9 +27,9 @@ interface FormColumnSetting {
 })
 export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
-  CmsFarmFormColumnDisplayType = CmsFarmFormColumnDisplayType;
+  FarmFormInfoColumnDisplayType = FarmFormInfoColumnDisplayType;
 
-  @Input() farmFormInfo: CmsFarmFormInfo;
+  @Input() farmFormInfo: FarmFormInfoModel;
   @Input() useValidation = false;
   @Input() funcID = '';
   @Input() mode: 'preview' | 'edit' = 'preview';
@@ -38,8 +37,8 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   formGroup: FormGroup;
   formColumnSettingMap: Map<string, FormColumnSetting>;
 
-  treeMap: Map<string, GetFarmTreeResponse> = new Map();
-  treeNodeSelectedMap: Map<string, FarmTreeInfo[]> = new Map();
+  treeMap: Map<string, GetFarmTreeResponseModel> = new Map();
+  treeNodeSelectedMap: Map<string, FarmTreeInfoModel[]> = new Map();
 
   constructor(
     private contentEditorService: ContentEditorService,
@@ -50,35 +49,36 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.warn('this.farmFormInfo = ', this.farmFormInfo);
     this.formGroup = this.createFormGroup(this.farmFormInfo);
     this.formColumnSettingMap = this.createFormColumnSettingMap(this.farmFormInfo);
     this.farmFormInfo.columns.forEach(column => {
       this.checkColumnTrigger(column);
-      if (column.display_type === CmsFarmFormColumnDisplayType.TREE) {
-        this.farmService.getFarmTree(column.setting.tree_source).subscribe(tree => {
+      if (column.displayType === FarmFormInfoColumnDisplayType.TREE) {
+        this.farmService.getFarmTree(column.setting.treeSource).subscribe(tree => {
           const idStrings = (column.value || '') as string;
           const ids = idStrings.split(',').filter(id => !!id);
-          const selectedNode: FarmTreeInfo[] = this.getFarmTreeInfosByTreeIds(ids, tree.data);
-          this.treeNodeSelectedMap.set(column.column_id, selectedNode);
-          this.treeMap.set(column.column_id, tree);
+          const selectedNode: FarmTreeInfoModel[] = this.getFarmTreeInfosByTreeIds(ids, tree.data);
+          this.treeNodeSelectedMap.set(column.columnId, selectedNode);
+          this.treeMap.set(column.columnId, tree);
         });
       }
     });
   }
 
-  private createFormGroup(farmFormInfo: CmsFarmFormInfo): FormGroup {
+  private createFormGroup(farmFormInfo: FarmFormInfoModel): FormGroup {
     const formGroup = new FormGroup({});
     const rangeValidatorFns: ValidatorFn[] = [];
     farmFormInfo.columns.forEach((column, index) => {
       // parse DATE & DATETIME
       let value: any = column.value;
       if (
-        column.display_type === CmsFarmFormColumnDisplayType.DATE
-        || column.display_type === CmsFarmFormColumnDisplayType.DATETIME
+        column.displayType === FarmFormInfoColumnDisplayType.DATE
+        || column.displayType === FarmFormInfoColumnDisplayType.DATETIME
       ) {
         value = this.cmsDateAdapter.convertDateStringToDate(value);
-      } else if (column.display_type === CmsFarmFormColumnDisplayType.LABEL) {
-        value = this.cmsDateAdapter.convertDateString(value, CmsFarmFormColumnDisplayType.DATETIME);
+      } else if (column.displayType === FarmFormInfoColumnDisplayType.LABEL) {
+        value = this.cmsDateAdapter.convertDateString(value, FarmFormInfoColumnDisplayType.DATETIME);
       }
 
       // create FormControl
@@ -87,7 +87,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
         const validatorFns: ValidatorFn[] = [];
         const validation = farmFormInfo.validation;
         // required
-        const required = validation.required?.find(col => col === column.column_id);
+        const required = validation.required?.find(col => col === column.columnId);
         if (required) {
           validatorFns.push((control: AbstractControl) => {
             if (!CmsValidator.hasValue(control.value)) {
@@ -99,7 +99,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
           });
         }
         // email
-        const email = validation.email?.find(col => col === column.column_id);
+        const email = validation.email?.find(col => col === column.columnId);
         if (email) {
           validatorFns.push((control: AbstractControl) => {
             return Validators.email(control) ? {
@@ -108,14 +108,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
           });
         }
         // alphanumeric TODO: 等 api 改為 regex
-        const alphanumeric = validation.alphanumeric?.find(col => col === column.column_id);
+        const alphanumeric = validation.alphanumeric?.find(col => col === column.columnId);
         if (alphanumeric) {
           validatorFns.push((control: AbstractControl) => {
             return null;
           });
         }
         // number
-        const num = validation.number?.find(col => col === column.column_id);
+        const num = validation.number?.find(col => col === column.columnId);
         if (num) {
           validatorFns.push((control: AbstractControl) => {
             if (!CmsValidator.isNumber(control.value)) {
@@ -131,14 +131,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
           formControl.setValidators(validatorFns);
         }
       }
-      formGroup.addControl(column.column_id, formControl);
+      formGroup.addControl(column.columnId, formControl);
     });
 
     // range
     if (this.useValidation && farmFormInfo.validation) {
       farmFormInfo.validation.range.forEach(r => {
         rangeValidatorFns.push(
-          CmsFormValidator.startTimeEndTime(r.start_column, r.end_column),
+          CmsFormValidator.startTimeEndTime(r.startColumn, r.endColumn),
         );
       });
     }
@@ -147,15 +147,16 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     return formGroup;
   }
 
-  private createFormColumnSettingMap(farmFormInfo: CmsFarmFormInfo): Map<string, FormColumnSetting> {
+  private createFormColumnSettingMap(farmFormInfo: FarmFormInfoModel): Map<string, FormColumnSetting> {
     const map = new Map<string, FormColumnSetting>();
     farmFormInfo?.columns?.forEach(column => {
-      map.set(column.column_id, { required: false, readonly: false, enable: true, });
+      map.set(column.columnId, { required: false, readonly: false, enable: true, });
     });
     return map;
   }
 
-  private getFarmTreeInfosByTreeIds(funcIds: string[], sources: FarmTreeInfo[], results: FarmTreeInfo[] = []): FarmTreeInfo[] {
+  private getFarmTreeInfosByTreeIds(funcIds: string[], sources: FarmTreeInfoModel[], results: FarmTreeInfoModel[] = [])
+    : FarmTreeInfoModel[] {
     if (!sources?.length) { return results; }
     results = results.concat(sources.filter(source => funcIds.indexOf(source.id) > -1));
     sources = sources.reduce((a, b) => a.concat(b.children || []), []);
@@ -167,7 +168,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.formGroup.reset();
   }
 
-  requestFormInfo(): Observable<CmsFarmFormInfo> {
+  requestFormInfo(): Observable<FarmFormInfoModel> {
     const formGroup = this.formGroup;
 
     for (const controlName of Object.keys(formGroup.controls)) {
@@ -177,14 +178,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
     }
 
-    const info: CmsFarmFormInfo = JSON.parse(JSON.stringify(this.farmFormInfo));
+    const info: FarmFormInfoModel = JSON.parse(JSON.stringify(this.farmFormInfo));
     info.columns.forEach(col => {
-      let value = formGroup.controls[col.column_id]?.value;
+      let value = formGroup.controls[col.columnId]?.value;
       if (
-        col.display_type === CmsFarmFormColumnDisplayType.DATE
-        || col.display_type === CmsFarmFormColumnDisplayType.DATETIME
+        col.displayType === FarmFormInfoColumnDisplayType.DATE
+        || col.displayType === FarmFormInfoColumnDisplayType.DATETIME
       ) {
-        value = this.cmsDateAdapter.convertDateToDateString(value, col.display_type);
+        value = this.cmsDateAdapter.convertDateToDateString(value, col.displayType);
       }
       col.value = value;
     });
@@ -195,37 +196,37 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     return of(info);
   }
 
-  checkColumnTrigger(column: CmsFarmFormColumn) {
+  checkColumnTrigger(column: FarmFormInfoModelColumn) {
     const triggers = column?.triggers;
     if (!triggers?.length) { return; }
     triggers.forEach(trigger => {
-      const affectedColumns = trigger.trigger_target; // 受影響的所有 column
-      if (trigger.trigger_type === CmsFarmFormColumnTriggerType.DATATRIGGER) {
-        const triggerID = trigger.trigger_setting.triggerId;
+      const affectedColumns = trigger.triggerTarget; // 受影響的所有 column
+      if (trigger.triggerType === FarmFormInfoColumnTriggerType.DATATRIGGER) {
+        const triggerID = trigger.triggerSetting.triggerId;
         this.farmService.listFarmTriggerData(triggerID).subscribe(options => {
-          trigger.trigger_target.forEach(target => {
-            const targetColumnSetting = this.farmFormInfo.columns.find(c => c.column_id === target)?.setting;
+          trigger.triggerTarget.forEach(target => {
+            const targetColumnSetting = this.farmFormInfo.columns.find(c => c.columnId === target)?.setting;
             if (targetColumnSetting) { targetColumnSetting.options = options; }
           });
         });
       } else {
-        const columnValue = this.formGroup?.get(column.column_id).value;
-        const triggeredColumn = trigger.trigger_setting[columnValue]; // 當前 trigger 的 column
+        const columnValue = this.formGroup?.get(column.columnId).value;
+        const triggeredColumn = trigger.triggerSetting[columnValue]; // 當前 trigger 的 column
         affectedColumns.forEach(affectedColumn => {
           const columnSetting = this.formColumnSettingMap.get(affectedColumn);
 
-          switch (trigger.trigger_type) {
-            case CmsFarmFormColumnTriggerType.ENABLETRIGGER:
+          switch (trigger.triggerType) {
+            case FarmFormInfoColumnTriggerType.ENABLETRIGGER:
               affectedColumn === triggeredColumn
                 ? columnSetting.enable = true
                 : columnSetting.enable = false;
               break;
-            case CmsFarmFormColumnTriggerType.READONLYTRIGGER:
+            case FarmFormInfoColumnTriggerType.READONLYTRIGGER:
               affectedColumn === triggeredColumn
                 ? columnSetting.readonly = true
                 : columnSetting.readonly = false;
               break;
-            case CmsFarmFormColumnTriggerType.REQUIREDTRIGGER:
+            case FarmFormInfoColumnTriggerType.REQUIREDTRIGGER:
               affectedColumn === triggeredColumn
                 ? columnSetting.required = true
                 : columnSetting.required = false;
@@ -236,9 +237,9 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     });
   }
 
-  openContentEditor(col: CmsFarmFormColumn) {
+  openContentEditor(col: FarmFormInfoModelColumn) {
     const controlID = this.funcID;
-    const control = this.formGroup.get(col.column_id);
+    const control = this.formGroup.get(col.columnId);
     const content = JSON.parse((control.value) as string) as ContentInfo;
     if (this.mode === 'preview') {
       this.contentEditorService.openEditorPreview(content, controlID).subscribe();
@@ -249,33 +250,33 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     }
   }
 
-  openHtmlEditor(col: CmsFarmFormColumn) {
+  openHtmlEditor(col: FarmFormInfoModelColumn) {
     this.htmlEditorService.openEditor({
       // title: `Html編輯`,
       content: col.value
     }).subscribe(content => {
       if (content || content === '') {
-        this.formGroup.get(col.column_id).setValue(content);
+        this.formGroup.get(col.columnId).setValue(content);
       }
     });
   }
 
-  changeGallery(col: CmsFarmFormColumn) {
+  changeGallery(col: FarmFormInfoModelColumn) {
     this.gallerySharedService.openGallery().subscribe(selectedGallery => {
       if (selectedGallery) {
-        this.formGroup.get(col.column_id).setValue(`${selectedGallery.galleryId}`);
-        col.setting.file_name = selectedGallery.fileName;
+        this.formGroup.get(col.columnId).setValue(`${selectedGallery.galleryId}`);
+        col.setting.fileName = selectedGallery.fileName;
       }
     });
   }
 
-  onNodesCheckedChange(ev: { nodes: FarmTreeInfo[] }, columnID: string) {
+  onNodesCheckedChange(ev: { nodes: FarmTreeInfoModel[] }, columnID: string) {
     const ids = ev.nodes.map(node => node.id);
     this.formGroup.get(columnID).setValue(ids.length ? ids.join(',') : '');
   }
 
-  onCheckboxChange(ev: MatCheckboxChange, col: CmsFarmFormColumn, option: { text: string, value: string }) {
-    const control = this.formGroup.get(col.column_id);
+  onCheckboxChange(ev: MatCheckboxChange, col: FarmFormInfoModelColumn, option: { text: string, value: string }) {
+    const control = this.formGroup.get(col.columnId);
     const controlValue = (control.value || '') as string;
     const values = controlValue ? [...new Set(controlValue.split(','))] : [];
     const index = values.indexOf(option.value);

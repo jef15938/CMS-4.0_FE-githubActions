@@ -1,61 +1,61 @@
 <div class="farm-form-info" *ngIf="formGroup">
   <form class="farm-form-info__form form" [formGroup]="formGroup">
     <ng-container *ngFor="let col of farmFormInfo.columns">
-      <ng-container *ngIf="formColumnSettingMap?.get(col.column_id)?.enable">
-        <div class="form__col" [style.width]="100/farmFormInfo.split_size + '%'">
+      <ng-container *ngIf="formColumnSettingMap?.get(col.columnId)?.enable">
+        <div class="form__col" [style.width]="100/farmFormInfo.splitSize + '%'">
           <div class="form__container">
             <div class="form__label">
               <span class="form__atrisk"
-                *ngIf="farmFormInfo.validation?.required?.indexOf(col.column_id)>-1 || formColumnSettingMap.get(col.column_id).required">*</span>
-              {{col.display_text}}
+                *ngIf="farmFormInfo.validation?.required?.indexOf(col.columnId)>-1 || formColumnSettingMap.get(col.columnId).required">*</span>
+              {{col.displayText}}
             </div>
             <div class="form__content"
-              [class.form__content--readonly]="col.is_readonly || formColumnSettingMap.get(col.column_id)?.readonly">
-              <ng-container [ngSwitch]="col.display_type">
+              [class.form__content--readonly]="col.isReadonly || formColumnSettingMap.get(col.columnId)?.readonly">
+              <ng-container [ngSwitch]="col.displayType">
                 <!-- TEXT -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXT">
-                  <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                    <input matInput [formControlName]="col.column_id" [maxLength]="col.setting?.max_length||65536"
-                      [required]="formColumnSettingMap.get(col.column_id).required"
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.TEXT">
+                  <mat-form-field appearance="legacy" [ngSwitch]="col.displayType">
+                    <input matInput [formControlName]="col.columnId" [maxLength]="col.setting?.maxLength||65536"
+                      [required]="formColumnSettingMap.get(col.columnId).required"
                       [placeholder]="col.setting?.placeholder||''">
-                    <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                      <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
+                    <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
+                      <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                         {{err}}
                       </div>
                     </mat-error>
                   </mat-form-field>
                 </ng-container>
                 <!-- TEXTAREA -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TEXTAREA">
-                  <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                    <textarea matInput [formControlName]="col.column_id" [maxLength]="col.setting?.max_length||65536"
-                      [required]="formColumnSettingMap.get(col.column_id).required"
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.TEXTAREA">
+                  <mat-form-field appearance="legacy" [ngSwitch]="col.displayType">
+                    <textarea matInput [formControlName]="col.columnId" [maxLength]="col.setting?.maxLength||65536"
+                      [required]="formColumnSettingMap.get(col.columnId).required"
                       [placeholder]="col.setting?.placeholder||''" rows="1"></textarea>
-                    <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                      <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
+                    <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
+                      <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                         {{err}}
                       </div>
                     </mat-error>
                   </mat-form-field>
                 </ng-container>
                 <!-- SELECT -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.SELECT">
-                  <mat-form-field appearance="legacy" [ngSwitch]="col.display_type">
-                    <mat-select [formControlName]="col.column_id" (selectionChange)="checkColumnTrigger(col)">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.SELECT">
+                  <mat-form-field appearance="legacy" [ngSwitch]="col.displayType">
+                    <mat-select [formControlName]="col.columnId" (selectionChange)="checkColumnTrigger(col)">
                       <mat-option *ngFor="let option of (col.setting?.options||[])" [value]="option.value">
                         {{option.text}}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                      <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
+                    <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
+                      <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                         {{err}}
                       </div>
                     </mat-error>
                   </mat-form-field>
                 </ng-container>
                 <!-- RADIO -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.RADIO">
-                  <mat-radio-group [formControlName]="col.column_id" class="form__radio-group"
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.RADIO">
+                  <mat-radio-group [formControlName]="col.columnId" class="form__radio-group"
                     (change)="checkColumnTrigger(col)">
                     <ng-container *ngFor="let option of (col.setting?.options||[]); let i=index;">
                       <mat-radio-button class="form__radio" [value]="option.value">
@@ -65,97 +65,96 @@
                   </mat-radio-group>
                 </ng-container>
                 <!-- CHECKBOX -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CHECKBOX">
-                  <input matInput [formControlName]="col.column_id" hidden
-                    [required]="formColumnSettingMap.get(col.column_id).required">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.CHECKBOX">
+                  <input matInput [formControlName]="col.columnId" hidden
+                    [required]="formColumnSettingMap.get(col.columnId).required">
                   <ng-container *ngFor="let option of col.setting.options">
                     <mat-checkbox class="form__checkbox"
-                      [checked]="formGroup.get(col.column_id).value|farmFormCheckboxOptionCheck:option.value"
+                      [checked]="formGroup.get(col.columnId).value|farmFormCheckboxOptionCheck:option.value"
                       (change)="onCheckboxChange($event, col, option); checkColumnTrigger(col);">
                       {{option.text}}
                     </mat-checkbox>
                   </ng-container>
                 </ng-container>
                 <!-- DATE -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATE">
-                  <cms-date-picker [formControlName]="col.column_id"
-                    [errors]="formGroup.controls[col.column_id]?.errors"
-                    [readonly]="col.is_readonly || formColumnSettingMap.get(col.column_id)?.readonly"
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.DATE">
+                  <cms-date-picker [formControlName]="col.columnId" [errors]="formGroup.controls[col.columnId]?.errors"
+                    [readonly]="col.isReadonly || formColumnSettingMap.get(col.columnId)?.readonly"
                     (dateChange)="checkColumnTrigger(col)">
                   </cms-date-picker>
                 </ng-container>
                 <!-- GALLERY -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.GALLERY">
-                  <input matInput [formControlName]="col.column_id" hidden
-                    [required]="formColumnSettingMap.get(col.column_id).required">
-                  <button type="button" mat-button (click)="changeGallery(col)">媒體庫</button> {{col.setting.file_name}}
-                  <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.GALLERY">
+                  <input matInput [formControlName]="col.columnId" hidden
+                    [required]="formColumnSettingMap.get(col.columnId).required">
+                  <button type="button" mat-button (click)="changeGallery(col)">媒體庫</button> {{col.setting.fileName}}
+                  <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
+                    <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                       {{err}}
                     </div>
                   </mat-error>
                 </ng-container>
                 <!-- EDITOR -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.EDITOR">
-                  <input matInput [formControlName]="col.column_id" hidden
-                    [required]="formColumnSettingMap.get(col.column_id).required">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.EDITOR">
+                  <input matInput [formControlName]="col.columnId" hidden
+                    [required]="formColumnSettingMap.get(col.columnId).required">
                   <ng-container *ngIf="mode==='edit'||(mode==='preview'&&col.value)">
                     <button type="button" mat-button
-                      (click)="openContentEditor(col)">{{mode==='preview'?'預覽':'編輯'}}{{col.display_text}}</button>
+                      (click)="openContentEditor(col)">{{mode==='preview'?'預覽':'編輯'}}{{col.displayText}}</button>
                   </ng-container>
                   <ng-container *ngIf="mode==='preview'&&!col.value;">無內容</ng-container>
 
-                  <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
+                  <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
+                    <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                       {{err}}
                     </div>
                   </mat-error>
                 </ng-container>
                 <!-- HTMLEDITOR -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.HTMLEDITOR">
-                  <input matInput [formControlName]="col.column_id" hidden
-                    [required]="formColumnSettingMap.get(col.column_id).required">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.HTMLEDITOR">
+                  <input matInput [formControlName]="col.columnId" hidden
+                    [required]="formColumnSettingMap.get(col.columnId).required">
                   <button type="button" mat-button (click)="openHtmlEditor(col)">編輯 Html</button>
-                  <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
+                  <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
+                    <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                       {{err}}
                     </div>
                   </mat-error>
                 </ng-container>
                 <!-- DATETIME -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.DATETIME">
-                  <cms-date-picker-datetime [formControlName]="col.column_id"
-                    [readonly]="col.is_readonly || formColumnSettingMap.get(col.column_id)?.readonly"
-                    [errors]="formGroup.controls[col.column_id]?.errors" (dateChange)="checkColumnTrigger(col)">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.DATETIME">
+                  <cms-date-picker-datetime [formControlName]="col.columnId"
+                    [readonly]="col.isReadonly || formColumnSettingMap.get(col.columnId)?.readonly"
+                    [errors]="formGroup.controls[col.columnId]?.errors" (dateChange)="checkColumnTrigger(col)">
                   </cms-date-picker-datetime>
                 </ng-container>
                 <!-- TREE -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.TREE">
-                  <input matInput [formControlName]="col.column_id" hidden
-                    [required]="formColumnSettingMap.get(col.column_id).required">
-                  <ng-container *ngIf="treeMap.get(col.column_id); let tree">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.TREE">
+                  <input matInput [formControlName]="col.columnId" hidden
+                    [required]="formColumnSettingMap.get(col.columnId).required">
+                  <ng-container *ngIf="treeMap.get(col.columnId); let tree">
                     <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="tree.data" [checkbox]="true"
-                      [checkMode]="tree.check_type" [nodeDisplayField]="'name'" [defaultExpandLevel]="-1"
-                      [checkedNodes]="treeNodeSelectedMap.get(col.column_id)"
-                      (nodesCheckedChange)="onNodesCheckedChange($event, col.column_id)"></cms-tree>
+                      [checkMode]="tree.checkType" [nodeDisplayField]="'name'" [defaultExpandLevel]="-1"
+                      [checkedNodes]="treeNodeSelectedMap.get(col.columnId)"
+                      (nodesCheckedChange)="onNodesCheckedChange($event, col.columnId)"></cms-tree>
                   </ng-container>
-                  <mat-error *ngIf="useValidation && formGroup.controls[col.column_id]?.errors">
-                    <div *ngFor="let err of (formGroup.controls[col.column_id]?.errors | formValidationError)">
+                  <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
+                    <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                       {{err}}
                     </div>
                   </mat-error>
                 </ng-container>
                 <!-- LABEL -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LABEL">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.LABEL">
                   <div [innerHTML]="col.value | dateStringFormat:'DATETIME' | safeHtml"></div>
                 </ng-container>
                 <!-- LINK -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.LINK">
-                  <a [href]="col.value" target="_blank" rel="noreferrer noopener">{{col.display_text}}</a>
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.LINK">
+                  <a [href]="col.value" target="_blank" rel="noreferrer noopener">{{col.displayText}}</a>
                 </ng-container>
                 <!-- CUSTOM -->
-                <ng-container *ngSwitchCase="CmsFarmFormColumnDisplayType.CUSTOM">
-                  <div cmsFarmDynamicFormControl [componentId]="col.setting?.component_id" [columnId]="col.column_id">
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.CUSTOM">
+                  <div cmsFarmDynamicFormControl [componentId]="col.setting?.componentId" [columnId]="col.columnId">
                   </div>
                 </ng-container>
               </ng-container>

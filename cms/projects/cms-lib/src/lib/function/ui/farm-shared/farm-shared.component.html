@@ -6,7 +6,7 @@
     <div>
       <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)" animationDuration="0ms">
         <mat-tab *ngFor="let category of farm.category"
-          [label]="(categoryName ? categoryName + ' > ' : '') + category.category_name">
+          [label]="(categoryName ? categoryName + ' > ' : '') + category.categoryName">
           <ng-template matTabContent>
             <div class="detail-info-container" *ngIf="farm.detailInfo">
               <cms-farm-detail-info [detailInfo]="farm.detailInfo"></cms-farm-detail-info>
@@ -19,7 +19,7 @@
               <hr>
             </div>
             <div class="table-info-container page-content-container" *ngIf="category.tableInfo">
-              <cms-farm-table-info [funcID]="category.category_id" [tableInfo]="category.tableInfo"
+              <cms-farm-table-info [funcID]="category.categoryId" [tableInfo]="category.tableInfo"
                 (actionClick)="onTableActionClick(category, $event)" (pageChange)="onTablePageChange(category, $event)">
               </cms-farm-table-info>
             </div>

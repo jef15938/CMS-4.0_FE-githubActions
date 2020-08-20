@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
-import { CmsFarmFormInfo } from './../../../../../global/model';
 import { FarmFormComp } from '../../farm-shared.interface';
 import { FarmFormInfoComponent } from '../farm-form-info/farm-form-info.component';
+import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/farm-form-info.model';
 
 @Component({
   selector: 'cms-farm-search-info',
@@ -13,7 +13,7 @@ export class FarmSearchInfoComponent implements OnInit, AfterContentChecked, OnD
   @ViewChild(FarmFormInfoComponent) farmFormInfoComponent: FarmFormInfoComponent;
 
   @Input() funcID = '';
-  @Input() searchInfo: CmsFarmFormInfo;
+  @Input() searchInfo: FarmFormInfoModel;
 
   @Output() farmFormInfoCompEmit = new EventEmitter<FarmFormComp>();
 
@@ -35,6 +35,7 @@ export class FarmSearchInfoComponent implements OnInit, AfterContentChecked, OnD
     this.intersectionObserver = new IntersectionObserver((entries, observer) => {
       this.farmFormInfoCompEmit.emit(this.farmFormInfoComponent);
     }, options);
+    // tslint:disable-next-line: no-string-literal
     this.intersectionObserver['USE_MUTATION_OBSERVER'] = false;
     this.intersectionObserver.observe(this.elementRef.nativeElement);
   }

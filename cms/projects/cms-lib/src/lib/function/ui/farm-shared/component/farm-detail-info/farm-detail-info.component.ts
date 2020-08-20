@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CmsFarmFormInfo } from './../../../../../global/model';
+import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/farm-form-info.model';
 
 @Component({
   selector: 'cms-farm-detail-info',
@@ -9,7 +9,7 @@ import { CmsFarmFormInfo } from './../../../../../global/model';
 export class FarmDetailInfoComponent implements OnInit {
 
   @Input() funcID = '';
-  @Input() detailInfo: CmsFarmFormInfo;
+  @Input() detailInfo: FarmFormInfoModel;
 
   constructor() { }
 

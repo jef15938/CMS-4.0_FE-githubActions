@@ -1,13 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CmsFarmTableDataInfo } from '../../../../global/model';
-import { CmsFarmTableDataAction } from '../../../../global/enum';
+import { FarmTableDataInfoModel, FarmTableDataInfoAction } from '../../../../global/api/data-model/models/farm-table-data-info.model';
 
 @Pipe({
   name: 'getFarmTableDataActions'
 })
 export class GetFarmTableDataActionsPipe implements PipeTransform {
 
-  transform(data: CmsFarmTableDataInfo): CmsFarmTableDataAction[] {
+  transform(data: FarmTableDataInfoModel): FarmTableDataInfoAction[] {
     return data.actions;
   }
 

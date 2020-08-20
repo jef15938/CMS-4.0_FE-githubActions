@@ -3,8 +3,8 @@
     <div>目前頁數:<ng-container *ngIf="tableInfo.pageInfo; let pageInfo">{{pageInfo.page}}</ng-container>
     </div>
     <div style="text-align: right;">
-      <button type="button" tabindex="0" mat-raised-button color="primary" *ngIf="tableInfo.can_create"
-        (click)="onActionClick(CmsFarmTableDataAction.CREATE)">
+      <button type="button" tabindex="0" mat-raised-button color="primary" *ngIf="tableInfo.canCreate"
+        (click)="onActionClick(FarmTableDataInfoAction.CREATE)">
         新增
       </button>
     </div>
@@ -35,10 +35,10 @@
       <td mat-cell *matCellDef="let element" [class.action-col]="col===ACTION_COLUMN">
         <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN">
           <ng-container *ngIf="element|getFarmTableColData:col; let colData;">
-            <ng-container *ngIf="colData.display_type===CmsFarmTableColumnDisplayType.LABEL">
+            <ng-container *ngIf="colData.displayType===FarmTableDataInfoColumnDisplayType.LABEL">
               {{colData?.value | dateStringFormat:'DATETIME':passDateStringFormat}}
             </ng-container>
-            <ng-container *ngIf="colData.display_type!==CmsFarmTableColumnDisplayType.LABEL">
+            <ng-container *ngIf="colData.displayType!==FarmTableDataInfoColumnDisplayType.LABEL">
               <a [href]="colData?.value" target="_blank" rel="noreferrer noopener">{{colData?.value}}</a>
             </ng-container>
           </ng-container>
@@ -53,22 +53,22 @@
             <button type="button" tabindex="0" mat-icon-button (click)="onActionClick(action, element)"
               [ngSwitch]="action">
               <mat-icon>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.MODIFY">
+                <ng-container *ngSwitchCase="FarmTableDataInfoAction.MODIFY">
                   edit
                 </ng-container>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.DELETE">
+                <ng-container *ngSwitchCase="FarmTableDataInfoAction.DELETE">
                   delete
                 </ng-container>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.PUBLISH">
+                <ng-container *ngSwitchCase="FarmTableDataInfoAction.PUBLISH">
                   redo
                 </ng-container>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.OFF">
+                <ng-container *ngSwitchCase="FarmTableDataInfoAction.OFF">
                   arrow_downward
                 </ng-container>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.PREVIEW">
+                <ng-container *ngSwitchCase="FarmTableDataInfoAction.PREVIEW">
                   visibility
                 </ng-container>
-                <ng-container *ngSwitchCase="CmsFarmTableDataAction.MORE">
+                <ng-container *ngSwitchCase="FarmTableDataInfoAction.MORE">
                   more_horiz
                 </ng-container>
               </mat-icon>

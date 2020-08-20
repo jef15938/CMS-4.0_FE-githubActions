@@ -8,7 +8,6 @@ import {
   LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective, LayoutWrapperComponent, FixedWrapperComponent
 } from '@neux/render';
 import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
-import { ContentTemplateInfo } from './../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { EditorMode, ContentEditorActionMode } from '../../content-editor.interface';
 import { CheckViewConfig } from './content-view-renderer.interface';
