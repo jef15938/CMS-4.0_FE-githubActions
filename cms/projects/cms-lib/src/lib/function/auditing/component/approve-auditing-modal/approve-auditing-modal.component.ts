@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuditingSubmitRequest } from '../../../../global/api/neuxAPI/bean/AuditingSubmitRequest';
 import { CustomModalBase } from '../../../ui/modal';
+import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
 
 export enum AuditingApproveStatus {
   APPROVED = 'APPROVED',
@@ -21,7 +21,7 @@ export class ApproveAuditingModalComponent extends CustomModalBase implements On
   batch = false;
   status: AuditingApproveStatus;
 
-  approveRequest: AuditingSubmitRequest = new AuditingSubmitRequest();
+  approveRequest: AuditingSubmitRequestModel = new AuditingSubmitRequestModel();
 
   title: string | (() => string) =
     () => [

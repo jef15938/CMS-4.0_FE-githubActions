@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { MyAuditingDetailInfo } from '../../../../global/api/neuxAPI/bean/MyAuditingDetailInfo';
 import { AuditingService } from '../../../../global/api/service';
 import { CustomModalBase } from '../../../ui/modal';
 import { ColDef } from '../../../ui/table';
+import { MyAuditingDetailInfoModel } from '../../../../global/api/data-model/models/my-auditing-detail-info.model';
 
 @Component({
   selector: 'cms-my-auditing-detail-modal',
@@ -15,9 +15,9 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
   actions;
 
   @Input() orderId: number;
-  myAuditingDetail: MyAuditingDetailInfo[];
+  myAuditingDetail: MyAuditingDetailInfoModel[];
 
-  colDefs: ColDef[] = [
+  colDefs: ColDef<MyAuditingDetailInfoModel>[] = [
     {
       colId: 'status',
       field: 'status',
@@ -25,40 +25,40 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
       width: '100px',
     },
     {
-      colId: 'auditing_group_name',
-      field: 'auditing_group_name',
+      colId: 'auditingGroupName',
+      field: 'auditingGroupName',
       title: '群組',
       width: '120px',
     },
     {
-      colId: 'auditing_dept_name',
-      field: 'auditing_dept_name',
+      colId: 'auditingDeptName',
+      field: 'auditingDeptName',
       title: '部門',
       width: '120px',
     },
     {
-      colId: 'auditing_name',
-      field: 'auditing_name',
+      colId: 'auditingName',
+      field: 'auditingName',
       title: '主管',
       width: '120px',
     },
     {
-      colId: 'auditing_stage',
-      field: 'auditing_stage',
+      colId: 'auditingStage',
+      field: 'auditingStage',
       title: '階段',
       width: '80px',
     },
 
     {
-      colId: 'auditing_time',
-      field: 'auditing_time',
+      colId: 'auditingName',
+      field: 'auditingName',
       title: '時間',
       format: 'DATETIME',
       width: '100px',
     },
     {
-      colId: 'auditing_comment',
-      field: 'auditing_comment',
+      colId: 'auditingComment',
+      field: 'auditingComment',
       title: '意見',
     },
   ];

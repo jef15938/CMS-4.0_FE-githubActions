@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service';
-import { SiteMapNodeGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapNodeGetResponse';
 import { CmsDateAdapter } from '../../../../global/util/mat-date/mat-date';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CmsFormValidator } from '../../../../global/util/form-validator';
+import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 
 @Component({
   selector: 'cms-auditing-sitemap-modal',
@@ -16,7 +16,7 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
   actions: CustomModalActionButton[];
 
   @Input() siteId: string;
-  @Input() sitemapNode: SiteMapNodeGetResponse;
+  @Input() sitemapNode: SiteMapNodeGetResponseModel;
 
   form: FormGroup;
 
@@ -47,7 +47,7 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
 
   confirm() {
     this.siteMapService.auditingSitemap(
-      this.sitemapNode.node_id,
+      this.sitemapNode.nodeId,
       this.cmsDateAdapter.format(this.form.controls.startTime.value),
       this.cmsDateAdapter.format(this.form.controls.endTime.value),
       this.form.controls.memo.value,

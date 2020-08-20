@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { DepartmentInfo } from '../../../../global/api/neuxAPI/bean/DepartmentInfo';
 import { DepartmentService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
+import { DepartmentDetailInfoModel } from '../../../../global/api/data-model/models/department-detail-info.model';
 
 @Component({
   selector: 'cms-dept-maintain-modal',
@@ -19,7 +19,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   deptId: string;
   parentId: string;
 
-  dept: DepartmentInfo;
+  dept: DepartmentDetailInfoModel;
 
   title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}部門`;
 
@@ -36,7 +36,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   getDept() {
     return (
       this.action === 'Create'
-        ? of(new DepartmentInfo())
+        ? of(new DepartmentDetailInfoModel())
         : this.departmentService.getDepartmentByID(this.deptId)
     ).pipe(
       tap(dept => this.dept = dept)
@@ -46,8 +46,8 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   private save() {
     return (
       this.action === 'Create'
-        ? this.departmentService.createDepartment(this.dept.dept_id, this.dept.dept_name, this.parentId)
-        : this.departmentService.updateDepartment(this.dept.dept_id, this.dept.dept_name, this.parentId)
+        ? this.departmentService.createDepartment(this.dept.deptId, this.dept.deptName, this.parentId)
+        : this.departmentService.updateDepartment(this.dept.deptId, this.dept.deptName, this.parentId)
     );
   }
 

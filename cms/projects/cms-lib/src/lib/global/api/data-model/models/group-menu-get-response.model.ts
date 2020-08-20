@@ -7,7 +7,7 @@ import { ModelMapping, ModelMapper } from '../model-mapper';
 @ModelMapping<GroupMenuGetResponse, GroupMenuGetResponseModel>(
   GroupMenuGetResponse, GroupMenuGetResponseModel,
   (bean, model) => {
-    model.datas = bean.datas.map(d => ModelMapper.mapModelTo(GroupMenuInfoModel, d));
+    model.datas = ModelMapper.mapArrayTo(GroupMenuInfoModel, bean.datas);
   }
 )
 export class GroupMenuGetResponseModel {

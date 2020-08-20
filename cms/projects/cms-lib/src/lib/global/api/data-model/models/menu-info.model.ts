@@ -9,7 +9,7 @@ import { ModelMapping, ModelMapper } from '../model-mapper';
     model.funcId = bean.func_id;
     model.funcName = bean.func_name;
     model.componentId = bean.component_id;
-    model.children = bean.children.map(c => ModelMapper.mapModelTo(MenuInfoModel, c));
+    model.children = ModelMapper.mapArrayTo(MenuInfoModel, bean.children);
   }
 )
 export class MenuInfoModel {

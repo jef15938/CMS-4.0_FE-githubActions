@@ -17,6 +17,17 @@ export class ModelMapper {
     ModelMapper.store.set(target, mappings);
   }
 
+  static map<Source, Target>(sourceClass: Constructor<Source>, targetClass: Constructor<Target>, source: Source): Target {
+    const mappings = ModelMapper.store.get(targetClass);
+    const mapper = mappings?.get(sourceClass);
+    if (!mapper) {
+      throw new Error(`No model mapping found. From class ${(sourceClass as any).name || sourceClass.toString()} to class ${(targetClass as any).name || targetClass.toString()}`);
+    }
+    const target = new targetClass();
+    mapper(source, target);
+    return target;
+  }
+
   static mapModelTo<Source, Target>(targetClass: Constructor<Target>, source: Source): Target {
     const sourceClass = (source as any).__proto__.constructor;
     const mappings = ModelMapper.store.get(targetClass);
@@ -36,6 +47,11 @@ export class ModelMapper {
       );
     }
     return func;
+  }
+
+  static mapArrayTo<Source, Target>(targetClass: Constructor<Target>, sources: Source[]): Target[] {
+    const results = (sources || []).map(source => ModelMapper.mapModelTo(targetClass, source));
+    return results;
   }
 
 }

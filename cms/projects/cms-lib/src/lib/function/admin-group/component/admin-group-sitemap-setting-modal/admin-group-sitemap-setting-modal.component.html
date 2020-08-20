@@ -5,8 +5,8 @@
         <mat-label>站台</mat-label>
         <mat-select [(ngModel)]="siteID" name="siteID" (selectionChange)="onSelectionChange($event)">
           <mat-option [value]="'none'">請選擇</mat-option>
-          <mat-option *ngFor="let site of sites" [value]="site.site_id">
-            {{site.site_name}}
+          <mat-option *ngFor="let site of sites" [value]="site.siteId">
+            {{site.siteName}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -16,7 +16,7 @@
     <div class="modal-form-layout__col">
       <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="nodes" [checkbox]="true"
         [checkedNodes]="checkedNodes" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
-        [nodeDisplayField]="'node_name'" (nodeCheckedChange)="onNodeCheckedChange($event)">
+        [nodeDisplayField]="'nodeName'" (nodeCheckedChange)="onNodeCheckedChange($event)">
       </cms-tree>
     </div>
   </div>

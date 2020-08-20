@@ -1,40 +1,40 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UserSiteMapPostRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPostRequest';
 import { SitemapService, ContentService, GroupService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
-import { LayoutInfo } from '../../../../global/api/neuxAPI/bean/LayoutInfo';
 import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
-import { GroupInfo } from '../../../../global/api/neuxAPI/bean/GroupInfo';
+import { GroupInfoModel } from '../../../../global/api/data-model/models/group-info.model';
+import { LayoutInfoModel } from '../../../../global/api/data-model/models/layout-info.model';
+import { UserSiteMapPostRequestModel } from '../../../../global/api/data-model/models/user-sitemap-post-request.model';
 
-class SiteMapCreateModel extends UserSiteMapPostRequest {
+class SiteMapCreateModel extends UserSiteMapPostRequestModel {
 
   constructor(parentId: string) {
     super();
-    this.parent_id = parentId;
+    this.parentId = parentId;
   }
 
   private clearLink() {
     this.url = undefined;
-    this.url_blank = undefined;
-    this.url_link_node_id = undefined;
-    this.url_type = undefined;
+    this.urlBlank = undefined;
+    this.urlLinkNodeId = undefined;
+    this.urlType = undefined;
   }
 
   private clearContent() {
-    this.layout_id = undefined;
-    this.content_path = undefined;
-    this.meta_description = undefined;
-    this.meta_image = undefined;
-    this.meta_keyword = undefined;
+    this.layoutId = undefined;
+    this.contentPath = undefined;
+    this.metaDescription = undefined;
+    this.metaImage = undefined;
+    this.metaKeyword = undefined;
   }
 
   checkFieldsByNodeType() {
-    switch (this.node_type) {
+    switch (this.nodeType) {
       case null:
         this.clearLink();
         this.clearContent();
@@ -67,8 +67,8 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   activedLayoutID: string;
 
   sitemapMaintainModel: SiteMapCreateModel;
-  layouts: LayoutInfo[] = [];
-  groups: GroupInfo[] = [];
+  layouts: LayoutInfoModel[] = [];
+  groups: GroupInfoModel[] = [];
   assignGroupIds: string[] = [];
 
   urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
@@ -115,13 +115,8 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   }
 
   confirm() {
-    this.sitemapMaintainModel.assign_group_id = this.assignGroupIds.join(',');
-    this.sitemapService.createSiteNode(
-      this.siteId,
-      this.sitemapMaintainModel.node_name,
-      this.sitemapMaintainModel.meta_title,
-      this.sitemapMaintainModel
-    ).subscribe(_ => {
+    this.sitemapMaintainModel.assignGroupId = this.assignGroupIds.join(',');
+    this.sitemapService.createSiteNode(this.siteId, this.sitemapMaintainModel).subscribe(_ => {
       this.close('Created');
     });
   }
@@ -130,24 +125,24 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     return optionValue === modelValue || (!optionValue && !modelValue);
   }
 
-  onSelectedLayoutCheckedChange(ev: MatCheckboxChange, layout: LayoutInfo) {
+  onSelectedLayoutCheckedChange(ev: MatCheckboxChange, layout: LayoutInfoModel) {
     if (ev.checked) {
-      this.sitemapMaintainModel.layout_id = layout.layout_id;
+      this.sitemapMaintainModel.layoutId = layout.layoutId;
     } else {
-      this.sitemapMaintainModel.layout_id = undefined;
+      this.sitemapMaintainModel.layoutId = undefined;
     }
   }
 
-  setActivedLayout(layout: LayoutInfo, actived: boolean) {
+  setActivedLayout(layout: LayoutInfoModel, actived: boolean) {
     if (actived) {
-      this.activedLayoutID = layout.layout_id;
-    } else if (this.activedLayoutID === layout.layout_id) {
+      this.activedLayoutID = layout.layoutId;
+    } else if (this.activedLayoutID === layout.layoutId) {
       this.activedLayoutID = undefined;
     }
   }
 
-  selectedLayout(layout: LayoutInfo, layoutSelect: MatSelect) {
-    this.sitemapMaintainModel.layout_id = layout.layout_id;
+  selectedLayout(layout: LayoutInfoModel, layoutSelect: MatSelect) {
+    this.sitemapMaintainModel.layoutId = layout.layoutId;
     layoutSelect.close();
   }
 
@@ -160,7 +155,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     return this.gallerySharedService.openImgGallery().subscribe((selected: GalleryInfo) => {
       if (selected) {
         this.metaImageName = selected.file_name;
-        this.sitemapMaintainModel.meta_image = `${selected.gallery_id}`;
+        this.sitemapMaintainModel.metaImage = `${selected.gallery_id}`;
       }
     });
   }

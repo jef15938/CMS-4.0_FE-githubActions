@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, concat, of } from 'rxjs';
 import { tap, concatMap } from 'rxjs/operators';
-import { DepartmentInfo } from '../../../../global/api/neuxAPI/bean/DepartmentInfo';
 import { DepartmentService } from '../../../../global/api/service';
 import { CmsTree } from '../../../ui/tree';
 import { ModalService } from '../../../ui/modal';
 import { DeptNodeComponent, DeptNodeCustomEvent } from '../dept-node/dept-node.component';
 import { DeptMaintainModalComponent } from '../dept-maintain-modal/dept-maintain-modal.component';
+import { DepartmentInfoModel } from '../../../../global/api/data-model/models/department-info.model';
 
 @Component({
   selector: 'cms-dept',
@@ -17,7 +17,7 @@ export class DeptComponent implements OnInit {
 
   customNodeRenderer = DeptNodeComponent;
 
-  depts: DepartmentInfo[] = [];
+  depts: DepartmentInfoModel[] = [];
 
   constructor(
     private departmentService: DepartmentService,
@@ -40,7 +40,7 @@ export class DeptComponent implements OnInit {
     );
   }
 
-  afterTreeRender(ev: { tree: CmsTree<DepartmentInfo>, firstTime: boolean }) {
+  afterTreeRender(ev: { tree: CmsTree<DepartmentInfoModel>, firstTime: boolean }) {
     const defaultSelect = this.depts ? this.depts[0] : undefined;
     ev.tree.selectNode(defaultSelect);
   }
@@ -50,13 +50,13 @@ export class DeptComponent implements OnInit {
       let actionOb: Observable<any> = of(undefined);
       switch (event.action) {
         case event.ActionType.CREATE:
-          actionOb = this.openDeptMaintainModal('Create', event.data)
+          actionOb = this.openDeptMaintainModal('Create', event.data);
           break;
         case event.ActionType.EDIT:
-          actionOb = this.openDeptMaintainModal('Update', event.data)
+          actionOb = this.openDeptMaintainModal('Update', event.data);
           break;
         case event.ActionType.DELETE:
-          actionOb = this.deleteDepartment(event.data)
+          actionOb = this.deleteDepartment(event.data);
           break;
       }
 
@@ -68,26 +68,26 @@ export class DeptComponent implements OnInit {
     }
   }
 
-  deleteDepartment(dept: DepartmentInfo) {
-    return this.modalService.openConfirm({ message: `${dept.dept_name}`, title: `確認刪除部門 ?` })
+  deleteDepartment(dept: DepartmentInfoModel) {
+    return this.modalService.openConfirm({ message: `${dept.deptName}`, title: `確認刪除部門 ?` })
       .pipe(
-        concatMap(confirm => confirm ? this.departmentService.deleteDepartment(dept.dept_id) : of(undefined))
+        concatMap(confirm => confirm ? this.departmentService.deleteDepartment(dept.deptId) : of(undefined))
       );
   }
 
-  openDeptMaintainModal(action: 'Create' | 'Update', selectedDept: DepartmentInfo) {
+  openDeptMaintainModal(action: 'Create' | 'Update', selectedDept: DepartmentInfoModel) {
     const parent = this.findParentDept(selectedDept);
     return this.modalService.openComponent({
       component: DeptMaintainModalComponent,
       componentInitData: {
         action,
-        deptId: action === 'Create' ? '' : selectedDept.dept_id,
-        parentId: action === 'Create' ? selectedDept.dept_id : parent ? parent.dept_id : '',
+        deptId: action === 'Create' ? '' : selectedDept.deptId,
+        parentId: action === 'Create' ? selectedDept.deptId : parent ? parent.deptId : '',
       }
     });
   }
 
-  findParentDept(child: DepartmentInfo, sources: DepartmentInfo[] = this.depts || []): DepartmentInfo {
+  findParentDept(child: DepartmentInfoModel, sources: DepartmentInfoModel[] = this.depts || []): DepartmentInfoModel {
     if (!sources.length) { return null; }
     for (let i = 0, l = sources.length; i < l; ++i) {
       const parent = sources[i];

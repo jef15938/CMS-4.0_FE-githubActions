@@ -1,8 +1,8 @@
 import { Type } from '@angular/core';
 
-export interface ColDef {
+export interface ColDef<TData> {
   colId: string;
-  field: string;
+  field: keyof TData | 'action' | '';
   title: string;
   cellClass?: string;
   cellRenderer?: Type<any>;

@@ -18,7 +18,7 @@ export class ItemComponent implements OnInit {
   title = '智慧助手 > 項目設定';
   items: ChatbotItem[];
 
-  colDefs: ColDef[] = [
+  colDefs: ColDef<ChatbotItem>[] = [
     {
       colId: 'value',
       field: 'value',

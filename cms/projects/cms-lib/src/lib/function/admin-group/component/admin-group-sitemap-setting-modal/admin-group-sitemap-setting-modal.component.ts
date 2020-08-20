@@ -1,21 +1,21 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { CustomModalActionButton, CustomModalBase, TreeComponent } from '../../../ui';
 import { SitemapService, GroupService } from '../../../../global/api/service';
-import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
-import { SiteInfo } from '../../../../global/api/neuxAPI/bean/SiteInfo';
 import { AdminGroupSitemapSettingNodeComponent } from '../admin-group-sitemap-setting-node/admin-group-sitemap-setting-node.component';
-import { GroupSitemapInfo } from '../../../../global/api/neuxAPI/bean/GroupSitemapInfo';
 import { forkJoin } from 'rxjs';
+import { GroupSitemapInfoModel } from '../../../../global/api/data-model/models/group-sitemap-info.model';
+import { SiteInfoModel } from '../../../../global/api/data-model/models/site-info.model';
+import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 
-class Node extends SiteMapGetResponse {
-  groupSitemapInfo: GroupSitemapInfo;
+class Node extends SiteMapGetResponseModel {
+  groupSitemapInfo: GroupSitemapInfoModel;
   isChecked = false;
 }
 
 @Component({
   selector: 'cms-admin-group-sitemap-setting-modal',
   templateUrl: './admin-group-sitemap-setting-modal.component.html',
-  styleUrls: ['./admin-group-sitemap-setting-modal.component.css']
+  styleUrls: ['./admin-group-sitemap-setting-modal.component.scss']
 })
 export class AdminGroupSitemapSettingModalComponent extends CustomModalBase implements OnInit {
   title = '設定前台節點';
@@ -28,7 +28,7 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
   @Input() groupID: string;
 
   siteID = 'none';
-  sites: SiteInfo[] = [];
+  sites: SiteInfoModel[] = [];
 
   nodes: Node[];
   checkedNodes: Node[] = [];
@@ -53,27 +53,27 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
       this.groupService.getGroupSiteMapList(this.siteID, this.groupID),
     ]).subscribe(([sitemaps, groupSitemapInfos]) => {
       this.nodes = this.convertToNodes(sitemaps, groupSitemapInfos);
-      this.checkedNodes = this.getNodesByNodeIds(groupSitemapInfos.map(info => info.node_id), this.nodes);
+      this.checkedNodes = this.getNodesByNodeIds(groupSitemapInfos.map(info => info.nodeId), this.nodes);
     });
   }
 
-  private convertToNodes(sitemaps: SiteMapGetResponse[], groupSitemapInfos: GroupSitemapInfo[]): Node[] {
+  private convertToNodes(sitemaps: SiteMapGetResponseModel[], groupSitemapInfos: GroupSitemapInfoModel[]): Node[] {
     return sitemaps.map(sitemap => {
       const node = new Node();
       for (const key in sitemap) {
         node[key] = sitemap[key];
       }
 
-      const groupSitemapInfo = new GroupSitemapInfo();
+      const groupSitemapInfo = new GroupSitemapInfoModel();
       node.groupSitemapInfo = groupSitemapInfo;
 
-      const groupSitemapInfoByNodeID = groupSitemapInfos.find(info => info.node_id === sitemap.node_id);
+      const groupSitemapInfoByNodeID = groupSitemapInfos.find(info => info.nodeId === sitemap.nodeId);
       if (groupSitemapInfoByNodeID) {
         node.isChecked = true;
-        node.groupSitemapInfo.can_add = groupSitemapInfoByNodeID.can_add;
-        node.groupSitemapInfo.can_delete = groupSitemapInfoByNodeID.can_delete;
-        node.groupSitemapInfo.can_modify = groupSitemapInfoByNodeID.can_modify;
-        node.groupSitemapInfo.node_id = groupSitemapInfoByNodeID.node_id;
+        node.groupSitemapInfo.canAdd = groupSitemapInfoByNodeID.canAdd;
+        node.groupSitemapInfo.canDelete = groupSitemapInfoByNodeID.canDelete;
+        node.groupSitemapInfo.canModify = groupSitemapInfoByNodeID.canModify;
+        node.groupSitemapInfo.nodeId = groupSitemapInfoByNodeID.nodeId;
       }
 
       node.children = this.convertToNodes(node.children, groupSitemapInfos);
@@ -83,7 +83,7 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
 
   private getNodesByNodeIds(nodeIds: string[], sources: Node[], results: Node[] = []): Node[] {
     if (!sources?.length) { return results; }
-    results = results.concat(sources.filter(source => nodeIds.indexOf(source.node_id) > -1));
+    results = results.concat(sources.filter(source => nodeIds.indexOf(source.nodeId) > -1));
     sources = sources.reduce((a, b) => a.concat(b.children || []), []);
     return this.getNodesByNodeIds(nodeIds, sources, results);
   }
@@ -92,20 +92,20 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
     const node = ev.node;
     node.isChecked = ev.checked;
     if (!node.isChecked) {
-      node.groupSitemapInfo.can_add = false;
-      node.groupSitemapInfo.can_delete = false;
-      node.groupSitemapInfo.can_modify = false;
+      node.groupSitemapInfo.canAdd = false;
+      node.groupSitemapInfo.canDelete = false;
+      node.groupSitemapInfo.canModify = false;
     }
   }
 
   confirm() {
     const checkedNodes: Node[] = this.tree.getSelectedNodes();
-    const groupSitemapInfos: GroupSitemapInfo[] = checkedNodes.map(node => {
-      const info = new GroupSitemapInfo();
-      info.node_id = node.node_id;
-      info.can_add = node.groupSitemapInfo.can_add;
-      info.can_delete = node.groupSitemapInfo.can_delete;
-      info.can_modify = node.groupSitemapInfo.can_modify;
+    const groupSitemapInfos: GroupSitemapInfoModel[] = checkedNodes.map(node => {
+      const info = new GroupSitemapInfoModel();
+      info.nodeId = node.nodeId;
+      info.canAdd = node.groupSitemapInfo.canAdd;
+      info.canDelete = node.groupSitemapInfo.canDelete;
+      info.canModify = node.groupSitemapInfo.canModify;
       return info;
     });
     this.groupService.updateGroupSitemap(this.siteID, this.groupID, groupSitemapInfos).subscribe(_ => this.close('Success'));

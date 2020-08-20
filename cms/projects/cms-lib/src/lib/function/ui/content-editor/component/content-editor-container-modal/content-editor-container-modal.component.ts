@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
-import { TemplateGetResponse } from './../../../../../global/api/neuxAPI/bean/TemplateGetResponse';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interface';
 import { ContentService } from '../../../../../global/api/service';
+import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
 
 @Component({
   selector: 'cms-content-editor-container-modal',
@@ -20,7 +20,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   @Input() editorMode: EditorMode = EditorMode.EDIT;
   @Input() onSaved: () => void;
 
-  templates: TemplateGetResponse;
+  templates: TemplateGetResponseModel;
 
   constructor(
     private contentService: ContentService,

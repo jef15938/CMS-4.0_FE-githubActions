@@ -13,7 +13,7 @@ export class TableComponent<TData> implements OnChanges {
   @ViewChildren(DynamicWrapperDirective) customRenderWrappers: QueryList<DynamicWrapperDirective<CustomCellRenderer>>;
 
   @Input() selectRow = false;
-  @Input() colDefs: ColDef[];
+  @Input() colDefs: ColDef<TData>[];
   @Input() dataSource: TData[];
 
   @Output() customEvent = new EventEmitter<CmsTableCustomCellEvent>();

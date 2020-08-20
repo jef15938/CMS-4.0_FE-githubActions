@@ -4,11 +4,16 @@ import { map } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { MyAuditingDetailGetResponse } from '../../neuxAPI/bean/MyAuditingDetailGetResponse';
-import { MyAuditingDetailInfo } from '../../neuxAPI/bean/MyAuditingDetailInfo';
 import { MyAuditingGetResponse } from '../../neuxAPI/bean/MyAuditingGetResponse';
 import { AuditingGetResponse } from '../../neuxAPI/bean/AuditingGetResponse';
 import { AuditingSubmitRequest } from '../../neuxAPI/bean/AuditingSubmitRequest';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
+import { ModelMapper } from '../../data-model/model-mapper';
+import { AuditingGetResponseModel } from '../../data-model/models/auditing-get-response.model';
+import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
+import { MyAuditingGetResponseModel } from '../../data-model/models/my-auditing-get-response.model';
+import { MyAuditingDetailInfoModel } from '../../data-model/models/my-auditing-detail-info.model';
+import { MyAuditingDetailGetResponseModel } from '../../data-model/models/my-auditing-detail-get-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +31,13 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  getMyAuditingList(pageNumber: number = 1): Observable<MyAuditingGetResponse> {
+  getMyAuditingList(pageNumber: number = 1): Observable<MyAuditingGetResponseModel> {
     if (!pageNumber) {
       throw new ParamsError('pageNumber', 'getMyAuditingList', 'number', pageNumber);
     }
-    return this.restAPIService.dispatchRestApi('GetMyAuditing', { page: pageNumber });
+    return this.restAPIService.dispatchRestApi<MyAuditingGetResponse>('GetMyAuditing', { page: pageNumber }).pipe(
+      ModelMapper.rxMapModelTo(MyAuditingGetResponseModel),
+    );
   }
 
   /**
@@ -40,12 +47,13 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  getMyAuditingDetail(orderID: number): Observable<MyAuditingDetailInfo[]> {
+  getMyAuditingDetail(orderID: number): Observable<MyAuditingDetailInfoModel[]> {
     if (!orderID) {
       throw new ParamsError('orderID', 'getMyAuditingDetail', 'number', orderID);
     }
-    return this.restAPIService.dispatchRestApi('GetMyAuditingByOrderID', { orderID }).pipe(
-      map((res: MyAuditingDetailGetResponse) => res.datas)
+    return this.restAPIService.dispatchRestApi<MyAuditingDetailGetResponse>('GetMyAuditingByOrderID', { orderID }).pipe(
+      ModelMapper.rxMapModelTo(MyAuditingDetailGetResponseModel),
+      map(res => res.datas)
     );
   }
 
@@ -56,11 +64,13 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  getAuditingListForManager(pageNumber: number = 1): Observable<AuditingGetResponse> {
+  getAuditingListForManager(pageNumber: number = 1): Observable<AuditingGetResponseModel> {
     if (!pageNumber) {
       throw new ParamsError('pageNumber', 'getAuditingListForManager', 'number', pageNumber);
     }
-    return this.restAPIService.dispatchRestApi('GetAuditing', { page: pageNumber });
+    return this.restAPIService.dispatchRestApi<AuditingGetResponse>('GetAuditing', { page: pageNumber }).pipe(
+      ModelMapper.rxMapModelTo(AuditingGetResponseModel)
+    );
   }
 
   /**
@@ -96,10 +106,12 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  getPreviewInfo(orderID: number): Observable<PreviewInfo> {
+  getPreviewInfo(orderID: number): Observable<PreviewInfoModel> {
     if (!orderID) {
       throw new ParamsError('orderID', 'getPreviewInfo', 'number', orderID);
     }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetAuditingPreviewByOrderID', { orderID });
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetAuditingPreviewByOrderID', { orderID }).pipe(
+      ModelMapper.rxMapModelTo(PreviewInfoModel),
+    );
   }
 }

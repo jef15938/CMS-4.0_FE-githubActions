@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DialogFlowMessengerService } from './global/service';
 import { RippleScreen } from './global/util/cfx';
 import { AuthorizationService } from './global/api/service';
-import { LoginInfo } from './global/api/neuxAPI/bean/LoginInfo';
 import { MenuInfoModel } from './global/api/data-model/models/menu-info.model';
+import { LoginInfoModel } from './global/api/data-model/models/login-info.model';
 
 @Component({
   selector: 'cms-cms',
@@ -18,7 +18,7 @@ export class CmsComponent implements OnInit, AfterViewInit {
   cmsMenus: MenuInfoModel[] = [];
   appMenus: MenuInfoModel[] = [];
 
-  loginInfo: LoginInfo;
+  loginInfo: LoginInfoModel;
 
   constructor(
     private router: Router,

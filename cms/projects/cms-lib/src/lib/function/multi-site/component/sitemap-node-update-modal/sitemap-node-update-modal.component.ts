@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
-import { SiteMapNodeGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapNodeGetResponse';
-import { UserSiteMapPutRequest } from '../../../../global/api/neuxAPI/bean/UserSiteMapPutRequest';
 import { SitemapService } from '../../../../global/api/service/sitemap/sitemap.service';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
-import { SiteNodeDetailInfo } from '../../../../global/api/neuxAPI/bean/SiteNodeDetailInfo';
+import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
+import { UserSiteMapPutRequestModel } from '../../../../global/api/data-model/models/user-sitemap-put-request.model';
+import { SiteNodeDetailInfoModel } from '../../../../global/api/data-model/models/site-node-detail-info.model';
 
 @Component({
   selector: 'cms-sitemap-node-update-modal',
@@ -37,9 +37,9 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
   ];
 
   @Input() parentID: string;
-  @Input() sitemapNode: SiteMapNodeGetResponse;
+  @Input() sitemapNode: SiteMapNodeGetResponseModel;
 
-  putRequest: UserSiteMapPutRequest;
+  putRequest: UserSiteMapPutRequestModel;
 
   constructor(
     private sitemapService: SitemapService,
@@ -55,23 +55,23 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
   }
 
   private wrapSiteMapNodeGetResponseToUserSiteMapPutRequest(
-    sitemapNode: SiteMapNodeGetResponse,
+    sitemapNode: SiteMapNodeGetResponseModel,
     parentID: string
-  ): UserSiteMapPutRequest {
-    const model = new UserSiteMapPutRequest();
-    model.parent_id = parentID || '';
-    model.content_path = sitemapNode.content_path;
-    model.details = JSON.parse(JSON.stringify(sitemapNode.details || []));
+  ): UserSiteMapPutRequestModel {
+    const model = new UserSiteMapPutRequestModel();
+    model.parentId = parentID || '';
+    model.contentPath = sitemapNode.contentPath;
+    model.details = [...sitemapNode.details];
     model.url = sitemapNode.url;
-    model.url_blank = sitemapNode.url_blank;
-    model.url_link_node_id = sitemapNode.url_link_node_id;
-    model.url_type = sitemapNode.url_type;
+    model.urlBlank = sitemapNode.urlBlank;
+    model.urlLinkNodeId = sitemapNode.urlLinkNodeId;
+    model.urlType = sitemapNode.urlType;
     return model;
   }
 
   confirm() {
     this.sitemapService.updateSiteNode(
-      this.sitemapNode.node_id,
+      this.sitemapNode.nodeId,
       this.putRequest.details,
       this.putRequest
     ).subscribe(_ => {
@@ -79,11 +79,11 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
     });
   }
 
-  openGallery(detail: SiteNodeDetailInfo) {
+  openGallery(detail: SiteNodeDetailInfoModel) {
     return this.gallerySharedService.openImgGallery().subscribe((selected: GalleryInfo) => {
       if (selected) {
-        detail.meta_image_name = selected.file_name;
-        detail.meta_image = `${selected.gallery_id}`;
+        detail.metaImageName = selected.file_name;
+        detail.metaImage = `${selected.gallery_id}`;
       }
     });
   }

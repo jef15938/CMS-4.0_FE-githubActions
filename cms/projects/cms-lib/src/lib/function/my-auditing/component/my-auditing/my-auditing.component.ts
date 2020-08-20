@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, concat } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
-import { MyAuditingInfo } from '../../../../global/api/neuxAPI/bean/MyAuditingInfo';
-import { PageInfo } from '../../../../global/api/neuxAPI/bean/PageInfo';
 import { AuditingService } from '../../../../global/api/service';
 import { ColDef } from '../../../ui/table';
 import { ModalService } from '../../../ui/modal';
 import { MyAuditingActionCellComponent, MyAuditingActionCellCustomEvent } from '../my-auditing-action-cell/my-auditing-action-cell.component';
 import { MyAuditingDetailModalComponent } from '../my-auditing-detail-modal/my-auditing-detail-modal.component';
-import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
+import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
+import { MyAuditingInfoModel } from '../../../../global/api/data-model/models/my-auditing-info.model';
+import { PageInfoModel } from '../../../../global/api/data-model/models/page-info.model';
 
 @Component({
   selector: 'cms-my-auditing',
@@ -18,19 +18,19 @@ import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 })
 export class MyAuditingComponent implements OnInit {
 
-  myAuditings: MyAuditingInfo[];
-  pageInfo: PageInfo;
+  myAuditings: MyAuditingInfoModel[];
+  pageInfo: PageInfoModel;
 
-  colDefs: ColDef[] = [
+  colDefs: ColDef<MyAuditingInfoModel>[] = [
     {
-      colId: 'order_id',
-      field: 'order_id',
+      colId: 'orderId',
+      field: 'orderId',
       title: '序號',
       width: '80px',
     },
     {
-      colId: 'order_name',
-      field: 'order_name',
+      colId: 'orderName',
+      field: 'orderName',
       title: '名稱',
     },
     {
@@ -40,15 +40,15 @@ export class MyAuditingComponent implements OnInit {
       width: '100px',
     },
     {
-      colId: 'start_time',
-      field: 'start_time',
+      colId: 'startTime',
+      field: 'startTime',
       title: '上架時間',
       format: 'DATETIME',
       width: '100px',
     },
     {
-      colId: 'end_time',
-      field: 'end_time',
+      colId: 'endTime',
+      field: 'endTime',
       title: '下架時間',
       format: 'DATETIME',
       width: '100px',
@@ -78,7 +78,7 @@ export class MyAuditingComponent implements OnInit {
     );
   }
 
-  private getMyAuditings(): Observable<MyAuditingInfo[]> {
+  private getMyAuditings(): Observable<MyAuditingInfoModel[]> {
     return this.auditingService.getMyAuditingList(this.pageInfo?.page).pipe(
       tap(res => {
         this.pageInfo = res.pageInfo;
@@ -95,7 +95,7 @@ export class MyAuditingComponent implements OnInit {
           this.modalService.openComponent({
             component: MyAuditingDetailModalComponent,
             componentInitData: {
-              orderId: event.data.order_id
+              orderId: event.data.orderId
             }
           });
           break;
@@ -114,15 +114,15 @@ export class MyAuditingComponent implements OnInit {
     }
   }
 
-  preview(auditingInfo: MyAuditingInfo) {
-    const orderID = auditingInfo.order_id;
+  preview(auditingInfo: MyAuditingInfoModel) {
+    const orderID = auditingInfo.orderId;
     this.auditingService.getPreviewInfo(orderID).subscribe(previewInfo => {
-      switch (previewInfo.preview_type) {
+      switch (previewInfo.previewType) {
         case PreviewInfoType.ONE_PAGE:
           window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
           break;
         case PreviewInfoType.FARM:
-          this.farmSharedService.openFarmPreview(previewInfo.func_id, previewInfo.data_id).subscribe();
+          this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
           break;
       }
     });

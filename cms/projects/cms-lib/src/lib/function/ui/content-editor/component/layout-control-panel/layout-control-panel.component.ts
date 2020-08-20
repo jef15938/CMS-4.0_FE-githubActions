@@ -2,13 +2,13 @@ import {
   Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges,
   ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef
 } from '@angular/core';
-import { TemplateGetResponse } from './../../../../../global/api/neuxAPI/bean/TemplateGetResponse';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
-import { TemplateInfo } from './../../../../../global/api/neuxAPI/bean/TemplateInfo';
 import { DynamicComponentFactoryService, LayoutBaseComponent } from '@neux/render';
 import { ContentTemplateInfo } from '../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
 import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentEditorContext } from '../../content-editor.interface';
+import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
+import { TemplateInfoModel } from '../../../../../global/api/data-model/models/template-info.model';
 
 @Component({
   selector: 'cms-layout-control-panel',
@@ -26,9 +26,9 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   @Input() contentInfo: ContentInfo;
 
   // 可選版面資料
-  @Input() selectableTemplates: TemplateGetResponse;
+  @Input() selectableTemplates: TemplateGetResponseModel;
 
-  mainTemplates: TemplateInfo[] = [];
+  mainTemplates: TemplateInfoModel[] = [];
 
   @Output() templateAdd = new EventEmitter<string>(); // template_name
 
@@ -42,9 +42,9 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.mainTemplates = [
       {
-        template_id: 'FixedWrapper',
-        template_name: '固定式外框',
-        template_thumbnail: ''
+        templateId: 'FixedWrapper',
+        templateName: '固定式外框',
+        templateThumbnail: ''
       },
       // {
       //   template_id: 'Download',
@@ -103,17 +103,17 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     }
   }
 
-  selectTemplate(selectedTemplateInfo: TemplateInfo) {
+  selectTemplate(selectedTemplateInfo: TemplateInfoModel) {
     const btnTemplatesContainer = this.selectedBtn.templatesContainer;
     const btnRootTemplatesContainer = this.selectedBtn.rootTemplatesContainer;
     const isRoot = btnTemplatesContainer === btnRootTemplatesContainer;
     const btnLayoutWrapper = this.selectedBtn.targetLayoutWrapper;
     const templateInfo = btnLayoutWrapper?.templateInfo;
 
-    const yes = window.confirm(`確定加入${selectedTemplateInfo.template_name}:${selectedTemplateInfo.template_id}？`);
+    const yes = window.confirm(`確定加入${selectedTemplateInfo.templateName}:${selectedTemplateInfo.templateId}？`);
     if (!yes) { return; }
-    const component = this.dynamicComponentFactoryService.getComponent(selectedTemplateInfo.template_id);
-    if (!component) { alert(`找不到指定id的版面元件 : ${selectedTemplateInfo.template_id}`); return; }
+    const component = this.dynamicComponentFactoryService.getComponent(selectedTemplateInfo.templateId);
+    if (!component) { alert(`找不到指定id的版面元件 : ${selectedTemplateInfo.templateId}`); return; }
 
     let defaultTemplateInfo: ContentTemplateInfo;
 
@@ -130,7 +130,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
     }
 
-    if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${selectedTemplateInfo.template_id}`); return; }
+    if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${selectedTemplateInfo.templateId}`); return; }
 
     const rootTemplatesContainers = this.context.getRootTemplatesContainerComponents();
 
@@ -175,7 +175,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       });
     }
 
-    this.templateAdd.emit(selectedTemplateInfo.template_id);
+    this.templateAdd.emit(selectedTemplateInfo.templateId);
   }
 
 

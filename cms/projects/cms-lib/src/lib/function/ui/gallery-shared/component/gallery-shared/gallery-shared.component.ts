@@ -36,7 +36,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   galleryPageInfo: PageInfo;
   galleryDatas: GalleryInfo[];
-  colDefs: ColDef[];
+  colDefs: ColDef<GalleryInfo>[];
 
   readonly clipBoardInputId = 'gallerySharedClipBoardInput';
 
@@ -74,8 +74,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  private createColDefs(mode: 'page' | 'modal'): ColDef[] {
-    const colDefs: ColDef[] = [
+  private createColDefs(mode: 'page' | 'modal'): ColDef<GalleryInfo>[] {
+    const colDefs: ColDef<GalleryInfo>[] = [
       // {
       //   colId: 'file_name',
       //   field: 'file_name',
@@ -93,7 +93,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
       // },
       {
         colId: 'info',
-        field: 'info',
+        field: '',
         title: '資訊',
         cellRenderer: GalleryInfoCellComponent,
       },
@@ -174,7 +174,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
         categoryID: action === 'Update' ? category.category_id : undefined,
         categoryName: action === 'Update' ? category.category_name : undefined,
         parentId: action === 'Update' ? this.tree.findParent(category)?.category_id : category.category_id,
-        assignDeptId: action === 'Update' ? category.assign_dept_id : this.authorizationService.getCurrentLoginInfo().dept_id,
+        assignDeptId: action === 'Update' ? category.assign_dept_id : this.authorizationService.getCurrentLoginInfo().deptId,
       }
     });
   }

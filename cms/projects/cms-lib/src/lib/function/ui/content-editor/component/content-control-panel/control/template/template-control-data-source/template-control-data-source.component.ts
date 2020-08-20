@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { DataSourceTemplateInfo, LayoutWrapperSelectEvent, DataSourceTemplateBaseComponent } from '@neux/render';
 import { ContentService } from '../../../../../../../../global/api/service/content/content.service';
-import { ContentDataSource } from '../../../../../../../../global/api/neuxAPI/bean/ContentDataSource';
+import { ContentDataSourceModel } from '../../../../../../../../global/api/data-model/models/content-data-source.model';
 
 @Component({
   selector: 'cms-template-control-data-source',
@@ -14,7 +14,7 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
   templateInfo: DataSourceTemplateInfo;
   sourceType: string;
 
-  souces: ContentDataSource[] = [];
+  souces: ContentDataSourceModel[] = [];
 
   constructor(
     private contentService: ContentService,

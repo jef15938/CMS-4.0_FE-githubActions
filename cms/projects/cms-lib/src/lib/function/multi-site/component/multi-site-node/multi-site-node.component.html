@@ -1,5 +1,5 @@
 <div class="cms-multi-site-node" *ngIf="node">
-  <div class="cms-multi-site-node__title pointer">{{node.data.node_name}}</div>
+  <div class="cms-multi-site-node__title pointer">{{node.data.nodeName}}</div>
   <div class="cms-multi-site-node__menu " #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
       <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.CREATE)"

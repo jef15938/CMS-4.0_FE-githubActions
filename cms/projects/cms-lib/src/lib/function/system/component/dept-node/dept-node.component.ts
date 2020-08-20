@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DepartmentInfo } from '../../../../global/api/neuxAPI/bean/DepartmentInfo';
 import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../ui/tree';
+import { DepartmentInfoModel } from '../../../../global/api/data-model/models/department-info.model';
 
 enum ActionType {
   CREATE, EDIT, DELETE
@@ -13,7 +13,7 @@ export class DeptNodeCustomEvent {
   ActionType = ActionType;
   constructor(
     public action: ActionType,
-    public data: DepartmentInfo
+    public data: DepartmentInfoModel,
   ) { }
 }
 
@@ -22,19 +22,19 @@ export class DeptNodeCustomEvent {
   templateUrl: './dept-node.component.html',
   styleUrls: ['./dept-node.component.scss']
 })
-export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfo>, OnInit, OnDestroy {
+export class DeptNodeComponent implements CmsTreeNodeRenderer<DepartmentInfoModel>, OnInit, OnDestroy {
   ActionType = ActionType;
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-  node: CmsTreeNode<DepartmentInfo>;
+  node: CmsTreeNode<DepartmentInfoModel>;
 
   private destroy$ = new Subject();
 
   constructor() { }
 
   // called before ngOnInit()
-  compInit(node: CmsTreeNode<DepartmentInfo>) {
+  compInit(node: CmsTreeNode<DepartmentInfoModel>) {
     this.node = node;
   }
 

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
 import { ContentService } from '../../../../../global/api/service';
-import { ContentVersionInfo } from '../../../../../global/api/neuxAPI/bean/ContentVersionInfo';
 import { ColDef } from '../../../table';
+import { ContentVersionInfoModel } from '../../../../../global/api/data-model/models/content-version-info.model';
 
 @Component({
   selector: 'cms-content-version-recover-modal',
@@ -15,23 +15,23 @@ export class ContentVersionRecoverModalComponent extends CustomModalBase impleme
 
   @Input() contentID = '';
 
-  versions: ContentVersionInfo[] = [];
+  versions: ContentVersionInfoModel[] = [];
 
-  colDefs: ColDef[] = [
+  colDefs: ColDef<ContentVersionInfoModel>[] = [
     {
       colId: 'version',
       field: 'version',
       title: '版本號',
     },
     {
-      colId: 'create_time',
-      field: 'create_time',
+      colId: 'createTime',
+      field: 'createTime',
       title: '建立時間',
       format: 'DATETIME',
     },
     {
-      colId: 'create_by',
-      field: 'create_by',
+      colId: 'createBy',
+      field: 'createBy',
       title: '建立者',
     },
   ];
@@ -45,7 +45,7 @@ export class ContentVersionRecoverModalComponent extends CustomModalBase impleme
     this.contentService.getContentVersionByContentID(this.contentID).subscribe(versions => this.versions = versions);
   }
 
-  onRowClick(version: ContentVersionInfo) {
+  onRowClick(version: ContentVersionInfoModel) {
     this.modalService.openConfirm({ message: `版本號 : ${version.version}`, title: `確定回到此版本 ?` }).subscribe(confirm => {
       if (confirm) {
         this.close(version);

@@ -1,5 +1,5 @@
 <ng-container *ngIf="node">
-  <span class="pointer">{{node.data.dept_name}}</span>
+  <span class="pointer">{{node.data.deptName}}</span>
   <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
       <button type="button" tabindex="0" mat-menu-item (click)="onActionClicked(ActionType.CREATE)">

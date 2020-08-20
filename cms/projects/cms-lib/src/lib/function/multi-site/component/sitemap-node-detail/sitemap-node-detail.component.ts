@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { SiteMapNodeGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapNodeGetResponse';
 import { ModalService } from '../../../ui/modal';
 import { SitemapService, ContentService } from '../../../../global/api/service';
 import { ContentEditorService } from '../../../ui/content-editor';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
 import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
-import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { SitemapNodeUpdateModalComponent } from '../sitemap-node-update-modal/sitemap-node-update-modal.component';
-import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
+import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
+import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
+import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 
 @Component({
   selector: 'cms-sitemap-node-detail',
@@ -24,11 +24,11 @@ export class SitemapNodeDetailComponent implements OnInit {
   SiteMapUrlType = SiteMapUrlType;
 
   @Input() siteID: string;
-  @Input() userSitemap: SiteMapGetResponse;
+  @Input() userSitemap: SiteMapGetResponseModel;
   @Input() sitemapNodeParentID: string;
-  @Input() sitemapNode: SiteMapNodeGetResponse;
+  @Input() sitemapNode: SiteMapNodeGetResponseModel;
 
-  @Output() update = new EventEmitter<SiteMapNodeGetResponse>();
+  @Output() update = new EventEmitter<SiteMapNodeGetResponseModel>();
 
   urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
     { value: SiteMapUrlType.INSIDE, name: '站內' },
@@ -62,14 +62,14 @@ export class SitemapNodeDetailComponent implements OnInit {
 
   preview(languageID: string) {
     if (!this.userSitemap.canPreview) { return; }
-    const nodeID = this.sitemapNode.node_id;
+    const nodeID = this.sitemapNode.nodeId;
     this.sitemapService.getPreviewInfo(nodeID, languageID).subscribe(previewInfo => {
-      switch (previewInfo.preview_type) {
+      switch (previewInfo.previewType) {
         case PreviewInfoType.ONE_PAGE:
           window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
           break;
         case PreviewInfoType.FARM:
-          this.farmSharedService.openFarmPreview(previewInfo.func_id, previewInfo.data_id).subscribe();
+          this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
           break;
       }
     });
@@ -78,16 +78,16 @@ export class SitemapNodeDetailComponent implements OnInit {
   editContent() {
     if (!this.userSitemap.canModify) { return; }
 
-    const noteType = this.sitemapNode.node_type;
-    const controlID = this.sitemapNode.layout_id;
-    const contentID = this.sitemapNode.content_id || this.sitemapNode.node_id;
+    const noteType = this.sitemapNode.nodeType;
+    const controlID = this.sitemapNode.layoutId;
+    const contentID = this.sitemapNode.contentId;
 
     switch (noteType) {
       case SiteMapNodeType.CONTENT:
         this.contentEditorService.openEditorByContentID(contentID, controlID).subscribe(_ => this.update.emit(this.sitemapNode));
         break;
       case SiteMapNodeType.FARM:
-        const funcID = this.sitemapNode.func_id;
+        const funcID = this.sitemapNode.funcId;
         this.farmSharedService.openFarm(funcID).subscribe(_ => this.update.emit(this.sitemapNode));
         break;
     }

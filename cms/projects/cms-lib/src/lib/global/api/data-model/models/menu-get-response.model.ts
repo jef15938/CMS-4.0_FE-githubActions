@@ -4,10 +4,10 @@ import { MenuGetResponse } from '../../neuxAPI/bean/MenuGetResponse';
 import { ModelMapping, ModelMapper } from '../model-mapper';
 
 // @dynamic
-@ModelMapping<MenuGetResponse, MenuGetResponseModel>(
+@ModelMapping(
   MenuGetResponse, MenuGetResponseModel,
   (bean, model) => {
-    model.datas = bean.datas.map(d => ModelMapper.mapModelTo(MenuInfoModel, d));
+    model.datas = ModelMapper.mapArrayTo(MenuInfoModel, bean.datas);
   }
 )
 export class MenuGetResponseModel {

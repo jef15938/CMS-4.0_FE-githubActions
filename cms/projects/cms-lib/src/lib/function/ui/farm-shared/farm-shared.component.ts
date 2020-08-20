@@ -3,8 +3,8 @@ import {
   OnChanges, SimpleChanges
 } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { Subject, of, throwError, NEVER } from 'rxjs';
-import { tap, takeUntil, concatMap, catchError } from 'rxjs/operators';
+import { Subject, of, throwError } from 'rxjs';
+import { tap, takeUntil, concatMap } from 'rxjs/operators';
 import { FarmService } from '../../../global/api/service';
 import { FarmInfo, CmsFarmInfoCategory, CmsFarmTableDataInfo } from '../../../global/model';
 import { CmsFarmTableDataAction } from '../../../global/enum';
@@ -14,7 +14,7 @@ import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
 import { FarmSharedService } from './farm-shared.service';
-import { PreviewInfoType } from '../../../global/api/neuxAPI/bean/PreviewInfo';
+import { PreviewInfoType } from '../../../global/api/data-model/models/preview-info.model';
 
 @Component({
   selector: 'cms-farm-shared',
@@ -176,12 +176,12 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     const funcID = category.category_id;
     const dataID = rowData.data_id;
     this.farmService.getPreviewInfo(funcID, dataID).subscribe(previewInfo => {
-      switch (previewInfo.preview_type) {
+      switch (previewInfo.previewType) {
         case PreviewInfoType.ONE_PAGE:
           window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
           break;
         case PreviewInfoType.FARM:
-          this.farmSharedService.openFarmPreview(previewInfo.func_id, previewInfo.data_id).subscribe();
+          this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
           break;
       }
     });

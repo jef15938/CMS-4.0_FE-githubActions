@@ -39,7 +39,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   files: Array<FileUploadModel> = [];
 
-  colDefs: ColDef[] = [
+  colDefs: ColDef<FileUploadModel>[] = [
     {
       colId: 'fileName',
       field: 'fileName',

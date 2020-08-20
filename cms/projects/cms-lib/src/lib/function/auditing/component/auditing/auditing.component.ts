@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, concat } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { AuditingService } from '../../../../global/api/service';
-import { AuditingInfo } from '../../../../global/api/neuxAPI/bean/AuditingInfo';
-import { PageInfo } from '../../../../global/api/neuxAPI/bean/PageInfo';
 import { ModalService } from '../../../ui/modal';
 import { ColDef } from '../../../ui/table';
 import { AuditingActionCellComponent, AuditingActionCellCustomEvent } from '../auditing-action-cell/auditing-action-cell.component';
 import { ApproveAuditingModalComponent, AuditingApproveStatus } from '../approve-auditing-modal/approve-auditing-modal.component';
 import { AuditingSubmitRequest } from '../../../../global/api/neuxAPI/bean/AuditingSubmitRequest';
-import { PreviewInfoType } from '../../../../global/api/neuxAPI/bean/PreviewInfo';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
+import { AuditingInfoModel } from '../../../../global/api/data-model/models/auditing-info.model';
+import { PageInfoModel } from '../../../../global/api/data-model/models/page-info.model';
+import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
 
 @Component({
   selector: 'cms-auditing',
@@ -19,31 +19,31 @@ import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 })
 export class AuditingComponent implements OnInit {
 
-  auditings: AuditingInfo[];
-  pageInfo: PageInfo;
+  auditings: AuditingInfoModel[];
+  pageInfo: PageInfoModel;
 
-  colDefs: ColDef[] = [
+  colDefs: ColDef<AuditingInfoModel>[] = [
     {
-      colId: 'order_id',
-      field: 'order_id',
+      colId: 'orderId',
+      field: 'orderId',
       title: '單號',
       width: '80px',
     },
     {
-      colId: 'order_name',
-      field: 'order_name',
+      colId: 'orderName',
+      field: 'orderName',
       title: '資料頁面',
       width: '40%',
     },
     {
-      colId: 'create_name',
-      field: 'create_name',
+      colId: 'createName',
+      field: 'createName',
       title: '送審人',
       width: '120px',
     },
     {
-      colId: 'submit_comment',
-      field: 'submit_comment',
+      colId: 'submitComment',
+      field: 'submitComment',
       title: '意見',
       width: '60%',
     },
@@ -84,7 +84,7 @@ export class AuditingComponent implements OnInit {
     );
   }
 
-  private getMyAuditings(): Observable<AuditingInfo[]> {
+  private getMyAuditings(): Observable<AuditingInfoModel[]> {
     return this.auditingService.getAuditingListForManager(this.pageInfo?.page).pipe(
       tap(res => {
         this.pageInfo = res.pageInfo;
@@ -115,7 +115,7 @@ export class AuditingComponent implements OnInit {
         }).subscribe((res: AuditingSubmitRequest) => {
           if (!res) { return; }
           this.auditingService.approveAuditing(
-            event.data.order_id,
+            event.data.orderId,
             res.status,
             res.comment,
           ).subscribe(_ => this.getMyAuditings().subscribe());
@@ -138,15 +138,15 @@ export class AuditingComponent implements OnInit {
     }
   }
 
-  preview(auditingInfo: AuditingInfo) {
-    const orderID = auditingInfo.order_id;
+  preview(auditingInfo: AuditingInfoModel) {
+    const orderID = auditingInfo.orderId;
     this.auditingService.getPreviewInfo(orderID).subscribe(previewInfo => {
-      switch (previewInfo.preview_type) {
+      switch (previewInfo.previewType) {
         case PreviewInfoType.ONE_PAGE:
           window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
           break;
         case PreviewInfoType.FARM:
-          this.farmSharedService.openFarmPreview(previewInfo.func_id, previewInfo.data_id).subscribe();
+          this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
           break;
       }
     });

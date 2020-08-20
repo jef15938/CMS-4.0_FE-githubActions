@@ -26,7 +26,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   @Input() context: any;
 
-  @Input() nodeDisplayField; // 顯示欄位
+  @Input() nodeDisplayField: keyof TData; // 顯示欄位
   @Input() nodeChildrenEntryField = 'children'; // children的進入口欄位
   @Input() nodeDatas: TData[] = []; // 樹資料
   @Input() defaultExpandLevel = 0; // 預設展開層數：-1=全展開

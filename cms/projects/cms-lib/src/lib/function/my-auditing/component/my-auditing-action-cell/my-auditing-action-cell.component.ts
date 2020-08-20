@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomCellRenderer, CmsTable } from '../../../ui/table';
-import { MyAuditingInfo } from '../../../../global/api/neuxAPI/bean/MyAuditingInfo';
+import { MyAuditingInfoModel } from '../../../../global/api/data-model/models/my-auditing-info.model';
 
 enum ActionType {
   DETAIL, PREVIEW
@@ -11,7 +11,7 @@ export class MyAuditingActionCellCustomEvent {
   ActionType = ActionType;
   constructor(
     public action: ActionType,
-    public data: MyAuditingInfo,
+    public data: MyAuditingInfoModel,
   ) { }
 }
 
@@ -24,7 +24,7 @@ export class MyAuditingActionCellComponent implements CustomCellRenderer, OnInit
 
   ActionType = ActionType;
 
-  config: { data: MyAuditingInfo, table: CmsTable };
+  config: { data: MyAuditingInfoModel, table: CmsTable };
 
   constructor() { }
 

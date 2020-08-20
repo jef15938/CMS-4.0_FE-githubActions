@@ -11,10 +11,10 @@
       <div *ngFor="let template of selectableTemplates.static" class="template-container"
         (click)="selectTemplate(template)">
         <div>
-          {{template.template_name}}
+          {{template.templateName}}
         </div>
         <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.template_id+'.png'">
+          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
         </div>
       </div>
     </mat-expansion-panel>
@@ -27,10 +27,10 @@
       <div *ngFor="let template of selectableTemplates.tab" class="template-container"
         (click)="selectTemplate(template)">
         <div>
-          {{template.template_name}}
+          {{template.templateName}}
         </div>
         <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.template_id+'.png'">
+          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
         </div>
       </div>
     </mat-expansion-panel>
@@ -43,10 +43,10 @@
       <div *ngFor="let template of selectableTemplates.dynamic" class="template-container"
         (click)="selectTemplate(template)">
         <div>
-          {{template.template_name}}
+          {{template.templateName}}
         </div>
         <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.template_id+'.png'">
+          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
         </div>
       </div>
     </mat-expansion-panel>
@@ -59,10 +59,10 @@
       <div *ngFor="let template of selectableTemplates.customize" class="template-container"
         (click)="selectTemplate(template)">
         <div>
-          {{template.template_name}}
+          {{template.templateName}}
         </div>
         <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.template_id+'.png'">
+          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
         </div>
       </div>
     </mat-expansion-panel>
@@ -74,10 +74,10 @@
       </mat-expansion-panel-header>
       <div *ngFor="let template of mainTemplates" class="template-container" (click)="selectTemplate(template)">
         <div>
-          {{template.template_name}}
+          {{template.templateName}}
         </div>
         <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.template_id+'.png'">
+          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
         </div>
       </div>
     </mat-expansion-panel>

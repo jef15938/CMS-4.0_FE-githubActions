@@ -12,6 +12,8 @@ import { ListFarmTriggerDataResponse } from '../../neuxAPI/bean/ListFarmTriggerD
 import { FarmOptionInfo } from '../../neuxAPI/bean/FarmOptionInfo';
 import { map } from 'rxjs/operators';
 import { GetFarmTreeResponse } from '../../neuxAPI/bean/GetFarmTreeResponse';
+import { ModelMapper } from '../../data-model/model-mapper';
+import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
 
 @Injectable({
   providedIn: 'root'
@@ -174,10 +176,12 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  getPreviewInfo(funcID: string, dataID: string): Observable<PreviewInfo> {
+  getPreviewInfo(funcID: string, dataID: string): Observable<PreviewInfoModel> {
     if (!funcID) { throw new ParamsError('funcID', 'getPreviewInfo', 'string', funcID); }
     if (!dataID) { throw new ParamsError('dataID', 'getPreviewInfo', 'string', dataID); }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreviewByFuncID', { funcID, dataID });
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreviewByFuncID', { funcID, dataID }).pipe(
+      ModelMapper.rxMapModelTo(PreviewInfoModel),
+    );
   }
 
   /**

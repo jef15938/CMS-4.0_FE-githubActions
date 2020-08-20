@@ -18,7 +18,7 @@ export class ReplyComponent implements OnInit {
   title = '智慧助手 > 回覆設定';
   replies: ChatbotReply[];
 
-  colDefs: ColDef[] = [
+  colDefs: ColDef<ChatbotReply>[] = [
     {
       colId: 'name',
       field: 'name',

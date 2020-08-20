@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
-import { DepartmentInfo } from '../../neuxAPI/bean/DepartmentInfo';
 import { DepartmentGetResponse } from '../../neuxAPI/bean/DepartmentGetResponse';
+import { ModelMapper } from '../../data-model/model-mapper';
+import { DepartmentGetResponseModel } from '../../data-model/models/department-get-response.model';
+import { DepartmentInfoModel } from '../../data-model/models/department-info.model';
+import { DepartmentDetailInfo } from '../../neuxAPI/bean/DepartmentDetailInfo';
+import { DepartmentDetailInfoModel } from '../../data-model/models/department-detail-info.model';
+import { DepartmentMaintainRequest } from '../../neuxAPI/bean/DepartmentMaintainRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +37,7 @@ export class DepartmentService {
       throw new ParamsError('deptName', 'createDepartment', 'string', deptName);
     }
 
-    const requestBody: { [k: string]: any } = {
+    const requestBody: Partial<DepartmentMaintainRequest> = {
       dept_name: deptName,
     };
 
@@ -69,9 +74,10 @@ export class DepartmentService {
    * @returns
    * @memberof DepartmentService
    */
-  getAllDepartment(): Observable<DepartmentInfo[]> {
-    return this.restAPIService.dispatchRestApi('GetDepartment', {}).pipe(
-      map((res: DepartmentGetResponse) => res.datas)
+  getAllDepartment(): Observable<DepartmentInfoModel[]> {
+    return this.restAPIService.dispatchRestApi<DepartmentGetResponse>('GetDepartment', {}).pipe(
+      ModelMapper.rxMapModelTo(DepartmentGetResponseModel),
+      map(res => res.datas)
     );
   }
 
@@ -82,25 +88,14 @@ export class DepartmentService {
    * @returns
    * @memberof DepartmentService
    */
-  getDepartmentByID(deptID: string): Observable<DepartmentInfo> {
+  getDepartmentByID(deptID: string): Observable<DepartmentDetailInfoModel> {
     if (!deptID) {
       throw new ParamsError('deptID', 'getDepartmentByID', 'string', deptID);
     }
 
-    return this.restAPIService.dispatchRestApi('GetDepartmentByDeptID', { deptID });
-  }
-
-  private getDeptFromAllById(id: string, all: DepartmentInfo[]): DepartmentInfo {
-    if (!all || !all.length) {
-      return null;
-    }
-    const dept = all.find(d => d.dept_id === id);
-    if (dept) {
-      return dept;
-    }
-    else {
-      return all.map(d => this.getDeptFromAllById(id, d.children)).find(x => x !== null);
-    }
+    return this.restAPIService.dispatchRestApi<DepartmentDetailInfo>('GetDepartmentByDeptID', { deptID }).pipe(
+      ModelMapper.rxMapModelTo(DepartmentDetailInfoModel)
+    );
   }
 
   /**
@@ -118,7 +113,7 @@ export class DepartmentService {
       throw new ParamsError('deptName', 'updateDepartment', 'string', deptName);
     }
 
-    const requestBody: { [k: string]: any } = {
+    const requestBody: Partial<DepartmentMaintainRequest> = {
       dept_name: deptName,
     };
 

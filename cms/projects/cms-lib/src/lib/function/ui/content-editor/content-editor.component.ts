@@ -5,7 +5,6 @@ import {
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ContentInfo } from '../../../global/api/neuxAPI/bean/ContentInfo';
-import { TemplateGetResponse } from '../../../global/api/neuxAPI/bean/TemplateGetResponse';
 import { ContentEditorSaveEvent, EditorMode, ContentEditorActionMode, ContentEditorContext } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
@@ -22,6 +21,7 @@ import { ContentVersionInfo } from '../../../global/api/neuxAPI/bean/ContentVers
 import { ATTRIBUTE_GALLERY_ID } from '../html-editor/const/html-editor-container.const';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
+import { TemplateGetResponseModel } from '../../../global/api/data-model/models/template-get-response.model';
 
 const isTabTemplateInfo = (templateInfo: ContentTemplateInfo): boolean => {
   return !!(templateInfo as any).tabList;
@@ -52,7 +52,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   @Input() contentID: string;
 
   // 可選版面資料
-  @Input() selectableTemplates: TemplateGetResponse;
+  @Input() selectableTemplates: TemplateGetResponseModel;
 
   @Input() btnClose = true;
 

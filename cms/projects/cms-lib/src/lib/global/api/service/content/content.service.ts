@@ -4,13 +4,18 @@ import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
 import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
-import { LayoutInfo } from '../../neuxAPI/bean/LayoutInfo';
 import { LayoutGetResponse } from '../../neuxAPI/bean/LayoutGetResponse';
 import { map } from 'rxjs/operators';
 import { ListContentDataSourceResponse } from '../../neuxAPI/bean/ListContentDataSourceResponse';
-import { ContentDataSource } from '../../neuxAPI/bean/ContentDataSource';
 import { ListContentVersionResponse } from '../../neuxAPI/bean/ListContentVersionResponse';
-import { ContentVersionInfo } from '../../neuxAPI/bean/ContentVersionInfo';
+import { LayoutInfoModel } from '../../data-model/models/layout-info.model';
+import { ModelMapper } from '../../data-model/model-mapper';
+import { LayoutGetResponseModel } from '../../data-model/models/layout-get-response.model';
+import { ContentDataSourceModel } from '../../data-model/models/content-data-source.model';
+import { ListContentDataSourceResponseModel } from '../../data-model/models/list-content-data-source-response.model';
+import { ContentVersionInfoModel } from '../../data-model/models/content-version-info.model';
+import { ListContentVersionResponseModel } from '../../data-model/models/list-content-version-response.model';
+import { TemplateGetResponseModel } from '../../data-model/models/template-get-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +46,11 @@ export class ContentService {
    * @returns
    * @memberof ContentService
    */
-  getLayout(): Observable<LayoutInfo[]> {
-    return this.restAPIService.dispatchRestApi<LayoutGetResponse>('GetLayout', null).pipe(map(_ => _.datas));
+  getLayout(): Observable<LayoutInfoModel[]> {
+    return this.restAPIService.dispatchRestApi<LayoutGetResponse>('GetLayout', null).pipe(
+      ModelMapper.rxMapModelTo(LayoutGetResponseModel),
+      map(res => res.datas)
+    );
   }
 
   /**
@@ -52,11 +60,13 @@ export class ContentService {
    * @returns
    * @memberof ContentService
    */
-  getTemplateByControlID(controlID: string): Observable<TemplateGetResponse> {
+  getTemplateByControlID(controlID: string): Observable<TemplateGetResponseModel> {
     if (!controlID) {
       throw new ParamsError('controlID', 'getTemplateByControlID', 'string', controlID);
     }
-    return this.restAPIService.dispatchRestApi('GetTemplateByControlID', { controlID });
+    return this.restAPIService.dispatchRestApi<TemplateGetResponse>('GetTemplateByControlID', { controlID }).pipe(
+      ModelMapper.rxMapModelTo(TemplateGetResponseModel),
+    );
   }
 
   /**
@@ -87,12 +97,14 @@ export class ContentService {
    * @returns
    * @memberof ContentService
    */
-  getContentDataSourceByTypeID(typeID: string): Observable<ContentDataSource[]> {
+  getContentDataSourceByTypeID(typeID: string): Observable<ContentDataSourceModel[]> {
     if (!typeID) {
       throw new ParamsError('typeID', 'getContentDataSourceByTypeID', 'string', typeID);
     }
-    return this.restAPIService.dispatchRestApi<ListContentDataSourceResponse>('GetContentDataSourceByTypeID', { typeID })
-      .pipe(map(res => res.datas));
+    return this.restAPIService.dispatchRestApi<ListContentDataSourceResponse>('GetContentDataSourceByTypeID', { typeID }).pipe(
+      ModelMapper.rxMapModelTo(ListContentDataSourceResponseModel),
+      map(res => res.datas)
+    );
   }
 
   /**
@@ -102,11 +114,13 @@ export class ContentService {
    * @returns
    * @memberof ContentService
    */
-  getContentVersionByContentID(contentID: string): Observable<ContentVersionInfo[]> {
+  getContentVersionByContentID(contentID: string): Observable<ContentVersionInfoModel[]> {
     if (!contentID) {
       throw new ParamsError('contentID', 'getContentVersionByContentID', 'string', contentID);
     }
-    return this.restAPIService.dispatchRestApi<ListContentVersionResponse>('GetContentVersionByContentID', { contentID })
-      .pipe(map(res => res.datas));
+    return this.restAPIService.dispatchRestApi<ListContentVersionResponse>('GetContentVersionByContentID', { contentID }).pipe(
+      ModelMapper.rxMapModelTo(ListContentVersionResponseModel),
+      map(res => res.datas)
+    );
   }
 }

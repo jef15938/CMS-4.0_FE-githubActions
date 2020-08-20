@@ -5,12 +5,21 @@ import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { SiteMapGetResponse } from '../../neuxAPI/bean/SiteMapGetResponse';
 import { SiteGetResponse } from '../../neuxAPI/bean/SiteGetResponse';
-import { SiteInfo } from '../../neuxAPI/bean/SiteInfo';
 import { SiteMapNodeGetResponse } from '../../neuxAPI/bean/SiteMapNodeGetResponse';
 import { UserSiteMapPutRequest } from '../../neuxAPI/bean/UserSiteMapPutRequest';
 import { SitemapAuditingRequest } from '../../neuxAPI/bean/SitemapAuditingRequest';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
+import { ModelMapper } from '../../data-model/model-mapper';
+import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
+import { SiteMapNodeGetResponseModel } from '../../data-model/models/site-map-node-get-response.model';
+import { SiteInfoModel } from '../../data-model/models/site-info.model';
+import { SiteGetResponseModel } from '../../data-model/models/site-get-response.model';
+import { SiteMapGetResponseModel } from '../../data-model/models/site-map-get-response.model';
+import { UserSiteMapPostRequestModel } from '../../data-model/models/user-sitemap-post-request.model';
+import { UserSiteMapPostRequest } from '../../neuxAPI/bean/UserSiteMapPostRequest';
+import { SiteNodeDetailInfoModel } from '../../data-model/models/site-node-detail-info.model';
+import { UserSiteMapPutRequestModel } from '../../data-model/models/user-sitemap-put-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,27 +51,13 @@ export class SitemapService {
    * @memberof SitemapService
    */
   createSiteNode(
-    siteID: string, nodeName: string, metaTitle: string,
-    optional?: {
-      layoutId?: string, parentId?: string, nodeType?: string, contentPath?: string,
-      urlType?: string, urlLinkNodeId?: string, url?: string, urlBlank?: string,
-      metaDescription?: string, metaKeyword?: string, metaImage?: string,
-    }
+    siteID: string, userSiteMapPostRequestModel: UserSiteMapPostRequestModel
   ) {
     if (!siteID) { throw new ParamsError('siteID', 'createSiteNode', 'string', siteID); }
-    if (!nodeName) { throw new ParamsError('nodeName', 'createSiteNode', 'string', nodeName); }
     // if (!metaTitle) { throw new ParamsError('metaTitle', 'createSiteNode', 'string', metaTitle); }
 
-    const requestBody: { [k: string]: any } = {
-      node_name: nodeName,
-      meta_title: metaTitle,
-    };
-
-    if (optional) {
-      for (const key of Object.keys(optional)) {
-        requestBody[key] = optional[key] || null;
-      }
-    }
+    const requestBody: UserSiteMapPostRequest = ModelMapper
+      .map(UserSiteMapPostRequestModel, UserSiteMapPostRequest, userSiteMapPostRequestModel);
 
     return this.restAPIService.dispatchRestApi('PostUserSiteMapBySiteID', { siteID, requestBody });
   }
@@ -87,8 +82,11 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getCMSSiteMap(siteID: string): Observable<SiteMapGetResponse[]> {
-    return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetSiteBySiteID', { siteID }).pipe(map(res => [res]));
+  getCMSSiteMap(siteID: string): Observable<SiteMapGetResponseModel[]> {
+    return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetSiteBySiteID', { siteID }).pipe(
+      ModelMapper.rxMapModelTo(SiteMapGetResponseModel),
+      map(res => [res])
+    );
   }
 
   /**
@@ -97,8 +95,11 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getUserSiteMapNodes(siteID: string): Observable<SiteMapGetResponse[]> {
-    return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetUserSiteMapBySiteID', { siteID }).pipe(map(res => [res]));
+  getUserSiteMapNodes(siteID: string): Observable<SiteMapGetResponseModel[]> {
+    return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetUserSiteMapBySiteID', { siteID }).pipe(
+      ModelMapper.rxMapModelTo(SiteMapGetResponseModel),
+      map(res => [res])
+    );
   }
 
   /**
@@ -108,8 +109,10 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeGetResponse> {
-    return this.restAPIService.dispatchRestApi<SiteMapNodeGetResponse>('GetSiteBySiteIDAndNodeID', { siteID, nodeID });
+  getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeGetResponseModel> {
+    return this.restAPIService.dispatchRestApi<SiteMapNodeGetResponse>('GetSiteBySiteIDAndNodeID', { siteID, nodeID }).pipe(
+      ModelMapper.rxMapModelTo(SiteMapNodeGetResponseModel),
+    );
   }
 
   /**
@@ -132,23 +135,14 @@ export class SitemapService {
    * @memberof SitemapService
    */
   updateSiteNode(
-    nodeID: string, details: SiteNodeDetailInfo[],
-    optional?: {
-      parent_id?: string, content_path?: string,
-      url_type?: string, url_link_node_id?: string, url?: string, url_blank?: string,
-    }
+    nodeID: string, details: SiteNodeDetailInfoModel[], userSiteMapPutRequestModel: UserSiteMapPutRequestModel
   ) {
     if (!nodeID) { throw new ParamsError('nodeID', 'updateSiteNode', 'string', nodeID); }
 
-    const requestBody: UserSiteMapPutRequest = {
-      parent_id: optional?.parent_id,
-      content_path: optional?.content_path,
-      url_type: optional?.url_type,
-      url_link_node_id: optional?.url_link_node_id,
-      url: optional?.url,
-      url_blank: optional?.url_blank,
-      details
-    };
+    const requestBody: UserSiteMapPutRequest = ModelMapper
+      .map(UserSiteMapPutRequestModel, UserSiteMapPutRequest, userSiteMapPutRequestModel);
+
+    requestBody.details = ModelMapper.mapArrayTo(SiteNodeDetailInfo, details);
 
     const params: { [k: string]: any } = {
       nodeID,
@@ -163,9 +157,10 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getSiteList(): Observable<SiteInfo[]> {
-    return this.restAPIService.dispatchRestApi('GetSite', {}).pipe(
-      map((res: SiteGetResponse) => res.datas)
+  getSiteList(): Observable<SiteInfoModel[]> {
+    return this.restAPIService.dispatchRestApi<SiteGetResponse>('GetSite', {}).pipe(
+      ModelMapper.rxMapModelTo(SiteGetResponseModel),
+      map(res => res.datas)
     );
   }
 
@@ -203,9 +198,11 @@ export class SitemapService {
    * @returns
    * @memberof SitemapService
    */
-  getPreviewInfo(nodeID: string, languageID?: string): Observable<PreviewInfo> {
+  getPreviewInfo(nodeID: string, languageID?: string): Observable<PreviewInfoModel> {
     if (!nodeID) { throw new ParamsError('nodeID', 'getPreviewInfo', 'string', nodeID); }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreviewByNodeID', { nodeID, language_id: languageID });
+    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreviewByNodeID', { nodeID, language_id: languageID }).pipe(
+      ModelMapper.rxMapModelTo(PreviewInfoModel),
+    );
   }
 
   /**

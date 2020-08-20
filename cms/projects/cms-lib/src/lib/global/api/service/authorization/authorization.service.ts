@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
 import { map, tap, concatMap } from 'rxjs/operators';
-
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { LoginRequest } from '../../neuxAPI/bean/LoginRequest';
-import { LoginInfo } from '../../neuxAPI/bean/LoginInfo';
 import { LoginResponse } from '../../neuxAPI/bean/LoginResponse';
 import { Router } from '@angular/router';
+import { LoginInfoModel } from '../../data-model/models/login-info.model';
+import { plainToClass } from 'class-transformer';
+import { ModelMapper } from '../../data-model/model-mapper';
+import { LoginResponseModel } from '../../data-model/models/login-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,18 +68,19 @@ export class AuthorizationService {
    * @returns
    * @memberof AuthorizationService
    */
-  getLoginInfo(): Observable<LoginInfo> {
-    return this.respAPIService.dispatchRestApi('GetLoginInfo', {}).pipe(
-      map((loginResponse: LoginResponse) => {
-        localStorage.setItem('loginInfo', JSON.stringify(loginResponse.loginInfo));
-        return loginResponse.loginInfo;
+  getLoginInfo(): Observable<LoginInfoModel> {
+    return this.respAPIService.dispatchRestApi<LoginResponse>('GetLoginInfo', {}).pipe(
+      ModelMapper.rxMapModelTo(LoginResponseModel),
+      map(res => {
+        localStorage.setItem('loginInfo', JSON.stringify(res.loginInfo));
+        return res.loginInfo;
       }),
     );
   }
 
-  getCurrentLoginInfo(): LoginInfo {
-    let loginInfo: any = localStorage.getItem('loginInfo');
-    loginInfo = loginInfo ? JSON.parse(loginInfo) : null;
-    return loginInfo;
+  getCurrentLoginInfo(): LoginInfoModel {
+    const loginInfoString: string = localStorage.getItem('loginInfo');
+    const loginInfo: LoginInfoModel = loginInfoString ? JSON.parse(loginInfoString) : null;
+    return plainToClass(LoginInfoModel, loginInfo);
   }
 }
