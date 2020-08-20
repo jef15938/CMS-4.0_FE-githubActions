@@ -10,7 +10,7 @@
       <br>
       <mat-form-field appearance="outline">
         <mat-label>部門名稱</mat-label>
-        <input matInput [(ngModel)]="dept.deptName" name="deptName" required #modelName="ngModel" maxlength="100" Ｆ>
+        <input matInput [(ngModel)]="dept.deptName" name="deptName" required #modelName="ngModel" maxlength="100">
         <mat-error *ngIf="modelName?.errors?.required">必填欄位</mat-error>
       </mat-form-field>
     </div>
