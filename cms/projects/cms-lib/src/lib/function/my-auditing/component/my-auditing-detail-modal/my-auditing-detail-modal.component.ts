@@ -50,8 +50,8 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
     },
 
     {
-      colId: 'auditingName',
-      field: 'auditingName',
+      colId: 'auditingTime',
+      field: 'auditingTime',
       title: '時間',
       format: 'DATETIME',
       width: '100px',
