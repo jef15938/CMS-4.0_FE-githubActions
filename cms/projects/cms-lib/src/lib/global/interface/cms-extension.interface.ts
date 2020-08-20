@@ -1,7 +1,6 @@
-import { Type, TemplateRef } from '@angular/core';
-import { MenuInfo } from '../api/neuxAPI/bean/MenuInfo';
 import { Observable } from 'rxjs';
+import { MenuInfoModel } from '../api/data-model/models/menu-info.model';
 
 export interface CmsExtensionMenuResolver {
-  resolve: () => Observable<MenuInfo[]>;
+  resolve: () => Observable<MenuInfoModel[]>;
 }

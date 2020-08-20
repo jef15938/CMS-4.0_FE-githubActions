@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input, C
 import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../../global/api/service';
-import { PageInfo } from '../../../../../global/api/neuxAPI/bean/PageInfo';
 import { ColDef } from '../../../../ui/table';
 import { TreeComponent } from '../../../../ui/tree';
 import { ModalService } from '../../../../ui/modal';
@@ -14,6 +13,7 @@ import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell
 import { GalleryFileType } from '../../type/gallery-shared.type';
 import { GalleryInfoModel } from '../../../../../global/api/data-model/models/gallery-info.model';
 import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/models/gallery-category-info.model';
+import { PageInfoModel } from '../../../../../global/api/data-model/models/page-info.model';
 
 @Component({
   selector: 'cms-gallery-shared',
@@ -34,7 +34,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   categories: GalleryCategoryInfoModel[] = [];
   selectedCategory: GalleryCategoryInfoModel;
 
-  galleryPageInfo: PageInfo;
+  galleryPageInfo: PageInfoModel;
   galleryDatas: GalleryInfoModel[];
   colDefs: ColDef<GalleryInfoModel>[];
 

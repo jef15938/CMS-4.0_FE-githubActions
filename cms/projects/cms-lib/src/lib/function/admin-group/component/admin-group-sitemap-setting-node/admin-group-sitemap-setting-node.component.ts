@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../ui';
-import { SiteMapGetResponse } from '../../../../global/api/neuxAPI/bean/SiteMapGetResponse';
 import { Subject } from 'rxjs';
-import { GroupSitemapInfo } from '../../../../global/api/neuxAPI/bean/GroupSitemapInfo';
+import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
+import { GroupSitemapInfoModel } from '../../../../global/api/data-model/models/group-sitemap-info.model';
 
-interface Node extends SiteMapGetResponse {
-  groupSitemapInfo: GroupSitemapInfo;
+interface Node extends SiteMapGetResponseModel {
+  groupSitemapInfo: GroupSitemapInfoModel;
   isChecked: boolean;
 }
 
@@ -42,15 +42,15 @@ export class AdminGroupSitemapSettingNodeComponent implements CmsTreeNodeRendere
   }
 
   changeCanAdd() {
-    this.node.data.groupSitemapInfo.can_add = !!!this.node.data.groupSitemapInfo.can_add;
+    this.node.data.groupSitemapInfo.canAdd = !!!this.node.data.groupSitemapInfo.canAdd;
   }
 
   changeCanModify() {
-    this.node.data.groupSitemapInfo.can_modify = !!!this.node.data.groupSitemapInfo.can_modify;
+    this.node.data.groupSitemapInfo.canModify = !!!this.node.data.groupSitemapInfo.canModify;
   }
 
   changeCanDelete() {
-    this.node.data.groupSitemapInfo.can_delete = !!!this.node.data.groupSitemapInfo.can_delete;
+    this.node.data.groupSitemapInfo.canDelete = !!!this.node.data.groupSitemapInfo.canDelete;
   }
 
 }

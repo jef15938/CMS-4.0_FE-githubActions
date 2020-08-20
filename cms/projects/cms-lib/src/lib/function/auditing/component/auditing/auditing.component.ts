@@ -6,11 +6,11 @@ import { ModalService } from '../../../ui/modal';
 import { ColDef } from '../../../ui/table';
 import { AuditingActionCellComponent, AuditingActionCellCustomEvent } from '../auditing-action-cell/auditing-action-cell.component';
 import { ApproveAuditingModalComponent, AuditingApproveStatus } from '../approve-auditing-modal/approve-auditing-modal.component';
-import { AuditingSubmitRequest } from '../../../../global/api/neuxAPI/bean/AuditingSubmitRequest';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { AuditingInfoModel } from '../../../../global/api/data-model/models/auditing-info.model';
 import { PageInfoModel } from '../../../../global/api/data-model/models/page-info.model';
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
+import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
 
 @Component({
   selector: 'cms-auditing',
@@ -112,7 +112,7 @@ export class AuditingComponent implements OnInit {
             batch: false,
             status,
           },
-        }).subscribe((res: AuditingSubmitRequest) => {
+        }).subscribe((res: AuditingSubmitRequestModel) => {
           if (!res) { return; }
           this.auditingService.approveAuditing(
             event.data.orderId,

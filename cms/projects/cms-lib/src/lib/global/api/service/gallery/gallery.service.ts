@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEventType, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subscription, of } from 'rxjs';
 import { map, catchError, last } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';

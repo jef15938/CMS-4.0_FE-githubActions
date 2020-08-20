@@ -13,7 +13,7 @@ import { GroupMenuGetResponseModel } from '../../data-model/models/group-menu-ge
 import { ListGroupResponseModel } from '../../data-model/models/list-group-response.model';
 import { GroupInfoModel } from '../../data-model/models/group-info.model';
 import { GroupSitemapInfoModel } from '../../data-model/models/group-sitemap-info.model';
-import { GroupSiteMapGetResponseModel } from '../../data-model/models/group-sitemap-get-response';
+import { GroupSiteMapGetResponseModel } from '../../data-model/models/group-sitemap-get-response.model';
 
 @Injectable({
   providedIn: 'root'
