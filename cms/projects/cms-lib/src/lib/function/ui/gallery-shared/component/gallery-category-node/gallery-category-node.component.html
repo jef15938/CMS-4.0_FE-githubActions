@@ -1,9 +1,9 @@
 <div class="cms-gallery-category-node" *ngIf="node">
-  <span class="cms-gallery-category-node__title">{{node.data.category_name}}</span>
+  <span class="cms-gallery-category-node__title">{{node.data.categoryName}}</span>
   <span #menuTrigger="matMenuTrigger" class="cms-gallery-category-node__btn" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
       <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.UPLOAD)"
-        [disabled]="!node.data.can_upload">
+        [disabled]="!node.data.canUpload">
         <mat-icon>file_upload</mat-icon>
         上傳
       </button>

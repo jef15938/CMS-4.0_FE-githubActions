@@ -2,8 +2,8 @@ import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { GalleryCategoryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryCategoryInfo';
 import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../../ui/tree';
+import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/models/gallery-category-info.model';
 
 enum ActionType {
   CREATE, EDIT, DELETE, UPLOAD
@@ -13,7 +13,7 @@ export class GalleryCategoryNodeCustomEvent {
   ActionType = ActionType;
   constructor(
     public action: ActionType,
-    public data: GalleryCategoryInfo
+    public data: GalleryCategoryInfoModel
   ) { }
 }
 
@@ -22,21 +22,21 @@ export class GalleryCategoryNodeCustomEvent {
   templateUrl: './gallery-category-node.component.html',
   styleUrls: ['./gallery-category-node.component.scss']
 })
-export class GalleryCategoryNodeComponent implements CmsTreeNodeRenderer<GalleryCategoryInfo>, OnInit, OnDestroy {
+export class GalleryCategoryNodeComponent implements CmsTreeNodeRenderer<GalleryCategoryInfoModel>, OnInit, OnDestroy {
 
   ActionType = ActionType;
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   mode: 'page' | 'modal' = 'page';
-  node: CmsTreeNode<GalleryCategoryInfo>;
+  node: CmsTreeNode<GalleryCategoryInfoModel>;
 
   private destroy$ = new Subject();
 
   constructor() { }
 
   // called before ngOnInit()
-  compInit(node: CmsTreeNode<GalleryCategoryInfo>) {
+  compInit(node: CmsTreeNode<GalleryCategoryInfoModel>) {
     this.node = node;
   }
 

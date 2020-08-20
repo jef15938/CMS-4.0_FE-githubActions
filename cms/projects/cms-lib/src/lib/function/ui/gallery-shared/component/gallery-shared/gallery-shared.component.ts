@@ -3,7 +3,6 @@ import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../../global/api/service';
 import { PageInfo } from '../../../../../global/api/neuxAPI/bean/PageInfo';
-import { GalleryCategoryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryCategoryInfo';
 import { ColDef } from '../../../../ui/table';
 import { TreeComponent } from '../../../../ui/tree';
 import { ModalService } from '../../../../ui/modal';
@@ -14,6 +13,7 @@ import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from '../gal
 import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell.component';
 import { GalleryFileType } from '../../type/gallery-shared.type';
 import { GalleryInfoModel } from '../../../../../global/api/data-model/models/gallery-info.model';
+import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/models/gallery-category-info.model';
 
 @Component({
   selector: 'cms-gallery-shared',
@@ -27,12 +27,12 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   @Output() galleryClick = new EventEmitter<GalleryInfoModel>();
 
-  @ViewChild(TreeComponent) tree: TreeComponent<GalleryCategoryInfo>;
+  @ViewChild(TreeComponent) tree: TreeComponent<GalleryCategoryInfoModel>;
 
   customNodeRenderer = GalleryCategoryNodeComponent;
 
-  categories: GalleryCategoryInfo[] = [];
-  selectedCategory: GalleryCategoryInfo;
+  categories: GalleryCategoryInfoModel[] = [];
+  selectedCategory: GalleryCategoryInfoModel;
 
   galleryPageInfo: PageInfo;
   galleryDatas: GalleryInfoModel[];
@@ -41,7 +41,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   readonly clipBoardInputId = 'gallerySharedClipBoardInput';
 
   private destroy$ = new Subject();
-  private categorySelected$ = new Subject<GalleryCategoryInfo>();
+  private categorySelected$ = new Subject<GalleryCategoryInfoModel>();
 
   filterFileTypeOptions: { value: string, display: string }[] = [];
   filter: { fileName: string, fileType: string } = { fileName: '', fileType: '', };
@@ -148,14 +148,14 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   getGallery(resetPage = false) {
 
-    if (!this.selectedCategory?.category_id) {
+    if (!this.selectedCategory?.categoryId) {
       this.galleryPageInfo = undefined;
       this.galleryDatas = undefined;
       return of(undefined);
     }
 
     return this.galleryService.getGalleryByCategoryID(
-      this.selectedCategory.category_id,
+      this.selectedCategory.categoryId,
       resetPage ? 1 : this.galleryPageInfo?.page,
       this.filter
     ).pipe(
@@ -166,25 +166,25 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     );
   }
 
-  private maintainCategory(action: 'Create' | 'Update', category: GalleryCategoryInfo) {
+  private maintainCategory(action: 'Create' | 'Update', category: GalleryCategoryInfoModel) {
     return this.modalService.openComponent({
       component: GalleryCategoryMaintainModalComponent,
       componentInitData: {
         action,
-        categoryID: action === 'Update' ? category.category_id : undefined,
-        categoryName: action === 'Update' ? category.category_name : undefined,
-        parentId: action === 'Update' ? this.tree.findParent(category)?.category_id : category.category_id,
-        assignDeptId: action === 'Update' ? category.assign_dept_id : this.authorizationService.getCurrentLoginInfo().deptId,
+        categoryID: action === 'Update' ? category.categoryId : undefined,
+        categoryName: action === 'Update' ? category.categoryName : undefined,
+        parentId: action === 'Update' ? this.tree.findParent(category)?.categoryId : category.categoryId,
+        assignDeptId: action === 'Update' ? category.assignDeptId : this.authorizationService.getCurrentLoginInfo().deptId,
       }
     });
   }
 
-  private uploadFileToCategory(category: GalleryCategoryInfo) {
+  private uploadFileToCategory(category: GalleryCategoryInfoModel) {
     return this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
-        categoryName: category.category_name,
-        categoryId: category.category_id,
+        categoryName: category.categoryName,
+        categoryId: category.categoryId,
       }
     });
   }
@@ -214,7 +214,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
           action = this.maintainCategory('Update', event.data);
           break;
         case event.ActionType.DELETE:
-          action = this.galleryService.deleteGalleryCategory(event.data.category_id).pipe(
+          action = this.galleryService.deleteGalleryCategory(event.data.categoryId).pipe(
             map(_ => 'Deleted')
           );
           break;
@@ -272,7 +272,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     }
   }
 
-  onNodeSelected(event: { node: GalleryCategoryInfo }) {
+  onNodeSelected(event: { node: GalleryCategoryInfoModel }) {
     this.categorySelected$.next(event?.node);
   }
 

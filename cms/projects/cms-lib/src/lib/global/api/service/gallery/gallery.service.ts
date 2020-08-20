@@ -1,16 +1,18 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, Subscription, of } from 'rxjs';
-import { map, catchError, tap, last } from 'rxjs/operators';
+import { map, catchError, last } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { GalleryGetResponse } from '../../neuxAPI/bean/GalleryGetResponse';
-import { GalleryCategoryInfo } from '../../neuxAPI/bean/GalleryCategoryInfo';
 import { GalleryCaregoryGetResponse } from '../../neuxAPI/bean/GalleryCaregoryGetResponse';
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface/cms-enviroment.interface';
 import { GalleryGetResponseModel } from '../../data-model/models/gallery-get-response.model';
 import { ModelMapper } from '../../data-model/model-mapper';
+import { GalleryCategoryInfoModel } from '../../data-model/models/gallery-category-info.model';
+import { GalleryCategoryGetResponseModel } from '../../data-model/models/gallery-category-get-response.model';
+import { GalleryCategoryPutRequest } from '../../neuxAPI/bean/GalleryCategoryPutRequest';
 
 export class FileUploadModel {
   fileName: string;
@@ -54,7 +56,7 @@ export class GalleryService {
     if (!categoryName) { throw new ParamsError('categoryName', 'createGalleryCategory', 'string', categoryName); }
     if (!assignDeptId) { throw new ParamsError('assignDeptId', 'createGalleryCategory', 'string', assignDeptId); }
 
-    const requestBody: { [k: string]: any } = {
+    const requestBody: Partial<GalleryCategoryPutRequest> = {
       category_name: categoryName,
       assign_dept_id: assignDeptId,
     };
@@ -114,9 +116,10 @@ export class GalleryService {
    * @returns
    * @memberof GalleryService
    */
-  getGalleryCategory(): Observable<GalleryCategoryInfo[]> {
-    return this.respAPIService.dispatchRestApi('GetGalleryCategory', {}).pipe(
-      map((res: GalleryCaregoryGetResponse) => res.datas)
+  getGalleryCategory(): Observable<GalleryCategoryInfoModel[]> {
+    return this.respAPIService.dispatchRestApi<GalleryCaregoryGetResponse>('GetGalleryCategory', {}).pipe(
+      ModelMapper.rxMapModelTo(GalleryCategoryGetResponseModel),
+      map(res => res.datas)
     );
   }
 
@@ -132,7 +135,7 @@ export class GalleryService {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
 
-    const requestBody: { [k: string]: any } = {
+    const requestBody: Partial<GalleryCategoryPutRequest> = {
       category_name: categoryName,
       assign_dept_id: assignDeptId,
     };
