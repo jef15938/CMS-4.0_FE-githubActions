@@ -149,7 +149,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       const allAddedNodes = records.map(r => Array.from(r.addedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
         .filter((node, i, arr) => arr.indexOf(node) === i);
-      // console.log('allAddedNodes = ', allAddedNodes);
+      console.log('allAddedNodes = ', allAddedNodes);
 
       const allRemovedNodes = records.map(r => Array.from(r.removedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
@@ -195,10 +195,10 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
           const addedEl = addedNode as HTMLElement;
           if (
             (addedEl.tagName.toLowerCase() === 'ol' || addedEl.tagName.toLowerCase() === 'ul')
-            && parentElement !== editorContainer
+            && parentElement !== editorContainer && parentElement.tagName.toLowerCase() === 'p'
           ) {
-            parentElement.insertBefore(addedEl, parentElement);
-            parentElement.removeChild(parentElement);
+            editorContainer.insertBefore(addedEl, parentElement);
+            editorContainer.removeChild(parentElement);
             return;
           }
           if (addedEl.tagName.toLowerCase() === 'div') {
