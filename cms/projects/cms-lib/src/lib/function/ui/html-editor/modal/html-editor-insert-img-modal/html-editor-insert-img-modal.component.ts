@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Inject } fr
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { GalleryService } from '../../../../../global/api/service';
-import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { Subject, fromEvent } from 'rxjs';
 import { switchMap, tap, takeUntil } from 'rxjs/operators';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
@@ -65,9 +64,9 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   }
 
   changeGallery() {
-    this.gallerySharedService.openImgGallery().subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openImgGallery().subscribe(selectedGallery => {
       if (selectedGallery) {
-        this.galleryID = selectedGallery.gallery_id;
+        this.galleryID = selectedGallery.galleryId;
         this.src = `${this.environment.apiBaseUrl}${selectedGallery.url}`;
         this.checkImgSize();
       }

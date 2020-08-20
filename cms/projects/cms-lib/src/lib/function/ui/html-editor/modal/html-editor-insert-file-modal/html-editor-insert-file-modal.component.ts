@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
-import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 
 @Component({
   selector: 'cms-html-editor-insert-file-modal',
@@ -53,12 +52,12 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
   }
 
   changeGallery() {
-    this.gallerySharedService.openFileGallery().subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openFileGallery().subscribe(selectedGallery => {
       if (selectedGallery) {
         this.aTagConfig.href = selectedGallery.url;
-        this.aTagConfig.text = selectedGallery.file_name;
-        this.aTagConfig.galleyID = selectedGallery.gallery_id;
-        this.fileType = selectedGallery.file_type;
+        this.aTagConfig.text = selectedGallery.fileName;
+        this.aTagConfig.galleyID = selectedGallery.galleryId;
+        this.fileType = selectedGallery.fileType;
       }
     });
   }

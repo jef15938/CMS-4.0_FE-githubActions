@@ -143,7 +143,11 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   private uploadFile(file: FileUploadModel) {
-    return this.galleryService.createGallery(file, this.categoryId);
+    if (this.isCreate) {
+      return this.galleryService.createGallery(file, this.categoryId);
+    } else {
+      return this.galleryService.updateGallery(file, this.galleryId);
+    }
   }
 
   create() {

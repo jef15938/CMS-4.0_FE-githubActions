@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ModalService, ModalSetting } from '../../../ui/modal';
 import { GallerySharedContainerModalComponent } from '../component/gallery-shared-container-modal/gallery-shared-container-modal.component';
 import { GalleryFileType } from '../type/gallery-shared.type';
+import { GalleryInfoModel } from '../../../../global/api/data-model/models/gallery-info.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class GallerySharedService {
 
   private openGalleryWithFileTypes(
     allowedFileTypes?: GalleryFileType[]
-  ): Observable<any> {
+  ): Observable<GalleryInfoModel> {
 
     const modalSetting: ModalSetting = {
       id: `gallery-shared`,

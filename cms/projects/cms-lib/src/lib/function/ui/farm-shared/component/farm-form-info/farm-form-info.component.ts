@@ -8,7 +8,6 @@ import { FarmFormComp } from '../../farm-shared.interface';
 import { ContentEditorService } from './../../../content-editor';
 import { FarmService } from '../../../../../global/api/service';
 import { HtmlEditorService } from '../../../html-editor';
-import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
 import { GetFarmTreeResponse } from '../../../../../global/api/neuxAPI/bean/GetFarmTreeResponse';
@@ -262,10 +261,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   changeGallery(col: CmsFarmFormColumn) {
-    this.gallerySharedService.openGallery().subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openGallery().subscribe(selectedGallery => {
       if (selectedGallery) {
-        this.formGroup.get(col.column_id).setValue(`${selectedGallery.gallery_id}`);
-        col.setting.file_name = selectedGallery.file_name;
+        this.formGroup.get(col.column_id).setValue(`${selectedGallery.galleryId}`);
+        col.setting.file_name = selectedGallery.fileName;
       }
     });
   }

@@ -4,7 +4,7 @@ import { GroupMenuGetResponse } from '../../neuxAPI/bean/GroupMenuGetResponse';
 import { ModelMapping, ModelMapper } from '../model-mapper';
 
 // @dynamic
-@ModelMapping<GroupMenuGetResponse, GroupMenuGetResponseModel>(
+@ModelMapping(
   GroupMenuGetResponse, GroupMenuGetResponseModel,
   (bean, model) => {
     model.datas = ModelMapper.mapArrayTo(GroupMenuInfoModel, bean.datas);

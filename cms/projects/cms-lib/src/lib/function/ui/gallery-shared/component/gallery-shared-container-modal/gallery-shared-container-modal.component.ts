@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
 import { GallerySharedComponent } from '../gallery-shared/gallery-shared.component';
-import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GalleryFileType } from '../../type/gallery-shared.type';
+import { GalleryInfoModel } from '../../../../../global/api/data-model/models/gallery-info.model';
 
 @Component({
   selector: 'cms-gallery-shared-container-modal',
@@ -24,7 +24,7 @@ export class GallerySharedContainerModalComponent extends CustomModalBase implem
     this.modalRef.addPanelClass('cms-gallery-shared-container-modal');
   }
 
-  onGalleryClick(gallery: GalleryInfo) {
+  onGalleryClick(gallery: GalleryInfoModel) {
     this.close(gallery);
   }
 

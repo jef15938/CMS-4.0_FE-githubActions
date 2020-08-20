@@ -3,7 +3,6 @@ import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service/sitemap/sitemap.service';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
-import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { UserSiteMapPutRequestModel } from '../../../../global/api/data-model/models/user-sitemap-put-request.model';
 import { SiteNodeDetailInfoModel } from '../../../../global/api/data-model/models/site-node-detail-info.model';
@@ -80,10 +79,10 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
   }
 
   openGallery(detail: SiteNodeDetailInfoModel) {
-    return this.gallerySharedService.openImgGallery().subscribe((selected: GalleryInfo) => {
+    return this.gallerySharedService.openImgGallery().subscribe(selected => {
       if (selected) {
-        detail.metaImageName = selected.file_name;
-        detail.metaImage = `${selected.gallery_id}`;
+        detail.metaImageName = selected.fileName;
+        detail.metaImage = `${selected.galleryId}`;
       }
     });
   }

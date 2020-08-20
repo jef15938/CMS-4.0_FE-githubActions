@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable, throwError, Subscription, of } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { map, catchError, tap, last } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
@@ -9,6 +9,8 @@ import { GalleryCategoryInfo } from '../../neuxAPI/bean/GalleryCategoryInfo';
 import { GalleryCaregoryGetResponse } from '../../neuxAPI/bean/GalleryCaregoryGetResponse';
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface/cms-enviroment.interface';
+import { GalleryGetResponseModel } from '../../data-model/models/gallery-get-response.model';
+import { ModelMapper } from '../../data-model/model-mapper';
 
 export class FileUploadModel {
   fileName: string;
@@ -85,7 +87,8 @@ export class GalleryService {
    * @returns
    * @memberof GalleryService
    */
-  getGalleryByCategoryID(categoryID: string, page = 1, filter?: { fileName?: string, fileType?: string }): Observable<GalleryGetResponse> {
+  getGalleryByCategoryID(categoryID: string, page = 1, filter?: { fileName?: string, fileType?: string }):
+    Observable<GalleryGetResponseModel> {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
@@ -100,7 +103,9 @@ export class GalleryService {
     if (filter?.fileName) { params.fileName = filter.fileName; }
     if (filter?.fileType) { params.fileType = filter.fileType; }
 
-    return this.respAPIService.dispatchRestApi('GetGalleryByCategoryID', params);
+    return this.respAPIService.dispatchRestApi<GalleryGetResponse>('GetGalleryByCategoryID', params).pipe(
+      ModelMapper.rxMapModelTo(GalleryGetResponseModel),
+    );
   }
 
   /**
@@ -188,7 +193,7 @@ export class GalleryService {
     const formData = new FormData();
     formData.append('file', file.data);
     formData.append('description', file.data.name);
-    const req = new HttpRequest('POST', `${this.apiUrl}/${galleryID}`, formData, {
+    const req = new HttpRequest('PUT', `${this.apiUrl}/${galleryID}`, formData, {
       reportProgress: true
     });
     file.success = false;

@@ -6,7 +6,6 @@ import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
-import { GalleryInfo } from '../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GroupInfoModel } from '../../../../global/api/data-model/models/group-info.model';
 import { LayoutInfoModel } from '../../../../global/api/data-model/models/layout-info.model';
 import { UserSiteMapPostRequestModel } from '../../../../global/api/data-model/models/user-sitemap-post-request.model';
@@ -152,10 +151,10 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   }
 
   openGallery() {
-    return this.gallerySharedService.openImgGallery().subscribe((selected: GalleryInfo) => {
+    return this.gallerySharedService.openImgGallery().subscribe(selected => {
       if (selected) {
-        this.metaImageName = selected.file_name;
-        this.sitemapMaintainModel.metaImage = `${selected.gallery_id}`;
+        this.metaImageName = selected.fileName;
+        this.sitemapMaintainModel.metaImage = `${selected.galleryId}`;
       }
     });
   }

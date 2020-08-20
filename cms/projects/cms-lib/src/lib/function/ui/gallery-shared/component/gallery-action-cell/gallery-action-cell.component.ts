@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { CustomCellRenderer, CmsTable } from '../../../../ui/table';
+import { GalleryInfoModel } from '../../../../../global/api/data-model/models/gallery-info.model';
 
 enum ActionType {
   EDIT, DELETE, COPY_URL,
@@ -10,7 +10,7 @@ export class GalleryActionCellCustomEvent {
   ActionType = ActionType;
   constructor(
     public action: ActionType,
-    public data: GalleryInfo,
+    public data: GalleryInfoModel,
   ) { }
 }
 
@@ -23,14 +23,14 @@ export class GalleryActionCellComponent implements CustomCellRenderer, OnInit {
 
   ActionType = ActionType;
 
-  config: { data: GalleryInfo, table: CmsTable };
+  config: { data: GalleryInfoModel, table: CmsTable };
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  compInit(config: { data: GalleryInfo, table: CmsTable }) {
+  compInit(config: { data: GalleryInfoModel, table: CmsTable }) {
     this.config = config;
   }
 

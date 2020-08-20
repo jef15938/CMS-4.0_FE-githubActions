@@ -4,7 +4,7 @@ import { LoginResponse } from '../../neuxAPI/bean/LoginResponse';
 import { ModelMapping, ModelMapper } from '../model-mapper';
 
 // @dynamic
-@ModelMapping<LoginResponse, LoginResponseModel>(
+@ModelMapping(
   LoginResponse, LoginResponseModel,
   (bean, model) => {
     model.loginInfo = ModelMapper.mapModelTo(LoginInfoModel, bean.loginInfo);

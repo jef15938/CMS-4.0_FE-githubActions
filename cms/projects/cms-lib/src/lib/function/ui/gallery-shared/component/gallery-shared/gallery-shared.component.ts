@@ -3,7 +3,6 @@ import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../../global/api/service';
 import { PageInfo } from '../../../../../global/api/neuxAPI/bean/PageInfo';
-import { GalleryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { GalleryCategoryInfo } from '../../../../../global/api/neuxAPI/bean/GalleryCategoryInfo';
 import { ColDef } from '../../../../ui/table';
 import { TreeComponent } from '../../../../ui/tree';
@@ -14,6 +13,7 @@ import { UploadGalleryModalComponent } from '../upload-gallery-modal/upload-gall
 import { GalleryActionCellComponent, GalleryActionCellCustomEvent } from '../gallery-action-cell/gallery-action-cell.component';
 import { GalleryInfoCellComponent } from '../gallery-info-cell/gallery-info-cell.component';
 import { GalleryFileType } from '../../type/gallery-shared.type';
+import { GalleryInfoModel } from '../../../../../global/api/data-model/models/gallery-info.model';
 
 @Component({
   selector: 'cms-gallery-shared',
@@ -25,7 +25,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   @Input() mode: 'page' | 'modal' = 'page';
   @Input() allowedFileTypes: GalleryFileType[] = [];
 
-  @Output() galleryClick = new EventEmitter<GalleryInfo>();
+  @Output() galleryClick = new EventEmitter<GalleryInfoModel>();
 
   @ViewChild(TreeComponent) tree: TreeComponent<GalleryCategoryInfo>;
 
@@ -35,8 +35,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   selectedCategory: GalleryCategoryInfo;
 
   galleryPageInfo: PageInfo;
-  galleryDatas: GalleryInfo[];
-  colDefs: ColDef<GalleryInfo>[];
+  galleryDatas: GalleryInfoModel[];
+  colDefs: ColDef<GalleryInfoModel>[];
 
   readonly clipBoardInputId = 'gallerySharedClipBoardInput';
 
@@ -74,8 +74,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  private createColDefs(mode: 'page' | 'modal'): ColDef<GalleryInfo>[] {
-    const colDefs: ColDef<GalleryInfo>[] = [
+  private createColDefs(mode: 'page' | 'modal'): ColDef<GalleryInfoModel>[] {
+    const colDefs: ColDef<GalleryInfoModel>[] = [
       // {
       //   colId: 'file_name',
       //   field: 'file_name',
@@ -189,13 +189,13 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateGallery(gallery: GalleryInfo) {
+  private updateGallery(gallery: GalleryInfoModel) {
     return this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
-        galleryId: gallery.gallery_id,
-        galleryType: gallery.file_type,
-        galleryName: gallery.file_name
+        galleryId: gallery.galleryId,
+        galleryType: gallery.fileType,
+        galleryName: gallery.fileName,
       }
     });
   }
@@ -254,7 +254,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
           action = this.updateGallery(event.data);
           break;
         case event.ActionType.DELETE:
-          action = this.galleryService.deleteGallery(event.data.gallery_id).pipe(
+          action = this.galleryService.deleteGallery(event.data.galleryId).pipe(
             map(_ => 'Deleted')
           );
           break;
@@ -281,7 +281,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.getGallery().subscribe();
   }
 
-  onRowClick(gallery: GalleryInfo) {
+  onRowClick(gallery: GalleryInfoModel) {
     this.galleryClick.emit(gallery);
   }
 

@@ -2,7 +2,6 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective, FieldInfo } from '@neux/render';
 import { GallerySharedService } from '../../../../../../gallery-shared/service/gallery-shared.service';
-import { GalleryInfo } from '../../../../../../../../global/api/neuxAPI/bean/GalleryInfo';
 import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
 
 @Component({
@@ -39,10 +38,10 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
   }
 
   changeGallery() {
-    this.gallerySharedService.openImgGallery().subscribe((selectedGallery: GalleryInfo) => {
+    this.gallerySharedService.openImgGallery().subscribe(selectedGallery => {
       if (selectedGallery) {
         this.fieldInfo.fieldVal = selectedGallery.url;
-        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${selectedGallery.gallery_id}`;
+        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${selectedGallery.galleryId}`;
         this.change.emit();
       }
     });
