@@ -149,7 +149,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       const allAddedNodes = records.map(r => Array.from(r.addedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
         .filter((node, i, arr) => arr.indexOf(node) === i);
-      console.log('allAddedNodes = ', allAddedNodes);
+      // console.log('allAddedNodes = ', allAddedNodes);
 
       const allRemovedNodes = records.map(r => Array.from(r.removedNodes))
         .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
