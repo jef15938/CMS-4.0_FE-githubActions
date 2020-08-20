@@ -16,6 +16,8 @@ import { ListContentDataSourceResponseModel } from '../../data-model/models/list
 import { ContentVersionInfoModel } from '../../data-model/models/content-version-info.model';
 import { ListContentVersionResponseModel } from '../../data-model/models/list-content-version-response.model';
 import { TemplateGetResponseModel } from '../../data-model/models/template-get-response.model';
+import { ContentInfoModel } from '../../data-model/models/content-info.model';
+import { plainToClass } from 'class-transformer';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +35,13 @@ export class ContentService {
    * @returns
    * @memberof ContentService
    */
-  getContentById(id: string, version?: number): Observable<ContentInfo> {
+  getContentById(id: string, version?: number): Observable<ContentInfoModel> {
     if (!id) {
       throw new ParamsError('id', 'getContentById', 'string', id);
     }
-    return this.restAPIService.dispatchRestApi('GetContentById', { id, version });
+    return this.restAPIService.dispatchRestApi<ContentInfo>('GetContentById', { id, version }).pipe(
+      ModelMapper.rxMapModelTo(ContentInfoModel),
+    );
   }
 
   /**
@@ -67,6 +71,23 @@ export class ContentService {
     return this.restAPIService.dispatchRestApi<TemplateGetResponse>('GetTemplateByControlID', { controlID }).pipe(
       ModelMapper.rxMapModelTo(TemplateGetResponseModel),
     );
+  }
+
+  convertContentInfoJsonToContentInfoModel(contentInfoJson: ContentInfo): ContentInfoModel {
+    if (!contentInfoJson) { return null; }
+    const contentInfo = plainToClass(ContentInfo, contentInfoJson);
+    return ModelMapper.mapModelTo(ContentInfoModel, contentInfo);
+  }
+
+  convertContentInfoModelToContentInfo(contentInfoModel: ContentInfoModel): ContentInfo {
+    if (!contentInfoModel) { return contentInfoModel as any; }
+    const contentInfoModelJsonString = JSON.stringify(contentInfoModel);
+    const regexLanguageId = new RegExp(/languageId/g);
+    const regexLanguageName = new RegExp(/languageName/g);
+    const resultString = contentInfoModelJsonString
+      .replace(regexLanguageId, 'language_id')
+      .replace(regexLanguageName, 'language_name');
+    return JSON.parse(resultString);
   }
 
   /**

@@ -3,6 +3,9 @@ import { ModalService, ModalSetting } from '../modal';
 import { EditorMode } from './content-editor.interface';
 import { ContentEditorContainerModalComponent } from './component/content-editor-container-modal/content-editor-container-modal.component';
 import { ContentInfo } from '../../../global/api/neuxAPI/bean/ContentInfo';
+import { ContentService } from '../../../global/api/service';
+import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -26,11 +29,12 @@ export class ContentEditorService {
 
   constructor(
     private modalService: ModalService,
+    private contentService: ContentService,
   ) {
 
   }
 
-  openEditorInfo(content: ContentInfo) {
+  openEditorInfo(content: ContentInfoModel) {
     const editorMode = EditorMode.READ;
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
@@ -40,7 +44,7 @@ export class ContentEditorService {
         editorMode,
       },
       modalSetting: this.getDefaultModalSetting(editorMode)
-    }, false);
+    }, false).pipe(map(this.mapContentInfoModelToContentInfo));
   }
 
   openEditorPreview(content: ContentInfo, controlID: string) {
@@ -49,11 +53,11 @@ export class ContentEditorService {
       component: ContentEditorContainerModalComponent,
       componentInitData: {
         title: '預覽',
-        content,
+        content: this.contentService.convertContentInfoJsonToContentInfoModel(content),
         editorMode,
       },
       modalSetting: this.getDefaultModalSetting(editorMode)
-    }, false);
+    }, false).pipe(map(this.mapContentInfoModelToContentInfo));
   }
 
   openEditorByContent(content: ContentInfo, controlID: string) {
@@ -61,12 +65,12 @@ export class ContentEditorService {
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
       componentInitData: {
-        content,
+        content: this.contentService.convertContentInfoJsonToContentInfoModel(content),
         controlID,
         editorMode,
       },
       modalSetting: this.getDefaultModalSetting(editorMode)
-    }, true);
+    }, true).pipe(map(this.mapContentInfoModelToContentInfo));
   }
 
   openEditorByContentID(contentID: string, controlID: string) {
@@ -79,7 +83,11 @@ export class ContentEditorService {
         editorMode,
       },
       modalSetting: this.getDefaultModalSetting(editorMode)
-    }, true);
+    }, true).pipe(map(this.mapContentInfoModelToContentInfo));
+  }
+
+  private mapContentInfoModelToContentInfo = (contentInfoModel: ContentInfoModel) => {
+    return this.contentService.convertContentInfoModelToContentInfo(contentInfoModel);
   }
 
 }

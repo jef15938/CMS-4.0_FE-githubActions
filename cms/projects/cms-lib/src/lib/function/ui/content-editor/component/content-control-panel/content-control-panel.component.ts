@@ -6,6 +6,8 @@ import { EditorMode, ContentEditorActionMode, ContentEditorContext } from '../..
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 import { ContentEditorService } from '../../content-editor.service';
 import { LanguageInfo } from '../../../../../global/api/neuxAPI/bean/LanguageInfo';
+import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
+import { LanguageInfoModel } from '../../../../../global/api/data-model/models/language-info.model';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -86,9 +88,9 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    * 顯示版型info
    */
   templateShowInfo() {
-    const languageInfo = new LanguageInfo();
-    languageInfo.templates = [this.selected.templateInfo];
-    const contentInfo = new ContentInfo();
+    const languageInfo = new LanguageInfoModel();
+    languageInfo.templates = [this.selected.templateInfo as any];
+    const contentInfo = new ContentInfoModel();
     contentInfo.languages = [languageInfo];
 
     this.contentEditorService.openEditorInfo(contentInfo).subscribe();

@@ -4,11 +4,11 @@ import {
 } from '@angular/core';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { DynamicComponentFactoryService, LayoutBaseComponent } from '@neux/render';
-import { ContentTemplateInfo } from '../../../../../global/api/neuxAPI/bean/ContentTemplateInfo';
-import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentEditorContext } from '../../content-editor.interface';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
 import { TemplateInfoModel } from '../../../../../global/api/data-model/models/template-info.model';
+import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
+import { ContentTemplateInfoModel } from '../../../../../global/api/data-model/models/content-template-info.model';
 
 @Component({
   selector: 'cms-layout-control-panel',
@@ -23,7 +23,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
   show = false;
 
-  @Input() contentInfo: ContentInfo;
+  @Input() contentInfo: ContentInfoModel;
 
   // 可選版面資料
   @Input() selectableTemplates: TemplateGetResponseModel;
@@ -115,7 +115,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     const component = this.dynamicComponentFactoryService.getComponent(selectedTemplateInfo.templateId);
     if (!component) { alert(`找不到指定id的版面元件 : ${selectedTemplateInfo.templateId}`); return; }
 
-    let defaultTemplateInfo: ContentTemplateInfo;
+    let defaultTemplateInfo: ContentTemplateInfoModel;
 
     try {
       const viewContainerRef = this.createTemplateContainer;

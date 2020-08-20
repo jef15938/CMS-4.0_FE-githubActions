@@ -1,10 +1,10 @@
 import { Subject, Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
-import { ContentInfo } from './../../../../global/api/neuxAPI/bean/ContentInfo';
+import { ContentInfoModel } from '../../../../global/api/data-model/models/content-info.model';
 
 class ContentInfoState {
   constructor(
-    public snapShot: ContentInfo,
+    public snapShot: ContentInfoModel,
     public action?: string,
   ) { }
 }
@@ -20,13 +20,13 @@ export class ContentInfoStateManager {
   states: ContentInfoState[] = [];
 
   currentState: ContentInfoState;
-  get contentInfoEditModel(): ContentInfo { return this.currentState?.snapShot; }
+  get contentInfoEditModel(): ContentInfoModel { return this.currentState?.snapShot; }
 
   hasPreviousState = false;
   hasNextState = false;
 
   constructor(
-    originContentInfo: ContentInfo,
+    originContentInfo: ContentInfoModel,
   ) {
     this.stateChange = this.stateChange$.pipe(shareReplay<ContentInfoState>(1));
     this.originState = new ContentInfoState(JSON.parse(JSON.stringify(originContentInfo)), 'origin');

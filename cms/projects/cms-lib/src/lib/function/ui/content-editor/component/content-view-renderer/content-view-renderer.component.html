@@ -1,7 +1,7 @@
 <div class="view-container">
   <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)" animationDuration="0ms">
-    <mat-tab *ngFor="let language of contentInfo.languages;let i=index;" [label]="language.language_name">
-      <rdr-templates-container [templates]="language.templates" mode="edit" (select)="onSelect($event)"
+    <mat-tab *ngFor="let language of contentInfo.languages;let i=index;" [label]="language.languageName">
+      <rdr-templates-container [templates]="$any(language.templates)" mode="edit" (select)="onSelect($event)"
         (enter)="onEnter($event)" (leave)="onLeave($event)">
       </rdr-templates-container>
       <!-- <ng-container *ngIf="tabIndex===i">

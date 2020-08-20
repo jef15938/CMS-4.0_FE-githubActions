@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interface';
 import { ContentService } from '../../../../../global/api/service';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
+import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 
 @Component({
   selector: 'cms-content-editor-container-modal',
@@ -16,7 +16,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   @Input() contentID?: string;
   @Input() controlID?: string;
-  @Input() content?: ContentInfo;
+  @Input() content?: ContentInfoModel;
   @Input() editorMode: EditorMode = EditorMode.EDIT;
   @Input() onSaved: () => void;
 
@@ -38,11 +38,12 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   }
 
-  close(currentContentInfo: ContentInfo) {
+  close(currentContentInfo: ContentInfoModel) {
     super.close(currentContentInfo);
   }
 
   save(event: ContentEditorSaveEvent) {
+    const convertedContentInfo = this.contentService.convertContentInfoModelToContentInfo(event.contentInfo);
     if (!this.contentID) {
       event.editorSave();
       alert('內容儲存成功');
@@ -50,7 +51,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
       return;
     }
 
-    this.contentService.updateContent(this.contentID, event.contentInfo).subscribe(_ => {
+    this.contentService.updateContent(this.contentID, convertedContentInfo).subscribe(_ => {
       alert('內容儲存成功');
       if (this.onSaved) {
         this.onSaved();

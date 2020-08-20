@@ -4,7 +4,6 @@ import {
 } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
-import { ContentInfo } from '../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentEditorSaveEvent, EditorMode, ContentEditorActionMode, ContentEditorContext } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
@@ -12,8 +11,7 @@ import { ContentControlPanelComponent } from './component/content-control-panel/
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactive-guardian.interface';
 import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
-import { ContentTemplateInfo } from '../../../global/api/neuxAPI/bean/ContentTemplateInfo';
-import { FieldType, TabTemplateInfo, TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
+import { TabTemplateInfo, TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 import { ModalService } from '../modal';
 import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
 import { ContentService } from '../../../global/api/service';
@@ -22,8 +20,11 @@ import { ATTRIBUTE_GALLERY_ID } from '../html-editor/const/html-editor-container
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
 import { TemplateGetResponseModel } from '../../../global/api/data-model/models/template-get-response.model';
+import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
+import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
+import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
 
-const isTabTemplateInfo = (templateInfo: ContentTemplateInfo): boolean => {
+const isTabTemplateInfo = (templateInfo: ContentTemplateInfoModel): boolean => {
   return !!(templateInfo as any).tabList;
 };
 
@@ -48,7 +49,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
 
   // 編輯對象外部提供資料
-  @Input() contentInfo: ContentInfo;
+  @Input() contentInfo: ContentInfoModel;
   @Input() contentID: string;
 
   // 可選版面資料
@@ -56,7 +57,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   @Input() btnClose = true;
 
-  @Output() editorClose = new EventEmitter<ContentInfo>();
+  @Output() editorClose = new EventEmitter<ContentInfoModel>();
   @Output() editorSave = new EventEmitter<ContentEditorSaveEvent>();
 
   manager: ContentEditorManager;
@@ -77,7 +78,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   ngOnInit(): void {
-    const contentInfo: ContentInfo = this.convertToEditorContent(this.contentInfo);
+    const contentInfo: ContentInfoModel = this.convertToEditorContent(this.contentInfo);
     this.cmsCanDeactiveGuard.registerAsGuardian(this);
     this.resetSelected();
     this.manager = new ContentEditorManager(contentInfo);
@@ -102,15 +103,15 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     this.registerClickCaptureListener('unregister');
   }
 
-  private convertToEditorContent(contentInfo: ContentInfo): ContentInfo {
-    const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfo;
+  private convertToEditorContent(contentInfo: ContentInfoModel): ContentInfoModel {
+    const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfoModel;
     info.languages.forEach(lang => {
       let templates = lang.templates;
       while (templates?.length) {
-        let tempTemplates: ContentTemplateInfo[] = [];
+        let tempTemplates: ContentTemplateInfoModel[] = [];
         templates.forEach(template => {
           template.fields.forEach(field => {
-            if (field.fieldType === FieldType.HTMLEDITOR) {
+            if (field.fieldType === ContentFieldInfoFieldType.HTMLEDITOR) {
               const htmlString = field.fieldVal;
               const container = document.createElement('div');
               container.innerHTML = htmlString;
@@ -128,7 +129,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
             }
           });
           if (isTabTemplateInfo(template)) {
-            tempTemplates = tempTemplates.concat((template as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
+            tempTemplates = tempTemplates.concat(((template as any) as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
           }
         });
         templates = tempTemplates;
@@ -137,15 +138,15 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     return info;
   }
 
-  private convertEditorContentToData(contentInfo: ContentInfo): ContentInfo {
-    const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfo;
+  private convertEditorContentToData(contentInfo: ContentInfoModel): ContentInfoModel {
+    const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfoModel;
     info.languages.forEach(lang => {
       let templates = lang.templates;
       while (templates?.length) {
-        let tempTemplates: ContentTemplateInfo[] = [];
+        let tempTemplates: ContentTemplateInfoModel[] = [];
         templates.forEach(template => {
           template.fields.forEach(field => {
-            if (field.fieldType === FieldType.HTMLEDITOR) {
+            if (field.fieldType === ContentFieldInfoFieldType.HTMLEDITOR) {
               const htmlString = field.fieldVal;
               const container = document.createElement('div');
               container.innerHTML = htmlString;
@@ -163,7 +164,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
             }
           });
           if (isTabTemplateInfo(template)) {
-            tempTemplates = tempTemplates.concat((template as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
+            tempTemplates = tempTemplates.concat(((template as any) as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
           }
         });
         templates = tempTemplates;
@@ -204,34 +205,34 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   save() {
-    const contentInfo: ContentInfo = this.convertEditorContentToData(
+    const contentInfo: ContentInfoModel = this.convertEditorContentToData(
       JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel))
     );
     let galleryIds: string[] = [];
 
-    let templates: ContentTemplateInfo[] = contentInfo.languages.reduce((a, b) => a.concat(b.templates || []), []);
+    let templates: ContentTemplateInfoModel[] = contentInfo.languages.reduce((a, b) => a.concat(b.templates || []), []);
 
     // 循環檢查 TemplateInfo 內是否用到 gallery 檔案，找出 galleryID
     while (templates.length) {
-      let children: ContentTemplateInfo[] = [];
+      let children: ContentTemplateInfoModel[] = [];
 
       templates.forEach(template => {
         template.fields.forEach(field => {
           switch (field.fieldType) {
-            case FieldType.HTMLEDITOR:
+            case ContentFieldInfoFieldType.HTMLEDITOR:
               const htmlString = field.fieldVal || '';
               const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
               const matches = htmlString.match(galleryIdRegex);
               const ids = matches?.map(str => str.replace('gallery-id="', '').replace('"', '')) || [];
               galleryIds = [...galleryIds, ...ids];
               break;
-            case FieldType.IMG:
+            case ContentFieldInfoFieldType.IMG:
               const imgGalleryID = field.extension['gallery-id'];
               if (imgGalleryID) {
                 galleryIds.push(imgGalleryID);
               }
               break;
-            case FieldType.BGIMG:
+            case ContentFieldInfoFieldType.BGIMG:
               const bgimgGalleryID = field.extension['gallery-id'];
               if (bgimgGalleryID) {
                 galleryIds.push(bgimgGalleryID);
@@ -243,7 +244,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         if (isTabTemplateInfo(template)) {
           children = [
             ...children,
-            ...(template as TabTemplateInfo).tabList.reduce<ContentTemplateInfo[]>((a, b) => [...a, ...(b.children)], [])
+            ...((template as any) as TabTemplateInfo).tabList
+              .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, ...(b.children as any[])], [])
           ];
         }
       });

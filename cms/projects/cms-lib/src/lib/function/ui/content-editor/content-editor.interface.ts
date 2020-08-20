@@ -1,5 +1,5 @@
-import { ContentInfo } from './../../../global/api/neuxAPI/bean/ContentInfo';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
+import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
 
 export enum EditorMode {
   EDIT, INFO, READ,
@@ -11,7 +11,7 @@ export enum ContentEditorActionMode {
 }
 
 export class ContentEditorSaveEvent {
-  contentInfo: ContentInfo;
+  contentInfo: ContentInfoModel;
   /** change Editor save status */
   editorSave: () => void;
 }

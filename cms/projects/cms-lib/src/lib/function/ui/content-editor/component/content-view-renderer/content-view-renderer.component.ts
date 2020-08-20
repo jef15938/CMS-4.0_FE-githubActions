@@ -7,11 +7,11 @@ import {
   LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective,
   LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective, LayoutWrapperComponent, FixedWrapperComponent
 } from '@neux/render';
-import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { EditorMode, ContentEditorActionMode } from '../../content-editor.interface';
 import { CheckViewConfig } from './content-view-renderer.interface';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 
 class AddTemplateBtn {
   constructor(
@@ -36,7 +36,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
   @Input() editorMode: EditorMode = EditorMode.EDIT;
   @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
-  @Input() contentInfo: ContentInfo;
+  @Input() contentInfo: ContentInfoModel;
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
   @Output() addTemplateBtnClick = new EventEmitter<AddTemplateButtonComponent>();
