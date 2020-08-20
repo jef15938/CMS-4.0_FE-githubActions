@@ -201,7 +201,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
             editorContainer.removeChild(parentElement);
             return;
           }
-          if (addedEl.tagName.toLowerCase() === 'div') {
+          if (addedEl.tagName.toLowerCase() === 'div' && !addedEl.classList.length) {
             const p = document.createElement('p');
             p.innerHTML = addedEl.innerHTML;
             parentElement.insertBefore(p, addedEl);
@@ -335,19 +335,19 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   onFocus() {
-    if (this.editorContainer.innerHTML === this.defaultContent) {
-      const p = this.editorContainer.querySelector('p');
-      this.simpleWysiwygService.setSelectionOnNode(p, 0, 1);
-    }
+    // if (this.editorContainer.innerHTML === this.defaultContent) {
+    //   const p = this.editorContainer.querySelector('p');
+    //   this.simpleWysiwygService.setSelectionOnNode(p, 0, 1);
+    // }
   }
 
   onBlur() {
-    if (
-      !this.editorContainer.innerHTML
-      || this.editorContainer.innerHTML === '<p></p>'
-      || this.editorContainer.innerHTML === '<p><br></p>'
-    ) {
-      this.editorContainer.innerHTML = this.defaultContent;
-    }
+    // if (
+    //   !this.editorContainer.innerHTML
+    //   || this.editorContainer.innerHTML === '<p></p>'
+    //   || this.editorContainer.innerHTML === '<p><br></p>'
+    // ) {
+    //   this.editorContainer.innerHTML = this.defaultContent;
+    // }
   }
 }
