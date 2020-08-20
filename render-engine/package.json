@@ -13,6 +13,8 @@
     "dev:ssr": "ng run render-engine:serve-ssr",
     "serve:ssr": "node dist/render-engine/server/main.js",
     "build:ssr": "ng build --prod && ng run render-engine:server:production",
+    "build:sit": "ng build --configuration=sit && ng run render-engine:server:sit",
+    "build:uat": "ng build --configuration=uat && ng run render-engine:server:uat",
     "prerender": "ng run render-engine:prerender"
   },
   "private": true,
