@@ -248,7 +248,7 @@ export class SimpleWysiwygService {
     return false;
   }
 
-  insertHtml(htmlString: string) {
+  insertHtml(htmlString: string, editorContainer: HTMLElement) {
     const range = this.getRange();
 
     if (!range) { return null; }
@@ -269,7 +269,7 @@ export class SimpleWysiwygService {
       document.execCommand('ms-endUndoUnit');
     }
 
-    const added = document.getElementById(modifiedId);
+    const added = editorContainer.querySelector(`#${modifiedId}`);
 
     if (added) {
       added.removeAttribute('id');

@@ -39,7 +39,7 @@ export class InsertTable extends HtmlEditorActionBase {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
         const table = this.tableControllerService.createTable(config);
-        const addedTable = this.context.simpleWysiwygService.insertHtml(table.outerHTML) as HTMLTableElement;
+        const addedTable = this.context.simpleWysiwygService.insertHtml(table.outerHTML, this.context.editorContainer) as HTMLTableElement;
         this.context.simpleWysiwygService.setSelectionOnNode(addedTable);
       })
     );

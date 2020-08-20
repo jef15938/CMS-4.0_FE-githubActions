@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, OnChanges, Output, EventEmitter,
-  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy, SimpleChanges, AfterViewChecked, ChangeDetectorRef,
+  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy, SimpleChanges, AfterViewChecked, ChangeDetectorRef, ElementRef,
 } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -72,6 +72,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
+    private elementRef: ElementRef,
   ) { }
 
   ngOnInit(): void {
@@ -185,7 +186,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   private createDragGhost(node: HTMLElement) {
-    const existing = document.getElementById(this.dragGhostId);
+    const existing = (this.elementRef.nativeElement as HTMLElement).querySelector(`#${this.dragGhostId}`);
     if (existing) { document.body.removeChild(existing); }
 
     const ghost = node.cloneNode(true) as HTMLElement;
@@ -257,7 +258,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   handleDragEnd(event) {
-    const ghost = document.getElementById(this.dragGhostId);
+    const ghost = (this.elementRef.nativeElement as HTMLElement).querySelector(`#${this.dragGhostId}`);
     if (ghost) { document.body.removeChild(ghost); }
     if (!this.draggable) { return; }
 

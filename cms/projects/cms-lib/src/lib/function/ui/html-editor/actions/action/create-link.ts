@@ -51,7 +51,7 @@ export class CreateLink extends DomCmdAction {
             }
           }
           aTagToModify.classList.add(CLASS_NAME_EDITOR_LINK);
-          const modified = this.context.simpleWysiwygService.insertHtml(aTagToModify.outerHTML);
+          const modified = this.context.simpleWysiwygService.insertHtml(aTagToModify.outerHTML, this.context.editorContainer);
 
           this.context.simpleWysiwygService.setSelectionOnNode(
             isCreateOnImg ? modified.getElementsByTagName('img')[0] : modified,

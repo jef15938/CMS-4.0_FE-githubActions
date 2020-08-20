@@ -29,7 +29,6 @@ export class ModelMapper {
     return target;
   }
 
-  // @dynamic
   static rxMapModelTo<Source, Target>(targetClass: Constructor<Target>) {
     function func(ob: Observable<Source>) {
       return ob.pipe(
@@ -41,7 +40,6 @@ export class ModelMapper {
 
 }
 
-// @dynamic
 export function ModelMapping<Source, Target>(
   sourceClass: Constructor<Source>,
   targetClass: Constructor<Target>,

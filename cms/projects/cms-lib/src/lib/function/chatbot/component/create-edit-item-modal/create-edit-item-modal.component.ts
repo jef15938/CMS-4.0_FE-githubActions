@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
@@ -28,7 +28,9 @@ export class CreateEditItemModalComponent extends CustomModalBase implements OnI
 
   title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}項目`;
 
-  constructor() {
+  constructor(
+    private elementRef: ElementRef,
+  ) {
     super();
   }
 
@@ -66,7 +68,7 @@ export class CreateEditItemModalComponent extends CustomModalBase implements OnI
     if (!synonym) { return; }
     if (this.item.synonyms.indexOf(synonym) < 0) {
       this.item.synonyms.unshift(synonym);
-      document.getElementById('synonym-list').scrollTo(0, 0);
+      (this.elementRef.nativeElement as HTMLElement).querySelector('#synonym-list').scrollTo(0, 0);
     } else {
       alert('已有同樣的同義祠');
     }

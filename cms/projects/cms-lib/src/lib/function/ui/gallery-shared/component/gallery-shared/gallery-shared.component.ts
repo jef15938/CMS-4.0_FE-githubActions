@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input, ComponentRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input, ComponentRef, ElementRef } from '@angular/core';
 import { concat, Subject, of, Observable, NEVER } from 'rxjs';
 import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
 import { AuthorizationService, GalleryService } from '../../../../../global/api/service';
@@ -50,6 +50,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     private galleryService: GalleryService,
     private authorizationService: AuthorizationService,
     private modalService: ModalService,
+    private elementRef: ElementRef,
   ) { }
 
   ngOnInit(): void {
@@ -228,7 +229,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   }
 
   copyToClipBoard(text: string) {
-    const input = document.getElementById(this.clipBoardInputId) as HTMLInputElement;
+    const input = (this.elementRef.nativeElement as HTMLElement).querySelector(`#${this.clipBoardInputId}`) as HTMLInputElement;
     input.setAttribute('type', 'text');
     input.setAttribute('value', text);
     input.select();

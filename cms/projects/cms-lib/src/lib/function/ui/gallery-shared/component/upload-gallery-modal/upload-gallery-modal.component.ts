@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, Inject, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { forkJoin } from 'rxjs';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
@@ -68,6 +68,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
     private galleryService: GalleryService,
     private changeDetectorRef: ChangeDetectorRef,
+    private elementRef: ElementRef,
   ) { super(); }
 
   ngOnInit() {
@@ -88,8 +89,12 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     this.changeDetectorRef.detectChanges();
   }
 
+  private getFileUpload() {
+    return (this.elementRef.nativeElement as HTMLElement).querySelector(`#${this.fileUploadInputIdentifier}`) as HTMLInputElement;
+  }
+
   addFiles() {
-    const fileUpload = document.getElementById(this.fileUploadInputIdentifier) as HTMLInputElement;
+    const fileUpload = this.getFileUpload();
     fileUpload.onchange = fileUpload.onchange || (() => {
       const files = Array.from(fileUpload.files);
       if (files.length > 5) {
@@ -142,7 +147,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   create() {
-    const fileUpload = document.getElementById(this.fileUploadInputIdentifier) as HTMLInputElement;
+    const fileUpload = this.getFileUpload();
     fileUpload.value = '';
 
     forkJoin(this.files.map(file => this.uploadFile(file))).subscribe(results => {
@@ -155,7 +160,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   update() {
-    const fileUpload = document.getElementById(this.fileUploadInputIdentifier) as HTMLInputElement;
+    const fileUpload = this.getFileUpload();
     fileUpload.value = '';
 
     const file = this.files[0];

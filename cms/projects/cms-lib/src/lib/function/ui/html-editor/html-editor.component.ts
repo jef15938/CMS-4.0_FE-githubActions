@@ -177,6 +177,44 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         HtmlEditorElementControllerFactory.getController(removedNode as HTMLElement)?.removeFromEditor(editorContainer);
       });
 
+      allAddedNodes.forEach(addedNode => {
+        const addedNodeType = addedNode.nodeType;
+        const parentElement = addedNode.parentElement;
+        if (addedNodeType === Node.TEXT_NODE && parentElement === editorContainer) {
+          const nextNode = addedNode.nextSibling;
+          const p = document.createElement('p');
+          p.appendChild(addedNode);
+          if (nextNode) {
+            parentElement.insertBefore(p, nextNode);
+          } else {
+            parentElement.appendChild(p);
+          }
+        }
+
+        if (addedNodeType === Node.ELEMENT_NODE) {
+          const addedEl = addedNode as HTMLElement;
+          if (
+            (addedEl.tagName.toLowerCase() === 'ol' || addedEl.tagName.toLowerCase() === 'ul')
+            && parentElement !== editorContainer
+          ) {
+            parentElement.insertBefore(addedEl, parentElement);
+            parentElement.removeChild(parentElement);
+            return;
+          }
+          if (addedEl.tagName.toLowerCase() === 'div') {
+            const p = document.createElement('p');
+            p.innerHTML = addedEl.innerHTML;
+            parentElement.insertBefore(p, addedEl);
+            parentElement.removeChild(addedEl);
+            return;
+          }
+          if (addedEl.tagName.toLowerCase() === 'br' && parentElement === editorContainer) {
+            parentElement.removeChild(addedEl);
+            return;
+          }
+        }
+      });
+
       while (acturallyAddedNodes && acturallyAddedNodes.length) {
         acturallyAddedNodes.forEach(addedNode => {
           HtmlEditorElementControllerFactory.addController(addedNode as HTMLElement, this)?.addToEditor(editorContainer);
@@ -299,12 +337,16 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   onFocus() {
     if (this.editorContainer.innerHTML === this.defaultContent) {
       const p = this.editorContainer.querySelector('p');
-      p.innerText = '';
+      this.simpleWysiwygService.setSelectionOnNode(p, 0, 1);
     }
   }
 
   onBlur() {
-    if (!this.editorContainer.innerHTML || this.editorContainer.innerHTML === '<p></p>') {
+    if (
+      !this.editorContainer.innerHTML
+      || this.editorContainer.innerHTML === '<p></p>'
+      || this.editorContainer.innerHTML === '<p><br></p>'
+    ) {
       this.editorContainer.innerHTML = this.defaultContent;
     }
   }
