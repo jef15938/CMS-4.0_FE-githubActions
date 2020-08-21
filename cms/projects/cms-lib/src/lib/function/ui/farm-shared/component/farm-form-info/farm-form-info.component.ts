@@ -49,7 +49,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.warn('this.farmFormInfo = ', this.farmFormInfo);
     this.formGroup = this.createFormGroup(this.farmFormInfo);
     this.formColumnSettingMap = this.createFormColumnSettingMap(this.farmFormInfo);
     this.farmFormInfo.columns.forEach(column => {

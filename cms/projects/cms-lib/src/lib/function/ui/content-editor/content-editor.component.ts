@@ -191,20 +191,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     }
   }
 
-  close() {
-    if (!this.contentID) {
-      this.editorClose.emit(this.manager.stateManager.contentInfoEditModel);
-      return;
-    }
-
-    if (!this.saved || this.contentControlPanel?.hasChange) {
-      const yes = window.confirm('有尚未儲存的變更，確定關閉？');
-      if (!yes) { return; }
-    }
-    this.editorClose.emit(this.manager.stateManager.contentInfoEditModel);
-  }
-
-  save() {
+  private getCurrentContent() {
     const contentInfo: ContentInfoModel = this.convertEditorContentToData(
       JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel))
     );
@@ -254,6 +241,26 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     }
 
     contentInfo.galleries = [...new Set(galleryIds)].sort();
+
+    return contentInfo;
+  }
+
+  close() {
+    const contentInfo = this.getCurrentContent();
+    if (!this.contentID) {
+      this.editorClose.emit(contentInfo);
+      return;
+    }
+
+    if (!this.saved || this.contentControlPanel?.hasChange) {
+      const yes = window.confirm('有尚未儲存的變更，確定關閉？');
+      if (!yes) { return; }
+    }
+    this.editorClose.emit(contentInfo);
+  }
+
+  save() {
+    const contentInfo = this.getCurrentContent();
     this.editorSave.emit({
       contentInfo,
       editorSave: this.setEditorSaved.bind(this),
