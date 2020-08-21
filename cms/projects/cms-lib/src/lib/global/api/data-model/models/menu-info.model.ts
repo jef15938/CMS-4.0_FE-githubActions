@@ -12,6 +12,16 @@ import { ModelMapping, ModelMapper } from '../model-mapper';
     model.children = ModelMapper.mapArrayTo(MenuInfoModel, bean.children);
   }
 )
+// @dynamic
+@ModelMapping(
+  MenuInfoModel, MenuInfo,
+  (model, bean) => {
+    bean.func_id = model.funcId;
+    bean.func_name = model.funcName;
+    bean.component_id = model.componentId;
+    bean.children = ModelMapper.mapArrayTo(MenuInfo, model.children);
+  }
+)
 export class MenuInfoModel {
 
   @IsNotEmpty()

@@ -14,6 +14,7 @@ import { ListGroupResponseModel } from '../../data-model/models/list-group-respo
 import { GroupInfoModel } from '../../data-model/models/group-info.model';
 import { GroupSitemapInfoModel } from '../../data-model/models/group-sitemap-info.model';
 import { GroupSiteMapGetResponseModel } from '../../data-model/models/group-sitemap-get-response.model';
+import { GroupMenuInfo } from '../../neuxAPI/bean/GroupMenuInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +72,7 @@ export class GroupService {
     }
 
     const requestBody: { [k: string]: any } = {
-      datas: ModelMapper.mapArrayTo(GroupMenuInfoModel, menuInfoModels)
+      datas: ModelMapper.mapArrayTo(GroupMenuInfo, menuInfoModels)
     };
 
     const params: { [k: string]: any } = {
