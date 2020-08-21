@@ -82,7 +82,7 @@ export class AuditingService {
    * @returns
    * @memberof AuditingService
    */
-  approveAuditing(orderID: number, status: string, comment?: string) {
+  approveAuditing(orderID: number | number[], status: string, comment?: string) {
     if (!orderID) { throw new ParamsError('orderID', 'approveAuditing', 'number', orderID); }
     if (!status) { throw new ParamsError('status', 'approveAuditing', 'string', status); }
 
@@ -92,7 +92,7 @@ export class AuditingService {
     };
 
     const params: { [k: string]: any } = {
-      orderID,
+      orderID: Array.isArray(orderID) ? orderID.join(',') : orderID,
       requestBody,
     };
 

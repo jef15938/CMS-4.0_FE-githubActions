@@ -22,6 +22,8 @@ export class AuditingComponent implements OnInit {
   auditings: AuditingInfoModel[];
   pageInfo: PageInfoModel;
 
+  checkedData: AuditingInfoModel[] = [];
+
   colDefs: ColDef<AuditingInfoModel>[] = [
     {
       colId: 'orderId',
@@ -89,6 +91,7 @@ export class AuditingComponent implements OnInit {
       tap(res => {
         this.pageInfo = res.pageInfo;
         this.auditings = res.datas;
+        this.checkedData = [];
       }),
       map(res => res.datas)
     );
@@ -106,20 +109,7 @@ export class AuditingComponent implements OnInit {
             status = AuditingApproveStatus.REJECT;
             break;
         }
-        this.modalService.openComponent({
-          component: ApproveAuditingModalComponent,
-          componentInitData: {
-            batch: false,
-            status,
-          },
-        }).subscribe((res: AuditingSubmitRequestModel) => {
-          if (!res) { return; }
-          this.auditingService.approveAuditing(
-            event.data.orderId,
-            res.status,
-            res.comment,
-          ).subscribe(_ => this.getMyAuditings().subscribe());
-        });
+        this.approveAuditing(status, event.data.orderId);
       } else {
         switch (event.action) {
           case event.ActionType.PREVIEW:
@@ -155,6 +145,31 @@ export class AuditingComponent implements OnInit {
   onPageChanged(event: { pageIndex: number }) {
     this.pageInfo.page = event.pageIndex + 1;
     this.init().subscribe();
+  }
+
+  private approveAuditing(status: AuditingApproveStatus, orderId: number | number[]) {
+    this.modalService.openComponent({
+      component: ApproveAuditingModalComponent,
+      componentInitData: {
+        batch: Array.isArray(orderId),
+        status,
+      },
+    }).subscribe((res: AuditingSubmitRequestModel) => {
+      if (!res) { return; }
+      this.auditingService.approveAuditing(
+        orderId,
+        res.status,
+        res.comment,
+      ).subscribe(_ => this.getMyAuditings().subscribe());
+    });
+  }
+
+  batchApprove() {
+    this.approveAuditing(AuditingApproveStatus.APPROVED, this.checkedData.map(d => d.orderId));
+  }
+
+  batchReject() {
+    this.approveAuditing(AuditingApproveStatus.REJECT, this.checkedData.map(d => d.orderId));
   }
 
 }

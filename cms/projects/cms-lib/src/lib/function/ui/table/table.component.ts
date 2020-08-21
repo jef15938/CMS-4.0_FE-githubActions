@@ -2,6 +2,7 @@ import { Component, Input, ViewChildren, QueryList, Output, EventEmitter, Compon
 import { ColDef, CmsTableCustomCellEvent, CustomCellRenderer } from './table.interface';
 import { DynamicWrapperDirective } from '@neux/core';
 import { Sort } from '@angular/material/sort';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'cms-table',
@@ -15,9 +16,12 @@ export class TableComponent<TData> implements OnChanges {
   @Input() selectRow = false;
   @Input() colDefs: ColDef<TData>[];
   @Input() dataSource: TData[];
+  @Input() checkbox = false;
+  @Input() checkedData: TData[] = [];
 
   @Output() customEvent = new EventEmitter<CmsTableCustomCellEvent>();
   @Output() rowClick = new EventEmitter<TData>();
+  @Output() selectionChange = new EventEmitter<TData[]>();
 
   sortedData: TData[] = [];
 
@@ -71,6 +75,23 @@ export class TableComponent<TData> implements OnChanges {
 
   private compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  onCheckboxAllChange(ev: MatCheckboxChange) {
+    this.checkedData.length = 0;
+    if (ev.checked) {
+      this.sortedData.forEach(d => this.checkedData.push(d));
+    }
+  }
+
+  onCheckboxSingleChange(ev: MatCheckboxChange, row: TData) {
+    const index = this.checkedData.indexOf(row);
+    if (ev.checked && index < 0) {
+      this.checkedData.push(row);
+    } else {
+      this.checkedData.splice(index, 1);
+    }
+    this.selectionChange.emit(this.checkedData);
   }
 
 }

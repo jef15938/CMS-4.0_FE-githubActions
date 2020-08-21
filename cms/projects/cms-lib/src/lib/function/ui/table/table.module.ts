@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DynamicWrapperModule } from '@neux/core';
 import { TableComponent } from './table.component';
 import { DirectiveModule } from './../../../global/directive/directive.module';
@@ -19,6 +20,7 @@ import { CellRenderOnloadPipe } from './pipe/cell-render-onload.pipe';
     MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatCheckboxModule,
     DirectiveModule,
     PipeModule
   ],

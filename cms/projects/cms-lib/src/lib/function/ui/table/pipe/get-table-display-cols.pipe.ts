@@ -6,8 +6,10 @@ import { ColDef } from '../table.interface';
 })
 export class GetTableDisplayColsPipe implements PipeTransform {
 
-  transform(colDefs: ColDef<any>[]): string[] {
-    return colDefs ? colDefs.map(c => c.colId) : [];
+  transform(colDefs: ColDef<any>[], checkbox: boolean): string[] {
+    const cols = colDefs ? colDefs.map(c => c.colId) : [];
+    if (checkbox) { cols.unshift('checkbox'); }
+    return cols;
   }
 
 }

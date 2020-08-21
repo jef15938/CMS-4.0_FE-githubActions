@@ -31,9 +31,12 @@
   }
 
   .btn-group {
-    button+button {
-      margin-left: 20px;
-    }
+    // button+button {
+    //   margin-left: 20px;
+    // }
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
   }
 
   .page-title-container {
