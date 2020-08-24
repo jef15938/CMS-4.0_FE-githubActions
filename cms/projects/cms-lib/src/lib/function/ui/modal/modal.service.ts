@@ -36,7 +36,7 @@ export class ModalService {
     modalConfig.maxHeight = fullScreen ? '100%' : config.modalSetting?.maxHeight || '90%';
     modalConfig.closeOnNavigation = config.modalSetting?.closeOnNavigation === false ? false : true;
     modalConfig.autoFocus = config.modalSetting?.autoFocus === true ? true : false;
-    modalConfig.panelClass = ['overflow-hidden'];
+    // modalConfig.panelClass = ['overflow-hidden'];
     // https://material.angular.io/components/modal/overview
 
     modalConfig.data = config;

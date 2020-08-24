@@ -131,3 +131,8 @@ button.mat-mini-fab {
 .overflow-hidden {
   overflow: hidden !important;
 }
+
+.mat-select-panel-wrap {
+  overflow-y: auto;
+  max-height: 168px;
+}
