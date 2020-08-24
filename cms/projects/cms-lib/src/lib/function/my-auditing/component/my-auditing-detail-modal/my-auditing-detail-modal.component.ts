@@ -42,12 +42,12 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
       title: '主管',
       width: '120px',
     },
-    {
-      colId: 'auditingStage',
-      field: 'auditingStage',
-      title: '階段',
-      width: '80px',
-    },
+    // {
+    //   colId: 'auditingStage',
+    //   field: 'auditingStage',
+    //   title: '階段',
+    //   width: '80px',
+    // },
 
     {
       colId: 'auditingTime',
