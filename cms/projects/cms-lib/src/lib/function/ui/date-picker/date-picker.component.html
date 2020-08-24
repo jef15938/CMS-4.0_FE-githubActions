@@ -1,5 +1,6 @@
 <div [class.readonly]="readonly" *ngIf="form" [formGroup]="form">
   <mat-form-field>
+    <mat-label *ngIf="label">{{label}}</mat-label>
     <input matInput [ngxMatDatetimePicker]="picker" [formControlName]="formControlName"
       (dateChange)="onDateChange($event)">
     <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
