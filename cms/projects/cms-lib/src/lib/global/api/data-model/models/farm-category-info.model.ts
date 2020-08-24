@@ -9,7 +9,7 @@ import { FarmTableInfoModel } from './farm-table-info.model';
   FarmCategoryInfo, FarmCategoryInfoModel,
   (bean, model) => {
     model.categoryId = bean.category_id;
-    model.categoryName = bean.category_id;
+    model.categoryName = bean.category_name;
     model.searchInfo = bean.searchInfo ? ModelMapper.mapModelTo(FarmFormInfoModel, bean.searchInfo) : null;
     model.tableInfo = bean.tableInfo ? ModelMapper.mapModelTo(FarmTableInfoModel, bean.tableInfo) : null;
   }
