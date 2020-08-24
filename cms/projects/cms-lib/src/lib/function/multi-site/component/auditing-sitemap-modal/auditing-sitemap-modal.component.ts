@@ -33,7 +33,7 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
     this.form = formBuilder.group({
       startTime: [startTime, Validators.compose([Validators.required])],
       endTime: [endTime, Validators.compose([Validators.required])],
-      memo: ['', Validators.compose([Validators.required])],
+      memo: ['頁面送審', Validators.compose([Validators.required])],
     }, {
       validators: [
         CmsFormValidator.startTimeEndTime('startTime', 'endTime'),
