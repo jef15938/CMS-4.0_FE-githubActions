@@ -31,11 +31,11 @@ export class GallerySharedService {
   ): Observable<GalleryInfoModel> {
 
     const modalSetting: ModalSetting = {
-      id: `gallery-shared`,
+      id: `gallery-shared-modal-container`,
       width: '80%',
-      maxWidth: '80%',
-      height: '80%',
-      hideCloseBtn: true,
+      maxWidth: '90%',
+      height: '90%',
+      hideCloseBtn: false,
     };
 
     return this.modalService.openComponent({

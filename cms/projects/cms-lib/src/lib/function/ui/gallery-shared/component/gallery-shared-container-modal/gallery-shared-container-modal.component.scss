@@ -1,8 +1,17 @@
-::ng-deep .cms-gallery-shared-container-modal mat-dialog-container {
-  padding: 0;
-}
-
 :host {
   display: block;
   height: 100%;
+}
+
+::ng-deep mat-dialog-container#gallery-shared-modal-container {
+  min-height: unset;
+  max-height: unset;
+}
+
+::ng-deep {
+  .cms-gallery-shared-container-modal {
+    .modal-custom__content {
+      height: 100%;
+    }
+  }
 }

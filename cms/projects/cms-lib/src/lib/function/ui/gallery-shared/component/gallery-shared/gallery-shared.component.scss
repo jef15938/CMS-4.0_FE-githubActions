@@ -1,18 +1,6 @@
 @import '../../../../../global/style/main';
 
-::ng-deep {
-  .cms-gallery-shared-container-modal {
 
-    mat-dialog-container {
-      padding: 0;
-    }
-
-
-    .modal-custom__content {
-      height: 100%;
-    }
-  }
-}
 
 :host {
   display: block;
