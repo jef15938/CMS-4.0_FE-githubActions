@@ -40,8 +40,15 @@
       </div>
 
       <ng-container *ngIf="galleryPageInfo?.page">
-        <div>目前頁數:{{galleryPageInfo.page}}</div>
-        <br>
+        <div class="tool-top">
+          <div>目前頁數:{{galleryPageInfo.page}}</div>
+          <div style="text-align: right;">
+            <button type="button" tabindex="0" mat-raised-button color="primary"
+              [disabled]="!selectedCategory?.canUpload" (click)="uploadFileToCategory(selectedCategory)">
+              上傳媒體
+            </button>
+          </div>
+        </div>
       </ng-container>
       <ng-container *ngIf="galleryDatas">
         <cms-table [colDefs]="colDefs" [dataSource]="galleryDatas" [selectRow]="mode==='modal'"

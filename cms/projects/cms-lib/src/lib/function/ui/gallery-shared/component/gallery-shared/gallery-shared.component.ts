@@ -179,7 +179,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     });
   }
 
-  private uploadFileToCategory(category: GalleryCategoryInfoModel) {
+  uploadFileToCategory(category: GalleryCategoryInfoModel) {
     return this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
@@ -204,9 +204,6 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     if (event instanceof GalleryCategoryNodeCustomEvent) {
       let action: Observable<any>;
       switch (event.action) {
-        case event.ActionType.UPLOAD:
-          action = this.uploadFileToCategory(event.data);
-          break;
         case event.ActionType.CREATE:
           action = this.maintainCategory('Create', event.data);
           break;

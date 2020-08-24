@@ -6,7 +6,7 @@ import { CmsTreeNodeRenderer, CmsTreeNode } from '../../../../ui/tree';
 import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/models/gallery-category-info.model';
 
 enum ActionType {
-  CREATE, EDIT, DELETE, UPLOAD
+  CREATE, EDIT, DELETE
 }
 
 export class GalleryCategoryNodeCustomEvent {

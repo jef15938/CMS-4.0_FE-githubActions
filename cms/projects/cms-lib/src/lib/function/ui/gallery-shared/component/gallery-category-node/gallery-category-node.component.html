@@ -2,22 +2,17 @@
   <span class="cms-gallery-category-node__title">{{node.data.categoryName}}</span>
   <span #menuTrigger="matMenuTrigger" class="cms-gallery-category-node__btn" [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
-      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.UPLOAD)"
-        [disabled]="!node.data.canUpload">
-        <mat-icon>file_upload</mat-icon>
-        上傳
-      </button>
       <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.CREATE)">
         <mat-icon>add</mat-icon>
-        新增
+        新增分類
       </button>
       <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.EDIT)">
         <mat-icon>edit</mat-icon>
-        修改
+        修改分類
       </button>
       <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.DELETE)">
         <mat-icon>delete</mat-icon>
-        刪除
+        刪除分類
       </button>
     </mat-menu>
   </span>
