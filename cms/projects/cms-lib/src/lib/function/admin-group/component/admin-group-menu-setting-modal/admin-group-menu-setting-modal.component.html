@@ -1,6 +1,6 @@
 <ng-container *ngIf="menus">
   <cms-tree class="cms-tree" [context]="this" [nodeDatas]="menus" [checkbox]="true" [defaultExpandLevel]="-1"
-    [nodeDisplayField]="'funcName'" [checkedNodes]="checkedNodes">
+    [nodeDisplayField]="'funcName'" [checkedNodes]="checkedNodes" [hideNode]="hideNode">
   </cms-tree>
 </ng-container>
 

@@ -53,4 +53,8 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
     this.groupService.updateGroupMenu(this.groupID, groupMenuInfos).subscribe(_ => this.close('Success'));
   }
 
+  hideNode(node: MenuInfoModel) {
+    return node.funcId === 'base';
+  }
+
 }

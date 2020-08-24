@@ -70,6 +70,8 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Output() nodesCheckedChange = new EventEmitter<{ nodes: TData[] }>();
   @Input() checkboxDisabled = (node: TData) => false;
 
+  @Input() hideNode: (node: TData) => boolean = (node: TData) => false;
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,

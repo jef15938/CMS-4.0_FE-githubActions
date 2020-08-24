@@ -8,8 +8,9 @@ import { DynamicWrapperModule } from '@neux/core';
 import { DirectiveModule } from './../../../global/directive';
 import { TreeComponent } from './tree.component';
 import { NodeRenderOnloadPipe } from './pipe/node-render-onload.pipe';
-import { NodeCheckboxDisabledPipe } from './pipe/node-checkbox-disabled';
+import { NodeCheckboxDisabledPipe } from './pipe/node-checkbox-disabled.pipe';
 import { NodeCanDragPipe, NodeCanDropPipe } from './pipe/node-can-move.pipe';
+import { NodeHidePipe } from './pipe/node-hide.pipe';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { NodeCanDragPipe, NodeCanDropPipe } from './pipe/node-can-move.pipe';
     NodeCheckboxDisabledPipe,
     NodeCanDragPipe,
     NodeCanDropPipe,
+    NodeHidePipe,
   ],
   exports: [
     TreeComponent
