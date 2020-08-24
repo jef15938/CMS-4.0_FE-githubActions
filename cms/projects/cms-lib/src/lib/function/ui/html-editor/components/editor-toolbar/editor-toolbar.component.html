@@ -84,27 +84,25 @@
         向外縮排
       </div>
     </button>
-    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
-      (click)="doAction(htmlEditorActions.highlight1)">
+
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button #highlight #menuTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="highlightMenu">
       <mat-icon aria-hidden="false">font_download</mat-icon>
       <div class="editor-toolbar__btn__hint">
-        標記文字_{{htmlEditorActions.highlight1?.order}}
+        標記文字
       </div>
     </button>
-    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
-      (click)="doAction(htmlEditorActions.highlight2)">
-      <mat-icon aria-hidden="false">font_download</mat-icon>
-      <div class="editor-toolbar__btn__hint">
-        標記文字_{{htmlEditorActions.highlight2?.order}}
-      </div>
-    </button>
-    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
-      (click)="doAction(htmlEditorActions.highlight3)">
-      <mat-icon aria-hidden="false">font_download</mat-icon>
-      <div class="editor-toolbar__btn__hint">
-        標記文字_{{htmlEditorActions.highlight3?.order}}
-      </div>
-    </button>
+    <mat-menu #highlightMenu="matMenu">
+      <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.highlight1)">
+        標註樣式1
+      </button>
+      <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.highlight2)">
+        標註樣式2
+      </button>
+      <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.highlight3)">
+        標註樣式3
+      </button>
+    </mat-menu>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
       (click)="doAction(htmlEditorActions.unhighlight)">
       <mat-icon aria-hidden="false">cancel</mat-icon>
