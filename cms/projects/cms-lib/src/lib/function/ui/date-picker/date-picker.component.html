@@ -8,6 +8,7 @@
       [disableMinute]="disableMinute" [defaultTime]="defaultTime" [stepHour]="stepHour" [stepMinute]="stepMinute"
       [stepSecond]="stepSecond" [color]="color" [enableMeridian]="enableMeridian" [hideTime]="hideTime"
       [touchUi]="touchUi">
+      <!-- [calendarHeaderComponent]="calendarHeaderComponent" [touchUi]="touchUi"> -->
     </ngx-mat-datetime-picker>
     <mat-error *ngIf="form.controls[formControlName]?.errors">
       <div *ngFor="let err of (form?.controls[formControlName]?.errors | formValidationError)">

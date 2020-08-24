@@ -1,4 +1,6 @@
-import { Component, OnInit, forwardRef, Output, EventEmitter, Input, OnChanges, SimpleChanges, Injector } from '@angular/core';
+import {
+  Component, OnInit, forwardRef, Output, EventEmitter, Input, OnChanges, SimpleChanges, Injector
+} from '@angular/core';
 import {
   Validator, FormGroup, FormBuilder, AbstractControl, ValidationErrors,
   ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, NgControl
@@ -7,6 +9,7 @@ import { MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core';
 import { CMS_DATE_FORMATS_DATE, CMS_DATE_FORMATS_DATETIME } from '../../../global/util/mat-date/mat-date';
 import { CmsFormValidator } from '../../../global/util/form-validator';
 import { NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
+import { DatePickerCalendarHeaderComponent } from './date-picker-calendar-header.component';
 
 @Component({
   selector: 'cms-date-picker',
@@ -28,6 +31,8 @@ import { NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-pick
   ]
 })
 export class DatePickerComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
+
+  calendarHeaderComponent = DatePickerCalendarHeaderComponent;
 
   @Input() readonly = false;
   @Input() formControlName = '';
