@@ -135,7 +135,11 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   private init() {
     return concat(
-      this.getCategories(),
+      this.getCategories().pipe(tap(_ => {
+        if (this.categories[0]) {
+          this.categorySelected$.next(this.categories[0]);
+        }
+      })),
       this.getGallery(),
     );
   }

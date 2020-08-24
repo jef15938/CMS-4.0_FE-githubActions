@@ -30,9 +30,9 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Input() nodeChildrenEntryField = 'children'; // children的進入口欄位
   @Input() nodeDatas: TData[] = []; // 樹資料
   @Input() defaultExpandLevel = 0; // 預設展開層數：-1=全展開
+  @Input() selectedNode: TData;
 
-  selectedNode: TData;
-  private selectedNodeEmitter = new Subject();
+  private selectedNode$ = new Subject();
 
   @Input() customNodeRenderer; // 客製的節點Template
   @Input() onCustomNodeRendererInit: (customRender: any) => void;
@@ -82,7 +82,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     this.dataSource = new MatTreeNestedDataSource<TData>();
     this.setDataSource(this.nodeDatas);
 
-    this.selectedNodeEmitter.pipe(
+    this.selectedNode$.pipe(
       takeUntil(this.destroy$),
     ).subscribe(_ => {
       this.nodeSelect.emit({ node: this.selectedNode });
@@ -150,7 +150,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
 
   selectNode(node: TData) {
     this.selectedNode = node;
-    this.selectedNodeEmitter.next();
+    this.selectedNode$.next();
   }
 
   onRowRightClicked(node: TData) {

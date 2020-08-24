@@ -7,8 +7,8 @@
     </div>
     <div class="page-content-container">
       <cms-tree class="cms-tree" [context]="this" [nodeDatas]="categories" [customNodeRenderer]="customNodeRenderer"
-        (customEvent)="onTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
-        [onCustomNodeRendererInit]="onCustomNodeRendererInit">
+        (customEvent)="onTreeCustomEvent($event)" [selectedNode]="selectedCategory"
+        (nodeSelect)="onNodeSelected($event)" [onCustomNodeRendererInit]="onCustomNodeRendererInit">
       </cms-tree>
     </div>
   </div>
