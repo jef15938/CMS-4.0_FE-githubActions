@@ -5,6 +5,8 @@ import { ModalOpenComponentConfig } from './modal.interface';
 import { CustomModalBase } from './base/custom-modal-base';
 import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.component';
 import { MessageModalComponent } from './component/message-modal/message-modal.component';
+import { concatMap } from 'rxjs/operators';
+import { of, NEVER } from 'rxjs';
 
 let modalId = 0;
 
@@ -56,6 +58,12 @@ export class ModalService {
       component: ConfirmModalComponent,
       componentInitData
     });
+  }
+
+  confirmDelete = () => {
+    return this.openConfirm({ message: '確定刪除?' }).pipe(
+      concatMap(confirm => confirm ? of(true) : NEVER),
+    );
   }
 
 }

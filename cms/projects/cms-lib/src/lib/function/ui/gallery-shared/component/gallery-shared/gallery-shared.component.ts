@@ -217,8 +217,11 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
           action = this.maintainCategory('Update', event.data);
           break;
         case event.ActionType.DELETE:
-          action = this.galleryService.deleteGalleryCategory(event.data.categoryId).pipe(
-            map(_ => 'Deleted')
+          action = of(undefined).pipe(
+            this.modalService.confirmDelete,
+            concatMap(_ => this.galleryService.deleteGalleryCategory(event.data.categoryId).pipe(
+              map(res => 'Deleted')
+            ))
           );
           break;
       }
@@ -257,8 +260,11 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
           action = this.updateGallery(event.data);
           break;
         case event.ActionType.DELETE:
-          action = this.galleryService.deleteGallery(event.data.galleryId).pipe(
-            map(_ => 'Deleted')
+          action = of(undefined).pipe(
+            this.modalService.confirmDelete,
+            concatMap(_ => this.galleryService.deleteGallery(event.data.galleryId).pipe(
+              map(res => 'Deleted')
+            ))
           );
           break;
         case event.ActionType.COPY_URL:

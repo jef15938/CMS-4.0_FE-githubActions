@@ -130,8 +130,11 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
           });
           break;
         case event.ActionType.DELETE:
-          action = this.sitemapService.deleteUserSiteMap(event.data.nodeId).pipe(
-            map(_ => 'Deleted')
+          action = of(undefined).pipe(
+            this.modalService.confirmDelete,
+            concatMap(_ => this.sitemapService.deleteUserSiteMap(event.data.nodeId).pipe(
+              map(res => 'Deleted')
+            ))
           );
           break;
       }

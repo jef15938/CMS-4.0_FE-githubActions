@@ -69,10 +69,10 @@ export class DeptComponent implements OnInit {
   }
 
   deleteDepartment(dept: DepartmentInfoModel) {
-    return this.modalService.openConfirm({ message: `${dept.deptName}`, title: `確認刪除部門 ?` })
-      .pipe(
-        concatMap(confirm => confirm ? this.departmentService.deleteDepartment(dept.deptId) : of(undefined))
-      );
+    return of(undefined).pipe(
+      this.modalService.confirmDelete,
+      concatMap(confirm => confirm ? this.departmentService.deleteDepartment(dept.deptId) : of(undefined))
+    );
   }
 
   openDeptMaintainModal(action: 'Create' | 'Update', selectedDept: DepartmentInfoModel) {
