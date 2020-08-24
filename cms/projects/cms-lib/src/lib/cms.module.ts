@@ -6,7 +6,7 @@ import { CmsComponent } from './cms.component';
 import { MenuNodeComponent } from './global/layouts/menu-node.component';
 import { WithCredentialsInterceptor, HttpErrorInterceptor, HttpError401Interceptor } from './global/interceptor/cms-http-interceptor';
 import { CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './global/service';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CmsDateAdapter, CMS_DATE_FORMATS_DATETIME, CmsDateTimeAdapter } from './global/util/mat-date/mat-date';
 import { DynamicRoutingComponent } from './global/component/dynamic-routing/dynamic-routing.component';
 import { CmsFarmDataResolver } from './global/service/cms-farm-data-resolver.service';
@@ -34,6 +34,7 @@ const LAYOUTS = [
     DynamicRoutingComponent
   ],
   providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'zh-TW' },
     { provide: DateAdapter, useClass: CmsDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME },
     { provide: NgxMatDateAdapter, useClass: CmsDateTimeAdapter, deps: [DateAdapter] },
@@ -66,6 +67,7 @@ export class CmsModule {
           provide: HTTP_INTERCEPTORS, multi: true,
           useClass: HttpError401Interceptor
         },
+        { provide: MAT_DATE_LOCALE, useValue: 'zh-TW' },
         { provide: DateAdapter, useClass: CmsDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: CMS_DATE_FORMATS_DATETIME },
         { provide: NgxMatDateAdapter, useClass: CmsDateTimeAdapter, deps: [DateAdapter] },

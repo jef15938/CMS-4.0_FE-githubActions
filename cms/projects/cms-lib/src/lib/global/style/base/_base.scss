@@ -136,3 +136,7 @@ button.mat-mini-fab {
   overflow-y: auto;
   max-height: 168px;
 }
+
+.mat-datepicker-dialog mat-dialog-container.mat-dialog-container {
+  padding: 0;
+}

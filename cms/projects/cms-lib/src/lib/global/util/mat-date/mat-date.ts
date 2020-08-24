@@ -176,23 +176,15 @@ export class CmsDateTimeAdapter extends NgxMatDateAdapter<Date> {
   }
 
   getMonthNames(style: 'short' | 'long' | 'narrow'): string[] {
-    return style === 'narrow' ?
-      ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
-      : ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+    return this.dateAdapter.getMonthNames(style);
   }
 
   getDateNames(): string[] {
-    return [
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-      11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-      21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
-    ].map(dateString => `${dateString}`);
+    return this.dateAdapter.getDateNames();
   }
 
   getDayOfWeekNames(style: 'short' | 'long' | 'narrow'): string[] {
-    return style === 'narrow' ?
-      ['一', '二', '三', '四', '五', '六', '日']
-      : ['週一', '週二', '週三', '週四', '週五', '週六', '週日'];
+    return this.dateAdapter.getDayOfWeekNames(style);
   }
 
   getYearName(date: Date): string {
