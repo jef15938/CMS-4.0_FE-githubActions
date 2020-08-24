@@ -184,13 +184,15 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   }
 
   uploadFileToCategory(category: GalleryCategoryInfoModel) {
-    return this.modalService.openComponent({
+    this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
         categoryName: category.categoryName,
         categoryId: category.categoryId,
       }
-    });
+    }).pipe(
+      concatMap(res => res ? this.getGallery() : of(undefined)),
+    ).subscribe();
   }
 
   private updateGallery(gallery: GalleryInfoModel) {
