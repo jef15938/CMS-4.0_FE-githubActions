@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS } from './global/const/render-app-shell-no-render-component-ids';
 import { API_CONFIG_TOKEN, API_HEADER_TOKEN } from '@neux/core';
 import { environment } from 'src/environments/environment';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GlobalHeader } from 'src/app/global/common/global-header';
 import { ErrorPageComponent } from 'src/app/global/component/error-page/error-page.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { GTagService } from './global/service/gtag.service';
+import { TransferHttpCacheModule } from '@nguniversal/common';
+import { BrowserStateInterceptor } from '@neux/render';
 
 @NgModule({
   declarations: [
@@ -30,12 +32,18 @@ import { GTagService } from './global/service/gtag.service';
     HttpClientModule,
     WrapperModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    TransferHttpCacheModule,
   ],
   providers: [
     ...RenderModule.forRoot().providers,
     { provide: RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN, useValue: RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS },
     { provide: API_CONFIG_TOKEN, useValue: environment },
-    { provide: API_HEADER_TOKEN, useExisting: GlobalHeader }
+    { provide: API_HEADER_TOKEN, useExisting: GlobalHeader },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BrowserStateInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
