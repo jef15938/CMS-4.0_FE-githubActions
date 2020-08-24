@@ -1,5 +1,5 @@
 <button type="button" mat-mini-fab *ngIf="!config?.modalSetting?.hideCloseBtn" class="modal-custom__close" color="warn"
-  (click)="modalRef.close()">
+  matTooltip="關閉" (click)="modalRef.close()">
   <mat-icon>close</mat-icon>
 </button>
 <!-- header -->

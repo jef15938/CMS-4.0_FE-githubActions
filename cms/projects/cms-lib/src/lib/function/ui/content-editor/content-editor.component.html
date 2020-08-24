@@ -13,26 +13,26 @@
   <!-- 按鈕們 -->
   <div #clickCapturelistenerBlock class="btn-panel dark-style" *ngIf="editorMode===EditorMode.EDIT">
     <span>
-      <button type="button" tabindex="-1" mat-icon-button alt="save" (click)="save()" *ngIf="!!contentID"
+      <button type="button" tabindex="-1" mat-icon-button alt="save" matTooltip="存檔" (click)="save()" *ngIf="!!contentID"
         [disabled]="saved">
         <mat-icon>save</mat-icon>
       </button>
-      <button type="button" tabindex="-1" mat-icon-button alt="undo"
+      <button type="button" tabindex="-1" mat-icon-button alt="undo" matTooltip="復原"
         [disabled]="!manager?.stateManager?.hasPreviousState" (click)="resetSelected(); manager?.stateManager?.back();">
         <mat-icon>undo</mat-icon>
       </button>
-      <button type="button" tabindex="-1" mat-icon-button alt="redo" [disabled]="!manager?.stateManager?.hasNextState"
+      <button type="button" tabindex="-1" mat-icon-button alt="redo" matTooltip="重做" [disabled]="!manager?.stateManager?.hasNextState"
         (click)="resetSelected(); manager?.stateManager?.forward();">
         <mat-icon>redo</mat-icon>
       </button>
-      <button type="button" tabindex="-1" mat-icon-button alt="state list" #menuTrigger="matMenuTrigger"
+      <button type="button" tabindex="-1" mat-icon-button alt="state list" matTooltip="步驟" #menuTrigger="matMenuTrigger"
         [matMenuTriggerFor]="stateMenu">
         <mat-icon>list</mat-icon>
       </button>
-      <button type="button" tabindex="-1" mat-icon-button alt="clear" (click)="clear()">
+      <button type="button" tabindex="-1" mat-icon-button alt="clear" matTooltip="清除所有" (click)="clear()">
         <mat-icon>delete</mat-icon>
       </button>
-      <button type="button" tabindex="-1" mat-icon-button alt="close" (click)="close()" *ngIf="btnClose">
+      <button type="button" tabindex="-1" mat-icon-button alt="close" matTooltip="關閉" (click)="close()" *ngIf="btnClose">
         <mat-icon>clear</mat-icon>
       </button>
     </span>

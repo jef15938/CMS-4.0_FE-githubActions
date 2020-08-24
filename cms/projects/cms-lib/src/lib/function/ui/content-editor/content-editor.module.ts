@@ -31,6 +31,7 @@ import { ContentEditorContainerModalComponent } from './component/content-editor
 import { TemplateControlDataSourceComponent } from './component/content-control-panel/control/template/template-control-data-source/template-control-data-source.component';
 import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
 import { TableModule } from '../table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { TableModule } from '../table';
     MatRadioModule,
     MatFormFieldModule,
     MatTabsModule,
+    MatTooltipModule,
     DragDropModule,
     WrapperModule,
     TableModule,

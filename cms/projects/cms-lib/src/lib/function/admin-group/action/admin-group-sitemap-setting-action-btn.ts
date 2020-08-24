@@ -8,6 +8,7 @@ export const AdminGroupSitemapSettingActionBtn: FarmTableActionBtn = {
   icon: '',
   fontSet: 'fontawasome',
   fontIcon: 'fa-tree',
+  tooltip: '設定前台節點',
   click: (row: FarmTableDataInfoModel, table: FarmTableInfoModel, injector: Injector) => {
     const modalService = injector.get(ModalService);
     const groupID = row.columns[0]?.value;

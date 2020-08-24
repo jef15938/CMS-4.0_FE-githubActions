@@ -50,33 +50,36 @@
         </ng-container>
         <ng-container *ngIf="col===ACTION_COLUMN">
           <ng-container *ngFor="let action of (element|getFarmTableDataActions)">
-            <button type="button" tabindex="0" mat-icon-button (click)="onActionClick(action, element)"
-              [ngSwitch]="action">
-              <mat-icon>
-                <ng-container *ngSwitchCase="FarmTableDataInfoAction.MODIFY">
-                  edit
-                </ng-container>
-                <ng-container *ngSwitchCase="FarmTableDataInfoAction.DELETE">
-                  delete
-                </ng-container>
-                <ng-container *ngSwitchCase="FarmTableDataInfoAction.PUBLISH">
-                  redo
-                </ng-container>
-                <ng-container *ngSwitchCase="FarmTableDataInfoAction.OFF">
-                  arrow_downward
-                </ng-container>
-                <ng-container *ngSwitchCase="FarmTableDataInfoAction.PREVIEW">
-                  visibility
-                </ng-container>
-                <ng-container *ngSwitchCase="FarmTableDataInfoAction.MORE">
-                  more_horiz
-                </ng-container>
-              </mat-icon>
-            </button>
+            <ng-container [ngSwitch]="action">
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.MODIFY"
+                matTooltip="編輯" (click)="onActionClick(action, element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.DELETE"
+                matTooltip="刪除" (click)="onActionClick(action, element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.PUBLISH"
+                matTooltip="送審" (click)="onActionClick(action, element)">
+                <mat-icon>redo</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.OFF"
+                matTooltip="下架" (click)="onActionClick(action, element)">
+                <mat-icon>arrow_downward</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.PREVIEW"
+                matTooltip="預覽" (click)="onActionClick(action, element)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.MORE"
+                matTooltip="看更多" (click)="onActionClick(action, element)">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </ng-container>
           </ng-container>
           <ng-container *ngIf="customAction">
             <ng-container *ngFor="let btn of customAction.btns">
-              <button type="button" tabindex="0" mat-icon-button (click)="btn.click(element, tableInfo, injector)">
+              <button type="button" tabindex="0" mat-icon-button [matTooltip]="btn.tooltip" (click)="btn.click(element, tableInfo, injector)">
                 <mat-icon [fontSet]="btn.fontSet" [fontIcon]="btn.fontIcon">
                   <ng-container *ngIf="btn.icon">{{btn.icon}}</ng-container>
                 </mat-icon>

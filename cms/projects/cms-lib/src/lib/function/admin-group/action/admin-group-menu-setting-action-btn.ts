@@ -8,6 +8,7 @@ export const AdminGroupMenuSettingActionBtn: FarmTableActionBtn = {
   icon: '',
   fontSet: 'fontawasome',
   fontIcon: 'fa-sitemap',
+  tooltip: '設定後台功能',
   click: (row: FarmTableDataInfoModel, table: FarmTableInfoModel, injector: Injector) => {
     const modalService = injector.get(ModalService);
     const groupID = row.columns[0]?.value;

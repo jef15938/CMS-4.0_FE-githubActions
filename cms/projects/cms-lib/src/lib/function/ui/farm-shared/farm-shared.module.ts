@@ -15,6 +15,7 @@ import { NgxMatDatetimePickerModule } from '@angular-material-components/datetim
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FarmSharedComponent } from './farm-shared.component';
 import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detail-info.component';
 import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
@@ -53,6 +54,7 @@ import { DirectiveModule } from '../../../global/directive';
     MatIconModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatTooltipModule,
     PipeModule,
     TreeModule,
     DatePickerModule,

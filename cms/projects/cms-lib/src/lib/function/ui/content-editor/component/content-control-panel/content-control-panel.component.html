@@ -9,19 +9,19 @@
     *ngIf="editorActionMode===ContentEditorActionMode.LAYOUT && (selected.selectedTargetType=== LayoutWrapperSelectedTargetType.TEMPLATE || selected.templateInfo.templateId==='HTML')">
     <hr>
     <div class="cms-content-control-panel__btn-group btn-group">
-      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button
+      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="版型限制"
         (click)="templateShowInfo()">
         <mat-icon>info</mat-icon>
       </button>
-      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button
+      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="上移"
         (click)="moveTemplate('up')" [disabled]="!canTemplateMoveUp">
         <mat-icon>keyboard_arrow_up</mat-icon>
       </button>
-      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button
+      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="下移"
         (click)="moveTemplate('down')" [disabled]="!canTemplateMoveDown">
         <mat-icon>keyboard_arrow_down</mat-icon>
       </button>
-      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button
+      <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="刪除版型"
         (click)="deleteTemplate()">
         <mat-icon>delete</mat-icon>
       </button>

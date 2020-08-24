@@ -8,6 +8,7 @@ import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.c
 import { MatButtonModule } from '@angular/material/button';
 import { DynamicWrapperModule } from '@neux/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
     PipeModule,
     DynamicWrapperModule,
   ],
