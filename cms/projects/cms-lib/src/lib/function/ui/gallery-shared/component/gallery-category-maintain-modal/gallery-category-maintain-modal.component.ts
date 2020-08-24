@@ -22,7 +22,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   depts: DepartmentInfoModel[] = [];
   checkedDepts: DepartmentInfoModel[] = [];
 
-  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}媒體庫群組`;
+  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}媒體庫分類`;
 
   constructor(
     private galleryService: GalleryService,
