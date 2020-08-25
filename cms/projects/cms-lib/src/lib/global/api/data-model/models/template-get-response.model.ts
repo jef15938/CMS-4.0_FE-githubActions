@@ -8,9 +8,9 @@ import { TemplateInfoModel } from './template-info.model';
   TemplateGetResponse, TemplateGetResponseModel,
   (bean, model) => {
     model.static = ModelMapper.mapArrayTo(TemplateInfoModel, bean.static);
-    model.tab = ModelMapper.mapArrayTo(TemplateInfoModel, bean.static);
-    model.dynamic = ModelMapper.mapArrayTo(TemplateInfoModel, bean.static);
-    model.customize = ModelMapper.mapArrayTo(TemplateInfoModel, bean.static);
+    model.tab = ModelMapper.mapArrayTo(TemplateInfoModel, bean.tab);
+    model.dynamic = ModelMapper.mapArrayTo(TemplateInfoModel, bean.dynamic);
+    model.customize = ModelMapper.mapArrayTo(TemplateInfoModel, bean.customize);
   }
 )
 export class TemplateGetResponseModel {
