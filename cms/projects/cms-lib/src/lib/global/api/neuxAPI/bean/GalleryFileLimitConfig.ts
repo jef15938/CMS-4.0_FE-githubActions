@@ -4,16 +4,12 @@ import {IsNotEmpty} from 'class-validator';
 
 import { TypeFactory } from '../type-factory';
 
-export class ContentFieldInfo {
+export class GalleryFileLimitConfig {
 
 @IsNotEmpty()
-public fieldId: string;
+public file_name_ext: string;
 @IsNotEmpty()
-public fieldType: string;
-@IsNotEmpty()
-public fieldVal: string;
-@IsNotEmpty()
-public extension: object;
+public max_file_size: number;
 
 
 }

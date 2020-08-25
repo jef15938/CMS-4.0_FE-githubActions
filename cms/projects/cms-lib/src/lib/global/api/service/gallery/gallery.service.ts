@@ -13,6 +13,8 @@ import { ModelMapper } from '../../data-model/model-mapper';
 import { GalleryCategoryInfoModel } from '../../data-model/models/gallery-category-info.model';
 import { GalleryCategoryGetResponseModel } from '../../data-model/models/gallery-category-get-response.model';
 import { GalleryCategoryPutRequest } from '../../neuxAPI/bean/GalleryCategoryPutRequest';
+import { GalleryConfigResponse } from '../../neuxAPI/bean/GalleryConfigResponse';
+import { GalleryConfigResponseModel } from '../../data-model/models/gallery-config-response.model';
 
 export class FileUploadModel {
   fileName: string;
@@ -242,6 +244,12 @@ export class GalleryService {
       canCancel: true,
       success: false,
     };
+  }
+
+  getGalleryConfig(): Observable<GalleryConfigResponseModel> {
+    return this.respAPIService.dispatchRestApi<GalleryConfigResponse>('GetGalleryConfig', {}).pipe(
+      ModelMapper.rxMapModelTo(GalleryConfigResponseModel),
+    );
   }
 
 }

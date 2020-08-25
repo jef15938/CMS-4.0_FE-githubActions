@@ -1,6 +1,11 @@
 import { PublishInfo } from '../../neuxAPI/bean/PublishInfo';
 import { ModelMapping } from '../model-mapper';
 
+class PublishInfoTime {
+  start_time: string;
+  end_time: string;
+}
+
 class PublishInfoTimeModel {
   startTime: string;
   endTime: string;
@@ -15,10 +20,15 @@ class PublishInfoTimeModel {
 @ModelMapping(
   PublishInfo, PublishInfoModel,
   (bean, model) => {
-    model.draft = bean.draft ? new PublishInfoTimeModel(bean.draft.start_time, bean.draft.end_time) : null;
-    model.pendingPublished = bean.pending_published
-      ? new PublishInfoTimeModel(bean.pending_published.start_time, bean.pending_published.end_time) : null;
-    model.published = bean.published ? new PublishInfoTimeModel(bean.published.start_time, bean.published.end_time) : null;
+    const draft = bean.draft as PublishInfoTime;
+    const pendingPublished = bean.pending_published as PublishInfoTime;
+    const published = bean.published as PublishInfoTime;
+
+    model.draft = draft ? new PublishInfoTimeModel(draft.start_time, draft.end_time) : null;
+    model.pendingPublished = pendingPublished
+      ? new PublishInfoTimeModel(pendingPublished.start_time, pendingPublished.end_time) : null;
+    model.published = published ?
+      new PublishInfoTimeModel(published.start_time, published.end_time) : null;
   }
 )
 export class PublishInfoModel {

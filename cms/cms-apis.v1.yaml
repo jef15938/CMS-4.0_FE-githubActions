@@ -1725,6 +1725,26 @@ paths:
           description: Internal Server Error
       operationId: get-Group
       description: 取得群組清單
+  /GalleryConfig:
+    get:
+      summary: GetGalleryConfig
+      tags:
+        - Gallery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GalleryConfigResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-GalleryConfig
+      description: 取得媒體庫相關上傳限制
 components:
   schemas:
     LoginRequest:
@@ -2494,6 +2514,9 @@ components:
                   url:
                     type: string
                     description: 當type是LINK時提供url網址
+                  limit_file_name_ext:
+                    type: string
+                    description: 媒體庫挑選副檔名限制(Gallery Type限定)
               is_readonly:
                 type: boolean
             required:
@@ -3167,4 +3190,46 @@ components:
       required:
         - group_id
         - group_name
+    GalleryConfigResponse:
+      title: GalleryConfigResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        max_upload_number:
+          type: number
+          description: 一次上傳最大檔案上限
+          example: 10
+        max_upload_size:
+          type: number
+          description: 一次上傳全部檔案大小上限(單位：kb)
+          example: 30000
+        limit_character:
+          type: string
+          description: 限制媒體庫的檔名字元
+        file_limits:
+          type: array
+          description: 各檔案上傳限制
+          items:
+            $ref: '#/components/schemas/GalleryFileLimitConfig'
+      required:
+        - max_upload_number
+        - max_upload_size
+        - limit_character
+        - file_limits
+    GalleryFileLimitConfig:
+      title: GalleryFileLimitConfig
+      type: object
+      x-tags:
+        - Model
+      properties:
+        file_name_ext:
+          type: string
+          description: 副檔名
+        max_file_size:
+          type: number
+          description: 單一檔案最大上傳大小
+      required:
+        - file_name_ext
+        - max_file_size
   securitySchemes: {}

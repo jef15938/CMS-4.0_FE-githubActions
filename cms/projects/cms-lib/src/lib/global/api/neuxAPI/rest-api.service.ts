@@ -60,6 +60,7 @@ import { PutReOrderSiteMapByNodeIDAPI } from './api/PutReOrderSiteMapByNodeIDAPI
 import { GetFarmTriggerByTriggerIDAPI } from './api/GetFarmTriggerByTriggerIDAPI';
 import { GetFarmTreeBySourceIDAPI } from './api/GetFarmTreeBySourceIDAPI';
 import { GetGroupAPI } from './api/GetGroupAPI';
+import { GetGalleryConfigAPI } from './api/GetGalleryConfigAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GenerationHeader } from './bean/GenerationHeader';
@@ -88,6 +89,7 @@ import { ListContentVersionResponse } from './bean/ListContentVersionResponse';
 import { ListFarmTriggerDataResponse } from './bean/ListFarmTriggerDataResponse';
 import { GetFarmTreeResponse } from './bean/GetFarmTreeResponse';
 import { ListGroupResponst } from './bean/ListGroupResponst';
+import { GalleryConfigResponse } from './bean/GalleryConfigResponse';
 
 
 const APIResponseMap= {
@@ -146,6 +148,7 @@ PutReOrderSiteMapByNodeID: GenerationHeader,
 GetFarmTriggerByTriggerID: ListFarmTriggerDataResponse,
 GetFarmTreeBySourceID: GetFarmTreeResponse,
 GetGroup: ListGroupResponst,
+GetGalleryConfig: GalleryConfigResponse,
 
 }
 
@@ -218,6 +221,7 @@ this.apiFactory.registerApi(new PutReOrderSiteMapByNodeIDAPI());
 this.apiFactory.registerApi(new GetFarmTriggerByTriggerIDAPI());
 this.apiFactory.registerApi(new GetFarmTreeBySourceIDAPI());
 this.apiFactory.registerApi(new GetGroupAPI());
+this.apiFactory.registerApi(new GetGalleryConfigAPI());
 
     }
 

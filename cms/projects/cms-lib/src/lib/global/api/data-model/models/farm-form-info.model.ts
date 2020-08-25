@@ -48,6 +48,7 @@ type FarmFormInfoColumn = {
     file_name?: string; // 上傳後的檔名
     url?: string; // 當type是LINK時提供url網址
     component_id?: string; // for CUSTOM，目前只有前端用
+    limit_file_name_ext?: string; // 媒體庫挑選副檔名限制(Gallery Type限定)
   };
   is_readonly: boolean;
 };
@@ -73,6 +74,7 @@ export type FarmFormInfoModelColumn = {
     fileName?: string; // 上傳後的檔名
     url?: string; // 當type是LINK時提供url網址
     componentId?: string; // for CUSTOM，目前只有前端用
+    limitFileNameExt?: string; // 媒體庫挑選副檔名限制(Gallery Type限定)
   };
   isReadonly: boolean;
 };
@@ -108,6 +110,7 @@ export type FarmFormInfoModelColumn = {
           fileName: c.setting.file_name,
           url: c.setting.url,
           componentId: c.setting.component_id,
+          limitFileNameExt: c.setting.limit_file_name_ext,
         },
         isReadonly: c.is_readonly,
       };

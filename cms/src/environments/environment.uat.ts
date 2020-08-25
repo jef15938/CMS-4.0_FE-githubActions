@@ -63,6 +63,7 @@ export const environment = {
     GetFarmTriggerByTriggerID: `${BASE_URL}\/FarmTrigger/{triggerID}`,
     GetFarmTreeBySourceID: `${BASE_URL}\/Farm/Tree/{sourceID}`,
     GetGroup: `${BASE_URL}\/Group`,
+    GetGalleryConfig: `${BASE_URL}\/GalleryConfig`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -121,6 +122,7 @@ export const environment = {
     GetFarmTriggerByTriggerID: 'Restful',
     GetFarmTreeBySourceID: 'Restful',
     GetGroup: 'Restful',
+    GetGalleryConfig: 'Restful',
   },
   chatbot: {
     apiUrl: 'https://labs.decoder.com.tw/chatbot-api'

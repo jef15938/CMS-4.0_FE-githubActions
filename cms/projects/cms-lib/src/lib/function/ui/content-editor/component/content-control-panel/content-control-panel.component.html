@@ -1,8 +1,11 @@
 <div *ngIf="show && selected" class="cms-content-control-panel" (click)="$event.stopPropagation()">
   <div class="cms-content-control-panel__info info">
     <span class="info__text">editorActionMode = {{editorActionMode}}</span>
+    <br>
     <span class="info__text">版型種類 : {{selected.templateType}}</span>
+    <br>
     <span class="info__text">版型Id : {{selected.templateInfo?.templateId}}</span>
+    <br>
     <span class="info__text">Id : {{selected.templateInfo.id}}</span>
   </div>
   <ng-container
@@ -50,9 +53,9 @@
   <ng-container
     *ngIf="editorActionMode===ContentEditorActionMode.TEMPLATE && selected.selectedTargetType === LayoutWrapperSelectedTargetType.FIELD">
     <div>
-      FieldId : {{selected.fieldInfo.fieldId}}
+      FieldId : {{selected?.fieldInfo?.fieldId||''}}
       <br>
-      FieldType : {{selected.fieldInfo.fieldType}}
+      FieldType : {{selected?.fieldInfo?.fieldType||''}}
       <hr>
     </div>
     <div [ngSwitch]="selected.fieldInfo.fieldType">
