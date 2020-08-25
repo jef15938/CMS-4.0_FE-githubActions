@@ -15,9 +15,11 @@
                 <!-- TEXT -->
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.TEXT">
                   <mat-form-field appearance="legacy" [ngSwitch]="col.displayType">
-                    <input matInput [formControlName]="col.columnId" [maxLength]="col.setting?.maxLength||65536"
+                    <input matInput [formControlName]="col.columnId" [maxLength]="col.setting?.maxLength||99999"
                       [required]="formColumnSettingMap.get(col.columnId).required"
                       [placeholder]="col.setting?.placeholder||''">
+                    <div matSuffix class="input-suffix" *ngIf="col.setting.maxLength">
+                      ({{formGroup?.controls[col.columnId]?.value?.length||0}}/{{col.setting.maxLength}})</div>
                     <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
                       <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                         {{err}}
@@ -28,9 +30,11 @@
                 <!-- TEXTAREA -->
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.TEXTAREA">
                   <mat-form-field appearance="legacy" [ngSwitch]="col.displayType">
-                    <textarea matInput [formControlName]="col.columnId" [maxLength]="col.setting?.maxLength||65536"
+                    <textarea matInput [formControlName]="col.columnId" [maxLength]="col.setting?.maxLength||99999"
                       [required]="formColumnSettingMap.get(col.columnId).required"
                       [placeholder]="col.setting?.placeholder||''" rows="1"></textarea>
+                    <div matSuffix class="input-suffix" *ngIf="col.setting.maxLength">
+                      ({{formGroup?.controls[col.columnId]?.value?.length||0}}/{{col.setting.maxLength}})</div>
                     <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
                       <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                         {{err}}
@@ -87,7 +91,8 @@
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.GALLERY">
                   <input matInput [formControlName]="col.columnId" hidden
                     [required]="formColumnSettingMap.get(col.columnId).required">
-                  <button type="button" mat-raised-button class="btn btn-dark" (click)="changeGallery(col)">媒體庫</button> {{col.setting.fileName}}
+                  <button type="button" mat-raised-button class="btn btn-dark" (click)="changeGallery(col)">媒體庫</button>
+                  {{col.setting.fileName}}
                   <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                       {{err}}

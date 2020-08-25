@@ -152,6 +152,10 @@ button.mat-mini-fab {
   text-align: right !important;
 }
 
+.input-suffix {
+  color: gray;
+}
+
 button.btn { 
   &.btn-confirm {
     background-color: $color-CIS;

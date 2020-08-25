@@ -49,6 +49,7 @@
                 <mat-form-field appearance="outline">
                   <mat-label>站外網址</mat-label>
                   <input matInput [(ngModel)]="putRequest.url" name="url" required maxlength="500" #modelUrl="ngModel">
+                  <div matSuffix class="input-suffix">({{putRequest?.url?.length||0}}/500)</div>
                   <mat-error *ngIf="modelUrl?.errors?.required">必填欄位</mat-error>
                 </mat-form-field>
               </div>
@@ -78,6 +79,7 @@
               <mat-label>節點連結路徑</mat-label>
               <textarea matInput [(ngModel)]="putRequest.contentPath" name="contentPath" maxlength="100" rows="1"
                 pattern="^[A-Za-z0-9\-]*$" #modelContentPath="ngModel"></textarea>
+              <div matSuffix class="input-suffix">({{putRequest?.contentPath?.length||0}}/100)</div>
               <mat-error *ngIf="modelContentPath?.errors?.required">限英數字和-</mat-error>
             </mat-form-field>
           </div>
@@ -98,6 +100,7 @@
                 <mat-label>節點名稱</mat-label>
                 <input matInput [(ngModel)]="detail.nodeName" name="nodeName" required maxlength="50"
                   #modelNodeName="ngModel">
+                <div matSuffix class="input-suffix">({{detail?.nodeName?.length||0}}/50)</div>
                 <mat-error *ngIf="modelNodeName?.errors?.required">必填欄位</mat-error>
               </mat-form-field>
             </div>
@@ -108,6 +111,7 @@
                 <mat-label>Meta標題</mat-label>
                 <textarea matInput [(ngModel)]="detail.metaTitle" name="metaTitle" required maxlength="500" rows="1"
                   #modelMetaTitle="ngModel"></textarea>
+                <div matSuffix class="input-suffix">({{detail?.metaTitle?.length||0}}/500)</div>
                 <mat-error *ngIf="modelNodeName?.errors?.required">必填欄位</mat-error>
               </mat-form-field>
             </div>
@@ -118,6 +122,7 @@
                 <mat-label>Meta描述</mat-label>
                 <textarea matInput [(ngModel)]="detail.metaDescription" name="metaDescription" rows="1"
                   maxlength="500"></textarea>
+                <div matSuffix class="input-suffix">({{detail?.metaDescription?.length||0}}/500)</div>
               </mat-form-field>
             </div>
           </div>
@@ -127,6 +132,7 @@
                 <mat-label>Meta關鍵字</mat-label>
                 <textarea matInput [(ngModel)]="detail.metaKeyword" name="metaKeyword" rows="1"
                   maxlength="500"></textarea>
+                <div matSuffix class="input-suffix">({{detail?.metaKeyword?.length||0}}/500)</div>
               </mat-form-field>
             </div>
           </div>
@@ -136,8 +142,8 @@
                 <mat-label>Meta圖片(1200x628)</mat-label>
                 <input matInput [value]="detail.metaImageName" name="meta_image" readonly>
               </mat-form-field>
-              <button class="modal-form-layout__btn gallery-btn  btn btn-dark" type="button" tabindex="0" mat-raised-button
-                (click)="openGallery(detail)">媒體庫</button>
+              <button class="modal-form-layout__btn gallery-btn  btn btn-dark" type="button" tabindex="0"
+                mat-raised-button (click)="openGallery(detail)">媒體庫</button>
             </div>
           </div>
         </ng-template>

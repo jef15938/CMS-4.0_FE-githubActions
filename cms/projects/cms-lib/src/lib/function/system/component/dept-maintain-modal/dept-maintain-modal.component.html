@@ -5,18 +5,21 @@
         <mat-label>部門ID</mat-label>
         <input matInput [(ngModel)]="dept.deptId" name="deptId" required #modelId="ngModel" maxlength="100"
           [readonly]="action!=='Create'">
+        <div matSuffix class="input-suffix">({{dept?.deptId?.length||0}}/100)</div>
         <mat-error *ngIf="modelId?.errors?.required">必填欄位</mat-error>
       </mat-form-field>
       <br>
       <mat-form-field appearance="outline">
         <mat-label>部門名稱</mat-label>
         <input matInput [(ngModel)]="dept.deptName" name="deptName" required #modelName="ngModel" maxlength="100">
+        <div matSuffix class="input-suffix">({{dept?.deptName?.length||0}}/100)</div>
         <mat-error *ngIf="modelName?.errors?.required">必填欄位</mat-error>
       </mat-form-field>
     </div>
     <div class="btn-group">
       <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
-      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()" [disabled]="form.invalid">儲存</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="form.invalid">儲存</button>
     </div>
   </form>
 </ng-container>
