@@ -135,9 +135,10 @@ button.mat-mini-fab {
   overflow: hidden !important;
 }
 
-.mat-select-panel-wrap {
+div.mat-select-panel-wrap, div.mat-select-panel {
   overflow-y: auto;
-  max-height: 168px;
+  max-height: 210px;
+  min-width: 100% !important;
 }
 
 .mat-datepicker-dialog mat-dialog-container.mat-dialog-container {
