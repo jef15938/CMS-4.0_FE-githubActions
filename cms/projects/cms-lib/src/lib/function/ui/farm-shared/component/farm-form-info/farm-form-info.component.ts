@@ -13,6 +13,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GetFarmTreeResponseModel } from '../../../../../global/api/data-model/models/get-farm-tree-response.model';
 import { FarmTreeInfoModel } from '../../../../../global/api/data-model/models/farm-tree-info.model';
 import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType } from '../../../../../global/api/data-model/models/farm-form-info.model';
+import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -261,7 +262,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   changeGallery(col: FarmFormInfoModelColumn) {
-    this.gallerySharedService.openGallery().subscribe(selectedGallery => {
+    const limitFileNameExt = col.setting.limitFileNameExt;
+    this.gallerySharedService.openGallery(
+      limitFileNameExt ? (limitFileNameExt.split(',').map(ext => ext.toLowerCase()) as GalleryFileType[]) : undefined
+    ).subscribe(selectedGallery => {
       if (selectedGallery) {
         this.formGroup.get(col.columnId).setValue(`${selectedGallery.galleryId}`);
         col.setting.fileName = selectedGallery.fileName;

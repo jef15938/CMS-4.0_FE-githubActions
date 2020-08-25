@@ -22,8 +22,8 @@ export class GallerySharedService {
     return this.openGalleryWithFileTypes(['pdf', 'doc', 'docx', 'xls', 'xlsx']);
   }
 
-  openGallery() {
-    return this.openGalleryWithFileTypes();
+  openGallery(types: GalleryFileType[] = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'png', 'jpg', 'jpeg', 'gif']) {
+    return this.openGalleryWithFileTypes(types);
   }
 
   private openGalleryWithFileTypes(
