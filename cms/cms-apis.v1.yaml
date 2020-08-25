@@ -2930,10 +2930,17 @@ components:
           type: string
           description: 語言名稱
           example: 中文
-        templates:
+        blocks:
           type: array
+          description: 區塊
           items:
-            $ref: '#/components/schemas/ContentTemplateInfo'
+            $ref: '#/components/schemas/ContentBlockInfo'
+      required:
+        - language_id
+        - language_name
+        - blocks
+      x-tags:
+        - Model
     LayoutGetResponse:
       title: LayoutGetResponse
       type: object
@@ -3045,8 +3052,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContentDataSource'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentDataSourceAction'
       required:
         - datas
+        - actions
     ContentDataSource:
       title: ContentDataSource
       type: object
@@ -3232,4 +3244,36 @@ components:
       required:
         - file_name_ext
         - max_file_size
+    ContentBlockInfo:
+      title: ContentBlockInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        block_id:
+          type: string
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentTemplateInfo'
+      required:
+        - block_id
+        - templates
+    ContentDataSourceAction:
+      title: ContentDataSourceAction
+      type: object
+      x-tags:
+        - Model
+      properties:
+        action_type:
+          type: string
+          description: action分類
+          enum:
+            - FARM
+        action_name:
+          type: string
+          description: action顯示名稱
+      required:
+        - action_type
+        - action_name
   securitySchemes: {}

@@ -1,28 +1,23 @@
-import { ValidateNested } from 'class-validator';
+import { ValidateNested, IsNotEmpty } from 'class-validator';
 import { LanguageInfo } from '../../neuxAPI/bean/LanguageInfo';
 import { ModelMapping, ModelMapper } from '../model-mapper';
-import { ContentTemplateInfoModel } from './content-template-info.model';
+import { ContentBlockInfoModel } from './content-block-info.model';
 
 // @dynamic
 @ModelMapping(
   LanguageInfo, LanguageInfoModel,
   (bean, model) => {
-    model.blocks = (bean as any).blocks;
     model.languageId = bean.language_id;
     model.languageName = bean.language_name;
-    model.templates = ModelMapper.mapArrayTo(ContentTemplateInfoModel, bean.templates);
+    model.blocks = ModelMapper.mapArrayTo(ContentBlockInfoModel, bean.blocks);
   }
 )
 export class LanguageInfoModel {
 
-  public blocks: {
-    block_id: string;
-    templates: Array<ContentTemplateInfoModel>;
-  }[];
   public languageId: string;
   public languageName: string;
-
   @ValidateNested()
-  public templates: Array<ContentTemplateInfoModel>;
+  @IsNotEmpty()
+  public blocks: Array<ContentBlockInfoModel>;
 
 }
