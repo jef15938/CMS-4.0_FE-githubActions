@@ -2,12 +2,22 @@
   Source: {{templateInfo?.source}}
   <br>
   SourceType: {{sourceType}}
+  <div class="btn-group text-right">
+    <button type="button" tabindex="-1" mat-raised-button class="btn btn-edit" #menuTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="actionMenu">
+      資料維護
+    </button>
+  </div>
   <mat-form-field appearance="outline">
     <mat-label>資料來源</mat-label>
     <mat-select [(ngModel)]="templateInfo.source" (selectionChange)="change.emit()">
-      <mat-option *ngFor="let source of souces" [value]="source.id">
+      <mat-option *ngFor="let source of sources" [value]="source.id">
         {{source.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-menu #actionMenu="matMenu">
+    <button type="button" tabindex="-1" mat-menu-item *ngFor="let action of actions"
+      (click)="openFarm(action.actionType)">{{action.actionName}}</button>
+  </mat-menu>
 </div>

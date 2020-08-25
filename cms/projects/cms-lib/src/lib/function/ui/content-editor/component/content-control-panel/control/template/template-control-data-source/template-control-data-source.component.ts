@@ -3,6 +3,7 @@ import { ContentControlBase } from '../../_base';
 import { DataSourceTemplateInfo, LayoutWrapperSelectEvent, DataSourceTemplateBaseComponent } from '@neux/render';
 import { ContentService } from '../../../../../../../../global/api/service/content/content.service';
 import { ContentDataSourceModel } from '../../../../../../../../global/api/data-model/models/content-data-source.model';
+import { ContentDataSourceActionModel } from '../../../../../../../../global/api/data-model/models/content-data-source-action.model';
 
 @Component({
   selector: 'cms-template-control-data-source',
@@ -14,7 +15,8 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
   templateInfo: DataSourceTemplateInfo;
   sourceType: string;
 
-  souces: ContentDataSourceModel[] = [];
+  sources: ContentDataSourceModel[] = [];
+  actions: ContentDataSourceActionModel[] = [];
 
   constructor(
     private contentService: ContentService,
@@ -30,8 +32,15 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
       const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as DataSourceTemplateInfo;
       this.sourceType = (event.componentRef.instance as DataSourceTemplateBaseComponent<any>).sourceType;
-      this.contentService.getContentDataSourceByTypeID(this.sourceType).subscribe(sources => this.souces = sources);
+      this.contentService.getContentDataSourceByTypeID(this.sourceType).subscribe(res => {
+        this.sources = res.datas || [];
+        this.actions = res.actions || [];
+      });
     }
+  }
+
+  openFarm(funcId: string) {
+
   }
 
 }

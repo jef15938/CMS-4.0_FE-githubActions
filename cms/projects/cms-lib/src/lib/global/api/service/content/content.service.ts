@@ -118,13 +118,12 @@ export class ContentService {
    * @returns
    * @memberof ContentService
    */
-  getContentDataSourceByTypeID(typeID: string): Observable<ContentDataSourceModel[]> {
+  getContentDataSourceByTypeID(typeID: string): Observable<ListContentDataSourceResponseModel> {
     if (!typeID) {
       throw new ParamsError('typeID', 'getContentDataSourceByTypeID', 'string', typeID);
     }
     return this.restAPIService.dispatchRestApi<ListContentDataSourceResponse>('GetContentDataSourceByTypeID', { typeID }).pipe(
       ModelMapper.rxMapModelTo(ListContentDataSourceResponseModel),
-      map(res => res.datas)
     );
   }
 
