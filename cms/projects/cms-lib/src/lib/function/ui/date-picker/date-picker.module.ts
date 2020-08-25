@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PipeModule } from '../../../global/pipe';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatButtonModule,
     NgxMatDatetimePickerModule,
     PipeModule,
   ],

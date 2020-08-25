@@ -8,7 +8,7 @@ import {
 import { MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core';
 import { CMS_DATE_FORMATS_DATE, CMS_DATE_FORMATS_DATETIME } from '../../../global/util/mat-date/mat-date';
 import { CmsFormValidator } from '../../../global/util/form-validator';
-import { NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
+import { NGX_MAT_DATE_FORMATS, NgxMatDatetimePicker } from '@angular-material-components/datetime-picker';
 import { DatePickerCalendarHeaderComponent } from './date-picker-calendar-header.component';
 
 @Component({
@@ -155,6 +155,18 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
 
   onDateInput(ev) {
     // console.warn('onDateInput() ev = ', ev);
+  }
+
+  onMonthSelected(ev: Date, datepicker: NgxMatDatetimePicker<Date>) {
+    const newDate = new Date(datepicker._selected);
+    newDate.setMonth(ev.getMonth());
+    datepicker.select(newDate);
+  }
+
+  onYearSelected(ev: Date, datepicker: NgxMatDatetimePicker<Date>) {
+    const newDate = new Date(datepicker._selected);
+    newDate.setFullYear(ev.getFullYear());
+    datepicker.select(newDate);
   }
 
 }

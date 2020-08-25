@@ -1,17 +1,16 @@
 <div class="cms-header">
-  <!-- <button mat-icon-button class="cms-double-arrow" (click)="previousClicked('year')">
+  <div class="cms-header-label">
+    <span>{{periodLabel}}</span>
+  </div>
+  <button type="button" mat-icon-button [disabled]="mode!=='year'" (click)="previousClicked('year')">
     <mat-icon>keyboard_arrow_left</mat-icon>
-    <mat-icon>keyboard_arrow_left</mat-icon>
-  </button> -->
-  <!-- <button mat-icon-button (click)="previousClicked('month')">
-    <mat-icon>keyboard_arrow_left</mat-icon>
-  </button> -->
-  <span class="cms-header-label" (click)="openYear()">{{periodLabel}}</span>
-  <!-- <button mat-icon-button (click)="nextClicked('month')">
+  </button>
+  <div class="mode-container">
+    <span class="mode" [class.active]="mode==='year'" (click)="openYear()">年</span>
+    <span class="mode" [class.active]="mode==='month'" (click)="openMonth()">月</span>
+    <span class="mode" [class.active]="mode==='day'" (click)="openDay()">日</span>
+  </div>
+  <button type="button" mat-icon-button [disabled]="mode!=='year'" (click)="nextClicked('year')">
     <mat-icon>keyboard_arrow_right</mat-icon>
-  </button> -->
-  <!-- <button mat-icon-button class="cms-double-arrow" (click)="nextClicked('year')">
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-  </button> -->
+  </button>
 </div>

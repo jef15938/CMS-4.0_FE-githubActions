@@ -1,11 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from '@neux/render';
-import { ContentInfo } from './../../../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentEditorManager } from '../../service/content-editor-manager';
-import { EditorMode, ContentEditorActionMode, ContentEditorContext } from '../../content-editor.interface';
+import { ContentEditorActionMode, ContentEditorContext } from '../../content-editor.interface';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 import { ContentEditorService } from '../../content-editor.service';
-import { LanguageInfo } from '../../../../../global/api/neuxAPI/bean/LanguageInfo';
 import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 import { LanguageInfoModel } from '../../../../../global/api/data-model/models/language-info.model';
 
