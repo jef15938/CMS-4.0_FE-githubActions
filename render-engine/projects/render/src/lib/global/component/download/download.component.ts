@@ -13,7 +13,7 @@ export class DownloadComponent extends DataSourceTemplateBaseComponent<DownloadD
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
-    templateId: 'Download',
+    templateId: 'download',
     fields: [],
     source: '',
     attributes: {

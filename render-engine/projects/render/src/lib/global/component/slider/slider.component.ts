@@ -18,7 +18,7 @@ export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData>
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
-    templateId: 'Slide',
+    templateId: 'slider',
     fields: [],
     source: '',
     attributes: {

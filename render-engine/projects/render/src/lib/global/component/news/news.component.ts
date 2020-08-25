@@ -13,7 +13,7 @@ export class NewsComponent extends DataSourceTemplateBaseComponent<NewsData> {
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
-    templateId: 'News',
+    templateId: 'news',
     fields: [],
     source: '',
     attributes: {

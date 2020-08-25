@@ -13,7 +13,7 @@ export class QaComponent extends DataSourceTemplateBaseComponent<QaData> {
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
-    templateId: 'QA',
+    templateId: 'qa',
     fields: [],
     source: '',
     attributes: {

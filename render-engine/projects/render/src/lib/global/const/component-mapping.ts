@@ -31,19 +31,19 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
     component: HtmlComponent,
   },
   {
-    component_id: 'Slide',
+    component_id: 'slider',
     component: SliderComponent,
   },
   {
-    component_id: 'News',
+    component_id: 'news',
     component: NewsComponent,
   },
   {
-    component_id: 'QA',
+    component_id: 'qa',
     component: QaComponent,
   },
   {
-    component_id: 'Download',
+    component_id: 'download',
     component: DownloadComponent,
   },
   {
