@@ -1,7 +1,7 @@
 <div [hidden]="!!subComponentRef">
   <ng-container *ngIf="farm">
     <div class="tool-btns" *ngIf="isSub">
-      <button type="button" tabindex="0" mat-button (click)="destroySelf()">回上層</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="destroySelf()">回上層</button>
     </div>
     <div>
       <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)" animationDuration="0ms">

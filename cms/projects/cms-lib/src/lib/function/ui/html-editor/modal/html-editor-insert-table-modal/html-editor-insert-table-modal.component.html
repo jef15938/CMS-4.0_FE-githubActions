@@ -18,9 +18,9 @@
         </div>
       </div>
     </div>
-    <div class="modal-form-layout__btn-group btn-group">
-      <button class="modal-form-layout__btn" type="button" tabindex="0" mat-raised-button (click)="close()">取消</button>
-      <button class="modal-form-layout__btn" type="button" tabindex="0" mat-raised-button (click)="confirm()"
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
         [disabled]="form.invalid">儲存</button>
     </div>
   </form>

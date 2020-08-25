@@ -136,7 +136,7 @@
                 <mat-label>Meta圖片(1200x628)</mat-label>
                 <input matInput [value]="detail.metaImageName" name="meta_image" readonly>
               </mat-form-field>
-              <button class="modal-form-layout__btn gallery-btn" type="button" tabindex="0" mat-button
+              <button class="modal-form-layout__btn gallery-btn" type="button" tabindex="0" mat-raised-button
                 (click)="openGallery(detail)">媒體庫</button>
             </div>
           </div>
@@ -144,9 +144,9 @@
       </mat-tab>
     </mat-tab-group>
 
-    <div class="modal-form-layout__btn-group btn-group">
-      <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="close()">取消</button>
-      <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="confirm()"
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
         [disabled]="form.invalid">儲存</button>
     </div>
   </form>

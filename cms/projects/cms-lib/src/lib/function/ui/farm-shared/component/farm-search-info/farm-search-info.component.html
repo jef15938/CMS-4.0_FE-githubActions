@@ -1,8 +1,8 @@
 <ng-container *ngIf="searchInfo">
   <cms-farm-form-info [funcID]="funcID" [farmFormInfo]="searchInfo" [useValidation]="true"></cms-farm-form-info>
   <div class="btn-group">
-    <button type="button" tabindex="0" mat-raised-button (click)="clear()">清除</button>
-    <button type="button" tabindex="0" mat-raised-button (click)="query()"
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="clear()">清除</button>
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="query()"
       [disabled]="!(farmFormInfoComponent?.formGroup?.valid)">查詢</button>
   </div>
 </ng-container>

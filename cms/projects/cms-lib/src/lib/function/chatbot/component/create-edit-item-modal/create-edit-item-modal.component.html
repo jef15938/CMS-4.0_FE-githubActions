@@ -19,14 +19,14 @@
         <mat-label>同義詞</mat-label>
         <div class="input-btn-group">
           <input matInput name="synonym" placeholder="請輸入同義詞" [(ngModel)]="synonym">
-          <button type="button" tabindex="0" mat-raised-button color="primary" [disabled]="!synonym"
+          <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" [disabled]="!synonym"
             (click)="addSynonym()">新增</button>
         </div>
         <mat-list class="synonym-list" id="synonym-list">
           <ng-container *ngFor="let synonym of item.synonyms">
             <mat-list-item>
               {{synonym}}
-              <button type="button" tabindex="0" mat-icon-button color="warn" (click)="removeSynonym(synonym)">
+              <button type="button" tabindex="0" mat-icon-button class="btn btn-danger" (click)="removeSynonym(synonym)">
                 <mat-icon>delete</mat-icon>
               </button>
             </mat-list-item>
@@ -35,8 +35,8 @@
       </div>
     </div>
     <div class="btn-group">
-      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-      <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+      <button type="button" tabindex="0" mat-raised-button (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
     </div>
   </form>
 </ng-container>

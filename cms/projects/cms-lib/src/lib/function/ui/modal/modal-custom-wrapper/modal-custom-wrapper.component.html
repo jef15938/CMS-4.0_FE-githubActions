@@ -16,7 +16,7 @@
   <!-- footer -->
   <div class="modal-custom__tail" mat-modal-actions *ngIf="instance&&instance.actions&&instance.actions.length">
     <div class="btn-group">
-      <button type="button" tabindex="0" mat-button *ngFor="let action of instance.actions"
+      <button type="button" tabindex="0" mat-raised-button *ngFor="let action of instance.actions"
         (click)="action.onClick($event)">{{action.text}}</button>
     </div>
 

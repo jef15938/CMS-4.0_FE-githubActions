@@ -7,12 +7,6 @@
           [src]="frameId | safeResource"></iframe>
       </div>
 
-      <div class="modal-form-layout__btn-group btn-group">
-        <button type="button" tabindex="0" class="modal-form-layout__btn" mat-raised-button
-          (click)="close()">取消</button>
-        <button type="button" tabindex="0" class="modal-form-layout__btn" mat-raised-button (click)="confirm()"
-          [disabled]="form.invalid || !isValidSrc">儲存</button>
-      </div>
       <div class="modal-form-layout__row">
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
@@ -25,6 +19,11 @@
       </div>
     </div>
 
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="form.invalid || !isValidSrc">儲存</button>
+    </div>
 
   </form>
 </div>

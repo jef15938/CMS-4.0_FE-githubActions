@@ -9,8 +9,8 @@
       </mat-form-field>
     </div>
     <div class=" btn-group">
-      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-      <button type="button" tabindex="0" mat-button *ngIf="status" (click)="confirm()" [disabled]="form.invalid">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button *ngIf="status" class="btn btn-confirm" (click)="confirm()" [disabled]="form.invalid">
         {{status===AuditingApproveStatus.APPROVED?'通過':'退回'}}
       </button>
     </div>

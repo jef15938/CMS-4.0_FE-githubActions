@@ -34,7 +34,8 @@
           </mat-form-field>
         </div>
 
-        <button class="filter__search-btn" type="button" mat-icon-button matTooltip="搜尋媒體" (click)="getGallery(true).subscribe()">
+        <button class="filter__search-btn" type="button" mat-icon-button matTooltip="搜尋媒體"
+          (click)="getGallery(true).subscribe()">
           <mat-icon>search</mat-icon>
         </button>
       </div>
@@ -43,8 +44,8 @@
         <div class="tool-top">
           <div>目前頁數:{{galleryPageInfo.page}}</div>
           <div style="text-align: right;">
-            <button type="button" tabindex="0" mat-raised-button color="primary"
-              [disabled]="!selectedCategory?.canUpload" (click)="uploadFileToCategory(selectedCategory)">
+            <button type="button" tabindex="0" mat-raised-button [disabled]="!selectedCategory?.canUpload"
+              class="btn btn-edit" (click)="uploadFileToCategory(selectedCategory)">
               上傳媒體
             </button>
           </div>

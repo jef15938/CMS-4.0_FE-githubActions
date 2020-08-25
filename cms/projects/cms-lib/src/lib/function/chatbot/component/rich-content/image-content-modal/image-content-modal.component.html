@@ -1,7 +1,7 @@
 <ng-container *ngIf="contentModel">
   <form #form="ngForm">
     <div class="btn-group">
-      <button type="button" tabindex="0" mat-button (click)="preview()" style="float: right;">預覽</button>
+      <button type="button" tabindex="0" mat-raised-button (click)="preview()" style="float: right;">預覽</button>
     </div>
     <div class="page-content-container">
       <mat-form-field appearance="outline">
@@ -14,8 +14,8 @@
       </mat-form-field>
     </div>
     <div class="btn-group">
-      <button type="button" tabindex="0" mat-button (click)="close()">取消</button>
-      <button type="button" tabindex="0" mat-button (click)="confirm()" [disabled]="form.invalid">儲存</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()" [disabled]="form.invalid">儲存</button>
     </div>
   </form>
 </ng-container>

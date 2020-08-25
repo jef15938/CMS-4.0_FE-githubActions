@@ -14,8 +14,8 @@
     </mat-paginator>
   </ng-container>
   <div class="btn-group">
-    <button type="button" tabindex="0" mat-button [disabled]="!checkedData.length" (click)="batchReject()">批次退回</button>
-    <button type="button" tabindex="0" mat-button [disabled]="!checkedData.length"
-      (click)="batchApprove()">批次同意</button>
+    <button type="button" tabindex="0" mat-raised-button [disabled]="!checkedData.length" class="btn btn-danger" (click)="batchReject()">批次退回</button>
+    <button type="button" tabindex="0" mat-raised-button [disabled]="!checkedData.length"
+      class="btn btn-confirm" (click)="batchApprove()">批次同意</button>
   </div>
 </div>

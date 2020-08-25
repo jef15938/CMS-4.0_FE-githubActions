@@ -87,7 +87,7 @@
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.GALLERY">
                   <input matInput [formControlName]="col.columnId" hidden
                     [required]="formColumnSettingMap.get(col.columnId).required">
-                  <button type="button" mat-button (click)="changeGallery(col)">媒體庫</button> {{col.setting.fileName}}
+                  <button type="button" mat-raised-button class="btn btn-dark" (click)="changeGallery(col)">媒體庫</button> {{col.setting.fileName}}
                   <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                       {{err}}
@@ -99,7 +99,7 @@
                   <input matInput [formControlName]="col.columnId" hidden
                     [required]="formColumnSettingMap.get(col.columnId).required">
                   <ng-container *ngIf="mode==='edit'||(mode==='preview'&&col.value)">
-                    <button type="button" mat-button
+                    <button type="button" mat-raised-button class="btn btn-warning"
                       (click)="openContentEditor(col)">{{mode==='preview'?'預覽':'編輯'}}{{col.displayText}}</button>
                   </ng-container>
                   <ng-container *ngIf="mode==='preview'&&!col.value;">無內容</ng-container>
@@ -114,7 +114,7 @@
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.HTMLEDITOR">
                   <input matInput [formControlName]="col.columnId" hidden
                     [required]="formColumnSettingMap.get(col.columnId).required">
-                  <button type="button" mat-button (click)="openHtmlEditor(col)">編輯 Html</button>
+                  <button type="button" mat-raised-button (click)="openHtmlEditor(col)">編輯 Html</button>
                   <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
                       {{err}}

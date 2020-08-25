@@ -6,13 +6,13 @@
           <img [src]="(localUrl+'/assets/img/icon/'+fileType+'.png') | safeResource">
         </div>
       </div>
-      <div class="modal-form-layout__btn-group btn-group">
-        <button class="modal-form-layout__btn dark-style" type="button" tabindex="-1" mat-button
-          (click)="changeGallery()">媒體庫</button>
-        <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button (click)="confirm()"
+      <div class="btn-group">
+        <button type="button" tabindex="-1" mat-raised-button
+          class="btn btn-dark" (click)="changeGallery()">媒體庫</button>
+        <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
           [disabled]="form.invalid">儲存</button>
-        <button type="button" class="modal-form-layout__btn" tabindex="0" mat-raised-button
-          (click)="close()">取消</button>
+        <button type="button" tabindex="0" mat-raised-button
+          class="btn btn-cancel" (click)="close()">取消</button>
       </div>
       <div class="modal-form-layout__row">
         <div class="modal-form-layout__col">
