@@ -80,7 +80,9 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
         target.push(`[${LayoutWrapperSelectedTargetType.FIELD}]${this.selected.fieldInfo.fieldId}`);
         break;
     }
-    this.manager.stateManager.preserveState(action || `Change ${targetType} : ${target.join(' ')}`);
+    // const msg = action || `變更:${targetType} : ${target.join(' ')}`;
+    const msg = action || `變更內容`;
+    this.manager.stateManager.preserveState(msg);
     this.hasChange = false;
   }
 

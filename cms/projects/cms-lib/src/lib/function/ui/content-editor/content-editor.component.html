@@ -1,7 +1,7 @@
 <div>
   <mat-menu #stateMenu="matMenu">
     <button type="button" tabindex="-1" mat-menu-item [class.current-state]="manager?.stateManager?.currentIndex === 0"
-      (click)="resetSelected(); manager?.stateManager?.back(manager?.stateManager?.currentIndex);">Init</button>
+      (click)="resetSelected(); manager?.stateManager?.back(manager?.stateManager?.currentIndex);">初始</button>
     <button type="button" tabindex="-1" mat-menu-item
       *ngFor="let state of manager?.stateManager?.states; let i = index;"
       [class.current-state]="manager?.stateManager?.currentIndex === i+1"
@@ -67,7 +67,7 @@
     <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
       <cms-layout-control-panel [context]="this" [selectedBtn]="manager.selectedTemplateAddBtn"
         [contentInfo]="manager?.stateManager?.currentState?.snapShot" [selectableTemplates]="selectableTemplates"
-        (templateAdd)="resetSelected(); manager.stateManager.preserveState('AddTemplate : '+$event);">
+        (templateAdd)="resetSelected(); manager.stateManager.preserveState('加入版型:'+$event);">
       </cms-layout-control-panel>
     </div>
     <!-- 內容編輯 -->

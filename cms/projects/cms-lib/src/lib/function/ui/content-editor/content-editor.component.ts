@@ -187,7 +187,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       this.manager.stateManager.currentState.snapShot.languages.forEach(language => {
         language.templates.length = 0;
       });
-      this.manager.stateManager.preserveState('Clear Content');
+      this.manager.stateManager.preserveState('清空內容');
     }
   }
 
@@ -362,7 +362,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       if (version) {
         this.contentService.getContentById(this.contentID, version.version).subscribe(contentInfo => {
           this.manager.stateManager.currentState.snapShot = contentInfo;
-          this.manager.stateManager.preserveState(`Recover Version : ${version.version}`);
+          this.manager.stateManager.preserveState(`復原版本 ${version.version}`);
         });
       }
     });

@@ -175,7 +175,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       });
     }
 
-    this.templateAdd.emit(selectedTemplateInfo.templateId);
+    this.templateAdd.emit(selectedTemplateInfo.templateName);
   }
 
 
