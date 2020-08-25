@@ -7,6 +7,7 @@ import { ContentTemplateInfoModel } from './content-template-info.model';
 @ModelMapping(
   LanguageInfo, LanguageInfoModel,
   (bean, model) => {
+    model.blocks = (bean as any).blocks;
     model.languageId = bean.language_id;
     model.languageName = bean.language_name;
     model.templates = ModelMapper.mapArrayTo(ContentTemplateInfoModel, bean.templates);
@@ -14,6 +15,10 @@ import { ContentTemplateInfoModel } from './content-template-info.model';
 )
 export class LanguageInfoModel {
 
+  public blocks: {
+    block_id: string;
+    templates: Array<ContentTemplateInfoModel>;
+  }[];
   public languageId: string;
   public languageName: string;
 

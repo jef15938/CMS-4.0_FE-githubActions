@@ -150,13 +150,15 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
     templatesContainer.layoutWrapperComponents?.forEach((lw) => {
       if (this.editorMode !== EditorMode.INFO) { // EDIT or READ
-        (lw?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `版型ID:${lw.templateInfo.templateId}`);
+        if (!(lw.componentRef.instance instanceof FixedWrapperComponent)) {
+          (lw?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `版型ID:${lw.templateInfo.templateId}`);
+        }
       }
 
       lw?.componentRef?.instance?.templateFieldDirectives?.forEach(field => {
         const element = field?.elementRef?.nativeElement as HTMLElement;
         if (this.editorMode !== EditorMode.INFO) { // EDIT or READ
-          element?.setAttribute('hover-info', `${field.fieldInfo.fieldType}`);
+          element?.setAttribute('hover-info', `${field?.fieldInfo?.fieldType || ''}`);
         } else {
           element?.classList.add('edit-info');
           const infos: string[] = [];
