@@ -6,6 +6,7 @@ import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.
 import { ContentEditorService } from '../../content-editor.service';
 import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 import { LanguageInfoModel } from '../../../../../global/api/data-model/models/language-info.model';
+import { ContentBlockInfoModel } from 'projects/cms-lib/src/lib/global/api/data-model/models/content-block-info.model';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -89,7 +90,9 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    */
   templateShowInfo() {
     const languageInfo = new LanguageInfoModel();
-    languageInfo.templates = [this.selected.templateInfo as any];
+    const contentBlockInfo = new ContentBlockInfoModel();
+    contentBlockInfo.templates = [this.selected.templateInfo as any];
+    languageInfo.blocks = [contentBlockInfo];
     const contentInfo = new ContentInfoModel();
     contentInfo.languages = [languageInfo];
 

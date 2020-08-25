@@ -23,6 +23,7 @@ import { TemplateGetResponseModel } from '../../../global/api/data-model/models/
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
 import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
+import { ContentBlockInfoModel } from '../../../global/api/data-model/models/content-block-info.model';
 
 const isTabTemplateInfo = (templateInfo: ContentTemplateInfoModel): boolean => {
   return !!(templateInfo as any).tabList;
@@ -106,7 +107,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   private convertToEditorContent(contentInfo: ContentInfoModel): ContentInfoModel {
     const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfoModel;
     info.languages.forEach(lang => {
-      let templates = lang.templates;
+      let templates = lang.blocks.map(b => b.templates).reduce((a, b) => a.concat(b), [] as ContentTemplateInfoModel[]);
       while (templates?.length) {
         let tempTemplates: ContentTemplateInfoModel[] = [];
         templates.forEach(template => {
@@ -141,7 +142,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   private convertEditorContentToData(contentInfo: ContentInfoModel): ContentInfoModel {
     const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfoModel;
     info.languages.forEach(lang => {
-      let templates = lang.templates;
+      let templates = lang.blocks.map(b => b.templates).reduce((a, b) => a.concat(b), [] as ContentTemplateInfoModel[]);
       while (templates?.length) {
         let tempTemplates: ContentTemplateInfoModel[] = [];
         templates.forEach(template => {
@@ -185,7 +186,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     const yes = window.confirm('確定清空此頁面？');
     if (yes) {
       this.manager.stateManager.currentState.snapShot.languages.forEach(language => {
-        language.templates.length = 0;
+        language.blocks.forEach(b => b.templates.length = 0);
       });
       this.manager.stateManager.preserveState('清空內容');
     }
@@ -197,7 +198,10 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     );
     let galleryIds: string[] = [];
 
-    let templates: ContentTemplateInfoModel[] = contentInfo.languages.reduce((a, b) => a.concat(b.templates || []), []);
+    let templates: ContentTemplateInfoModel[] = contentInfo.languages
+      .reduce((a, b) => a.concat(b.blocks || []), [] as ContentBlockInfoModel[])
+      .map(block => block.templates)
+      .reduce((a, b) => a.concat(b || []), [] as ContentTemplateInfoModel[]);
 
     // 循環檢查 TemplateInfo 內是否用到 gallery 檔案，找出 galleryID
     while (templates.length) {
