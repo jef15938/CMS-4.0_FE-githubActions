@@ -4,9 +4,10 @@ import { forkJoin } from 'rxjs';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../../../global/interface/cms-enviroment.interface';
-import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
+import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
 import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
+import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
 
 @Component({
   selector: 'cms-upload-gallery-modal',
@@ -33,6 +34,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   @Input() galleryName: string;
   @Input() galleryType: string;
   @Input() accept: string;
+  @Input() galleryConfig: GalleryConfigResponseModel;
 
   isCreate = true;
   complete = new EventEmitter<string>();
@@ -69,6 +71,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     private galleryService: GalleryService,
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
+    private modalService: ModalService,
   ) { super(); }
 
   ngOnInit() {
@@ -203,6 +206,20 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     }
 
     return new Blob([ia], { type: mimeString });
+  }
+
+  openInfo() {
+    if (!this.galleryConfig) { alert('無法取得資訊'); return; }
+    const title = '上傳說明';
+    const messages: string[] = [];
+    messages.push(`單次上傳檔案數限制 : ${this.galleryConfig.maxUploadNumber}個`);
+    messages.push(`單次上傳檔案總大小限制 : ${this.galleryConfig.maxUploadSize}kb`);
+    messages.push(`檔名字元不可包含 : ${this.galleryConfig.limitCharacter}`);
+    this.galleryConfig.fileLimits.forEach(fileLimit => {
+      messages.push(`[${fileLimit.fileNameExt}] 類型單檔大小限制 : ${fileLimit.maxFileSize}kb`);
+    });
+    const message = messages.map(msg => `<p>${msg}</p>`).join('');
+    this.modalService.openMessage({ title, message }).subscribe();
   }
 
 }

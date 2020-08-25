@@ -14,6 +14,7 @@ import { GalleryFileType } from '../../type/gallery-shared.type';
 import { GalleryInfoModel } from '../../../../../global/api/data-model/models/gallery-info.model';
 import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/models/gallery-category-info.model';
 import { PageInfoModel } from '../../../../../global/api/data-model/models/page-info.model';
+import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
 
 @Component({
   selector: 'cms-gallery-shared',
@@ -38,6 +39,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   galleryDatas: GalleryInfoModel[];
   colDefs: ColDef<GalleryInfoModel>[];
 
+  galleryConfig: GalleryConfigResponseModel;
+
   readonly clipBoardInputId = 'gallerySharedClipBoardInput';
 
   private destroy$ = new Subject();
@@ -59,6 +62,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.filter.fileType = this.filterFileTypeOptions[0].value;
 
     this.init().subscribe();
+    this.getGalleryConfig().subscribe();
 
     this.categorySelected$.pipe(
       tap(selectedCategory => {
@@ -150,6 +154,12 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     );
   }
 
+  private getGalleryConfig() {
+    return this.galleryService.getGalleryConfig().pipe(
+      tap(config => this.galleryConfig = config),
+    );
+  }
+
   getGallery(resetPage = false) {
 
     if (!this.selectedCategory?.categoryId) {
@@ -187,6 +197,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
+        galleryConfig: this.galleryConfig,
         categoryName: category.categoryName,
         categoryId: category.categoryId,
       }
@@ -199,6 +210,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     return this.modalService.openComponent({
       component: UploadGalleryModalComponent,
       componentInitData: {
+        galleryConfig: this.galleryConfig,
         galleryId: gallery.galleryId,
         galleryType: gallery.fileType,
         galleryName: gallery.fileName,
