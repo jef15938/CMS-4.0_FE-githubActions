@@ -47,7 +47,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   private categorySelected$ = new Subject<GalleryCategoryInfoModel>();
 
   filterFileTypeOptions: { value: string, display: string }[] = [];
-  filter: { fileName: string, fileType: string } = { fileName: '', fileType: '', };
+  filter: { fileName: string, fileTypes: string[] } = { fileName: '', fileTypes: [], };
 
   constructor(
     private galleryService: GalleryService,
@@ -59,7 +59,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.colDefs = this.createColDefs(this.mode);
     this.filterFileTypeOptions = this.createFilterFileTypeOptions();
-    this.filter.fileType = this.filterFileTypeOptions[0].value;
+    this.filter.fileTypes = this.filterFileTypeOptions.map(option => option.value);
 
     this.init().subscribe();
     this.getGalleryConfig().subscribe();
@@ -118,7 +118,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   private createFilterFileTypeOptions(): { value: GalleryFileType, display: string }[] {
     let filterFileTypeOptions: { value: GalleryFileType, display: string }[] = [
-      { value: '', display: '全部', },
+      // { value: '', display: '全部', },
       { value: 'pdf', display: 'pdf', },
       { value: 'doc', display: 'doc', },
       { value: 'docx', display: 'docx', },

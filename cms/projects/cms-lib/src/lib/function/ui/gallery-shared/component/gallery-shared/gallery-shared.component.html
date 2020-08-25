@@ -26,7 +26,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="filter__field">
             <mat-label>檔案類型</mat-label>
-            <mat-select [(ngModel)]="filter.fileType" name="fileType">
+            <mat-select [(ngModel)]="filter.fileTypes" name="fileType" [multiple]="true">
               <mat-option *ngFor="let option of filterFileTypeOptions" [value]="option.value">
                 {{option.display}}
               </mat-option>

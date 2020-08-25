@@ -91,7 +91,7 @@ export class GalleryService {
    * @returns
    * @memberof GalleryService
    */
-  getGalleryByCategoryID(categoryID: string, page = 1, filter?: { fileName?: string, fileType?: string }):
+  getGalleryByCategoryID(categoryID: string, page = 1, filter?: { fileName?: string, fileTypes?: string[] }):
     Observable<GalleryGetResponseModel> {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
@@ -105,7 +105,7 @@ export class GalleryService {
     } = { categoryID, page };
 
     if (filter?.fileName) { params.fileName = filter.fileName; }
-    if (filter?.fileType) { params.fileType = filter.fileType; }
+    if (filter?.fileTypes?.length) { params.fileType = filter.fileTypes.join(','); }
 
     return this.respAPIService.dispatchRestApi<GalleryGetResponse>('GetGalleryByCategoryID', params).pipe(
       ModelMapper.rxMapModelTo(GalleryGetResponseModel),
