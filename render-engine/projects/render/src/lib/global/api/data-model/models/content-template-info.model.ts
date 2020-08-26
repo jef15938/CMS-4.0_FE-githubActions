@@ -7,6 +7,10 @@ import { ContentFieldInfoModel } from './content-field-info.model';
 @ModelMapping(
   ContentTemplateInfo, ContentTemplateInfoModel,
   (bean, model) => {
+    const beanKeys = Object.keys(bean);
+    beanKeys.forEach(k => {
+      model[k] = bean[k];
+    });
     model.id = bean.id;
     model.templateId = bean.templateId;
     model.fields = ModelMapper.mapArrayTo(ContentFieldInfoModel, bean.fields);
