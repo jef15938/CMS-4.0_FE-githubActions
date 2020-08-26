@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, GroupTemplateInfo, FieldInfo, GroupTemplateBaseComponent } from '@neux/render';
+import { LayoutWrapperSelectEvent, GroupTemplateInfo, GroupTemplateBaseComponent } from '@neux/render';
 import { ContentControlBase } from '../../_base';
+import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-model/models/content-field-info.model';
 
 @Component({
   selector: 'cms-template-control-group',
@@ -48,17 +49,17 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
     return arr; // for testing
   }
 
-  copyGroup(group: FieldInfo[]) {
+  copyGroup(group: ContentFieldInfoModel[]) {
     this.templateInfo.itemList.push(JSON.parse(JSON.stringify(group)));
     this.change.emit();
   }
 
-  removeGroup(group: FieldInfo[]) {
+  removeGroup(group: ContentFieldInfoModel[]) {
     this.templateInfo.itemList.splice(this.templateInfo.itemList.indexOf(group), 1);
     this.change.emit();
   }
 
-  findFieldByFieldId(fields: FieldInfo[], field: string) {
+  findFieldByFieldId(fields: ContentFieldInfoModel[], field: string) {
     return fields.find(f => f.fieldId === field);
   }
 

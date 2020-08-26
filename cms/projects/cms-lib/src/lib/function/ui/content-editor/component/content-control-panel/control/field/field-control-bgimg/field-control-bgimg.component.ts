@@ -1,8 +1,9 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective, FieldInfo } from '@neux/render';
+import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective } from '@neux/render';
 import { GallerySharedService } from '../../../../../../gallery-shared/service/gallery-shared.service';
 import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
+import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-model/models/content-field-info.model';
 
 @Component({
   selector: 'cms-field-control-bgimg',
@@ -11,7 +12,7 @@ import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-e
 })
 export class FieldControlBgimgComponent extends ContentControlBase implements OnInit, OnChanges {
 
-  fieldInfo: FieldInfo;
+  fieldInfo: ContentFieldInfoModel;
 
   adviceFormat = '';
   adviceWidth = 0;

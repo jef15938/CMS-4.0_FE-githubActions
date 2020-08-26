@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, FieldType, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from '@neux/render';
+import { LayoutWrapperSelectEvent, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from '@neux/render';
 import { ContentEditorManager } from '../../service/content-editor-manager';
 import { ContentEditorActionMode, ContentEditorContext } from '../../content-editor.interface';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
@@ -7,6 +7,7 @@ import { ContentEditorService } from '../../content-editor.service';
 import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 import { LanguageInfoModel } from '../../../../../global/api/data-model/models/language-info.model';
 import { ContentBlockInfoModel } from '../../../../../global/api/data-model/models/content-block-info.model';
+import { ContentFieldInfoFieldType } from '../../../../../global/api/data-model/models/content-field-info.model';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -31,7 +32,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   @Output() templateMove = new EventEmitter<boolean>();
 
   LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
-  FieldType = FieldType;
+  FieldType = ContentFieldInfoFieldType;
 
   // 用來判斷資料是否異動過
   hasChange = false;
