@@ -4,6 +4,9 @@
     最新消息資料呈現區域
   </div>
   <div class="transglobe-source-news-002" *ngIf="mode==='preview'">
+    <div style="height: 50px; line-height: 50px; vertical-align: middle; background-color: lightblue;">
+      最新消息
+    </div>
     <div class="api-template garden-news-type2">
       <div class="page-block">
         <div class="ga-page-control" displaytype="DEFAULT"><a href="#" class="prev" style="display: none;"></a>
@@ -17,26 +20,26 @@
         </div>
       </div>
       <div class="ul-items">
-        <div class="ul-li-items" *ngFor="let data of sourceData;">
+        <div class="ul-li-items" *ngFor="let data of sourceData.datas;">
           <a [href]="data.url" class="" target="_blank">
             <div class="question-num">
               <div class="monnthyeaar">
                 <div class="monnth">
                   <p ga-edit-maxlength="3" ga-edit-maxlength-pad="3" ga-edit-maxlength-mobile="3" ga-edit="text"
                     gaid="ga-1">
-                    {{month[data.createTime.substr(5,2)]}}
+                    {{month[data.start_date.substr(5,2)]}}
                   </p>
                 </div>
                 <div class="yeaar">
                   <p ga-edit-maxlength="4" ga-edit-maxlength-pad="4" ga-edit-maxlength-mobile="4" ga-edit="text"
                     gaid="ga-2">
-                    {{data.createTime.substr(0,4)}}
+                    {{data.start_date.substr(0,4)}}
                   </p>
                 </div>
               </div>
               <div class="txt">
                 <p ga-edit-maxlength="2" ga-edit-maxlength-pad="2" ga-edit-maxlength-mobile="2">
-                  {{data.createTime.substr(8,2)}}
+                  {{data.start_date.substr(8,2)}}
                 </p>
               </div>
             </div>

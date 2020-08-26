@@ -5,7 +5,7 @@ import { TypeFactory } from '../type-factory';
 
 export class ListDataSourceDataResponse {
 
-public datas: Array<string>;
+public datas: Array<any>;
 
 
 }

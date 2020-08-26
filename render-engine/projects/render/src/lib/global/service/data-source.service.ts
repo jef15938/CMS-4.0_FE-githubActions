@@ -1,8 +1,21 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../api/neuxAPI/rest-api.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ListDataSourceDataResponse } from '../api/neuxAPI/bean/ListDataSourceDataResponse';
-import { map } from 'rxjs/operators';
+import { ListDataSourceDataResponseModel } from '../api/data-model/models/list-data-source-data-response.model';
+import { ModelMapper } from '@neux/core';
+
+import * as download from './mock/download.json';
+import * as news from './mock/news.json';
+import * as qa from './mock/qa.json';
+import * as slider from './mock/slider.json';
+
+const mock = {
+  download,
+  news,
+  qa,
+  slider,
+};
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +34,10 @@ export class DataSourceService {
    * @returns
    * @memberof DataSourceService
    */
-  getDataSourceByTypeIDAndId(typeID: string, id: string): Observable<any[]> {
+  getDataSourceByTypeIDAndId<TData>(typeID: string, id: string): Observable<ListDataSourceDataResponseModel<TData>> {
+    return of(mock[typeID]);
     return this.restAPIService.dispatchRestApi<ListDataSourceDataResponse>('GetDataSourceByTypeIDAndId', { typeID, id }).pipe(
-      map(res => res.datas)
+      ModelMapper.rxMapModelTo(ListDataSourceDataResponseModel),
     );
   }
 

@@ -5,11 +5,11 @@ import { ModelMapping } from '@neux/core';
 @ModelMapping(
   ListDataSourceDataResponse, ListDataSourceDataResponseModel,
   (bean, model) => {
-    model.datas = bean.datas;
+    (model as any).datas = bean.datas as any[];
   }
 )
-export class ListDataSourceDataResponseModel {
+export class ListDataSourceDataResponseModel<T> {
 
-  public datas: Array<string>;
+  public datas: Array<T>;
 
 }

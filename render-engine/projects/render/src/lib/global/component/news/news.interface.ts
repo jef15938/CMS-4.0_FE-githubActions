@@ -1,12 +1,6 @@
 export interface NewsData {
-  content: string;
-  contentType: string;
-  createBy: string;
-  createTime: string;
-  newsId: number;
+  id: string;
   title: string;
-  typeId: string;
-  updateBy: string;
-  updateTime: string;
+  start_date: string;
   url: string;
 }

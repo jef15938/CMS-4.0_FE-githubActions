@@ -5,6 +5,7 @@ import { OnChanges, SimpleChanges, OnInit, Injector, Directive } from '@angular/
 import { of, Observable } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { DataSourceService } from '../../../global/service/data-source.service';
+import { ListDataSourceDataResponseModel } from '../../../global/api/data-model/models/list-data-source-data-response.model';
 
 @Directive()
 export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseComponent<DataSourceTemplateInfo>
@@ -14,7 +15,7 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
   abstract sourceType: string;
 
   templateType = TemplateType.DATA_SOURCE;
-  sourceData: TData[] = [];
+  sourceData: ListDataSourceDataResponseModel<TData>;
 
   dataSourceService: DataSourceService;
 
@@ -37,9 +38,10 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
     this.getSourceData().subscribe();
   }
 
-  getSourceData(): Observable<TData[]> {
+  getSourceData(): Observable<ListDataSourceDataResponseModel<TData>> {
+    console.warn('this.templateInfo = ', this.templateInfo);
     if (this.mode === 'edit' || !this.templateInfo?.source) { return of(undefined); }
-    return this.dataSourceService.getDataSourceByTypeIDAndId(this.sourceType, this.templateInfo?.source).pipe(
+    return this.dataSourceService.getDataSourceByTypeIDAndId<TData>(this.sourceType, this.templateInfo?.source).pipe(
       takeUntil(this.destroy$),
       tap(sourceData => this.sourceData = sourceData),
     );
