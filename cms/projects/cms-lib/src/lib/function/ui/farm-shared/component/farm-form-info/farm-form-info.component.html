@@ -155,7 +155,7 @@
                 </ng-container>
                 <!-- LINK -->
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.LINK">
-                  <a [href]="col.value" target="_blank" rel="noreferrer noopener">{{col.displayText}}</a>
+                  <a [href]="col.setting.url" target="_blank" rel="noreferrer noopener">{{col.displayText}}</a>
                 </ng-container>
                 <!-- CUSTOM -->
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.CUSTOM">
