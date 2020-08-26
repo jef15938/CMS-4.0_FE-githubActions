@@ -1,5 +1,5 @@
 import { FarmValidationInfo } from '../../neuxAPI/bean/FarmValidationInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 type FarmValidationInfoRange = {
   start_column: string;

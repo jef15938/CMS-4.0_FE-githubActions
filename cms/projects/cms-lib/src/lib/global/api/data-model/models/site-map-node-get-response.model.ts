@@ -3,7 +3,7 @@ import { IsNotEmpty } from 'class-validator';
 import { SiteMapNodeGetResponse } from '../../neuxAPI/bean/SiteMapNodeGetResponse';
 import { SiteNodeDetailInfoModel } from './site-node-detail-info.model';
 import { PublishInfoModel } from './publish-info.model';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

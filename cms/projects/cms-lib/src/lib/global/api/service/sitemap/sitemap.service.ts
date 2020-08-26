@@ -10,7 +10,7 @@ import { UserSiteMapPutRequest } from '../../neuxAPI/bean/UserSiteMapPutRequest'
 import { SitemapAuditingRequest } from '../../neuxAPI/bean/SitemapAuditingRequest';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
 import { SiteMapNodeGetResponseModel } from '../../data-model/models/site-map-node-get-response.model';
 import { SiteInfoModel } from '../../data-model/models/site-info.model';

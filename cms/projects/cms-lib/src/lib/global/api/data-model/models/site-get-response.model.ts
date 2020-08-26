@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { SiteGetResponse } from '../../neuxAPI/bean/SiteGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { SiteInfoModel } from './site-info.model';
 
 // @dynamic

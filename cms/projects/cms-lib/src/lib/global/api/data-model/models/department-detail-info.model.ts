@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { DepartmentDetailInfo } from '../../neuxAPI/bean/DepartmentDetailInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

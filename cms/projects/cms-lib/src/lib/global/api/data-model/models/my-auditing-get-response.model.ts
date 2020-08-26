@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { MyAuditingGetResponse } from '../../neuxAPI/bean/MyAuditingGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { MyAuditingInfoModel } from './my-auditing-info.model';
 import { PageInfoModel } from './page-info.model';
 

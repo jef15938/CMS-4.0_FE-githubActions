@@ -1,6 +1,6 @@
 import { ValidateNested, IsNotEmpty } from 'class-validator';
 import { SiteMapGetResponse } from '../../neuxAPI/bean/SiteMapGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

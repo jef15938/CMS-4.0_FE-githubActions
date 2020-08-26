@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { ListContentVersionResponse } from '../../neuxAPI/bean/ListContentVersionResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { ContentVersionInfoModel } from './content-version-info.model';
 
 // @dynamic

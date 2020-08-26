@@ -1,5 +1,5 @@
 import { LayoutInfo } from '../../neuxAPI/bean/LayoutInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

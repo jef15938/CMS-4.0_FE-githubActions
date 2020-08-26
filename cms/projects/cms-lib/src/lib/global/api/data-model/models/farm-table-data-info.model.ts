@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { FarmTableDataInfo } from '../../neuxAPI/bean/FarmTableDataInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 export enum FarmTableDataInfoColumnDisplayType {
   LABEL = 'LABEL',

@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 import { GroupSitemapInfo } from '../../neuxAPI/bean/GroupSitemapInfo';
 
 // @dynamic

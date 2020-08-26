@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { AuditingSubmitRequest } from '../../neuxAPI/bean/AuditingSubmitRequest';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

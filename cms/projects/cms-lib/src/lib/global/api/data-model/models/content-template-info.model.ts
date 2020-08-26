@@ -1,6 +1,6 @@
 import { IsNotEmpty, ValidateNested } from 'class-validator';
 import { ContentTemplateInfo } from '../../neuxAPI/bean/ContentTemplateInfo';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { ContentFieldInfoModel } from './content-field-info.model';
 
 // @dynamic

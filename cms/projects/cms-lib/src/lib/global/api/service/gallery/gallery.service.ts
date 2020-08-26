@@ -9,7 +9,7 @@ import { GalleryCaregoryGetResponse } from '../../neuxAPI/bean/GalleryCaregoryGe
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface/cms-enviroment.interface';
 import { GalleryGetResponseModel } from '../../data-model/models/gallery-get-response.model';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { GalleryCategoryInfoModel } from '../../data-model/models/gallery-category-info.model';
 import { GalleryCategoryGetResponseModel } from '../../data-model/models/gallery-category-get-response.model';
 import { GalleryCategoryPutRequest } from '../../neuxAPI/bean/GalleryCategoryPutRequest';

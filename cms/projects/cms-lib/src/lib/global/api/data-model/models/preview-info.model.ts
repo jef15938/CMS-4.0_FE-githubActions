@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 export enum PreviewInfoType {
   ONE_PAGE = 'ONE_PAGE',

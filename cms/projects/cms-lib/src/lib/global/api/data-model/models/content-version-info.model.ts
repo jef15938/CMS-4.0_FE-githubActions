@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { ContentVersionInfo } from '../../neuxAPI/bean/ContentVersionInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

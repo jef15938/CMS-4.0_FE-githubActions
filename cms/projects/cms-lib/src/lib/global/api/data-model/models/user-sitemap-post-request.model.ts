@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { UserSiteMapPostRequest } from '../../neuxAPI/bean/UserSiteMapPostRequest';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

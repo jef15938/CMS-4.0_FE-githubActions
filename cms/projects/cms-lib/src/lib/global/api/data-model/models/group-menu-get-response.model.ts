@@ -1,7 +1,7 @@
 import { ValidateNested } from 'class-validator';
 import { GroupMenuInfoModel } from './group-menu-info.model';
 import { GroupMenuGetResponse } from '../../neuxAPI/bean/GroupMenuGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

@@ -1,6 +1,6 @@
 import { ValidateNested, IsNotEmpty } from 'class-validator';
 import { ListFarmTriggerDataResponse } from '../../neuxAPI/bean/ListFarmTriggerDataResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { FarmOptionInfoModel } from './farm-option-info.model';
 
 // @dynamic

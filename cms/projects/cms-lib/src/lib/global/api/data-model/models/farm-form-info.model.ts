@@ -1,5 +1,5 @@
 import { FarmFormInfo } from '../../neuxAPI/bean/FarmFormInfo';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { FarmValidationInfoModel } from './farm-validation-info.model';
 import { IsNotEmpty, ValidateNested } from 'class-validator';
 

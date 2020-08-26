@@ -10,7 +10,7 @@ import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 import { ListFarmTriggerDataResponse } from '../../neuxAPI/bean/ListFarmTriggerDataResponse';
 import { map } from 'rxjs/operators';
 import { GetFarmTreeResponse } from '../../neuxAPI/bean/GetFarmTreeResponse';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
 import { FarmOptionInfoModel } from '../../data-model/models/farm-option-info.model';
 import { ListFarmTriggerDataResponseModel } from '../../data-model/models/list-farm-trigger-data-response.model';

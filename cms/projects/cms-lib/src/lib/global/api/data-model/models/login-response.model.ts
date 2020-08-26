@@ -1,7 +1,7 @@
 import { ValidateNested, IsNotEmpty } from 'class-validator';
 import { LoginInfoModel } from './login-info.model';
 import { LoginResponse } from '../../neuxAPI/bean/LoginResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

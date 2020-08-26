@@ -7,7 +7,7 @@ import { GroupMenuGetResponse } from '../../neuxAPI/bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from '../../neuxAPI/bean/GroupSiteMapGetResponse';
 import { GroupSitemapInfo } from '../../neuxAPI/bean/GroupSitemapInfo';
 import { ListGroupResponst } from '../../neuxAPI/bean/ListGroupResponst';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { GroupMenuInfoModel } from '../../data-model/models/group-menu-info.model';
 import { GroupMenuGetResponseModel } from '../../data-model/models/group-menu-get-response.model';
 import { ListGroupResponseModel } from '../../data-model/models/list-group-response.model';

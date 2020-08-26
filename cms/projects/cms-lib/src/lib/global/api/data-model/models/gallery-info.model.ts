@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { GalleryInfo } from '../../neuxAPI/bean/GalleryInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

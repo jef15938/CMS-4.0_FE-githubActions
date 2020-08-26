@@ -8,7 +8,7 @@ import { MyAuditingGetResponse } from '../../neuxAPI/bean/MyAuditingGetResponse'
 import { AuditingGetResponse } from '../../neuxAPI/bean/AuditingGetResponse';
 import { AuditingSubmitRequest } from '../../neuxAPI/bean/AuditingSubmitRequest';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { AuditingGetResponseModel } from '../../data-model/models/auditing-get-response.model';
 import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
 import { MyAuditingGetResponseModel } from '../../data-model/models/my-auditing-get-response.model';

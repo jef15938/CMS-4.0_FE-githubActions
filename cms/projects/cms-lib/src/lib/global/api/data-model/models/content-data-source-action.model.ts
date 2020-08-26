@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { ContentDataSourceAction } from '../../neuxAPI/bean/ContentDataSourceAction';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 export enum ContentDataSourceActionType {
   FARM = 'FARM',

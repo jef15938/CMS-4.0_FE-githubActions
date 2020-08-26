@@ -8,7 +8,7 @@ import { LoginResponse } from '../../neuxAPI/bean/LoginResponse';
 import { Router } from '@angular/router';
 import { LoginInfoModel } from '../../data-model/models/login-info.model';
 import { plainToClass } from 'class-transformer';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { LoginResponseModel } from '../../data-model/models/login-response.model';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { ListGroupResponst } from '../../neuxAPI/bean/ListGroupResponst';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { GroupInfoModel } from './group-info.model';
 
 // @dynamic

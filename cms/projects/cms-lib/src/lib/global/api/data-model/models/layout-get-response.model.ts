@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { LayoutGetResponse } from '../../neuxAPI/bean/LayoutGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { LayoutInfoModel } from './layout-info.model';
 
 // @dynamic

@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { TemplateInfoModel } from './template-info.model';
 
 // @dynamic

@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { DepartmentGetResponse } from '../../neuxAPI/bean/DepartmentGetResponse';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { DepartmentGetResponseModel } from '../../data-model/models/department-get-response.model';
 import { DepartmentInfoModel } from '../../data-model/models/department-info.model';
 import { DepartmentDetailInfo } from '../../neuxAPI/bean/DepartmentDetailInfo';

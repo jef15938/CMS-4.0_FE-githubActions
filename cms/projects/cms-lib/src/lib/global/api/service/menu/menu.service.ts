@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { MenuGetResponse } from '../../neuxAPI/bean/MenuGetResponse';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { MenuInfoModel } from '../../data-model/models/menu-info.model';
 import { MenuGetResponseModel } from '../../data-model/models/menu-get-response.model';
 

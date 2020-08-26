@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { ListContentDataSourceResponse } from '../../neuxAPI/bean/ListContentDataSourceResponse';
 import { ListContentVersionResponse } from '../../neuxAPI/bean/ListContentVersionResponse';
 import { LayoutInfoModel } from '../../data-model/models/layout-info.model';
-import { ModelMapper } from '../../data-model/model-mapper';
+import { ModelMapper } from '@neux/core';
 import { LayoutGetResponseModel } from '../../data-model/models/layout-get-response.model';
 import { ContentDataSourceModel } from '../../data-model/models/content-data-source.model';
 import { ListContentDataSourceResponseModel } from '../../data-model/models/list-content-data-source-response.model';

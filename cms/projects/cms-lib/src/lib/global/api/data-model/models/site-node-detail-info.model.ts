@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

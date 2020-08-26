@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { ContentFieldInfo } from '../../neuxAPI/bean/ContentFieldInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 export enum ContentFieldInfoFieldType {
   TEXT = 'TEXT',

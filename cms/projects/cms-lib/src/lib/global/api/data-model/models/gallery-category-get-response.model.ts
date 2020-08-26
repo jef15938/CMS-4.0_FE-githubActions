@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { GalleryCaregoryGetResponse } from '../../neuxAPI/bean/GalleryCaregoryGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { GalleryCategoryInfoModel } from './gallery-category-info.model';
 
 // @dynamic

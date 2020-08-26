@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { DepartmentGetResponse } from '../../neuxAPI/bean/DepartmentGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { DepartmentInfoModel } from './department-info.model';
 
 // @dynamic

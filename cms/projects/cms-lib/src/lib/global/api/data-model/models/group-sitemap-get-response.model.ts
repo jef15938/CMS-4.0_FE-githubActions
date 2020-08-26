@@ -1,6 +1,6 @@
 import { ValidateNested } from 'class-validator';
 import { GroupSiteMapGetResponse } from '../../neuxAPI/bean/GroupSiteMapGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { GroupSitemapInfoModel } from './group-sitemap-info.model';
 
 // @dynamic

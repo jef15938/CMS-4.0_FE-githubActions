@@ -1,7 +1,7 @@
 import { ValidateNested } from 'class-validator';
 import { MyAuditingDetailInfoModel } from './my-auditing-detail-info.model';
 import { MyAuditingDetailGetResponse } from '../../neuxAPI/bean/MyAuditingDetailGetResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 
 // @dynamic
 @ModelMapping(

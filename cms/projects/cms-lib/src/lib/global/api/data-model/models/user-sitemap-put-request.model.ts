@@ -1,5 +1,5 @@
 import { UserSiteMapPutRequest } from '../../neuxAPI/bean/UserSiteMapPutRequest';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { ValidateNested } from 'class-validator';
 import { SiteNodeDetailInfoModel } from './site-node-detail-info.model';
 import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';

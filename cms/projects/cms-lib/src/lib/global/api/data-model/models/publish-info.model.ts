@@ -1,5 +1,5 @@
 import { PublishInfo } from '../../neuxAPI/bean/PublishInfo';
-import { ModelMapping } from '../model-mapper';
+import { ModelMapping } from '@neux/core';
 
 class PublishInfoTime {
   start_time: string;

@@ -1,6 +1,6 @@
 import { ValidateNested, IsNotEmpty } from 'class-validator';
 import { ListContentDataSourceResponse } from '../../neuxAPI/bean/ListContentDataSourceResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { ContentDataSourceModel } from './content-data-source.model';
 import { ContentDataSourceActionModel } from './content-data-source-action.model';
 

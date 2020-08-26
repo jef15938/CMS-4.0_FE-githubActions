@@ -30,7 +30,7 @@
     "@angular/platform-browser": "^10.0.1",
     "@angular/platform-browser-dynamic": "^10.0.1",
     "@angular/router": "^10.0.1",
-    "@neux/core": "^0.1.13",
+    "@neux/core": "^0.1.14",
     "@neux/render": "0.0.2-next.18",
     "@neux/ui": "0.0.26",
     "@ngrx/effects": "^10.0.0",

@@ -1,6 +1,6 @@
 import { ValidateNested, IsNotEmpty } from 'class-validator';
 import { GalleryConfigResponse } from '../../neuxAPI/bean/GalleryConfigResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { GalleryFileLimitConfigModel } from './gallery-file-limit-config.model';
 
 // @dynamic

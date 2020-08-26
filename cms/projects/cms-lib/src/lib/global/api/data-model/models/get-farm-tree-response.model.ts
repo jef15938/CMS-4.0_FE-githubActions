@@ -1,6 +1,6 @@
 import { ValidateNested, IsNotEmpty } from 'class-validator';
 import { GetFarmTreeResponse } from '../../neuxAPI/bean/GetFarmTreeResponse';
-import { ModelMapping, ModelMapper } from '../model-mapper';
+import { ModelMapping, ModelMapper } from '@neux/core';
 import { FarmTreeInfoModel } from './farm-tree-info.model';
 
 // @dynamic
