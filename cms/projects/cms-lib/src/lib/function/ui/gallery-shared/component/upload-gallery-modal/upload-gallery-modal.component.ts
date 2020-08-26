@@ -139,7 +139,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
       const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
 
-      const fileLimit = this.galleryConfig.fileLimits.find(limit => limit.fileNameExt.toLowerCase() === ext);
+      const fileLimit = this.findFileSizeLimitByExt(ext);
       if (!fileLimit) {
         alert(`沒有關於 ${ext} 檔案類型的設定檔`);
         fileUpload.value = '';
@@ -147,14 +147,14 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       }
 
       if (file.size >= fileLimit.maxFileSize * 1024) {
-        alert(`檔案大小超過限制。${ext} 類型的大小限制為 ${fileLimit.maxFileSize}kb，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
+        alert(`檔案大小超過限制。${ext} 類型的大小限制為 ${fileLimit.maxFileSize} kb，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
         fileUpload.value = '';
         return;
       }
 
       const currentTotalBytes = this.countTotalFileSize(this.files);
       if (currentTotalBytes + file.size > galleryConfig.maxUploadSize * 1024) {
-        alert(`加入檔案後的全部檔案大小超過一次可上傳的大小限制(${galleryConfig.maxUploadSize}kb)。當前的總檔案大小為 ${FileUtil.readableFileSize(currentTotalBytes, 1)}，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
+        alert(`加入檔案後的全部檔案大小超過一次可上傳的大小限制(${galleryConfig.maxUploadSize} kb)。當前的總檔案大小為 ${FileUtil.readableFileSize(currentTotalBytes, 1)}，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
         fileUpload.value = '';
         return;
       }
@@ -268,15 +268,23 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     return files.reduce((a, b) => a + b.fileSize, 0);
   }
 
+  findFileSizeLimitByExt(ext: string) {
+    if (!this.galleryConfig) {
+      return null;
+    }
+    const fileLimit = this.galleryConfig.fileLimits.find(limit => limit.fileNameExt.toLowerCase() === ext);
+    return fileLimit;
+  }
+
   openInfo() {
     if (!this.galleryConfig) { alert('無法取得資訊'); return; }
     const title = '上傳說明';
     const messages: string[] = [];
-    messages.push(`單次上傳檔案數限制 : ${this.galleryConfig.maxUploadNumber}個`);
-    messages.push(`單次上傳檔案總大小限制 : ${this.galleryConfig.maxUploadSize}kb`);
+    messages.push(`單次上傳檔案數限制 : ${this.galleryConfig.maxUploadNumber} 個`);
+    messages.push(`單次上傳檔案總大小限制 : ${this.galleryConfig.maxUploadSize} kb`);
     messages.push(`檔名字元不可包含 : ${this.galleryConfig.limitCharacter}`);
     this.galleryConfig.fileLimits.forEach(fileLimit => {
-      messages.push(`[${fileLimit.fileNameExt}] 類型單檔大小限制 : ${fileLimit.maxFileSize}kb`);
+      messages.push(`[${fileLimit.fileNameExt}] 類型單檔大小限制 : ${fileLimit.maxFileSize} kb`);
     });
     const message = messages.map(msg => `<p>${msg}</p>`).join('');
     this.modalService.openMessage({ title, message }).subscribe();

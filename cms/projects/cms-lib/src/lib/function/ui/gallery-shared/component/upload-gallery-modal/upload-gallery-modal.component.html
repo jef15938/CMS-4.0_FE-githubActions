@@ -10,9 +10,9 @@
   </div>
 
   <div class="page-title-container">
-    上傳數量限制 : {{files.length}} / {{galleryConfig?.maxUploadNumber||'??'}}
+    上傳數量限制 : {{files.length}} / {{isCreate?galleryConfig?.maxUploadNumber||'??':1}}
     <br>
-    上傳大小限制 : {{countTotalFileSize(files)|readableFileSize:1}} / {{galleryConfig?.maxUploadSize||'??'}}kb
+    上傳大小限制 : {{countTotalFileSize(files)|readableFileSize:1}} / {{isCreate?galleryConfig?.maxUploadSize||'??':findFileSizeLimitByExt(galleryType?.toLowerCase())?.maxFileSize||'??'}} kb
   </div>
 
   <ul class="cms-upload-gallery-modal__upload">
