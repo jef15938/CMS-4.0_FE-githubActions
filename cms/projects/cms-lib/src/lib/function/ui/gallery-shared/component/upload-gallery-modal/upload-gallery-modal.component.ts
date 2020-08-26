@@ -8,6 +8,7 @@ import { CustomModalBase, CustomModalActionButton, ModalService } from '../../..
 import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
+import { FileUtil } from '../../../../../global/util/file.util';
 
 @Component({
   selector: 'cms-upload-gallery-modal',
@@ -96,15 +97,70 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     return (this.elementRef.nativeElement as HTMLElement).querySelector(`#${this.fileUploadInputIdentifier}`) as HTMLInputElement;
   }
 
-  addFiles() {
+  addFiles(galleryConfig: GalleryConfigResponseModel) {
+    if (!galleryConfig) {
+      alert('無法取得上傳設定檔，請重整頁面後再試');
+      return;
+    }
+
+    if (!this.isCreate && this.files.length) {
+      alert('修改媒體時只能選取一個檔案替換');
+    }
+
+    const maxUploadNumber = this.isCreate ? galleryConfig.maxUploadNumber : 1;
+    if (this.isCreate && this.files.length >= maxUploadNumber) {
+      alert(`一次最多上傳 ${maxUploadNumber} 個`);
+      return;
+    }
+
     const fileUpload = this.getFileUpload();
     fileUpload.onchange = fileUpload.onchange || (() => {
-      const files = Array.from(fileUpload.files);
-      if (files.length > 5) {
-        alert('一次最多上傳 5 個');
+      const file = Array.from(fileUpload.files)[0];
+
+      if (!file) {
+        fileUpload.value = '';
         return;
       }
-      this.files = Array.from(fileUpload.files).map(file => this.galleryService.mapFileToFileUploadModel(file));
+
+      if (!this.isCreate && this.files.length) {
+        alert('修改媒體時只能選取一個檔案替換');
+        fileUpload.value = '';
+        return;
+      }
+
+      if (galleryConfig.limitCharacter) {
+        const limitCharacters = galleryConfig.limitCharacter.split(',');
+        if (limitCharacters.some(c => file.name.indexOf(c) > -1)) {
+          alert(`檔案名稱不可含有下列字元 : ${galleryConfig.limitCharacter}`);
+          fileUpload.value = '';
+          return;
+        }
+      }
+
+      const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
+
+      const fileLimit = this.galleryConfig.fileLimits.find(limit => limit.fileNameExt.toLowerCase() === ext);
+      if (!fileLimit) {
+        alert(`沒有關於 ${ext} 檔案類型的設定檔`);
+        fileUpload.value = '';
+        return;
+      }
+
+      if (file.size >= fileLimit.maxFileSize * 1024) {
+        alert(`檔案大小超過限制。${ext} 類型的大小限制為 ${fileLimit.maxFileSize}kb，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
+        fileUpload.value = '';
+        return;
+      }
+
+      const currentTotalBytes = this.countTotalFileSize(this.files);
+      if (currentTotalBytes + file.size > galleryConfig.maxUploadSize * 1024) {
+        alert(`加入檔案後的全部檔案大小超過一次可上傳的大小限制(${galleryConfig.maxUploadSize}kb)。當前的總檔案大小為 ${FileUtil.readableFileSize(currentTotalBytes, 1)}，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
+        fileUpload.value = '';
+        return;
+      }
+
+      this.files.push(this.galleryService.mapFileToFileUploadModel(file));
+      fileUpload.value = '';
     });
     fileUpload.click();
   }
@@ -206,6 +262,10 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     }
 
     return new Blob([ia], { type: mimeString });
+  }
+
+  countTotalFileSize(files: FileUploadModel[]) {
+    return files.reduce((a, b) => a + b.fileSize, 0);
   }
 
   openInfo() {

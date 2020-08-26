@@ -2,19 +2,26 @@
 
   <div class="btn-group text-right">
     <button type="button" tabindex="0" mat-raised-button class="btn btn-warning" (click)="openInfo()">上傳說明</button>
-    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" (click)="addFiles()">
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" (click)="addFiles(galleryConfig)">
       <ng-container *ngIf="isCreate">加入檔案</ng-container>
       <ng-container *ngIf="!isCreate">新增檔案</ng-container>
     </button>
     <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="cleanFiles()">清除檔案</button>
   </div>
 
+  <div class="page-title-container">
+    上傳數量限制 : {{files.length}} / {{galleryConfig?.maxUploadNumber||'??'}}
+    <br>
+    上傳大小限制 : {{countTotalFileSize(files)|readableFileSize:1}} / {{galleryConfig?.maxUploadSize||'??'}}kb
+  </div>
+
   <ul class="cms-upload-gallery-modal__upload">
-    <li class="cms-upload-gallery-modal__upload__item" *ngFor="let file of files" [@fadeInOut]="file.state">
+    <li class="cms-upload-gallery-modal__upload__item" *ngFor="let file of files; let i = index;"
+      [@fadeInOut]="file.state">
       <mat-progress-bar class="cms-upload-gallery-modal__upload__progress" [value]="file.progress"></mat-progress-bar>
       <div class="cms-upload-gallery-modal__upload__suffix">
         <div class="cms-upload-gallery-modal__upload__suffix__ele">
-          [{{file.fileType?.indexOf('image')<0 ? '檔案' : '圖片'}}] {{file.data.name}} ({{file.progress}})%
+          {{i}}. [{{file.fileType?.indexOf('image')<0 ? '檔案' : '圖片'}}] {{file.data.name}} ({{file.progress}})%
         </div>
         <div class="cms-upload-gallery-modal__upload__suffix__ele btn-group">
           <button type="button" tabindex="0" mat-button (click)="cropFile(file)"
@@ -30,8 +37,8 @@
       </div>
     </li>
   </ul>
-  <input type="file" [id]="fileUploadInputIdentifier" [name]="fileUploadInputIdentifier" [multiple]="isCreate"
-    [accept]="accept" style="display:none;" maxlength="5" />
+  <input type="file" [id]="fileUploadInputIdentifier" [name]="fileUploadInputIdentifier" [accept]="accept"
+    style="display:none;" />
   <br>
   <div class="cms-upload-gallery-modal__btn-group btn-group">
     <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="create()" *ngIf="isCreate"
