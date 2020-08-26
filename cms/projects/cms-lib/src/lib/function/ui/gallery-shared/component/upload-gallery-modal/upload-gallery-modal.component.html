@@ -1,7 +1,7 @@
 <div class="cms-upload-gallery-modal">
 
   <div class="btn-group text-right">
-    <button type="button" tabindex="0" mat-raised-button class="btn btn-warning" (click)="openInfo()">上傳說明</button>
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-warning" style="float:left;" (click)="openInfo()">上傳說明</button>
     <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" (click)="addFiles(galleryConfig)">
       <ng-container *ngIf="isCreate">加入檔案</ng-container>
       <ng-container *ngIf="!isCreate">新增檔案</ng-container>

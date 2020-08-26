@@ -5,7 +5,7 @@
   <div class="btn-group text-right">
     <button type="button" tabindex="-1" mat-raised-button class="btn btn-edit" #menuTrigger="matMenuTrigger"
       [matMenuTriggerFor]="actionMenu">
-      資料維護
+      操作
     </button>
   </div>
   <mat-form-field appearance="outline">
@@ -18,6 +18,6 @@
   </mat-form-field>
   <mat-menu #actionMenu="matMenu">
     <button type="button" tabindex="-1" mat-menu-item *ngFor="let action of actions"
-      (click)="openFarm(action.actionType)">{{action.actionName}}</button>
+      (click)="doAction(action)">{{action.actionName}}</button>
   </mat-menu>
 </div>

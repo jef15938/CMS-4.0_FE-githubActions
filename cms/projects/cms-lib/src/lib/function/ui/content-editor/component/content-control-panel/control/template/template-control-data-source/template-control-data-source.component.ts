@@ -3,7 +3,8 @@ import { ContentControlBase } from '../../_base';
 import { DataSourceTemplateInfo, LayoutWrapperSelectEvent, DataSourceTemplateBaseComponent } from '@neux/render';
 import { ContentService } from '../../../../../../../../global/api/service/content/content.service';
 import { ContentDataSourceModel } from '../../../../../../../../global/api/data-model/models/content-data-source.model';
-import { ContentDataSourceActionModel } from '../../../../../../../../global/api/data-model/models/content-data-source-action.model';
+import { ContentDataSourceActionModel, ContentDataSourceActionType } from '../../../../../../../../global/api/data-model/models/content-data-source-action.model';
+import { FarmSharedService } from '../../../../../../farm-shared/farm-shared.service';
 
 @Component({
   selector: 'cms-template-control-data-source',
@@ -20,6 +21,7 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
 
   constructor(
     private contentService: ContentService,
+    private farmSharedService: FarmSharedService,
   ) {
     super();
   }
@@ -39,8 +41,12 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
     }
   }
 
-  openFarm(funcId: string) {
-
+  doAction(action: ContentDataSourceActionModel) {
+    switch (action.actionType) {
+      case ContentDataSourceActionType.FARM:
+        this.farmSharedService.openFarm(action.funcId);
+        break;
+    }
   }
 
 }
