@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper';
-import { ContentTemplateInfo, SitemapNode } from '../../interface';
 import { LayoutInfo } from '../../interface/layout-info.interface';
+import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 
 @Component({
   selector: 'lib-layout',
@@ -22,7 +22,7 @@ export class LayoutComponent extends CommonTemplateBaseComponent implements OnIn
 
   }
 
-  get siteMap(): SitemapNode {
+  get siteMap(): SiteMapGetResponseModel {
     return this.templateInfo?.attributes?.sitemap;
   }
 

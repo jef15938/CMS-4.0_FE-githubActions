@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { SitemapNode } from '../../interface';
+import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 
 export const fetchSitemap = createAction(
   '[Render] Fetch Sitemap',
@@ -8,7 +8,7 @@ export const fetchSitemap = createAction(
 
 export const fetchSitemapSuccess = createAction(
   '[Render] Fetch Sitemap Success',
-  props<{ lang: string, root: string, sitemap: SitemapNode }>()
+  props<{ lang: string, root: string, sitemap: SiteMapGetResponseModel }>()
 );
 
 export const fetchSitemapFailure = createAction(

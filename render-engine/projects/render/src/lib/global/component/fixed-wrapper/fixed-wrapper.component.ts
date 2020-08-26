@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
-import { ContentTemplateInfo } from '../../interface/content-template-info.interface';
+import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 
 @Component({
   selector: 'rdr-fixed-wrapper',
@@ -9,7 +9,7 @@ import { ContentTemplateInfo } from '../../interface/content-template-info.inter
 })
 export class FixedWrapperComponent extends CommonTemplateBaseComponent implements OnInit {
 
-  defaultTemplateInfo: ContentTemplateInfo = {
+  defaultTemplateInfo: ContentTemplateInfoModel = {
     id: '',
     templateId: 'FixedWrapper',
     fields: [],

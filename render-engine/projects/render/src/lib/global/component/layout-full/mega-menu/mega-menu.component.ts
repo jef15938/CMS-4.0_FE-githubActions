@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { SitemapNode } from '../../../interface';
+import { SiteMapGetResponseModel } from '../../../api/data-model/models/site-map-get-response.model';
 
 @Component({
   selector: 'rdr-mega-menu',
@@ -8,7 +8,7 @@ import { SitemapNode } from '../../../interface';
 })
 export class MegaMenuComponent implements OnInit, OnChanges {
 
-  @Input() menu: SitemapNode;
+  @Input() menu: SiteMapGetResponseModel;
   @Input() level = 1;
   @Input() maxLavel: number;
 

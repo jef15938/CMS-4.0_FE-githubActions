@@ -21,9 +21,10 @@ export class DataSourceService {
    * @returns
    * @memberof DataSourceService
    */
-  getDataSourceByTypeIDAndId(typeID: string, id: string): Observable<any> {
-    return this.restAPIService.dispatchRestApi<ListDataSourceDataResponse>('GetDataSourceByTypeIDAndId', { typeID, id })
-      .pipe(map(res => res.datas));
+  getDataSourceByTypeIDAndId(typeID: string, id: string): Observable<any[]> {
+    return this.restAPIService.dispatchRestApi<ListDataSourceDataResponse>('GetDataSourceByTypeIDAndId', { typeID, id }).pipe(
+      map(res => res.datas)
+    );
   }
 
 }

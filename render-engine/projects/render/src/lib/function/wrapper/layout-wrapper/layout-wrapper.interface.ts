@@ -1,6 +1,6 @@
 import { ComponentRef } from '@angular/core';
-import { ContentTemplateInfo } from '../../../global/interface/content-template-info.interface';
-import { FieldInfo } from '../../../global/interface/field-info.interface';
+import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
+import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
 
 export enum TemplateType {
   COMMON = 'Common',
@@ -11,7 +11,7 @@ export enum TemplateType {
 }
 
 export interface LayoutWrapper {
-  parentTemplatesContainer: { templates: ContentTemplateInfo[]; };
+  parentTemplatesContainer: { templates: ContentTemplateInfoModel[]; };
 }
 
 export enum LayoutWrapperSelectedTargetType {
@@ -22,7 +22,7 @@ export enum LayoutWrapperSelectedTargetType {
 export interface TemplateFieldSelectEvent {
   selectedTarget: HTMLElement;
   selectedTargetType: LayoutWrapperSelectedTargetType;
-  fieldInfo: FieldInfo;
+  fieldInfo: ContentFieldInfoModel;
   fieldDirective: any;
 }
 
@@ -32,7 +32,7 @@ export interface LayoutWrapperSelectEvent {
   wrapper: LayoutWrapper;
   componentRef: ComponentRef<any>;
   templateType: TemplateType;
-  templateInfo: ContentTemplateInfo;
-  fieldInfo?: FieldInfo;
+  templateInfo: ContentTemplateInfoModel;
+  fieldInfo?: ContentFieldInfoModel;
   fieldDirective?: any;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { TabTemplateBaseComponent } from '../../../../function/wrapper/layout-base/tab-template-base.component';
 import { TabTemplateInfo } from '../../../interface/tab-template-info.interface';
-import { FieldType } from '../../../interface/field-info.interface';
+import { ContentFieldInfoFieldType } from '../../../api/data-model/models/content-field-info.model';
 
 @Component({
   selector: 'rdr-tab-demo',
@@ -17,7 +17,7 @@ export class TabDemoComponent extends TabTemplateBaseComponent implements OnInit
     attributes: {},
     tabList: [{
       fieldId: 'f1',
-      fieldType: FieldType.GROUP,
+      fieldType: ContentFieldInfoFieldType.GROUP,
       fieldVal: '',
       extension: {},
       tabId: 't1',
@@ -30,7 +30,7 @@ export class TabDemoComponent extends TabTemplateBaseComponent implements OnInit
     },
     {
       fieldId: 'f2',
-      fieldType: FieldType.GROUP,
+      fieldType: ContentFieldInfoFieldType.GROUP,
       fieldVal: '',
       extension: {},
       tabId: 't2',

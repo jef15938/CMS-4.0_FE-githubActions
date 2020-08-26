@@ -1,9 +1,9 @@
-import { ContentTemplateInfo } from './content-template-info.interface';
-import { SitemapNode } from './sitemap-node.interface';
+import { ContentTemplateInfoModel } from '../api/data-model/models/content-template-info.model';
+import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
 
-export interface LayoutInfo extends ContentTemplateInfo {
-  children: ContentTemplateInfo[];
+export interface LayoutInfo extends ContentTemplateInfoModel {
+  children: ContentTemplateInfoModel[];
   attributes: {
-    sitemap: SitemapNode
+    sitemap: SiteMapGetResponseModel
   };
 }

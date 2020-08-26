@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContentInfo, ContentTemplateInfo } from '../../interface';
 import { PageData } from '../../types';
 import { LayoutInfo } from '../../interface/layout-info.interface';
+import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
+import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 
 @Component({
   selector: 'rdr-render',
@@ -25,7 +26,7 @@ export class RenderComponent implements OnInit {
     // 把最外層Layout也放入TemplateList中，sitemap當作Data
     this.templates = [{
       id: '',
-      templateId: pageInfo.layoutID,
+      templateId: pageInfo.layoutId,
       fields: [],
       children: templateList,
       attributes: {
@@ -43,13 +44,15 @@ export class RenderComponent implements OnInit {
    * @returns {ContentTemplateInfo[]}
    * @memberof RenderComponent
    */
-  private getTemplateInfoByLanguageId(contentInfo: ContentInfo, languageID: string): ContentTemplateInfo[] {
+  private getTemplateInfoByLanguageId(contentInfo: ContentInfoModel, languageID: string): ContentTemplateInfoModel[] {
     // 異常資料處理
     if (!contentInfo || !languageID) { return []; }
     const languageInfoList = contentInfo.languages;
     if (!languageInfoList?.length) { return []; }
 
-    const templatesByLanguage: ContentTemplateInfo[] = languageInfoList.find(lang => lang.languageID === languageID)?.templates;
+    const templatesByLanguage: ContentTemplateInfoModel[] =
+      languageInfoList.find(lang => lang.languageId === languageID)?.blocks
+        .map(b => b.templates).reduce((a, b) => a.concat(b || []), [] as ContentTemplateInfoModel[]);
     // 回傳對應 languageID 的資料 || []
     return templatesByLanguage || [];
   }

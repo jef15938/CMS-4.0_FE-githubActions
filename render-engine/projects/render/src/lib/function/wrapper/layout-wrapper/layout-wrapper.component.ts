@@ -3,7 +3,6 @@ import {
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
   HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID
 } from '@angular/core';
-import { ContentTemplateInfo } from '../../../global/interface';
 import { LayoutBase } from '../layout-base/layout-base.interface';
 import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
@@ -12,6 +11,7 @@ import { LayoutWrapperBase } from './layout-wrapper-base';
 import { DynamicWrapperComponent } from '@neux/core';
 import { DynamicComponentFactoryService } from '../../../global/service/dynamic-component-factory.service';
 import { isPlatformServer } from '@angular/common';
+import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 
 @Component({
   selector: 'rdr-layout-wrapper',
@@ -21,12 +21,12 @@ import { isPlatformServer } from '@angular/common';
 export class LayoutWrapperComponent extends LayoutWrapperBase implements
   LayoutWrapper, OnInit, AfterViewInit, OnChanges {
 
-  @Input() templateInfo: ContentTemplateInfo;
+  @Input() templateInfo: ContentTemplateInfoModel;
   @Input() mode: 'preview' | 'edit' = 'edit';
 
-  @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfo>>;
+  @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfoModel>>;
 
-  parentTemplatesContainer: { templates: ContentTemplateInfo[]; };
+  parentTemplatesContainer: { templates: ContentTemplateInfoModel[]; };
 
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
 
@@ -72,7 +72,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     this.setMode();
   }
 
-  setInstanceProperties = (componentRef: ComponentRef<LayoutBase<ContentTemplateInfo>>): void => {
+  setInstanceProperties = (componentRef: ComponentRef<LayoutBase<ContentTemplateInfoModel>>): void => {
     const instance = componentRef?.instance;
     if (instance) {
       instance.templateInfo = this.templateInfo;
@@ -87,7 +87,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
       this.registerInstanceEvents(this.componentRef?.instance).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
-  private registerInstanceEvents(instance: LayoutBase<ContentTemplateInfo>) {
+  private registerInstanceEvents(instance: LayoutBase<ContentTemplateInfoModel>) {
     const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
     const templateFieldDirectives = (instance?.templateFieldDirectives || []);
     return merge(

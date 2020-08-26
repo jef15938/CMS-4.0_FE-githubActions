@@ -1,6 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
-import { ContentTemplateInfo, FieldType } from '../../interface';
+import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
+import { ContentFieldInfoFieldType } from '../../api/data-model/models/content-field-info.model';
 
 @Component({
   selector: 'rdr-html',
@@ -9,12 +10,12 @@ import { ContentTemplateInfo, FieldType } from '../../interface';
 })
 export class HtmlComponent extends CommonTemplateBaseComponent implements OnInit {
 
-  defaultTemplateInfo: ContentTemplateInfo = {
+  defaultTemplateInfo: ContentTemplateInfoModel = {
     id: '',
     templateId: 'HTML',
     fields: [{
       fieldId: 'html',
-      fieldType: FieldType.HTMLEDITOR,
+      fieldType: ContentFieldInfoFieldType.HTMLEDITOR,
       fieldVal: '',
       extension: {},
     }],

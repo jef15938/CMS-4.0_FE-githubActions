@@ -1,12 +1,12 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { SitemapNode } from '../../interface';
 import * as RenderActions from '../actions/render.actions';
 import { RequestStatus } from '../../enum';
+import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 
 export const renderFeatureKey = 'RenderState';
 
 export interface RenderState {
-  sitemapCache: { root: string, lang: string, sitemap: SitemapNode }[];
+  sitemapCache: { root: string, lang: string, sitemap: SiteMapGetResponseModel }[];
   sitemapRequestPending: boolean;
   sitemapRequestResultStatus: RequestStatus;
 

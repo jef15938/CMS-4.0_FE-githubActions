@@ -1,12 +1,12 @@
 import { HostListener, Output, EventEmitter, Injector, Directive } from '@angular/core';
-import { FieldInfo } from '../../../../global/interface/field-info.interface';
 import { TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from '../layout-wrapper.interface';
 import { LayoutWrapperBase } from '../layout-wrapper-base';
+import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
 
 @Directive()
 export abstract class TemplateFieldDirective extends LayoutWrapperBase {
 
-  abstract fieldInfo: FieldInfo;
+  abstract fieldInfo: ContentFieldInfoModel;
   // tslint:disable-next-line: no-output-native
   @Output() select = new EventEmitter<TemplateFieldSelectEvent>();
 

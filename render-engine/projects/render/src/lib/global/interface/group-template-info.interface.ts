@@ -1,6 +1,6 @@
-import { ContentTemplateInfo } from './content-template-info.interface';
-import { FieldInfo } from './field-info.interface';
+import { ContentTemplateInfoModel } from '../api/data-model/models/content-template-info.model';
+import { ContentFieldInfoModel } from '../api/data-model/models/content-field-info.model';
 
-export interface GroupTemplateInfo extends ContentTemplateInfo {
-  itemList: FieldInfo[][];
+export interface GroupTemplateInfo extends ContentTemplateInfoModel {
+  itemList: ContentFieldInfoModel[][];
 }

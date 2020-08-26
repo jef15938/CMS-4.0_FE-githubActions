@@ -1,8 +1,8 @@
 import { Directive, Input, Injector } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
-import { FieldInfo } from '../../../../global/interface/field-info.interface';
+import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
 
-export interface LinkFieldInfo extends FieldInfo {
+export interface LinkFieldInfo extends ContentFieldInfoModel {
   extension: {
     isTargetBlank: 'true' | 'false';
   };

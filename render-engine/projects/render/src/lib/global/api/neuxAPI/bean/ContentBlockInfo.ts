@@ -4,18 +4,15 @@ import {IsNotEmpty} from 'class-validator';
 import {ContentTemplateInfo} from './ContentTemplateInfo';
 
 import { TypeFactory } from '../type-factory';
-import { ContentBlockInfo } from './ContentBlockInfo';
 
-export class LanguageInfo {
+export class ContentBlockInfo {
 
 @IsNotEmpty()
-public language_id: string;
-@IsNotEmpty()
-public language_name: string;
-@Type(TypeFactory(ContentBlockInfo))
+public block_id: string;
+@Type(TypeFactory(ContentTemplateInfo))
 @ValidateNested()
 @IsNotEmpty()
-public blocks: Array<ContentBlockInfo>;
+public templates: Array<ContentTemplateInfo>;
 
 
 }

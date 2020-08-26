@@ -1,8 +1,8 @@
 import { Directive, Input, Injector } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
-import { FieldInfo } from '../../../../global/interface/field-info.interface';
+import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
 
-export interface ImgFieldInfo extends FieldInfo {
+export interface ImgFieldInfo extends ContentFieldInfoModel {
   extension: {
     altValue: string;
   };

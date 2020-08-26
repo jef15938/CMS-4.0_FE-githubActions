@@ -1,11 +1,9 @@
 import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector, OnDestroy, OnChanges, SimpleChanges, Directive } from '@angular/core';
-import { ContentTemplateInfo } from '../../../global/interface/content-template-info.interface';
 import { LayoutBase } from './layout-base.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
 import { TemplateFieldDirective } from '../layout-wrapper/field-directive/template-field.directive';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
-import { FieldType, FieldInfo } from '../../../global/interface/field-info.interface';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, merge } from 'rxjs';
 import { LayoutFieldTextDirective } from '../layout-wrapper/field-directive/layout-field-text.directive';
@@ -14,15 +12,18 @@ import { LayoutFieldLinkDirective } from '../layout-wrapper/field-directive/layo
 import { LayoutFieldBgimgDirective } from '../layout-wrapper/field-directive/layout-field-bgimg.directive';
 import { LayoutFieldImgDirective } from '../layout-wrapper/field-directive/layout-field-img.directive';
 import { LayoutFieldHtmlEditorDirective } from '../layout-wrapper/field-directive/layout-field-html-editor.directive';
+import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
+import { ContentFieldInfo } from '../../../global/api/neuxAPI/bean/ContentFieldInfo';
+import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
 
 @Directive()
-export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfo>
+export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel>
   implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   abstract templateType: TemplateType;
   abstract defaultTemplateInfo: TInfo;
 
-  readonly FieldType = FieldType;
+  readonly FieldType = ContentFieldInfoFieldType;
   readonly TemplateType = TemplateType;
 
   parentLayoutWrapper: LayoutWrapperComponent;
@@ -90,7 +91,7 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfo>
    * fieldId
    * [fields] 不給的話從 this.templateInfo.fields 找
    */
-  getFieldByFieldId(fieldId: string, fields?: FieldInfo[]): FieldInfo {
+  getFieldByFieldId(fieldId: string, fields?: ContentFieldInfo[]): ContentFieldInfo {
     fields = fields || this.templateInfo?.fields || [];
     return fields.find(f => f.fieldId === fieldId);
   }

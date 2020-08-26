@@ -10,7 +10,7 @@ import {
   QueryList
 } from '@angular/core';
 import { animate, style, transition, trigger, state } from '@angular/animations';
-import { SitemapNode } from '../../../interface';
+import { SiteMapGetResponseModel } from '../../../api/data-model/models/site-map-get-response.model';
 
 @Component({
   selector: 'rdr-mobile-mega-menu',
@@ -25,7 +25,7 @@ import { SitemapNode } from '../../../interface';
   ]
 })
 export class MobileMegaMenuComponent implements OnInit, OnChanges, AfterViewInit {
-  @Input() menu: SitemapNode;
+  @Input() menu: SiteMapGetResponseModel;
   @Input() level = 1;
   @Input() maxLavel: number;
   @ViewChild('title') content: ElementRef;
