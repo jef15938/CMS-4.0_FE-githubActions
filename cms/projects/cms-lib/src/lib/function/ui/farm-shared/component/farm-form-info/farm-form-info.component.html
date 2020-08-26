@@ -138,9 +138,10 @@
                   <input matInput [formControlName]="col.columnId" hidden
                     [required]="formColumnSettingMap.get(col.columnId).required">
                   <ng-container *ngIf="treeMap.get(col.columnId); let tree">
-                    <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="tree.data" [checkbox]="true"
-                      [checkMode]="tree.checkType" [nodeDisplayField]="'name'" [defaultExpandLevel]="-1"
-                      [checkedNodes]="treeNodeSelectedMap.get(col.columnId)"
+                    <cms-tree #sitemapTree class="cms-tree"
+                      [class.has-error]="useValidation && formGroup.controls[col.columnId]?.errors" [context]="this"
+                      [nodeDatas]="tree.data" [checkbox]="true" [checkMode]="tree.checkType" [nodeDisplayField]="'name'"
+                      [defaultExpandLevel]="-1" [checkedNodes]="treeNodeSelectedMap.get(col.columnId)"
                       (nodesCheckedChange)="onNodesCheckedChange($event, col.columnId)"></cms-tree>
                   </ng-container>
                   <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
