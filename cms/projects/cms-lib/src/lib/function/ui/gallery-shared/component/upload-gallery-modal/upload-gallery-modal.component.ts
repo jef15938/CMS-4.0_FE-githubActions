@@ -103,64 +103,97 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       return;
     }
 
-    if (!this.isCreate && this.files.length) {
-      alert('修改媒體時只能選取一個檔案替換');
-    }
-
     const maxUploadNumber = this.isCreate ? galleryConfig.maxUploadNumber : 1;
-    if (this.isCreate && this.files.length >= maxUploadNumber) {
-      alert(`一次最多上傳 ${maxUploadNumber} 個`);
+    if (this.files.length > maxUploadNumber) {
+      alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
       return;
     }
 
     const fileUpload = this.getFileUpload();
     fileUpload.onchange = fileUpload.onchange || (() => {
-      const file = Array.from(fileUpload.files)[0];
-
-      if (!file) {
-        fileUpload.value = '';
-        return;
-      }
-
-      if (!this.isCreate && this.files.length) {
-        alert('修改媒體時只能選取一個檔案替換');
-        fileUpload.value = '';
-        return;
-      }
-
-      if (galleryConfig.limitCharacter) {
-        const limitCharacters = galleryConfig.limitCharacter.split(',');
-        if (limitCharacters.some(c => file.name.indexOf(c) > -1)) {
-          alert(`檔案名稱不可含有下列字元 : ${galleryConfig.limitCharacter}`);
-          fileUpload.value = '';
-          return;
-        }
-      }
-
-      const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
-
-      const fileLimit = this.findFileSizeLimitByExt(ext);
-      if (!fileLimit) {
-        alert(`沒有關於 ${ext} 檔案類型的設定檔`);
-        fileUpload.value = '';
-        return;
-      }
-
-      if (file.size >= fileLimit.maxFileSize * 1024) {
-        alert(`檔案大小超過限制。${ext} 類型的大小限制為 ${fileLimit.maxFileSize} kb，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
-        fileUpload.value = '';
-        return;
-      }
-
-      const currentTotalBytes = this.countTotalFileSize(this.files);
-      if (currentTotalBytes + file.size > galleryConfig.maxUploadSize * 1024) {
-        alert(`加入檔案後的全部檔案大小超過一次可上傳的大小限制(${galleryConfig.maxUploadSize} kb)。當前的總檔案大小為 ${FileUtil.readableFileSize(currentTotalBytes, 1)}，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
-        fileUpload.value = '';
-        return;
-      }
-
-      this.files.push(this.galleryService.mapFileToFileUploadModel(file));
+      const files = Array.from(fileUpload.files);
       fileUpload.value = '';
+
+      if (!files.length) {
+        return;
+      }
+
+      const checkResults: {
+        fileName: string;
+        error: string;
+      }[] = files.map(file => {
+        const checkResult = {
+          fileName: file.name,
+          error: '',
+        };
+
+        if (galleryConfig.limitCharacter) {
+          const limitCharacters = galleryConfig.limitCharacter.split(',');
+          if (limitCharacters.some(c => file.name.indexOf(c) > -1)) {
+            checkResult.error = `檔案名稱不可含有下列字元 : ${galleryConfig.limitCharacter}`;
+            return checkResult;
+          }
+        }
+
+        const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
+
+        const fileLimit = this.findFileSizeLimitByExt(ext);
+        if (!fileLimit) {
+          checkResult.error = `沒有關於 ${ext} 檔案類型的設定檔`;
+          return checkResult;
+        }
+
+        if (file.size >= fileLimit.maxFileSize * 1024) {
+          checkResult.error = `檔案大小超過 ${ext} 類型的限制 ${fileLimit.maxFileSize} kb。`;
+          return checkResult;
+        }
+
+        return checkResult;
+      });
+
+      // if (galleryConfig.limitCharacter) {
+      //   const limitCharacters = galleryConfig.limitCharacter.split(',');
+      //   if (limitCharacters.some(c => file.name.indexOf(c) > -1)) {
+      //     alert(`檔案名稱不可含有下列字元 : ${galleryConfig.limitCharacter}`);
+      //     return;
+      //   }
+      // }
+
+      // const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
+
+      // const fileLimit = this.findFileSizeLimitByExt(ext);
+      // if (!fileLimit) {
+      //   alert(`沒有關於 ${ext} 檔案類型的設定檔`);
+      //   return;
+      // }
+
+      // if (file.size >= fileLimit.maxFileSize * 1024) {
+      //   alert(`檔案大小超過限制。${ext} 類型的大小限制為 ${fileLimit.maxFileSize} kb，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
+      //   return;
+      // }
+
+      // const currentTotalBytes = this.countTotalFileSize(this.files);
+      // if (currentTotalBytes + file.size > galleryConfig.maxUploadSize * 1024) {
+      //   alert(`加入檔案後的全部檔案大小超過一次可上傳的大小限制(${galleryConfig.maxUploadSize} kb)。當前的總檔案大小為 ${FileUtil.readableFileSize(currentTotalBytes, 1)}，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
+      //   return;
+      // }
+
+      // this.files.push(this.galleryService.mapFileToFileUploadModel(file));
+
+      const invalidResults = checkResults.filter(r => r.error);
+      if (invalidResults.length) {
+        const title = '上傳的檔案不符限制';
+        const messages = invalidResults.map(r => {
+          return `<p><span class="text-error">${r.fileName}</span><br><span>${r.error}</span></p>`;
+        });
+        const message = `<p>以下檔案不符檔案限制，本次選擇的所有檔案不加入上傳清單</p>${messages.join('')}`;
+        this.modalService.openMessage({ title, message }).subscribe();
+        return;
+      }
+
+      files.forEach(f => {
+        this.files.push(this.galleryService.mapFileToFileUploadModel(f));
+      });
     });
     fileUpload.click();
   }
@@ -210,6 +243,18 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   create() {
+    const maxUploadNumber = this.isCreate ? this.galleryConfig.maxUploadNumber : 1;
+    if (this.files.length > maxUploadNumber) {
+      alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
+      return;
+    }
+
+    const currentTotalBytes = this.countTotalFileSize(this.files);
+    if (currentTotalBytes > this.galleryConfig.maxUploadSize * 1024) {
+      alert(`檔案總大小超過可上傳的大小限制(${this.galleryConfig.maxUploadSize} kb)。`);
+      return;
+    }
+
     const fileUpload = this.getFileUpload();
     fileUpload.value = '';
 
@@ -223,6 +268,18 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   update() {
+    const maxUploadNumber = this.isCreate ? this.galleryConfig.maxUploadNumber : 1;
+    if (this.files.length > maxUploadNumber) {
+      alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
+      return;
+    }
+
+    const currentTotalBytes = this.countTotalFileSize(this.files);
+    if (currentTotalBytes > this.galleryConfig.maxUploadSize * 1024) {
+      alert(`檔案總大小超過可上傳的大小限制(${this.galleryConfig.maxUploadSize} kb)。`);
+      return;
+    }
+
     const fileUpload = this.getFileUpload();
     fileUpload.value = '';
 
