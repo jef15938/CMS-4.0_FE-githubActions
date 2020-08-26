@@ -176,7 +176,8 @@
       <div class="modal-form-layout__col">
         <mat-form-field appearance="outline">
           <mat-label>可選擇群組</mat-label>
-          <mat-select [(ngModel)]="assignGroupIds" name="assignGroupIds" required multiple>
+          <mat-select #select [(ngModel)]="assignGroupIds" name="assignGroupIds" required [multiple]="true"
+            [cmsMatSelectMultipleCloseBtn]="select">
             <mat-option *ngFor="let group of groups" [value]="group.groupId">
               {{group.groupName}}
             </mat-option>

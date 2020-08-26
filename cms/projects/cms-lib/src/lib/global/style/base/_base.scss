@@ -85,10 +85,6 @@
     line-height: normal;
   }
 
-  .mat-select-panel-wrap {
-    overflow: hidden;
-  }
-
   .highlight1 {
     color: $color-red
   }
@@ -135,7 +131,11 @@ button.mat-mini-fab {
   overflow: hidden !important;
 }
 
-div.mat-select-panel-wrap, div.mat-select-panel {
+div.mat-select-panel-wrap {
+  overflow: hidden;
+}
+
+div.mat-select-panel {
   overflow-y: auto;
   max-height: 210px;
   min-width: 100% !important;

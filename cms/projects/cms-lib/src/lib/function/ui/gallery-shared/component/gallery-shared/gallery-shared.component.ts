@@ -15,6 +15,7 @@ import { GalleryInfoModel } from '../../../../../global/api/data-model/models/ga
 import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/models/gallery-category-info.model';
 import { PageInfoModel } from '../../../../../global/api/data-model/models/page-info.model';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'cms-gallery-shared',
