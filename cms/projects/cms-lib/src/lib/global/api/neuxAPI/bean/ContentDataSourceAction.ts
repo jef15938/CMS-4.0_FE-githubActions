@@ -10,6 +10,7 @@ export class ContentDataSourceAction {
 public action_type: string;
 @IsNotEmpty()
 public action_name: string;
-
+@IsNotEmpty()
+public func_id: string;
 
 }

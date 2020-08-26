@@ -12,7 +12,7 @@ export enum ContentDataSourceActionType {
   (bean, model) => {
     model.actionType = bean.action_type;
     model.actionName = bean.action_name;
-    model.funcId = 'slider';
+    model.funcId = bean.func_id;
   }
 )
 export class ContentDataSourceActionModel {
