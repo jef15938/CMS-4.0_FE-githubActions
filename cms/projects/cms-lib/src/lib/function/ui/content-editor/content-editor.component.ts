@@ -29,6 +29,10 @@ const isTabTemplateInfo = (templateInfo: ContentTemplateInfoModel): boolean => {
   return !!(templateInfo as any).tabList;
 };
 
+const isFixedWrapper = (templateInfo: ContentTemplateInfoModel): boolean => {
+  return templateInfo.templateId === 'FixedWrapper';
+};
+
 @Component({
   selector: 'cms-content-editor',
   templateUrl: './content-editor.component.html',
@@ -132,6 +136,10 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
           if (isTabTemplateInfo(template)) {
             tempTemplates = tempTemplates.concat(((template as any) as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
           }
+          if (isFixedWrapper(template)) {
+            tempTemplates = tempTemplates.concat(((template.attributes?.templates as ContentTemplateInfoModel[]) || [])
+              .reduce((a, b) => a.concat(b), []));
+          }
         });
         templates = tempTemplates;
       }
@@ -166,6 +174,10 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
           });
           if (isTabTemplateInfo(template)) {
             tempTemplates = tempTemplates.concat(((template as any) as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
+          }
+          if (isFixedWrapper(template)) {
+            tempTemplates = tempTemplates.concat(((template.attributes?.templates as ContentTemplateInfoModel[]) || [])
+              .reduce((a, b) => a.concat(b), []));
           }
         });
         templates = tempTemplates;
@@ -237,6 +249,13 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
             ...children,
             ...((template as any) as TabTemplateInfo).tabList
               .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, ...(b.children as any[])], [])
+          ];
+        }
+        if (isFixedWrapper(template)) {
+          children = [
+            ...children,
+            ...((template.attributes?.templates as ContentTemplateInfoModel[]) || [])
+              .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, b], [])
           ];
         }
       });
