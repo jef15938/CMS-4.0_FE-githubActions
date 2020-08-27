@@ -11,6 +11,7 @@ import { GalleryActionCellComponent } from './component/gallery-action-cell/gall
 import { GalleryInfoCellComponent } from './component/gallery-info-cell/gallery-info-cell.component';
 import { GelleryImgSrcPipe } from './pipe/gallery-img-src.pipe';
 import { GallerySharedContainerModalComponent } from './component/gallery-shared-container-modal/gallery-shared-container-modal.component';
+import { GellerySizePipe } from './pipe/gallery-size.pipe';
 
 const COMPONENTS_PIPES = [
   GallerySharedComponent,
@@ -21,6 +22,7 @@ const COMPONENTS_PIPES = [
   GalleryActionCellComponent,
   GalleryInfoCellComponent,
   GelleryImgSrcPipe,
+  GellerySizePipe,
 ];
 
 @NgModule({
