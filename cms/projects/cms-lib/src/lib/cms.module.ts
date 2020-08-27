@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, ErrorHandler } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './function/shared/shared.module';
 import { CmsRoutingModule } from './cms-routing.module';
@@ -14,6 +14,7 @@ import { FARM_TABLE_ACTION_TOKEN } from './function/ui/farm-shared/farm-shared-i
 import { AdminGroupTableAction } from './function/admin-group/admin-group-table-action';
 import { AdminGroupModule } from './function/admin-group/admin-group.module';
 import { NgxMatDateAdapter, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
+import { CmsErrorHandler } from './global/error-handling';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -46,6 +47,7 @@ export class CmsModule {
     return {
       ngModule: CmsModule,
       providers: [
+        { provide: ErrorHandler, useClass: CmsErrorHandler },
         CmsAuthGuard,
         CmsCanDeactiveGuard,
         DialogFlowMessengerService,

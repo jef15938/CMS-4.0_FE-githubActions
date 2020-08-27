@@ -8,7 +8,7 @@ import { CustomModalBase, CustomModalActionButton, ModalService } from '../../..
 import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
-import { FileUtil } from '../../../../../global/util/file.util';
+import { CmsMediaError, CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-upload-gallery-modal',
@@ -98,75 +98,79 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   addFiles(galleryConfig: GalleryConfigResponseModel) {
-    if (!galleryConfig) {
-      alert('無法取得上傳設定檔，請重整頁面後再試');
-      return;
-    }
-
-    const maxUploadNumber = this.isCreate ? galleryConfig.maxUploadNumber : 1;
-    if (this.files.length > maxUploadNumber) {
-      alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
-      return;
-    }
-
-    const fileUpload = this.getFileUpload();
-    fileUpload.onchange = fileUpload.onchange || (() => {
-      const files = Array.from(fileUpload.files);
-      fileUpload.value = '';
-
-      if (!files.length) {
+    try {
+      if (!galleryConfig) {
+        alert('無法取得上傳設定檔，請重整頁面後再試');
         return;
       }
 
-      const checkResults: {
-        fileName: string;
-        error: string;
-      }[] = files.map(file => {
-        const checkResult = {
-          fileName: file.name,
-          error: '',
-        };
+      const maxUploadNumber = this.isCreate ? galleryConfig.maxUploadNumber : 1;
+      if (this.files.length > maxUploadNumber) {
+        alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
+        return;
+      }
 
-        if (galleryConfig.limitCharacter) {
-          const limitCharacters = galleryConfig.limitCharacter.split(',');
-          if (limitCharacters.some(c => file.name.indexOf(c) > -1)) {
-            checkResult.error = `檔案名稱不可含有下列字元 : ${galleryConfig.limitCharacter}`;
+      const fileUpload = this.getFileUpload();
+      fileUpload.onchange = fileUpload.onchange || (() => {
+        const files = Array.from(fileUpload.files);
+        fileUpload.value = '';
+
+        if (!files.length) {
+          return;
+        }
+
+        const checkResults: {
+          fileName: string;
+          error: string;
+        }[] = files.map(file => {
+          const checkResult = {
+            fileName: file.name,
+            error: '',
+          };
+
+          if (galleryConfig.limitCharacter) {
+            const limitCharacters = galleryConfig.limitCharacter.split(',');
+            if (limitCharacters.some(c => file.name.indexOf(c) > -1)) {
+              checkResult.error = `檔案名稱不可含有下列字元 : ${galleryConfig.limitCharacter}`;
+              return checkResult;
+            }
+          }
+
+          const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
+
+          const fileLimit = this.findFileSizeLimitByExt(ext);
+          if (!fileLimit) {
+            checkResult.error = `沒有關於 ${ext} 檔案類型的設定檔`;
             return checkResult;
           }
-        }
 
-        const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
+          if (file.size >= fileLimit.maxFileSize * 1024) {
+            checkResult.error = `檔案大小超過 ${ext} 類型的限制 ${fileLimit.maxFileSize} kb。`;
+            return checkResult;
+          }
 
-        const fileLimit = this.findFileSizeLimitByExt(ext);
-        if (!fileLimit) {
-          checkResult.error = `沒有關於 ${ext} 檔案類型的設定檔`;
           return checkResult;
-        }
-
-        if (file.size >= fileLimit.maxFileSize * 1024) {
-          checkResult.error = `檔案大小超過 ${ext} 類型的限制 ${fileLimit.maxFileSize} kb。`;
-          return checkResult;
-        }
-
-        return checkResult;
-      });
-
-      const invalidResults = checkResults.filter(r => r.error);
-      if (invalidResults.length) {
-        const title = '上傳的檔案不符限制';
-        const messages = invalidResults.map(r => {
-          return `<p><span class="text-error">${r.fileName}</span><br><span>${r.error}</span></p>`;
         });
-        const message = `<p>以下檔案不符檔案限制，本次選擇的所有檔案不加入上傳清單</p>${messages.join('')}`;
-        this.modalService.openMessage({ title, message }).subscribe();
-        return;
-      }
 
-      files.forEach(f => {
-        this.files.push(this.galleryService.mapFileToFileUploadModel(f));
+        const invalidResults = checkResults.filter(r => r.error);
+        if (invalidResults.length) {
+          const title = '上傳的檔案不符限制';
+          const messages = invalidResults.map(r => {
+            return `<p><span class="text-error">${r.fileName}</span><br><span>${r.error}</span></p>`;
+          });
+          const message = `<p>以下檔案不符檔案限制，本次選擇的所有檔案不加入上傳清單</p>${messages.join('')}`;
+          this.modalService.openMessage({ title, message }).subscribe();
+          return;
+        }
+
+        files.forEach(f => {
+          this.files.push(this.galleryService.mapFileToFileUploadModel(f));
+        });
       });
-    });
-    fileUpload.click();
+      fileUpload.click();
+    } catch (error) {
+      CmsErrorHandler.throwError(error, new CmsMediaError().setMessage('UploadGalleryModalComponent.addFiles()'));
+    }
   }
 
   cleanFiles() {
