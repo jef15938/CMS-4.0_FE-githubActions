@@ -17,7 +17,7 @@ export class ContentEditorSaveEvent {
 }
 
 export interface ContentEditorContext {
-  getRootTemplatesContainerComponents: () => TemplatesContainerComponent[];
+  getRootTemplatesContainersOfBlocksByLanguage: () => TemplatesContainerComponent[][];
   findLayoutWrapperByTemplateInfoId: (templateInfoId: string, source: TemplatesContainerComponent) => LayoutWrapperComponent;
   findParentLayoutWrapperOfTemplatesContainer: (
     templatesContainer: TemplatesContainerComponent,

@@ -111,9 +111,13 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
     if (!(up || down)) { return; }
 
-    const rootTemplatesContainers = this.context.getRootTemplatesContainerComponents();
-    const layoutWrappers = rootTemplatesContainers
-      .map(rootTemplatesContainer => this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer));
+    const rootTemplatesContainersOfBlocksByLanguage = this.context.getRootTemplatesContainersOfBlocksByLanguage();
+    const layoutWrappers = rootTemplatesContainersOfBlocksByLanguage
+      .map(rootTemplatesContainersOfBlocksByLanguage => {
+        return rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainer =>
+          this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer)
+        ).find(v => !!v);
+      });
 
     layoutWrappers.forEach(layoutWrapper => {
       const templateInfo = layoutWrapper.templateInfo;
@@ -149,9 +153,13 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       const nextIndex = (index === currentLanguageTemplateInfos.length - 1) ? 0 : index + 1;
       const next = layoutWrapperComponents[nextIndex];
       // 處理資料
-      const rootTemplatesContainers = this.context.getRootTemplatesContainerComponents();
-      const layoutWrappers = rootTemplatesContainers
-        .map(rootTemplatesContainer => this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer));
+      const rootTemplatesContainersOfBlocksByLanguage = this.context.getRootTemplatesContainersOfBlocksByLanguage();
+      const layoutWrappers = rootTemplatesContainersOfBlocksByLanguage
+        .map(rootTemplatesContainersOfBlocksByLanguage => {
+          return rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainer =>
+            this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer)
+          ).find(v => !!v);
+        });
 
       layoutWrappers.forEach(layoutWrapper =>
         layoutWrapper.parentTemplatesContainer.templates.splice(

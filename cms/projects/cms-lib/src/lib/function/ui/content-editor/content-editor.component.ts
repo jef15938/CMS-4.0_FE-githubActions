@@ -391,8 +391,21 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     });
   }
 
-  getRootTemplatesContainerComponents() {
-    return Array.from(this.contentViewRenderer.templatesContainers);
+  getRootTemplatesContainersOfBlocksByLanguage(): TemplatesContainerComponent[][] {
+    const all = Array.from(this.contentViewRenderer.templatesContainers);
+    const languageCounts = this.contentInfo.languages.length;
+    const results: TemplatesContainerComponent[][] = [];
+    const containerCountsPerLanguage = all.length / languageCounts;
+    for (let i = 0, l = languageCounts; i < l; ++i) {
+      const arr = [];
+      results.push(arr);
+      all.forEach((container, index) => {
+        if (index >= i * containerCountsPerLanguage && index <= i * containerCountsPerLanguage + containerCountsPerLanguage) {
+          arr.push(container);
+        }
+      });
+    }
+    return results;
   }
 
   findLayoutWrapperByTemplateInfoId(

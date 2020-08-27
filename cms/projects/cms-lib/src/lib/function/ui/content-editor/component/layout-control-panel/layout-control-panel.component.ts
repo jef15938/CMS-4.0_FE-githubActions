@@ -3,7 +3,7 @@ import {
   ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef
 } from '@angular/core';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
-import { DynamicComponentFactoryService, LayoutBaseComponent } from '@neux/render';
+import { DynamicComponentFactoryService, LayoutBaseComponent, TemplatesContainerComponent } from '@neux/render';
 import { ContentEditorContext } from '../../content-editor.interface';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
 import { TemplateInfoModel } from '../../../../../global/api/data-model/models/template-info.model';
@@ -132,11 +132,13 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
     if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${selectedTemplateInfo.templateId}`); return; }
 
-    const rootTemplatesContainers = this.context.getRootTemplatesContainerComponents();
+    const rootTemplatesContainersOfBlocksByLanguage = this.context.getRootTemplatesContainersOfBlocksByLanguage();
 
     if (isRoot) {
-      rootTemplatesContainers.forEach(rootTemplatesContainer => {
-        rootTemplatesContainer.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
+      rootTemplatesContainersOfBlocksByLanguage.forEach(rootTemplatesContainersOfBlocks => {
+        rootTemplatesContainersOfBlocks.forEach(rootTemplatesContainer => {
+          rootTemplatesContainer.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
+        })
       });
     } else {
       const btnParentLayoutWrapper =
@@ -152,18 +154,24 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
       const templatesContainerIndex = btnLayoutWrapperTemplatesContainerComponents.indexOf(btnTemplatesContainer);
 
-      const allLangTargetTemplatesContainers = rootTemplatesContainers.map(rootTemplatesContainer => {
-        if (rootTemplatesContainer === btnRootTemplatesContainer) {
-          return btnTemplatesContainer;
-        } else {
-          const templateInfoId = btnParentLayoutWrapper.templateInfo.id;
-          const layoutWrapper = this.context.findLayoutWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
-          if (!layoutWrapper) { return null; }
-          return Array.from(
-            layoutWrapper.componentRef.instance.templatesContainerComponents
-          )[templatesContainerIndex];
-        }
-      });
+      const allLangTargetTemplatesContainers =
+        rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainersOfBlocks => {
+          return rootTemplatesContainersOfBlocks.map(rootTemplatesContainer => {
+            if (
+              rootTemplatesContainer === btnRootTemplatesContainer
+              && !rootTemplatesContainer.templates.some(t => t.templateId === 'FixedWrapper')
+            ) {
+              return btnTemplatesContainer;
+            } else {
+              const templateInfoId = btnParentLayoutWrapper.templateInfo.id;
+              const layoutWrapper = this.context.findLayoutWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
+              if (!layoutWrapper) { return null; }
+              return Array.from(
+                layoutWrapper.componentRef.instance.templatesContainerComponents
+              )[templatesContainerIndex];
+            }
+          }).filter(v => !!v);
+        }).reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[]);
 
       if (allLangTargetTemplatesContainers.some(v => !v)) {
         alert('系統異常 : allLangTargetTemplatesContainers 不完全');
