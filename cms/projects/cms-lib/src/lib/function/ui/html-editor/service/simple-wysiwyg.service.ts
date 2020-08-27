@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class SimpleWysiwygService {
 
   // tslint:disable-next-line: only-arrow-functions
-  getSelectionCollapsed = function (containerNode) {
+  getSelectionCollapsed = function(containerNode) {
     if (window.getSelection) {
       const sel = window.getSelection();
       if (sel.isCollapsed) {
@@ -81,6 +81,20 @@ export class SimpleWysiwygService {
     }
   }
 
+  getSelection(): Selection {
+    if (window.getSelection) {
+      const sel = window.getSelection();
+      return sel;
+    }
+    // tslint:disable-next-line: no-string-literal
+    else if (document['selection']) {
+      // tslint:disable-next-line: no-string-literal
+      const sel = document['selection'];
+      return sel;
+    }
+    return null;
+  }
+
   // save/restore selection
   // http://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
   getRange(): Range {
@@ -128,7 +142,7 @@ export class SimpleWysiwygService {
 
   // http://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-a-child-of-another
   // tslint:disable-next-line: only-arrow-functions
-  isOrContainsNode = function (ancestor, descendant) {
+  isOrContainsNode = function(ancestor, descendant) {
     let node = descendant;
     while (node) {
       if (node === ancestor) {

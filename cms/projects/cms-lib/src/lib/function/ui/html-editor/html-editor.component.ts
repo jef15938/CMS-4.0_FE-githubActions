@@ -157,7 +157,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       // console.log('allRemovedNodes = ', allRemovedNodes);
 
       let acturallyAddedNodes = allAddedNodes
-        .filter(node => allRemovedNodes.indexOf(node) < 0)
+        // .filter(node => allRemovedNodes.indexOf(node) < 0)
         .filter(node => this.simpleWysiwygService.isChildOf(node, editorContainer));
       // console.log('acturallyAddedNodes = ', acturallyAddedNodes);
 
@@ -334,20 +334,12 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     return htmlString;
   }
 
-  onFocus() {
-    // if (this.editorContainer.innerHTML === this.defaultContent) {
-    //   const p = this.editorContainer.querySelector('p');
-    //   this.simpleWysiwygService.setSelectionOnNode(p, 0, 1);
-    // }
-  }
-
-  onBlur() {
-    // if (
-    //   !this.editorContainer.innerHTML
-    //   || this.editorContainer.innerHTML === '<p></p>'
-    //   || this.editorContainer.innerHTML === '<p><br></p>'
-    // ) {
-    //   this.editorContainer.innerHTML = this.defaultContent;
-    // }
+  onFocus(ev) {
+    const editorContainer = this.editorContainer;
+    if (editorContainer.innerHTML === this.defaultContent || editorContainer.innerHTML === '<p><br></p>') {
+      setTimeout(() => {
+        this.simpleWysiwygService.setSelectionOnNode(this.editorContainer.firstChild, 1);
+      }, 10);
+    }
   }
 }
