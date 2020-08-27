@@ -54,7 +54,7 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
   }
 
   hideNode(node: MenuInfoModel) {
-    return node.funcId === 'base';
+    return false;
   }
 
 }
