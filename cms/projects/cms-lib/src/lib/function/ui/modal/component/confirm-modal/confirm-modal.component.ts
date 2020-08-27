@@ -12,10 +12,12 @@ export class ConfirmModalComponent extends CustomModalBase implements OnInit {
     {
       text: '取消',
       onClick: () => this.close(),
+      class: 'btn btn-cancel'
     },
     {
       text: '確認',
       onClick: () => this.confirm(),
+      class: 'btn btn-confirm'
     }
   ];
 

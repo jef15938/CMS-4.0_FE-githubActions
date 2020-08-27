@@ -41,9 +41,9 @@
     style="display:none;" />
   <br>
   <div class="cms-upload-gallery-modal__btn-group btn-group">
-    <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="create()" *ngIf="isCreate"
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="upload('create')" *ngIf="isCreate"
       [disabled]="!files.length">上傳檔案</button>
-    <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="update()" *ngIf="!isCreate"
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="upload('update')" *ngIf="!isCreate"
       [disabled]="!files.length">確定取代</button>
   </div>
 

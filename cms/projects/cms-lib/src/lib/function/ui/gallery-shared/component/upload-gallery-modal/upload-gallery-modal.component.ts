@@ -151,35 +151,6 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
         return checkResult;
       });
 
-      // if (galleryConfig.limitCharacter) {
-      //   const limitCharacters = galleryConfig.limitCharacter.split(',');
-      //   if (limitCharacters.some(c => file.name.indexOf(c) > -1)) {
-      //     alert(`檔案名稱不可含有下列字元 : ${galleryConfig.limitCharacter}`);
-      //     return;
-      //   }
-      // }
-
-      // const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
-
-      // const fileLimit = this.findFileSizeLimitByExt(ext);
-      // if (!fileLimit) {
-      //   alert(`沒有關於 ${ext} 檔案類型的設定檔`);
-      //   return;
-      // }
-
-      // if (file.size >= fileLimit.maxFileSize * 1024) {
-      //   alert(`檔案大小超過限制。${ext} 類型的大小限制為 ${fileLimit.maxFileSize} kb，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
-      //   return;
-      // }
-
-      // const currentTotalBytes = this.countTotalFileSize(this.files);
-      // if (currentTotalBytes + file.size > galleryConfig.maxUploadSize * 1024) {
-      //   alert(`加入檔案後的全部檔案大小超過一次可上傳的大小限制(${galleryConfig.maxUploadSize} kb)。當前的總檔案大小為 ${FileUtil.readableFileSize(currentTotalBytes, 1)}，選擇的檔案 ${file.name} 的大小為 ${FileUtil.readableFileSize(file.size, 1)}。`);
-      //   return;
-      // }
-
-      // this.files.push(this.galleryService.mapFileToFileUploadModel(file));
-
       const invalidResults = checkResults.filter(r => r.error);
       if (invalidResults.length) {
         const title = '上傳的檔案不符限制';
@@ -227,70 +198,44 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     }
   }
 
-  retryFile(file: FileUploadModel) {
-    if (file.canRetry) {
-      this.uploadFile(file);
-      file.canRetry = false;
+  upload(action: 'create' | 'update') {
+    const maxUploadNumber = this.isCreate ? this.galleryConfig.maxUploadNumber : 1;
+    if (this.files.length > maxUploadNumber) {
+      alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
+      return;
     }
-  }
 
-  private uploadFile(file: FileUploadModel) {
-    if (this.isCreate) {
-      return this.galleryService.createGallery(file, this.categoryId);
-    } else {
-      return this.galleryService.updateGallery(file, this.galleryId);
+    const currentTotalBytes = this.countTotalFileSize(this.files);
+    if (currentTotalBytes > this.galleryConfig.maxUploadSize * 1024) {
+      alert(`檔案總大小超過可上傳的大小限制(${this.galleryConfig.maxUploadSize} kb)。`);
+      return;
     }
+
+    return action === 'create' ? this.create() : this.update();
   }
 
   create() {
-    const maxUploadNumber = this.isCreate ? this.galleryConfig.maxUploadNumber : 1;
-    if (this.files.length > maxUploadNumber) {
-      alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
-      return;
-    }
-
-    const currentTotalBytes = this.countTotalFileSize(this.files);
-    if (currentTotalBytes > this.galleryConfig.maxUploadSize * 1024) {
-      alert(`檔案總大小超過可上傳的大小限制(${this.galleryConfig.maxUploadSize} kb)。`);
-      return;
-    }
-
-    const fileUpload = this.getFileUpload();
-    fileUpload.value = '';
-
-    forkJoin(this.files.map(file => this.uploadFile(file))).subscribe(results => {
-      if (results.map(r => r.success).every(success => !!success)) {
-        this.close(true);
-      } else {
-
-      }
-    });
+    forkJoin(this.files.map(file => this.galleryService.createGallery(file, this.categoryId)))
+      .subscribe(results => {
+        const failedUploads = results.filter(r => !r.success);
+        if (!failedUploads.length) {
+          this.close(true);
+        } else {
+          alert(`以下檔案上傳失敗 : ${failedUploads.map(failed => failed.fileName).join(', ')}`);
+        }
+      });
   }
 
   update() {
-    const maxUploadNumber = this.isCreate ? this.galleryConfig.maxUploadNumber : 1;
-    if (this.files.length > maxUploadNumber) {
-      alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
-      return;
-    }
-
-    const currentTotalBytes = this.countTotalFileSize(this.files);
-    if (currentTotalBytes > this.galleryConfig.maxUploadSize * 1024) {
-      alert(`檔案總大小超過可上傳的大小限制(${this.galleryConfig.maxUploadSize} kb)。`);
-      return;
-    }
-
-    const fileUpload = this.getFileUpload();
-    fileUpload.value = '';
-
     const file = this.files[0];
-    this.uploadFile(file).subscribe(result => {
-      if (result.success) {
-        this.close(true);
-      } else {
-
-      }
-    });
+    this.galleryService.updateGallery(file, this.galleryId)
+      .subscribe(result => {
+        if (result.success) {
+          this.close(true);
+        } else {
+          alert('檔案上傳失敗');
+        }
+      });
   }
 
   removeFile(file: FileUploadModel) {

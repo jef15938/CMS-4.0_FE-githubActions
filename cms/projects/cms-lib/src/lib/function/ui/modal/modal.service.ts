@@ -61,7 +61,7 @@ export class ModalService {
   }
 
   confirmDelete = () => {
-    return this.openConfirm({ message: '確定刪除?' }).pipe(
+    return this.openConfirm({ message: '<span style="color:red;">確定刪除?</span>'}).pipe(
       concatMap(confirm => confirm ? of(true) : NEVER),
     );
   }
