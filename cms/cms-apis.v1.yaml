@@ -3273,6 +3273,9 @@ components:
         action_name:
           type: string
           description: action顯示名稱
+        func_id:
+          type: string
+          description: 功能代碼
       required:
         - action_type
         - action_name
