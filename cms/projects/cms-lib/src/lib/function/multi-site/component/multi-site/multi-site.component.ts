@@ -205,7 +205,6 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     const target = ev.target;
     const to = ev.to;
     if (!target || !to || target === to) { return; }
-    // TODO: 移動節點 api
     this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
       if (!confirm) { return; }
       of(undefined).pipe(
@@ -221,7 +220,6 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     const to = ev.to;
     const order = ev.order;
     if (!target || !to || target === to) { return; }
-    // TODO: 移動節點 api
     this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
       if (!confirm) { return; }
       of(undefined).pipe(
