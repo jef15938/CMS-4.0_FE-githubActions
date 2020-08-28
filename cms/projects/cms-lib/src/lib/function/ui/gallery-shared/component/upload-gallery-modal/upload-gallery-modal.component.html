@@ -10,9 +10,9 @@
   </div>
 
   <div class="page-title-container">
-    上傳數量限制 : <span [class.text-error]="files.length>(isCreate?galleryConfig?.maxUploadNumber:1)">{{files.length}}</span> / {{isCreate?galleryConfig?.maxUploadNumber||'??':1}}
+    上傳數量限制 : <span [class.text-danger]="files.length>(isCreate?galleryConfig?.maxUploadNumber:1)">{{files.length}}</span> / {{isCreate?galleryConfig?.maxUploadNumber||'??':1}}
     <br>
-    上傳大小限制 : <span [class.text-error]="countTotalFileSize(files)>(isCreate?galleryConfig?.maxUploadSize:findFileSizeLimitByExt(galleryType?.toLowerCase())?.maxFileSize)*1024">{{countTotalFileSize(files)|readableFileSize:1}}</span> / {{isCreate?galleryConfig?.maxUploadSize||'??':findFileSizeLimitByExt(galleryType?.toLowerCase())?.maxFileSize||'??'}} kb
+    上傳大小限制 : <span [class.text-danger]="countTotalFileSize(files)>(isCreate?galleryConfig?.maxUploadSize:findFileSizeLimitByExt(galleryType?.toLowerCase())?.maxFileSize)*1024">{{countTotalFileSize(files)|readableFileSize:1}}</span> / {{isCreate?galleryConfig?.maxUploadSize||'??':findFileSizeLimitByExt(galleryType?.toLowerCase())?.maxFileSize||'??'}} kb
   </div>
 
   <ul class="cms-upload-gallery-modal__upload">

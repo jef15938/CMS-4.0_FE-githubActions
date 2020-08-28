@@ -38,6 +38,15 @@ export class DatePickerCalendarHeaderComponent implements OnDestroy {
         }, 0);
 
       });
+
+    calendar.monthSelected.pipe(takeUntil(this.destroyed$))
+      .subscribe(res => {
+        setTimeout(() => {
+          calendar.currentView = 'month';
+          this.mode = 'day';
+        }, 0);
+
+      });
   }
 
   ngOnDestroy() {

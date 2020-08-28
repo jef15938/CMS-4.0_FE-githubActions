@@ -156,7 +156,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
         if (invalidResults.length) {
           const title = '上傳的檔案不符限制';
           const messages = invalidResults.map(r => {
-            return `<p><span class="text-error">${r.fileName}</span><br><span>${r.error}</span></p>`;
+            return `<p><span class="text-danger">${r.fileName}</span><br><span>${r.error}</span></p>`;
           });
           const message = `<p>以下檔案不符檔案限制，本次選擇的所有檔案不加入上傳清單</p>${messages.join('')}`;
           this.modalService.openMessage({ title, message }).subscribe();

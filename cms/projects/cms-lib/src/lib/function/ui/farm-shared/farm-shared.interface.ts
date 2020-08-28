@@ -13,6 +13,7 @@ export interface FarmTableActionBtn {
   fontSet?: string;
   fontIcon?: string;
   tooltip?: string;
+  class?: string;
   click: (row: FarmTableDataInfoModel, table: FarmTableInfoModel, injector: Injector) => void;
 }
 

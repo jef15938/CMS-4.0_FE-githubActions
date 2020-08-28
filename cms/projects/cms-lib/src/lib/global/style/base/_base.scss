@@ -139,6 +139,7 @@ div.mat-select-panel {
   overflow-y: auto;
   max-height: 210px;
   min-width: 100% !important;
+  border: 1px solid lightgray;
 }
 
 .mat-datepicker-dialog mat-dialog-container.mat-dialog-container {
@@ -198,8 +199,28 @@ button.btn {
   border: 1px solid red;
 }
 
-.text-error {
+.text-confirm {
+  color: $color-CIS;
+}
+
+.text-cancel {
+  color: gray;
+}
+
+.text-edit {
+  color: #3f51b5;
+}
+
+.text-danger {
   color: red;
+}
+
+.text-warning {
+  color: orange;
+}
+
+.text-dark {
+  color: #393939;
 }
 
 /*hide the floating mat input part */
