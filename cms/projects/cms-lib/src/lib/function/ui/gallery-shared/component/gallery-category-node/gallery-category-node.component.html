@@ -1,16 +1,18 @@
 <div class="cms-gallery-category-node" *ngIf="node">
   <span class="cms-gallery-category-node__title">{{node.data.categoryName}}</span>
-  <span #menuTrigger="matMenuTrigger" class="cms-gallery-category-node__btn" [matMenuTriggerFor]="appMenu">
+  <span *ngIf="mode==='modal'"></span>
+  <span #menuTrigger="matMenuTrigger" *ngIf="mode==='page'" class="cms-gallery-category-node__btn"
+    [matMenuTriggerFor]="appMenu">
     <mat-menu #appMenu="matMenu">
-      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.CREATE)">
+      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.CREATE)">
         <mat-icon>add</mat-icon>
         新增分類
       </button>
-      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.EDIT)">
+      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.EDIT)">
         <mat-icon>edit</mat-icon>
         修改分類
       </button>
-      <button type="button" tabindex="0" mat-menu-item *ngIf="mode==='page'" (click)="onMenuClicked(ActionType.DELETE)">
+      <button type="button" tabindex="0" mat-menu-item (click)="onMenuClicked(ActionType.DELETE)">
         <mat-icon>delete</mat-icon>
         刪除分類
       </button>
