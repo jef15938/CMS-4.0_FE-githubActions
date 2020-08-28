@@ -131,21 +131,21 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
           if (galleryConfig.limitCharacter) {
             const limitCharacters = galleryConfig.limitCharacter.split(',');
             if (limitCharacters.some(c => file.name.indexOf(c) > -1)) {
-              checkResult.error = `檔案名稱不可含有下列字元 : ${galleryConfig.limitCharacter}`;
+              checkResult.error = `檔名不可含有下列字元 : ${galleryConfig.limitCharacter}`;
               return checkResult;
             }
           }
 
-          const ext = file.type.substring(file.type.lastIndexOf('/') + 1, file.type.length);
+          const ext = file.name.substring(file.name.lastIndexOf('.') + 1, file.name.length);
 
           const fileLimit = this.findFileSizeLimitByExt(ext);
           if (!fileLimit) {
-            checkResult.error = `沒有關於 ${ext} 檔案類型的設定檔`;
+            checkResult.error = `不支援 .${ext}`;
             return checkResult;
           }
 
           if (file.size >= fileLimit.maxFileSize * 1024) {
-            checkResult.error = `檔案大小超過 ${ext} 類型的限制 ${fileLimit.maxFileSize} kb。`;
+            checkResult.error = `上傳大小過大，${ext} 上傳上限為 ${fileLimit.maxFileSize} kb`;
             return checkResult;
           }
 
