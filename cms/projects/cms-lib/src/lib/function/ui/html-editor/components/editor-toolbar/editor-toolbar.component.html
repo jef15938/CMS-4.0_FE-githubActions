@@ -1,7 +1,7 @@
 <div class="editor-toolbar">
   <div class="editor-toolbar__row">
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button (click)="openDescription()">
-      <mat-icon aria-hidden="false">description</mat-icon>
+      <mat-icon aria-hidden="false">info</mat-icon>
       <div class="editor-toolbar__btn__hint">
         編輯器說明
       </div>
@@ -74,14 +74,14 @@
       (click)="doAction(htmlEditorActions.indent)">
       <mat-icon aria-hidden="false">format_indent_decrease</mat-icon>
       <div class="editor-toolbar__btn__hint">
-        向內縮排
+        增加縮排
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
       (click)="doAction(htmlEditorActions.outdent)">
       <mat-icon aria-hidden="false">format_indent_increase</mat-icon>
       <div class="editor-toolbar__btn__hint">
-        向外縮排
+        減少縮排
       </div>
     </button>
 
@@ -102,14 +102,10 @@
       <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.highlight3)">
         標註樣式3
       </button>
+      <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.unhighlight)">
+        class
+      </button>
     </mat-menu>
-    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
-      (click)="doAction(htmlEditorActions.unhighlight)">
-      <mat-icon aria-hidden="false">cancel</mat-icon>
-      <div class="editor-toolbar__btn__hint">
-        取消標記文字
-      </div>
-    </button>
   </div>
   <div class="editor-toolbar__row">
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
