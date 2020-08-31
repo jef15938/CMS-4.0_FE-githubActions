@@ -1,11 +1,12 @@
 <div class="modal-form-layout">
   <form #form="ngForm" class="modal-form-layout__form">
     <div class="modal-form-layout__content ">
-      <!-- <div class="modal-form-layout__source-container">
+      <div class="modal-form-layout__source-container">
         <iframe class="modal-form-layout__source-container__iframe"
-          *ngIf="frameIdControl?.value && frameIdControl?.valid" [src]="frameIdControl.value | safeResource"></iframe>
+          *ngIf="frameIdControl?.value && frameIdControl?.valid"
+          [src]="YoutubeUtil.convertVideoUrlToEmbedUrl(frameIdControl.value)  | safeResource"></iframe>
       </div>
-      <br> -->
+      <br>
       <div>
         <p>寬度限定 100%</p>
         <p>框架高度由 css 控制</p>

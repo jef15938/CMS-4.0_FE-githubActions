@@ -10,6 +10,8 @@ import { NgModel, FormControl } from '@angular/forms';
 })
 export class HtmlEditorInsertVideoModalComponent extends CustomModalBase implements OnInit {
 
+  YoutubeUtil = YoutubeUtil;
+
   @ViewChild('Img') img: ElementRef<HTMLImageElement>;
 
   title = '';
@@ -35,10 +37,9 @@ export class HtmlEditorInsertVideoModalComponent extends CustomModalBase impleme
       this.modalService.openMessage({ message: 'Youtube 網址錯誤' });
       return;
     }
-    this.close({
-      src,
-      frameId: this.frameIdControl.value || '',
-    });
+    const videoId = YoutubeUtil.findVideoIdFromVideoUrl(this.frameIdControl.value);
+    const frameId = YoutubeUtil.getEmbedUrl(videoId);
+    this.close({ src, frameId });
   }
 
   checkFrameIdValid(control: FormControl) {

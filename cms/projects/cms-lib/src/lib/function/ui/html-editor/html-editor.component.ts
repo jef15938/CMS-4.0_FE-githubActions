@@ -83,7 +83,9 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       const videoUrl = iframe.src;
       const img = document.createElement('img');
       img.setAttribute(ATTRIBUTE_FRAME_ID, videoUrl);
+      console.warn('videoUrl = ', videoUrl);
       img.src = YoutubeUtil.convertVideoUrlToImageUrl(videoUrl);
+      console.warn('img.src  = ', img.src );
       img.style.width = '100%';
       img.style.height = 'auto';
       parent.insertBefore(img, iframe);
