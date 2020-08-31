@@ -19,7 +19,7 @@ export class InsertVideo extends HtmlEditorActionBase {
     return this.context.modalService.openComponent({
       component: HtmlEditorInsertVideoModalComponent,
       componentInitData: {
-        title: `${image ? '修改' : '加入'}影片`,
+        title: `${image ? '修改' : '加入'} Youtube 影片`,
         src: image?.src,
         frameId: image?.getAttribute(ATTRIBUTE_FRAME_ID)
       }

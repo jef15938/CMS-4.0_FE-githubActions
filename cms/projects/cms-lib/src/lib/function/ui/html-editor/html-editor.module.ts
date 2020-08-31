@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,6 +34,7 @@ import { HtmlEditorDescriptionComponent } from './modal/html-editor-description/
     MatIconModule,
     MatButtonModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     HtmlEditorContainerModalComponent,
