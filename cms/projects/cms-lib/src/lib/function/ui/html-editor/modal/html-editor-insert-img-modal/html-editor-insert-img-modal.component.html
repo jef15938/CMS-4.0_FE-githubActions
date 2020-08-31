@@ -1,17 +1,12 @@
 <div class="modal-form-layout page-content-container">
   <form class="modal-form-layout__form" #form="ngForm">
+    <div class="btn-group text-right">
+      <button type="button" tabindex="-1" mat-raised-button class="btn btn-dark" (click)="changeGallery()">媒體庫</button>
+    </div>
     <div class="modal-form-layout__content ">
       <div class="modal-form-layout__source-container">
         <img class="modal-form-layout__source-container__img" [src]="src" *ngIf="src">
       </div>
-      <div class="btn-group">
-        <button type="button" tabindex="-1" mat-raised-button
-          class="btn btn-dark" (click)="changeGallery()">媒體庫</button>
-        <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
-          [disabled]="form.invalid">儲存</button>
-        <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
-      </div>
-
       <!-- <div class="modal-form-layout__row">
         <mat-form-field appearance="outline" class="modal-form-layout__col">
           <mat-label>圖片網址</mat-label>
@@ -40,7 +35,11 @@
       </div>
 
     </div>
-
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="form.invalid">確定</button>
+    </div>
   </form>
 </div>
 <!-- 用來算寬高用的隱藏圖片 -->
