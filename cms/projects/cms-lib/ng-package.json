@@ -8,7 +8,8 @@
       "class-validator": "class-validator",
       "angular-cropperjs": "angular-cropperjs",
       "@neux/core": "@neux/core",
-      "@neux/render": "@neux/render"
+      "@neux/render": "@neux/render",
+      "@angular-material-components/datetime-picker": "@angular-material-components/datetime-picker"
     }
   }
 }

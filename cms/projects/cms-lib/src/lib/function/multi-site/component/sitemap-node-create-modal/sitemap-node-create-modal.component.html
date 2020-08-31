@@ -119,10 +119,10 @@
           <div class="modal-form-layout__col">
             <mat-form-field appearance="outline">
               <mat-label>節點連結路徑</mat-label>
-              <textarea matInput [(ngModel)]="sitemapMaintainModel.contentPath" name="contentPath" maxlength="100"
-                rows="1" pattern="^[A-Za-z0-9\-]*$" #modelContentPath="ngModel"></textarea>
+              <input type="input" matInput [(ngModel)]="sitemapMaintainModel.contentPath" name="contentPath" maxlength="100"
+                rows="1" pattern="^[A-Za-z0-9\-]*$" #modelContentPath="ngModel">
               <div matSuffix class="input-suffix">({{sitemapMaintainModel?.contentPath?.length||0}}/100)</div>
-              <mat-error *ngIf="modelNodeName?.errors?.required">限英數字和-</mat-error>
+              <mat-error *ngIf="modelContentPath?.errors?.pattern">限英數字和-</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -132,10 +132,10 @@
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>Meta標題</mat-label>
-            <textarea matInput [(ngModel)]="sitemapMaintainModel.metaTitle" name="metaTitle" required maxlength="500"
-              rows="1" #modelMetaTitle="ngModel"></textarea>
+            <input type="input" matInput [(ngModel)]="sitemapMaintainModel.metaTitle" name="metaTitle" required maxlength="500"
+              rows="1" #modelMetaTitle="ngModel">
             <div matSuffix class="input-suffix">({{sitemapMaintainModel?.metaTitle?.length||0}}/500)</div>
-            <mat-error *ngIf="modelNodeName?.errors?.required">必填欄位</mat-error>
+            <mat-error *ngIf="modelMetaTitle?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -144,8 +144,8 @@
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>Meta描述</mat-label>
-            <textarea matInput [(ngModel)]="sitemapMaintainModel.metaDescription" name="metaDescription" rows="1"
-              maxlength="500"></textarea>
+            <input type="input" matInput [(ngModel)]="sitemapMaintainModel.metaDescription" name="metaDescription" rows="1"
+              maxlength="500">
             <div matSuffix class="input-suffix">({{sitemapMaintainModel?.metaDescription?.length||0}}/500)</div>
           </mat-form-field>
         </div>
@@ -154,8 +154,8 @@
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>Meta關鍵字</mat-label>
-            <textarea matInput [(ngModel)]="sitemapMaintainModel.metaKeyword" name="metaKeyword" rows="1"
-              maxlength="500"></textarea>
+            <input type="input" matInput [(ngModel)]="sitemapMaintainModel.metaKeyword" name="metaKeyword" rows="1"
+              maxlength="500">
             <div matSuffix class="input-suffix">({{sitemapMaintainModel?.metaKeyword?.length||0}}/500)</div>
           </mat-form-field>
         </div>

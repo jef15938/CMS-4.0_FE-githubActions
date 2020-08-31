@@ -27,7 +27,7 @@ export class ModalService {
   ) {
     const modalConfig = new MatDialogConfig();
     // The user can't close the modal by clicking outside its body
-    // modalConfig.disableClose = true;
+    modalConfig.disableClose = true;
 
     modalConfig.id = config.modalSetting?.id || `cms-modal-${++modalId}`;
     modalConfig.width = fullScreen ? '100%' : config.modalSetting?.width || '600px';

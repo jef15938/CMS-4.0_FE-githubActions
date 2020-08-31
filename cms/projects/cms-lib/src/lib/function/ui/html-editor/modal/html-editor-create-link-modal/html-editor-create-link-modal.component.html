@@ -4,7 +4,7 @@
       <div class="modal-form-layout__row">
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
-            <mat-label>URL</mat-label>
+            <mat-label>網址</mat-label>
             <input matInput [(ngModel)]="aTagConfig.href" name="url" required #modelUrl="ngModel">
             <mat-error *ngIf="modelUrl?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
@@ -13,7 +13,7 @@
       <div class="modal-form-layout__row" *ngIf="canModifyText">
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
-            <mat-label>Text</mat-label>
+            <mat-label>顯示的文字</mat-label>
             <input matInput [(ngModel)]="aTagConfig.text" name="text">
           </mat-form-field>
         </div>
