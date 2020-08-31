@@ -49,62 +49,52 @@
 
     <form #form="ngForm" class="form">
       <div class="form__top">
-        <mat-form-field appearance="outline" *ngIf="sitemapNode">
-          <mat-label>節點類型</mat-label>
-          <mat-select [(ngModel)]="sitemapNode.nodeType" name="nodeType" disabled
-            [compareWith]="compareOptionWithModel">
-            <mat-option *ngFor="let option of nodeTypeOptions" [value]="option.value">
-              {{option.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="form__container">
+          <div class="form__label">節點類型</div>
+          <div class="form__content">{{nodeTypes[sitemapNode.nodeType] || '無'}}</div>
+        </div>
+
         <ng-container [ngSwitch]="sitemapNode.nodeType">
           <!-- URL -->
           <ng-container *ngSwitchCase="SiteMapNodeType.URL">
-            <mat-form-field appearance="outline">
-              <mat-label>連結類型</mat-label>
-              <mat-select [(ngModel)]="sitemapNode.urlType" name="urlType" disabled>
-                <mat-option *ngFor="let option of urlTypeOptions" [value]="option.value">
-                  {{option.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <div class="form__container">
+              <div class="form__label">連結類型</div>
+              <div class="form__content">{{urlTypes[sitemapNode.urlType] || ''}}</div>
+            </div>
             <ng-container [ngSwitch]="sitemapNode.urlType">
               <!-- 站內 -->
               <ng-container *ngSwitchCase="SiteMapUrlType.INSIDE">
-                <mat-form-field appearance="outline">
-                  <mat-label>站內節點ID</mat-label>
-                  <input matInput [value]="sitemapNode.urlLinkNodeId" name="urlLinkNodeId" readonly>
-                </mat-form-field>
+                <div class="form__container">
+                  <div class="form__label">站內節點ID</div>
+                  <div class="form__content">{{sitemapNode.urlLinkNodeId}}</div>
+                </div>
               </ng-container>
               <!-- 站外 -->
               <ng-container *ngSwitchCase="SiteMapUrlType.OUTSIDE">
-                <mat-form-field appearance="outline">
-                  <mat-label>站外網址</mat-label>
-                  <input matInput [value]="sitemapNode.url" name="url" readonly>
-                </mat-form-field>
+                <div class="form__container">
+                  <div class="form__label">站外網址</div>
+                  <div class="form__content">{{sitemapNode.url}}</div>
+                </div>
               </ng-container>
               <!-- 共通 -->
-              <mat-form-field appearance="outline">
-                <mat-label>另開視窗</mat-label>
-                <mat-select [(ngModel)]="sitemapNode.urlBlank" name="urlBlank" disabled>
-                  <mat-option *ngFor="let option of urlBlankTypeOptions" [value]="option.value">
-                    {{option.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <div class="form__container">
+                <div class="form__label">另開視窗</div>
+                <div class="form__content">{{urlBlankTypes[sitemapNode.urlBlank] || ''}}</div>
+              </div>
             </ng-container>
           </ng-container>
 
           <!-- CONTENT -->
           <ng-container *ngSwitchCase="SiteMapNodeType.CONTENT">
-            <mat-form-field appearance="outline">
-              <mat-label>節點連結路徑</mat-label>
-              <input matInput [value]="sitemapNode.contentPath" name="contentPath" readonly>
-            </mat-form-field>
+            <div class="form__container">
+              <div class="form__label">節點連結路徑</div>
+              <div class="form__content">{{sitemapNode.contentPath}}</div>
+            </div>
           </ng-container>
         </ng-container>
       </div>
+
+      <hr>
 
       <div class="form__bot">
         <mat-tab-group animationDuration="0ms">
@@ -122,26 +112,26 @@
                     預覽
                   </button>
                 </div>
-                <mat-form-field appearance="outline">
-                  <mat-label>節點名稱</mat-label>
-                  <input matInput [value]="detail.nodeName" name="nodeName" readonly>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                  <mat-label>Meta標題</mat-label>
-                  <input matInput [value]="detail.metaTitle" name="metaTitle" readonly>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                  <mat-label>Meta描述</mat-label>
-                  <input matInput [value]="detail.metaDescription" name="metaDescription" readonly>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                  <mat-label>Meta關鍵字</mat-label>
-                  <input matInput [value]="detail.metaKeyword" name="metaKeyword" readonly>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                  <mat-label>Meta圖片</mat-label>
-                  <input matInput [value]="detail.metaImageName" name="metaImageName" readonly>
-                </mat-form-field>
+                <div class="form__container">
+                  <div class="form__label">節點名稱</div>
+                  <div class="form__content">{{detail.nodeName}}</div>
+                </div>
+                <div class="form__container">
+                  <div class="form__label">Meta標題</div>
+                  <div class="form__content">{{detail.metaTitle}}</div>
+                </div>
+                <div class="form__container">
+                  <div class="form__label">Meta描述</div>
+                  <div class="form__content">{{detail.metaDescription}}</div>
+                </div>
+                <div class="form__container">
+                  <div class="form__label">Meta關鍵字</div>
+                  <div class="form__content">{{detail.metaKeyword}}</div>
+                </div>
+                <div class="form__container">
+                  <div class="form__label">Meta圖片</div>
+                  <div class="form__content">{{detail.metaImageName}}</div>
+                </div>
               </div>
             </ng-template>
           </mat-tab>

@@ -6,12 +6,12 @@
 @mixin site-layout() {
   .list-block {
     border-right: 1px solid $color-light-gray;
-    width: 30%;
+    width: 40%;
     height: 100%;
   }
 
   .set-block {
-    width: 70%;
+    width: 60%;
     height: 100%;
   }
 

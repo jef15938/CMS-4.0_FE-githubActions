@@ -30,21 +30,21 @@ export class SitemapNodeDetailComponent implements OnInit {
 
   @Output() update = new EventEmitter<SiteMapNodeGetResponseModel>();
 
-  urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
-    { value: SiteMapUrlType.INSIDE, name: '站內' },
-    { value: SiteMapUrlType.OUTSIDE, name: '站外' },
-  ];
+  urlTypes = {
+    [SiteMapUrlType.INSIDE]: '站內',
+    [SiteMapUrlType.OUTSIDE]: '站外',
+  };
 
-  urlBlankTypeOptions: { value: SiteMapUrlBlankType, name: string }[] = [
-    { value: SiteMapUrlBlankType.YES, name: '是' },
-    { value: SiteMapUrlBlankType.NO, name: '否' },
-  ];
+  urlBlankTypes = {
+    [SiteMapUrlBlankType.YES]: '是',
+    [SiteMapUrlBlankType.NO]: '否',
+  };
 
-  nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
-    { value: SiteMapNodeType.NONE, name: '無' },
-    { value: SiteMapNodeType.URL, name: '連結' },
-    { value: SiteMapNodeType.CONTENT, name: '頁面' },
-  ];
+  nodeTypes = {
+    [SiteMapNodeType.NONE]: '無',
+    [SiteMapNodeType.URL]: '連結',
+    [SiteMapNodeType.CONTENT]: '頁面',
+  };
 
   constructor(
     private modalService: ModalService,
