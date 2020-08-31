@@ -20,7 +20,7 @@ export class YoutubeUtil {
   }
 
   static convertVideoUrlToEmbedUrl(videoUrl: string) {
-    return this.getEmbedUrl(this.findVideoIdFromVideoUrl(videoUrl));
+    return YoutubeUtil.getEmbedUrl(YoutubeUtil.findVideoIdFromVideoUrl(videoUrl));
   }
 
   static convertVideoUrlToImageUrl(videoUrl: string): string {
