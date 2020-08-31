@@ -53,34 +53,34 @@
             <ng-container [ngSwitch]="action">
               <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.MODIFY"
                 matTooltip="編輯" (click)="onActionClick(action, element)">
-                <mat-icon class="text-edit">edit</mat-icon>
+                <mat-icon>edit</mat-icon>
               </button>
               <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.DELETE"
                 matTooltip="刪除" (click)="onActionClick(action, element)">
-                <mat-icon class="text-danger">delete</mat-icon>
+                <mat-icon>delete</mat-icon>
               </button>
               <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.PUBLISH"
                 matTooltip="送審" (click)="onActionClick(action, element)">
-                <mat-icon class="text-confirm">redo</mat-icon>
+                <mat-icon>redo</mat-icon>
               </button>
               <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.OFF"
                 matTooltip="下架" (click)="onActionClick(action, element)">
-                <mat-icon class="text-danger">arrow_downward</mat-icon>
+                <mat-icon>arrow_downward</mat-icon>
               </button>
               <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.PREVIEW"
                 matTooltip="預覽" (click)="onActionClick(action, element)">
-                <mat-icon class="text-warning">visibility</mat-icon>
+                <mat-icon>visibility</mat-icon>
               </button>
               <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.MORE"
                 matTooltip="看更多" (click)="onActionClick(action, element)">
-                <mat-icon class="text-dark">more_horiz</mat-icon>
+                <mat-icon>more_horiz</mat-icon>
               </button>
             </ng-container>
           </ng-container>
           <ng-container *ngIf="customAction">
             <ng-container *ngFor="let btn of customAction.btns">
               <button type="button" tabindex="0" mat-icon-button [matTooltip]="btn.tooltip" (click)="btn.click(element, tableInfo, injector)">
-                <mat-icon [fontSet]="btn.fontSet" [fontIcon]="btn.fontIcon" [class]="btn.class||'text-dark'">
+                <mat-icon [fontSet]="btn.fontSet" [fontIcon]="btn.fontIcon" [class]="btn.class||''">
                   <ng-container *ngIf="btn.icon">{{btn.icon}}</ng-container>
                 </mat-icon>
               </button>
