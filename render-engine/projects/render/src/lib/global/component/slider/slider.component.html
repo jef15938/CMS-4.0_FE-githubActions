@@ -9,7 +9,7 @@
   <ng-container *ngIf="mode==='preview'">
     <swiper #Swiper [config]="config" [disabled]="disabled" (indexChange)="onIndexChange($event)"
       (swiperTransitionStart)="onSwiperEvent('transitionStart')" (swiperTransitionEnd)="onSwiperEvent('transitionEnd')">
-      <div *ngFor="let data of sourceData.datas" class="full-width">
+      <div *ngFor="let data of sourceData?.datas" class="full-width">
         <div style="position: absolute; top: 50%; transform: translateY(-50%); left: 0; width: 100%; text-align: center;">
           <div style="font-size: 64px;">{{data.title}}</div>
           <div style="font-size: 16px;">{{data.description}}</div>
