@@ -26,7 +26,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   @ViewChild('EditorContainer') private editorContainerElRef: ElementRef<HTMLDivElement>;
   @ViewChild('MenuTrigger') private editorMenu: MatMenuTrigger;
 
-  commonAncestorContainer: Node;
+  selectedTarget: Node;
 
   get editorContainer() { return this.editorContainerElRef?.nativeElement; }
   get isSelectionInsideEditorContainer() {
@@ -83,9 +83,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       const videoUrl = iframe.src;
       const img = document.createElement('img');
       img.setAttribute(ATTRIBUTE_FRAME_ID, videoUrl);
-      console.warn('videoUrl = ', videoUrl);
       img.src = YoutubeUtil.convertVideoUrlToImageUrl(videoUrl);
-      console.warn('img.src  = ', img.src );
       img.style.width = '100%';
       img.style.height = 'auto';
       parent.insertBefore(img, iframe);
@@ -133,13 +131,13 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
               || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'a')
               ;
             if (special) {
-              this.commonAncestorContainer = special;
+              this.selectedTarget = special;
               return;
             }
           }
         }
         // console.warn('document:selectionchange,  range = ', range);
-        this.commonAncestorContainer = range.commonAncestorContainer;
+        this.selectedTarget = range.commonAncestorContainer;
       }, 0);
     });
   }
@@ -229,6 +227,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
       if (!editorContainer.innerHTML) {
         editorContainer.innerHTML = this.defaultContent;
+        this.setFocusOnDefaultContent();
       }
     });
 
@@ -252,6 +251,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     if (ev.target === this.editorContainer) {
       return;
     }
+
     const target = ev.target as HTMLElement;
     const special =
       this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
@@ -260,7 +260,10 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     if (special) {
       this.evPreventDefaultAndStopPropagation(ev);
       this.simpleWysiwygService.setSelectionOnNode(special);
+      this.selectedTarget = special;
       return;
+    } else {
+      this.selectedTarget = target;
     }
   }
 
@@ -301,26 +304,35 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   doAction(action: HtmlEditorAction) {
     if (!action) { return; }
     if (!this.isSelectionInsideEditorContainer) { return; }
-
-    action.do().subscribe(_ => {
-
-    });
+    action.do().subscribe();
   }
 
   getContent() {
     const container = this.editorContainer.cloneNode(true) as HTMLElement;
+
+    let htmlString = container.innerHTML || '';
+
+    const regDivStart = new RegExp(/<div/, 'g');
+    const regDivEnd = new RegExp(/<\/div>/, 'g');
+    htmlString = htmlString.replace(regDivStart, '<p').replace(regDivEnd, '</p>');
+    container.innerHTML = htmlString;
+
     let nodes = [container];
     while (nodes && nodes.length) {
       nodes.forEach(node => {
-        node.classList?.remove('selected');
-        node.style?.removeProperty('outline');
-        if (node.tagName?.toLowerCase() === 'img' && node.getAttribute(ATTRIBUTE_FRAME_ID)) {
-          const frameId = node.getAttribute(ATTRIBUTE_FRAME_ID);
-          const iframe = document.createElement('iframe');
-          iframe.src = frameId;
-          iframe.setAttribute('style', 'width: 100%; height: 100%;');
-          node.parentNode.insertBefore(iframe, node);
-          node.parentNode.removeChild(node);
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          node.classList.remove('selected');
+          node.style.removeProperty('outline');
+          node.classList.add(`editor-${node.tagName.toLowerCase()}`);
+
+          if (node.tagName?.toLowerCase() === 'img' && node.getAttribute(ATTRIBUTE_FRAME_ID)) {
+            const frameId = node.getAttribute(ATTRIBUTE_FRAME_ID);
+            const iframe = document.createElement('iframe');
+            iframe.src = frameId;
+            iframe.setAttribute('style', 'width: 100%; height: 100%;');
+            node.parentNode.insertBefore(iframe, node);
+            node.parentNode.removeChild(node);
+          }
         }
       });
       nodes = nodes.reduce((a, b) => {
@@ -328,20 +340,22 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }, []);
     }
 
-    let htmlString = container.innerHTML || '';
 
-    const regDivStart = new RegExp(/<div/, 'g');
-    const regDivEnd = new RegExp(/<\/div>/, 'g');
-    htmlString = htmlString.replace(regDivStart, '<p').replace(regDivEnd, '</p>');
-    return htmlString;
+    return container.innerHTML || '';
   }
 
   onFocus(ev) {
+    setTimeout(() => {
+      this.setFocusOnDefaultContent();
+    }, 100);
+  }
+
+  private setFocusOnDefaultContent() {
     const editorContainer = this.editorContainer;
     if (editorContainer.innerHTML === this.defaultContent || editorContainer.innerHTML === '<p><br></p>') {
-      setTimeout(() => {
-        this.simpleWysiwygService.setSelectionOnNode(this.editorContainer.firstChild, 1);
-      }, 10);
+      const firstChild = this.editorContainer.firstChild;
+      this.simpleWysiwygService.setSelectionOnNode(this.editorContainer.firstChild, 1);
+      this.selectedTarget = this.editorContainer.firstChild;
     }
   }
 }

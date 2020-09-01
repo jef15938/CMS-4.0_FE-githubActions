@@ -16,14 +16,14 @@ export class HtmlEditorElementControllerFactory {
 
       switch (tagName) {
         case 'a':
-          if (el.classList?.contains(CLASS_NAME_EDITOR_LINK)) {
-            controller =
-              HtmlEditorElementControllerFactory.getController(el)
-              || new HtmlEditorLinkController(el as HTMLImageElement, context);
-          } else if (el.classList?.contains(CLASS_NAME_GALLERY_FILE)) {
+          if (el.classList?.contains(CLASS_NAME_GALLERY_FILE)) {
             controller =
               HtmlEditorElementControllerFactory.getController(el)
               || new HtmlEditorGalleryFileController(el as HTMLImageElement, context);
+          } else if (el.classList?.contains(CLASS_NAME_EDITOR_LINK)) {
+            controller =
+              HtmlEditorElementControllerFactory.getController(el)
+              || new HtmlEditorLinkController(el as HTMLImageElement, context);
           }
           break;
         case 'img':

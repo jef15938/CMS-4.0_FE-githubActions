@@ -12,7 +12,7 @@ export interface HtmlEditorContext {
   simpleWysiwygService: SimpleWysiwygService;
   modalService: ModalService;
   editorContainer: HTMLDivElement;
-  commonAncestorContainer: Node;
+  selectedTarget: Node;
   isSelectionInsideEditorContainer: boolean;
   doAction(action: HtmlEditorAction): void;
   checkInnerHtml(): void;

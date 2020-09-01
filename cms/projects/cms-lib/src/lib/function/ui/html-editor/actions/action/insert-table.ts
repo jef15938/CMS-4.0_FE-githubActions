@@ -47,11 +47,11 @@ export class InsertTable extends HtmlEditorActionBase {
 
   private findExistingTable(): HTMLTableElement {
     const range = this.context.simpleWysiwygService.getRange();
-    const commonAncestorContainer = range.commonAncestorContainer as HTMLElement;
-    const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLowerCase();
+    const selectedTarget = range.commonAncestorContainer as HTMLElement;
+    const selectedTargetTagName = selectedTarget?.tagName?.toLowerCase();
     const tableTagNames = ['td', 'th', 'tr', 'table', 'tbody', 'thead', 'tfoot'];
-    if (commonAncestorContainer && tableTagNames.indexOf(commonAncestorContainerTagName) > -1) {
-      let el = commonAncestorContainer;
+    if (selectedTarget && tableTagNames.indexOf(selectedTargetTagName) > -1) {
+      let el = selectedTarget;
       while (el) {
         const tagName = el.tagName?.toLowerCase();
         if (tagName === 'table') {

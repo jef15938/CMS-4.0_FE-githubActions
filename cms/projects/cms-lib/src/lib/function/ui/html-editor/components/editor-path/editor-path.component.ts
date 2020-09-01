@@ -23,7 +23,7 @@ export class EditorPathComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
       debounceTime(200),
     ).subscribe(_ => {
-      this.checkPath(this.context?.commonAncestorContainer as HTMLElement);
+      this.checkPath(this.context?.selectedTarget as HTMLElement);
     });
   }
 

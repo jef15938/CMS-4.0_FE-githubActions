@@ -35,16 +35,16 @@ export class ModifyFile extends HtmlEditorActionBase {
   }
 
   private getExistingFileLink(range: Range): HTMLAnchorElement {
-    const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
-    const commonAncestorContainerTagName = commonAncestorContainer?.tagName?.toLocaleLowerCase();
+    const selectedTarget = this.context.selectedTarget as HTMLElement;
+    const selectedTargetTagName = selectedTarget?.tagName?.toLocaleLowerCase();
     let aTag: HTMLAnchorElement;
 
-    if (commonAncestorContainerTagName === 'a') {
-      aTag = commonAncestorContainer as HTMLAnchorElement;
+    if (selectedTargetTagName === 'a') {
+      aTag = selectedTarget as HTMLAnchorElement;
     } else {
       // try to find the parent <a>
       if (!aTag) {
-        let parent = commonAncestorContainer.parentElement;
+        let parent = selectedTarget.parentElement;
         let a: HTMLAnchorElement;
         while (parent) {
           if (parent === this.context.editorContainer) {

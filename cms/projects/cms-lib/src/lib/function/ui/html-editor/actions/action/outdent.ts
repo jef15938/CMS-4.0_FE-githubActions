@@ -6,7 +6,7 @@ export class Outdent extends HtmlEditorActionBase {
   private readonly padding = 40;
 
   do() {
-    const selected = this.context.commonAncestorContainer as HTMLElement;
+    const selected = this.context.selectedTarget as HTMLElement;
     const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer, selected);
     if (rowRoot) {
       let padding = 0;

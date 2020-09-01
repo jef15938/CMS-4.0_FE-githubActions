@@ -5,7 +5,8 @@
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>網址</mat-label>
-            <input matInput [(ngModel)]="aTagConfig.href" name="url" required #modelUrl="ngModel">
+            <input matInput [(ngModel)]="aTagConfig.href" name="url" required #modelUrl="ngModel"
+              [disabled]="!canModifyUrl">
             <mat-error *ngIf="modelUrl?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
         </div>

@@ -13,6 +13,7 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase implemen
 
   @Input() aTag: HTMLAnchorElement;
   @Input() canModifyText: boolean;
+  @Input() canModifyUrl = true;
 
   aTagConfig: {
     href: string;

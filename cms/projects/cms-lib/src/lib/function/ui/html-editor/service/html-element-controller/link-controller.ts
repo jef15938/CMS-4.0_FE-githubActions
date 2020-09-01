@@ -38,7 +38,7 @@ export class HtmlEditorLinkController extends HtmlEditorElementController<HTMLIm
     if (!this.context.isSelectionInsideEditorContainer) { return; }
 
     const range = this.context.simpleWysiwygService.getRange();
-    if (this.context.simpleWysiwygService.isChildOf(range.commonAncestorContainer, this.el)) {
+    if (this.context.selectedTarget === this.el || this.context.simpleWysiwygService.isChildOf(range.commonAncestorContainer, this.el)) {
       this.onSelected();
     } else {
       this.onUnselected();

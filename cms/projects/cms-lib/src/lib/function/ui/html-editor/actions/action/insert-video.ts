@@ -8,9 +8,9 @@ export class InsertVideo extends HtmlEditorActionBase {
 
   do() {
     const editorContainer = this.context.editorContainer;
-    const commonAncestorContainer = this.context.commonAncestorContainer as HTMLElement;
-    const image = commonAncestorContainer?.tagName?.toLowerCase() === 'img' && commonAncestorContainer.getAttribute(ATTRIBUTE_FRAME_ID)
-      ? commonAncestorContainer as HTMLImageElement
+    const selectedTarget = this.context.selectedTarget as HTMLElement;
+    const image = selectedTarget?.tagName?.toLowerCase() === 'img' && selectedTarget.getAttribute(ATTRIBUTE_FRAME_ID)
+      ? selectedTarget as HTMLImageElement
       : undefined;
     // https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230
     const range = this.context.simpleWysiwygService.getRange();

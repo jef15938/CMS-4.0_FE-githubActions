@@ -1,5 +1,5 @@
 import { HtmlEditorLinkController } from './link-controller';
-import { ModifyFile } from '../../actions/action/_index';
+import { ModifyFile, CreateLink } from '../../actions/action/_index';
 
 
 export class HtmlEditorGalleryFileController extends HtmlEditorLinkController {
@@ -8,6 +8,7 @@ export class HtmlEditorGalleryFileController extends HtmlEditorLinkController {
     super.onAddToEditor();
     this.contextMenuItems = [
       { text: '變更檔案', icon: 'edit', action: new ModifyFile(this.context) },
+      { text: '連結', icon: 'link', action: new CreateLink(this.context) },
     ];
   }
 
