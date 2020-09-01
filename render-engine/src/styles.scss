@@ -8,3 +8,144 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.neux-editor {
+  font-size: 16px;
+  margin: 10px;
+  outline:none;
+
+  ol {
+    display: block;
+    list-style-type: decimal;
+  }
+
+  ul {
+    display: block;
+    list-style-type: disc;
+  }
+
+  ol, ul {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  }
+
+  img::-moz-selection {
+    /* Code for Firefox */
+    color: transparent !important;
+    background: transparent !important;
+  }
+
+  img::selection {
+    color: transparent !important;
+    background: transparent !important;
+  }
+
+  .highlight {
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    text-align: left;
+  }
+
+  .highlight-1 {
+    color: red;
+  }
+
+  .highlight-2 {
+    color: green;
+  }
+
+  .highlight-3 {
+    color: blue;
+  }
+
+  a.editor-link {
+    color: #0088cc;
+  }
+
+  a.gallery-file {
+    color: #0088cc;
+    text-decoration: none;
+  }
+
+  .neux-table {
+
+    &.selected {
+      outline: 3px solid #b4d7ff;
+    }
+
+    border-collapse:collapse;
+    border-spacing:0;
+    margin: 10px;
+
+    td {
+      font-family: Arial, sans-serif;
+      // font-size: 14px;
+      padding: 10px 5px;
+      border-style: solid;
+      border-width: 1px;
+      overflow: hidden;
+      word-break: normal;
+      border-color: black;
+    }
+
+    td.highlightTD {
+      background-color: rgba(212, 75, 22, 0.5);
+    }
+
+    td.selected {
+      background-color: lightblue;
+    }
+
+    th {
+      font-family: Arial, sans-serif;
+      // font-size: 14px;
+      font-weight: normal;
+      padding: 10px 5px;
+      border-style: solid;
+      border-width: 1px;
+      overflow: hidden;
+      word-break: normal;
+      border-color: black;
+    }
+
+    .tg-0pky {
+      border-color: inherit;
+      text-align: left;
+      vertical-align: top
+    }
+
+    .seleted {
+      background-color: silver;
+    }
+  }
+
+  .figure-color {
+    display: block;
+    border-color: salmon;
+    border-width: 3px;
+    float: left;
+    margin-right: 0.5%;
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+  .image-style-side {
+    max-width: 100%;
+    position: relative;
+    // float:left;
+  }
+
+  .item-hover:hover {
+    border: 2px green dashed;
+  }
+
+  .item-seleted {
+    border: 10px green dashed;
+  }
+}
