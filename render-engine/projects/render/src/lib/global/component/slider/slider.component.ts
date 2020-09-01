@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Injector } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector, Inject } from '@angular/core';
 import {
   SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface
@@ -8,6 +8,8 @@ import { SliderData } from './slider.interface';
 import { MOCK_SLIDER_DATA } from './slider.mock';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
 import { DataSourceType } from '../../enum';
+import { RENDER_ENVIROMENT_TOKEN } from '../../injection-token/injection-token';
+import { RenderEnvironment } from '../../interface/render-environment.interface';
 
 @Component({
   selector: 'rdr-slider',
@@ -53,6 +55,7 @@ export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData>
 
   constructor(
     injector: Injector,
+    @Inject(RENDER_ENVIROMENT_TOKEN) public enviroment: RenderEnvironment,
   ) {
     super(injector, MOCK_SLIDER_DATA);
   }

@@ -4,6 +4,7 @@
 
 
 const BASE_URL = 'http://runtime.decoder.com.tw';
+const RESOUCE_BASE_URL = 'https://cms.decoder.com.tw';
 const API_URL = {
   GetPageByPageIDAndLang: `${BASE_URL}\/Page/{pageID}/{lang}`,
   GetPageByPageID: `${BASE_URL}\/Page/{pageID}`,
@@ -40,6 +41,7 @@ const API_TYPE = {
 export const environment = {
   production: false,
   apiBaseUrl: BASE_URL,
+  resourceBaseUrl: RESOUCE_BASE_URL,
   API_URL,
   API_TYPE,
   google: {

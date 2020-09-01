@@ -1,7 +1,7 @@
 import { NgModule, Inject, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RenderModule, WrapperModule, RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN } from '@neux/render';
+import { RenderModule, WrapperModule, RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN, RENDER_ENVIROMENT_TOKEN } from '@neux/render';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS } from './global/const/render-app-shell-no-render-component-ids';
@@ -38,6 +38,7 @@ import { BrowserStateInterceptor } from '@neux/render';
     ...RenderModule.forRoot().providers,
     { provide: RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN, useValue: RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS },
     { provide: API_CONFIG_TOKEN, useValue: environment },
+    { provide: RENDER_ENVIROMENT_TOKEN, useValue: environment },
     { provide: API_HEADER_TOKEN, useExisting: GlobalHeader },
     {
       provide: HTTP_INTERCEPTORS,
