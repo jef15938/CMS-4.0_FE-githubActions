@@ -1,6 +1,6 @@
 {
   "name": "@neux/render",
-  "version": "0.0.2-next.24",
+  "version": "0.0.2-next.25",
   "peerDependencies": {
     "@angular/common": "^10.0.1",
     "@angular/core": "^10.0.1",

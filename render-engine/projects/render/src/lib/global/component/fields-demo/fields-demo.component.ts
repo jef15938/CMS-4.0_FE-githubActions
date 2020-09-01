@@ -1,6 +1,8 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, Inject } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
+import { RENDER_ENVIROMENT_TOKEN } from '../../injection-token/injection-token';
+import { RenderEnvironment } from '../../interface/render-environment.interface';
 
 @Component({
   selector: 'rdr-fields-demo',
@@ -18,6 +20,7 @@ export class FieldsDemoComponent extends CommonTemplateBaseComponent implements 
 
   constructor(
     injector: Injector,
+    @Inject(RENDER_ENVIROMENT_TOKEN) public enviroment: RenderEnvironment,
   ) {
     super(injector);
   }

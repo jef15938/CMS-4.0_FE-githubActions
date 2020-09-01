@@ -1,6 +1,6 @@
 <ng-container *ngIf="templateInfo">
   <div style="padding: 10px;" [libLayoutFieldBgimg]="templateInfo?.fields | getFieldFromFieldsById:'bg'"
-    #fieldBgimg="field" [style.background]="'url('+fieldBgimg.fieldInfo?.fieldVal+')'" [adviceWidth]="500"
+    #fieldBgimg="field" [style.background]="'url('+enviroment.resourceBaseUrl+fieldBgimg.fieldInfo?.fieldVal+')'" [adviceWidth]="500"
     [adviceHeight]="300" adviceFormat="bmp">
     <div style="text-align: center;" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'"
       #fieldText="field" [maxLength]="16">
@@ -11,7 +11,7 @@
       <div style="float: left; padding: 10px; height:300px; width: 300px; max-height: 100%;"
         [libLayoutFieldImg]="templateInfo?.fields | getFieldFromFieldsById:'img'" #fieldImg="field" [adviceWidth]="160"
         [adviceHeight]="90" adviceFormat="jpg">
-        <img [alt]="fieldImg.fieldInfo?.extension?.altValue" [src]="fieldImg.fieldInfo?.fieldVal"
+        <img [alt]="fieldImg.fieldInfo?.extension?.altValue" [src]="enviroment.resourceBaseUrl+fieldImg.fieldInfo?.fieldVal"
           style="width: 100%; height: auto; max-height: 100%;">
       </div>
       <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo?.fields | getFieldFromFieldsById:'article'"
