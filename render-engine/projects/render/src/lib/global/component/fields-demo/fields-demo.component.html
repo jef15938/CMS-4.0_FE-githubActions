@@ -16,7 +16,7 @@
       </div>
       <div style="padding: 10px;" [libLayoutFieldTextarea]="templateInfo?.fields | getFieldFromFieldsById:'article'"
         #fieldTextarea="field" [maxLength]="-1" [maxLines]="5"
-        [innerHTML]="fieldTextarea.fieldInfo?.fieldVal | newLineReplace | safeHtml">
+        [innerHTML]="fieldTextarea.fieldInfo?.fieldVal | newLineReplace | addResourceBaseUrl | safeHtml">
       </div>
     </div>
 
