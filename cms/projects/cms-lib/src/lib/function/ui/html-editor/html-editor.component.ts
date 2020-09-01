@@ -77,6 +77,17 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     const div = document.createElement('div');
     div.innerHTML = htmlString;
 
+    const imgs = Array.from(div.querySelectorAll(`img[${ATTRIBUTE_GALLERY_ID}]`));
+    imgs.forEach(img => {
+      const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+      if (galleryID) {
+        const src = img.getAttribute('src');
+        if (src.indexOf(this.environment.apiBaseUrl) < 0) {
+          img.setAttribute('src', `${this.environment.apiBaseUrl}${src}`);
+        }
+      }
+    });
+
     const iframes = Array.from(div.querySelectorAll('iframe'));
     iframes.forEach(iframe => {
       const parent = iframe.parentElement;
@@ -340,6 +351,16 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }, []);
     }
 
+    const imgs = Array.from(container.querySelectorAll(`img[${ATTRIBUTE_GALLERY_ID}]`));
+    imgs.forEach(img => {
+      const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+      if (galleryID) {
+        const src = img.getAttribute('src');
+        if (src.indexOf(this.environment.apiBaseUrl) > -1) {
+          img.setAttribute('src', img.getAttribute('src').replace(this.environment.apiBaseUrl, ''));
+        }
+      }
+    });
 
     return container.innerHTML || '';
   }

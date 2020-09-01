@@ -117,20 +117,20 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         templates.forEach(template => {
           template.fields.forEach(field => {
             if (field.fieldType === ContentFieldInfoFieldType.HTMLEDITOR) {
-              const htmlString = field.fieldVal;
-              const container = document.createElement('div');
-              container.innerHTML = htmlString;
-              const imgs = Array.from(container.querySelectorAll('img'));
-              imgs.forEach(img => {
-                const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
-                if (galleryID) {
-                  const src = img.getAttribute('src');
-                  if (src.indexOf(this.environment.apiBaseUrl) < 0) {
-                    img.setAttribute('src', `${this.environment.apiBaseUrl}${src}`);
-                  }
-                }
-              });
-              field.fieldVal = container.innerHTML;
+              // const htmlString = field.fieldVal;
+              // const container = document.createElement('div');
+              // container.innerHTML = htmlString;
+              // const imgs = Array.from(container.querySelectorAll('img'));
+              // imgs.forEach(img => {
+              //   const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+              //   if (galleryID) {
+              //     const src = img.getAttribute('src');
+              //     if (src.indexOf(this.environment.apiBaseUrl) < 0) {
+              //       img.setAttribute('src', `${this.environment.apiBaseUrl}${src}`);
+              //     }
+              //   }
+              // });
+              // field.fieldVal = container.innerHTML;
             }
           });
           if (isTabTemplateInfo(template)) {
@@ -156,20 +156,20 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         templates.forEach(template => {
           template.fields.forEach(field => {
             if (field.fieldType === ContentFieldInfoFieldType.HTMLEDITOR) {
-              const htmlString = field.fieldVal;
-              const container = document.createElement('div');
-              container.innerHTML = htmlString;
-              const imgs = Array.from(container.querySelectorAll('img'));
-              imgs.forEach(img => {
-                const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
-                if (galleryID) {
-                  const src = img.getAttribute('src');
-                  if (src.indexOf(this.environment.apiBaseUrl) > -1) {
-                    img.setAttribute('src', `${src.replace(this.environment.apiBaseUrl, '')}`);
-                  }
-                }
-              });
-              field.fieldVal = container.innerHTML;
+              // const htmlString = field.fieldVal;
+              // const container = document.createElement('div');
+              // container.innerHTML = htmlString;
+              // const imgs = Array.from(container.querySelectorAll('img'));
+              // imgs.forEach(img => {
+              //   const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+              //   if (galleryID) {
+              //     const src = img.getAttribute('src');
+              //     if (src.indexOf(this.environment.apiBaseUrl) > -1) {
+              //       img.setAttribute('src', `${src.replace(this.environment.apiBaseUrl, '')}`);
+              //     }
+              //   }
+              // });
+              // field.fieldVal = container.innerHTML;
             }
           });
           if (isTabTemplateInfo(template)) {
