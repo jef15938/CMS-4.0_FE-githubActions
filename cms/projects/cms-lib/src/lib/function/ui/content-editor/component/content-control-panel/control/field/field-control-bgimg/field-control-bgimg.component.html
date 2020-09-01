@@ -16,7 +16,7 @@
   <div class="field-control-bgImg__input">
     <mat-form-field appearance="outline">
       <mat-label>圖片連結</mat-label>
-      <input matInput [(ngModel)]="fieldInfo.fieldVal" (keydown)="change.emit()">
+      <input matInput [(ngModel)]="fieldInfo.fieldVal" (keydown)="change.emit()" readonly>
     </mat-form-field>
   </div>
 </div>
