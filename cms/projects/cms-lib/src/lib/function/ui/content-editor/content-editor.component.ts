@@ -83,7 +83,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   ngOnInit(): void {
-    const contentInfo: ContentInfoModel = this.convertToEditorContent(this.contentInfo);
+    const contentInfo: ContentInfoModel = this.contentInfo;
     this.cmsCanDeactiveGuard.registerAsGuardian(this);
     this.resetSelected();
     this.manager = new ContentEditorManager(contentInfo);
@@ -108,84 +108,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     this.registerClickCaptureListener('unregister');
   }
 
-  private convertToEditorContent(contentInfo: ContentInfoModel): ContentInfoModel {
-    const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfoModel;
-    info.languages.forEach(lang => {
-      let templates = lang.blocks.map(b => b.templates).reduce((a, b) => a.concat(b), [] as ContentTemplateInfoModel[]);
-      while (templates?.length) {
-        let tempTemplates: ContentTemplateInfoModel[] = [];
-        templates.forEach(template => {
-          template.fields.forEach(field => {
-            if (field.fieldType === ContentFieldInfoFieldType.HTMLEDITOR) {
-              // const htmlString = field.fieldVal;
-              // const container = document.createElement('div');
-              // container.innerHTML = htmlString;
-              // const imgs = Array.from(container.querySelectorAll('img'));
-              // imgs.forEach(img => {
-              //   const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
-              //   if (galleryID) {
-              //     const src = img.getAttribute('src');
-              //     if (src.indexOf(this.environment.apiBaseUrl) < 0) {
-              //       img.setAttribute('src', `${this.environment.apiBaseUrl}${src}`);
-              //     }
-              //   }
-              // });
-              // field.fieldVal = container.innerHTML;
-            }
-          });
-          if (isTabTemplateInfo(template)) {
-            tempTemplates = tempTemplates.concat(((template as any) as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
-          }
-          if (isFixedWrapper(template)) {
-            tempTemplates = tempTemplates.concat(((template.attributes?.templates as ContentTemplateInfoModel[]) || [])
-              .reduce((a, b) => a.concat(b), []));
-          }
-        });
-        templates = tempTemplates;
-      }
-    });
-    return info;
-  }
-
-  private convertEditorContentToData(contentInfo: ContentInfoModel): ContentInfoModel {
-    const info = JSON.parse(JSON.stringify(contentInfo)) as ContentInfoModel;
-    info.languages.forEach(lang => {
-      let templates = lang.blocks.map(b => b.templates).reduce((a, b) => a.concat(b), [] as ContentTemplateInfoModel[]);
-      while (templates?.length) {
-        let tempTemplates: ContentTemplateInfoModel[] = [];
-        templates.forEach(template => {
-          template.fields.forEach(field => {
-            if (field.fieldType === ContentFieldInfoFieldType.HTMLEDITOR) {
-              // const htmlString = field.fieldVal;
-              // const container = document.createElement('div');
-              // container.innerHTML = htmlString;
-              // const imgs = Array.from(container.querySelectorAll('img'));
-              // imgs.forEach(img => {
-              //   const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
-              //   if (galleryID) {
-              //     const src = img.getAttribute('src');
-              //     if (src.indexOf(this.environment.apiBaseUrl) > -1) {
-              //       img.setAttribute('src', `${src.replace(this.environment.apiBaseUrl, '')}`);
-              //     }
-              //   }
-              // });
-              // field.fieldVal = container.innerHTML;
-            }
-          });
-          if (isTabTemplateInfo(template)) {
-            tempTemplates = tempTemplates.concat(((template as any) as TabTemplateInfo).tabList.reduce((a, b) => a.concat(b.children), []));
-          }
-          if (isFixedWrapper(template)) {
-            tempTemplates = tempTemplates.concat(((template.attributes?.templates as ContentTemplateInfoModel[]) || [])
-              .reduce((a, b) => a.concat(b), []));
-          }
-        });
-        templates = tempTemplates;
-      }
-    });
-    return info;
-  }
-
   setEditorUnsaved() {
     this.saved = false;
   }
@@ -205,9 +127,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   private getCurrentContent() {
-    const contentInfo: ContentInfoModel = this.convertEditorContentToData(
-      JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel))
-    );
+    const contentInfo: ContentInfoModel = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
     let galleryIds: string[] = [];
 
     let templates: ContentTemplateInfoModel[] = contentInfo.languages
