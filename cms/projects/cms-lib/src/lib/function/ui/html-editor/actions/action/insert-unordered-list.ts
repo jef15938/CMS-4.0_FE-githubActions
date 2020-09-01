@@ -22,7 +22,8 @@ export class InsertUnorderedList extends DomCmdAction {
 
     const level = (closestUl ? (+closestUl.getAttribute('level')) : 0) + 1;
     newUl.setAttribute('level', `${level}`);
-    li.innerText = `階層 (${level})`;
+    const textNode = document.createTextNode(`階層 (${level})`);
+    li.appendChild(textNode);
 
     let parent = selected.parentElement;
     let insertBefore = selected;
@@ -40,6 +41,8 @@ export class InsertUnorderedList extends DomCmdAction {
     } else {
       parent.appendChild(newUl);
     }
+
+    this.context.simpleWysiwygService.setSelectionOnNode(textNode, 1, 1);
 
     return of(undefined);
   }
