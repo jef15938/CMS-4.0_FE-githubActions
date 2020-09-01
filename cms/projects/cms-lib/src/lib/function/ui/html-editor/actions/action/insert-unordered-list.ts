@@ -1,19 +1,60 @@
-import { HtmlEditorActionBase } from '../action.base';
+import { DomCmdAction } from '../action.base';
 import { of } from 'rxjs';
 
-export class InsertUnorderedList extends HtmlEditorActionBase {
+export class InsertUnorderedList extends DomCmdAction {
+
+  commandId = 'insertUnorderedList';
+
   do() {
     const selected = this.context.selectedTarget as HTMLElement;
-    console.warn('selected = ', selected);
-    // const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer, selected);
-    // if (rowRoot) {
-    //   let padding = this.padding;
-    //   const paddingLeft = rowRoot.style.getPropertyValue('padding-left');
-    //   if (paddingLeft) {
-    //     padding += +paddingLeft.replace('px', '');
-    //   }
-    //   rowRoot.style.setProperty('padding-left', `${padding}px`);
-    // }
+    // console.warn('selected = ', selected);
+
+    if (selected === this.context.editorContainer) {
+      return of(undefined);
+    }
+
+    const closestUl = this.findClosestUl(selected, this.context.editorContainer);
+    // console.warn('closestUl = ', closestUl);
+
+    const newUl = document.createElement('ul');
+    const li = document.createElement('li');
+    newUl.appendChild(li);
+
+    const level = (closestUl ? (+closestUl.getAttribute('level')) : 0) + 1;
+    newUl.setAttribute('level', `${level}`);
+    li.innerText = `階層 (${level})`;
+
+    let parent = selected.parentElement;
+    let insertBefore = selected;
+    if (parent.tagName.toLowerCase() === 'li' || parent.tagName.toLowerCase() === 'p') {
+      insertBefore = parent;
+      parent = parent.parentElement;
+    }
+
+    insertBefore = insertBefore.nextElementSibling as HTMLElement;
+
+    // console.warn({ parent, insertBefore });
+
+    if (insertBefore) {
+      parent.insertBefore(newUl, insertBefore);
+    } else {
+      parent.appendChild(newUl);
+    }
+
     return of(undefined);
+  }
+
+  private findClosestUl(selected: HTMLElement, editorContainer: HTMLDivElement) {
+    let closest = selected;
+    while (closest) {
+      if (selected === editorContainer || !editorContainer.contains(selected)) {
+        return undefined;
+      }
+      if (closest.nodeType === Node.ELEMENT_NODE && (closest.tagName.toLowerCase() === 'ul')) {
+        return closest;
+      }
+      closest = closest.parentElement;
+    }
+    return closest;
   }
 }
