@@ -127,61 +127,99 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   private getCurrentContent() {
-    const contentInfo: ContentInfoModel = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
     let galleryIds: string[] = [];
 
-    let templates: ContentTemplateInfoModel[] = contentInfo.languages
-      .reduce((a, b) => a.concat(b.blocks || []), [] as ContentBlockInfoModel[])
-      .map(block => block.templates)
-      .reduce((a, b) => a.concat(b || []), [] as ContentTemplateInfoModel[]);
-
-    // 循環檢查 TemplateInfo 內是否用到 gallery 檔案，找出 galleryID
-    while (templates.length) {
-      let children: ContentTemplateInfoModel[] = [];
-
-      templates.forEach(template => {
-        template.fields.forEach(field => {
-          switch (field.fieldType) {
-            case ContentFieldInfoFieldType.HTMLEDITOR:
-              const htmlString = field.fieldVal || '';
-              const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
-              const matches = htmlString.match(galleryIdRegex);
-              const ids = matches?.map(str => str.replace('gallery-id="', '').replace('"', '')) || [];
-              galleryIds = [...galleryIds, ...ids];
-              break;
-            case ContentFieldInfoFieldType.IMG:
-              const imgGalleryID = field.extension['gallery-id'];
-              if (imgGalleryID) {
-                galleryIds.push(imgGalleryID);
-              }
-              break;
-            case ContentFieldInfoFieldType.BGIMG:
-              const bgimgGalleryID = field.extension['gallery-id'];
-              if (bgimgGalleryID) {
-                galleryIds.push(bgimgGalleryID);
-              }
-              break;
-          }
+    // 調整抓取 gallery-id 方式，本來用資料抓會需要針對特定資料欄位，現在用元件 instance 抓
+    let templatesContainers = Array.from(this.contentViewRenderer.templatesContainers);
+    while (templatesContainers.length) {
+      templatesContainers.forEach(templatesContainer => {
+        templatesContainer.templates.forEach(template => {
+          template.fields.forEach(field => {
+            switch (field.fieldType) {
+              case ContentFieldInfoFieldType.HTMLEDITOR:
+                const htmlString = field.fieldVal || '';
+                const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
+                const matches = htmlString.match(galleryIdRegex);
+                const ids = matches?.map(str => str.replace('gallery-id="', '').replace('"', '')) || [];
+                galleryIds = [...galleryIds, ...ids];
+                break;
+              case ContentFieldInfoFieldType.IMG:
+                const imgGalleryID = field.extension['gallery-id'];
+                if (imgGalleryID) {
+                  galleryIds.push(imgGalleryID);
+                }
+                break;
+              case ContentFieldInfoFieldType.BGIMG:
+                const bgimgGalleryID = field.extension['gallery-id'];
+                if (bgimgGalleryID) {
+                  galleryIds.push(bgimgGalleryID);
+                }
+                break;
+            }
+          });
         });
-
-        if (isTabTemplateInfo(template)) {
-          children = [
-            ...children,
-            ...((template as any) as TabTemplateInfo).tabList
-              .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, ...(b.children as any[])], [])
-          ];
-        }
-        if (isFixedWrapper(template)) {
-          children = [
-            ...children,
-            ...((template.attributes?.templates as ContentTemplateInfoModel[]) || [])
-              .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, b], [])
-          ];
-        }
       });
 
-      templates = children;
+      templatesContainers = templatesContainers.map(templatesContainer =>
+        templatesContainer.layoutWrapperComponents.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
+          .reduce((a, b) => a.concat(b), [])
+      ).reduce((a, b) => a.concat(b), []);
     }
+
+    const contentInfo: ContentInfoModel = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
+
+    // let templates: ContentTemplateInfoModel[] = contentInfo.languages
+    //   .reduce((a, b) => a.concat(b.blocks || []), [] as ContentBlockInfoModel[])
+    //   .map(block => block.templates)
+    //   .reduce((a, b) => a.concat(b || []), [] as ContentTemplateInfoModel[]);
+
+    // // 循環檢查 TemplateInfo 內是否用到 gallery 檔案，找出 galleryID
+    // while (templates.length) {
+    //   let children: ContentTemplateInfoModel[] = [];
+
+    //   templates.forEach(template => {
+    //     template.fields.forEach(field => {
+    //       switch (field.fieldType) {
+    //         case ContentFieldInfoFieldType.HTMLEDITOR:
+    //           const htmlString = field.fieldVal || '';
+    //           const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
+    //           const matches = htmlString.match(galleryIdRegex);
+    //           const ids = matches?.map(str => str.replace('gallery-id="', '').replace('"', '')) || [];
+    //           galleryIds = [...galleryIds, ...ids];
+    //           break;
+    //         case ContentFieldInfoFieldType.IMG:
+    //           const imgGalleryID = field.extension['gallery-id'];
+    //           if (imgGalleryID) {
+    //             galleryIds.push(imgGalleryID);
+    //           }
+    //           break;
+    //         case ContentFieldInfoFieldType.BGIMG:
+    //           const bgimgGalleryID = field.extension['gallery-id'];
+    //           if (bgimgGalleryID) {
+    //             galleryIds.push(bgimgGalleryID);
+    //           }
+    //           break;
+    //       }
+    //     });
+
+    //     if (isTabTemplateInfo(template)) {
+    //       children = [
+    //         ...children,
+    //         ...((template as any) as TabTemplateInfo).tabList
+    //           .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, ...(b.children as any[])], [])
+    //       ];
+    //     }
+    //     if (isFixedWrapper(template)) {
+    //       children = [
+    //         ...children,
+    //         ...((template.attributes?.templates as ContentTemplateInfoModel[]) || [])
+    //           .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, b], [])
+    //       ];
+    //     }
+    //   });
+
+    //   templates = children;
+    // }
 
     contentInfo.galleries = [...new Set(galleryIds)].sort();
 
