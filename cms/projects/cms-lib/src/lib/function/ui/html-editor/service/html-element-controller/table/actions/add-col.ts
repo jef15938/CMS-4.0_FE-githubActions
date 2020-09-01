@@ -58,9 +58,9 @@ export class AddCol extends HtmlEditorActionBase {
         const start = startEnd.colStart;
         const stop = startEnd.colEnd - 1;
         if (index >= start && index <= stop) {
-          if (tmpTD.colSpan > 1) {
-            tmpTD.colSpan = tmpTD.colSpan + 1;
-          } else {
+          // if (tmpTD.colSpan > 1) { // 決定 colSpan > 1 的 col，新增 col 時要不要被包含在 col 內，註解掉就是不包含
+          //   tmpTD.colSpan = tmpTD.colSpan + 1;
+          // } else {
             const newCell = this.controller.tableControllerService.createCell('new');
             const insertBefore = tmpTD.nextElementSibling;
             if (insertBefore) {
@@ -69,7 +69,7 @@ export class AddCol extends HtmlEditorActionBase {
               tmpTD.parentNode.appendChild(newCell);
             }
             break;
-          }
+          // }
         }
 
       }
