@@ -129,7 +129,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   private getCurrentContent() {
     let galleryIds: string[] = [];
 
-    // 調整抓取 gallery-id 方式，本來用資料抓會需要針對特定資料欄位，現在用元件 instance 抓
+    // 調整抓取 gallery-id 方式，本來用資料抓會需要針對特定資料欄位寫死，現在直接用元件 instance 抓
     let templatesContainers = Array.from(this.contentViewRenderer.templatesContainers);
     while (templatesContainers.length) {
       templatesContainers.forEach(templatesContainer => {
