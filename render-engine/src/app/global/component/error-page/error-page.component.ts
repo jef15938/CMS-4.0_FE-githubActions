@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'rdr-error-page',
@@ -7,7 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ErrorPageComponent implements OnInit {
 
-  constructor() { }
+  error: any;
+
+  constructor(
+    private router: Router
+  ) {
+    const currentNavigation = this.router.getCurrentNavigation();
+    console.warn('ErrorPageComponent currentNavigation = ', currentNavigation);
+    const error = currentNavigation?.extras?.state?.error;
+    this.error = error;
+    console.warn('ErrorPageComponent error = ', error);
+  }
 
   ngOnInit(): void {
   }

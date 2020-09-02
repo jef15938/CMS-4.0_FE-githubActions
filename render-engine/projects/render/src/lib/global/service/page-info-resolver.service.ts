@@ -68,7 +68,7 @@ export class PageInfoResolverService implements Resolve<PageData> {
     }).pipe(
       catchError(error => {
         console.log('error:', error);
-        this.router.navigate(['error-page']);
+        this.router.navigate(['error-page'], { state: { error } });
         return throwError(error);
       })
     );
