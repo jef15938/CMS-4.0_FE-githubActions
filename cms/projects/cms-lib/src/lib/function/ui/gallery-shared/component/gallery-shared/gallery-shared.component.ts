@@ -15,7 +15,7 @@ import { GalleryInfoModel } from '../../../../../global/api/data-model/models/ga
 import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/models/gallery-category-info.model';
 import { PageInfoModel } from '../../../../../global/api/data-model/models/page-info.model';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
-import { MatSelect } from '@angular/material/select';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-gallery-shared',
@@ -146,11 +146,14 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
         }
       })),
       this.getGallery(),
+    ).pipe(
+      CmsErrorHandler.rxHandleError('取得媒體庫資料錯誤'),
     );
   }
 
   private getCategories() {
     return this.galleryService.getGalleryCategory().pipe(
+      // CmsErrorHandler.rxMapError(this.error.setMessage('getGalleryByCategoryID')),
       tap(categories => this.categories = categories)
     );
   }

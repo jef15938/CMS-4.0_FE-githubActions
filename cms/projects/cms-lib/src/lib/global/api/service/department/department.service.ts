@@ -10,11 +10,15 @@ import { DepartmentInfoModel } from '../../data-model/models/department-info.mod
 import { DepartmentDetailInfo } from '../../neuxAPI/bean/DepartmentDetailInfo';
 import { DepartmentDetailInfoModel } from '../../data-model/models/department-detail-info.model';
 import { DepartmentMaintainRequest } from '../../neuxAPI/bean/DepartmentMaintainRequest';
+import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
+import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
+
+  error = new CmsApiServiceError({ name: 'DepartmentService' });
 
   constructor(
     private restAPIService: RestApiService
@@ -50,7 +54,9 @@ export class DepartmentService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PostDepartmentByDeptID', params);
+    return this.restAPIService.dispatchRestApi('PostDepartmentByDeptID', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('createDepartment')),
+    );
   }
 
   /**
@@ -65,7 +71,9 @@ export class DepartmentService {
       throw new ParamsError('deptID', 'deleteDepartment', 'string', deptID);
     }
 
-    return this.restAPIService.dispatchRestApi('DeleteDepartmentByDeptID', { deptID });
+    return this.restAPIService.dispatchRestApi('DeleteDepartmentByDeptID', { deptID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('deleteDepartment')),
+    );
   }
 
   /**
@@ -76,6 +84,7 @@ export class DepartmentService {
    */
   getAllDepartment(): Observable<DepartmentInfoModel[]> {
     return this.restAPIService.dispatchRestApi<DepartmentGetResponse>('GetDepartment', {}).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getAllDepartment')),
       ModelMapper.rxMapModelTo(DepartmentGetResponseModel),
       map(res => res.datas)
     );
@@ -94,6 +103,7 @@ export class DepartmentService {
     }
 
     return this.restAPIService.dispatchRestApi<DepartmentDetailInfo>('GetDepartmentByDeptID', { deptID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getDepartmentByID')),
       ModelMapper.rxMapModelTo(DepartmentDetailInfoModel)
     );
   }
@@ -126,6 +136,8 @@ export class DepartmentService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutDepartmentByDeptID', params);
+    return this.restAPIService.dispatchRestApi('PutDepartmentByDeptID', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('updateDepartment')),
+    );
   }
 }

@@ -20,11 +20,15 @@ import { UserSiteMapPostRequestModel } from '../../data-model/models/user-sitema
 import { UserSiteMapPostRequest } from '../../neuxAPI/bean/UserSiteMapPostRequest';
 import { SiteNodeDetailInfoModel } from '../../data-model/models/site-node-detail-info.model';
 import { UserSiteMapPutRequestModel } from '../../data-model/models/user-sitemap-put-request.model';
+import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
+import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SitemapService {
+
+  error = new CmsApiServiceError({ name: 'SitemapService' });
 
   constructor(
     private restAPIService: RestApiService
@@ -59,7 +63,9 @@ export class SitemapService {
     const requestBody: UserSiteMapPostRequest = ModelMapper
       .map(UserSiteMapPostRequestModel, UserSiteMapPostRequest, userSiteMapPostRequestModel);
 
-    return this.restAPIService.dispatchRestApi('PostUserSiteMapBySiteID', { siteID, requestBody });
+    return this.restAPIService.dispatchRestApi('PostUserSiteMapBySiteID', { siteID, requestBody }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('createSiteNode')),
+    );
   }
 
   /**
@@ -73,7 +79,9 @@ export class SitemapService {
     if (!nodeID) {
       throw new ParamsError('nodeID', 'deleteUserSiteMap', 'string', nodeID);
     }
-    return this.restAPIService.dispatchRestApi('DeleteUserSiteMapByNodeID', { nodeID });
+    return this.restAPIService.dispatchRestApi('DeleteUserSiteMapByNodeID', { nodeID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('deleteUserSiteMap')),
+    );
   }
 
   /**
@@ -84,6 +92,7 @@ export class SitemapService {
    */
   getCMSSiteMap(siteID: string): Observable<SiteMapGetResponseModel[]> {
     return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetSiteBySiteID', { siteID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getCMSSiteMap')),
       ModelMapper.rxMapModelTo(SiteMapGetResponseModel),
       map(res => [res])
     );
@@ -97,6 +106,7 @@ export class SitemapService {
    */
   getUserSiteMapNodes(siteID: string): Observable<SiteMapGetResponseModel[]> {
     return this.restAPIService.dispatchRestApi<SiteMapGetResponse>('GetUserSiteMapBySiteID', { siteID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getUserSiteMapNodes')),
       ModelMapper.rxMapModelTo(SiteMapGetResponseModel),
       map(res => [res])
     );
@@ -111,6 +121,7 @@ export class SitemapService {
    */
   getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeGetResponseModel> {
     return this.restAPIService.dispatchRestApi<SiteMapNodeGetResponse>('GetSiteBySiteIDAndNodeID', { siteID, nodeID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getUserSiteMapNodeByNodeId')),
       ModelMapper.rxMapModelTo(SiteMapNodeGetResponseModel),
     );
   }
@@ -149,7 +160,9 @@ export class SitemapService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutUserSiteMapByNodeID', params);
+    return this.restAPIService.dispatchRestApi('PutUserSiteMapByNodeID', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('PutUserSiteMapByNodeID')),
+    );
   }
 
   /**
@@ -159,6 +172,7 @@ export class SitemapService {
    */
   getSiteList(): Observable<SiteInfoModel[]> {
     return this.restAPIService.dispatchRestApi<SiteGetResponse>('GetSite', {}).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getSiteList')),
       ModelMapper.rxMapModelTo(SiteGetResponseModel),
       map(res => res.datas)
     );
@@ -188,7 +202,9 @@ export class SitemapService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PostSitemapAuditingByNodeId', params);
+    return this.restAPIService.dispatchRestApi('PostSitemapAuditingByNodeId', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('PostSitemapAuditingByNodeId')),
+    );
   }
 
   /**
@@ -201,6 +217,7 @@ export class SitemapService {
   getPreviewInfo(nodeID: string, languageID?: string): Observable<PreviewInfoModel> {
     if (!nodeID) { throw new ParamsError('nodeID', 'getPreviewInfo', 'string', nodeID); }
     return this.restAPIService.dispatchRestApi<PreviewInfo>('GetSitemapPreviewByNodeID', { nodeID, language_id: languageID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getPreviewInfo')),
       ModelMapper.rxMapModelTo(PreviewInfoModel),
     );
   }
@@ -228,6 +245,8 @@ export class SitemapService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutReOrderSiteMapByNodeID', params);
+    return this.restAPIService.dispatchRestApi('PutReOrderSiteMapByNodeID', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('PutReOrderSiteMapByNodeID')),
+    );
   }
 }

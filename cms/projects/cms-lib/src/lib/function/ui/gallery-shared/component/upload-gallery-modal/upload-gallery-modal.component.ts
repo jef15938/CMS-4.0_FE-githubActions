@@ -8,7 +8,7 @@ import { CustomModalBase, CustomModalActionButton, ModalService } from '../../..
 import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
-import { CmsMediaError, CmsErrorHandler } from '../../../../../global/error-handling';
+import { CmsFunctionError, CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-upload-gallery-modal',
@@ -169,7 +169,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       });
       fileUpload.click();
     } catch (error) {
-      CmsErrorHandler.throwError(error, new CmsMediaError().setMessage('UploadGalleryModalComponent.addFiles()'));
+      CmsErrorHandler.throw(error, new CmsFunctionError().setMessage('UploadGalleryModalComponent.addFiles()'));
     }
   }
 

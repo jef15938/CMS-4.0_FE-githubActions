@@ -4,13 +4,13 @@ export class CmsError {
   // tslint:disable-next-line: variable-name
   private _name = 'CmsError';
   // tslint:disable-next-line: variable-name
-  private _message = 'CmsError';
+  private _message = '系統錯誤';
   // tslint:disable-next-line: variable-name
   private _messages: string[] = [];
   // tslint:disable-next-line: variable-name
-  private _title = 'CmsError';
+  private _title = '';
   // tslint:disable-next-line: variable-name
-  private _description = 'CmsError';
+  private _description = '系統錯誤';
   // tslint:disable-next-line: variable-name
   private _stacks: string[] = [];
 
@@ -37,18 +37,28 @@ export class CmsError {
     this._description = config.description || this._description;
   }
 
+  setName(name: string) {
+    if (name) { this._name = name; }
+    return this;
+  }
+
   setMessage(message: string) {
     if (message) { this._message = message; }
     return this;
   }
 
   addMessage(message: string) {
-    if (message) { this._messages.push(message); }
+    if (message) { this._messages.unshift(message); }
+    return this;
+  }
+
+  setDescription(description: string) {
+    if (description) { this._description = description; }
     return this;
   }
 
   addStack(stack: string) {
-    if (stack) { this._stacks.push(stack); }
+    if (stack) { this._stacks.unshift(stack); }
     return this;
   }
 }

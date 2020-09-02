@@ -14,11 +14,15 @@ import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
 import { MyAuditingGetResponseModel } from '../../data-model/models/my-auditing-get-response.model';
 import { MyAuditingDetailInfoModel } from '../../data-model/models/my-auditing-detail-info.model';
 import { MyAuditingDetailGetResponseModel } from '../../data-model/models/my-auditing-detail-get-response.model';
+import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
+import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuditingService {
+
+  error = new CmsApiServiceError({ name: 'AuditingService' });
 
   constructor(
     private restAPIService: RestApiService
@@ -36,6 +40,7 @@ export class AuditingService {
       throw new ParamsError('pageNumber', 'getMyAuditingList', 'number', pageNumber);
     }
     return this.restAPIService.dispatchRestApi<MyAuditingGetResponse>('GetMyAuditing', { page: pageNumber }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getMyAuditingList')),
       ModelMapper.rxMapModelTo(MyAuditingGetResponseModel),
     );
   }
@@ -52,6 +57,7 @@ export class AuditingService {
       throw new ParamsError('orderID', 'getMyAuditingDetail', 'number', orderID);
     }
     return this.restAPIService.dispatchRestApi<MyAuditingDetailGetResponse>('GetMyAuditingByOrderID', { orderID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getMyAuditingDetail')),
       ModelMapper.rxMapModelTo(MyAuditingDetailGetResponseModel),
       map(res => res.datas)
     );
@@ -69,6 +75,7 @@ export class AuditingService {
       throw new ParamsError('pageNumber', 'getAuditingListForManager', 'number', pageNumber);
     }
     return this.restAPIService.dispatchRestApi<AuditingGetResponse>('GetAuditing', { page: pageNumber }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getAuditingListForManager')),
       ModelMapper.rxMapModelTo(AuditingGetResponseModel)
     );
   }
@@ -96,7 +103,9 @@ export class AuditingService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PostAuditingByOrderID', params);
+    return this.restAPIService.dispatchRestApi('PostAuditingByOrderID', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('PostAuditingByOrderID')),
+    );
   }
 
   /**
@@ -111,6 +120,7 @@ export class AuditingService {
       throw new ParamsError('orderID', 'getPreviewInfo', 'number', orderID);
     }
     return this.restAPIService.dispatchRestApi<PreviewInfo>('GetAuditingPreviewByOrderID', { orderID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('GetAuditingPreviewByOrderID')),
       ModelMapper.rxMapModelTo(PreviewInfoModel),
     );
   }

@@ -29,13 +29,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status !== 401) {
-          const message = error?.error?.error_message;
-          this.showLogoutMessage(message).subscribe();
-        }
-        return throwError(error);
-      })
+      // catchError((error: HttpErrorResponse) => {
+      //   console.warn('error = ', error);
+      //   if (error.status !== 401) {
+      //     const message = error?.error?.error_message || error?.error?.error || error?.error?.message;
+      //     this.showLogoutMessage(message).subscribe();
+      //   }
+      //   return throwError(error);
+      // })
     );
   }
 

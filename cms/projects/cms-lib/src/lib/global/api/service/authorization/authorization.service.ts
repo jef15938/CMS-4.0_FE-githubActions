@@ -10,11 +10,15 @@ import { LoginInfoModel } from '../../data-model/models/login-info.model';
 import { plainToClass } from 'class-transformer';
 import { ModelMapper } from '@neux/core';
 import { LoginResponseModel } from '../../data-model/models/login-response.model';
+import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
+import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
+
+  error = new CmsApiServiceError({ name: 'AuthorizationService' });
 
   constructor(
     private respAPIService: RestApiService,
@@ -42,6 +46,7 @@ export class AuthorizationService {
     };
 
     return this.respAPIService.dispatchRestApi('PostLogin', { requestBody }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('login')),
       concatMap(_ => this.getLoginInfo()),
       tap(_ => this.router.navigate([''])),
     );
@@ -55,6 +60,7 @@ export class AuthorizationService {
    */
   logout() {
     return this.respAPIService.dispatchRestApi('GetLogout', {}).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('logout')),
       tap(_ => {
         localStorage.clear();
         this.router.navigate(['login']);
@@ -70,6 +76,7 @@ export class AuthorizationService {
    */
   getLoginInfo(): Observable<LoginInfoModel> {
     return this.respAPIService.dispatchRestApi<LoginResponse>('GetLoginInfo', {}).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getLoginInfo')),
       ModelMapper.rxMapModelTo(LoginResponseModel),
       map(res => {
         localStorage.setItem('loginInfo', JSON.stringify(res.loginInfo));

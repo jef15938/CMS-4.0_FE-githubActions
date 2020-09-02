@@ -15,11 +15,15 @@ import { GroupInfoModel } from '../../data-model/models/group-info.model';
 import { GroupSitemapInfoModel } from '../../data-model/models/group-sitemap-info.model';
 import { GroupSiteMapGetResponseModel } from '../../data-model/models/group-sitemap-get-response.model';
 import { GroupMenuInfo } from '../../neuxAPI/bean/GroupMenuInfo';
+import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
+import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
+
+  error = new CmsApiServiceError({ name: 'GroupService' });
 
   constructor(
     private restAPIService: RestApiService
@@ -33,6 +37,7 @@ export class GroupService {
    */
   getGroupList(): Observable<GroupInfoModel[]> {
     return this.restAPIService.dispatchRestApi<ListGroupResponst>('GetGroup', {}).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getGroupList')),
       ModelMapper.rxMapModelTo(ListGroupResponseModel),
       map(res => res.datas)
     );
@@ -51,6 +56,7 @@ export class GroupService {
     }
 
     return this.restAPIService.dispatchRestApi<GroupMenuGetResponse>('GetGroupMenuByGroupID', { groupID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getGroupMenuList')),
       ModelMapper.rxMapModelTo(GroupMenuGetResponseModel),
       map(res => res.datas)
     );
@@ -80,7 +86,9 @@ export class GroupService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutGroupMenuByGroupID', params);
+    return this.restAPIService.dispatchRestApi('PutGroupMenuByGroupID', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('updateGroupMenu')),
+    );
   }
 
   /**
@@ -96,6 +104,7 @@ export class GroupService {
     if (!groupID) { throw new ParamsError('groupID', 'getGroupSiteMapList', 'string', groupID); }
 
     return this.restAPIService.dispatchRestApi<GroupSiteMapGetResponse>('GetGroupSiteMapBySiteIDAndGroupID', { siteID, groupID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getGroupSiteMapList')),
       ModelMapper.rxMapModelTo(GroupSiteMapGetResponseModel),
       map(res => res.datas)
     );
@@ -124,6 +133,8 @@ export class GroupService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutGroupSiteMapBySiteIDAndGroupID', params);
+    return this.restAPIService.dispatchRestApi('PutGroupSiteMapBySiteIDAndGroupID', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('updateGroupSitemap')),
+    );
   }
 }

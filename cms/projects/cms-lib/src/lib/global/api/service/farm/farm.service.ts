@@ -21,11 +21,15 @@ import { FarmInfoGetResponse } from '../../neuxAPI/bean/FarmInfoGetResponse';
 import { FarmInfoGetResponseModel } from '../../data-model/models/farm-info-get-response.model';
 import { FarmTableInfoModel } from '../../data-model/models/farm-table-info.model';
 import { FarmTableInfo } from '../../neuxAPI/bean/FarmTableInfo';
+import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
+import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FarmService {
+
+  error = new CmsApiServiceError({ name: 'FarmService' });
 
   constructor(
     private restAPIService: RestApiService,
@@ -44,6 +48,7 @@ export class FarmService {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
     return this.restAPIService.dispatchRestApi<FarmInfoGetResponse>('GetFarmByFuncID', { funcID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getFarmByFuncID')),
       ModelMapper.rxMapModelTo(FarmInfoGetResponseModel)
     );
   }
@@ -60,6 +65,7 @@ export class FarmService {
     if (!funcID) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'string', funcID); }
     if (!page) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page); }
     return this.restAPIService.dispatchRestApi<FarmTableInfo>('GetFarmTableInfoByFuncID', { funcID, page }, { extraQueryParams }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getFarmTableInfoByFuncID')),
       ModelMapper.rxMapModelTo(FarmTableInfoModel)
     );
   }
@@ -78,6 +84,7 @@ export class FarmService {
       throw new ParamsError('dataID', 'GetFarmDetailInfoByFuncID', 'string', dataID);
     }
     return this.restAPIService.dispatchRestApi<FarmFormInfo>('GetFarmDetailInfoByFuncID', { funcID, dataID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getFarmDetailInfoByFuncID')),
       ModelMapper.rxMapModelTo(FarmFormInfoModel),
     );
   }
@@ -93,6 +100,7 @@ export class FarmService {
   getFarmFormInfoByFuncID(funcID: string, dataID?: string): Observable<FarmFormInfoModel> {
     if (!funcID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', funcID); }
     return this.restAPIService.dispatchRestApi<FarmFormInfo>('GetFarmFormInfoByFuncID', { funcID, dataID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getFarmFormInfoByFuncID')),
       ModelMapper.rxMapModelTo(FarmFormInfoModel),
     );
   }
@@ -113,7 +121,9 @@ export class FarmService {
     });
 
     const url = `${this.environment.apiBaseUrl}/FarmFormInfo/${funcID}`;
-    return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header });
+    return this.restAPIService.dispatchRestApi('PostFarmFormInfoByFuncID', { funcID, requestBody: formData }, { header }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('createFarmForm')),
+    );
   }
 
   /**
@@ -136,7 +146,9 @@ export class FarmService {
       console.log('formData ' + k + ' = ' + v);
     });
 
-    return this.restAPIService.dispatchRestApi('PutFarmFormInfoByFuncID', { funcID, dataID, requestBody: formData }, { header });
+    return this.restAPIService.dispatchRestApi('PutFarmFormInfoByFuncID', { funcID, dataID, requestBody: formData }, { header }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('updateFarmForm')),
+    );
   }
 
   /**
@@ -164,7 +176,9 @@ export class FarmService {
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PostFarmAuditingByFuncId', params);
+    return this.restAPIService.dispatchRestApi('PostFarmAuditingByFuncId', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('auditingFarmData')),
+    );
   }
 
   /**
@@ -181,7 +195,9 @@ export class FarmService {
       dataID,
     };
 
-    return this.restAPIService.dispatchRestApi('GetFarmTakeOffByFuncID', params);
+    return this.restAPIService.dispatchRestApi('GetFarmTakeOffByFuncID', params).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('takeOffFormData')),
+    );
   }
 
   /**
@@ -195,6 +211,7 @@ export class FarmService {
     if (!funcID) { throw new ParamsError('funcID', 'getPreviewInfo', 'string', funcID); }
     if (!dataID) { throw new ParamsError('dataID', 'getPreviewInfo', 'string', dataID); }
     return this.restAPIService.dispatchRestApi<PreviewInfo>('GetFarmPreviewByFuncID', { funcID, dataID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getPreviewInfo')),
       ModelMapper.rxMapModelTo(PreviewInfoModel),
     );
   }
@@ -211,6 +228,7 @@ export class FarmService {
       throw new ParamsError('triggerID', 'listFarmTriggerData', 'string', triggerID);
     }
     return this.restAPIService.dispatchRestApi<ListFarmTriggerDataResponse>('GetFarmTriggerByTriggerID', { triggerID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('listFarmTriggerData')),
       ModelMapper.rxMapModelTo(ListFarmTriggerDataResponseModel),
       map(res => res.datas)
     );
@@ -228,6 +246,7 @@ export class FarmService {
       throw new ParamsError('sourceID', 'getFarmTree', 'string', sourceID);
     }
     return this.restAPIService.dispatchRestApi<GetFarmTreeResponse>('GetFarmTreeBySourceID', { sourceID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getFarmTree')),
       ModelMapper.rxMapModelTo(GetFarmTreeResponseModel),
     );
   }
