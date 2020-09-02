@@ -6,6 +6,7 @@ import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { UserSiteMapPutRequestModel } from '../../../../global/api/data-model/models/user-sitemap-put-request.model';
 import { SiteNodeDetailInfoModel } from '../../../../global/api/data-model/models/site-node-detail-info.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-sitemap-node-update-modal',
@@ -73,7 +74,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
       this.sitemapNode.nodeId,
       this.putRequest.details,
       this.putRequest
-    ).subscribe(_ => {
+    ).pipe(CmsErrorHandler.rxHandleError('更新節點錯誤')).subscribe(_ => {
       this.close('Updated');
     });
   }

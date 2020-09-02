@@ -4,6 +4,7 @@ import { CustomModalBase, CustomModalActionButton } from './../../../modal';
 import { FarmService } from '../../../../../global/api/service';
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
 import { CmsFormValidator } from '../../../../../global/util/form-validator';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-auditing-farm-data-modal',
@@ -51,7 +52,7 @@ export class AuditingFarmDataModalComponent extends CustomModalBase implements O
       this.cmsDateAdapter.format(this.form.controls.startTime.value),
       this.cmsDateAdapter.format(this.form.controls.endTime.value),
       this.form.controls.memo.value,
-    ).subscribe(_ => {
+    ).pipe(CmsErrorHandler.rxHandleError('送審錯誤')).subscribe(_ => {
       this.close('Created');
     });
   }

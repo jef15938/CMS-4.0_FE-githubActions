@@ -9,7 +9,8 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Memo</mat-label>
-    <textarea matInput formControlName="memo" rows="1" required></textarea>
+    <textarea matInput formControlName="memo" maxlength="500" rows="1" required></textarea>
+    <div matSuffix class="input-suffix">({{form?.controls['memo']?.value?.length||0}}/100)</div>
     <mat-error *ngIf="form.controls.memo.errors?.required">請輸入Memo</mat-error>
   </mat-form-field>
 

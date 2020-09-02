@@ -10,6 +10,7 @@ import { MultiSiteNodeComponent, MultiSiteNodeCustomEvent } from '../multi-site-
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { SiteInfoModel } from '../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 enum EditModeType {
   SITE, NODE,
@@ -51,7 +52,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.registerSubjects();
-    this.init().subscribe();
+    this.getSites().subscribe();
   }
 
   ngAfterViewInit(): void {
@@ -64,14 +65,9 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  private init(): Observable<any> {
-    return concat(
-      this.getSites(),
-    );
-  }
-
   private getSites(): Observable<SiteInfoModel[]> {
     return this.sitemapService.getSiteList().pipe(
+      CmsErrorHandler.rxHandleError('取得節點清單錯誤'),
       tap(sites => this.sites = sites),
       tap(_ => this.selectSite(this.sites[0])),
     );
@@ -133,6 +129,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
           action = of(undefined).pipe(
             this.modalService.confirmDelete,
             concatMap(_ => this.sitemapService.deleteUserSiteMap(event.data.nodeId).pipe(
+              CmsErrorHandler.rxHandleError('刪除節點錯誤'),
               map(res => 'Deleted')
             ))
           );
@@ -154,19 +151,20 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedSitemapNodeParentID = undefined;
 
       if (selectedUserSitemap) {
-        this.sitemapService.getUserSiteMapNodeByNodeId(this.selectedSite.siteId, selectedUserSitemap.nodeId).pipe(
-          catchError(err => {
-            alert(`取得節點錯誤 : ${selectedUserSitemap.nodeName}`);
-            console.error(err);
-            return throwError(`取得節點錯誤 : ${selectedUserSitemap.nodeName}`);
-          })
-        ).subscribe(selectedSitemapNode => {
-          this.selectedSitemapNode = selectedSitemapNode;
-          const parent = this.userSitemapTree.findParent(selectedUserSitemap);
-          this.selectedSitemapNodeParentID = parent?.nodeId;
-        });
+        this.getSiteNode(this.selectedSite.siteId, selectedUserSitemap.nodeId)
+          .subscribe(selectedSitemapNode => {
+            this.selectedSitemapNode = selectedSitemapNode;
+            const parent = this.userSitemapTree.findParent(selectedUserSitemap);
+            this.selectedSitemapNodeParentID = parent?.nodeId;
+          });
       }
     });
+  }
+
+  private getSiteNode(siteId: string, nodeId: string) {
+    return this.sitemapService.getUserSiteMapNodeByNodeId(siteId, nodeId).pipe(
+      CmsErrorHandler.rxHandleError('取得節點資料錯誤'),
+    );
   }
 
   onNodeUpdate() {
@@ -201,6 +199,12 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     return node.canOrder;
   }
 
+  private reOrderSiteNode(targetNodeId: string, parentNodeId: string, order: number) {
+    return this.sitemapService.reOrderSiteNode(targetNodeId, parentNodeId, 0).pipe(
+      CmsErrorHandler.rxHandleError('移動節點錯誤'),
+    );
+  }
+
   onTreeDragToNode(ev: { target: SiteMapGetResponseModel, to: SiteMapGetResponseModel }) {
     const target = ev.target;
     const to = ev.to;
@@ -208,7 +212,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
       if (!confirm) { return; }
       of(undefined).pipe(
-        concatMap(_ => this.sitemapService.reOrderSiteNode(target.nodeId, to.nodeId, 0))
+        concatMap(_ => this.reOrderSiteNode(target.nodeId, to.nodeId, 0))
       ).subscribe(_ => {
         this.onNodeUpdate();
       });
@@ -223,7 +227,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalService.openConfirm({ message: '確定移動節點?' }).subscribe(confirm => {
       if (!confirm) { return; }
       of(undefined).pipe(
-        concatMap(_ => this.sitemapService.reOrderSiteNode(target.nodeId, to.nodeId, order))
+        concatMap(_ => this.reOrderSiteNode(target.nodeId, to.nodeId, order))
       ).subscribe(_ => {
         this.onNodeUpdate();
       });

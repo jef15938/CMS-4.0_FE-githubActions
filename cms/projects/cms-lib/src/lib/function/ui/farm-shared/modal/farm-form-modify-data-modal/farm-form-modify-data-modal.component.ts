@@ -5,6 +5,7 @@ import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { FarmFormInfoComponent } from '../../component/farm-form-info/farm-form-info.component';
 import { FarmService } from '../../../../../global/api/service';
 import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/farm-form-info.model';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-farm-form-modify-data-modal',
@@ -39,6 +40,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
   }
 
   confirm() {
+    const action = this.action === 'create' ? '新增' : '更新';
     of(undefined).pipe(
       concatMap(_ => this.farmFormInfoComponent.requestFormInfo()),
       concatMap(formInfo => {
@@ -52,7 +54,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
           return this.farmService.updateFarmForm(this.funcID, this.dataID, formData);
         }
       }),
-    ).subscribe(() => this.close(true));
+    ).pipe(CmsErrorHandler.rxHandleError(`${action}資料錯誤`)).subscribe(() => this.close(true));
   }
 
 }

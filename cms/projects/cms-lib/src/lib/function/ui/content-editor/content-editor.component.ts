@@ -24,6 +24,7 @@ import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
 import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
 import { ContentBlockInfoModel } from '../../../global/api/data-model/models/content-block-info.model';
+import { CmsErrorHandler } from '../../../global/error-handling';
 
 const isTabTemplateInfo = (templateInfo: ContentTemplateInfoModel): boolean => {
   return !!(templateInfo as any).tabList;
@@ -341,10 +342,12 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       }
     }).subscribe((version: ContentVersionInfo) => {
       if (version) {
-        this.contentService.getContentById(this.contentID, version.version).subscribe(contentInfo => {
-          this.manager.stateManager.currentState.snapShot = contentInfo;
-          this.manager.stateManager.preserveState(`復原版本 ${version.version}`);
-        });
+        this.contentService.getContentById(this.contentID, version.version)
+          .pipe(CmsErrorHandler.rxHandleError('取得版本內容錯誤'))
+          .subscribe(contentInfo => {
+            this.manager.stateManager.currentState.snapShot = contentInfo;
+            this.manager.stateManager.preserveState(`復原版本 ${version.version}`);
+          });
       }
     });
   }

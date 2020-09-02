@@ -78,12 +78,12 @@ export class AuditingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getMyAuditings().subscribe();
+    this.getAuditings().subscribe();
   }
 
-  private getMyAuditings(): Observable<AuditingInfoModel[]> {
+  private getAuditings(): Observable<AuditingInfoModel[]> {
     return this.auditingService.getAuditingListForManager(this.pageInfo?.page).pipe(
-      CmsErrorHandler.rxHandleError('取得審核資料錯誤'),
+      CmsErrorHandler.rxHandleError('取得待審清單錯誤'),
       tap(res => {
         this.pageInfo = res.pageInfo;
         this.auditings = res.datas;
@@ -142,7 +142,7 @@ export class AuditingComponent implements OnInit {
 
   onPageChanged(event: { pageIndex: number }) {
     this.pageInfo.page = event.pageIndex + 1;
-    this.getMyAuditings().subscribe();
+    this.getAuditings().subscribe();
   }
 
   private approveAuditing(status: AuditingApproveStatus, orderId: number | number[]) {
@@ -158,7 +158,7 @@ export class AuditingComponent implements OnInit {
         orderId,
         res.status,
         res.comment,
-      ).pipe(CmsErrorHandler.rxHandleError('審核錯誤')).subscribe(_ => this.getMyAuditings().subscribe());
+      ).pipe(CmsErrorHandler.rxHandleError('審核錯誤')).subscribe(_ => this.getAuditings().subscribe());
     });
   }
 

@@ -138,7 +138,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       rootTemplatesContainersOfBlocksByLanguage.forEach(rootTemplatesContainersOfBlocks => {
         rootTemplatesContainersOfBlocks.forEach(rootTemplatesContainer => {
           rootTemplatesContainer.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
-        })
+        });
       });
     } else {
       const btnParentLayoutWrapper =
@@ -174,7 +174,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
         }).reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[]);
 
       if (allLangTargetTemplatesContainers.some(v => !v)) {
-        alert('系統異常 : allLangTargetTemplatesContainers 不完全');
+        alert('程式錯誤，尋找版面資料錯誤');
         return;
       }
 

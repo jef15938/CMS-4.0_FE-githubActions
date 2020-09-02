@@ -50,9 +50,9 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
     if (this.siteID === 'none') { return; }
 
     forkJoin([
-      this.sitemapService.getCMSSiteMap(this.siteID),
-      this.groupService.getGroupSiteMapList(this.siteID, this.groupID),
-    ]).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')).subscribe(([sitemaps, groupSitemapInfos]) => {
+      this.sitemapService.getCMSSiteMap(this.siteID).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')),
+      this.groupService.getGroupSiteMapList(this.siteID, this.groupID).pipe(CmsErrorHandler.rxHandleError('取得前台節點清單錯誤')),
+    ]).subscribe(([sitemaps, groupSitemapInfos]) => {
       this.nodes = this.convertToNodes(sitemaps, groupSitemapInfos);
       this.checkedNodes = this.getNodesByNodeIds(groupSitemapInfos.map(info => info.nodeId), this.nodes);
     });

@@ -146,19 +146,19 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
         }
       })),
       this.getGallery(),
-    ).pipe(
-      CmsErrorHandler.rxHandleError('取得媒體庫資料錯誤'),
     );
   }
 
   private getCategories() {
     return this.galleryService.getGalleryCategory().pipe(
+      CmsErrorHandler.rxHandleError('取得媒體庫分類清單錯誤'),
       tap(categories => this.categories = categories)
     );
   }
 
   private getGalleryConfig() {
     return this.galleryService.getGalleryConfig().pipe(
+      CmsErrorHandler.rxHandleError('取得媒體庫錯誤'),
       tap(config => this.galleryConfig = config),
     );
   }

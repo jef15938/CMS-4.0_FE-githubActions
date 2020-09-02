@@ -4,6 +4,7 @@ import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interfa
 import { ContentService } from '../../../../../global/api/service';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
 import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-content-editor-container-modal',
@@ -29,11 +30,15 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   ngOnInit(): void {
     this.modalRef.addPanelClass([`cms-content-editor-container-modal`, `mode-${this.editorMode}`]);
     if (this.contentID) {
-      this.contentService.getContentById(this.contentID).subscribe(content => this.content = content);
+      this.contentService.getContentById(this.contentID)
+        .pipe(CmsErrorHandler.rxHandleError('取得頁面內容資料錯誤'))
+        .subscribe(content => this.content = content);
     }
 
     if (this.editorMode === EditorMode.EDIT) {
-      this.contentService.getTemplateByControlID(this.controlID).subscribe(templates => this.templates = templates);
+      this.contentService.getTemplateByControlID(this.controlID)
+        .pipe(CmsErrorHandler.rxHandleError('取得可選擇版型清單錯誤'))
+        .subscribe(templates => this.templates = templates);
     }
 
   }
@@ -51,16 +56,19 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
       return;
     }
 
-    this.contentService.updateContent(this.contentID, convertedContentInfo).subscribe(_ => {
-      alert('內容儲存成功');
-      if (this.onSaved) {
-        this.onSaved();
-      }
-      event.editorSave();
-    }, err => {
-      alert('內容儲存失敗');
-      console.error('內容儲存失敗', err);
-    });
+    this.contentService
+      .updateContent(this.contentID, convertedContentInfo)
+      .pipe(CmsErrorHandler.rxHandleError('更新頁面內容資料錯誤'))
+      .subscribe(_ => {
+        alert('內容儲存成功');
+        if (this.onSaved) {
+          this.onSaved();
+        }
+        event.editorSave();
+      }, err => {
+        alert('內容儲存失敗');
+        console.error('內容儲存失敗', err);
+      });
   }
 
 }

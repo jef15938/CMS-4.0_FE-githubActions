@@ -7,6 +7,7 @@ import { ModalService } from '../../../ui/modal';
 import { DeptNodeComponent, DeptNodeCustomEvent } from '../dept-node/dept-node.component';
 import { DeptMaintainModalComponent } from '../dept-maintain-modal/dept-maintain-modal.component';
 import { DepartmentInfoModel } from '../../../../global/api/data-model/models/department-info.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-dept',
@@ -25,17 +26,12 @@ export class DeptComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initPage().subscribe();
-  }
-
-  private initPage(): Observable<any> {
-    return concat(
-      this.getDepts(),
-    );
+    this.getDepts().subscribe();
   }
 
   private getDepts() {
     return this.departmentService.getAllDepartment().pipe(
+      CmsErrorHandler.rxHandleError('取得部門清單錯誤'),
       tap(depts => this.depts = depts),
     );
   }
@@ -62,7 +58,7 @@ export class DeptComponent implements OnInit {
 
       actionOb.subscribe(res => {
         if (res) {
-          this.initPage().subscribe();
+          this.getDepts().subscribe();
         }
       });
     }
@@ -71,7 +67,10 @@ export class DeptComponent implements OnInit {
   deleteDepartment(dept: DepartmentInfoModel) {
     return of(undefined).pipe(
       this.modalService.confirmDelete,
-      concatMap(confirm => confirm ? this.departmentService.deleteDepartment(dept.deptId) : of(undefined))
+      concatMap(confirm => confirm
+        ? this.departmentService.deleteDepartment(dept.deptId).pipe(CmsErrorHandler.rxHandleError('刪除部門錯誤'))
+        : of(undefined)
+      )
     );
   }
 

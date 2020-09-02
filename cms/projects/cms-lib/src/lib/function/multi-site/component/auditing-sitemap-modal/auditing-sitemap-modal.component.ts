@@ -53,7 +53,7 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
       this.cmsDateAdapter.format(this.form.controls.endTime.value),
       this.form.controls.memo.value,
       this.siteId,
-    ).pipe(CmsErrorHandler.rxHandleError()).subscribe(_ => {
+    ).pipe(CmsErrorHandler.rxHandleError('送審錯誤')).subscribe(_ => {
       this.close('Created');
     });
   }

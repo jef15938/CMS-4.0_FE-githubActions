@@ -1,9 +1,9 @@
 <div class="page-content-container" [formGroup]="form">
-  <cms-date-picker-datetime formControlName="startTime" appearance="outline" label="上架時間"
+  <cms-date-picker-datetime formControlName="startTime" appearance="outline" label="上架時間" [required]="true"
     [errors]="form.controls['startTime']?.errors">
   </cms-date-picker-datetime>
 
-  <cms-date-picker-datetime formControlName="endTime" appearance="outline" label="下架時間"
+  <cms-date-picker-datetime formControlName="endTime" appearance="outline" label="下架時間" [required]="true"
     [errors]="form.controls['endTime']?.errors">
   </cms-date-picker-datetime>
 

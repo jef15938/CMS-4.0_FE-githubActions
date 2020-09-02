@@ -5,6 +5,7 @@ import { ContentService } from '../../../../../../../../global/api/service/conte
 import { ContentDataSourceModel } from '../../../../../../../../global/api/data-model/models/content-data-source.model';
 import { ContentDataSourceActionModel, ContentDataSourceActionType } from '../../../../../../../../global/api/data-model/models/content-data-source-action.model';
 import { FarmSharedService } from '../../../../../../farm-shared/farm-shared.service';
+import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-template-control-data-source',
@@ -34,10 +35,12 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
       const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as DataSourceTemplateInfo;
       this.sourceType = (event.componentRef.instance as DataSourceTemplateBaseComponent<any>).sourceType;
-      this.contentService.getContentDataSourceByTypeID(this.sourceType).subscribe(res => {
-        this.sources = res.datas || [];
-        this.actions = res.actions || [];
-      });
+      this.contentService.getContentDataSourceByTypeID(this.sourceType)
+        .pipe(CmsErrorHandler.rxHandleError('取得資料來源清單錯誤'))
+        .subscribe(res => {
+          this.sources = res.datas || [];
+          this.actions = res.actions || [];
+        });
     }
   }
 

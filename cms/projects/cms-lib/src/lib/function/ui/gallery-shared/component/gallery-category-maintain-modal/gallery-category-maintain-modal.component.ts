@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { GalleryService, DepartmentService } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
 import { DepartmentInfoModel } from '../../../../../global/api/data-model/models/department-info.model';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-gallery-category-maintain-modal',
@@ -33,10 +34,12 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
 
   ngOnInit(): void {
     const assignedDeptIds = this.assignDeptId.split(',');
-    this.departmentService.getAllDepartment().subscribe(depts => {
-      this.checkedDepts = this.getDeptsByDeptIds(assignedDeptIds, depts);
-      this.depts = depts;
-    });
+    this.departmentService.getAllDepartment()
+      .pipe(CmsErrorHandler.rxHandleError(`取得部門清單錯誤`))
+      .subscribe(depts => {
+        this.checkedDepts = this.getDeptsByDeptIds(assignedDeptIds, depts);
+        this.depts = depts;
+      });
   }
 
   private getDeptsByDeptIds(deptIds: string[], sources: DepartmentInfoModel[], results: DepartmentInfoModel[] = []): DepartmentInfoModel[] {
@@ -47,13 +50,14 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   }
 
   private save() {
+    const action = this.action === 'Create' ? '新增' : '更新';
     const checkedDeptIds = Array.from(new Set(this.checkedDepts.map(dept => dept.deptId)));
     const assignDeptId = checkedDeptIds.length ? checkedDeptIds.join(',') : '';
     return (
       this.action === 'Create'
         ? this.galleryService.createGalleryCategory(this.categoryName, assignDeptId, this.parentId)
         : this.galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.categoryName, assignDeptId, this.parentId)
-    );
+    ).pipe(CmsErrorHandler.rxHandleError(`${action}媒體庫分類錯誤`));
   }
 
   confirm() {

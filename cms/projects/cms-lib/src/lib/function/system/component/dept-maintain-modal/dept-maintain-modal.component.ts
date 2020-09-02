@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 import { DepartmentService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
 import { DepartmentDetailInfoModel } from '../../../../global/api/data-model/models/department-detail-info.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-dept-maintain-modal',
@@ -39,16 +40,18 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
         ? of(new DepartmentDetailInfoModel())
         : this.departmentService.getDepartmentByID(this.deptId)
     ).pipe(
+      CmsErrorHandler.rxHandleError('取得部門資料錯誤'),
       tap(dept => this.dept = dept)
     );
   }
 
   private save() {
+    const action = this.action === 'Create' ? '新增' : '更新';
     return (
       this.action === 'Create'
         ? this.departmentService.createDepartment(this.dept.deptId, this.dept.deptName, this.parentId)
         : this.departmentService.updateDepartment(this.dept.deptId, this.dept.deptName, this.parentId)
-    );
+    ).pipe(CmsErrorHandler.rxHandleError(`${action}新增部門錯誤`));
   }
 
   confirm() {

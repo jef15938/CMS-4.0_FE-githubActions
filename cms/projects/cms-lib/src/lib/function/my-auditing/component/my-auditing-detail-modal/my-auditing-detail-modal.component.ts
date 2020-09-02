@@ -4,6 +4,7 @@ import { AuditingService } from '../../../../global/api/service';
 import { CustomModalBase } from '../../../ui/modal';
 import { ColDef } from '../../../ui/table';
 import { MyAuditingDetailInfoModel } from '../../../../global/api/data-model/models/my-auditing-detail-info.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-my-auditing-detail-modal',
@@ -72,6 +73,7 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
   ngOnInit(): void {
     this.updateSize('1280px');
     this.auditingService.getMyAuditingDetail(this.orderId).pipe(
+      CmsErrorHandler.rxHandleError('取得審核紀錄錯誤'),
       tap(myAuditingDetail => this.myAuditingDetail = myAuditingDetail)
     ).subscribe();
   }

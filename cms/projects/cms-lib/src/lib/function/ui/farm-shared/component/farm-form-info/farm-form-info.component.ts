@@ -14,6 +14,7 @@ import { GetFarmTreeResponseModel } from '../../../../../global/api/data-model/m
 import { FarmTreeInfoModel } from '../../../../../global/api/data-model/models/farm-tree-info.model';
 import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType } from '../../../../../global/api/data-model/models/farm-form-info.model';
 import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -55,13 +56,15 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.farmFormInfo.columns.forEach(column => {
       this.checkColumnTrigger(column);
       if (column.displayType === FarmFormInfoColumnDisplayType.TREE) {
-        this.farmService.getFarmTree(column.setting.treeSource).subscribe(tree => {
-          const idStrings = (column.value || '') as string;
-          const ids = idStrings.split(',').filter(id => !!id);
-          const selectedNode: FarmTreeInfoModel[] = this.getFarmTreeInfosByTreeIds(ids, tree.data);
-          this.treeNodeSelectedMap.set(column.columnId, selectedNode);
-          this.treeMap.set(column.columnId, tree);
-        });
+        this.farmService.getFarmTree(column.setting.treeSource)
+          .pipe(CmsErrorHandler.rxHandleError(`取得${column.displayText}欄位資料來源錯誤`))
+          .subscribe(tree => {
+            const idStrings = (column.value || '') as string;
+            const ids = idStrings.split(',').filter(id => !!id);
+            const selectedNode: FarmTreeInfoModel[] = this.getFarmTreeInfosByTreeIds(ids, tree.data);
+            this.treeNodeSelectedMap.set(column.columnId, selectedNode);
+            this.treeMap.set(column.columnId, tree);
+          });
       }
     });
   }
@@ -203,12 +206,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       const affectedColumns = trigger.triggerTarget; // 受影響的所有 column
       if (trigger.triggerType === FarmFormInfoColumnTriggerType.DATATRIGGER) {
         const triggerID = trigger.triggerSetting.triggerId;
-        this.farmService.listFarmTriggerData(triggerID).subscribe(options => {
-          trigger.triggerTarget.forEach(target => {
-            const targetColumnSetting = this.farmFormInfo.columns.find(c => c.columnId === target)?.setting;
-            if (targetColumnSetting) { targetColumnSetting.options = options; }
+        this.farmService.listFarmTriggerData(triggerID)
+          .pipe(CmsErrorHandler.rxHandleError(`取得${column.displayText}欄位trigger資料錯誤`))
+          .subscribe(options => {
+            trigger.triggerTarget.forEach(target => {
+              const targetColumnSetting = this.farmFormInfo.columns.find(c => c.columnId === target)?.setting;
+              if (targetColumnSetting) { targetColumnSetting.options = options; }
+            });
           });
-        });
       } else {
         const columnValue = this.formGroup?.get(column.columnId).value;
         const triggeredColumn = trigger.triggerSetting[columnValue]; // 當前 trigger 的 column

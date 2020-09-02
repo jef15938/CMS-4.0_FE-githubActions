@@ -29,9 +29,9 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
 
   ngOnInit(): void {
     forkJoin([
-      this.groupService.getGroupMenuList(this.groupID),
-      this.menuService.getCMSMenu()
-    ]).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')).subscribe(([groupMenuInfos, menus]) => {
+      this.groupService.getGroupMenuList(this.groupID).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')),
+      this.menuService.getCMSMenu().pipe(CmsErrorHandler.rxHandleError('取得後台功能清單錯誤')),
+    ]).subscribe(([groupMenuInfos, menus]) => {
       this.checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.funcId), menus);
       this.menus = menus;
     });

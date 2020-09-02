@@ -3,6 +3,7 @@ import { CustomModalBase, CustomModalActionButton, ModalService } from '../../..
 import { ContentService } from '../../../../../global/api/service';
 import { ColDef } from '../../../table';
 import { ContentVersionInfoModel } from '../../../../../global/api/data-model/models/content-version-info.model';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-content-version-recover-modal',
@@ -42,7 +43,9 @@ export class ContentVersionRecoverModalComponent extends CustomModalBase impleme
   ) { super(); }
 
   ngOnInit(): void {
-    this.contentService.getContentVersionByContentID(this.contentID).subscribe(versions => this.versions = versions);
+    this.contentService.getContentVersionByContentID(this.contentID)
+      .pipe(CmsErrorHandler.rxHandleError('取得版本清單錯誤'))
+      .subscribe(versions => this.versions = versions);
   }
 
   onRowClick(version: ContentVersionInfoModel) {

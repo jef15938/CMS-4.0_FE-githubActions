@@ -10,6 +10,7 @@ import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
 import { MyAuditingInfoModel } from '../../../../global/api/data-model/models/my-auditing-info.model';
 import { PageInfoModel } from '../../../../global/api/data-model/models/page-info.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-my-auditing',
@@ -69,17 +70,12 @@ export class MyAuditingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.init().subscribe();
-  }
-
-  private init(): Observable<any> {
-    return concat(
-      this.getMyAuditings(),
-    );
+    this.getMyAuditings().subscribe();
   }
 
   private getMyAuditings(): Observable<MyAuditingInfoModel[]> {
     return this.auditingService.getMyAuditingList(this.pageInfo?.page).pipe(
+      CmsErrorHandler.rxHandleError('取得申請清單錯誤'),
       tap(res => {
         this.pageInfo = res.pageInfo;
         this.myAuditings = res.datas;
@@ -116,21 +112,23 @@ export class MyAuditingComponent implements OnInit {
 
   preview(auditingInfo: MyAuditingInfoModel) {
     const orderID = auditingInfo.orderId;
-    this.auditingService.getPreviewInfo(orderID).subscribe(previewInfo => {
-      switch (previewInfo.previewType) {
-        case PreviewInfoType.ONE_PAGE:
-          window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
-          break;
-        case PreviewInfoType.FARM:
-          this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
-          break;
-      }
-    });
+    this.auditingService.getPreviewInfo(orderID)
+      .pipe(CmsErrorHandler.rxHandleError('取得預覽資料錯誤'))
+      .subscribe(previewInfo => {
+        switch (previewInfo.previewType) {
+          case PreviewInfoType.ONE_PAGE:
+            window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
+            break;
+          case PreviewInfoType.FARM:
+            this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
+            break;
+        }
+      });
   }
 
   onPageChanged(event: { pageIndex: number }) {
     this.pageInfo.page = event.pageIndex + 1;
-    this.init().subscribe();
+    this.getMyAuditings().subscribe();
   }
 
 }

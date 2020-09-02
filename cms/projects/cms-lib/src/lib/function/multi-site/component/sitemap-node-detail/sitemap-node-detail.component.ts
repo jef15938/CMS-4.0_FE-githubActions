@@ -10,6 +10,7 @@ import { SitemapNodeUpdateModalComponent } from '../sitemap-node-update-modal/si
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-sitemap-node-detail',
@@ -63,16 +64,18 @@ export class SitemapNodeDetailComponent implements OnInit {
   preview(languageID: string) {
     if (!this.userSitemap.canPreview) { return; }
     const nodeID = this.sitemapNode.nodeId;
-    this.sitemapService.getPreviewInfo(nodeID, languageID).subscribe(previewInfo => {
-      switch (previewInfo.previewType) {
-        case PreviewInfoType.ONE_PAGE:
-          window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
-          break;
-        case PreviewInfoType.FARM:
-          this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
-          break;
-      }
-    });
+    this.sitemapService.getPreviewInfo(nodeID, languageID)
+      .pipe(CmsErrorHandler.rxHandleError('取得預覽資料錯誤'))
+      .subscribe(previewInfo => {
+        switch (previewInfo.previewType) {
+          case PreviewInfoType.ONE_PAGE:
+            window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
+            break;
+          case PreviewInfoType.FARM:
+            this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
+            break;
+        }
+      });
   }
 
   editContent() {
