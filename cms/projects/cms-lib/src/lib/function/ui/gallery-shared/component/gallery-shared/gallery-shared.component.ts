@@ -153,7 +153,6 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   private getCategories() {
     return this.galleryService.getGalleryCategory().pipe(
-      // CmsErrorHandler.rxMapError(this.error.setMessage('getGalleryByCategoryID')),
       tap(categories => this.categories = categories)
     );
   }

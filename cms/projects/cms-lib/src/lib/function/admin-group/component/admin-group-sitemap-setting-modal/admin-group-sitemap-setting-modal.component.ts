@@ -6,6 +6,7 @@ import { forkJoin } from 'rxjs';
 import { GroupSitemapInfoModel } from '../../../../global/api/data-model/models/group-sitemap-info.model';
 import { SiteInfoModel } from '../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 class Node extends SiteMapGetResponseModel {
   groupSitemapInfo: GroupSitemapInfoModel;
@@ -51,7 +52,7 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
     forkJoin([
       this.sitemapService.getCMSSiteMap(this.siteID),
       this.groupService.getGroupSiteMapList(this.siteID, this.groupID),
-    ]).subscribe(([sitemaps, groupSitemapInfos]) => {
+    ]).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')).subscribe(([sitemaps, groupSitemapInfos]) => {
       this.nodes = this.convertToNodes(sitemaps, groupSitemapInfos);
       this.checkedNodes = this.getNodesByNodeIds(groupSitemapInfos.map(info => info.nodeId), this.nodes);
     });
@@ -108,7 +109,9 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
       info.canModify = node.groupSitemapInfo.canModify;
       return info;
     });
-    this.groupService.updateGroupSitemap(this.siteID, this.groupID, groupSitemapInfos).subscribe(_ => this.close('Success'));
+    this.groupService.updateGroupSitemap(this.siteID, this.groupID, groupSitemapInfos)
+      .pipe(CmsErrorHandler.rxHandleError('更新資料錯誤'))
+      .subscribe(_ => this.close('Success'));
   }
 
 }

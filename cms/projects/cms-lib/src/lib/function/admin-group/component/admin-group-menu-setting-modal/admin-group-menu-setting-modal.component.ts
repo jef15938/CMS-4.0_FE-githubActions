@@ -4,6 +4,7 @@ import { GroupService, MenuService } from '../../../../global/api/service';
 import { forkJoin } from 'rxjs';
 import { MenuInfoModel } from '../../../../global/api/data-model/models/menu-info.model';
 import { GroupMenuInfoModel } from '../../../../global/api/data-model/models/group-menu-info.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-admin-group-menu-setting-modal',
@@ -30,7 +31,7 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
     forkJoin([
       this.groupService.getGroupMenuList(this.groupID),
       this.menuService.getCMSMenu()
-    ]).subscribe(([groupMenuInfos, menus]) => {
+    ]).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')).subscribe(([groupMenuInfos, menus]) => {
       this.checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.funcId), menus);
       this.menus = menus;
     });
@@ -50,7 +51,9 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
       info.funcId = node.funcId;
       return info;
     });
-    this.groupService.updateGroupMenu(this.groupID, groupMenuInfos).subscribe(_ => this.close('Success'));
+    this.groupService.updateGroupMenu(this.groupID, groupMenuInfos)
+      .pipe(CmsErrorHandler.rxHandleError('更新資料錯誤'))
+      .subscribe(_ => this.close('Success'));
   }
 
   hideNode(node: MenuInfoModel) {

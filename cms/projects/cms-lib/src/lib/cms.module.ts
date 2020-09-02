@@ -15,6 +15,7 @@ import { AdminGroupTableAction } from './function/admin-group/admin-group-table-
 import { AdminGroupModule } from './function/admin-group/admin-group.module';
 import { NgxMatDateAdapter, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 import { CmsErrorHandler } from './global/error-handling';
+import { ModalService } from './function/ui';
 
 const LAYOUTS = [
   MenuNodeComponent,
@@ -43,6 +44,11 @@ const LAYOUTS = [
   ]
 })
 export class CmsModule {
+
+  constructor(modalService: ModalService) {
+    CmsErrorHandler.registerModalService(modalService);
+  }
+
   static forRoot(providers = []): ModuleWithProviders<CmsModule> {
     return {
       ngModule: CmsModule,

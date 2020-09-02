@@ -11,6 +11,7 @@ import { AuditingInfoModel } from '../../../../global/api/data-model/models/audi
 import { PageInfoModel } from '../../../../global/api/data-model/models/page-info.model';
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
 import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-auditing',
@@ -77,17 +78,12 @@ export class AuditingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.init().subscribe();
-  }
-
-  private init(): Observable<any> {
-    return concat(
-      this.getMyAuditings(),
-    );
+    this.getMyAuditings().subscribe();
   }
 
   private getMyAuditings(): Observable<AuditingInfoModel[]> {
     return this.auditingService.getAuditingListForManager(this.pageInfo?.page).pipe(
+      CmsErrorHandler.rxHandleError('取得審核資料錯誤'),
       tap(res => {
         this.pageInfo = res.pageInfo;
         this.auditings = res.datas;
@@ -130,21 +126,23 @@ export class AuditingComponent implements OnInit {
 
   preview(auditingInfo: AuditingInfoModel) {
     const orderID = auditingInfo.orderId;
-    this.auditingService.getPreviewInfo(orderID).subscribe(previewInfo => {
-      switch (previewInfo.previewType) {
-        case PreviewInfoType.ONE_PAGE:
-          window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
-          break;
-        case PreviewInfoType.FARM:
-          this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
-          break;
-      }
-    });
+    this.auditingService.getPreviewInfo(orderID)
+      .pipe(CmsErrorHandler.rxHandleError('取得預覽資料錯誤'))
+      .subscribe(previewInfo => {
+        switch (previewInfo.previewType) {
+          case PreviewInfoType.ONE_PAGE:
+            window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
+            break;
+          case PreviewInfoType.FARM:
+            this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
+            break;
+        }
+      });
   }
 
   onPageChanged(event: { pageIndex: number }) {
     this.pageInfo.page = event.pageIndex + 1;
-    this.init().subscribe();
+    this.getMyAuditings().subscribe();
   }
 
   private approveAuditing(status: AuditingApproveStatus, orderId: number | number[]) {
@@ -160,7 +158,7 @@ export class AuditingComponent implements OnInit {
         orderId,
         res.status,
         res.comment,
-      ).subscribe(_ => this.getMyAuditings().subscribe());
+      ).pipe(CmsErrorHandler.rxHandleError('審核錯誤')).subscribe(_ => this.getMyAuditings().subscribe());
     });
   }
 

@@ -13,6 +13,8 @@ export class CmsError {
   private _description = '系統錯誤';
   // tslint:disable-next-line: variable-name
   private _stacks: string[] = [];
+  // tslint:disable-next-line: variable-name
+  private _childClass: new () => any;
 
   get code(): number { return this._code; }
   get name(): string { return this._name; }
@@ -21,7 +23,11 @@ export class CmsError {
   get description(): string { return this._description; }
   get stack(): string { return [...this._stacks].join('\n----\n'); }
 
-  constructor() { }
+  constructor(childClass?: new () => any) {
+    if (childClass) {
+      this._childClass = childClass;
+    }
+  }
 
   protected config(config: {
     code?: number;
@@ -37,28 +43,52 @@ export class CmsError {
     this._description = config.description || this._description;
   }
 
+  private clone(source: any) {
+    const constructor = this._childClass || CmsError;
+    const cloned = new constructor();
+
+    const keys = Object.keys(source);
+    keys.forEach(key => {
+      const value = source[key];
+      if (!value) { cloned[key] = value; }
+      if (Array.isArray(value)) {
+        cloned[key] = [...value];
+        return;
+      }
+      const valueType = typeof (value);
+      if (valueType === 'function') { return; }
+      cloned[key] = value;
+    });
+    return cloned;
+  }
+
   setName(name: string) {
-    if (name) { this._name = name; }
-    return this;
+    const cloned = this.clone(this);
+    if (name) { cloned._name = name; }
+    return cloned;
   }
 
   setMessage(message: string) {
-    if (message) { this._message = message; }
-    return this;
+    const cloned = this.clone(this);
+    if (message) { cloned._message = message; }
+    return cloned;
   }
 
   addMessage(message: string) {
-    if (message) { this._messages.unshift(message); }
-    return this;
+    const cloned = this.clone(this);
+    if (message) { cloned._messages.unshift(message); }
+    return cloned;
   }
 
   setDescription(description: string) {
-    if (description) { this._description = description; }
-    return this;
+    const cloned = this.clone(this);
+    if (description) { cloned._description = description; }
+    return cloned;
   }
 
   addStack(stack: string) {
-    if (stack) { this._stacks.unshift(stack); }
-    return this;
+    const cloned = this.clone(this);
+    if (stack) { cloned._stacks.unshift(stack); }
+    return cloned;
   }
 }

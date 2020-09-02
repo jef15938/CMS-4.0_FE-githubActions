@@ -3,8 +3,7 @@ import { AuthorizationService } from '../../../../global/api/service';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../global/injection-token';
 import { CmsEnviroment } from '../../../../global/interface';
 import { ModalService } from '../../../ui/modal';
-import { catchError } from 'rxjs/operators';
-import { NEVER } from 'rxjs';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-login',
@@ -32,11 +31,11 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authorizationService.login(this.username, this.password, this.validationCode).pipe(
-      catchError(err => {
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        showMessage();
         this.validationCode = null;
         this.refreshValidImageVersion();
-        return NEVER;
-      })
+      }),
     ).subscribe();
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, tap, concatMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, tap, concatMap, catchError } from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { LoginRequest } from '../../neuxAPI/bean/LoginRequest';
