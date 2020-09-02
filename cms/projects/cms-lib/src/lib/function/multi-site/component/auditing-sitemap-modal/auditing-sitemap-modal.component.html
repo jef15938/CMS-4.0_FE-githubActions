@@ -1,9 +1,9 @@
 <div class="page-content-container" [formGroup]="form">
-  <cms-date-picker-datetime formControlName="startTime" appearance="outline" label="上架時間"
+  <cms-date-picker-datetime formControlName="startTime" appearance="outline" label="上架時間" [required]="true"
     [errors]="form.controls['startTime']?.errors">
   </cms-date-picker-datetime>
 
-  <cms-date-picker-datetime formControlName="endTime" appearance="outline" label="下架時間"
+  <cms-date-picker-datetime formControlName="endTime" appearance="outline" label="下架時間" [required]="true"
     [errors]="form.controls['endTime']?.errors">
   </cms-date-picker-datetime>
 
@@ -15,6 +15,7 @@
 
   <div class="btn-group">
     <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
-    <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+      [disabled]="form.invalid">儲存</button>
   </div>
 </div>

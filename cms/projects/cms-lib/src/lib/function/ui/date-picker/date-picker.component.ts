@@ -39,6 +39,7 @@ export class DatePickerComponent implements OnInit, OnChanges, ControlValueAcces
   @Input() label = '';
   @Input() appearance: any = 'legacy';
   @Input() errors;
+  @Input() required = false;
   @Output() dateChange = new EventEmitter();
 
   // ngx-datetime-picker

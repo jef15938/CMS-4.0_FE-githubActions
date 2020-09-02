@@ -5,6 +5,7 @@ import { CmsDateAdapter } from '../../../../global/util/mat-date/mat-date';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CmsFormValidator } from '../../../../global/util/form-validator';
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
+import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
   selector: 'cms-auditing-sitemap-modal',
@@ -52,7 +53,7 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
       this.cmsDateAdapter.format(this.form.controls.endTime.value),
       this.form.controls.memo.value,
       this.siteId,
-    ).subscribe(_ => {
+    ).pipe(CmsErrorHandler.rxHandleError()).subscribe(_ => {
       this.close('Created');
     });
   }
