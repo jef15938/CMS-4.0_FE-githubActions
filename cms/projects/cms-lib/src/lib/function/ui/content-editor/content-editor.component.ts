@@ -11,28 +11,17 @@ import { ContentControlPanelComponent } from './component/content-control-panel/
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactive-guardian.interface';
 import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
-import { TabTemplateInfo, TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
+import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 import { ModalService } from '../modal';
 import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
 import { ContentService } from '../../../global/api/service';
 import { ContentVersionInfo } from '../../../global/api/neuxAPI/bean/ContentVersionInfo';
-import { ATTRIBUTE_GALLERY_ID } from '../html-editor/const/html-editor-container.const';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
 import { TemplateGetResponseModel } from '../../../global/api/data-model/models/template-get-response.model';
-import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
 import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
-import { ContentBlockInfoModel } from '../../../global/api/data-model/models/content-block-info.model';
 import { CmsErrorHandler } from '../../../global/error-handling';
-
-const isTabTemplateInfo = (templateInfo: ContentTemplateInfoModel): boolean => {
-  return !!(templateInfo as any).tabList;
-};
-
-const isFixedWrapper = (templateInfo: ContentTemplateInfoModel): boolean => {
-  return templateInfo.templateId === 'FixedWrapper';
-};
 
 @Component({
   selector: 'cms-content-editor',
@@ -168,60 +157,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     }
 
     const contentInfo: ContentInfoModel = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
-
-    // let templates: ContentTemplateInfoModel[] = contentInfo.languages
-    //   .reduce((a, b) => a.concat(b.blocks || []), [] as ContentBlockInfoModel[])
-    //   .map(block => block.templates)
-    //   .reduce((a, b) => a.concat(b || []), [] as ContentTemplateInfoModel[]);
-
-    // // 循環檢查 TemplateInfo 內是否用到 gallery 檔案，找出 galleryID
-    // while (templates.length) {
-    //   let children: ContentTemplateInfoModel[] = [];
-
-    //   templates.forEach(template => {
-    //     template.fields.forEach(field => {
-    //       switch (field.fieldType) {
-    //         case ContentFieldInfoFieldType.HTMLEDITOR:
-    //           const htmlString = field.fieldVal || '';
-    //           const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
-    //           const matches = htmlString.match(galleryIdRegex);
-    //           const ids = matches?.map(str => str.replace('gallery-id="', '').replace('"', '')) || [];
-    //           galleryIds = [...galleryIds, ...ids];
-    //           break;
-    //         case ContentFieldInfoFieldType.IMG:
-    //           const imgGalleryID = field.extension['gallery-id'];
-    //           if (imgGalleryID) {
-    //             galleryIds.push(imgGalleryID);
-    //           }
-    //           break;
-    //         case ContentFieldInfoFieldType.BGIMG:
-    //           const bgimgGalleryID = field.extension['gallery-id'];
-    //           if (bgimgGalleryID) {
-    //             galleryIds.push(bgimgGalleryID);
-    //           }
-    //           break;
-    //       }
-    //     });
-
-    //     if (isTabTemplateInfo(template)) {
-    //       children = [
-    //         ...children,
-    //         ...((template as any) as TabTemplateInfo).tabList
-    //           .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, ...(b.children as any[])], [])
-    //       ];
-    //     }
-    //     if (isFixedWrapper(template)) {
-    //       children = [
-    //         ...children,
-    //         ...((template.attributes?.templates as ContentTemplateInfoModel[]) || [])
-    //           .reduce<ContentTemplateInfoModel[]>((a, b) => [...a, b], [])
-    //       ];
-    //     }
-    //   });
-
-    //   templates = children;
-    // }
-
     contentInfo.galleries = [...new Set(galleryIds)].sort();
 
     return contentInfo;

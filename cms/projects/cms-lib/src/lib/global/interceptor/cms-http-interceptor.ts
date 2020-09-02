@@ -21,33 +21,6 @@ export class WithCredentialsInterceptor implements HttpInterceptor {
 }
 
 @Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
-
-  constructor(
-    private modalService: ModalService,
-  ) { }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(
-      // catchError((error: HttpErrorResponse) => {
-      //   console.warn('error = ', error);
-      //   if (error.status !== 401) {
-      //     const message = error?.error?.error_message || error?.error?.error || error?.error?.message;
-      //     this.showLogoutMessage(message).subscribe();
-      //   }
-      //   return throwError(error);
-      // })
-    );
-  }
-
-  private showLogoutMessage(message: string) {
-    return this.modalService.openMessage({ message });
-  }
-
-}
-
-
-@Injectable()
 export class HttpError401Interceptor implements HttpInterceptor {
 
   private isLogouting = false;
