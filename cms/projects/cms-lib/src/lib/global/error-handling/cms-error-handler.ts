@@ -11,7 +11,7 @@ interface ModalService {
 
 export class CmsErrorHandler implements ErrorHandler {
 
-  private static modalService: ModalService;
+  private static modalService: ModalService = null;
 
   private static showMessage(message: string) {
     if (CmsErrorHandler.modalService) {
