@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
 import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interface';
 import { ContentService } from '../../../../../global/api/service';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
@@ -25,6 +25,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   constructor(
     private contentService: ContentService,
+    private modalService: ModalService
   ) { super(); }
 
   ngOnInit(): void {
@@ -51,7 +52,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
     const convertedContentInfo = this.contentService.convertContentInfoModelToContentInfo(event.contentInfo);
     if (!this.contentID) {
       event.editorSave();
-      alert('內容儲存成功');
+      this.modalService.openMessage({ message: '內容儲存成功' }).subscribe();
       this.close(event.contentInfo);
       return;
     }
@@ -60,13 +61,13 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
       .updateContent(this.contentID, convertedContentInfo)
       .pipe(CmsErrorHandler.rxHandleError('更新頁面內容資料錯誤'))
       .subscribe(_ => {
-        alert('內容儲存成功');
+        this.modalService.openMessage({ message: '內容儲存成功' }).subscribe();
         if (this.onSaved) {
           this.onSaved();
         }
         event.editorSave();
       }, err => {
-        alert('內容儲存失敗');
+        this.modalService.openMessage({ message: '內容儲存失敗' }).subscribe();
         console.error('內容儲存失敗', err);
       });
   }

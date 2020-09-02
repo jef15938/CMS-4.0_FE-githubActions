@@ -100,13 +100,13 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   addFiles(galleryConfig: GalleryConfigResponseModel) {
     try {
       if (!galleryConfig) {
-        alert('無法取得上傳設定檔，請重整頁面後再試');
+        this.modalService.openMessage({ message: '無法取得上傳設定檔，請重整頁面後再試' }).subscribe();
         return;
       }
 
       const maxUploadNumber = this.isCreate ? galleryConfig.maxUploadNumber : 1;
       if (this.files.length > maxUploadNumber) {
-        alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
+        this.modalService.openMessage({ message: `一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個` }).subscribe();
         return;
       }
 
@@ -205,13 +205,13 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   upload(action: 'create' | 'update') {
     const maxUploadNumber = this.isCreate ? this.galleryConfig.maxUploadNumber : 1;
     if (this.files.length > maxUploadNumber) {
-      alert(`一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個`);
+      this.modalService.openMessage({ message: `一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個` }).subscribe();
       return;
     }
 
     const currentTotalBytes = this.countTotalFileSize(this.files);
     if (currentTotalBytes > this.galleryConfig.maxUploadSize * 1024) {
-      alert(`檔案總大小超過可上傳的大小限制(${this.galleryConfig.maxUploadSize} kb)。`);
+      this.modalService.openMessage({ message: `檔案總大小超過可上傳的大小限制(${this.galleryConfig.maxUploadSize} kb)。` }).subscribe();
       return;
     }
 
@@ -225,7 +225,9 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
         if (!failedUploads.length) {
           this.close(true);
         } else {
-          alert(`以下檔案上傳失敗 : ${failedUploads.map(failed => failed.fileName).join(', ')}`);
+          this.modalService.openMessage({
+            message: `以下檔案上傳失敗 : ${failedUploads.map(failed => `<p>${failed.fileName}</p>`)}`
+          }).subscribe();
         }
       });
   }
@@ -237,7 +239,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
         if (result.success) {
           this.close(true);
         } else {
-          alert('檔案上傳失敗');
+          this.modalService.openMessage({ message: '檔案上傳失敗' }).subscribe();
         }
       });
   }
@@ -283,7 +285,11 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   openInfo() {
-    if (!this.galleryConfig) { alert('無法取得資訊'); return; }
+    if (!this.galleryConfig) {
+      this.modalService.openMessage({ message: '沒有上傳設定資訊' }).subscribe();
+      return;
+    }
+
     const title = '上傳說明';
     const messages: string[] = [];
     messages.push(`單次上傳檔案數限制 : ${this.galleryConfig.maxUploadNumber} 個`);

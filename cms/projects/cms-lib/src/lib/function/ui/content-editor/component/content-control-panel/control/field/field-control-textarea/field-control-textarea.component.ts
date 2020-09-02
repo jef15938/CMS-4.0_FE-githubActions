@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { TemplateFieldSelectEvent, LayoutFieldTextareaDirective } from '@neux/render';
+import { ModalService } from '../../../../../../modal';
 
 @Component({
   selector: 'cms-field-control-textarea',
@@ -11,6 +12,12 @@ export class FieldControlTextareaComponent extends ContentControlBase implements
 
   maxLength = 0;
   maxLines = 0;
+
+  constructor(
+    private modalService: ModalService,
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
   }
@@ -29,7 +36,7 @@ export class FieldControlTextareaComponent extends ContentControlBase implements
     if (this.maxLines && lines.length >= this.maxLines) {
       ev.stopPropagation();
       ev.preventDefault();
-      alert(`行數最多允許${this.maxLines}行`);
+      this.modalService.openMessage({ message: `行數最多允許${this.maxLines}行` }).subscribe();
     }
   }
 
@@ -39,7 +46,7 @@ export class FieldControlTextareaComponent extends ContentControlBase implements
       if (this.maxLines && lines.length > this.maxLines) {
         ev.stopPropagation();
         ev.preventDefault();
-        alert(`行數最多允許${this.maxLines}行，多餘行數將被合併至最後一行`);
+        this.modalService.openMessage({ message: `行數最多允許${this.maxLines}行，多餘行數將被合併至最後一行` }).subscribe();
         const overLimitLines = lines.splice(this.maxLines - 1, lines.length - this.maxLines + 1);
         lines.push(overLimitLines.join(''));
         this.selected.fieldInfo.fieldVal = lines.join('\n');

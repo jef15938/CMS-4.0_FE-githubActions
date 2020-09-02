@@ -225,14 +225,14 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     this.farmService.takeOffFormData(category.categoryId, rowData.dataId)
       .pipe(CmsErrorHandler.rxHandleError('資料下架錯誤'))
       .subscribe(_ => {
-        alert(`資料已下架 : ${rowData.dataId}`);
+        this.modalService.openMessage({ message: `資料已下架 : ${rowData.dataId}` }).subscribe();
         this.getCategoryTableInfo(category).subscribe();
       });
   }
 
   private deleteData(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {
     // TODO: 刪除 Farm Table 資料
-    alert('功能準備中');
+    this.modalService.openMessage({ message: '功能準備中' }).subscribe();
   }
 
   private auditingData(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {

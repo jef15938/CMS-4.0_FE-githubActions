@@ -105,7 +105,7 @@ export class SitemapNodeDetailComponent implements OnInit {
       }
     }).subscribe(res => {
       if (res) {
-        alert('送審成功');
+        this.modalService.openMessage({ message: '送審成功' }).subscribe();
         this.update.emit(this.sitemapNode);
       }
     });
@@ -120,7 +120,7 @@ export class SitemapNodeDetailComponent implements OnInit {
       }
     }).subscribe(res => {
       if (res) {
-        alert('修改成功');
+        this.modalService.openMessage({ message: '更新成功' }).subscribe();
         this.update.emit(this.sitemapNode);
       }
     });

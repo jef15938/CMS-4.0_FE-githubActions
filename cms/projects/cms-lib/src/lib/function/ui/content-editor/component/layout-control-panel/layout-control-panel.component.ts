@@ -9,6 +9,7 @@ import { TemplateGetResponseModel } from '../../../../../global/api/data-model/m
 import { TemplateInfoModel } from '../../../../../global/api/data-model/models/template-info.model';
 import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 import { ContentTemplateInfoModel } from '../../../../../global/api/data-model/models/content-template-info.model';
+import { ModalService } from '../../../modal';
 
 @Component({
   selector: 'cms-layout-control-panel',
@@ -37,6 +38,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   constructor(
     private dynamicComponentFactoryService: DynamicComponentFactoryService,
     private componentFactoryResolver: ComponentFactoryResolver,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -113,7 +115,10 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     const yes = window.confirm(`確定加入${selectedTemplateInfo.templateName}:${selectedTemplateInfo.templateId}？`);
     if (!yes) { return; }
     const component = this.dynamicComponentFactoryService.getComponent(selectedTemplateInfo.templateId);
-    if (!component) { alert(`找不到指定id的版面元件 : ${selectedTemplateInfo.templateId}`); return; }
+    if (!component) {
+      this.modalService.openMessage({ message: `找不到指定id的版面元件 : ${selectedTemplateInfo.templateId}` }).subscribe();
+      return;
+    }
 
     let defaultTemplateInfo: ContentTemplateInfoModel;
 
@@ -130,7 +135,10 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
     }
 
-    if (!defaultTemplateInfo) { alert(`找不到指定id版面元件的預設資料 : ${selectedTemplateInfo.templateId}`); return; }
+    if (!defaultTemplateInfo) {
+      this.modalService.openMessage({ message: `找不到指定id版面元件的預設資料 : ${selectedTemplateInfo.templateId}` }).subscribe();
+      return;
+    }
 
     const rootTemplatesContainersOfBlocksByLanguage = this.context.getRootTemplatesContainersOfBlocksByLanguage();
 
@@ -145,7 +153,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
         this.context.findParentLayoutWrapperOfTemplatesContainer(btnTemplatesContainer, btnRootTemplatesContainer);
 
       if (!btnParentLayoutWrapper) {
-        alert('系統異常 : 無 btnLayoutWrapper');
+        this.modalService.openMessage({ message: '系統異常 : 無 btnLayoutWrapper' }).subscribe();
         return;
       }
 
@@ -174,7 +182,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
         }).reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[]);
 
       if (allLangTargetTemplatesContainers.some(v => !v)) {
-        alert('程式錯誤，尋找版面資料錯誤');
+        this.modalService.openMessage({ message: '程式錯誤，尋找版面資料錯誤' }).subscribe();
         return;
       }
 

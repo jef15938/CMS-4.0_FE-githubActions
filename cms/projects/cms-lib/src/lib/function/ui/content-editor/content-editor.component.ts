@@ -250,7 +250,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     nextState?: RouterStateSnapshot
   ): boolean {
     if (!this.saved) {
-      alert('有尚未儲存的內容');
+      this.modalService.openMessage({ message: '有尚未儲存的內容' }).subscribe();
       return false;
     }
     this.close();
