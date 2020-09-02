@@ -40,7 +40,7 @@ export class GalleryService {
   constructor(
     private respAPIService: RestApiService,
     private httpClient: HttpClient,
-    @Inject(CMS_ENVIROMENT_TOKEN) environment: CmsEnviroment,
+    @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
   ) {
     this.apiUrl = `${environment.apiBaseUrl}/Gallery`;
   }
@@ -150,7 +150,7 @@ export class GalleryService {
   }
 
   deleteGallery(galleryID: number) {
-    return this.httpClient.delete(`https://cms.decoder.com.tw/Gallery/${galleryID}`, {
+    return this.httpClient.delete(`${this.environment.apiBaseUrl}/Gallery/${galleryID}`, {
       headers: {
         'content-type': 'application/json'
       }
