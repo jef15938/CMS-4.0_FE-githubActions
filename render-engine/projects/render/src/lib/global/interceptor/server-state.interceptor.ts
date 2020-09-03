@@ -2,6 +2,7 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpResponse } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { HttpUtil } from '../utils/http-util';
 
 @Injectable()
 export class ServerStateInterceptor implements HttpInterceptor {
@@ -13,7 +14,12 @@ export class ServerStateInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       tap(event => {
         if (event instanceof HttpResponse && req.url.indexOf('/DataSource/') < 0) {
-          this.transferState.set(makeStateKey(req.url), event.body);
+          try {
+            HttpUtil.checkErrorResponse(event);
+            this.transferState.set(makeStateKey(req.url), event.body);
+          } catch (error) {
+
+          }
         }
       })
     );

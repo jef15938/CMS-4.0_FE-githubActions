@@ -25,6 +25,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { RenderEffects } from './global/store/effects/render.effects';
 import * as fromRenderStore from './global/store/reducers/render.reducer';
 import { FixedWrapperComponent } from './global/component/fixed-wrapper/fixed-wrapper.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorHandlerInterceptor } from './global/interceptor/http-error-handler.interceptor';
 
 const COMPONENTS = [
   SliderComponent,
@@ -67,6 +69,7 @@ export class RenderModule {
     return {
       ngModule: RenderModule,
       providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptor, multi: true },
         { provide: RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN, useValue: RENDER_DEFAULT_COMPONENT_MAPPINGS }
       ]
     };

@@ -12,6 +12,7 @@ import { fetchSitemap } from '../store/actions/render.actions';
 import { PageInfoGetResponseModel } from '../api/data-model/models/page-info-get-response.model';
 import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
 import { ContentInfoModel } from '../api/data-model/models/content-info.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -66,9 +67,15 @@ export class PageInfoResolverService implements Resolve<PageData> {
       sitemap: sitemap$,
       contentInfo: contentInfo$
     }).pipe(
-      catchError(error => {
-        console.log('error:', error);
-        this.router.navigate(['error-page'], { state: { error } });
+      catchError((error: HttpErrorResponse) => {
+        this.router.navigate(['error-page'], {
+          state: {
+            error: {
+              error: error.error,
+              message: error.message,
+            },
+          }
+        });
         return throwError(error);
       })
     );
