@@ -5,15 +5,15 @@ import { FarmCustomFormControlComponent } from '../../function/farm-custom-form-
 
 export const COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = [
   {
-    component_id: 'app-extension-1-1',
+    component_id: 'app-extension-1',
     component: Test1Component
   },
   {
-    component_id: 'app-extension-1-2',
+    component_id: 'app-extension-2',
     component: Test2Component
   },
   {
-    component_id: 'app-extension-2-1',
+    component_id: 'app-extension-3',
     component: Test2Component
   },
   {

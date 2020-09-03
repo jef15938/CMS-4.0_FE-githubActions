@@ -1,93 +1,166 @@
 {
   "datas": [{
-    "func_id": "base",
-    "func_name": "主功能",
-    "component_id": null,
-    "children": [{
-      "func_id": "multi-site",
-      "func_name": "多網站管理",
-      "component_id": "multi-site",
-      "children": []
-    }, {
-      "func_id": "web",
-      "func_name": "網站管理",
+      "func_id": "extension",
+      "func_name": "APP 擴充",
+      "component_id": "app-extension-1",
+      "children": [{
+        "func_id": "app-extension-1",
+        "func_name": "APP 擴充 1",
+        "component_id": "app-extension-1",
+        "children": [
+        ]
+      }]
+    },
+    {
+      "func_id": "base",
+      "func_name": "官網管理",
       "component_id": null,
       "children": [{
-        "func_id": "news",
-        "func_name": "最新消息管理",
-        "component_id": null,
+        "func_id": "multi-site",
+        "func_name": "多網站管理",
+        "component_id": "multi-site",
         "children": []
       }, {
-        "func_id": "news_type",
-        "func_name": "最新消息分類管理",
-        "component_id": null,
+        "func_id": "my-auditing",
+        "func_name": "我的申請單",
+        "component_id": "my-auditing",
         "children": []
+      }, {
+        "func_id": "gallery",
+        "func_name": "媒體庫",
+        "component_id": "gallery",
+        "children": []
+      }, {
+        "func_id": "auditing",
+        "func_name": "審核/放行管理",
+        "component_id": "auditing",
+        "children": []
+      }, {
+        "func_id": "web",
+        "func_name": "網站管理",
+        "component_id": null,
+        "children": [{
+          "func_id": "news",
+          "func_name": "最新消息管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "news_type",
+          "func_name": "最新消息分類管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "slider",
+          "func_name": "輪播管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "slider_type",
+          "func_name": "輪播分類管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "qa",
+          "func_name": "常見問題管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "qa_type",
+          "func_name": "常見問題分類管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "download",
+          "func_name": "表單下載管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "download_type",
+          "func_name": "表單下載分類管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "zip",
+          "func_name": "zip上傳與發佈",
+          "component_id": null,
+          "children": []
+        }]
+      }, {
+        "func_id": "system",
+        "func_name": "中央權限管理",
+        "component_id": null,
+        "children": [{
+          "func_id": "dept",
+          "func_name": "部門管理",
+          "component_id": "dept",
+          "children": []
+        }, {
+          "func_id": "admin_user",
+          "func_name": "帳號管理",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "admin_group",
+          "func_name": "群組管理",
+          "component_id": null,
+          "children": []
+        }]
+      }, {
+        "func_id": "report",
+        "func_name": "報表管理",
+        "component_id": "signal",
+        "children": [{
+          "func_id": "admin_user_group",
+          "func_name": "權限報表",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "login_log",
+          "func_name": "使用者登入軌跡紀錄",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "operation_log",
+          "func_name": "登入操作功能項目紀錄",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "auditing_report",
+          "func_name": "審核報表",
+          "component_id": null,
+          "children": []
+        }]
+      }, {
+        "func_id": "cms-chatbot",
+        "func_name": "CMS 助手",
+        "component_id": null,
+        "children": [{
+          "func_id": "cms-item",
+          "func_name": "項目設定",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "cms-reply",
+          "func_name": "回覆設定",
+          "component_id": null,
+          "children": []
+        }]
+      }, {
+        "func_id": "chatbot",
+        "func_name": "智慧助手",
+        "component_id": null,
+        "children": [{
+          "func_id": "item",
+          "func_name": "項目設定",
+          "component_id": null,
+          "children": []
+        }, {
+          "func_id": "reply",
+          "func_name": "回覆設定",
+          "component_id": null,
+          "children": []
+        }]
       }]
-    }, {
-      "func_id": "my-auditing",
-      "func_name": "我的申請單",
-      "component_id": "my-auditing",
-      "children": []
-    }, {
-      "func_id": "gallery",
-      "func_name": "媒體庫",
-      "component_id": "gallery",
-      "children": []
-    }, {
-      "func_id": "auditing",
-      "func_name": "審核/放行管理",
-      "component_id": "auditing",
-      "children": []
-    }, {
-      "func_id": "system",
-      "func_name": "中央權限管理",
-      "component_id": null,
-      "children": [{
-        "func_id": "dept",
-        "func_name": "部門管理",
-        "component_id": "dept",
-        "children": []
-      }, {
-        "func_id": "admin_user",
-        "func_name": "帳號管理",
-        "component_id": null,
-        "children": []
-      }, {
-        "func_id": "admin_group",
-        "func_name": "群組管理",
-        "component_id": null,
-        "children": []
-      }]
-    }, {
-      "func_id": "chatbot",
-      "func_name": "智慧助手",
-      "component_id": null,
-      "children": [{
-        "func_id": "item",
-        "func_name": "項目設定",
-        "component_id": null,
-        "children": []
-      }, {
-        "func_id": "reply",
-        "func_name": "回覆設定",
-        "component_id": null,
-        "children": []
-      }]
-    }, {
-      "func_id": "cms-chatbot",
-      "func_name": "CMS 助手",
-      "component_id": null,
-      "children": [{
-        "func_id": "cms-item",
-        "func_name": "項目設定",
-        "component_id": null,
-        "children": []
-      }, {
-        "func_id": "cms-reply",
-        "func_name": "回覆設定",
-        "component_id": null,
-        "children": []
-      }]
-    }]
-  }]
+    }
+  ]
 }

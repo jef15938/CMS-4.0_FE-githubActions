@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { of } from 'rxjs';
 import { FarmService } from '../api/service';
+import { CmsErrorHandler } from '../error-handling';
 
 @Injectable()
 export class CmsFarmDataResolver implements Resolve<any> {
@@ -11,6 +12,8 @@ export class CmsFarmDataResolver implements Resolve<any> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot) {
-    return route.params?.funcId ? this.farmService.getFarmByFuncID(route.params.funcId) : of(undefined);
+    return route.params?.funcId ? this.farmService.getFarmByFuncID(route.params.funcId).pipe(
+      CmsErrorHandler.rxHandleError('取得 Farm 資料錯誤'),
+    ) : of(undefined);
   }
 }

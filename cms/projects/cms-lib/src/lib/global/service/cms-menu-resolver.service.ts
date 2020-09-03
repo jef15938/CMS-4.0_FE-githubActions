@@ -6,6 +6,7 @@ import { CmsExtensionMenuResolver } from '../../global/interface';
 import { CMS_EXTENSION_MENU_RESOLVER_TOKEN } from '../../global/injection-token';
 import { MenuService } from '../api/service';
 import { MenuInfoModel } from '../api/data-model/models/menu-info.model';
+import { CmsErrorHandler } from '../error-handling';
 
 @Injectable()
 export class CmsUserMenuResolver implements Resolve<any> {
@@ -29,19 +30,22 @@ export class CmsUserMenuResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot) {
     return this.menuService.getUserMenu().pipe(
+      CmsErrorHandler.rxHandleError('取得功能 menu 清單錯誤'),
       concatMap(cmsMenus => {
+
         const menus = {
           cmsMenus: [],
           appMenus: [],
         };
 
+        this.menus = menus;
         menus.cmsMenus = cmsMenus;
 
         if (!this.cmsExtensionMenuProvidor) { return of(menus); }
+
         return this.cmsExtensionMenuProvidor.resolve().pipe(
           map(extensionMenus => {
             menus.appMenus = extensionMenus || [];
-            this.menus = menus;
             return menus;
           })
         );
