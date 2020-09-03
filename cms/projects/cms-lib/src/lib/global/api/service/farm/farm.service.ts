@@ -5,7 +5,7 @@ import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { FarmAuditingRequest } from '../../neuxAPI/bean/FarmAuditingRequest';
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
 import { ListFarmTriggerDataResponse } from '../../neuxAPI/bean/ListFarmTriggerDataResponse';
 import { map } from 'rxjs/operators';
@@ -22,6 +22,7 @@ import { FarmInfoGetResponseModel } from '../../data-model/models/farm-info-get-
 import { FarmTableInfoModel } from '../../data-model/models/farm-table-info.model';
 import { FarmTableInfo } from '../../neuxAPI/bean/FarmTableInfo';
 import { FarmServiceError, CmsErrorHandler } from '../../../error-handling';
+import { plainToClass } from 'class-transformer';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,7 @@ export class FarmService {
   constructor(
     private restAPIService: RestApiService,
     @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
+    private httpClient: HttpClient,
   ) { }
 
   /**
@@ -42,12 +44,20 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  getFarmByFuncID(funcID: string): Observable<FarmInfoGetResponseModel> {
+  getFarmByFuncID(funcID: string, dataID = '', parentID = ''): Observable<FarmInfoGetResponseModel> {
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
-    return this.restAPIService.dispatchRestApi<FarmInfoGetResponse>('GetFarmByFuncID', { funcID }).pipe(
+    return (
+      // this.restAPIService.dispatchRestApi<FarmInfoGetResponse>('GetFarmByFuncID', { funcID })
+      this.httpClient.get(`${this.environment.apiBaseUrl}/Farm/${funcID}?dataID=${dataID}&parentID=${parentID}`, {
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+    ).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getFarmByFuncID')),
+      map(x => plainToClass(FarmInfoGetResponse, x)),
       ModelMapper.rxMapModelTo(FarmInfoGetResponseModel)
     );
   }

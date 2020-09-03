@@ -114,10 +114,10 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     this.getCategoryTableInfo(category).subscribe();
   }
 
-  private createSub(category: FarmCategoryInfoModel) {
+  private seeMore(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {
     if (!category) { return; }
 
-    this.farmService.getFarmByFuncID(category.categoryId)
+    this.farmService.getFarmByFuncID(rowData.moreFuncId, rowData.dataId, category.categoryId)
       .pipe(CmsErrorHandler.rxHandleError('取得 Farm 資料錯誤'))
       .subscribe(farm => {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmSharedComponent);
@@ -173,7 +173,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
         this.preview(category, event.rowData);
         break;
       case FarmTableDataInfoAction.MORE:
-        this.createSub(category);
+        this.seeMore(category, event.rowData);
         break;
     }
   }

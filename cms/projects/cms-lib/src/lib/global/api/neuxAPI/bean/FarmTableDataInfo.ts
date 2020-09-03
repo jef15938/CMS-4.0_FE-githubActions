@@ -13,6 +13,7 @@ public is_checked: boolean;
 public columns: Array<object>;
 @IsNotEmpty()
 public actions: Array<string>;
+public moreFuncId: string;
 
 
 }

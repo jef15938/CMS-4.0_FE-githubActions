@@ -43,6 +43,7 @@ export type FarmTableDataInfoModelColumn = {
       };
     });
     model.actions = bean.actions as FarmTableDataInfoAction[];
+    model.moreFuncId = bean.moreFuncId;
   }
 )
 export class FarmTableDataInfoModel {
@@ -54,5 +55,6 @@ export class FarmTableDataInfoModel {
   public columns: Array<FarmTableDataInfoModelColumn>;
   @IsNotEmpty()
   public actions: Array<FarmTableDataInfoAction>;
+  public moreFuncId: string;
 
 }
