@@ -15,15 +15,14 @@ import { GroupInfoModel } from '../../data-model/models/group-info.model';
 import { GroupSitemapInfoModel } from '../../data-model/models/group-sitemap-info.model';
 import { GroupSiteMapGetResponseModel } from '../../data-model/models/group-sitemap-get-response.model';
 import { GroupMenuInfo } from '../../neuxAPI/bean/GroupMenuInfo';
-import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
-import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
+import { GroupServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
 
-  error = new CmsApiServiceError({ name: 'GroupService' });
+  error = new GroupServiceError();
 
   constructor(
     private restAPIService: RestApiService

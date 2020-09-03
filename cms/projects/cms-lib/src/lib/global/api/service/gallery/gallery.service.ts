@@ -15,7 +15,7 @@ import { GalleryCategoryGetResponseModel } from '../../data-model/models/gallery
 import { GalleryCategoryPutRequest } from '../../neuxAPI/bean/GalleryCategoryPutRequest';
 import { GalleryConfigResponse } from '../../neuxAPI/bean/GalleryConfigResponse';
 import { GalleryConfigResponseModel } from '../../data-model/models/gallery-config-response.model';
-import { CmsApiServiceError, CmsErrorHandler } from '../../../error-handling';
+import { GalleryServiceError, CmsErrorHandler } from '../../../error-handling';
 
 export class FileUploadModel {
   fileName: string;
@@ -37,7 +37,7 @@ export class FileUploadModel {
 export class GalleryService {
 
   private apiUrl = '';
-  error = new CmsApiServiceError({ name: 'GalleryService' });
+  error = new GalleryServiceError();
 
   constructor(
     private respAPIService: RestApiService,

@@ -14,15 +14,14 @@ import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
 import { MyAuditingGetResponseModel } from '../../data-model/models/my-auditing-get-response.model';
 import { MyAuditingDetailInfoModel } from '../../data-model/models/my-auditing-detail-info.model';
 import { MyAuditingDetailGetResponseModel } from '../../data-model/models/my-auditing-detail-get-response.model';
-import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
-import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
+import { AuditingServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuditingService {
 
-  error = new CmsApiServiceError({ name: 'AuditingService' });
+  error = new AuditingServiceError();
 
   constructor(
     private restAPIService: RestApiService

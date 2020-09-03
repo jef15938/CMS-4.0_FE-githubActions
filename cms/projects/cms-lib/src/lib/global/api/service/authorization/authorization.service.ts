@@ -10,15 +10,14 @@ import { LoginInfoModel } from '../../data-model/models/login-info.model';
 import { plainToClass } from 'class-transformer';
 import { ModelMapper } from '@neux/core';
 import { LoginResponseModel } from '../../data-model/models/login-response.model';
-import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
-import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
+import { AuthorizationServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
 
-  error = new CmsApiServiceError({ name: 'AuthorizationService' });
+  error = new AuthorizationServiceError();
 
   constructor(
     private respAPIService: RestApiService,

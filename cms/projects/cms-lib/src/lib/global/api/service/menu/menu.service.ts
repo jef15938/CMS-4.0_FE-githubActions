@@ -6,15 +6,14 @@ import { MenuGetResponse } from '../../neuxAPI/bean/MenuGetResponse';
 import { ModelMapper } from '@neux/core';
 import { MenuInfoModel } from '../../data-model/models/menu-info.model';
 import { MenuGetResponseModel } from '../../data-model/models/menu-get-response.model';
-import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
-import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
+import { MenuServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  error = new CmsApiServiceError({ name: 'MenuService' });
+  error = new MenuServiceError();
 
   constructor(
     private restAPIService: RestApiService

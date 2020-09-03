@@ -11,22 +11,20 @@ import { ListContentVersionResponse } from '../../neuxAPI/bean/ListContentVersio
 import { LayoutInfoModel } from '../../data-model/models/layout-info.model';
 import { ModelMapper } from '@neux/core';
 import { LayoutGetResponseModel } from '../../data-model/models/layout-get-response.model';
-import { ContentDataSourceModel } from '../../data-model/models/content-data-source.model';
 import { ListContentDataSourceResponseModel } from '../../data-model/models/list-content-data-source-response.model';
 import { ContentVersionInfoModel } from '../../data-model/models/content-version-info.model';
 import { ListContentVersionResponseModel } from '../../data-model/models/list-content-version-response.model';
 import { TemplateGetResponseModel } from '../../data-model/models/template-get-response.model';
 import { ContentInfoModel } from '../../data-model/models/content-info.model';
 import { plainToClass } from 'class-transformer';
-import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
-import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
+import { ContentServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContentService {
 
-  error = new CmsApiServiceError({ name: 'ContentService' });
+  error = new ContentServiceError();
 
   constructor(
     private restAPIService: RestApiService

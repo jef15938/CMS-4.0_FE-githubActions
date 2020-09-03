@@ -10,15 +10,14 @@ import { DepartmentInfoModel } from '../../data-model/models/department-info.mod
 import { DepartmentDetailInfo } from '../../neuxAPI/bean/DepartmentDetailInfo';
 import { DepartmentDetailInfoModel } from '../../data-model/models/department-detail-info.model';
 import { DepartmentMaintainRequest } from '../../neuxAPI/bean/DepartmentMaintainRequest';
-import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
-import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
+import { DepartmentServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
 
-  error = new CmsApiServiceError({ name: 'DepartmentService' });
+  error = new DepartmentServiceError();
 
   constructor(
     private restAPIService: RestApiService

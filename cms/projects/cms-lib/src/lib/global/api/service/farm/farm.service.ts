@@ -21,15 +21,14 @@ import { FarmInfoGetResponse } from '../../neuxAPI/bean/FarmInfoGetResponse';
 import { FarmInfoGetResponseModel } from '../../data-model/models/farm-info-get-response.model';
 import { FarmTableInfoModel } from '../../data-model/models/farm-table-info.model';
 import { FarmTableInfo } from '../../neuxAPI/bean/FarmTableInfo';
-import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
-import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
+import { FarmServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FarmService {
 
-  error = new CmsApiServiceError({ name: 'FarmService' });
+  error = new FarmServiceError();
 
   constructor(
     private restAPIService: RestApiService,

@@ -20,15 +20,14 @@ import { UserSiteMapPostRequestModel } from '../../data-model/models/user-sitema
 import { UserSiteMapPostRequest } from '../../neuxAPI/bean/UserSiteMapPostRequest';
 import { SiteNodeDetailInfoModel } from '../../data-model/models/site-node-detail-info.model';
 import { UserSiteMapPutRequestModel } from '../../data-model/models/user-sitemap-put-request.model';
-import { CmsApiServiceError } from '../../../error-handling/type/api-service/api-service-error';
-import { CmsErrorHandler } from '../../../error-handling/cms-error-handler';
+import { SitemapServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SitemapService {
 
-  error = new CmsApiServiceError({ name: 'SitemapService' });
+  error = new SitemapServiceError();
 
   constructor(
     private restAPIService: RestApiService
