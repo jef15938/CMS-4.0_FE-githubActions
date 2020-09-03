@@ -117,49 +117,54 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   }
 
   private getCurrentContent() {
-    let galleryIds: string[] = [];
+    try {
+      let galleryIds: string[] = [];
 
-    // 調整抓取 gallery-id 方式，本來用資料抓會需要針對特定資料欄位寫死，現在直接用元件 instance 抓
-    let templatesContainers = Array.from(this.contentViewRenderer.templatesContainers);
-    while (templatesContainers.length) {
-      templatesContainers.forEach(templatesContainer => {
-        templatesContainer.templates.forEach(template => {
-          template.fields.forEach(field => {
-            switch (field.fieldType) {
-              case ContentFieldInfoFieldType.HTMLEDITOR:
-                const htmlString = field.fieldVal || '';
-                const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
-                const matches = htmlString.match(galleryIdRegex);
-                const ids = matches?.map(str => str.replace('gallery-id="', '').replace('"', '')) || [];
-                galleryIds = [...galleryIds, ...ids];
-                break;
-              case ContentFieldInfoFieldType.IMG:
-                const imgGalleryID = field.extension['gallery-id'];
-                if (imgGalleryID) {
-                  galleryIds.push(imgGalleryID);
-                }
-                break;
-              case ContentFieldInfoFieldType.BGIMG:
-                const bgimgGalleryID = field.extension['gallery-id'];
-                if (bgimgGalleryID) {
-                  galleryIds.push(bgimgGalleryID);
-                }
-                break;
-            }
+      // 調整抓取 gallery-id 方式，本來用資料抓會需要針對特定資料欄位寫死，現在直接用元件 instance 抓
+      let templatesContainers = Array.from(this.contentViewRenderer.templatesContainers);
+      while (templatesContainers.length) {
+        templatesContainers.forEach(templatesContainer => {
+          templatesContainer.templates.forEach(template => {
+            template.fields.forEach(field => {
+              switch (field.fieldType) {
+                case ContentFieldInfoFieldType.HTMLEDITOR:
+                  const htmlString = field.fieldVal || '';
+                  const galleryIdRegex = new RegExp(/gallery-id="([^"]|\\")*"/, 'g');
+                  const matches = htmlString.match(galleryIdRegex);
+                  const ids = matches?.map(str => str.replace('gallery-id="', '').replace('"', '')) || [];
+                  galleryIds = [...galleryIds, ...ids];
+                  break;
+                case ContentFieldInfoFieldType.IMG:
+                  const imgGalleryID = field.extension['gallery-id'];
+                  if (imgGalleryID) {
+                    galleryIds.push(imgGalleryID);
+                  }
+                  break;
+                case ContentFieldInfoFieldType.BGIMG:
+                  const bgimgGalleryID = field.extension['gallery-id'];
+                  if (bgimgGalleryID) {
+                    galleryIds.push(bgimgGalleryID);
+                  }
+                  break;
+              }
+            });
           });
         });
-      });
 
-      templatesContainers = templatesContainers.map(templatesContainer =>
-        templatesContainer.layoutWrapperComponents.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
-          .reduce((a, b) => a.concat(b), [])
-      ).reduce((a, b) => a.concat(b), []);
+        templatesContainers = templatesContainers.map(templatesContainer =>
+          templatesContainer.layoutWrapperComponents.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
+            .reduce((a, b) => a.concat(b), [])
+        ).reduce((a, b) => a.concat(b), []);
+      }
+
+      const contentInfo: ContentInfoModel = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
+      contentInfo.galleries = [...new Set(galleryIds)].sort();
+
+      return contentInfo;
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'ContentEditorComponent.getCurrentContent()', '取得當前內容資料錯誤');
+      return null;
     }
-
-    const contentInfo: ContentInfoModel = JSON.parse(JSON.stringify(this.manager.stateManager.contentInfoEditModel));
-    contentInfo.galleries = [...new Set(galleryIds)].sort();
-
-    return contentInfo;
   }
 
   close() {

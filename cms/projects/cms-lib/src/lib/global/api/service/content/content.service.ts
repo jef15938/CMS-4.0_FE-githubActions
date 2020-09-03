@@ -85,14 +85,19 @@ export class ContentService {
   }
 
   convertContentInfoModelToContentInfo(contentInfoModel: ContentInfoModel): ContentInfo {
-    if (!contentInfoModel) { return contentInfoModel as any; }
-    const contentInfoModelJsonString = JSON.stringify(contentInfoModel);
-    const regexLanguageId = new RegExp(/languageId/g);
-    const regexLanguageName = new RegExp(/languageName/g);
-    const resultString = contentInfoModelJsonString
-      .replace(regexLanguageId, 'language_id')
-      .replace(regexLanguageName, 'language_name');
-    return JSON.parse(resultString);
+    try {
+      if (!contentInfoModel) { return contentInfoModel as any; }
+      const contentInfoModelJsonString = JSON.stringify(contentInfoModel);
+      const regexLanguageId = new RegExp(/languageId/g);
+      const regexLanguageName = new RegExp(/languageName/g);
+      const resultString = contentInfoModelJsonString
+        .replace(regexLanguageId, 'language_id')
+        .replace(regexLanguageName, 'language_name');
+      return JSON.parse(resultString);
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'ContentService.convertContentInfoModelToContentInfo()', '資料解析錯誤');
+      return null;
+    }
   }
 
   /**

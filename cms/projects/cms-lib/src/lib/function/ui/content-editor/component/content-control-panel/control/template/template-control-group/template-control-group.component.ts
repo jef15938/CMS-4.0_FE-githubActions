@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { LayoutWrapperSelectEvent, GroupTemplateInfo, GroupTemplateBaseComponent } from '@neux/render';
 import { ContentControlBase } from '../../_base';
 import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-model/models/content-field-info.model';
+import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-template-control-group',
@@ -50,8 +51,12 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
   }
 
   copyGroup(group: ContentFieldInfoModel[]) {
-    this.templateInfo.itemList.push(JSON.parse(JSON.stringify(group)));
-    this.change.emit();
+    try {
+      this.templateInfo.itemList.push(JSON.parse(JSON.stringify(group)));
+      this.change.emit();
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'TemplateControlGroupComponent.copyGroup()', 'JSON 資料解析錯誤');
+    }
   }
 
   removeGroup(group: ContentFieldInfoModel[]) {

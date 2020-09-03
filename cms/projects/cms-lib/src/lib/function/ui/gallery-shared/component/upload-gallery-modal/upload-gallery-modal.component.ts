@@ -169,7 +169,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       });
       fileUpload.click();
     } catch (error) {
-      CmsErrorHandler.throw(error, new CmsFunctionError().setMessage('UploadGalleryModalComponent.addFiles()'));
+      CmsErrorHandler.throwAndShow(error, 'UploadGalleryModalComponent.addFiles()', '加入檔案錯誤');
     }
   }
 

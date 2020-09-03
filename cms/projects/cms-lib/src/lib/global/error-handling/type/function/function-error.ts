@@ -4,10 +4,10 @@ export class CmsFunctionError extends CmsError {
   constructor(error?: string) {
     super();
     this.config({
-      code: 1100,
+      code: 2000,
       name: 'CmsFunctionError',
-      message: error || '媒體操作系統錯誤',
-      description: error || '媒體操作系統錯誤',
+      message: error || '系統錯誤',
+      description: error || '系統錯誤',
     });
   }
 }

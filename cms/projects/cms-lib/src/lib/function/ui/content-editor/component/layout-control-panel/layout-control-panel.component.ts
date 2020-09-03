@@ -10,6 +10,7 @@ import { TemplateInfoModel } from '../../../../../global/api/data-model/models/t
 import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 import { ContentTemplateInfoModel } from '../../../../../global/api/data-model/models/content-template-info.model';
 import { ModalService } from '../../../modal';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-layout-control-panel',
@@ -132,7 +133,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       componentRef.destroy();
       viewContainerRef.clear();
     } catch (error) {
-
+      CmsErrorHandler.throwAndShow(error, 'LayoutControlPanelComponent.selectTemplate()', '處理選擇版面預設資料錯誤錯誤');
     }
 
     if (!defaultTemplateInfo) {
@@ -142,53 +143,57 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
 
     const rootTemplatesContainersOfBlocksByLanguage = this.context.getRootTemplatesContainersOfBlocksByLanguage();
 
-    if (isRoot) {
-      rootTemplatesContainersOfBlocksByLanguage.forEach(rootTemplatesContainersOfBlocks => {
-        rootTemplatesContainersOfBlocks.forEach(rootTemplatesContainer => {
-          rootTemplatesContainer.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
+    try {
+      if (isRoot) {
+        rootTemplatesContainersOfBlocksByLanguage.forEach(rootTemplatesContainersOfBlocks => {
+          rootTemplatesContainersOfBlocks.forEach(rootTemplatesContainer => {
+            rootTemplatesContainer.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
+          });
         });
-      });
-    } else {
-      const btnParentLayoutWrapper =
-        this.context.findParentLayoutWrapperOfTemplatesContainer(btnTemplatesContainer, btnRootTemplatesContainer);
+      } else {
+        const btnParentLayoutWrapper =
+          this.context.findParentLayoutWrapperOfTemplatesContainer(btnTemplatesContainer, btnRootTemplatesContainer);
 
-      if (!btnParentLayoutWrapper) {
-        this.modalService.openMessage({ message: '系統異常 : 無 btnLayoutWrapper' }).subscribe();
-        return;
+        if (!btnParentLayoutWrapper) {
+          this.modalService.openMessage({ message: '系統異常 : 無 btnLayoutWrapper' }).subscribe();
+          return;
+        }
+
+        const btnLayoutWrapperTemplatesContainerComponents =
+          Array.from(btnParentLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
+
+        const templatesContainerIndex = btnLayoutWrapperTemplatesContainerComponents.indexOf(btnTemplatesContainer);
+
+        const allLangTargetTemplatesContainers =
+          rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainersOfBlocks => {
+            return rootTemplatesContainersOfBlocks.map(rootTemplatesContainer => {
+              if (
+                rootTemplatesContainer === btnRootTemplatesContainer
+                && !rootTemplatesContainer.templates.some(t => t.templateId === 'FixedWrapper')
+              ) {
+                return btnTemplatesContainer;
+              } else {
+                const templateInfoId = btnParentLayoutWrapper.templateInfo.id;
+                const layoutWrapper = this.context.findLayoutWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
+                if (!layoutWrapper) { return null; }
+                return Array.from(
+                  layoutWrapper.componentRef.instance.templatesContainerComponents
+                )[templatesContainerIndex];
+              }
+            }).filter(v => !!v);
+          }).reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[]);
+
+        if (allLangTargetTemplatesContainers.some(v => !v)) {
+          this.modalService.openMessage({ message: '程式錯誤，尋找版面資料錯誤' }).subscribe();
+          return;
+        }
+
+        allLangTargetTemplatesContainers.forEach(target => {
+          target.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
+        });
       }
-
-      const btnLayoutWrapperTemplatesContainerComponents =
-        Array.from(btnParentLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
-
-      const templatesContainerIndex = btnLayoutWrapperTemplatesContainerComponents.indexOf(btnTemplatesContainer);
-
-      const allLangTargetTemplatesContainers =
-        rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainersOfBlocks => {
-          return rootTemplatesContainersOfBlocks.map(rootTemplatesContainer => {
-            if (
-              rootTemplatesContainer === btnRootTemplatesContainer
-              && !rootTemplatesContainer.templates.some(t => t.templateId === 'FixedWrapper')
-            ) {
-              return btnTemplatesContainer;
-            } else {
-              const templateInfoId = btnParentLayoutWrapper.templateInfo.id;
-              const layoutWrapper = this.context.findLayoutWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
-              if (!layoutWrapper) { return null; }
-              return Array.from(
-                layoutWrapper.componentRef.instance.templatesContainerComponents
-              )[templatesContainerIndex];
-            }
-          }).filter(v => !!v);
-        }).reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[]);
-
-      if (allLangTargetTemplatesContainers.some(v => !v)) {
-        this.modalService.openMessage({ message: '程式錯誤，尋找版面資料錯誤' }).subscribe();
-        return;
-      }
-
-      allLangTargetTemplatesContainers.forEach(target => {
-        target.templates.splice(this.selectedBtn.position, 0, JSON.parse(JSON.stringify(defaultTemplateInfo)));
-      });
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'LayoutControlPanelComponent.selectTemplate()', '處理加入版面資料錯誤');
     }
 
     this.templateAdd.emit(selectedTemplateInfo.templateName);

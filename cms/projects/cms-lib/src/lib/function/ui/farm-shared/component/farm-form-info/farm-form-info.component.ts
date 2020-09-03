@@ -172,31 +172,36 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   requestFormInfo(): Observable<FarmFormInfoModel> {
-    const formGroup = this.formGroup;
+    try {
+      const formGroup = this.formGroup;
 
-    for (const controlName of Object.keys(formGroup.controls)) {
-      const control = formGroup.controls[controlName];
-      control.markAsDirty({ onlySelf: true });
-      control.markAsTouched({ onlySelf: true });
-      control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
-    }
-
-    const info: FarmFormInfoModel = JSON.parse(JSON.stringify(this.farmFormInfo));
-    info.columns.forEach(col => {
-      let value = formGroup.controls[col.columnId]?.value;
-      if (
-        col.displayType === FarmFormInfoColumnDisplayType.DATE
-        || col.displayType === FarmFormInfoColumnDisplayType.DATETIME
-      ) {
-        value = this.cmsDateAdapter.convertDateToDateString(value, col.displayType);
+      for (const controlName of Object.keys(formGroup.controls)) {
+        const control = formGroup.controls[controlName];
+        control.markAsDirty({ onlySelf: true });
+        control.markAsTouched({ onlySelf: true });
+        control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
       }
-      col.value = value;
-    });
 
-    if (!this.useValidation) { return of(info); }
+      const info: FarmFormInfoModel = JSON.parse(JSON.stringify(this.farmFormInfo));
+      info.columns.forEach(col => {
+        let value = formGroup.controls[col.columnId]?.value;
+        if (
+          col.displayType === FarmFormInfoColumnDisplayType.DATE
+          || col.displayType === FarmFormInfoColumnDisplayType.DATETIME
+        ) {
+          value = this.cmsDateAdapter.convertDateToDateString(value, col.displayType);
+        }
+        col.value = value;
+      });
 
-    if (!formGroup.valid) { return throwError('Form is not valid.'); }
-    return of(info);
+      if (!this.useValidation) { return of(info); }
+
+      if (!formGroup.valid) { return throwError('Form is not valid.'); }
+      return of(info);
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'FarmFormInfoComponent.requestFormInfo()', '處理表單資料錯誤');
+      return null;
+    }
   }
 
   checkColumnTrigger(column: FarmFormInfoModelColumn) {
@@ -243,15 +248,20 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   openContentEditor(col: FarmFormInfoModelColumn) {
-    const controlID = this.funcID;
-    const control = this.formGroup.get(col.columnId);
-    const content = JSON.parse((control.value) as string) as ContentInfo;
-    if (this.mode === 'preview') {
-      this.contentEditorService.openEditorPreview(content, controlID).subscribe();
-    } else {
-      this.contentEditorService.openEditorByContent(content, controlID).subscribe(result => {
-        control.setValue(JSON.stringify(result));
-      });
+    try {
+      const controlID = this.funcID;
+      const control = this.formGroup.get(col.columnId);
+
+      const content = JSON.parse((control.value) as string) as ContentInfo;
+      if (this.mode === 'preview') {
+        this.contentEditorService.openEditorPreview(content, controlID).subscribe();
+      } else {
+        this.contentEditorService.openEditorByContent(content, controlID).subscribe(result => {
+          control.setValue(JSON.stringify(result));
+        });
+      }
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'FarmFormInfoComponent.openContentEditor()', '開啟編輯器資料處理錯誤');
     }
   }
 

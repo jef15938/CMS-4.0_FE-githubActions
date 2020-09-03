@@ -85,8 +85,13 @@ export class AuthorizationService {
   }
 
   getCurrentLoginInfo(): LoginInfoModel {
-    const loginInfoString: string = localStorage.getItem('loginInfo');
-    const loginInfo: LoginInfoModel = loginInfoString ? JSON.parse(loginInfoString) : null;
-    return plainToClass(LoginInfoModel, loginInfo);
+    try {
+      const loginInfoString: string = localStorage.getItem('loginInfo');
+      const loginInfo: LoginInfoModel = loginInfoString ? JSON.parse(loginInfoString) : null;
+      return plainToClass(LoginInfoModel, loginInfo);
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'AuthorizationService.getCurrentLoginInfo()', '資料解析錯誤');
+      return null;
+    }
   }
 }

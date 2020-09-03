@@ -4,6 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { HttpError } from '@neux/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CmsFunctionError } from './type/function/function-error';
 
 interface ModalService {
   openMessage: (config: { message: string }) => Observable<any>;
@@ -25,11 +26,23 @@ export class CmsErrorHandler implements ErrorHandler {
     this.modalService = modalService;
   }
 
-  static throw<T extends CmsError>(catchedError: any, cmsError?: T) {
-    if (cmsError) {
-      cmsError.addMessage(catchedError.message).addStack(catchedError.stack);
-    }
-    throw cmsError || catchedError;
+  private static createError(catchedError: any, message: string, description?: string) {
+    return new CmsFunctionError(message)
+      .setDescription(description)
+      .addMessage(catchedError.message)
+      .addStack(catchedError.stack)
+      ;
+  }
+
+  static throw(catchedError: any, message: string) {
+    const errorToThrow = this.createError(catchedError, message);
+    throw errorToThrow;
+  }
+
+  static throwAndShow(catchedError: any, message: string, description: string) {
+    const errorToThrow = this.createError(catchedError, message, description);
+    CmsErrorHandler.showMessage(errorToThrow.description);
+    throw errorToThrow;
   }
 
   static handleError(catchedError: any);
