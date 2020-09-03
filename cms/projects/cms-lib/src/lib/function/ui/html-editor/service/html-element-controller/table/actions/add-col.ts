@@ -58,11 +58,11 @@ export class AddCol extends HtmlEditorActionBase {
         const start = startEnd.colStart;
         const stop = startEnd.colEnd - 1;
         if (index >= start && index <= stop) {
-          if (tmpTD.colSpan > 1 && start !== rangeStartEnd.colStart) { // 決定 colSpan > 1 的 col，新增 col 時要不要被包含在 col 內，註解掉就是不包含
+          if (tmpTD.colSpan > 1 && start !== index) {
             tmpTD.colSpan = tmpTD.colSpan + 1;
           } else {
             const newCell = this.controller.tableControllerService.createCell('new');
-            const insertBefore = tmpTD.nextElementSibling;
+            const insertBefore = this.position === 'right' ? tmpTD : tmpTD.nextElementSibling;
             if (insertBefore) {
               tmpTD.parentNode.insertBefore(newCell, tmpTD);
             } else {
