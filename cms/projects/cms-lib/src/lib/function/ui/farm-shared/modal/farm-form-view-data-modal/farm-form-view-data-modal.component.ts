@@ -9,7 +9,7 @@ import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/f
 })
 export class FarmFormViewDataModalComponent extends CustomModalBase implements OnInit {
 
-  title: string | (() => string);
+  title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];
 
   @Input() funcID: string;

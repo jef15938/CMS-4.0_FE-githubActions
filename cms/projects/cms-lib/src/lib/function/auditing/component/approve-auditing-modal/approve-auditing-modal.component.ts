@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase } from '../../../ui/modal';
+import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
 import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
 
 export enum AuditingApproveStatus {
@@ -14,25 +14,26 @@ export enum AuditingApproveStatus {
 })
 export class ApproveAuditingModalComponent extends CustomModalBase implements OnInit {
 
-  AuditingApproveStatus = AuditingApproveStatus;
+  title: string | (() => string) = '';
+  actions: CustomModalActionButton[] = [];
 
-  actions;
+  AuditingApproveStatus = AuditingApproveStatus;
 
   batch = false;
   status: AuditingApproveStatus;
 
   approveRequest: AuditingSubmitRequestModel = new AuditingSubmitRequestModel();
 
-  title: string | (() => string) =
-    () => [
-      '審核',
-      this.batch ? '批次' : '',
-      this.status === AuditingApproveStatus.APPROVED ? '通過' : this.status === AuditingApproveStatus.REJECT ? '退回' : ''
-    ].join('')
-
   constructor() { super(); }
 
   ngOnInit(): void {
+
+    this.title = [
+      '審核',
+      this.batch ? '批次' : '',
+      this.status === AuditingApproveStatus.APPROVED ? '通過' : this.status === AuditingApproveStatus.REJECT ? '退回' : ''
+    ].join('');
+
     this.approveRequest.status = this.status;
     this.approveRequest.comment = this.status === AuditingApproveStatus.APPROVED ? '審核通過' : '';
   }

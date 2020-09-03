@@ -24,7 +24,7 @@ import { CmsFunctionError, CmsErrorHandler } from '../../../../../global/error-h
   ]
 })
 export class UploadGalleryModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
-  title: string | (() => string);
+  title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 
   readonly fileUploadInputIdentifier = 'fileUpload';

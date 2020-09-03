@@ -16,7 +16,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
 
   @ViewChild(FarmFormInfoComponent) farmFormInfoComponent: FarmFormInfoComponent;
 
-  title: string | (() => string);
+  title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];
 
   @Input() farmFormInfo: FarmFormInfoModel;

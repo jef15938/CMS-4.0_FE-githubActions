@@ -13,6 +13,7 @@ import { CmsErrorHandler } from '../../../../global/error-handling';
 })
 export class DeptMaintainModalComponent extends CustomModalBase implements OnInit {
 
+  title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];
 
   action: 'Create' | 'Update' = 'Create';
@@ -22,8 +23,6 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
 
   dept: DepartmentDetailInfoModel;
 
-  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}部門`;
-
   constructor(
     private departmentService: DepartmentService
   ) {
@@ -31,6 +30,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   }
 
   ngOnInit(): void {
+    this.title = `${this.action === 'Create' ? '新增' : '修改'}部門`;
     this.getDept().subscribe();
   }
 

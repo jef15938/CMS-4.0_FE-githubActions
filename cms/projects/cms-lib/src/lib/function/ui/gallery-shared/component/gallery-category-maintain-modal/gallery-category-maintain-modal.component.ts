@@ -11,6 +11,7 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
 })
 export class GalleryCategoryMaintainModalComponent extends CustomModalBase implements OnInit {
 
+  title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];
 
   action: 'Create' | 'Update' = 'Create';
@@ -23,8 +24,6 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   depts: DepartmentInfoModel[] = [];
   checkedDepts: DepartmentInfoModel[] = [];
 
-  title: string | (() => string) = () => `${this.action === 'Create' ? '新增' : '修改'}媒體庫分類`;
-
   constructor(
     private galleryService: GalleryService,
     private departmentService: DepartmentService,
@@ -33,6 +32,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
   }
 
   ngOnInit(): void {
+    this.title = `${this.action === 'Create' ? '新增' : '修改'}媒體庫分類`;
     const assignedDeptIds = this.assignDeptId.split(',');
     this.departmentService.getAllDepartment()
       .pipe(CmsErrorHandler.rxHandleError(`取得部門清單錯誤`))
