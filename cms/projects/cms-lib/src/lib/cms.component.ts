@@ -15,8 +15,7 @@ export class CmsComponent implements OnInit, AfterViewInit {
 
   // @ViewChild('MenuContainer') menuContainer: ElementRef;
 
-  cmsMenus: MenuInfoModel[] = [];
-  appMenus: MenuInfoModel[] = [];
+  menus: MenuInfoModel[] = [];
 
   loginInfo: LoginInfoModel;
 
@@ -29,8 +28,7 @@ export class CmsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     const menus = this.activatedRoute.snapshot.data.menus;
-    this.cmsMenus = menus.cmsMenus || [];
-    this.appMenus = menus.appMenus || [];
+    this.menus = menus || [];
 
     this.loginInfo = this.authorizationService.getCurrentLoginInfo();
   }
@@ -40,7 +38,7 @@ export class CmsComponent implements OnInit, AfterViewInit {
     // const rippleFx = new RippleScreen(menuContainerEle);
     const currentUrl = this.router.url;
     if (!currentUrl || currentUrl === '/') {
-      const firstMenuPath = this.getFirstMenuPath(this.cmsMenus);
+      const firstMenuPath = this.getFirstMenuPath(this.menus);
       if (firstMenuPath) {
         this.router.navigateByUrl(firstMenuPath);
       }

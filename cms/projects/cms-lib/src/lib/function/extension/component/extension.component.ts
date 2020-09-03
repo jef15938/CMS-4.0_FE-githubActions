@@ -48,7 +48,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit {
   private initState() {
     this.errorMsg = '';
 
-    const menus = this.cmsUserMenuResolver.getMenus()?.cmsMenus;
+    const menus = this.cmsUserMenuResolver.getMenus();
 
     if (!menus?.length) {
       this.errorMsg = `系統異常 : 沒有Menu資料`;

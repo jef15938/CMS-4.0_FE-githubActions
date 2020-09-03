@@ -5,11 +5,8 @@
         <img class="menu-container__CI__img" src="assets/img/CMS-logo-vertical.png">
       </div>
       <ul class="menu-container__menu">
-        <li class="menu-container__item" *ngFor="let menu of cmsMenus">
+        <li class="menu-container__item" *ngFor="let menu of menus">
           <cms-menu-node [menu]="menu"></cms-menu-node>
-        </li>
-        <li class="menu-container__item" *ngFor="let menu of appMenus">
-          <cms-menu-node [menu]="menu" [isAppMenu]="true"></cms-menu-node>
         </li>
       </ul>
     </div>
