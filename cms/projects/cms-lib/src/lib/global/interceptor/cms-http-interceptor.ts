@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, NEVER, throwError } from 'rxjs';
-import { AuthorizationService } from '../api/service';
-import { Router } from '@angular/router';
-import { catchError, concatMap } from 'rxjs/operators';
-import { ModalService } from '../../function/ui';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { CmsHttpCancelService } from '../service/cms-http-cancel.service';
+import { Cms } from '../service';
 
 // https://weblog.west-wind.com/posts/2019/Apr/07/Creating-a-custom-HttpInterceptor-to-handle-withCredentials
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class WithCredentialsInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     req = req.clone({
@@ -23,24 +20,17 @@ export class WithCredentialsInterceptor implements HttpInterceptor {
 @Injectable()
 export class HttpError401Interceptor implements HttpInterceptor {
 
-  private isLogouting = false;
-
   constructor(
-    private authorizationService: AuthorizationService,
-    private router: Router,
-    private modalService: ModalService,
+    private cms: Cms,
+    private cmsHttpCancelService: CmsHttpCancelService
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          if (this.router.url !== '/login' && !this.isLogouting) {
-            this.isLogouting = true;
-            this.showLogoutMessage()
-              .pipe(concatMap(_ => this.authorizationService.logout()))
-              .subscribe(_ => this.isLogouting = false);
-          }
+          this.cmsHttpCancelService.cancelPendingRequests();
+          this.cms.setAuthorized(false);
           return NEVER;
         } else {
           return throwError(error);
@@ -48,9 +38,16 @@ export class HttpError401Interceptor implements HttpInterceptor {
       })
     );
   }
+}
 
-  private showLogoutMessage() {
-    return this.modalService.openMessage({ message: '授權時間已到，請重新登入' });
+@Injectable()
+export class ManageHttpInterceptor implements HttpInterceptor {
+
+  constructor(
+    private cmsHttpCancelService: CmsHttpCancelService,
+  ) { }
+
+  intercept<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
+    return next.handle(req).pipe(takeUntil(this.cmsHttpCancelService.onCancelPendingRequests()));
   }
-
 }

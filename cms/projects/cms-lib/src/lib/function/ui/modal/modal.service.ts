@@ -21,6 +21,10 @@ export class ModalService {
 
   }
 
+  closeAll() {
+    this.matDialog.closeAll();
+  }
+
   openComponent<TComponent extends CustomModalBase>(
     config: ModalOpenComponentConfig<TComponent>,
     fullScreen = false,
@@ -61,7 +65,7 @@ export class ModalService {
   }
 
   confirmDelete = () => {
-    return this.openConfirm({ message: '<span style="color:red;">確定刪除?</span>'}).pipe(
+    return this.openConfirm({ message: '<span style="color:red;">確定刪除?</span>' }).pipe(
       concatMap(confirm => confirm ? of(true) : NEVER),
     );
   }

@@ -1,17 +1,21 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogFlowMessengerService } from './global/service';
 import { RippleScreen } from './global/util/cfx';
 import { AuthorizationService } from './global/api/service';
 import { MenuInfoModel } from './global/api/data-model/models/menu-info.model';
 import { LoginInfoModel } from './global/api/data-model/models/login-info.model';
+import { Cms } from './global/service/cms.service';
+import { Subject, of } from 'rxjs';
+import { takeUntil, catchError, tap } from 'rxjs/operators';
+import { ModalService } from './function/ui';
 
 @Component({
   selector: 'cms-cms',
   templateUrl: './cms.component.html',
   styleUrls: ['./cms.component.scss']
 })
-export class CmsComponent implements OnInit, AfterViewInit {
+export class CmsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // @ViewChild('MenuContainer') menuContainer: ElementRef;
 
@@ -19,18 +23,27 @@ export class CmsComponent implements OnInit, AfterViewInit {
 
   loginInfo: LoginInfoModel;
 
+  private destroy$ = new Subject();
+
   constructor(
+    private cms: Cms,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authorizationService: AuthorizationService,
     private dialogFlowMessengerService: DialogFlowMessengerService,
+    private modalService: ModalService,
   ) { }
+
 
   ngOnInit(): void {
     const menus = this.activatedRoute.snapshot.data.menus;
     this.menus = menus || [];
-
     this.loginInfo = this.authorizationService.getCurrentLoginInfo();
+    this.cms.onAuthorizationChange().pipe(takeUntil(this.destroy$)).subscribe(authorized => {
+      if (!authorized) {
+        this.logout();
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -45,8 +58,22 @@ export class CmsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
+  }
+
   logout() {
-    this.authorizationService.logout().subscribe();
+    this.authorizationService.logout().pipe(
+      catchError(error => of(undefined)),
+      tap(_ => {
+        localStorage.clear();
+        this.modalService.openMessage({ message: '授權時間已到，請重新登入' }).subscribe(_ => {
+          this.modalService.closeAll();
+          this.router.navigate(['login']);
+        });
+      })
+    ).subscribe();
   }
 
   getFirstMenuPath(menus: MenuInfoModel[], path = ''): string {

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { map, tap, concatMap, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map} from 'rxjs/operators';
 import { ParamsError } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { LoginRequest } from '../../neuxAPI/bean/LoginRequest';
 import { LoginResponse } from '../../neuxAPI/bean/LoginResponse';
-import { Router } from '@angular/router';
 import { LoginInfoModel } from '../../data-model/models/login-info.model';
 import { plainToClass } from 'class-transformer';
 import { ModelMapper } from '@neux/core';
@@ -21,7 +20,6 @@ export class AuthorizationService {
 
   constructor(
     private respAPIService: RestApiService,
-    private router: Router,
   ) { }
 
   /**
@@ -46,8 +44,6 @@ export class AuthorizationService {
 
     return this.respAPIService.dispatchRestApi('PostLogin', { requestBody }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('login')),
-      concatMap(_ => this.getLoginInfo()),
-      tap(_ => this.router.navigate([''])),
     );
   }
 
@@ -60,10 +56,6 @@ export class AuthorizationService {
   logout() {
     return this.respAPIService.dispatchRestApi('GetLogout', {}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('logout')),
-      tap(_ => {
-        localStorage.clear();
-        this.router.navigate(['login']);
-      }),
     );
   }
 
