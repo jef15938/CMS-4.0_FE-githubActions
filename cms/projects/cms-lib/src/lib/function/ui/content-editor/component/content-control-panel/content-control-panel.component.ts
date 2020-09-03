@@ -111,8 +111,8 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
     if (!(up || down)) { return; }
 
-    const rootTemplatesContainersOfBlocksByLanguage = this.context.getRootTemplatesContainersOfBlocksByLanguage();
-    const layoutWrappers = rootTemplatesContainersOfBlocksByLanguage
+    const rootTemplatesContainersOfBlocksByLanguages = this.context.getRootTemplatesContainersOfBlocksByLanguage();
+    const layoutWrappers = rootTemplatesContainersOfBlocksByLanguages
       .map(rootTemplatesContainersOfBlocksByLanguage => {
         return rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainer =>
           this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer)
@@ -153,8 +153,8 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       const nextIndex = (index === currentLanguageTemplateInfos.length - 1) ? 0 : index + 1;
       const next = layoutWrapperComponents[nextIndex];
       // 處理資料
-      const rootTemplatesContainersOfBlocksByLanguage = this.context.getRootTemplatesContainersOfBlocksByLanguage();
-      const layoutWrappers = rootTemplatesContainersOfBlocksByLanguage
+      const rootTemplatesContainersOfBlocksByLanguages = this.context.getRootTemplatesContainersOfBlocksByLanguage();
+      const layoutWrappers = rootTemplatesContainersOfBlocksByLanguages
         .map(rootTemplatesContainersOfBlocksByLanguage => {
           return rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainer =>
             this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer)

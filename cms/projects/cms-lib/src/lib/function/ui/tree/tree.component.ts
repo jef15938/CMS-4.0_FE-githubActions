@@ -10,8 +10,6 @@ import { CmsTree, CmsTreeCustomCellEvent, CmsTreeDropPosition } from './tree.int
 import { DynamicWrapperDirective } from '@neux/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
-
-
 @Component({
   selector: 'cms-tree',
   templateUrl: './tree.component.html',

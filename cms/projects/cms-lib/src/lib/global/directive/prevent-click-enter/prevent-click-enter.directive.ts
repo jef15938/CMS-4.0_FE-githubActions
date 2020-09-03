@@ -20,7 +20,9 @@ export class PreventClickEnterDirective implements OnInit, OnDestroy {
       if (
         e.code === 'Enter'
         || e.key === 'Enter'
+        // tslint:disable-next-line: deprecation
         || e.keyCode === 13
+        // tslint:disable-next-line: deprecation
         || e.which === 13
       ) {
         e.preventDefault();

@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CmsTreeDropPosition } from '../tree.interface';
 
 @Pipe({
   name: 'nodeCanDrag'

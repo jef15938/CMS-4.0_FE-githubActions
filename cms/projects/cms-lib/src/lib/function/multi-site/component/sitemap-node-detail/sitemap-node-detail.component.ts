@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalService } from '../../../ui/modal';
-import { SitemapService, ContentService } from '../../../../global/api/service';
+import { SitemapService } from '../../../../global/api/service';
 import { ContentEditorService } from '../../../ui/content-editor';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
 import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
@@ -49,7 +49,6 @@ export class SitemapNodeDetailComponent implements OnInit {
 
   constructor(
     private modalService: ModalService,
-    private contentService: ContentService,
     private contentEditorService: ContentEditorService,
     private sitemapService: SitemapService,
     private farmSharedService: FarmSharedService,

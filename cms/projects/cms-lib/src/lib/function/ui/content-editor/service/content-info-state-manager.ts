@@ -54,7 +54,6 @@ export class ContentInfoStateManager {
       this.states.length - this.currentIndex,
       new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action)
     );
-    // this.currentState = new ContentInfoState(JSON.parse(JSON.stringify(nowSnapShot)), action);
     this.currentIndex++;
     this.calHasState();
     this.emitStateChange();

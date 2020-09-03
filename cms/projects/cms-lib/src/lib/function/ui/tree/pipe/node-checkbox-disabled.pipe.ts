@@ -1,5 +1,4 @@
-import { Pipe, PipeTransform, ComponentRef } from '@angular/core';
-import { CmsTree, CmsTreeNodeRenderer } from '../tree.interface';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'nodeCheckboxDisabled'

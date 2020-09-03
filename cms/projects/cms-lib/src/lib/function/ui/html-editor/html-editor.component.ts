@@ -334,8 +334,6 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         if (node.nodeType === Node.ELEMENT_NODE) {
           node.classList.remove('selected');
           node.style.removeProperty('outline');
-          // node.classList.add(`editor-${node.tagName.toLowerCase()}`);
-
           if (node.tagName?.toLowerCase() === 'img' && node.getAttribute(ATTRIBUTE_FRAME_ID)) {
             const frameId = node.getAttribute(ATTRIBUTE_FRAME_ID);
             const iframe = document.createElement('iframe');

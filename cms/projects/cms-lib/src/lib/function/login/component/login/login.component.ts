@@ -2,7 +2,6 @@ import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core'
 import { AuthorizationService } from '../../../../global/api/service';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../global/injection-token';
 import { CmsEnviroment } from '../../../../global/interface';
-import { ModalService } from '../../../ui/modal';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 
 @Component({
@@ -23,7 +22,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private authorizationService: AuthorizationService,
     @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
-    private modalService: ModalService,
   ) { }
 
   ngOnInit(): void {

@@ -48,9 +48,7 @@ import { HtmlEditorDescriptionComponent } from './modal/html-editor-description/
     HtmlEditorInsertFileModalComponent,
     HtmlEditorDescriptionComponent,
   ],
-  exports: [
-    // HtmlEditorComponent
-  ]
+  exports: []
 })
 export class HtmlEditorModule {
 }

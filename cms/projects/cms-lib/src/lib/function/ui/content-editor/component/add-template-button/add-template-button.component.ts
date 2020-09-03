@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ComponentRef, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ComponentRef, HostListener, EventEmitter } from '@angular/core';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 
 @Component({

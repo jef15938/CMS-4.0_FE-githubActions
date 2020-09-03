@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, concat } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { AuditingService } from '../../../../global/api/service';
 import { ModalService } from '../../../ui/modal';

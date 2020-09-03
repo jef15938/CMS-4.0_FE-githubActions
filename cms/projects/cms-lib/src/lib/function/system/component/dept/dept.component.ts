@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, concat, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { tap, concatMap } from 'rxjs/operators';
 import { DepartmentService } from '../../../../global/api/service';
 import { CmsTree } from '../../../ui/tree';

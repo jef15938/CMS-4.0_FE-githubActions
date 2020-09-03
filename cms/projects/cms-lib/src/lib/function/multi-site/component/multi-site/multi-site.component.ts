@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Observable, concat, Subject, throwError, of } from 'rxjs';
-import { tap, takeUntil, map, catchError, concatMap } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { tap, takeUntil, map, concatMap } from 'rxjs/operators';
 import { SitemapService } from '../../../../global/api/service';
 import { ModalService } from '../../../ui/modal';
 import { CmsTree, TreeComponent } from '../../../ui/tree';
