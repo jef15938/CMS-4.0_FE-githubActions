@@ -200,8 +200,8 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       return of(info);
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'FarmFormInfoComponent.requestFormInfo()', '處理表單資料錯誤');
-      return null;
     }
+    return null;
   }
 
   checkColumnTrigger(column: FarmFormInfoModelColumn) {

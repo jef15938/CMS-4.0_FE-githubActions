@@ -96,8 +96,8 @@ export class ContentService {
       return JSON.parse(resultString);
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'ContentService.convertContentInfoModelToContentInfo()', '資料解析錯誤');
-      return null;
     }
+    return null;
   }
 
   /**

@@ -43,8 +43,8 @@ export class ContentInfoStateManager {
       return new ContentInfoState(JSON.parse(JSON.stringify(this.originState.snapShot)));
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'ContentInfoStateManager.getInitState()', '編輯狀態管理器取得初始狀態資料錯誤');
-      return null;
     }
+    return null;
   }
 
   private emitStateChange() {

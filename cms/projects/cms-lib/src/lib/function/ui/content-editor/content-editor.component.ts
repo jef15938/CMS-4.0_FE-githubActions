@@ -313,14 +313,19 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     templateInfoId: string,
     source: TemplatesContainerComponent
   ): LayoutWrapperComponent {
-    if (!templateInfoId || !source) { return null; }
-    const layoutWrappers = Array.from(source.layoutWrapperComponents || []);
-    const target = layoutWrappers.find(lw => lw.templateInfo.id === templateInfoId);
-    if (target) { return target; }
-    return layoutWrappers.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
-      .reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[])
-      .map(templatesContainer => this.findLayoutWrapperByTemplateInfoId(templateInfoId, templatesContainer))
-      .find(v => !!v);
+    try {
+      if (!templateInfoId || !source) { return null; }
+      const layoutWrappers = Array.from(source.layoutWrapperComponents || []);
+      const target = layoutWrappers.find(lw => lw.templateInfo.id === templateInfoId);
+      if (target) { return target; }
+      return layoutWrappers.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
+        .reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[])
+        .map(templatesContainer => this.findLayoutWrapperByTemplateInfoId(templateInfoId, templatesContainer))
+        .find(v => !!v);
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'ContentEditorComponent.findLayoutWrapperByTemplateInfoId()', '執行錯誤');
+    }
+    return null;
   }
 
   findParentLayoutWrapperOfTemplatesContainer(
@@ -331,29 +336,34 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     if (!templatesContainer || !source) { return null; }
     if (templatesContainer === source) { return parent; }
 
-    let target: LayoutWrapperComponent;
-    const childLayoutWrappers = Array.from(source.layoutWrapperComponents || []);
-    childLayoutWrappers.forEach(childLayoutWrapper => {
-      const childTemplatesContainerComponents = Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
-      if (childTemplatesContainerComponents.indexOf(templatesContainer) > -1) {
-        target = childLayoutWrapper;
-      }
-    });
-    if (target) { return target; }
+    try {
+      let target: LayoutWrapperComponent;
+      const childLayoutWrappers = Array.from(source.layoutWrapperComponents || []);
+      childLayoutWrappers.forEach(childLayoutWrapper => {
+        const childTemplatesContainerComponents = Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
+        if (childTemplatesContainerComponents.indexOf(templatesContainer) > -1) {
+          target = childLayoutWrapper;
+        }
+      });
+      if (target) { return target; }
 
-    const grandsonLayoutWrappers = childLayoutWrappers
-      .map(childLayoutWrapper =>
-        Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || [])
-          .map(templatesContainerComponent => Array.from(templatesContainerComponent.layoutWrapperComponents))
-          .reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[])
-      ).reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[]);
+      const grandsonLayoutWrappers = childLayoutWrappers
+        .map(childLayoutWrapper =>
+          Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || [])
+            .map(templatesContainerComponent => Array.from(templatesContainerComponent.layoutWrapperComponents))
+            .reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[])
+        ).reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[]);
 
-    return grandsonLayoutWrappers.map(grandsonLayoutWrapper => {
-      return grandsonLayoutWrapper.componentRef.instance.templatesContainerComponents
-        .map(templatesContainerComponent => {
-          return this.findParentLayoutWrapperOfTemplatesContainer(templatesContainer, templatesContainerComponent, grandsonLayoutWrapper);
-        }).find(v => !!v);
-    }).find(v => !!v);
+      return grandsonLayoutWrappers.map(grandsonLayoutWrapper => {
+        return grandsonLayoutWrapper.componentRef.instance.templatesContainerComponents
+          .map(templatesContainerComponent => {
+            return this.findParentLayoutWrapperOfTemplatesContainer(templatesContainer, templatesContainerComponent, grandsonLayoutWrapper);
+          }).find(v => !!v);
+      }).find(v => !!v);
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'ContentEditorComponent.findLayoutWrapperByTemplateInfoId()', '執行錯誤');
+    }
+    return null;
   }
 
 }

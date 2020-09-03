@@ -11,6 +11,7 @@ import { ATTRIBUTE_FRAME_ID, ATTRIBUTE_GALLERY_ID } from './const/html-editor-co
 import { YoutubeUtil } from './service/youtube-util';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
+import { CmsErrorHandler } from '../../../global/error-handling';
 
 @Component({
   selector: 'cms-html-editor',
@@ -315,7 +316,11 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   doAction(action: HtmlEditorAction) {
     if (!action) { return; }
     if (!this.isSelectionInsideEditorContainer) { return; }
-    action.do().subscribe();
+    try {
+      action.do().subscribe();
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'HtmlEditorComponent.doAction()', '執行錯誤');
+    }
   }
 
   getContent() {

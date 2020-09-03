@@ -83,7 +83,7 @@ export class AuthorizationService {
       return plainToClass(LoginInfoModel, loginInfo);
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'AuthorizationService.getCurrentLoginInfo()', '資料解析錯誤');
-      return null;
     }
+    return null;
   }
 }
