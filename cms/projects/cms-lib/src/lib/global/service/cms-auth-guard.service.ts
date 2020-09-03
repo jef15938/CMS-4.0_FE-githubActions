@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthorizationService } from '../api/service';
+import { Cms } from './cms.service';
 
 @Injectable()
 export class CmsAuthGuard implements CanActivate {
@@ -10,6 +11,7 @@ export class CmsAuthGuard implements CanActivate {
   constructor(
     private authorizationService: AuthorizationService,
     private router: Router,
+    private cms: Cms,
   ) {
 
   }
@@ -21,7 +23,10 @@ export class CmsAuthGuard implements CanActivate {
       return this.toLoginPage();
     }
     return this.authorizationService.getLoginInfo().pipe(
-      map(_ => true),
+      map(_ => {
+        this.cms.setAuthorized(true);
+        return true;
+      }),
       catchError(err => {
         return this.toLoginPage();
       }),
@@ -29,6 +34,7 @@ export class CmsAuthGuard implements CanActivate {
   }
 
   toLoginPage() {
+    this.cms.setAuthorized(false);
     return of(this.router.parseUrl('login'));
   }
 }
