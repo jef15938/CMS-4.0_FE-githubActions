@@ -68,8 +68,6 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Output() nodesCheckedChange = new EventEmitter<{ nodes: TData[] }>();
   @Input() checkboxDisabled = (node: TData) => false;
 
-  @Input() hideNode: (node: TData) => boolean = (node: TData) => false;
-
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
@@ -270,7 +268,6 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   }
 
   onNodeCheckboxChange(ev: MatCheckboxChange, node: TData) {
-    this.nodeCheckedChange.emit({ node, checked: ev.checked });
     if (ev.checked && this.checkedNodes.indexOf(node) < 0) {
       if (this.checkMode === 'MULTIPLE') {
         this.checkedNodes.push(node);
@@ -282,6 +279,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
     if (!ev.checked && this.checkedNodes.indexOf(node) > -1) {
       this.checkedNodes.splice(this.checkedNodes.indexOf(node), 1);
     }
+    this.nodeCheckedChange.emit({ node, checked: ev.checked });
     this.nodesCheckedChange.emit({ nodes: this.checkedNodes });
   }
 

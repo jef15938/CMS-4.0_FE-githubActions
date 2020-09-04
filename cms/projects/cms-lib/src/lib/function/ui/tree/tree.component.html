@@ -4,8 +4,7 @@
     <mat-tree-node class="cms-tree__node pointer" *matTreeNodeDef="let node" matTreeNodeToggle>
       <div class="cms-tree__node__head " [class.cms-tree__node__head--selected]="node===selectedNode"
         (click)="onRowClicked($event, node)" cmsRightClickHandler (rightClick)="onRowRightClicked(node)"
-        [class.can-drag]="draggable&&(node|nodeCanDrag:canDragNode)"
-        [style.display]="(node|nodeHide:hideNode)?'none':'block'">
+        [class.can-drag]="draggable&&(node|nodeCanDrag:canDragNode)">
         <div class="cms-tree__node__head__anchor--prev"
           [class.cms-tree__node__head__anchor]="dragNode&&(node|nodeCanDrop:canDropOnNodePreviousNext)&&dragNode!==node"
           (dragover)="prevOrNextDragOver($event, node, -1)" (dragleave)="prevOrNextDragLeave($event)"
@@ -37,8 +36,7 @@
     <mat-nested-tree-node class="cms-tree__node pointer" *matTreeNodeDef="let node; when: hasChild">
       <div class="cms-tree__node__head " [class.cms-tree__node__head--selected]="node===selectedNode"
         [class.can-drag]="draggable&&(node|nodeCanDrag:canDragNode)" (click)="onRowClicked($event, node)"
-        cmsRightClickHandler (rightClick)="onRowRightClicked(node)"
-        [style.display]="(node|nodeHide:hideNode)?'none':'block'">
+        cmsRightClickHandler (rightClick)="onRowRightClicked(node)">
         <div class="cms-tree__node__head__anchor--prev"
           [class.cms-tree__node__head__anchor]="dragNode&&(node|nodeCanDrop:canDropOnNodePreviousNext)&&dragNode!==node"
           (dragover)="prevOrNextDragOver($event, node, -1)" (dragleave)="prevOrNextDragLeave($event)">

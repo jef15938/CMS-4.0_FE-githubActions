@@ -1,10 +1,12 @@
-<ng-container *ngIf="menus">
-  <cms-tree class="cms-tree" [context]="this" [nodeDatas]="menus" [checkbox]="true" [defaultExpandLevel]="-1"
-    [nodeDisplayField]="'funcName'" [checkedNodes]="checkedNodes" [hideNode]="hideNode">
+<ng-container *ngIf="treeData">
+  <cms-tree class="cms-tree" [context]="this" [nodeDatas]="treeData.menus" [checkbox]="true" [defaultExpandLevel]="-1"
+    [nodeDisplayField]="'funcName'" [checkedNodes]="treeData.checkedNodes"
+    (nodeCheckedChange)="onNodeCheckedChange($event)">
   </cms-tree>
 </ng-container>
 
 <div class="btn-group">
   <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
-  <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()" [disabled]="!menus">儲存</button>
+  <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+    [disabled]="!treeData">儲存</button>
 </div>

@@ -12,10 +12,10 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="modal-form-layout__row" *ngIf="nodes">
+  <div class="modal-form-layout__row" *ngIf="treeData">
     <div class="modal-form-layout__col">
-      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="nodes" [checkbox]="true"
-        [checkedNodes]="checkedNodes" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
+      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="treeData.nodes" [checkbox]="true"
+        [checkedNodes]="treeData.checkedNodes" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
         [nodeDisplayField]="'nodeName'" (nodeCheckedChange)="onNodeCheckedChange($event)">
       </cms-tree>
     </div>
@@ -23,6 +23,6 @@
   <div class="btn-group">
     <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
     <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
-      [disabled]="!nodes">儲存</button>
+      [disabled]="!treeData">儲存</button>
   </div>
 </div>

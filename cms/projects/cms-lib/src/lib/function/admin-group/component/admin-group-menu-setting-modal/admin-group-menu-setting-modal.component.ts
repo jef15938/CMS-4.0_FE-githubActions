@@ -19,8 +19,10 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
 
   @Input() groupID: string;
 
-  menus: MenuInfoModel[];
-  checkedNodes: MenuInfoModel[] = [];
+  treeData: {
+    menus: MenuInfoModel[],
+    checkedNodes: MenuInfoModel[],
+  } = null;
 
   constructor(
     private menuService: MenuService,
@@ -32,8 +34,8 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
       this.groupService.getGroupMenuList(this.groupID).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')),
       this.menuService.getCMSMenu().pipe(CmsErrorHandler.rxHandleError('取得後台功能清單錯誤')),
     ]).subscribe(([groupMenuInfos, menus]) => {
-      this.checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.funcId), menus);
-      this.menus = menus;
+      const checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.funcId), menus);
+      this.treeData = { menus, checkedNodes };
     });
   }
 
@@ -58,6 +60,18 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
 
   hideNode(node: MenuInfoModel) {
     return false;
+  }
+
+  onNodeCheckedChange(ev: { node: MenuInfoModel, checked: boolean }) {
+    // if (ev.checked) { // check parent if node checked
+    //   const parent = this.tree.findParent(ev.node);
+    //   if (parent) {
+    //     if (parent && this.treeData.checkedNodes.indexOf(parent) < 0) {
+    //       this.treeData.checkedNodes.push(parent);
+    //     }
+    //     this.onNodeCheckedChange({ node: parent, checked: true });
+    //   }
+    // }
   }
 
 }

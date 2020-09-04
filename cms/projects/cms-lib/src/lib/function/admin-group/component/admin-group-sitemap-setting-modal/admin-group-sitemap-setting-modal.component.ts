@@ -31,8 +31,10 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
   siteID = 'none';
   sites: SiteInfoModel[] = [];
 
-  nodes: Node[];
-  checkedNodes: Node[] = [];
+  treeData: {
+    nodes: Node[],
+    checkedNodes: Node[],
+  } = null;
 
   constructor(
     private sitemapService: SitemapService,
@@ -44,8 +46,7 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
   }
 
   onSelectionChange(ev) {
-    this.nodes = null;
-    this.checkedNodes = [];
+    this.treeData = null;
 
     if (this.siteID === 'none') { return; }
 
@@ -53,8 +54,9 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
       this.sitemapService.getCMSSiteMap(this.siteID).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')),
       this.groupService.getGroupSiteMapList(this.siteID, this.groupID).pipe(CmsErrorHandler.rxHandleError('取得前台節點清單錯誤')),
     ]).subscribe(([sitemaps, groupSitemapInfos]) => {
-      this.nodes = this.convertToNodes(sitemaps, groupSitemapInfos);
-      this.checkedNodes = this.getNodesByNodeIds(groupSitemapInfos.map(info => info.nodeId), this.nodes);
+      const nodes = this.convertToNodes(sitemaps, groupSitemapInfos);
+      const checkedNodes = this.getNodesByNodeIds(groupSitemapInfos.map(info => info.nodeId), nodes);
+      this.treeData = { nodes, checkedNodes };
     });
   }
 
@@ -97,6 +99,16 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
       node.groupSitemapInfo.canDelete = false;
       node.groupSitemapInfo.canModify = false;
     }
+
+    // if (ev.checked) { // check parent if node checked
+    //   const parent = this.tree.findParent(ev.node);
+    //   if (parent) {
+    //     if (parent && this.treeData.checkedNodes.indexOf(parent) < 0) {
+    //       this.treeData.checkedNodes.push(parent);
+    //     }
+    //     this.onNodeCheckedChange({ node: parent, checked: true });
+    //   }
+    // }
   }
 
   confirm() {
