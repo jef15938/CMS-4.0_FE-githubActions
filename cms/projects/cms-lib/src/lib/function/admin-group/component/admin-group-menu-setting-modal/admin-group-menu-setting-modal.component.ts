@@ -1,10 +1,16 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton, TreeComponent } from '../../../ui';
 import { GroupService, MenuService } from '../../../../global/api/service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { MenuInfoModel } from '../../../../global/api/data-model/models/menu-info.model';
 import { GroupMenuInfoModel } from '../../../../global/api/data-model/models/group-menu-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { map } from 'rxjs/operators';
+
+interface TreeData {
+  menus: MenuInfoModel[];
+  checkedNodes: MenuInfoModel[];
+}
 
 @Component({
   selector: 'cms-admin-group-menu-setting-modal',
@@ -19,10 +25,7 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
 
   @Input() groupID: string;
 
-  treeData: {
-    menus: MenuInfoModel[],
-    checkedNodes: MenuInfoModel[],
-  } = null;
+  treeData$: Observable<TreeData>;
 
   constructor(
     private menuService: MenuService,
@@ -30,13 +33,15 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
   ) { super(); }
 
   ngOnInit(): void {
-    forkJoin([
+    this.treeData$ = forkJoin([
       this.groupService.getGroupMenuList(this.groupID).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')),
       this.menuService.getCMSMenu().pipe(CmsErrorHandler.rxHandleError('取得後台功能清單錯誤')),
-    ]).subscribe(([groupMenuInfos, menus]) => {
-      const checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.funcId), menus);
-      this.treeData = { menus, checkedNodes };
-    });
+    ]).pipe(
+      map(([groupMenuInfos, menus]) => {
+        const checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.funcId), menus);
+        return { menus, checkedNodes };
+      })
+    );
   }
 
   private getMenuInfosByFuncIds(funcIds: string[], sources: MenuInfoModel[], results: MenuInfoModel[] = []): MenuInfoModel[] {
@@ -58,20 +63,16 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
       .subscribe(_ => this.close('Success'));
   }
 
-  hideNode(node: MenuInfoModel) {
-    return false;
-  }
-
-  onNodeCheckedChange(ev: { node: MenuInfoModel, checked: boolean }) {
-    // if (ev.checked) { // check parent if node checked
-    //   const parent = this.tree.findParent(ev.node);
-    //   if (parent) {
-    //     if (parent && this.treeData.checkedNodes.indexOf(parent) < 0) {
-    //       this.treeData.checkedNodes.push(parent);
-    //     }
-    //     this.onNodeCheckedChange({ node: parent, checked: true });
-    //   }
-    // }
+  onNodeCheckedChange(ev: { node: MenuInfoModel, checked: boolean }, treeData: TreeData) {
+    if (ev.checked) { // check parent if node checked
+      const parent = this.tree.findParent(ev.node);
+      if (parent) {
+        if (parent && treeData.checkedNodes.indexOf(parent) < 0) {
+          treeData.checkedNodes.push(parent);
+        }
+        this.onNodeCheckedChange({ node: parent, checked: true }, treeData);
+      }
+    }
   }
 
 }

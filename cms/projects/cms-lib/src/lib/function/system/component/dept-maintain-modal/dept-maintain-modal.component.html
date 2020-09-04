@@ -1,4 +1,4 @@
-<ng-container *ngIf="dept">
+<ng-container *ngIf="dept$|async;let dept">
   <form #form="ngForm">
     <div class="page-content-container">
       <mat-form-field appearance="outline">

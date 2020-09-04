@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { AuditingService } from '../../../../global/api/service';
 import { ModalService } from '../../../ui/modal';
 import { ColDef } from '../../../ui/table';
@@ -8,10 +8,14 @@ import { AuditingActionCellComponent, AuditingActionCellCustomEvent } from '../a
 import { ApproveAuditingModalComponent, AuditingApproveStatus } from '../approve-auditing-modal/approve-auditing-modal.component';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { AuditingInfoModel } from '../../../../global/api/data-model/models/auditing-info.model';
-import { PageInfoModel } from '../../../../global/api/data-model/models/page-info.model';
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
 import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { AuditingGetResponseModel } from 'projects/cms-lib/src/lib/global/api/data-model/models/auditing-get-response.model';
+
+interface Model extends AuditingGetResponseModel {
+  checkedData: AuditingInfoModel[];
+}
 
 @Component({
   selector: 'cms-auditing',
@@ -20,10 +24,12 @@ import { CmsErrorHandler } from '../../../../global/error-handling';
 })
 export class AuditingComponent implements OnInit {
 
-  auditings: AuditingInfoModel[];
-  pageInfo: PageInfoModel;
+  refreshPage$ = new BehaviorSubject(1);
+  auditings$: Observable<Model>;
 
-  checkedData: AuditingInfoModel[] = [];
+  // auditings: AuditingInfoModel[];
+  // pageInfo: PageInfoModel;
+  // checkedData: AuditingInfoModel[] = [];
 
   colDefs: ColDef<AuditingInfoModel>[] = [
     {
@@ -78,22 +84,21 @@ export class AuditingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getAuditings().subscribe();
-  }
-
-  private getAuditings(): Observable<AuditingInfoModel[]> {
-    return this.auditingService.getAuditingListForManager(this.pageInfo?.page).pipe(
-      CmsErrorHandler.rxHandleError('取得待審清單錯誤'),
-      tap(res => {
-        this.pageInfo = res.pageInfo;
-        this.auditings = res.datas;
-        this.checkedData = [];
-      }),
-      map(res => res.datas)
+    this.auditings$ = this.refreshPage$.pipe(
+      switchMap(page => this.auditingService.getAuditingListForManager(page).pipe(
+        CmsErrorHandler.rxHandleError('取得申請清單錯誤'),
+        map(res => {
+          return {
+            pageInfo: res.pageInfo,
+            datas: res.datas,
+            checkedData: [],
+          };
+        })
+      ))
     );
   }
 
-  onCustomEvent(event: AuditingActionCellCustomEvent) {
+  onCustomEvent(event: AuditingActionCellCustomEvent, auditings: Model) {
     if (event instanceof AuditingActionCellCustomEvent) {
       if (event.action === event.ActionType.APPROVE || event.action === event.ActionType.REFUSE) {
         let status: AuditingApproveStatus;
@@ -105,7 +110,7 @@ export class AuditingComponent implements OnInit {
             status = AuditingApproveStatus.REJECT;
             break;
         }
-        this.approveAuditing(status, event.data.orderId);
+        this.approveAuditing(status, event.data.orderId, auditings);
       } else {
         switch (event.action) {
           case event.ActionType.PREVIEW:
@@ -141,11 +146,10 @@ export class AuditingComponent implements OnInit {
   }
 
   onPageChanged(event: { pageIndex: number }) {
-    this.pageInfo.page = event.pageIndex + 1;
-    this.getAuditings().subscribe();
+    this.refreshPage$.next(event.pageIndex + 1);
   }
 
-  private approveAuditing(status: AuditingApproveStatus, orderId: number | number[]) {
+  private approveAuditing(status: AuditingApproveStatus, orderId: number | number[], auditings: Model) {
     this.modalService.openComponent({
       component: ApproveAuditingModalComponent,
       componentInitData: {
@@ -158,16 +162,16 @@ export class AuditingComponent implements OnInit {
         orderId,
         res.status,
         res.comment,
-      ).pipe(CmsErrorHandler.rxHandleError('審核錯誤')).subscribe(_ => this.getAuditings().subscribe());
+      ).pipe(CmsErrorHandler.rxHandleError('審核錯誤')).subscribe(_ => this.refreshPage$.next(auditings.pageInfo.page));
     });
   }
 
-  batchApprove() {
-    this.approveAuditing(AuditingApproveStatus.APPROVED, this.checkedData.map(d => d.orderId));
+  batchApprove(auditings: Model) {
+    this.approveAuditing(AuditingApproveStatus.APPROVED, auditings.checkedData.map(d => d.orderId), auditings);
   }
 
-  batchReject() {
-    this.approveAuditing(AuditingApproveStatus.REJECT, this.checkedData.map(d => d.orderId));
+  batchReject(auditings: Model) {
+    this.approveAuditing(AuditingApproveStatus.REJECT, auditings.checkedData.map(d => d.orderId), auditings);
   }
 
 }

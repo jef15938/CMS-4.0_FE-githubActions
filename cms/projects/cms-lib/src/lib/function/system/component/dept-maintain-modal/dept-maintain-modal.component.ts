@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Component, OnInit, Input } from '@angular/core';
+import { of, Observable } from 'rxjs';
 import { DepartmentService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
 import { DepartmentDetailInfoModel } from '../../../../global/api/data-model/models/department-detail-info.model';
@@ -16,12 +15,11 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];
 
-  action: 'Create' | 'Update' = 'Create';
+  @Input() action: 'Create' | 'Update' = 'Create';
+  @Input() deptId: string;
+  @Input() parentId: string;
 
-  deptId: string;
-  parentId: string;
-
-  dept: DepartmentDetailInfoModel;
+  dept$: Observable<DepartmentDetailInfoModel>;
 
   constructor(
     private departmentService: DepartmentService
@@ -31,31 +29,26 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
 
   ngOnInit(): void {
     this.title = `${this.action === 'Create' ? '新增' : '修改'}部門`;
-    this.getDept().subscribe();
-  }
-
-  getDept() {
-    return (
+    this.dept$ = (
       this.action === 'Create'
         ? of(new DepartmentDetailInfoModel())
         : this.departmentService.getDepartmentByID(this.deptId)
     ).pipe(
       CmsErrorHandler.rxHandleError('取得部門資料錯誤'),
-      tap(dept => this.dept = dept)
     );
   }
 
-  private save() {
+  private save(dept: DepartmentDetailInfoModel) {
     const action = this.action === 'Create' ? '新增' : '更新';
     return (
       this.action === 'Create'
-        ? this.departmentService.createDepartment(this.dept.deptId, this.dept.deptName, this.parentId)
-        : this.departmentService.updateDepartment(this.dept.deptId, this.dept.deptName, this.parentId)
+        ? this.departmentService.createDepartment(dept.deptId, dept.deptName, this.parentId)
+        : this.departmentService.updateDepartment(dept.deptId, dept.deptName, this.parentId)
     ).pipe(CmsErrorHandler.rxHandleError(`${action}新增部門錯誤`));
   }
 
-  confirm() {
-    this.save().subscribe(_ => {
+  confirm(dept: DepartmentDetailInfoModel) {
+    this.save(dept).subscribe(_ => {
       this.close('Confirm');
     });
   }

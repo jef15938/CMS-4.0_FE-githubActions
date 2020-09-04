@@ -1,15 +1,15 @@
 <div class="page-title-container">
   <h1>我的申請單</h1>
 </div>
-<div class="page-content-container">
-  <ng-container *ngIf="pageInfo?.page">
-    <div>目前頁數:{{pageInfo.page}}</div>
+<div class="page-content-container" *ngIf="myAuditings$|async;let myAuditings">
+  <ng-container *ngIf="myAuditings.pageInfo">
+    <div>目前頁數:{{myAuditings.pageInfo.page}}</div>
     <br>
   </ng-container>
-  <cms-table [colDefs]="colDefs" [dataSource]="myAuditings" (customEvent)="onCustomEvent($event)"></cms-table>
-  <ng-container *ngIf="pageInfo?.totalPageSize && pageInfo?.totalRecSize">
-    <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)"
-      [pageIndex]="pageInfo.page-1">
+  <cms-table [colDefs]="colDefs" [dataSource]="myAuditings.datas" (customEvent)="onCustomEvent($event)"></cms-table>
+  <ng-container *ngIf="myAuditings.pageInfo">
+    <mat-paginator [length]="myAuditings.pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)"
+      [pageIndex]="myAuditings.pageInfo.page-1">
     </mat-paginator>
   </ng-container>
 </div>

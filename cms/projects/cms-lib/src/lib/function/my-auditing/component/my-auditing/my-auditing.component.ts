@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AuditingService } from '../../../../global/api/service';
 import { ColDef } from '../../../ui/table';
 import { ModalService } from '../../../ui/modal';
@@ -9,8 +9,8 @@ import { MyAuditingDetailModalComponent } from '../my-auditing-detail-modal/my-a
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
 import { MyAuditingInfoModel } from '../../../../global/api/data-model/models/my-auditing-info.model';
-import { PageInfoModel } from '../../../../global/api/data-model/models/page-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { MyAuditingGetResponseModel } from 'projects/cms-lib/src/lib/global/api/data-model/models/my-auditing-get-response.model';
 
 @Component({
   selector: 'cms-my-auditing',
@@ -19,8 +19,8 @@ import { CmsErrorHandler } from '../../../../global/error-handling';
 })
 export class MyAuditingComponent implements OnInit {
 
-  myAuditings: MyAuditingInfoModel[];
-  pageInfo: PageInfoModel;
+  refreshPage$ = new BehaviorSubject(1);
+  myAuditings$: Observable<MyAuditingGetResponseModel>;
 
   colDefs: ColDef<MyAuditingInfoModel>[] = [
     {
@@ -70,17 +70,10 @@ export class MyAuditingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getMyAuditings().subscribe();
-  }
-
-  private getMyAuditings(): Observable<MyAuditingInfoModel[]> {
-    return this.auditingService.getMyAuditingList(this.pageInfo?.page).pipe(
-      CmsErrorHandler.rxHandleError('取得申請清單錯誤'),
-      tap(res => {
-        this.pageInfo = res.pageInfo;
-        this.myAuditings = res.datas;
-      }),
-      map(res => res.datas)
+    this.myAuditings$ = this.refreshPage$.pipe(
+      switchMap(page => this.auditingService.getMyAuditingList(page).pipe(
+        CmsErrorHandler.rxHandleError('取得申請清單錯誤'),
+      ))
     );
   }
 
@@ -127,8 +120,7 @@ export class MyAuditingComponent implements OnInit {
   }
 
   onPageChanged(event: { pageIndex: number }) {
-    this.pageInfo.page = event.pageIndex + 1;
-    this.getMyAuditings().subscribe();
+    this.refreshPage$.next(event.pageIndex + 1);
   }
 
 }
