@@ -108,15 +108,15 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
       node.groupSitemapInfo.canModify = false;
     }
 
-    if (ev.checked) { // check parent if node checked
-      const parent = this.tree.findParent(ev.node);
-      if (parent) {
-        if (parent && treeData.checkedNodes.indexOf(parent) < 0) {
-          treeData.checkedNodes.push(parent);
-        }
-        this.onNodeCheckedChange({ node: parent, checked: true }, treeData);
-      }
-    }
+    // if (ev.checked) { // check parent if node checked
+    //   const parent = this.tree.findParent(ev.node);
+    //   if (parent) {
+    //     if (parent && treeData.checkedNodes.indexOf(parent) < 0) {
+    //       treeData.checkedNodes.push(parent);
+    //     }
+    //     this.onNodeCheckedChange({ node: parent, checked: true }, treeData);
+    //   }
+    // }
   }
 
   confirm() {
