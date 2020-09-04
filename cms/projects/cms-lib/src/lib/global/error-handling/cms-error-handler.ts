@@ -118,7 +118,6 @@ export class CmsErrorHandler implements ErrorHandler {
 
           if (catchedError.name === 'TimeoutError') {
             cmsError = cmsError
-              .addMessage('Timeout has occurred')
               .setDescription('系統逾時');
           }
 
