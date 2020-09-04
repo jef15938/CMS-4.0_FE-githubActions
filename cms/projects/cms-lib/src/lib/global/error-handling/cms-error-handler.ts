@@ -116,6 +116,12 @@ export class CmsErrorHandler implements ErrorHandler {
               .setDescription(catchedError.error?.error_message || catchedError.message);
           }
 
+          if (catchedError.name === 'TimeoutError') {
+            cmsError = cmsError
+              .addMessage('Timeout has occurred')
+              .setDescription('系統逾時');
+          }
+
           if (callBack && typeof (callBack) === 'function') {
             callBack(catchedError);
           }
