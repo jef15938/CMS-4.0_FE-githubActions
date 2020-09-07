@@ -5,6 +5,6 @@
   <div class="page-content-container cms-dept__content" *ngIf="depts$|async;let depts">
     <cms-tree class="cms-tree" [defaultExpandLevel]="-1" [context]="this" [nodeDatas]="depts"
       [customNodeRenderer]="customNodeRenderer" (customEvent)="onCustomEvent($event, depts)"
-      (afterRender)="afterTreeRender($event)"></cms-tree>
+      (afterRender)="afterTreeRender($event, depts)"></cms-tree>
   </div>
 </div>
