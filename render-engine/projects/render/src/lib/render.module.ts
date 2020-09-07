@@ -27,6 +27,7 @@ import * as fromRenderStore from './global/store/reducers/render.reducer';
 import { FixedWrapperComponent } from './global/component/fixed-wrapper/fixed-wrapper.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandlerInterceptor } from './global/interceptor/http-error-handler.interceptor';
+import { HtmlEditorContentComponent } from './function/ui/html-editor-content/html-editor-content.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -42,6 +43,7 @@ const COMPONENTS = [
   LayoutComponent,
   HtmlComponent,
   FixedWrapperComponent,
+  HtmlEditorContentComponent,
 ];
 
 @NgModule({

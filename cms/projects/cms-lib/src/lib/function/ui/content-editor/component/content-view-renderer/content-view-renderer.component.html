@@ -3,7 +3,7 @@
     <mat-tab *ngFor="let language of contentInfo.languages;let i=index;" [label]="language.languageName">
       <ng-container *ngFor="let block of language.blocks">
         <div [attr.blockId]="block.blockId">
-          <rdr-templates-container [templates]="$any(block.templates)" mode="edit" (select)="onSelect($event)"
+          <rdr-templates-container [templates]="$any(block.templates)" mode="edit" (select)="onSelect($event)" [runtime]="false"
           (enter)="onEnter($event)" (leave)="onLeave($event)">
         </rdr-templates-container>
         </div>

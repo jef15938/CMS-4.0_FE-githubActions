@@ -10,3 +10,4 @@ export * from './lib/global/component/index';
 export * from './lib/global/interface/index';
 // export * from './lib/global/pipe/index';
 export * from './lib/function/wrapper/index';
+export * from './lib/function/ui/index';
