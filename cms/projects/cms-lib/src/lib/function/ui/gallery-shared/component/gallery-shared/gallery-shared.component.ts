@@ -183,14 +183,14 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     );
   }
 
-  private maintainCategory(action: 'Create' | 'Update', category: GalleryCategoryInfoModel) {
+  maintainCategory(action: 'Create' | 'Update', category?: GalleryCategoryInfoModel) {
     return this.modalService.openComponent({
       component: GalleryCategoryMaintainModalComponent,
       componentInitData: {
         action,
         categoryID: action === 'Update' ? category.categoryId : undefined,
         categoryName: action === 'Update' ? category.categoryName : undefined,
-        parentId: action === 'Update' ? this.tree.findParent(category)?.categoryId : category.categoryId,
+        parentId: action === 'Update' ? this.tree.findParent(category)?.categoryId : category?.categoryId,
         assignDeptId: action === 'Update' ? category.assignDeptId : this.authorizationService.getCurrentLoginInfo().deptId,
       }
     });

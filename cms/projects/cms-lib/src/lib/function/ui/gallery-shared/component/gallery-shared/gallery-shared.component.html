@@ -6,8 +6,13 @@
       </h1>
     </div>
     <div class="page-content-container">
+      <div style="text-align: right; width: 100%; margin-bottom: 10px;">
+        <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" (click)="maintainCategory('Create')">
+          新增分類
+        </button>
+      </div>
       <cms-tree class="cms-tree" [context]="this" [nodeDatas]="categories" [customNodeRenderer]="customNodeRenderer"
-        (customEvent)="onTreeCustomEvent($event)" [selectedNode]="selectedCategory"
+        (customEvent)="onTreeCustomEvent($event)" [selectedNode]="selectedCategory" [defaultExpandLevel]="-1"
         (nodeSelect)="onNodeSelected($event)" [onCustomNodeRendererInit]="onCustomNodeRendererInit">
       </cms-tree>
     </div>
