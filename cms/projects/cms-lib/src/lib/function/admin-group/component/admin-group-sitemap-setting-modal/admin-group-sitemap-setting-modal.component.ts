@@ -13,6 +13,7 @@ import { switchMap, map } from 'rxjs/operators';
 class Node extends SiteMapGetResponseModel {
   groupSitemapInfo: GroupSitemapInfoModel;
   isChecked = false;
+  children: Node[];
 }
 
 interface TreeData {
@@ -99,24 +100,49 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
     return this.getNodesByNodeIds(nodeIds, sources, results);
   }
 
-  onNodeCheckedChange(ev: { node: Node, checked: boolean }, treeData: TreeData) {
-    const node = ev.node;
-    node.isChecked = ev.checked;
+  private checkNodeStateByChecked(node: Node, checked: boolean, treeData: TreeData) {
+    node.isChecked = checked;
+
     if (!node.isChecked) {
       node.groupSitemapInfo.canAdd = false;
       node.groupSitemapInfo.canDelete = false;
       node.groupSitemapInfo.canModify = false;
     }
 
-    // if (ev.checked) { // check parent if node checked
-    //   const parent = this.tree.findParent(ev.node);
-    //   if (parent) {
-    //     if (parent && treeData.checkedNodes.indexOf(parent) < 0) {
-    //       treeData.checkedNodes.push(parent);
-    //     }
-    //     this.onNodeCheckedChange({ node: parent, checked: true }, treeData);
-    //   }
-    // }
+    const allCheckedNodes = treeData.checkedNodes;
+
+    if (checked && allCheckedNodes.indexOf(node) < 0) {
+      allCheckedNodes.push(node);
+    } else if (!checked && allCheckedNodes.indexOf(node) > -1) {
+      const index = allCheckedNodes.indexOf(node);
+      allCheckedNodes.splice(index, 1);
+    }
+  }
+
+  onNodeCheckedChange(ev: { node: Node, checked: boolean }, treeData: TreeData) {
+    const targetNode = ev.node;
+    const checked = ev.checked;
+
+    this.checkNodeStateByChecked(targetNode, checked, treeData);
+
+    // 處理子層 => 勾選則子層全勾，取消則子層全取消
+    let childrenOfTargetNode = targetNode.children || [];
+    while (childrenOfTargetNode?.length) {
+      childrenOfTargetNode.forEach(childOfNode => {
+        this.checkNodeStateByChecked(childOfNode, checked, treeData);
+      });
+      childrenOfTargetNode = childrenOfTargetNode.reduce((a, b) => a.concat(b.children || []), []);
+    }
+
+    // 取消時不用處理父層
+    if (checked) {
+      // 處理父層 => 勾選往上的父層也要勾選
+      let parent = this.tree.findParent(targetNode);
+      while (parent) {
+        this.checkNodeStateByChecked(parent, checked, treeData);
+        parent = this.tree.findParent(parent);
+      }
+    }
   }
 
   confirm() {
