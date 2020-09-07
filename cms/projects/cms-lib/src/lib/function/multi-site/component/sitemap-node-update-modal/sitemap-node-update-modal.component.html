@@ -80,7 +80,7 @@
               <input type="input" matInput [(ngModel)]="putRequest.contentPath" name="contentPath" maxlength="100" rows="1"
                 pattern="^[A-Za-z0-9\-]*$" #modelContentPath="ngModel">
               <div matSuffix class="input-suffix">({{putRequest?.contentPath?.length||0}}/100)</div>
-              <mat-error *ngIf="modelContentPath?.errors?.required">限英數字和-</mat-error>
+              <mat-error *ngIf="modelContentPath?.errors?.pattern">限英數字和-</mat-error>
             </mat-form-field>
           </div>
         </div>
