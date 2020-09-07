@@ -11,7 +11,7 @@ import { AuditingInfoModel } from '../../../../global/api/data-model/models/audi
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
 import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
-import { AuditingGetResponseModel } from 'projects/cms-lib/src/lib/global/api/data-model/models/auditing-get-response.model';
+import { AuditingGetResponseModel } from '../../../../global/api/data-model/models/auditing-get-response.model';
 
 interface Model extends AuditingGetResponseModel {
   checkedData: AuditingInfoModel[];

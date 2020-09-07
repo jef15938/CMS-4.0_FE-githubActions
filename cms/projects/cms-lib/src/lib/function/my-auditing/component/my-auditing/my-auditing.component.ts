@@ -10,7 +10,7 @@ import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
 import { MyAuditingInfoModel } from '../../../../global/api/data-model/models/my-auditing-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
-import { MyAuditingGetResponseModel } from 'projects/cms-lib/src/lib/global/api/data-model/models/my-auditing-get-response.model';
+import { MyAuditingGetResponseModel } from '../../../../global/api/data-model/models/my-auditing-get-response.model';
 
 @Component({
   selector: 'cms-my-auditing',
