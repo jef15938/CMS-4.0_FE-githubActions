@@ -1,2 +1,14 @@
 @import "../../../../../global/style/main";
 
+mat-radio-group {
+  display: block;
+  padding-bottom: 1.34375em;
+
+  mat-radio-button {
+    width: 84px;
+
+    &:not(:first-child) {
+      margin-left: 10px;
+    }
+  }
+}

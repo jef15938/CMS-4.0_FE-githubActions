@@ -248,4 +248,16 @@ export class SitemapService {
       CmsErrorHandler.rxMapError(this.error.setMessage('PutReOrderSiteMapByNodeID')),
     );
   }
+
+  flattenNodes(
+    source: SiteMapGetResponseModel[], level = 0, result: SiteMapGetResponseModel[] = [], parent?: SiteMapGetResponseModel
+  ) {
+    if (!source?.length) { return []; }
+    source.forEach(node => {
+      node.nodeName = `${parent ? parent.nodeName + '  >  ' : ''}${node.nodeName}`;
+      result.push(node);
+      this.flattenNodes(node.children, level + 1, result, node);
+    });
+    return result;
+  }
 }

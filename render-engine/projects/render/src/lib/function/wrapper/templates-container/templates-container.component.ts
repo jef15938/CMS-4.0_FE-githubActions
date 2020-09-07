@@ -15,6 +15,7 @@ import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/
 export class TemplatesContainerComponent extends LayoutWrapperBase implements OnInit, AfterViewInit, AfterViewChecked {
 
   @Input() mode: 'preview' | 'edit' = 'preview';
+  @Input() runtime = false;
   @Input() templates: ContentTemplateInfoModel[];
 
   // tslint:disable-next-line: no-output-native

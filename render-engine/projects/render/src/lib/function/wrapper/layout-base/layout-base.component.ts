@@ -47,7 +47,7 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
   @ViewChildren(LayoutFieldHtmlEditorDirective) layoutFieldHtmlEditorDirectives: QueryList<LayoutFieldHtmlEditorDirective>;
 
   @Input() mode: 'preview' | 'edit' = 'preview';
-
+  @Input() runtime = false;
   @Input() templateInfo: TInfo;
 
   protected destroy$ = new Subject();

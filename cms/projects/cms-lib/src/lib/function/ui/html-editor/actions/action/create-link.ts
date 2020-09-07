@@ -1,7 +1,7 @@
 import { DomCmdAction } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HtmlEditorCreateLinkModalComponent } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
+import { HtmlEditorCreateLinkModalComponent, ATagConfig } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
 import { ATTRIBUTE_FRAME_ID, CLASS_NAME_EDITOR_LINK, CLASS_NAME_GALLERY_FILE } from '../../const/html-editor-container.const';
 
 export class CreateLink extends DomCmdAction {
@@ -20,7 +20,7 @@ export class CreateLink extends DomCmdAction {
       aTagToModify.text = range.toString();
     }
 
-    const canModifyUrl = existingATag?.classList?.contains(CLASS_NAME_GALLERY_FILE) ? false : true;
+    const isGallery = existingATag?.classList?.contains(CLASS_NAME_GALLERY_FILE);
 
     return this.context.modalService.openComponent({
       component: HtmlEditorCreateLinkModalComponent,
@@ -28,18 +28,23 @@ export class CreateLink extends DomCmdAction {
         title: `${isCreate ? '加入' : '修改'}連結`,
         aTag: aTagToModify,
         canModifyText,
-        canModifyUrl,
+        isGallery,
       }
     }).pipe(
-      tap((configATag: HTMLAnchorElement) => {
+      tap((atagConfig: ATagConfig) => {
         this.context.simpleWysiwygService.restoreSelection(range);
-        if (!configATag) { return; }
+        if (!atagConfig) { return; }
 
-        aTagToModify.href = configATag.href;
-        aTagToModify.target = configATag.target;
+        aTagToModify.href = atagConfig.href;
+        aTagToModify.target = atagConfig.target;
 
         if (canModifyText) {
-          aTagToModify.text = configATag.text;
+          aTagToModify.text = atagConfig.text;
+        }
+
+        if (!isGallery) {
+          aTagToModify.setAttribute('urlType', atagConfig.urlType);
+          aTagToModify.setAttribute('siteId', atagConfig.siteId);
         }
 
         if (isCreate) { // 新增
@@ -51,7 +56,7 @@ export class CreateLink extends DomCmdAction {
             aTagToModify.appendChild(editorContainerSelectedTarget);
           } else {
             if (canModifyText) {
-              aTagToModify.text = configATag.text || configATag.href;
+              aTagToModify.text = atagConfig.text || atagConfig.href;
             } else {
               const contents = range.cloneContents();
               aTagToModify.appendChild(contents);

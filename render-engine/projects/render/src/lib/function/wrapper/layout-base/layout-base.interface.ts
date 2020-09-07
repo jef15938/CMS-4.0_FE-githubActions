@@ -11,6 +11,7 @@ export interface LayoutBase<TInfo extends ContentTemplateInfoModel> {
   templateInfo: TInfo;
   templateType: TemplateType;
   mode: 'preview' | 'edit';
+  runtime: boolean;
 
   ngOnChanges(changes: SimpleChanges): void;
 }

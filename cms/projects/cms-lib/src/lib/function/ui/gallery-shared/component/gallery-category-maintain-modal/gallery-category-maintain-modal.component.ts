@@ -53,10 +53,12 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
     const action = this.action === 'Create' ? '新增' : '更新';
     const checkedDeptIds = Array.from(new Set(this.checkedDepts.map(dept => dept.deptId)));
     const assignDeptId = checkedDeptIds.length ? checkedDeptIds.join(',') : '';
+    // const parentId = this.parentId;
+    const parentId = '';
     return (
       this.action === 'Create'
-        ? this.galleryService.createGalleryCategory(this.categoryName, assignDeptId, this.parentId)
-        : this.galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.categoryName, assignDeptId, this.parentId)
+        ? this.galleryService.createGalleryCategory(this.categoryName, assignDeptId, parentId)
+        : this.galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.categoryName, assignDeptId, parentId)
     ).pipe(CmsErrorHandler.rxHandleError(`${action}媒體庫分類錯誤`));
   }
 

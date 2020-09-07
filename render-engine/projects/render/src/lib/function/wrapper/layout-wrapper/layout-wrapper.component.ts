@@ -1,7 +1,7 @@
 import {
   Component, OnInit, Input, ViewChild,
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
-  HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID
+  HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID, AfterContentChecked
 } from '@angular/core';
 import { LayoutBase } from '../layout-base/layout-base.interface';
 import { takeUntil, map, tap } from 'rxjs/operators';
@@ -19,14 +19,15 @@ import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/
   styleUrls: ['./layout-wrapper.component.scss']
 })
 export class LayoutWrapperComponent extends LayoutWrapperBase implements
-  LayoutWrapper, OnInit, AfterViewInit, OnChanges {
+  LayoutWrapper, OnInit, AfterViewInit, AfterContentChecked, OnChanges {
 
   @Input() templateInfo: ContentTemplateInfoModel;
+  @Input() runtime = false;
   @Input() mode: 'preview' | 'edit' = 'edit';
 
   @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfoModel>>;
 
-  parentTemplatesContainer: { templates: ContentTemplateInfoModel[]; };
+  @Input() parentTemplatesContainer: { templates: ContentTemplateInfoModel[]; runtime: boolean };
 
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
 
@@ -45,15 +46,15 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     this.platformId = this.injector.get<string>(PLATFORM_ID);
     this.changeDetectorRef.detach();
   }
+  ngAfterContentChecked(): void {
+    this.setMode();
+  }
 
   ngOnInit(): void {
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.mode) {
-      this.setMode();
-    }
     if (changes.templateInfo && this.componentRef?.instance) {
       this.componentRef.instance.templateInfo = this.templateInfo;
       if (this.componentRef?.instance?.ngOnChanges) {
@@ -69,7 +70,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     const component = this.dynamicComponentFactoryService.getComponent(this.templateInfo.templateId);
     this.dynamicWrapperComponent.loadWithComponent(component);
     this.checkEventBinding();
-    this.setMode();
   }
 
   setInstanceProperties = (componentRef: ComponentRef<LayoutBase<ContentTemplateInfoModel>>): void => {
@@ -77,6 +77,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     if (instance) {
       instance.templateInfo = this.templateInfo;
       instance.mode = this.mode;
+      instance.runtime = this.runtime;
       instance.parentLayoutWrapper = this;
     }
   }
@@ -124,14 +125,23 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   setMode() {
+    this.runtime = this.parentTemplatesContainer?.runtime || false;
     const mode = this.mode || 'preview';
+    const runtime = this.runtime || false;
     const instance = this.componentRef?.instance;
     if (instance) {
       instance.mode = mode;
+      instance.runtime = runtime;
       const templatesContainerComponents = instance?.templatesContainerComponents || new QueryList();
-      templatesContainerComponents.forEach(c => c.mode = mode);
+      templatesContainerComponents.forEach(c => {
+        c.mode = mode;
+        c.runtime = runtime;
+      });
       const templateFieldDirectives = instance?.templateFieldDirectives || new QueryList();
-      templateFieldDirectives.forEach(d => d.mode = mode);
+      templateFieldDirectives.forEach(d => {
+        d.mode = mode;
+        d.runtime = runtime;
+      });
     }
   }
 

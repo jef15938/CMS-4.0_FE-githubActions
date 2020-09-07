@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageData } from '../../types';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
@@ -14,12 +14,16 @@ import { ContentTemplateInfoModel } from '../../api/data-model/models/content-te
 export class RenderComponent implements OnInit {
 
   templates: LayoutInfo[];
+  runtime = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
+    const url = this.router.url;
+    this.runtime = url.indexOf('/preview/') < 0;
 
     const { pageInfo, sitemap, contentInfo } = this.activatedRoute.snapshot.data.data as PageData;
     const templateList = this.getTemplateInfoByLanguageId(contentInfo, pageInfo.lang);

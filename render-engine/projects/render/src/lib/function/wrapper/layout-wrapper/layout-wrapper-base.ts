@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 @Directive()
 export abstract class LayoutWrapperBase implements OnDestroy {
   mode: 'preview' | 'edit' = 'preview';
+  runtime = false;
 
   protected changeDetectorRef: ChangeDetectorRef = null;
   public elementRef: ElementRef = null;
