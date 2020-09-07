@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { TemplateFieldSelectEvent, LinkFieldInfo, LinkFieldInfoUrlType } from '@neux/render';
-import { SitemapService } from 'projects/cms-lib/src/lib/global/api/service';
+import { SitemapService } from '../../../../../../../../global/api/service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { SiteInfoModel } from '../../../../../../../../global/api/data-model/models/site-info.model';
