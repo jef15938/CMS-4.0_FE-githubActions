@@ -5,9 +5,13 @@ import { PageInfoGetResponse } from '../api/neuxAPI/bean/PageInfoGetResponse';
 import { PageInfoGetResponseModel } from '../api/data-model/models/page-info-get-response.model';
 import { ModelMapper } from '@neux/core';
 import { ContentInfoModel } from '../api/data-model/models/content-info.model';
-import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
-import { SiteMapGetResponse } from '../api/neuxAPI/bean/SiteMapGetResponse';
 import { ContentInfo } from '../api/neuxAPI/bean/ContentInfo';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { ContextApiNameFactory, ApiContext } from '../api/context-api-name-factory';
+import { plainToClass } from 'class-transformer';
+import { SitesResponse } from '../api/neuxAPI/bean/SitesResponse';
+import { SitesResponseModel } from '../api/data-model/models/sites-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +19,8 @@ import { ContentInfo } from '../api/neuxAPI/bean/ContentInfo';
 export class RenderService {
 
   constructor(
-    private apiService: RestApiService
+    private apiService: RestApiService,
+    private httpClient: HttpClient,
   ) { }
 
   /**
@@ -26,26 +31,16 @@ export class RenderService {
    * @returns {Observable<PageInfo>}
    * @memberof RenderService
    */
-  getPageInfo(context: 'preview' | 'runtime', pageID: string, lang: string = null): Observable<PageInfoGetResponseModel> {
+  getPageInfo(context: ApiContext, pageID: string, lang: string = null): Observable<PageInfoGetResponseModel> {
 
-    if (!!lang) {
-      return (
-        context === 'preview'
-          ? this.apiService.dispatchRestApi<PageInfoGetResponse>('GetPreviewPageByPageIDAndLang', { pageID, lang })
-          : this.apiService.dispatchRestApi<PageInfoGetResponse>('GetPageByPageIDAndLang', { pageID, lang })
-      ).pipe(
-        ModelMapper.rxMapModelTo(PageInfoGetResponseModel),
-      );
-    }
-    else {
-      return (
-        context === 'preview'
-          ? this.apiService.dispatchRestApi<PageInfoGetResponse>('GetPreviewPageByPageID', { pageID })
-          : this.apiService.dispatchRestApi<PageInfoGetResponse>('GetPageByPageID', { pageID })
-      ).pipe(
-        ModelMapper.rxMapModelTo(PageInfoGetResponseModel),
-      );
-    }
+    const dispatch = !!lang
+      ? this.apiService.dispatchRestApi<PageInfoGetResponse>(ContextApiNameFactory.GetPageByPageIDAndLang(context), { pageID, lang })
+      : this.apiService.dispatchRestApi<PageInfoGetResponse>(ContextApiNameFactory.GetPageByPageID(context), { pageID })
+      ;
+
+    return dispatch.pipe(
+      ModelMapper.rxMapModelTo(PageInfoGetResponseModel),
+    );
   }
 
   /**
@@ -55,13 +50,19 @@ export class RenderService {
    * @returns {Observable<ContentInfo>}
    * @memberof RenderService
    */
-  getContentInfo(context: 'preview' | 'runtime', contentID: string): Observable<ContentInfoModel> {
+  getContentInfo(context: ApiContext, contentID: string): Observable<ContentInfoModel> {
     return (
       context === 'preview'
         ? this.apiService.dispatchRestApi<ContentInfo>('GetPreviewContentByContentID', { contentID })
         : this.apiService.dispatchRestApi<ContentInfo>('GetContentByContentID', { contentID })
     ).pipe(
       ModelMapper.rxMapModelTo(ContentInfoModel),
+    );
+  }
+
+  getSitemapJson(): Observable<SitesResponse> {
+    return this.httpClient.get<SitesResponse>('./sitemap.json').pipe(
+      map(res => plainToClass(SitesResponse, res)),
     );
   }
 
@@ -73,19 +74,15 @@ export class RenderService {
    * @returns {Observable<any>}
    * @memberof RenderService
    */
-  getSitemap(context: 'preview' | 'runtime', root: string, lang: string = null): Observable<SiteMapGetResponseModel> {
-    let request: Observable<any>;
-    if (!!lang) {
-      request = context === 'preview'
-        ? this.apiService.dispatchRestApi<SiteMapGetResponse>('GetPreviewSiteMapByNodeIdAndLang', { node_id: root, lang })
-        : this.apiService.dispatchRestApi<SiteMapGetResponse>('GetSiteMapByNodeIdAndLang', { node_id: root, lang });
-    }
-    request = context === 'preview'
-      ? this.apiService.dispatchRestApi<SiteMapGetResponse>('GetPreviewSiteMapByNodeId', { node_id: root })
-      : this.apiService.dispatchRestApi<SiteMapGetResponse>('GetSiteMapByNodeId', { node_id: root });
+  getSitemap(context: ApiContext): Observable<SitesResponseModel> {
 
-    return request.pipe(
-      ModelMapper.rxMapModelTo(SiteMapGetResponseModel),
+    const dispatch = context === 'runtime'
+      ? this.getSitemapJson()
+      : this.apiService.dispatchRestApi<SitesResponse>(ContextApiNameFactory.GetSiteMapByNodeId(context), {})
+      ;
+
+    return dispatch.pipe(
+      ModelMapper.rxMapModelTo(SitesResponseModel),
     );
   }
 

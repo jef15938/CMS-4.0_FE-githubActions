@@ -1,19 +1,19 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as RenderActions from '../actions/render.actions';
 import { RequestStatus } from '../../enum';
-import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
+import { SitesResponseModel } from '../../api/data-model/models/sites-response.model';
 
 export const renderFeatureKey = 'RenderState';
 
 export interface RenderState {
-  sitemapCache: { root: string, lang: string, sitemap: SiteMapGetResponseModel }[];
+  sitemapCache: SitesResponseModel;
   sitemapRequestPending: boolean;
   sitemapRequestResultStatus: RequestStatus;
 
 }
 
 export const initialState: RenderState = {
-  sitemapCache: [],
+  sitemapCache: null,
   sitemapRequestPending: false,
   sitemapRequestResultStatus: null
 };
@@ -23,11 +23,11 @@ export const renderReducer = createReducer(
   initialState,
   on(
     RenderActions.fetchSitemapSuccess,
-    (state, { lang, root, sitemap }) => ({
+    (state, { sitemap }) => ({
       ...state,
       sitemapRequestPending: false,
       sitemapRequestResultStatus: RequestStatus.Success,
-      sitemapCache: [...state.sitemapCache, { root, lang, sitemap }]
+      sitemapCache: sitemap
     })
   ),
   on(

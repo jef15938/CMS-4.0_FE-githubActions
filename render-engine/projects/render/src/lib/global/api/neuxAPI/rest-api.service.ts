@@ -22,17 +22,18 @@ import { PageInfoGetResponse } from './bean/PageInfoGetResponse';
 import { SiteMapGetResponse } from './bean/SiteMapGetResponse';
 import { ContentInfo } from './bean/ContentInfo';
 import { ListDataSourceDataResponse } from './bean/ListDataSourceDataResponse';
+import { SitesResponse } from './bean/SitesResponse';
 
 
 const APIResponseMap = {
   GetPageByPageIDAndLang: PageInfoGetResponse,
   GetPageByPageID: PageInfoGetResponse,
-  GetSiteMapByNodeIdAndLang: SiteMapGetResponse,
-  GetSiteMapByNodeId: SiteMapGetResponse,
+  GetSiteMapByNodeIdAndLang: SitesResponse,
+  GetSiteMapByNodeId: SitesResponse,
   GetPreviewPageByPageIDAndLang: PageInfoGetResponse,
   GetPreviewPageByPageID: PageInfoGetResponse,
-  GetPreviewSiteMapByNodeIdAndLang: SiteMapGetResponse,
-  GetPreviewSiteMapByNodeId: SiteMapGetResponse,
+  GetPreviewSiteMapByNodeIdAndLang: SitesResponse,
+  GetPreviewSiteMapByNodeId: SitesResponse,
   GetContentByContentID: ContentInfo,
   GetPreviewContentByContentID: ContentInfo,
   GetDataSourceByTypeIDAndId: ListDataSourceDataResponse,

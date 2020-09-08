@@ -6,6 +6,7 @@ import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.compone
 import { LayoutWrapperSelectEvent } from '../layout-wrapper/layout-wrapper.interface';
 import { LayoutWrapperBase } from '../layout-wrapper/layout-wrapper-base';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
+import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
 
 @Component({
   selector: 'rdr-templates-container',
@@ -16,6 +17,7 @@ export class TemplatesContainerComponent extends LayoutWrapperBase implements On
 
   @Input() mode: 'preview' | 'edit' = 'preview';
   @Input() runtime = false;
+  @Input() sites: SitesResponseModel = null;
   @Input() templates: ContentTemplateInfoModel[];
 
   // tslint:disable-next-line: no-output-native

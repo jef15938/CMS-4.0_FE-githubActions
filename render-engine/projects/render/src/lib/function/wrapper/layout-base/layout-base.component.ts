@@ -15,6 +15,7 @@ import { LayoutFieldHtmlEditorDirective } from '../layout-wrapper/field-directiv
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { ContentFieldInfo } from '../../../global/api/neuxAPI/bean/ContentFieldInfo';
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
+import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
 
 @Directive()
 export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel>
@@ -48,6 +49,7 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
 
   @Input() mode: 'preview' | 'edit' = 'preview';
   @Input() runtime = false;
+  @Input() sites: SitesResponseModel = null;
   @Input() templateInfo: TInfo;
 
   protected destroy$ = new Subject();
@@ -75,7 +77,7 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
       this.layoutFieldHtmlEditorDirectives.changes,
     ).pipe(takeUntil(this.destroy$)).subscribe(_ => {
       this.parentLayoutWrapper.checkEventBinding();
-      this.parentLayoutWrapper.setMode();
+      this.parentLayoutWrapper.setBasicData(this);
     });
   }
 

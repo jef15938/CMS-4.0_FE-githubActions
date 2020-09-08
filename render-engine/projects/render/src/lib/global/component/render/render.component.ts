@@ -4,6 +4,7 @@ import { PageData } from '../../types';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
+import { SitesResponseModel } from '../../api/data-model/models/sites-response.model';
 
 @Component({
   selector: 'rdr-render',
@@ -15,6 +16,7 @@ export class RenderComponent implements OnInit {
 
   templates: LayoutInfo[];
   runtime = false;
+  sites: SitesResponseModel = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -26,6 +28,9 @@ export class RenderComponent implements OnInit {
     this.runtime = url.indexOf('/preview/') < 0;
 
     const { pageInfo, sitemap, contentInfo } = this.activatedRoute.snapshot.data.data as PageData;
+
+    this.sites = sitemap;
+
     const templateList = this.getTemplateInfoByLanguageId(contentInfo, pageInfo.lang);
     // 把最外層Layout也放入TemplateList中，sitemap當作Data
     this.templates = [{
@@ -34,9 +39,10 @@ export class RenderComponent implements OnInit {
       fields: [],
       children: templateList,
       attributes: {
-        sitemap
+        sitemap: null // TODO: 修正
       }
     }];
+    console.warn('this.templates = ', this.templates);
   }
 
   /**

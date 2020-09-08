@@ -1,10 +1,12 @@
 import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef, Injector, Directive } from '@angular/core';
 import { Subject } from 'rxjs';
+import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
 
 @Directive()
 export abstract class LayoutWrapperBase implements OnDestroy {
   mode: 'preview' | 'edit' = 'preview';
   runtime = false;
+  sites: SitesResponseModel = null;
 
   protected changeDetectorRef: ChangeDetectorRef = null;
   public elementRef: ElementRef = null;

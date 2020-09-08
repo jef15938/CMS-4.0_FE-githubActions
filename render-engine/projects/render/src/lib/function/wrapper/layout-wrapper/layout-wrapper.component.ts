@@ -12,6 +12,7 @@ import { DynamicWrapperComponent } from '@neux/core';
 import { DynamicComponentFactoryService } from '../../../global/service/dynamic-component-factory.service';
 import { isPlatformServer } from '@angular/common';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
+import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
 
 @Component({
   selector: 'rdr-layout-wrapper',
@@ -23,11 +24,14 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
   @Input() templateInfo: ContentTemplateInfoModel;
   @Input() runtime = false;
+  @Input() sites: SitesResponseModel = null;
   @Input() mode: 'preview' | 'edit' = 'edit';
 
   @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfoModel>>;
 
-  @Input() parentTemplatesContainer: { templates: ContentTemplateInfoModel[]; runtime: boolean };
+  @Input() parentTemplatesContainer: {
+    mode: 'preview' | 'edit', templates: ContentTemplateInfoModel[]; runtime: boolean; sites: SitesResponseModel
+  };
 
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
 
@@ -46,13 +50,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     this.platformId = this.injector.get<string>(PLATFORM_ID);
     this.changeDetectorRef.detach();
   }
-  ngAfterContentChecked(): void {
-    this.setMode();
-  }
-
-  ngOnInit(): void {
-
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.templateInfo && this.componentRef?.instance) {
@@ -61,6 +58,14 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
         this.componentRef.instance.ngOnChanges(changes);
       }
     }
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  ngAfterContentChecked(): void {
+    this.setBasicData(this.componentRef?.instance);
   }
 
   ngAfterViewInit() {
@@ -73,13 +78,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   setInstanceProperties = (componentRef: ComponentRef<LayoutBase<ContentTemplateInfoModel>>): void => {
-    const instance = componentRef?.instance;
-    if (instance) {
-      instance.templateInfo = this.templateInfo;
-      instance.mode = this.mode;
-      instance.runtime = this.runtime;
-      instance.parentLayoutWrapper = this;
-    }
+    this.setBasicData(componentRef?.instance);
   }
 
   checkEventBinding() {
@@ -124,23 +123,30 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     return event;
   }
 
-  setMode() {
-    this.runtime = this.parentTemplatesContainer?.runtime || false;
+  setBasicData(instance: LayoutBase<ContentTemplateInfoModel>) {
     const mode = this.mode || 'preview';
     const runtime = this.runtime || false;
-    const instance = this.componentRef?.instance;
+    const sites = this.sites;
+    const templateInfo = this.templateInfo;
+
     if (instance) {
+      instance.templateInfo = templateInfo;
       instance.mode = mode;
       instance.runtime = runtime;
+      instance.sites = sites;
+      instance.parentLayoutWrapper = this;
+
       const templatesContainerComponents = instance?.templatesContainerComponents || new QueryList();
       templatesContainerComponents.forEach(c => {
         c.mode = mode;
         c.runtime = runtime;
+        c.sites = sites;
       });
       const templateFieldDirectives = instance?.templateFieldDirectives || new QueryList();
       templateFieldDirectives.forEach(d => {
         d.mode = mode;
         d.runtime = runtime;
+        d.sites = sites;
       });
     }
   }

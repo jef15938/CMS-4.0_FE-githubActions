@@ -17,6 +17,7 @@ public url_blank: string;
 public children: Array<SiteMapGetResponse>;
 @IsNotEmpty()
 public content_id: string;
-
+@IsNotEmpty()
+public content_path: string;
 
 }

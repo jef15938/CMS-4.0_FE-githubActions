@@ -3,6 +3,7 @@ import { LayoutWrapper, TemplateType } from '../layout-wrapper/layout-wrapper.in
 import { TemplateFieldDirective } from '../layout-wrapper/field-directive/template-field.directive';
 import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
+import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
 
 export interface LayoutBase<TInfo extends ContentTemplateInfoModel> {
   parentLayoutWrapper: LayoutWrapper;
@@ -12,6 +13,6 @@ export interface LayoutBase<TInfo extends ContentTemplateInfoModel> {
   templateType: TemplateType;
   mode: 'preview' | 'edit';
   runtime: boolean;
-
+  sites: SitesResponseModel;
   ngOnChanges(changes: SimpleChanges): void;
 }

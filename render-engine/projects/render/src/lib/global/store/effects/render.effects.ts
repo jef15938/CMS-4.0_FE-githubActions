@@ -19,9 +19,9 @@ export class RenderEffects {
 
   fetchSitemap$ = createEffect(() => this.actions$.pipe(
     ofType(RenderActions.fetchSitemap),
-    switchMap(({ context, lang, root }) =>
-      this.renderService.getSitemap(context, root, lang).pipe(
-        map(sitemap => RenderActions.fetchSitemapSuccess({ lang, root, sitemap })),
+    switchMap(({ context }) =>
+      this.renderService.getSitemap(context).pipe(
+        map(sitemap => RenderActions.fetchSitemapSuccess({ sitemap })),
         catchError((error) => of(RenderActions.fetchSitemapFailure(error)))
       )
     )

@@ -11,6 +11,7 @@ import { ModelMapping, ModelMapper } from '@neux/core';
     model.url = bean.url;
     model.urlBlank = bean.url_blank;
     model.contentId = bean.content_id;
+    model.contentPath = bean.content_path;
     model.children = ModelMapper.mapArrayTo(SiteMapGetResponseModel, bean.children);
   }
 )
@@ -26,5 +27,6 @@ export class SiteMapGetResponseModel {
   public children: Array<SiteMapGetResponseModel>;
   @IsNotEmpty()
   public contentId: string;
+  public contentPath: string;
 
 }
