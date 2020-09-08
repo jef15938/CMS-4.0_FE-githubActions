@@ -24,6 +24,7 @@ public canOrder: boolean;
 @Type(TypeFactory(SiteMapGetResponse))
 @ValidateNested()
 public children: Array<SiteMapGetResponse>;
+public content_type: string;
 
 
 }

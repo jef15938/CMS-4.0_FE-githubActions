@@ -61,7 +61,7 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase implemen
           ? this.sitemapService.getCMSSiteMap(this.aTagConfig.siteId)
           : of([])
       ).pipe(
-        map(nodes => this.sitemapService.flattenNodes(nodes))
+        map(nodes => this.sitemapService.flattenNodes(nodes).filter(node => node.contentType === 'CONTENT'))
       )
     ));
   }

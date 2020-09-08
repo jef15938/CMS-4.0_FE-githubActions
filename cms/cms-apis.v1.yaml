@@ -758,6 +758,45 @@ paths:
         name: id
         in: path
         required: true
+  '/SitemapContent/{siteId}/{nodeId}':
+    get:
+      summary: GetSitemapContent
+      tags:
+        - Content
+        - SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentInfo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: getSitemapContent
+      description: 若頁面未處於lock狀態，回傳該頁面的Content JSON，並設定為lock狀態
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: siteId
+        in: path
+        required: true
+        description: 網站ID
+      - schema:
+          type: string
+        name: nodeId
+        in: path
+        required: true
+        description: 節點ID
   '/MyAuditing/{orderID}':
     get:
       summary: GetMyAuditingDetail
@@ -842,7 +881,17 @@ paths:
           description: Internal Server Error
       operationId: get-Farm
       description: 客製化網站管理取得整頁資訊
-      parameters: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: dataID
+          description: 帶入TableDataInfo.data_id
+        - schema:
+            type: string
+          in: query
+          name: parentID
+          description: 帶入當下的CategoryID
     parameters:
       - schema:
           type: string
@@ -1745,6 +1794,40 @@ paths:
           description: Internal Server Error
       operationId: get-GalleryConfig
       description: 取得媒體庫相關上傳限制
+  '/SitemapContentUnlock/{siteId}/{nodeId}':
+    get:
+      summary: SitemapContentUnlock
+      tags:
+        - Content
+        - SiteMap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationHeader'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-SitemapContentUnlock
+      description: 離開編輯或儲存後，解鎖content資料，讓其他人可再取得內容編輯
+    parameters:
+      - schema:
+          type: string
+        name: siteId
+        in: path
+        required: true
+        description: 網站ID
+      - schema:
+          type: string
+        name: nodeId
+        in: path
+        required: true
+        description: 節點Id
 components:
   schemas:
     LoginRequest:
@@ -2226,6 +2309,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SiteMapGetResponse'
+        content_type:
+          type: string
+          description: 節點類型
       required:
         - node_id
         - node_name
@@ -2685,6 +2771,9 @@ components:
               - 'OFF'
               - PREVIEW
               - MORE
+        moreFuncId:
+          type: string
+          description: 如果action有更多則會傳入此參數
       required:
         - data_id
         - is_checked

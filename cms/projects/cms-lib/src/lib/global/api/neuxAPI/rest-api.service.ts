@@ -28,6 +28,7 @@ import { PutUserSiteMapByNodeIDAPI } from './api/PutUserSiteMapByNodeIDAPI';
 import { DeleteUserSiteMapByNodeIDAPI } from './api/DeleteUserSiteMapByNodeIDAPI';
 import { GetContentByIdAPI } from './api/GetContentByIdAPI';
 import { PutContentByIdAPI } from './api/PutContentByIdAPI';
+import { GetSitemapContentBySiteIdAndNodeIdAPI } from './api/GetSitemapContentBySiteIdAndNodeIdAPI';
 import { GetMyAuditingByOrderIDAPI } from './api/GetMyAuditingByOrderIDAPI';
 import { GetMyAuditingAPI } from './api/GetMyAuditingAPI';
 import { GetFarmByFuncIDAPI } from './api/GetFarmByFuncIDAPI';
@@ -61,6 +62,7 @@ import { GetFarmTriggerByTriggerIDAPI } from './api/GetFarmTriggerByTriggerIDAPI
 import { GetFarmTreeBySourceIDAPI } from './api/GetFarmTreeBySourceIDAPI';
 import { GetGroupAPI } from './api/GetGroupAPI';
 import { GetGalleryConfigAPI } from './api/GetGalleryConfigAPI';
+import { GetSitemapContentUnlockBySiteIdAndNodeIdAPI } from './api/GetSitemapContentUnlockBySiteIdAndNodeIdAPI';
 
 import { GalleryGetResponse } from './bean/GalleryGetResponse';
 import { GenerationHeader } from './bean/GenerationHeader';
@@ -117,6 +119,7 @@ PutUserSiteMapByNodeID: GenerationHeader,
 DeleteUserSiteMapByNodeID: GenerationHeader,
 GetContentById: ContentInfo,
 PutContentById: GenerationHeader,
+GetSitemapContentBySiteIdAndNodeId: ContentInfo,
 GetMyAuditingByOrderID: MyAuditingDetailGetResponse,
 GetMyAuditing: MyAuditingGetResponse,
 GetFarmByFuncID: FarmInfoGetResponse,
@@ -149,6 +152,7 @@ GetFarmTriggerByTriggerID: ListFarmTriggerDataResponse,
 GetFarmTreeBySourceID: GetFarmTreeResponse,
 GetGroup: ListGroupResponst,
 GetGalleryConfig: GalleryConfigResponse,
+GetSitemapContentUnlockBySiteIdAndNodeId: GenerationHeader,
 
 }
 
@@ -189,6 +193,7 @@ this.apiFactory.registerApi(new PutUserSiteMapByNodeIDAPI());
 this.apiFactory.registerApi(new DeleteUserSiteMapByNodeIDAPI());
 this.apiFactory.registerApi(new GetContentByIdAPI());
 this.apiFactory.registerApi(new PutContentByIdAPI());
+this.apiFactory.registerApi(new GetSitemapContentBySiteIdAndNodeIdAPI());
 this.apiFactory.registerApi(new GetMyAuditingByOrderIDAPI());
 this.apiFactory.registerApi(new GetMyAuditingAPI());
 this.apiFactory.registerApi(new GetFarmByFuncIDAPI());
@@ -222,6 +227,7 @@ this.apiFactory.registerApi(new GetFarmTriggerByTriggerIDAPI());
 this.apiFactory.registerApi(new GetFarmTreeBySourceIDAPI());
 this.apiFactory.registerApi(new GetGroupAPI());
 this.apiFactory.registerApi(new GetGalleryConfigAPI());
+this.apiFactory.registerApi(new GetSitemapContentUnlockBySiteIdAndNodeIdAPI());
 
     }
 

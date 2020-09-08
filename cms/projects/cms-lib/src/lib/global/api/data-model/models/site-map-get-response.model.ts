@@ -15,6 +15,7 @@ import { ModelMapping, ModelMapper } from '@neux/core';
     model.canDelete = bean.canDelete;
     model.canOrder = bean.canOrder;
     model.children = ModelMapper.mapArrayTo(SiteMapGetResponseModel, bean.children);
+    model.contentType = bean.content_type;
   }
 )
 export class SiteMapGetResponseModel {
@@ -36,5 +37,5 @@ export class SiteMapGetResponseModel {
   public canOrder: boolean;
   @ValidateNested()
   public children: Array<SiteMapGetResponseModel>;
-
+  public contentType: string;
 }

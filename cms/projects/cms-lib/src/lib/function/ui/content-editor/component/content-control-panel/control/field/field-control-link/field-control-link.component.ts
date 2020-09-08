@@ -36,7 +36,7 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
           ? this.sitemapService.getCMSSiteMap(this.fieldInfo?.extension.siteId)
           : of([])
       ).pipe(
-        map(nodes => this.sitemapService.flattenNodes(nodes))
+        map(nodes => this.sitemapService.flattenNodes(nodes).filter(node => node.contentType === 'CONTENT'))
       )
     ));
   }

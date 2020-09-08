@@ -48,14 +48,7 @@ export class FarmService {
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
-    return (
-      // this.restAPIService.dispatchRestApi<FarmInfoGetResponse>('GetFarmByFuncID', { funcID })
-      this.httpClient.get(`${this.environment.apiBaseUrl}/Farm/${funcID}?dataID=${dataID}&parentID=${parentID}`, {
-        headers: {
-          'content-type': 'application/json'
-        }
-      })
-    ).pipe(
+    return this.restAPIService.dispatchRestApi<FarmInfoGetResponse>('GetFarmByFuncID', { funcID, dataID, parentID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getFarmByFuncID')),
       map(x => plainToClass(FarmInfoGetResponse, x)),
       ModelMapper.rxMapModelTo(FarmInfoGetResponseModel)
