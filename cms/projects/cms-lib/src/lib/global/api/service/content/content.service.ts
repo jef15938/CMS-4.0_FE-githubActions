@@ -50,6 +50,45 @@ export class ContentService {
   /**
    *
    *
+   * @param {string} siteId
+   * @param {string} nodeId
+   * @returns
+   * @memberof ContentService
+   */
+  getSitemapContentBySiteIdAndNodeId(siteId: string, nodeId: string): Observable<ContentInfoModel> {
+    if (!siteId) {
+      throw new ParamsError('siteId', 'getSitemapContentBySiteIdAndNodeId', 'string', siteId);
+    }
+    if (!nodeId) {
+      throw new ParamsError('siteId', 'getSitemapContentBySiteIdAndNodeId', 'string', nodeId);
+    }
+    return this.restAPIService.dispatchRestApi<ContentInfo>('GetSitemapContentBySiteIdAndNodeId', { siteId, nodeId }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getSitemapContentBySiteIdAndNodeId')),
+      ModelMapper.rxMapModelTo(ContentInfoModel),
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {string} siteId
+   * @param {string} nodeId
+   * @returns
+   * @memberof ContentService
+   */
+  getSitemapContentUnlockBySiteIdAndNodeId(siteId: string, nodeId: string): Observable<any> {
+    if (!siteId) {
+      throw new ParamsError('siteId', 'getSitemapContentUnlockBySiteIdAndNodeId', 'string', siteId);
+    }
+    if (!nodeId) {
+      throw new ParamsError('siteId', 'getSitemapContentUnlockBySiteIdAndNodeId', 'string', nodeId);
+    }
+    return this.restAPIService.dispatchRestApi<any>('GetSitemapContentUnlockBySiteIdAndNodeId', { siteId, nodeId });
+  }
+
+  /**
+   *
+   *
    * @returns
    * @memberof ContentService
    */

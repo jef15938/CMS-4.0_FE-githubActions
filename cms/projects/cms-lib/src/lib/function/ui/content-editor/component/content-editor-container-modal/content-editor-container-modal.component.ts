@@ -15,6 +15,8 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   title = '';
   actions: CustomModalActionButton[];
 
+  @Input() siteID?: string;
+  @Input() nodeID?: string;
   @Input() contentID?: string;
   @Input() controlID?: string;
   @Input() content?: ContentInfoModel;
@@ -30,9 +32,9 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   ngOnInit(): void {
     this.modalRef.addPanelClass([`cms-content-editor-container-modal`, `mode-${this.editorMode}`]);
-    if (this.contentID) {
-      this.contentService.getContentById(this.contentID)
-        .pipe(CmsErrorHandler.rxHandleError('取得頁面內容資料錯誤'))
+    if (this.siteID && this.nodeID) {
+      this.contentService.getSitemapContentBySiteIdAndNodeId(this.siteID, this.nodeID)
+        .pipe(CmsErrorHandler.rxHandleError('取得頁面內容編輯資料錯誤'))
         .subscribe(content => this.content = content);
     }
 
@@ -46,11 +48,16 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   close(currentContentInfo: ContentInfoModel) {
     super.close(currentContentInfo);
+    if (this.siteID && this.nodeID) {
+      this.contentService.getSitemapContentUnlockBySiteIdAndNodeId(this.siteID, this.nodeID)
+        .pipe(CmsErrorHandler.rxHandleError('解除鎖定編輯內容錯誤'))
+        .subscribe();
+    }
   }
 
   save(event: ContentEditorSaveEvent) {
     const convertedContentInfo = this.contentService.convertContentInfoModelToContentInfo(event.contentInfo);
-    if (!this.contentID) {
+    if (!this.siteID || !this.nodeID || !this.contentID) {
       event.editorSave();
       this.modalService.openMessage({ message: '內容儲存成功' }).subscribe();
       this.close(event.contentInfo);

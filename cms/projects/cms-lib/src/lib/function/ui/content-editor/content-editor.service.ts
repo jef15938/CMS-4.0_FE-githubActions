@@ -73,11 +73,13 @@ export class ContentEditorService {
     }, true).pipe(map(this.mapContentInfoModelToContentInfo));
   }
 
-  openEditorByContentID(contentID: string, controlID: string) {
+  openEditorByIDs(siteID: string, nodeID: string, contentID: string, controlID: string) {
     const editorMode = EditorMode.EDIT;
     return this.modalService.openComponent({
       component: ContentEditorContainerModalComponent,
       componentInitData: {
+        siteID,
+        nodeID,
         contentID,
         controlID,
         editorMode,
