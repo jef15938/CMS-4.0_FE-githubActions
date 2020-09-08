@@ -32,6 +32,7 @@ export const environment = {
     DeleteUserSiteMapByNodeID: `${BASE_URL}\/UserSiteMap/{nodeID}`,
     GetContentById: `${BASE_URL}\/Content/{id}`,
     PutContentById: `${BASE_URL}\/Content/{id}`,
+    GetSitemapContentBySiteIdAndNodeId: `${BASE_URL}\/SitemapContent/{siteId}/{nodeId}`,
     GetMyAuditingByOrderID: `${BASE_URL}\/MyAuditing/{orderID}`,
     GetMyAuditing: `${BASE_URL}\/MyAuditing`,
     GetFarmByFuncID: `${BASE_URL}\/Farm/{funcID}`,
@@ -65,6 +66,7 @@ export const environment = {
     GetFarmTreeBySourceID: `${BASE_URL}\/Farm/Tree/{sourceID}`,
     GetGroup: `${BASE_URL}\/Group`,
     GetGalleryConfig: `${BASE_URL}\/GalleryConfig`,
+    GetSitemapContentUnlockBySiteIdAndNodeId: `${BASE_URL}\/SitemapContentUnlock/{siteId}/{nodeId}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -91,6 +93,7 @@ export const environment = {
     DeleteUserSiteMapByNodeID: 'Restful',
     GetContentById: 'Restful',
     PutContentById: 'Restful',
+    GetSitemapContentBySiteIdAndNodeId: 'Restful',
     GetMyAuditingByOrderID: 'Restful',
     GetMyAuditing: 'Restful',
     GetFarmByFuncID: 'Restful',
@@ -124,6 +127,7 @@ export const environment = {
     GetFarmTreeBySourceID: 'Restful',
     GetGroup: 'Restful',
     GetGalleryConfig: 'Restful',
+    GetSitemapContentUnlockBySiteIdAndNodeId: 'Restful',
   },
   chatbot: {
     apiUrl: 'https://labs.decoder.com.tw/chatbot-api'
