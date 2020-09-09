@@ -1,12 +1,14 @@
-import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef, Injector, Directive } from '@angular/core';
+import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef, Injector, Directive, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
+import { LayoutWrapperBaseInterface } from './layout-wrapper.interface';
 
 @Directive()
-export abstract class LayoutWrapperBase implements OnDestroy {
-  mode: 'preview' | 'edit' = 'preview';
-  runtime = false;
-  sites: SitesResponseModel = null;
+export abstract class LayoutWrapperBase implements LayoutWrapperBaseInterface, OnDestroy {
+  @Input() mode: 'preview' | 'edit' = 'preview';
+  @Input() runtime = false;
+  @Input() fixed = false;
+  @Input() sites: SitesResponseModel = null;
 
   protected changeDetectorRef: ChangeDetectorRef = null;
   public elementRef: ElementRef = null;

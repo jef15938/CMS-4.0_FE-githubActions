@@ -15,6 +15,7 @@ import { ContentFieldInfoModel } from './content-field-info.model';
     model.templateId = bean.templateId;
     model.fields = ModelMapper.mapArrayTo(ContentFieldInfoModel, bean.fields);
     model.attributes = JSON.parse(JSON.stringify(bean.attributes));
+    model.hidden = (bean as any).hidden;
   }
 )
 export class ContentTemplateInfoModel {
@@ -28,5 +29,5 @@ export class ContentTemplateInfoModel {
   public fields: Array<ContentFieldInfoModel>;
   @IsNotEmpty()
   public attributes: { [key: string]: any };
-
+  hidden?: boolean;
 }

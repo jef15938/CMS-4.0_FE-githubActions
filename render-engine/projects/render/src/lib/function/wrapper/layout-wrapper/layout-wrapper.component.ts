@@ -23,9 +23,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   LayoutWrapper, OnInit, AfterViewInit, AfterContentChecked, OnChanges {
 
   @Input() templateInfo: ContentTemplateInfoModel;
-  @Input() runtime = false;
-  @Input() sites: SitesResponseModel = null;
-  @Input() mode: 'preview' | 'edit' = 'edit';
 
   @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfoModel>>;
 
@@ -131,6 +128,8 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
     if (instance) {
       instance.templateInfo = templateInfo;
+      const isFixedWrapper = instance.templateInfo.templateId === 'FixedWrapper';
+
       instance.mode = mode;
       instance.runtime = runtime;
       instance.sites = sites;
@@ -141,12 +140,14 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
         c.mode = mode;
         c.runtime = runtime;
         c.sites = sites;
+        c.fixed = isFixedWrapper;
       });
       const templateFieldDirectives = instance?.templateFieldDirectives || new QueryList();
       templateFieldDirectives.forEach(d => {
         d.mode = mode;
         d.runtime = runtime;
         d.sites = sites;
+        d.fixed = isFixedWrapper;
       });
     }
   }

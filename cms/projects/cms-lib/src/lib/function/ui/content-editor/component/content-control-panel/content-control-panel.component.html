@@ -1,16 +1,23 @@
 <div *ngIf="show && selected" class="cms-content-control-panel" (click)="$event.stopPropagation()">
   <div class="cms-content-control-panel__info info">
-    <span class="info__text">editorActionMode = {{editorActionMode}}</span>
-    <br>
     <span class="info__text">版型種類 : {{selected.templateType}}</span>
     <br>
     <span class="info__text">版型Id : {{selected.templateInfo?.templateId}}</span>
     <br>
     <span class="info__text">Id : {{selected.templateInfo.id}}</span>
+    <br>
+    <span class="info__text">Fixed = {{selected.wrapper?.fixed}}</span>
   </div>
   <ng-container
     *ngIf="editorActionMode===ContentEditorActionMode.LAYOUT && (selected.selectedTargetType=== LayoutWrapperSelectedTargetType.TEMPLATE || selected.templateInfo.templateId==='HTML')">
     <hr>
+    <ng-container *ngIf="selected.wrapper?.fixed">
+      <mat-checkbox class="form__checkbox" [checked]="!!selected.templateInfo.hidden"
+        (change)="selected.templateInfo.hidden = !(!!selected.templateInfo.hidden); hasChange=true;">
+        隱藏版面
+      </mat-checkbox>
+      <br>
+    </ng-container>
     <div class="cms-content-control-panel__btn-group btn-group">
       <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="版型限制"
         (click)="templateShowInfo()">
@@ -81,6 +88,6 @@
     </div>
   </ng-container>
   <hr>
-  <button type="button" tabindex="0" mat-raised-button style="width: 100%;"
-    [disabled]="!hasChange" (click)="preserveChanges()">套用變更</button>
+  <button type="button" tabindex="0" mat-raised-button style="width: 100%;" [disabled]="!hasChange"
+    (click)="preserveChanges()">套用變更</button>
 </div>

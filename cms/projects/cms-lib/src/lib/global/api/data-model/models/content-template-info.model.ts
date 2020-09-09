@@ -17,6 +17,7 @@ import { CmsErrorHandler } from '../../../error-handling';
       model.templateId = bean.templateId;
       model.fields = ModelMapper.mapArrayTo(ContentFieldInfoModel, bean.fields);
       model.attributes = JSON.parse(JSON.stringify(bean.attributes));
+      model.hidden = (bean as any).hidden;
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'ContentTemplateInfoModel @ModelMapping()', '資料解析錯誤');
     }
@@ -33,5 +34,5 @@ export class ContentTemplateInfoModel {
   public fields: Array<ContentFieldInfoModel>;
   @IsNotEmpty()
   public attributes: { [key: string]: any };
-
+  hidden?: boolean;
 }

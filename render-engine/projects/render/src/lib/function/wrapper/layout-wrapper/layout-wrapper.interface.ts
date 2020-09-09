@@ -1,6 +1,7 @@
 import { ComponentRef } from '@angular/core';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
+import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
 
 export enum TemplateType {
   COMMON = 'Common',
@@ -10,7 +11,14 @@ export enum TemplateType {
   CUSTOMIZE = 'Customize',
 }
 
-export interface LayoutWrapper {
+export interface LayoutWrapperBaseInterface {
+  mode: 'preview' | 'edit';
+  runtime: boolean;
+  sites: SitesResponseModel;
+  fixed: boolean;
+}
+
+export interface LayoutWrapper extends LayoutWrapperBaseInterface{
   parentTemplatesContainer: { templates: ContentTemplateInfoModel[]; };
 }
 

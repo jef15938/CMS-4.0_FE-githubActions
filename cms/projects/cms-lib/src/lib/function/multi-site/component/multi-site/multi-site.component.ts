@@ -84,16 +84,20 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     switch (mode) {
       case EditModeType.NODE:
         if (!this.selectedSite) { this.modalService.openMessage({ message: '尚未選擇網站' }); return; }
-        this.sitemapService.getUserSiteMapNodes(this.selectedSite.siteId).subscribe(userSitemaps => {
-          this.userSitemaps = userSitemaps;
-          this.editMode = mode;
+        this.sitemapService.getUserSiteMapNodes(this.selectedSite.siteId)
+          .pipe(
+            CmsErrorHandler.rxHandleError(),
+          )
+          .subscribe(userSitemaps => {
+            this.userSitemaps = userSitemaps;
+            this.editMode = mode;
 
-          if (this.selectedUserSitemap) {
-            const newNode = this.getNodeFromSitemapsByNodeID(this.selectedUserSitemap.nodeId, this.userSitemaps);
-            this.selectedUserSitemap = newNode;
-            this.userSitemapTree.selectNode(newNode);
-          }
-        });
+            if (this.selectedUserSitemap) {
+              const newNode = this.getNodeFromSitemapsByNodeID(this.selectedUserSitemap.nodeId, this.userSitemaps);
+              this.selectedUserSitemap = newNode;
+              this.userSitemapTree.selectNode(newNode);
+            }
+          });
         break;
       case EditModeType.SITE:
         this.editMode = mode;
