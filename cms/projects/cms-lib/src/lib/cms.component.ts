@@ -40,8 +40,8 @@ export class CmsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menus = menus || [];
     this.loginInfo = this.authorizationService.getCurrentLoginInfo();
     this.cms.onAuthorizationChange().pipe(takeUntil(this.destroy$)).subscribe(authorized => {
-      if (!authorized) {
-        this.logout();
+      if (!authorized.authorized) {
+        this.logout(authorized.reason);
       }
     });
   }
@@ -63,15 +63,16 @@ export class CmsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  logout() {
+  logout(reason: string) {
     this.authorizationService.logout().pipe(
       catchError(error => of(undefined)),
       tap(_ => {
         localStorage.clear();
-        this.modalService.openMessage({ message: '授權時間已到，請重新登入' }).subscribe(_ => {
-          this.modalService.closeAll();
-          this.router.navigate(['login']);
-        });
+        this.modalService.closeAll();
+        if (reason) {
+          this.modalService.openMessage({ message: reason }).subscribe();
+        }
+        this.router.navigate(['login']);
       })
     ).subscribe();
   }

@@ -30,7 +30,7 @@ export class HttpError401Interceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
           this.cmsHttpCancelService.cancelPendingRequests();
-          this.cms.setAuthorized(false);
+          this.cms.setAuthorized(false, '授權時間已到');
         }
         return throwError(error);
       })

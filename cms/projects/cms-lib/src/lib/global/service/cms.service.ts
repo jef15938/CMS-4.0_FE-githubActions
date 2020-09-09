@@ -6,11 +6,11 @@ export class Cms {
 
   private authorized = false;
 
-  private authorizationChange$ = new BehaviorSubject(this.authorized);
+  private authorizationChange$ = new BehaviorSubject({ authorized: this.authorized, reason: '' });
 
-  public setAuthorized(authorized: boolean) {
+  public setAuthorized(authorized: boolean, reason = '') {
     this.authorized = authorized;
-    this.authorizationChange$.next(this.authorized);
+    this.authorizationChange$.next({ authorized, reason });
   }
 
   public onAuthorizationChange() {

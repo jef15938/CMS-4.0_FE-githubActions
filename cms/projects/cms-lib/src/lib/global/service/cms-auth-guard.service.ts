@@ -34,7 +34,7 @@ export class CmsAuthGuard implements CanActivate {
   }
 
   toLoginPage() {
-    this.cms.setAuthorized(false);
+    this.cms.setAuthorized(false, '');
     return of(this.router.parseUrl('login'));
   }
 }
