@@ -11,7 +11,7 @@ export class GroupTemplateDemoComponent extends GroupTemplateBaseComponent imple
 
   defaultTemplateInfo: GroupTemplateInfo = {
     id: '',
-    templateId: 'IconPage',
+    templateId: 'GroupDemo',
     fields: [],
     attributes: {},
     itemList: [],
