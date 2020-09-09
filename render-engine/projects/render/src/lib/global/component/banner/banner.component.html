@@ -1,0 +1,10 @@
+<div class="content">
+  <div class="title" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'" #fieldTitle="field"
+    [maxLength]="16">
+    {{fieldTitle.fieldInfo?.fieldVal}}
+  </div>
+  <div class="subtitle" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'subtitle'"
+    #fieldSubtitle="field" [maxLength]="16">
+    {{fieldSubtitle.fieldInfo?.fieldVal}}
+  </div>
+</div>

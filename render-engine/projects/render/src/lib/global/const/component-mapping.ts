@@ -4,6 +4,8 @@ import {
   NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent, FixedWrapperComponent
 } from '../component';
 import { HtmlComponent } from '../component/html/html.component';
+import { BannerComponent } from '../component/banner/banner.component';
+import { ListComponent } from '../component/list/list.component';
 
 export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = [
   {
@@ -57,5 +59,17 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'GroupDemo',
     component: GroupTemplateDemoComponent,
-  }
+  },
+  {
+    component_id: 'qa',
+    component: QaComponent,
+  },
+  {
+    component_id: 'banner',
+    component: BannerComponent,
+  },
+  {
+    component_id: 'list',
+    component: ListComponent,
+  },
 ];

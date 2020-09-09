@@ -1,9 +1,3 @@
-mode={{mode}}
-<br>
-runtime={{runtime}}
-<br>
-sites={{sites|json}}
-<br>
 <ng-container *ngIf="templateInfo">
   <div [libLayoutFieldHtmlEditor]="templateInfo?.fields | getFieldFromFieldsById:'html'" #fieldHtmlEditor="field">
     <rdr-html-editor-content [htmlString]="fieldHtmlEditor.fieldInfo?.fieldVal" [runtime]="runtime"></rdr-html-editor-content>

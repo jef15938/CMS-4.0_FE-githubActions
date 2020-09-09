@@ -49,6 +49,16 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
         templateName: '固定式外框',
         templateThumbnail: ''
       },
+      {
+        templateId: 'banner',
+        templateName: 'Banner',
+        templateThumbnail: ''
+      },
+      {
+        templateId: 'list',
+        templateName: '清單',
+        templateThumbnail: ''
+      },
       // {
       //   template_id: 'Download',
       //   template_name: 'Download',

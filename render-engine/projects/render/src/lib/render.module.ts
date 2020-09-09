@@ -28,6 +28,8 @@ import { FixedWrapperComponent } from './global/component/fixed-wrapper/fixed-wr
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandlerInterceptor } from './global/interceptor/http-error-handler.interceptor';
 import { HtmlEditorContentComponent } from './function/ui/html-editor-content/html-editor-content.component';
+import { BannerComponent } from './global/component/banner/banner.component';
+import { ListComponent } from './global/component/list/list.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -44,6 +46,8 @@ const COMPONENTS = [
   HtmlComponent,
   FixedWrapperComponent,
   HtmlEditorContentComponent,
+  BannerComponent,
+  ListComponent,
 ];
 
 @NgModule({

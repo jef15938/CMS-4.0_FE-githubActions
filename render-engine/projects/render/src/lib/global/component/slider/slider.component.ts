@@ -5,7 +5,6 @@ import {
 } from 'ngx-swiper-wrapper';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { SliderData } from './slider.interface';
-import { MOCK_SLIDER_DATA } from './slider.mock';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
 import { DataSourceType } from '../../enum';
 import { RENDER_ENVIROMENT_TOKEN } from '../../injection-token/injection-token';
@@ -57,7 +56,7 @@ export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData>
     injector: Injector,
     @Inject(RENDER_ENVIROMENT_TOKEN) public enviroment: RenderEnvironment,
   ) {
-    super(injector, MOCK_SLIDER_DATA);
+    super(injector);
   }
 
   onIndexChange(index: number): void {
