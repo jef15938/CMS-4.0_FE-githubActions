@@ -1,6 +1,7 @@
-import { Directive, Input, Injector } from '@angular/core';
+import { Directive, Input, Injector, AfterContentChecked } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
 import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
+import { SitesResponseModel } from '../../../../global/api/data-model/models/sites-response.model';
 
 export enum LinkFieldInfoUrlType {
   INSIDE = 'INSIDE',
@@ -19,13 +20,35 @@ export interface LinkFieldInfo extends ContentFieldInfoModel {
   selector: '[libLayoutFieldLink]',
   exportAs: 'field',
 })
-export class LayoutFieldLinkDirective extends TemplateFieldDirective {
+export class LayoutFieldLinkDirective extends TemplateFieldDirective implements AfterContentChecked {
   @Input('libLayoutFieldLink') fieldInfo: LinkFieldInfo;
 
   constructor(
     injector: Injector,
   ) {
     super(injector);
+  }
+
+  ngAfterContentChecked(): void {
+    if (this.runtime) {
+      const el = this.elementRef.nativeElement as HTMLElement;
+      const aTag = (el?.tagName?.toLowerCase() === 'a' ? el : el.querySelector('a')) as HTMLAnchorElement;
+      if (!aTag) { return; }
+
+      const isInside = aTag.getAttribute('urltype') === 'INSIDE';
+      if (!isInside) { return; }
+
+      const isHrefSet = !!aTag.getAttribute('nodeId');
+      if (!isHrefSet) {
+        const siteId = aTag.getAttribute('siteid');
+        const nodeId = aTag.getAttribute('href');
+        const href = SitesResponseModel.findContentPathBySiteIdAndNodeId(this.sites, siteId, nodeId);
+        if (href) {
+          aTag.setAttribute('nodeId', nodeId);
+          aTag.setAttribute('href', href);
+        }
+      }
+    }
   }
 
   click(ev) {
