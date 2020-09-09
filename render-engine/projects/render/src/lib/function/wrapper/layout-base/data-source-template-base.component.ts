@@ -39,8 +39,7 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
   }
 
   getSourceData(): Observable<ListDataSourceDataResponseModel<TData>> {
-    if (!this.runtime) { return of(undefined); }
-    if (this.mode === 'edit' || !this.templateInfo?.source) { return of(undefined); }
+    if (!this.mode || this.mode === 'edit' || !this.templateInfo?.source) { return of(undefined); }
     return this.dataSourceService.getDataSourceByTypeIDAndId<TData>(this.sourceType, this.templateInfo?.source).pipe(
       takeUntil(this.destroy$),
       tap(sourceData => this.sourceData = sourceData),
