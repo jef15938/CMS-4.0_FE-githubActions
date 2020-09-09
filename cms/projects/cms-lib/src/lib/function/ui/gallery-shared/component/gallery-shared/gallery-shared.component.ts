@@ -16,6 +16,7 @@ import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/m
 import { PageInfoModel } from '../../../../../global/api/data-model/models/page-info.model';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'cms-gallery-shared',
@@ -311,6 +312,27 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   onCustomNodeRendererInit = (customRenderComponentRef: ComponentRef<GalleryCategoryNodeComponent>) => {
     customRenderComponentRef.instance.mode = this.mode;
+  }
+
+  clearFilterName(ev: MouseEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.filter.fileName = '';
+  }
+
+  toggleFilterTypeSelectAll(ev: MouseEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    const shouldSelectAll = !this.filter?.fileTypes?.length || (this.filter.fileTypes.length !== this.filterFileTypeOptions?.length);
+    const newValue = [];
+    if (shouldSelectAll) {
+      this.filterFileTypeOptions.forEach(option => {
+        newValue.push(option.value);
+      });
+    }
+    this.filter.fileTypes = newValue;
   }
 
 }
