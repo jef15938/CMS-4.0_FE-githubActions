@@ -17,6 +17,10 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
     component: TabDemoComponent,
   },
   {
+    component_id: 'fixed-demo-1',
+    component: LayoutFullComponent,
+  },
+  {
     component_id: 'full',
     component: LayoutFullComponent,
   },
