@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
 
 @Component({
   selector: 'cms-html-editor-insert-table-modal',
@@ -16,7 +16,9 @@ export class HtmlEditorInsertTableModalComponent extends CustomModalBase impleme
   @Input() rows: number = null;
   @Input() cols: number = null;
 
-  constructor() { super(); }
+  constructor(
+    private modalService: ModalService,
+  ) { super(); }
 
   ngOnInit(): void {
     this.rows = this.rows || 3;
@@ -24,6 +26,10 @@ export class HtmlEditorInsertTableModalComponent extends CustomModalBase impleme
   }
 
   confirm() {
+    if (this.rows > 15 || this.cols > 15) {
+      this.modalService.openMessage({ message: '表格行列皆不能超過15行或列' }).subscribe();
+      return;
+    }
     this.close({
       rows: this.rows || null,
       cols: this.cols || null,

@@ -91,8 +91,8 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       {
         text: '欄', children: [
           { text: '標記/取消', action: new MarkCol(this.context, this) },
-          { text: '左方欄', icon: 'add', action: new AddCol(this.context, this, 'left') },
-          { text: '右方欄', icon: 'add', action: new AddCol(this.context, this, 'right') },
+          { text: '左側欄', icon: 'add', action: new AddCol(this.context, this, 'left') },
+          { text: '右側欄', icon: 'add', action: new AddCol(this.context, this, 'right') },
           { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
         ]
       },

@@ -19,6 +19,11 @@ export class AddCol extends HtmlEditorActionBase {
   do(): Observable<any> {
     if (!this.controller.selectedCols.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準欄' }); }
 
+    const table = this.controller.el;
+    const firstRowTds = Array.from(Array.from(table.querySelectorAll('tbody > tr'))[0].children) as HTMLTableDataCellElement[];
+    const allCols = firstRowTds.reduce((a, b) => a += b.colSpan, 0);
+    if (allCols >= 15) { return this.context.modalService.openMessage({ message: '不能超過15行' }); }
+
     const rangeStartEnd = this.controller.tableControllerService.getStartEndBySelectedCols(this.controller.selectedCols);
     // console.warn('rangeStartEnd = ', rangeStartEnd);
 

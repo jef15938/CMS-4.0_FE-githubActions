@@ -20,6 +20,9 @@ export class AddRow extends HtmlEditorActionBase {
     if (!this.controller.selectedRows.length) { return this.context.modalService.openMessage({ message: '請選擇加入的基準列' }); }
 
     const table = this.controller.el;
+    const rows = table.querySelectorAll('tbody > tr');
+    if (rows.length >= 15) { return this.context.modalService.openMessage({ message: '不能超過15列' }); }
+
     const rowParent = this.controller.selectedRows.map(row => row.parentElement)[0];
     const rowParentChildren = Array.from(rowParent.childNodes);
     const rowIndexes = this.controller.selectedRows.map(row => rowParentChildren.indexOf(row));

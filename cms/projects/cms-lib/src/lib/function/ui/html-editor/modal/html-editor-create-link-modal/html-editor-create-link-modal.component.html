@@ -60,7 +60,7 @@
       <div class="modal-form-layout__row" *ngIf="canModifyText">
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
-            <mat-label>顯示的文字</mat-label>
+            <mat-label>連結文字</mat-label>
             <input matInput [(ngModel)]="aTagConfig.text" name="text" required #modelText="ngModel">
             <mat-error *ngIf="modelText?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
