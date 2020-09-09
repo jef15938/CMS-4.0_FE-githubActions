@@ -11,6 +11,7 @@ export enum ContentEditorActionMode {
 }
 
 export class ContentEditorSaveEvent {
+  save: boolean;
   contentInfo: ContentInfoModel;
   /** change Editor save status */
   editorSave: () => void;

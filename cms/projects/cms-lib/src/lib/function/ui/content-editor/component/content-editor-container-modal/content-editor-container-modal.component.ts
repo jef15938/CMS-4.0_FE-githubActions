@@ -5,6 +5,8 @@ import { ContentService } from '../../../../../global/api/service';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
 import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'cms-content-editor-container-modal',
@@ -55,7 +57,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
     }
   }
 
-  save(event: ContentEditorSaveEvent) {
+  save(event: ContentEditorSaveEvent, closeAfterSave = false) {
     const convertedContentInfo = this.contentService.convertContentInfoModelToContentInfo(event.contentInfo);
     if (!this.siteID || !this.nodeID || !this.contentID) {
       event.editorSave();
@@ -64,19 +66,28 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
       return;
     }
 
-    this.contentService
-      .updateContent(this.contentID, convertedContentInfo)
-      .pipe(CmsErrorHandler.rxHandleError('更新頁面內容資料錯誤'))
-      .subscribe(_ => {
-        this.modalService.openMessage({ message: '內容儲存成功' }).subscribe();
-        if (this.onSaved) {
-          this.onSaved();
-        }
-        event.editorSave();
-      }, err => {
-        this.modalService.openMessage({ message: '內容儲存失敗' }).subscribe();
-        console.error('內容儲存失敗', err);
-      });
+    const action = event.save
+      ? this.contentService
+        .updateContent(this.contentID, convertedContentInfo)
+        .pipe(
+          tap(_ => this.modalService.openMessage({ message: '內容儲存成功' }).subscribe()),
+          CmsErrorHandler.rxHandleError('更新頁面內容資料錯誤')
+        )
+      : of(undefined);
+
+    action.subscribe(_ => {
+      console.warn('closeAfterSave = ', closeAfterSave);
+      if (this.onSaved) {
+        this.onSaved();
+      }
+      event.editorSave();
+      if (closeAfterSave) {
+        this.close(event.contentInfo);
+      }
+    }, err => {
+      this.modalService.openMessage({ message: '內容儲存失敗' }).subscribe();
+      console.error('內容儲存失敗', err);
+    });
   }
 
 }

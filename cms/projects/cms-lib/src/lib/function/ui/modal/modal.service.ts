@@ -57,7 +57,7 @@ export class ModalService {
     });
   }
 
-  openConfirm(componentInitData?: { message?: string, title?: string }) {
+  openConfirm(componentInitData?: { message?: string, title?: string, confirmBtnMessage?: string, cancelBtnMessage?: string }) {
     return this.openComponent({
       component: ConfirmModalComponent,
       componentInitData

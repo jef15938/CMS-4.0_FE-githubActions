@@ -54,6 +54,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   @Output() editorClose = new EventEmitter<ContentInfoModel>();
   @Output() editorSave = new EventEmitter<ContentEditorSaveEvent>();
+  @Output() editorSaveAndClose = new EventEmitter<ContentEditorSaveEvent>();
 
   manager: ContentEditorManager;
 
@@ -175,15 +176,31 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     }
 
     if (!this.saved || this.contentControlPanel?.hasChange) {
-      const yes = window.confirm('有尚未儲存的變更，確定關閉？');
-      if (!yes) { return; }
+      this.modalService.openConfirm({
+        message: '有尚未儲存的變更，請選擇是否儲存',
+        confirmBtnMessage: '儲存後離開',
+        cancelBtnMessage: '不儲存直接離開'
+      }).subscribe(confirm => {
+        this.editorSaveAndClose.emit({
+          save: confirm,
+          contentInfo,
+          editorSave: this.setEditorSaved.bind(this),
+        });
+      });
+    } else {
+      this.editorClose.emit(contentInfo);
     }
-    this.editorClose.emit(contentInfo);
+
+    // if (!this.saved || this.contentControlPanel?.hasChange) {
+    //   const yes = window.confirm('有尚未儲存的變更，確定關閉？');
+    //   if (!yes) { return; }
+    // }
   }
 
   save() {
     const contentInfo = this.getCurrentContent();
     this.editorSave.emit({
+      save: true,
       contentInfo,
       editorSave: this.setEditorSaved.bind(this),
     });
