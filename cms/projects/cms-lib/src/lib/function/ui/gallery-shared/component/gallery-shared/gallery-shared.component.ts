@@ -325,7 +325,7 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     ev.stopPropagation();
     ev.preventDefault();
 
-    const shouldSelectAll = !this.filter?.fileTypes?.length || (this.filter.fileTypes.length !== this.filterFileTypeOptions?.length);
+    const shouldSelectAll = !this.filterFileTypeOptions?.length || (this.filter?.fileTypes?.length !== this.filterFileTypeOptions?.length);
     const newValue = [];
     if (shouldSelectAll) {
       this.filterFileTypeOptions.forEach(option => {

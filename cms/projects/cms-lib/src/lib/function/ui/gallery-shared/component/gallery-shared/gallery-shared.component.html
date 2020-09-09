@@ -42,7 +42,7 @@
             </mat-select>
             <button mat-icon-button matSuffix (click)="toggleFilterTypeSelectAll($event)">
               <mat-icon>
-                {{(filter?.fileTypes?.length && filter.fileTypes.length===filterFileTypeOptions?.length)?'close':'check'}}
+                {{(this.filterFileTypeOptions?.length && filter.fileTypes.length===filterFileTypeOptions?.length)?'close':'check'}}
               </mat-icon>
             </button>
           </mat-form-field>
