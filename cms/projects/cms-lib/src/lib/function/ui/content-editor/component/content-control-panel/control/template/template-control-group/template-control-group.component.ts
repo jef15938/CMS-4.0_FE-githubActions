@@ -3,6 +3,7 @@ import { LayoutWrapperSelectEvent, GroupTemplateInfo, GroupTemplateBaseComponent
 import { ContentControlBase } from '../../_base';
 import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-model/models/content-field-info.model';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
+import { ModalService } from '../../../../../../../../function/ui/modal';
 
 @Component({
   selector: 'cms-template-control-group',
@@ -17,6 +18,10 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
 
   maxItemCount: number;
   groupItemDisplayFieldId: string;
+
+  constructor(
+    private modalService: ModalService
+  ) { super(); }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
@@ -60,6 +65,10 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
   }
 
   removeGroup(group: ContentFieldInfoModel[]) {
+    if (this.templateInfo.itemList.length <= 1) {
+      this.modalService.openMessage({ message: '最後一個項目不可刪除' });
+      return;
+    }
     this.templateInfo.itemList.splice(this.templateInfo.itemList.indexOf(group), 1);
     this.change.emit();
   }
