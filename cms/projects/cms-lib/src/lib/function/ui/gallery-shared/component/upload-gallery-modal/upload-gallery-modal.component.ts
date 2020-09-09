@@ -280,7 +280,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     if (!this.galleryConfig) {
       return null;
     }
-    const fileLimit = this.galleryConfig.fileLimits.find(limit => limit.fileNameExt.toLowerCase() === ext);
+    const fileLimit = this.galleryConfig.fileLimits.find(limit => limit.fileNameExt.toLowerCase() === ext?.toLowerCase());
     return fileLimit;
   }
 
