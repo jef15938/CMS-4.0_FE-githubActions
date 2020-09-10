@@ -5,7 +5,8 @@
   .item-container {
     width: 100%;
 
-    mat-icon, input {
+    mat-icon,
+    input {
       height: 24px;
       line-height: 24px;
       vertical-align: middle;
@@ -16,7 +17,9 @@
     }
 
     input {
-      width: calc(100% - 48px);
+      width: calc(100% - 104px);
+      display: inline-block;
+      padding: 2px;
     }
   }
 }

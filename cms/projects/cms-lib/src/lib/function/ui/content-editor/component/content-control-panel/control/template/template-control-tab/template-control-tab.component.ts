@@ -1,6 +1,8 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo, TabTemplateBaseComponent } from '@neux/render';
 import { ContentControlBase } from '../../_base';
+import { ModalService } from '../../../../../../../../function/ui/modal';
+import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-template-control-tab',
@@ -13,6 +15,10 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
 
   maxItemCount: number;
   templateInfo: TabTemplateInfo;
+
+  constructor(
+    private modalService: ModalService
+  ) { super(); }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
@@ -45,16 +51,20 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     return arr; // for testing
   }
 
-  addTab() {
-    const newTab = {
-      tabId: 'NewTab',
-      children: [],
-    } as TabInfo;
-    this.templateInfo.tabList.push(newTab);
-    this.change.emit();
+  copyTab(tab: TabInfo) {
+    try {
+      this.templateInfo.tabList.push(JSON.parse(JSON.stringify(tab)));
+      this.change.emit();
+    } catch (error) {
+      CmsErrorHandler.throwAndShow(error, 'TemplateControlTabComponent.copyTab()', 'JSON 資料解析錯誤');
+    }
   }
 
   removeTab(tab: TabInfo) {
+    if (this.templateInfo.tabList.length <= 1) {
+      this.modalService.openMessage({ message: '最後一個項目不可刪除' });
+      return;
+    }
     this.templateInfo.tabList.splice(this.templateInfo.tabList.indexOf(tab), 1);
     this.change.emit();
   }
