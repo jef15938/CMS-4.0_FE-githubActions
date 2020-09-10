@@ -17,7 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputHashing": "none",
             "outputPath": "dist/render-engine/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -41,6 +40,7 @@
                 "with": "src/environments/environment.prod.ts"
               }],
               "optimization": true,
+              "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
@@ -65,6 +65,7 @@
                 "with": "src/environments/environment.sit.ts"
               }],
               "optimization": true,
+              "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
@@ -89,6 +90,7 @@
                 "with": "src/environments/environment.uat.ts"
               }],
               "optimization": true,
+              "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
@@ -172,13 +174,13 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputHashing": "none",
             "outputPath": "dist/render-engine/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json"
           },
           "configurations": {
             "production": {
+              "outputHashing": "media",
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.prod.ts"
@@ -187,6 +189,7 @@
               "optimization": true
             },
             "sit": {
+              "outputHashing": "media",
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.sit.ts"
@@ -195,6 +198,7 @@
               "optimization": true
             },
             "uat": {
+              "outputHashing": "media",
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.uat.ts"
@@ -228,7 +232,6 @@
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "outputHashing": "none",
             "browserTarget": "render-engine:build:production",
             "serverTarget": "render-engine:server:production",
             "routes": [
