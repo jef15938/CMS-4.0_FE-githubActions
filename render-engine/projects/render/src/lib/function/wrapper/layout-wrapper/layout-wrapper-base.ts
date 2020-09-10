@@ -6,9 +6,9 @@ import { LayoutWrapperBaseInterface } from './layout-wrapper.interface';
 @Directive()
 export abstract class LayoutWrapperBase implements LayoutWrapperBaseInterface, OnDestroy {
   @Input() mode: 'preview' | 'edit';
-  @Input() runtime = false;
-  @Input() fixed = false;
-  @Input() sites: SitesResponseModel = null;
+  @Input() runtime;
+  @Input() fixed;
+  @Input() sites: SitesResponseModel;
 
   protected changeDetectorRef: ChangeDetectorRef = null;
   public elementRef: ElementRef = null;

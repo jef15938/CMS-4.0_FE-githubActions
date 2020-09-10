@@ -1,7 +1,7 @@
 import {
   Component, OnInit, Input, ViewChild,
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
-  HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID, AfterContentChecked
+  HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID, SimpleChange
 } from '@angular/core';
 import { LayoutBase } from '../layout-base/layout-base.interface';
 import { takeUntil, map, tap } from 'rxjs/operators';
@@ -20,7 +20,7 @@ import { SitesResponseModel } from '../../../global/api/data-model/models/sites-
   styleUrls: ['./layout-wrapper.component.scss']
 })
 export class LayoutWrapperComponent extends LayoutWrapperBase implements
-  LayoutWrapper, OnInit, AfterViewInit, AfterContentChecked, OnChanges {
+  LayoutWrapper, OnInit, AfterViewInit, OnChanges {
 
   @Input() templateInfo: ContentTemplateInfoModel;
 
@@ -49,20 +49,12 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.templateInfo && this.componentRef?.instance) {
-      this.componentRef.instance.templateInfo = this.templateInfo;
-      if (this.componentRef?.instance?.ngOnChanges) {
-        this.componentRef.instance.ngOnChanges(changes);
-      }
-    }
+    // console.warn('ngOnChanges()', { this: this, changes });
+    this.setInstanceData(this.componentRef?.instance);
   }
 
   ngOnInit(): void {
 
-  }
-
-  ngAfterContentChecked(): void {
-    this.setBasicData(this.componentRef?.instance);
   }
 
   ngAfterViewInit() {
@@ -75,7 +67,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   setInstanceProperties = (componentRef: ComponentRef<LayoutBase<ContentTemplateInfoModel>>): void => {
-    this.setBasicData(componentRef?.instance);
+    this.setInstanceData(componentRef?.instance);
   }
 
   checkEventBinding() {
@@ -120,36 +112,64 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     return event;
   }
 
-  setBasicData(instance: LayoutBase<ContentTemplateInfoModel>) {
-    const mode = this.mode || 'preview';
-    const runtime = this.runtime || false;
-    const sites = this.sites;
-    const templateInfo = this.templateInfo;
+  setInstanceData(instance: LayoutBase<ContentTemplateInfoModel>, force = false) {
+    if (!instance) { return; }
+    instance.parentLayoutWrapper = this;
 
-    if (instance) {
-      instance.templateInfo = templateInfo;
-      const isFixedWrapper = instance.templateInfo.templateId === 'FixedWrapper';
+    const oldData = {
+      mode: instance.mode,
+      runtime: instance.runtime,
+      sites: instance.sites,
+      templateInfo: instance.templateInfo,
+      fixed: instance.fixed,
+    };
 
-      instance.mode = mode;
-      instance.runtime = runtime;
-      instance.sites = sites;
-      instance.parentLayoutWrapper = this;
+    const newData = {
+      mode: this.mode,
+      runtime: this.runtime,
+      sites: this.sites,
+      templateInfo: this.templateInfo,
+      fixed: this.templateInfo?.templateId === 'FixedWrapper',
+    };
 
-      const templatesContainerComponents = instance?.templatesContainerComponents || new QueryList();
-      templatesContainerComponents.forEach(c => {
-        c.mode = mode;
-        c.runtime = runtime;
-        c.sites = sites;
-        c.fixed = isFixedWrapper;
-      });
-      const templateFieldDirectives = instance?.templateFieldDirectives || new QueryList();
-      templateFieldDirectives.forEach(d => {
-        d.mode = mode;
-        d.runtime = runtime;
-        d.sites = sites;
-        d.fixed = isFixedWrapper;
-      });
+    const newDataKeys = Object.keys(newData);
+
+    const hasChange = newDataKeys.some(k => newData[k] !== oldData[k]);
+
+    // console.warn({ this: this, instance, oldData, newData, hasChange, newDataKeys, force });
+    if (!hasChange && !force) { return; }
+
+    newDataKeys.forEach(k => instance[k] = newData[k]);
+
+    const simpleChanges = newDataKeys.map(k => {
+      return { k, v: new SimpleChange(oldData[k], newData[k], false) };
+    }).reduce((r, e) => {
+      r[e.k] = e.v;
+      return r;
+    }, {}) as SimpleChanges;
+
+    // console.warn('simpleChanges = ', simpleChanges);
+
+    if (instance.ngOnChanges && typeof (instance.ngOnChanges) === 'function') {
+      instance.ngOnChanges(simpleChanges);
     }
+
+    const templatesContainerComponents = Array.from(instance.templatesContainerComponents || []);
+    const templateFieldDirectives = Array.from(instance.templateFieldDirectives || []);
+
+    // console.warn({ templatesContainerComponents, templateFieldDirectives });
+
+    [...templatesContainerComponents, ...templateFieldDirectives].forEach(comp => {
+      comp.mode = newData.mode;
+      comp.runtime = newData.runtime;
+      comp.sites = newData.sites;
+      comp.fixed = newData.fixed;
+
+      const compAny = comp as any;
+      if (compAny.ngOnChanges && typeof (compAny.ngOnChanges) === 'function') {
+        compAny.ngOnChanges(simpleChanges);
+      }
+    });
   }
 
   @HostListener('click') click() {

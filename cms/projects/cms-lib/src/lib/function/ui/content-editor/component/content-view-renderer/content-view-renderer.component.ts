@@ -112,7 +112,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
     if ( // 如果有固定式版面，跳過
       !Array.from(templatesContainer.layoutWrapperComponents || [])
-        .some(lw => lw.componentRef.instance instanceof FixedWrapperComponent)
+        .some(lw => lw.componentRef?.instance instanceof FixedWrapperComponent)
     ) {
       // 產生
       templatesContainer.layoutWrapperComponents.forEach((lw, i) => {
@@ -129,9 +129,9 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
     // 子節點的templatesContainer繼續產生
     templatesContainer.layoutWrapperComponents.forEach(lw => {
-      let children: TemplatesContainerComponent[] = Array.from(lw.componentRef.instance.templatesContainerComponents || []);
+      let children: TemplatesContainerComponent[] = Array.from(lw.componentRef?.instance.templatesContainerComponents || []);
 
-      if (lw.dynamicWrapperComponent.componentRef.instance instanceof FixedWrapperComponent) {
+      if (lw.dynamicWrapperComponent.componentRef?.instance instanceof FixedWrapperComponent) {
         children = children.map(childTemplatesContainer =>
           Array.from(childTemplatesContainer.layoutWrapperComponents || [])
             .reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[])
@@ -149,6 +149,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
     if (!templatesContainer) { return; }
 
     templatesContainer.layoutWrapperComponents?.forEach((lw) => {
+      if (!lw.componentRef?.instance) { return; }
       if (this.editorMode !== EditorMode.INFO) { // EDIT or READ
         if (!(lw.componentRef.instance instanceof FixedWrapperComponent)) {
           (lw?.elementRef?.nativeElement as HTMLElement)?.setAttribute('hover-info', `版型ID:${lw.templateInfo.templateId}`);
