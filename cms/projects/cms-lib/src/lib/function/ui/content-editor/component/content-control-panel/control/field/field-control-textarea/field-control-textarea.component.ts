@@ -10,6 +10,9 @@ import { ModalService } from '../../../../../../modal';
 })
 export class FieldControlTextareaComponent extends ContentControlBase implements OnInit, OnChanges {
 
+  readonly defaultMaxLength = 100;
+  readonly defaultMaxLines = 10;
+
   maxLength = 0;
   maxLines = 0;
 
@@ -26,8 +29,8 @@ export class FieldControlTextareaComponent extends ContentControlBase implements
     if (changes.selected) {
       const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
       const directive = selected.fieldDirective as LayoutFieldTextareaDirective;
-      this.maxLength = directive.maxLength > 0 ? directive.maxLength : 0;
-      this.maxLines = directive.maxLines > 0 ? directive.maxLines : 0;
+      this.maxLength = directive.maxLength || this.defaultMaxLength;
+      this.maxLines = directive.maxLines || this.defaultMaxLines;
     }
   }
 
