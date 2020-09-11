@@ -73,7 +73,7 @@ export class MyAuditingDetailModalComponent extends CustomModalBase implements O
   ngOnInit(): void {
     this.updateSize('1280px');
     this.myAuditingDetails$ = this.auditingService.getMyAuditingDetail(this.orderId).pipe(
-      CmsErrorHandler.rxHandleError('取得審核紀錄錯誤'),
+      CmsErrorHandler.rxHandleError(),
     );
   }
 

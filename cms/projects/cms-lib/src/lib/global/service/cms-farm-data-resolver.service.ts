@@ -13,7 +13,7 @@ export class CmsFarmDataResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot) {
     return route.params?.funcId ? this.farmService.getFarmByFuncID(route.params.funcId).pipe(
-      CmsErrorHandler.rxHandleError('取得 Farm 資料錯誤'),
+      CmsErrorHandler.rxHandleError(),
     ) : of(undefined);
   }
 }

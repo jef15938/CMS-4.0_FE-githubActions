@@ -29,7 +29,7 @@ export class DeptComponent implements OnInit {
   ngOnInit(): void {
     this.depts$ = this.refresh$.pipe(
       switchMap(_ => this.departmentService.getAllDepartment().pipe(
-        CmsErrorHandler.rxHandleError('取得部門清單錯誤'),
+        CmsErrorHandler.rxHandleError(),
       ))
     );
     this.refresh$.next(undefined);
@@ -67,7 +67,7 @@ export class DeptComponent implements OnInit {
     return of(undefined).pipe(
       this.modalService.confirmDelete,
       concatMap(confirm => confirm
-        ? this.departmentService.deleteDepartment(dept.deptId).pipe(CmsErrorHandler.rxHandleError('刪除部門錯誤'))
+        ? this.departmentService.deleteDepartment(dept.deptId).pipe(CmsErrorHandler.rxHandleError())
         : of(undefined)
       )
     );

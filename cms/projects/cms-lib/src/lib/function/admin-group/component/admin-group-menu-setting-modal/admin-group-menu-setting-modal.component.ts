@@ -34,8 +34,8 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
 
   ngOnInit(): void {
     this.treeData$ = forkJoin([
-      this.groupService.getGroupMenuList(this.groupID).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')),
-      this.menuService.getCMSMenu().pipe(CmsErrorHandler.rxHandleError('取得後台功能清單錯誤')),
+      this.groupService.getGroupMenuList(this.groupID).pipe(CmsErrorHandler.rxHandleError()),
+      this.menuService.getCMSMenu().pipe(CmsErrorHandler.rxHandleError()),
     ]).pipe(
       map(([groupMenuInfos, menus]) => {
         const checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.funcId), menus);
@@ -59,7 +59,7 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
       return info;
     });
     this.groupService.updateGroupMenu(this.groupID, groupMenuInfos)
-      .pipe(CmsErrorHandler.rxHandleError('更新資料錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(_ => this.close('Success'));
   }
 

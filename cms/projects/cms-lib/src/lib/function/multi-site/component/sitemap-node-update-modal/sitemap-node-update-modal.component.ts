@@ -74,7 +74,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
       this.sitemapNode.nodeId,
       this.putRequest.details,
       this.putRequest
-    ).pipe(CmsErrorHandler.rxHandleError('更新節點錯誤')).subscribe(_ => {
+    ).pipe(CmsErrorHandler.rxHandleError()).subscribe(_ => {
       this.close('Updated');
     });
   }

@@ -34,7 +34,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
         ? of(new DepartmentDetailInfoModel())
         : this.departmentService.getDepartmentByID(this.deptId)
     ).pipe(
-      CmsErrorHandler.rxHandleError('取得部門資料錯誤'),
+      CmsErrorHandler.rxHandleError(),
     );
   }
 
@@ -44,7 +44,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
       this.action === 'Create'
         ? this.departmentService.createDepartment(dept.deptId, dept.deptName, this.parentId)
         : this.departmentService.updateDepartment(dept.deptId, dept.deptName, this.parentId)
-    ).pipe(CmsErrorHandler.rxHandleError(`${action}新增部門錯誤`));
+    ).pipe(CmsErrorHandler.rxHandleError());
   }
 
   confirm(dept: DepartmentDetailInfoModel) {

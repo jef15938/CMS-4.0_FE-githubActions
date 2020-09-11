@@ -54,7 +54,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
           return this.farmService.updateFarmForm(this.funcID, this.dataID, formData);
         }
       }),
-    ).pipe(CmsErrorHandler.rxHandleError(`${action}資料錯誤`)).subscribe(() => this.close(true));
+    ).pipe(CmsErrorHandler.rxHandleError()).subscribe(() => this.close(true));
   }
 
 }

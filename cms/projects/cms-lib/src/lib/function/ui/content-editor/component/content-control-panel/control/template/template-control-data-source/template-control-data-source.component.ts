@@ -36,7 +36,7 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
       this.templateInfo = event?.templateInfo as DataSourceTemplateInfo;
       this.sourceType = (event.componentRef.instance as DataSourceTemplateBaseComponent<any>).sourceType;
       this.contentService.getContentDataSourceByTypeID(this.sourceType)
-        .pipe(CmsErrorHandler.rxHandleError('取得資料來源清單錯誤'))
+        .pipe(CmsErrorHandler.rxHandleError())
         .subscribe(res => {
           this.sources = res.datas || [];
           this.actions = res.actions || [];

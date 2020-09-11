@@ -57,7 +57,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       this.checkColumnTrigger(column);
       if (column.displayType === FarmFormInfoColumnDisplayType.TREE) {
         this.farmService.getFarmTree(column.setting.treeSource)
-          .pipe(CmsErrorHandler.rxHandleError(`取得${column.displayText}欄位資料來源錯誤`))
+          .pipe(CmsErrorHandler.rxHandleError())
           .subscribe(tree => {
             const idStrings = (column.value || '') as string;
             const ids = idStrings.split(',').filter(id => !!id);
@@ -212,7 +212,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       if (trigger.triggerType === FarmFormInfoColumnTriggerType.DATATRIGGER) {
         const triggerID = trigger.triggerSetting.triggerId;
         this.farmService.listFarmTriggerData(triggerID)
-          .pipe(CmsErrorHandler.rxHandleError(`取得${column.displayText}欄位trigger資料錯誤`))
+          .pipe(CmsErrorHandler.rxHandleError())
           .subscribe(options => {
             trigger.triggerTarget.forEach(target => {
               const targetColumnSetting = this.farmFormInfo.columns.find(c => c.columnId === target)?.setting;

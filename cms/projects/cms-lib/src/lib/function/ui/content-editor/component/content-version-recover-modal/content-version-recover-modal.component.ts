@@ -44,7 +44,7 @@ export class ContentVersionRecoverModalComponent extends CustomModalBase impleme
 
   ngOnInit(): void {
     this.contentService.getContentVersionByContentID(this.contentID)
-      .pipe(CmsErrorHandler.rxHandleError('取得版本清單錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(versions => this.versions = versions);
   }
 

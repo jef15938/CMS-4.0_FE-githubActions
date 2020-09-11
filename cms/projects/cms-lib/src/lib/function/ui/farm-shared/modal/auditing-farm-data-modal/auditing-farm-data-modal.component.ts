@@ -52,7 +52,7 @@ export class AuditingFarmDataModalComponent extends CustomModalBase implements O
       this.cmsDateAdapter.format(this.form.controls.startTime.value),
       this.cmsDateAdapter.format(this.form.controls.endTime.value),
       this.form.controls.memo.value,
-    ).pipe(CmsErrorHandler.rxHandleError('送審錯誤')).subscribe(_ => {
+    ).pipe(CmsErrorHandler.rxHandleError()).subscribe(_ => {
       this.close('Created');
     });
   }

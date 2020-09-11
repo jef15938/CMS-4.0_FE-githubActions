@@ -25,7 +25,7 @@ export class FarmSharedContainerModalComponent extends CustomModalBase implement
   ngOnInit(): void {
     this.modalRef.addPanelClass('cms-farm-shared-container-modal');
     this.farmService.getFarmByFuncID(this.funcID)
-      .pipe(CmsErrorHandler.rxHandleError('取得 Farm 資料錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(farm => {
         this.farm = farm;
       });

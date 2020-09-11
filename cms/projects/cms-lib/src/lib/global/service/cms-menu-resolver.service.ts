@@ -21,7 +21,7 @@ export class CmsUserMenuResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot) {
     return this.menuService.getUserMenu().pipe(
-      CmsErrorHandler.rxHandleError('取得功能 menu 清單錯誤'),
+      CmsErrorHandler.rxHandleError(),
       tap(menus => {
         this.menus = menus;
         return of(menus);

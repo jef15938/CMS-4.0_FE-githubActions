@@ -64,7 +64,7 @@ export class SitemapNodeDetailComponent implements OnInit {
     if (!this.userSitemap.canPreview) { return; }
     const nodeID = this.sitemapNode.nodeId;
     this.sitemapService.getPreviewInfo(nodeID, languageID)
-      .pipe(CmsErrorHandler.rxHandleError('取得預覽資料錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(previewInfo => {
         switch (previewInfo.previewType) {
           case PreviewInfoType.ONE_PAGE:

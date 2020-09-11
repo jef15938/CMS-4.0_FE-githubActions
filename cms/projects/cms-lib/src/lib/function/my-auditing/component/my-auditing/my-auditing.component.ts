@@ -72,7 +72,7 @@ export class MyAuditingComponent implements OnInit {
   ngOnInit(): void {
     this.myAuditings$ = this.refreshPage$.pipe(
       switchMap(page => this.auditingService.getMyAuditingList(page).pipe(
-        CmsErrorHandler.rxHandleError('取得申請清單錯誤'),
+        CmsErrorHandler.rxHandleError(),
       ))
     );
   }
@@ -106,7 +106,7 @@ export class MyAuditingComponent implements OnInit {
   preview(auditingInfo: MyAuditingInfoModel) {
     const orderID = auditingInfo.orderId;
     this.auditingService.getPreviewInfo(orderID)
-      .pipe(CmsErrorHandler.rxHandleError('取得預覽資料錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(previewInfo => {
         switch (previewInfo.previewType) {
           case PreviewInfoType.ONE_PAGE:

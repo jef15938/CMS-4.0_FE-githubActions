@@ -152,14 +152,14 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   private getCategories() {
     return this.galleryService.getGalleryCategory().pipe(
-      CmsErrorHandler.rxHandleError('取得媒體庫分類清單錯誤'),
+      CmsErrorHandler.rxHandleError(),
       tap(categories => this.categories = categories)
     );
   }
 
   private getGalleryConfig() {
     return this.galleryService.getGalleryConfig().pipe(
-      CmsErrorHandler.rxHandleError('取得媒體庫錯誤'),
+      CmsErrorHandler.rxHandleError(),
       tap(config => this.galleryConfig = config),
     );
   }

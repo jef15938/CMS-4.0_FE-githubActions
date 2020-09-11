@@ -67,7 +67,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getSites(): Observable<SiteInfoModel[]> {
     return this.sitemapService.getSiteList().pipe(
-      CmsErrorHandler.rxHandleError('取得節點清單錯誤'),
+      CmsErrorHandler.rxHandleError(),
       tap(sites => this.sites = sites),
       tap(_ => this.selectSite(this.sites[0])),
     );
@@ -133,7 +133,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
           action = of(undefined).pipe(
             this.modalService.confirmDelete,
             concatMap(_ => this.sitemapService.deleteUserSiteMap(event.data.nodeId).pipe(
-              CmsErrorHandler.rxHandleError('刪除節點錯誤'),
+              CmsErrorHandler.rxHandleError(),
               map(res => 'Deleted')
             ))
           );
@@ -167,7 +167,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getSiteNode(siteId: string, nodeId: string) {
     return this.sitemapService.getUserSiteMapNodeByNodeId(siteId, nodeId).pipe(
-      CmsErrorHandler.rxHandleError('取得節點資料錯誤'),
+      CmsErrorHandler.rxHandleError(),
     );
   }
 
@@ -205,7 +205,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private reOrderSiteNode(targetNodeId: string, parentNodeId: string, order: number) {
     return this.sitemapService.reOrderSiteNode(targetNodeId, parentNodeId, 0).pipe(
-      CmsErrorHandler.rxHandleError('移動節點錯誤'),
+      CmsErrorHandler.rxHandleError(),
     );
   }
 

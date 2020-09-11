@@ -56,8 +56,8 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
       switchMap(_ => {
         if (this.siteID === 'none') { return of(null); }
         return forkJoin([
-          this.sitemapService.getCMSSiteMap(this.siteID).pipe(CmsErrorHandler.rxHandleError('取得群組資料錯誤')),
-          this.groupService.getGroupSiteMapList(this.siteID, this.groupID).pipe(CmsErrorHandler.rxHandleError('取得前台節點清單錯誤')),
+          this.sitemapService.getCMSSiteMap(this.siteID).pipe(CmsErrorHandler.rxHandleError()),
+          this.groupService.getGroupSiteMapList(this.siteID, this.groupID).pipe(CmsErrorHandler.rxHandleError()),
         ]).pipe(
           map(([sitemaps, groupSitemapInfos]) => {
             const nodes = this.convertToNodes(sitemaps, groupSitemapInfos);
@@ -156,7 +156,7 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
       return info;
     });
     this.groupService.updateGroupSitemap(this.siteID, this.groupID, groupSitemapInfos)
-      .pipe(CmsErrorHandler.rxHandleError('更新資料錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(_ => this.close('Success'));
   }
 

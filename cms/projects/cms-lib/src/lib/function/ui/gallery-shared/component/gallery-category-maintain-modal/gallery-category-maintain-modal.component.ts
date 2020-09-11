@@ -35,7 +35,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
     this.title = `${this.action === 'Create' ? '新增' : '修改'}媒體庫分類`;
     const assignedDeptIds = this.assignDeptId.split(',');
     this.departmentService.getAllDepartment()
-      .pipe(CmsErrorHandler.rxHandleError(`取得部門清單錯誤`))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(depts => {
         this.checkedDepts = this.getDeptsByDeptIds(assignedDeptIds, depts);
         this.depts = depts;
@@ -59,7 +59,7 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase imple
       this.action === 'Create'
         ? this.galleryService.createGalleryCategory(this.categoryName, assignDeptId, parentId)
         : this.galleryService.putGalleryCategoryByCategoryID(this.categoryID, this.categoryName, assignDeptId, parentId)
-    ).pipe(CmsErrorHandler.rxHandleError(`${action}媒體庫分類錯誤`));
+    ).pipe(CmsErrorHandler.rxHandleError());
   }
 
   confirm() {

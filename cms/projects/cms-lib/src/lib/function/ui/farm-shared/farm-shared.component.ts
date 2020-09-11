@@ -83,7 +83,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
         });
         return this.farmService.getFarmTableInfoByFuncID(category.categoryId, page, queryParams)
           .pipe(
-            CmsErrorHandler.rxHandleError('取得 Table 資料錯誤'),
+            CmsErrorHandler.rxHandleError(),
             tap(farmTableInfo => {
               category.tableInfo = farmTableInfo;
             })
@@ -118,7 +118,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     if (!category) { return; }
 
     this.farmService.getFarmByFuncID(rowData.moreFuncId, rowData.dataId, category.categoryId)
-      .pipe(CmsErrorHandler.rxHandleError('取得 Farm 資料錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(farm => {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmSharedComponent);
         const viewContainerRef = this.subContainerViewContainerRef;
@@ -182,7 +182,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     const funcID = category.categoryId;
     const dataID = rowData.dataId;
     this.farmService.getPreviewInfo(funcID, dataID)
-      .pipe(CmsErrorHandler.rxHandleError('取得預覽資料錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(previewInfo => {
         switch (previewInfo.previewType) {
           case PreviewInfoType.ONE_PAGE:
@@ -199,7 +199,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     const funcID = category.categoryId;
     const dataID = rowData?.dataId || '';
     of(undefined).pipe(
-      concatMap(_ => this.farmService.getFarmFormInfoByFuncID(funcID, rowData?.dataId).pipe(CmsErrorHandler.rxHandleError('取得表單資料錯誤'))),
+      concatMap(_ => this.farmService.getFarmFormInfoByFuncID(funcID, rowData?.dataId).pipe(CmsErrorHandler.rxHandleError())),
       concatMap(farmFormInfo => {
         return this.modalService.openComponent({
           component: FarmFormModifyDataModalComponent,
@@ -223,7 +223,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   private takeOffData(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {
     this.farmService.takeOffFormData(category.categoryId, rowData.dataId)
-      .pipe(CmsErrorHandler.rxHandleError('資料下架錯誤'))
+      .pipe(CmsErrorHandler.rxHandleError())
       .subscribe(_ => {
         this.modalService.openMessage({ message: `資料已下架 : ${rowData.dataId}` }).subscribe();
         this.getCategoryTableInfo(category).subscribe();

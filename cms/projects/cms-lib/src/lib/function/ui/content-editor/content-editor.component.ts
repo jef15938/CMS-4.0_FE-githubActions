@@ -300,7 +300,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     }).subscribe((version: ContentVersionInfo) => {
       if (version) {
         this.contentService.getContentById(this.contentID, version.version)
-          .pipe(CmsErrorHandler.rxHandleError('取得版本內容錯誤'))
+          .pipe(CmsErrorHandler.rxHandleError())
           .subscribe(contentInfo => {
             this.manager.stateManager.currentState.snapShot = contentInfo;
             this.manager.stateManager.preserveState(`復原版本 ${version.version}`);

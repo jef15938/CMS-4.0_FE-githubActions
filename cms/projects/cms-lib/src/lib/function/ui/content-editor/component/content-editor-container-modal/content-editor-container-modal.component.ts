@@ -36,13 +36,19 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
     this.modalRef.addPanelClass([`cms-content-editor-container-modal`, `mode-${this.editorMode}`]);
     if (this.siteID && this.nodeID) {
       this.contentService.getSitemapContentBySiteIdAndNodeId(this.siteID, this.nodeID)
-        .pipe(CmsErrorHandler.rxHandleError('取得頁面內容編輯資料錯誤'))
+        .pipe(CmsErrorHandler.rxHandleError((error, showMessage) => {
+          showMessage();
+          this.close(null);
+        }))
         .subscribe(content => this.content = content);
     }
 
     if (this.editorMode === EditorMode.EDIT) {
       this.contentService.getTemplateByControlID(this.controlID)
-        .pipe(CmsErrorHandler.rxHandleError('取得可選擇版型清單錯誤'))
+        .pipe(CmsErrorHandler.rxHandleError((error, showMessage) => {
+          showMessage();
+          this.close(null);
+        }))
         .subscribe(templates => this.templates = templates);
     }
 
@@ -52,7 +58,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
     super.close(currentContentInfo);
     if (this.siteID && this.nodeID) {
       this.contentService.getSitemapContentUnlockBySiteIdAndNodeId(this.siteID, this.nodeID)
-        .pipe(CmsErrorHandler.rxHandleError('解除鎖定編輯內容錯誤'))
+        .pipe(CmsErrorHandler.rxHandleError())
         .subscribe();
     }
   }
@@ -71,7 +77,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
         .updateContent(this.contentID, convertedContentInfo)
         .pipe(
           tap(_ => this.modalService.openMessage({ message: '內容儲存成功' }).subscribe()),
-          CmsErrorHandler.rxHandleError('更新頁面內容資料錯誤')
+          CmsErrorHandler.rxHandleError()
         )
       : of(undefined);
 

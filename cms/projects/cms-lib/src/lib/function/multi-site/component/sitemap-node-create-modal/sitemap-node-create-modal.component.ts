@@ -104,14 +104,14 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
 
   getGroups() {
     return this.groupService.getGroupList().pipe(
-      CmsErrorHandler.rxHandleError('取得群組清單錯誤'),
+      CmsErrorHandler.rxHandleError(),
       tap(groups => this.groups = groups)
     );
   }
 
   getLayouts() {
     return this.contentService.getLayout().pipe(
-      CmsErrorHandler.rxHandleError('取得版面清單錯誤'),
+      CmsErrorHandler.rxHandleError(),
       tap(layouts => this.layouts = layouts)
     );
   }
@@ -119,7 +119,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
   confirm() {
     this.sitemapMaintainModel.assignGroupId = this.assignGroupIds.join(',');
     this.sitemapService.createSiteNode(this.siteId, this.sitemapMaintainModel).pipe(
-      CmsErrorHandler.rxHandleError('新增節點錯誤'),
+      CmsErrorHandler.rxHandleError(),
     ).subscribe(_ => {
       this.close('Created');
     });
