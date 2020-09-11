@@ -190,11 +190,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     } else {
       this.editorClose.emit(contentInfo);
     }
-
-    // if (!this.saved || this.contentControlPanel?.hasChange) {
-    //   const yes = window.confirm('有尚未儲存的變更，確定關閉？');
-    //   if (!yes) { return; }
-    // }
   }
 
   save() {
@@ -246,13 +241,21 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   clickCaptureEventListener = (ev) => {
     if (this.contentControlPanel?.hasChange) {
-      const yes = window.confirm('選取的Template/Field有尚未儲存的變更，確定放棄？');
-      if (!yes) { ev.stopPropagation(); return; }
-      this.resetSelected();
-      this.contentControlPanel.hasChange = false;
-      this.manager.stateManager.resetState();
-      this.contentViewRenderer.checkView();
-      this.cancelScale();
+      this.modalService.openConfirm({
+        message: '選取的版面有尚未套用的變更，請選擇是否套用',
+        confirmBtnMessage: '套用變更',
+        cancelBtnMessage: '復原變更'
+      }).subscribe(confirm => {
+        if (confirm) {
+          this.contentControlPanel.preserveChanges();
+        } else {
+          this.resetSelected();
+          this.contentControlPanel.hasChange = false;
+          this.manager.stateManager.resetState();
+          this.contentViewRenderer.checkView();
+          this.cancelScale();
+        }
+      });
     } else {
       this.resetSelected();
       this.cancelScale();
