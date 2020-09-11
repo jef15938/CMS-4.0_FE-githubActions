@@ -33,10 +33,18 @@ export class AdminGroupMenuSettingModalComponent extends CustomModalBase impleme
   ) { super(); }
 
   ngOnInit(): void {
-    this.treeData$ = forkJoin([
-      this.groupService.getGroupMenuList(this.groupID).pipe(CmsErrorHandler.rxHandleError()),
-      this.menuService.getCMSMenu().pipe(CmsErrorHandler.rxHandleError()),
+    this.treeData$ = this.getTreeData();
+  }
+
+  private getTreeData() {
+    return forkJoin([
+      this.groupService.getGroupMenuList(this.groupID),
+      this.menuService.getCMSMenu(),
     ]).pipe(
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        showMessage();
+        this.treeData$ = this.getTreeData();
+      }),
       map(([groupMenuInfos, menus]) => {
         const checkedNodes = this.getMenuInfosByFuncIds(groupMenuInfos.map(info => info.funcId), menus);
         return { menus, checkedNodes };

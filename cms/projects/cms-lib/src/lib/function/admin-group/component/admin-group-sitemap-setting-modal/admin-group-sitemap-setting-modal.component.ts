@@ -48,17 +48,27 @@ export class AdminGroupSitemapSettingModalComponent extends CustomModalBase impl
   ) { super(); }
 
   ngOnInit(): void {
-    this.site$ = this.sitemapService.getSiteList();
+    this.site$ = this.sitemapService.getSiteList().pipe(
+      CmsErrorHandler.rxHandleError()
+    );
   }
 
   ngAfterViewInit(): void {
-    this.treeData$ = this.select.selectionChange.pipe(
+    this.treeData$ = this.getTreeData();
+  }
+
+  private getTreeData() {
+    return this.select.selectionChange.pipe(
       switchMap(_ => {
         if (this.siteID === 'none') { return of(null); }
         return forkJoin([
-          this.sitemapService.getCMSSiteMap(this.siteID).pipe(CmsErrorHandler.rxHandleError()),
-          this.groupService.getGroupSiteMapList(this.siteID, this.groupID).pipe(CmsErrorHandler.rxHandleError()),
+          this.sitemapService.getCMSSiteMap(this.siteID),
+          this.groupService.getGroupSiteMapList(this.siteID, this.groupID),
         ]).pipe(
+          CmsErrorHandler.rxHandleError((error, showMessage) => {
+            showMessage();
+            this.treeData$ = this.getTreeData();
+          }),
           map(([sitemaps, groupSitemapInfos]) => {
             const nodes = this.convertToNodes(sitemaps, groupSitemapInfos);
             const checkedNodes = this.getNodesByNodeIds(groupSitemapInfos.map(info => info.nodeId), nodes);
