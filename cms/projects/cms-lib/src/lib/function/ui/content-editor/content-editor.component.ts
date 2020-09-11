@@ -239,8 +239,9 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     });
   }
 
-  clickCaptureEventListener = (ev) => {
+  clickCaptureEventListener = (ev: MouseEvent) => {
     if (this.contentControlPanel?.hasChange) {
+      ev.stopPropagation();
       this.modalService.openConfirm({
         message: '選取的版面有尚未套用的變更，請選擇是否套用',
         confirmBtnMessage: '套用變更',
@@ -255,6 +256,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
           this.contentViewRenderer.checkView();
           this.cancelScale();
         }
+        ev.target.dispatchEvent(ev);
       });
     } else {
       this.resetSelected();
