@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map} from 'rxjs/operators';
-import { ParamsError } from '@neux/core';
+import { map } from 'rxjs/operators';
+import { plainToClass } from 'class-transformer';
+import { ParamsError, ModelMapper } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { LoginRequest } from '../../neuxAPI/bean/LoginRequest';
-import { LoginResponse } from '../../neuxAPI/bean/LoginResponse';
 import { LoginInfoModel } from '../../data-model/models/login-info.model';
-import { plainToClass } from 'class-transformer';
-import { ModelMapper } from '@neux/core';
 import { LoginResponseModel } from '../../data-model/models/login-response.model';
 import { AuthorizationServiceError, CmsErrorHandler } from '../../../error-handling';
 
@@ -42,7 +40,7 @@ export class AuthorizationService {
       validation_code: validationCode,
     };
 
-    return this.respAPIService.dispatchRestApi('PostLogin', { requestBody }).pipe(
+    return this.respAPIService.Login({ requestBody }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('login')),
     );
   }
@@ -54,7 +52,7 @@ export class AuthorizationService {
    * @memberof AuthorizationService
    */
   logout() {
-    return this.respAPIService.dispatchRestApi('GetLogout', {}).pipe(
+    return this.respAPIService.Logout({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('logout')),
     );
   }
@@ -66,7 +64,7 @@ export class AuthorizationService {
    * @memberof AuthorizationService
    */
   getLoginInfo(): Observable<LoginInfoModel> {
-    return this.respAPIService.dispatchRestApi<LoginResponse>('GetLoginInfo', {}).pipe(
+    return this.respAPIService.GetLoginInfo({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getLoginInfo')),
       ModelMapper.rxMapModelTo(LoginResponseModel),
       map(res => {

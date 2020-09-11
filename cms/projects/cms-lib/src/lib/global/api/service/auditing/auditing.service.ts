@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ParamsError } from '@neux/core';
+import { ParamsError, ModelMapper } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
-import { MyAuditingDetailGetResponse } from '../../neuxAPI/bean/MyAuditingDetailGetResponse';
-import { MyAuditingGetResponse } from '../../neuxAPI/bean/MyAuditingGetResponse';
-import { AuditingGetResponse } from '../../neuxAPI/bean/AuditingGetResponse';
 import { AuditingSubmitRequest } from '../../neuxAPI/bean/AuditingSubmitRequest';
-import { PreviewInfo } from '../../neuxAPI/bean/PreviewInfo';
-import { ModelMapper } from '@neux/core';
 import { AuditingGetResponseModel } from '../../data-model/models/auditing-get-response.model';
 import { PreviewInfoModel } from '../../data-model/models/preview-info.model';
 import { MyAuditingGetResponseModel } from '../../data-model/models/my-auditing-get-response.model';
@@ -38,7 +33,7 @@ export class AuditingService {
     if (!pageNumber) {
       throw new ParamsError('pageNumber', 'getMyAuditingList', 'number', pageNumber);
     }
-    return this.restAPIService.dispatchRestApi<MyAuditingGetResponse>('GetMyAuditing', { page: pageNumber }).pipe(
+    return this.restAPIService.GetMyAuditing({ page: pageNumber }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getMyAuditingList')),
       ModelMapper.rxMapModelTo(MyAuditingGetResponseModel),
     );
@@ -55,7 +50,7 @@ export class AuditingService {
     if (!orderID) {
       throw new ParamsError('orderID', 'getMyAuditingDetail', 'number', orderID);
     }
-    return this.restAPIService.dispatchRestApi<MyAuditingDetailGetResponse>('GetMyAuditingByOrderID', { orderID }).pipe(
+    return this.restAPIService.GetMyAuditingDetail({ orderID: `${orderID}` }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getMyAuditingDetail')),
       ModelMapper.rxMapModelTo(MyAuditingDetailGetResponseModel),
       map(res => res.datas)
@@ -73,7 +68,7 @@ export class AuditingService {
     if (!pageNumber) {
       throw new ParamsError('pageNumber', 'getAuditingListForManager', 'number', pageNumber);
     }
-    return this.restAPIService.dispatchRestApi<AuditingGetResponse>('GetAuditing', { page: pageNumber }).pipe(
+    return this.restAPIService.GetAuditingList({ page: pageNumber }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getAuditingListForManager')),
       ModelMapper.rxMapModelTo(AuditingGetResponseModel)
     );
@@ -97,12 +92,12 @@ export class AuditingService {
       comment,
     };
 
-    const params: { [k: string]: any } = {
-      orderID: Array.isArray(orderID) ? orderID.join(',') : orderID,
+    const params = {
+      orderID: (Array.isArray(orderID) ? orderID.join(',') : orderID) as any,
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PostAuditingByOrderID', params).pipe(
+    return this.restAPIService.ApproveAuditing(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('PostAuditingByOrderID')),
     );
   }
@@ -118,7 +113,7 @@ export class AuditingService {
     if (!orderID) {
       throw new ParamsError('orderID', 'getPreviewInfo', 'number', orderID);
     }
-    return this.restAPIService.dispatchRestApi<PreviewInfo>('GetAuditingPreviewByOrderID', { orderID }).pipe(
+    return this.restAPIService.GetAuditingPreview({ orderID: `${orderID}` }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('GetAuditingPreviewByOrderID')),
       ModelMapper.rxMapModelTo(PreviewInfoModel),
     );

@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ParamsError } from '@neux/core';
+import { ParamsError, ModelMapper } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
-import { DepartmentGetResponse } from '../../neuxAPI/bean/DepartmentGetResponse';
-import { ModelMapper } from '@neux/core';
 import { DepartmentGetResponseModel } from '../../data-model/models/department-get-response.model';
 import { DepartmentInfoModel } from '../../data-model/models/department-info.model';
-import { DepartmentDetailInfo } from '../../neuxAPI/bean/DepartmentDetailInfo';
 import { DepartmentDetailInfoModel } from '../../data-model/models/department-detail-info.model';
 import { DepartmentMaintainRequest } from '../../neuxAPI/bean/DepartmentMaintainRequest';
 import { DepartmentServiceError, CmsErrorHandler } from '../../../error-handling';
@@ -40,20 +37,17 @@ export class DepartmentService {
       throw new ParamsError('deptName', 'createDepartment', 'string', deptName);
     }
 
-    const requestBody: Partial<DepartmentMaintainRequest> = {
+    const requestBody: DepartmentMaintainRequest = {
       dept_name: deptName,
+      parent_id: parentID || '',
     };
 
-    if (parentID) {
-      requestBody.parent_id = parentID;
-    }
-
-    const params: { [k: string]: any } = {
+    const params = {
       deptID,
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PostDepartmentByDeptID', params).pipe(
+    return this.restAPIService.CreateDepartment(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('createDepartment')),
     );
   }
@@ -70,7 +64,7 @@ export class DepartmentService {
       throw new ParamsError('deptID', 'deleteDepartment', 'string', deptID);
     }
 
-    return this.restAPIService.dispatchRestApi('DeleteDepartmentByDeptID', { deptID }).pipe(
+    return this.restAPIService.DeleteDepartment({ deptID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('deleteDepartment')),
     );
   }
@@ -82,7 +76,7 @@ export class DepartmentService {
    * @memberof DepartmentService
    */
   getAllDepartment(): Observable<DepartmentInfoModel[]> {
-    return this.restAPIService.dispatchRestApi<DepartmentGetResponse>('GetDepartment', {}).pipe(
+    return this.restAPIService.GetDepartment({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getAllDepartment')),
       ModelMapper.rxMapModelTo(DepartmentGetResponseModel),
       map(res => res.datas)
@@ -101,7 +95,7 @@ export class DepartmentService {
       throw new ParamsError('deptID', 'getDepartmentByID', 'string', deptID);
     }
 
-    return this.restAPIService.dispatchRestApi<DepartmentDetailInfo>('GetDepartmentByDeptID', { deptID }).pipe(
+    return this.restAPIService.GetDepartmentInfo({ deptID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getDepartmentByID')),
       ModelMapper.rxMapModelTo(DepartmentDetailInfoModel)
     );
@@ -122,20 +116,17 @@ export class DepartmentService {
       throw new ParamsError('deptName', 'updateDepartment', 'string', deptName);
     }
 
-    const requestBody: Partial<DepartmentMaintainRequest> = {
+    const requestBody: DepartmentMaintainRequest = {
       dept_name: deptName,
+      parent_id: parentID || '',
     };
 
-    if (parentID) {
-      requestBody.parent_id = parentID;
-    }
-
-    const params: { [k: string]: any } = {
+    const params = {
       deptID,
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutDepartmentByDeptID', params).pipe(
+    return this.restAPIService.UpdateDepartment(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateDepartment')),
     );
   }

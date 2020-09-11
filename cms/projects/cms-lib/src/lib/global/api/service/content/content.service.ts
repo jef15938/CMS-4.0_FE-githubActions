@@ -1,22 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ParamsError } from '@neux/core';
+import { plainToClass } from 'class-transformer';
+import { ParamsError, ModelMapper } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
-import { TemplateGetResponse } from '../../neuxAPI/bean/TemplateGetResponse';
-import { LayoutGetResponse } from '../../neuxAPI/bean/LayoutGetResponse';
 import { map } from 'rxjs/operators';
-import { ListContentDataSourceResponse } from '../../neuxAPI/bean/ListContentDataSourceResponse';
-import { ListContentVersionResponse } from '../../neuxAPI/bean/ListContentVersionResponse';
 import { LayoutInfoModel } from '../../data-model/models/layout-info.model';
-import { ModelMapper } from '@neux/core';
 import { LayoutGetResponseModel } from '../../data-model/models/layout-get-response.model';
 import { ListContentDataSourceResponseModel } from '../../data-model/models/list-content-data-source-response.model';
 import { ContentVersionInfoModel } from '../../data-model/models/content-version-info.model';
 import { ListContentVersionResponseModel } from '../../data-model/models/list-content-version-response.model';
 import { TemplateGetResponseModel } from '../../data-model/models/template-get-response.model';
 import { ContentInfoModel } from '../../data-model/models/content-info.model';
-import { plainToClass } from 'class-transformer';
 import { ContentServiceError, CmsErrorHandler } from '../../../error-handling';
 
 @Injectable({
@@ -41,7 +36,7 @@ export class ContentService {
     if (!id) {
       throw new ParamsError('id', 'getContentById', 'string', id);
     }
-    return this.restAPIService.dispatchRestApi<ContentInfo>('GetContentById', { id, version }).pipe(
+    return this.restAPIService.GetContent({ id, version }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getContentById')),
       ModelMapper.rxMapModelTo(ContentInfoModel),
     );
@@ -62,7 +57,7 @@ export class ContentService {
     if (!nodeId) {
       throw new ParamsError('siteId', 'getSitemapContentBySiteIdAndNodeId', 'string', nodeId);
     }
-    return this.restAPIService.dispatchRestApi<ContentInfo>('GetSitemapContentBySiteIdAndNodeId', { siteId, nodeId }).pipe(
+    return this.restAPIService.GetSitemapContent({ siteId, nodeId }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getSitemapContentBySiteIdAndNodeId')),
       ModelMapper.rxMapModelTo(ContentInfoModel),
     );
@@ -83,7 +78,7 @@ export class ContentService {
     if (!nodeId) {
       throw new ParamsError('siteId', 'getSitemapContentUnlockBySiteIdAndNodeId', 'string', nodeId);
     }
-    return this.restAPIService.dispatchRestApi<any>('GetSitemapContentUnlockBySiteIdAndNodeId', { siteId, nodeId });
+    return this.restAPIService.SitemapContentUnlock({ siteId, nodeId });
   }
 
   /**
@@ -93,7 +88,7 @@ export class ContentService {
    * @memberof ContentService
    */
   getLayout(): Observable<LayoutInfoModel[]> {
-    return this.restAPIService.dispatchRestApi<LayoutGetResponse>('GetLayout', null).pipe(
+    return this.restAPIService.GetLayout({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getLayout')),
       ModelMapper.rxMapModelTo(LayoutGetResponseModel),
       map(res => res.datas)
@@ -111,7 +106,7 @@ export class ContentService {
     if (!controlID) {
       throw new ParamsError('controlID', 'getTemplateByControlID', 'string', controlID);
     }
-    return this.restAPIService.dispatchRestApi<TemplateGetResponse>('GetTemplateByControlID', { controlID }).pipe(
+    return this.restAPIService.GetTemplate({ controlID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getTemplateByControlID')),
       ModelMapper.rxMapModelTo(TemplateGetResponseModel),
     );
@@ -151,12 +146,12 @@ export class ContentService {
     if (!id) { throw new ParamsError('id', 'updateContent', 'string', id); }
     if (!contentInfo) { throw new ParamsError('contentInfo', 'updateContent', 'ContentInfo', contentInfo); }
 
-    const params: { [k: string]: any } = {
+    const params = {
       id,
       requestBody: contentInfo,
     };
 
-    return this.restAPIService.dispatchRestApi('PutContentById', params).pipe(
+    return this.restAPIService.UpdateContent(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateContent')),
     );
   }
@@ -173,7 +168,7 @@ export class ContentService {
     if (!typeID) {
       throw new ParamsError('typeID', 'getContentDataSourceByTypeID', 'string', typeID);
     }
-    return this.restAPIService.dispatchRestApi<ListContentDataSourceResponse>('GetContentDataSourceByTypeID', { typeID }).pipe(
+    return this.restAPIService.ListContentDataSource({ typeID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getContentDataSourceByTypeID')),
       ModelMapper.rxMapModelTo(ListContentDataSourceResponseModel),
     );
@@ -190,7 +185,7 @@ export class ContentService {
     if (!contentID) {
       throw new ParamsError('contentID', 'getContentVersionByContentID', 'string', contentID);
     }
-    return this.restAPIService.dispatchRestApi<ListContentVersionResponse>('GetContentVersionByContentID', { contentID }).pipe(
+    return this.restAPIService.ListContentVersion({ contentID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getContentVersionByContentID')),
       ModelMapper.rxMapModelTo(ListContentVersionResponseModel),
       map(res => res.datas)

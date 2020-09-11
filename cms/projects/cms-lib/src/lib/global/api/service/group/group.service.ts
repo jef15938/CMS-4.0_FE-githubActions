@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ParamsError } from '@neux/core';
+import { ParamsError, ModelMapper } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { GroupMenuGetResponse } from '../../neuxAPI/bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from '../../neuxAPI/bean/GroupSiteMapGetResponse';
 import { GroupSitemapInfo } from '../../neuxAPI/bean/GroupSitemapInfo';
-import { ListGroupResponst } from '../../neuxAPI/bean/ListGroupResponst';
-import { ModelMapper } from '@neux/core';
 import { GroupMenuInfoModel } from '../../data-model/models/group-menu-info.model';
 import { GroupMenuGetResponseModel } from '../../data-model/models/group-menu-get-response.model';
 import { ListGroupResponseModel } from '../../data-model/models/list-group-response.model';
@@ -35,7 +33,7 @@ export class GroupService {
    * @memberof GroupService
    */
   getGroupList(): Observable<GroupInfoModel[]> {
-    return this.restAPIService.dispatchRestApi<ListGroupResponst>('GetGroup', {}).pipe(
+    return this.restAPIService.GetGroupList({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGroupList')),
       ModelMapper.rxMapModelTo(ListGroupResponseModel),
       map(res => res.datas)
@@ -54,7 +52,7 @@ export class GroupService {
       throw new ParamsError('groupID', 'getGroupMenuList', 'string', groupID);
     }
 
-    return this.restAPIService.dispatchRestApi<GroupMenuGetResponse>('GetGroupMenuByGroupID', { groupID }).pipe(
+    return this.restAPIService.GetGroupMenuList({ groupID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGroupMenuList')),
       ModelMapper.rxMapModelTo(GroupMenuGetResponseModel),
       map(res => res.datas)
@@ -76,16 +74,16 @@ export class GroupService {
       throw new ParamsError('menuInfoModels', 'updateGroupMenu', 'GroupMenuInfo[]', menuInfoModels);
     }
 
-    const requestBody: { [k: string]: any } = {
+    const requestBody: GroupMenuGetResponse = {
       datas: ModelMapper.mapArrayTo(GroupMenuInfo, menuInfoModels)
     };
 
-    const params: { [k: string]: any } = {
+    const params = {
       groupID,
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutGroupMenuByGroupID', params).pipe(
+    return this.restAPIService.PutGroupMenuList(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateGroupMenu')),
     );
   }
@@ -102,7 +100,7 @@ export class GroupService {
     if (!siteID) { throw new ParamsError('siteID', 'getGroupSiteMapList', 'string', siteID); }
     if (!groupID) { throw new ParamsError('groupID', 'getGroupSiteMapList', 'string', groupID); }
 
-    return this.restAPIService.dispatchRestApi<GroupSiteMapGetResponse>('GetGroupSiteMapBySiteIDAndGroupID', { siteID, groupID }).pipe(
+    return this.restAPIService.GetGroupSiteMapList({ siteID, groupID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGroupSiteMapList')),
       ModelMapper.rxMapModelTo(GroupSiteMapGetResponseModel),
       map(res => res.datas)
@@ -122,17 +120,17 @@ export class GroupService {
     if (!groupID) { throw new ParamsError('groupID', 'updateGroupSitemap', 'string', groupID); }
     if (!sitemapInfos) { throw new ParamsError('sitemapInfos', 'updateGroupSitemap', 'GroupMenuInfo[]', sitemapInfos); }
 
-    const requestBody: { [k: string]: any } = {
+    const requestBody: GroupSiteMapGetResponse = {
       datas: ModelMapper.mapArrayTo(GroupSitemapInfo, sitemapInfos)
     };
 
-    const params: { [k: string]: any } = {
+    const params = {
       siteID,
       groupID,
       requestBody,
     };
 
-    return this.restAPIService.dispatchRestApi('PutGroupSiteMapBySiteIDAndGroupID', params).pipe(
+    return this.restAPIService.PutGroupSiteMapList(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateGroupSitemap')),
     );
   }

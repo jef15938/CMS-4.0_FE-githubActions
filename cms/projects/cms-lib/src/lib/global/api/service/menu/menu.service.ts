@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RestApiService } from '../../neuxAPI/rest-api.service';
-import { MenuGetResponse } from '../../neuxAPI/bean/MenuGetResponse';
 import { ModelMapper } from '@neux/core';
+import { RestApiService } from '../../neuxAPI/rest-api.service';
 import { MenuInfoModel } from '../../data-model/models/menu-info.model';
 import { MenuGetResponseModel } from '../../data-model/models/menu-get-response.model';
 import { MenuServiceError, CmsErrorHandler } from '../../../error-handling';
@@ -26,7 +25,7 @@ export class MenuService {
    * @memberof MenuService
    */
   getCMSMenu(): Observable<MenuInfoModel[]> {
-    return this.restAPIService.dispatchRestApi<MenuGetResponse>('GetCMSMenu', {}).pipe(
+    return this.restAPIService.GetCMSAllMenu({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getCMSMenu')),
       ModelMapper.rxMapModelTo(MenuGetResponseModel),
       map(res => res.datas)
@@ -40,7 +39,7 @@ export class MenuService {
    * @memberof MenuService
    */
   getUserMenu(): Observable<MenuInfoModel[]> {
-    return this.restAPIService.dispatchRestApi<MenuGetResponse>('GetUserMenu', {}).pipe(
+    return this.restAPIService.GetLoginUserCMSMenu({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getUserMenu')),
       ModelMapper.rxMapModelTo(MenuGetResponseModel),
       map(res => res.datas),

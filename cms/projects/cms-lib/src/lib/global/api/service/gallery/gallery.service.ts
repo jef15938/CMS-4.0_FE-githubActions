@@ -2,18 +2,14 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subscription, of } from 'rxjs';
 import { map, catchError, last } from 'rxjs/operators';
-import { ParamsError } from '@neux/core';
+import { ParamsError, ModelMapper } from '@neux/core';
 import { RestApiService } from '../../neuxAPI/rest-api.service';
-import { GalleryGetResponse } from '../../neuxAPI/bean/GalleryGetResponse';
-import { GalleryCaregoryGetResponse } from '../../neuxAPI/bean/GalleryCaregoryGetResponse';
 import { CMS_ENVIROMENT_TOKEN } from '../../../injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../interface/cms-enviroment.interface';
 import { GalleryGetResponseModel } from '../../data-model/models/gallery-get-response.model';
-import { ModelMapper } from '@neux/core';
 import { GalleryCategoryInfoModel } from '../../data-model/models/gallery-category-info.model';
 import { GalleryCategoryGetResponseModel } from '../../data-model/models/gallery-category-get-response.model';
 import { GalleryCategoryPutRequest } from '../../neuxAPI/bean/GalleryCategoryPutRequest';
-import { GalleryConfigResponse } from '../../neuxAPI/bean/GalleryConfigResponse';
 import { GalleryConfigResponseModel } from '../../data-model/models/gallery-config-response.model';
 import { GalleryServiceError, CmsErrorHandler } from '../../../error-handling';
 
@@ -60,16 +56,13 @@ export class GalleryService {
     if (!categoryName) { throw new ParamsError('categoryName', 'createGalleryCategory', 'string', categoryName); }
     if (!assignDeptId) { throw new ParamsError('assignDeptId', 'createGalleryCategory', 'string', assignDeptId); }
 
-    const requestBody: Partial<GalleryCategoryPutRequest> = {
+    const requestBody: GalleryCategoryPutRequest = {
       category_name: categoryName,
       assign_dept_id: assignDeptId,
+      parent_id: parentId || '',
     };
 
-    if (parentId) {
-      requestBody.parent_id = parentId;
-    }
-
-    return this.respAPIService.dispatchRestApi('PostGalleryCategory', { requestBody }).pipe(
+    return this.respAPIService.CreateGalleryCategory({ requestBody }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('createGalleryCategory')),
     );
   }
@@ -85,7 +78,7 @@ export class GalleryService {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
-    return this.respAPIService.dispatchRestApi('DeleteGalleryCategoryByCategoryID', { categoryID }).pipe(
+    return this.respAPIService.DeleteGalleryCategory({ categoryID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('deleteGalleryCategory')),
     );
   }
@@ -113,7 +106,7 @@ export class GalleryService {
     if (filter?.fileName) { params.fileName = filter.fileName; }
     if (filter?.fileTypes?.length) { params.fileType = filter.fileTypes.join(','); }
 
-    return this.respAPIService.dispatchRestApi<GalleryGetResponse>('GetGalleryByCategoryID', params).pipe(
+    return this.respAPIService.GetGallery(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGalleryByCategoryID')),
       ModelMapper.rxMapModelTo(GalleryGetResponseModel),
     );
@@ -126,7 +119,7 @@ export class GalleryService {
    * @memberof GalleryService
    */
   getGalleryCategory(): Observable<GalleryCategoryInfoModel[]> {
-    return this.respAPIService.dispatchRestApi<GalleryCaregoryGetResponse>('GetGalleryCategory', {}).pipe(
+    return this.respAPIService.GetGalleryCategory({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGalleryCategory')),
       ModelMapper.rxMapModelTo(GalleryCategoryGetResponseModel),
       map(res => res.datas)
@@ -145,26 +138,23 @@ export class GalleryService {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
 
-    const requestBody: Partial<GalleryCategoryPutRequest> = {
+    const requestBody: GalleryCategoryPutRequest = {
       category_name: categoryName,
       assign_dept_id: assignDeptId,
+      parent_id: parentId || '',
     };
 
-    if (parentId) {
-      requestBody.parent_id = parentId;
-    }
-
-    return this.respAPIService.dispatchRestApi('PutGalleryCategoryByCategoryID', { categoryID, requestBody }).pipe(
+    return this.respAPIService.UpdateGalleryCategory({ categoryID, requestBody }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('putGalleryCategoryByCategoryID')),
     );
   }
 
   deleteGallery(galleryID: number) {
-    return this.httpClient.delete(`${this.environment.apiBaseUrl}/Gallery/${galleryID}`, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    }).pipe(
+    if (!galleryID) {
+      throw new ParamsError('galleryID', 'deleteGallery', 'number', galleryID);
+    }
+
+    return this.respAPIService.DeleteGallery({ galleryID: `${galleryID}` }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('deleteGallery')),
     );
   }
@@ -259,7 +249,7 @@ export class GalleryService {
   }
 
   getGalleryConfig(): Observable<GalleryConfigResponseModel> {
-    return this.respAPIService.dispatchRestApi<GalleryConfigResponse>('GetGalleryConfig', {}).pipe(
+    return this.respAPIService.GetGalleryConfig({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGalleryConfig')),
       ModelMapper.rxMapModelTo(GalleryConfigResponseModel),
     );

@@ -29,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     ...RenderModule.forRoot().providers,
+    { provide: 'API_BASE_URL', useValue: environment.apiBaseUrl },
     { provide: CMS_ENVIROMENT_TOKEN, useValue: environment },
     { provide: RENDER_ENVIROMENT_TOKEN, useValue: environment },
     { provide: RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN, useValue: COMPONENT_MAPPINGS },
