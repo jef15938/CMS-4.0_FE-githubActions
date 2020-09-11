@@ -16,7 +16,6 @@ import { GalleryCategoryInfoModel } from '../../../../../global/api/data-model/m
 import { PageInfoModel } from '../../../../../global/api/data-model/models/page-info.model';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
-import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'cms-gallery-shared',
@@ -50,6 +49,8 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
 
   filterFileTypeOptions: { value: string, display: string }[] = [];
   filter: { fileName: string, fileTypes: string[] } = { fileName: '', fileTypes: [], };
+
+  private modifiedImageTimestampMap = new Map();
 
   constructor(
     private galleryService: GalleryService,
@@ -179,6 +180,11 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
     ).pipe(
       tap(res => {
         this.galleryPageInfo = res.pageInfo;
+        (res.datas || []).forEach(data => {
+          if (this.modifiedImageTimestampMap.has(data.galleryId)) {
+            data.url += `?v=${this.modifiedImageTimestampMap.get(data.galleryId)}`;
+          }
+        });
         this.galleryDatas = res.datas;
       })
     );
@@ -219,7 +225,11 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
         galleryType: gallery.fileType,
         galleryName: gallery.fileName,
       }
-    });
+    }).pipe(tap(res => {
+      if (res) {
+        this.modifiedImageTimestampMap.set(gallery.galleryId, new Date().getTime());
+      }
+    }));
   }
 
   onTreeCustomEvent(event: GalleryCategoryNodeCustomEvent) {
