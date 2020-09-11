@@ -179,20 +179,27 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   cropFile(file: FileUploadModel) {
     if (file) {
-      const reader = new FileReader();
-      // 轉換成 DataURL
-      reader.readAsDataURL(file.data);
+      this.cropperService.openEditor(file.url).subscribe((dataUrl: string) => {
+        if (!dataUrl) { return; }
+        const blob = this.dataURItoBlob(dataUrl);
+        const newFile = this.galleryService.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
+        this.files.splice(this.files.indexOf(file), 1, newFile);
+        this.files = [...this.files];
+      });
+      // const reader = new FileReader();
+      // // 轉換成 DataURL
+      // reader.readAsDataURL(file.data);
 
-      reader.onload = () => {
-        // 將圖片 src 替換為 DataURL
-        const url = reader.result as string;
-        this.cropperService.openEditor(url).subscribe((dataUrl: string) => {
-          if (!dataUrl) { return; }
-          const blob = this.dataURItoBlob(dataUrl);
-          const newFile = this.galleryService.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
-          this.files.splice(this.files.indexOf(file), 1, newFile);
-        });
-      };
+      // reader.onload = () => {
+      //   // 將圖片 src 替換為 DataURL
+      //   const url = reader.result as string;
+      //   this.cropperService.openEditor(url).subscribe((dataUrl: string) => {
+      //     if (!dataUrl) { return; }
+      //     const blob = this.dataURItoBlob(dataUrl);
+      //     const newFile = this.galleryService.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
+      //     this.files.splice(this.files.indexOf(file), 1, newFile);
+      //   });
+      // };
     }
   }
 

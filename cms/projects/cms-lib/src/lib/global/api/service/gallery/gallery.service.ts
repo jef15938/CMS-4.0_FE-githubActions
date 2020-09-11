@@ -12,6 +12,7 @@ import { GalleryCategoryGetResponseModel } from '../../data-model/models/gallery
 import { GalleryCategoryPutRequest } from '../../neuxAPI/bean/GalleryCategoryPutRequest';
 import { GalleryConfigResponseModel } from '../../data-model/models/gallery-config-response.model';
 import { GalleryServiceError, CmsErrorHandler } from '../../../error-handling';
+import { stringify } from 'querystring';
 
 export class FileUploadModel {
   fileName: string;
@@ -25,6 +26,7 @@ export class FileUploadModel {
   canCancel: boolean;
   success: boolean;
   sub?: Subscription;
+  url: string;
 }
 
 @Injectable({
@@ -234,7 +236,7 @@ export class GalleryService {
   }
 
   mapFileToFileUploadModel(file: File): FileUploadModel {
-    return {
+    const model = {
       fileName: file.name,
       fileSize: file.size,
       fileType: file.type,
@@ -245,7 +247,19 @@ export class GalleryService {
       canRetry: false,
       canCancel: true,
       success: false,
+      url: '',
     };
+
+    const reader = new FileReader();
+    // 轉換成 DataURL
+    reader.readAsDataURL(model.data);
+
+    reader.onload = () => {
+      // 將圖片 src 替換為 DataURL
+      model.url = reader.result as string;
+    };
+
+    return model;
   }
 
   getGalleryConfig(): Observable<GalleryConfigResponseModel> {
