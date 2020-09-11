@@ -9,9 +9,9 @@ export class GellerySizePipe implements PipeTransform {
 
   constructor() { }
 
-  transform(data: GalleryInfoModel, args?: any): string {
-    if (!data?.size) { return ''; }
-    return FileUtil.readableFileSize(+data.size);
+  transform(size: string | number, args?: any): string {
+    if (!size) { return ''; }
+    return FileUtil.readableFileSize(+size);
   }
 
 }

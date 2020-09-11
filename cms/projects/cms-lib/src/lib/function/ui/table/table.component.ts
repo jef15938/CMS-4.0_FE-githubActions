@@ -18,6 +18,8 @@ export class TableComponent<TData> implements OnChanges {
   @Input() dataSource: TData[];
   @Input() checkbox = false;
   @Input() checkedData: TData[] = [];
+  @Input() textError = '查詢錯誤';
+  @Input() textNoData = '查無資料';
 
   @Output() customEvent = new EventEmitter<CmsTableCustomCellEvent>();
   @Output() rowClick = new EventEmitter<TData>();

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, Inject, ElementRef } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
 import { forkJoin } from 'rxjs';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
@@ -8,20 +7,15 @@ import { CustomModalBase, CustomModalActionButton, ModalService } from '../../..
 import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
-import { CmsFunctionError, CmsErrorHandler } from '../../../../../global/error-handling';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
+import { UploadGalleryInfoCellComponent } from '../upload-gallery-info-cell/upload-gallery-info-cell.component';
+import { UploadGalleryActionCellComponent, UploadGalleryActionCellCustomEvent } from '../upload-gallery-action-cell/upload-gallery-action-cell.component';
+import { UploadGalleryProgressCellComponent } from '../upload-gallery-progress-cell/upload-gallery-progress-cell.component';
 
 @Component({
   selector: 'cms-upload-gallery-modal',
   templateUrl: './upload-gallery-modal.component.html',
   styleUrls: ['./upload-gallery-modal.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      state('in', style({ opacity: 100 })),
-      transition('* => void', [
-        animate(300, style({ opacity: 0 }))
-      ])
-    ])
-  ]
 })
 export class UploadGalleryModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
   title: string | (() => string) = '';
@@ -44,26 +38,24 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   colDefs: ColDef<FileUploadModel>[] = [
     {
-      colId: 'fileName',
-      field: 'fileName',
-      title: '檔名',
+      colId: 'info',
+      field: '',
+      title: '資訊',
+      cellRenderer: UploadGalleryInfoCellComponent,
     },
     {
-      colId: 'fileType',
-      field: 'fileType',
-      title: '類型',
+      colId: 'progress',
+      field: '',
+      title: '上傳進度',
+      cellRenderer: UploadGalleryProgressCellComponent,
     },
     {
-      colId: 'fileSize',
-      field: 'fileSize',
-      title: '大小',
-    },
-    // {
-    //   colId: 'action',
-    //   field: 'action',
-    //   title: '操作',
-    //   cellRenderer: AuditingActionCellComponent,
-    // }
+      colId: 'action',
+      field: 'action',
+      title: '操作',
+      cellRenderer: UploadGalleryActionCellComponent,
+      width: '80px',
+    }
   ];
 
   constructor(
@@ -105,7 +97,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       }
 
       const maxUploadNumber = this.isCreate ? galleryConfig.maxUploadNumber : 1;
-      if (this.files.length > maxUploadNumber) {
+      if (this.files.length >= maxUploadNumber) {
         this.modalService.openMessage({ message: `一次最多上傳 ${maxUploadNumber} 個檔案，現在上傳清單中有 ${this.files.length} 個` }).subscribe();
         return;
       }
@@ -163,9 +155,11 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
           return;
         }
 
+        const addedfiles = [];
         files.forEach(f => {
-          this.files.push(this.galleryService.mapFileToFileUploadModel(f));
+          addedfiles.push(this.galleryService.mapFileToFileUploadModel(f));
         });
+        this.files = [...this.files, ...addedfiles];
       });
       fileUpload.click();
     } catch (error) {
@@ -248,6 +242,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     const index = this.files.indexOf(file);
     if (index > -1) {
       this.files.splice(index, 1);
+      this.files = [...this.files];
     }
   }
 
@@ -300,6 +295,19 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     });
     const message = messages.map(msg => `<p>${msg}</p>`).join('');
     this.modalService.openMessage({ title, message }).subscribe();
+  }
+
+  onTableCustomEvent(event) {
+    if (event instanceof UploadGalleryActionCellCustomEvent) {
+      switch (event.action) {
+        case event.ActionType.CROP:
+          this.cropFile(event.data);
+          break;
+        case event.ActionType.DELETE:
+          this.removeFile(event.data);
+          break;
+      }
+    }
   }
 
 }

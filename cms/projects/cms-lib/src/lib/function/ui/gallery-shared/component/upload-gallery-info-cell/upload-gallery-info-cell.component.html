@@ -1,0 +1,19 @@
+<div class="gallery-info-cell" *ngIf="config?.data">
+  <div class="gallery-info-cell__pic">
+    <a class="gallery-info-cell__link" [href]="" target="_blank"
+      rel="noreferrer noopener">
+      <img class="gallery-info-cell__img">
+    </a>
+  </div>
+  <ul class="gallery-info-cell__info-list">
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.fileName}}
+    </li>
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.fileSize| gellerySize}}
+    </li>
+    <!-- <li class="gallery-info-cell__info-list__item">
+      {{config.data.fileType}}
+    </li> -->
+  </ul>
+</div>

@@ -52,10 +52,10 @@
     <ng-container matColumnDef="noData">
       <td mat-footer-cell *matFooterCellDef [attr.colspan]="colDefs.length">
         <ng-container *ngIf="error; else noDataBlock">
-          查詢錯誤
+          {{textError}}
         </ng-container>
         <ng-template #noDataBlock>
-          查無資料
+          {{textNoData}}
         </ng-template>
       </td>
     </ng-container>
