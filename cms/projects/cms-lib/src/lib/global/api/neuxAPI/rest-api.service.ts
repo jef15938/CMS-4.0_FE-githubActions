@@ -44,10 +44,10 @@ import { UserSiteMapPutRequest } from './bean/UserSiteMapPutRequest';
 import { FarmAuditingRequest } from './bean/FarmAuditingRequest';
 import { SitemapAuditingRequest } from './bean/SitemapAuditingRequest';
 
-function RestApi(config: {
+export function RestApi(config: {
   apiName: string, method: string, path: string, mock: string, responseType: any,
 }) {
-  return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+  const func = (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     descriptor.value = function(params: { [key: string]: any }, apiDispatchOptions?: ApiDispatchOptions) {
       console.log(`RestApi ${propertyKey}()`, config, { params, apiDispatchOptions });
       return (this as any).dispatch(
@@ -55,6 +55,7 @@ function RestApi(config: {
       );
     };
   };
+  return func;
 }
 
 @Injectable({
@@ -73,6 +74,7 @@ export class RestApiService {
     this.apiConfig = this.configGetter.getApiConfig();
   }
   
+  // @dynamic
   @RestApi({
     apiName: 'GetGalleryByCategoryID',
     method: 'get',
@@ -85,6 +87,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GalleryGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostGalleryByCategoryID',
     method: 'post',
@@ -97,6 +100,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetGalleryCategory',
     method: 'get',
@@ -109,6 +113,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GalleryCaregoryGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostGalleryCategory',
     method: 'post',
@@ -121,6 +126,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostLogin',
     method: 'post',
@@ -133,6 +139,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<LoginResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetDepartment',
     method: 'get',
@@ -145,6 +152,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<DepartmentGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'DeleteGalleryCategoryByCategoryID',
     method: 'delete',
@@ -157,6 +165,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutGalleryCategoryByCategoryID',
     method: 'put',
@@ -169,6 +178,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetUserMenu',
     method: 'get',
@@ -181,6 +191,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<MenuGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetLogout',
     method: 'get',
@@ -193,6 +204,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutDepartmentByDeptID',
     method: 'put',
@@ -205,6 +217,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'DeleteDepartmentByDeptID',
     method: 'delete',
@@ -217,6 +230,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostDepartmentByDeptID',
     method: 'post',
@@ -229,6 +243,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetDepartmentByDeptID',
     method: 'get',
@@ -241,6 +256,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<DepartmentDetailInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetAuditing',
     method: 'get',
@@ -253,6 +269,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<AuditingGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostAuditingByOrderID',
     method: 'post',
@@ -265,6 +282,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetLoginInfo',
     method: 'get',
@@ -277,6 +295,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<LoginResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetCMSMenu',
     method: 'get',
@@ -289,6 +308,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<MenuGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetUserSiteMapBySiteID',
     method: 'get',
@@ -301,6 +321,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SiteMapGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostUserSiteMapBySiteID',
     method: 'post',
@@ -313,6 +334,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutUserSiteMapByNodeID',
     method: 'put',
@@ -325,6 +347,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'DeleteUserSiteMapByNodeID',
     method: 'delete',
@@ -337,6 +360,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetContentById',
     method: 'get',
@@ -349,6 +373,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ContentInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutContentById',
     method: 'put',
@@ -361,6 +386,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetSitemapContentBySiteIdAndNodeId',
     method: 'get',
@@ -373,6 +399,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ContentInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetMyAuditingByOrderID',
     method: 'get',
@@ -385,6 +412,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<MyAuditingDetailGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetMyAuditing',
     method: 'get',
@@ -397,6 +425,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<MyAuditingGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetFarmByFuncID',
     method: 'get',
@@ -409,6 +438,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FarmInfoGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetFarmTableInfoByFuncID',
     method: 'get',
@@ -421,6 +451,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FarmTableInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetFarmFormInfoByFuncID',
     method: 'get',
@@ -433,6 +464,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FarmFormInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostFarmFormInfoByFuncID',
     method: 'post',
@@ -445,6 +477,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutFarmFormInfoByFuncID',
     method: 'put',
@@ -457,6 +490,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostFarmAuditingByFuncId',
     method: 'post',
@@ -469,6 +503,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetFarmDetailInfoByFuncID',
     method: 'get',
@@ -481,6 +516,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FarmFormInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetFarmPreviewByFuncID',
     method: 'get',
@@ -493,6 +529,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PreviewInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetGalleryShowByGalleryID',
     method: 'get',
@@ -505,6 +542,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<any> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetSite',
     method: 'get',
@@ -517,6 +555,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SiteGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetSiteBySiteID',
     method: 'get',
@@ -529,6 +568,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SiteMapGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetSiteBySiteIDAndNodeID',
     method: 'get',
@@ -541,6 +581,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SiteMapNodeGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetGroupMenuByGroupID',
     method: 'get',
@@ -553,6 +594,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GroupMenuGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutGroupMenuByGroupID',
     method: 'put',
@@ -565,6 +607,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetGroupSiteMapBySiteIDAndGroupID',
     method: 'get',
@@ -577,6 +620,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GroupSiteMapGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutGroupSiteMapBySiteIDAndGroupID',
     method: 'put',
@@ -589,6 +633,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetTemplateByControlID',
     method: 'get',
@@ -601,6 +646,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<TemplateGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutGalleryByGalleryID',
     method: 'put',
@@ -613,6 +659,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'DeleteGalleryByGalleryID',
     method: 'delete',
@@ -625,6 +672,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PostSitemapAuditingByNodeId',
     method: 'post',
@@ -637,6 +685,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetLayout',
     method: 'get',
@@ -649,6 +698,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<LayoutGetResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetFarmTakeOffByFuncID',
     method: 'get',
@@ -661,6 +711,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetSitemapPreviewByNodeID',
     method: 'get',
@@ -673,6 +724,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PreviewInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetAuditingPreviewByOrderID',
     method: 'get',
@@ -685,6 +737,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PreviewInfo> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetContentDataSourceByTypeID',
     method: 'get',
@@ -697,6 +750,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListContentDataSourceResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetContentVersionByContentID',
     method: 'get',
@@ -709,6 +763,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListContentVersionResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'PutReOrderSiteMapByNodeID',
     method: 'put',
@@ -721,6 +776,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetFarmTriggerByTriggerID',
     method: 'get',
@@ -733,6 +789,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListFarmTriggerDataResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetFarmTreeBySourceID',
     method: 'get',
@@ -745,6 +802,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GetFarmTreeResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetGroup',
     method: 'get',
@@ -757,6 +815,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListGroupResponst> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetGalleryConfig',
     method: 'get',
@@ -769,6 +828,7 @@ export class RestApiService {
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GalleryConfigResponse> { return null; }
 
+  // @dynamic
   @RestApi({
     apiName: 'GetSitemapContentUnlockBySiteIdAndNodeId',
     method: 'get',
