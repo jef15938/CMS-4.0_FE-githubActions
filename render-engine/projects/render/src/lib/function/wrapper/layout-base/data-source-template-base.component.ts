@@ -14,7 +14,7 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
   abstract defaultTemplateInfo: DataSourceTemplateInfo;
   abstract sourceType: string;
 
-  protected hasSendGetDataRequest = false;
+  protected hasSendInitGetDataRequest = false;
 
   templateType = TemplateType.DATA_SOURCE;
   sourceData: ListDataSourceDataResponseModel<TData>;
@@ -36,12 +36,12 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
 
   ngOnChanges(changes: SimpleChanges): void {
     super.ngOnChanges(changes);
+    if (this.hasSendInitGetDataRequest || !this.mode || this.mode === 'edit' || !this.templateInfo?.source) { return; }
     this.getSourceData().subscribe();
+    this.hasSendInitGetDataRequest = true;
   }
 
   getSourceData(): Observable<ListDataSourceDataResponseModel<TData>> {
-    if (this.hasSendGetDataRequest || !this.mode || this.mode === 'edit' || !this.templateInfo?.source) { return of(undefined); }
-    this.hasSendGetDataRequest = true;
     return this.dataSourceService.getDataSourceByTypeIDAndId<TData>(this.sourceType, this.templateInfo?.source).pipe(
       takeUntil(this.destroy$),
       tap(sourceData => {

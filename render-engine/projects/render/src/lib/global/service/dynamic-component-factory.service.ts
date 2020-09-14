@@ -15,32 +15,20 @@ export class DynamicComponentFactoryService {
   getComponent(componentId: string) {
     const defaultComponentMappings = this.getDefaultComponentMappings();
     const customComponentMappings = this.getCustomComponentMappings();
-    const mapping = customComponentMappings.find(m => m.component_id === componentId)
-      || defaultComponentMappings.find(m => m.component_id === componentId);
+    const mapping = [...customComponentMappings, ...defaultComponentMappings].find(m => m.component_id === componentId);
     const component = mapping?.component;
     return component;
   }
 
-  getAppShellNoRenderComponentIds(): string[] {
-    let ids = [];
-    try {
-      ids = this.injector.get(RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN);
-    } catch (error) {
-    }
-    return ids;
+  getAppShellNoRenderComponentIds() {
+    return this.injector.get(RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN, []);
   }
 
   private getDefaultComponentMappings() {
-    const mappings = this.injector.get(RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN);
-    return mappings || [];
+    return this.injector.get(RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN, []);
   }
 
-  getCustomComponentMappings() {
-    let mappings = [];
-    try {
-      mappings = this.injector.get(RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN);
-    } catch (error) {
-    }
-    return mappings;
+  private getCustomComponentMappings() {
+    return this.injector.get(RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN, []);
   }
 }

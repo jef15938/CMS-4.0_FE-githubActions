@@ -19,29 +19,22 @@ export class GelleryImgSrcPipe implements PipeTransform {
 
   transform(data: Data, isLocalFile = false): string {
     if (data) {
-      const isImg = this.isImg(data, isLocalFile);
-
-      const path =
-        isImg
-          ? (isLocalFile ? data.url : `${this.environment.apiBaseUrl}${data.url}`)
-          : `./assets/img/icon/${isLocalFile ? data.fileName.substring(data.fileName.lastIndexOf('.') + 1) : data.fileType.toLowerCase()}.png`;
-      console.warn(data, isImg, path);
+      const extensionName = isLocalFile ? data.fileName.substring(data.fileName.lastIndexOf('.') + 1) : data.fileType.toLowerCase();
+      const isImg = this.isImg(extensionName, isLocalFile);
+      const path = isImg
+        ? (isLocalFile ? data.url : `${this.environment.apiBaseUrl}${data.url}`)
+        : `./assets/img/icon/${extensionName}.png`;
       return path;
     } else {
       return '';
     }
   }
 
-  private isImg(data: Data, isLocalFile: boolean): boolean {
+  private isImg(extensionName: string, isLocalFile: boolean): boolean {
     // PDF,DOC,DOCX,XLS,XLSX
     // PNG,JPG,JPEG,GIF
     const imgFileExtensionNames = ['PNG', 'JPG', 'JPEG', 'GIF'];
-    const extensionName = (
-      isLocalFile
-        ? data.fileName.substring(data.fileName.lastIndexOf('.') + 1)
-        : data.fileType
-    ).toUpperCase();
-    return imgFileExtensionNames.indexOf(extensionName) > -1;
+    return imgFileExtensionNames.map(e => e.toLowerCase()).indexOf(extensionName?.toLowerCase()) > -1;
   }
 
 }
