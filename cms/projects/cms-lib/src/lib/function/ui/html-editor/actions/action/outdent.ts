@@ -3,19 +3,19 @@ import { of } from 'rxjs';
 
 export class Outdent extends HtmlEditorActionBase {
 
-  private readonly padding = 40;
+  private readonly margin = 40;
 
   do() {
     const selected = this.context.selectedTarget as HTMLElement;
     const rowRoot = this.context.simpleWysiwygService.findRowRoot(this.context.editorContainer, selected);
     if (rowRoot) {
-      let padding = 0;
-      const paddingLeft = rowRoot.style.getPropertyValue('padding-left');
-      if (paddingLeft) {
-        padding = +paddingLeft.replace('px', '') - this.padding;
-        if (padding < 0) { padding = 0; }
+      let margin = 0;
+      const marginLeft = rowRoot.style.getPropertyValue('margin-left');
+      if (marginLeft) {
+        margin = +marginLeft.replace('px', '') - this.margin;
+        if (margin < 0) { margin = 0; }
       }
-      padding ? rowRoot.style.setProperty('padding-left', `${padding}px`) : rowRoot.style.removeProperty('padding-left');
+      margin ? rowRoot.style.setProperty('margin-left', `${margin}px`) : rowRoot.style.removeProperty('margin-left');
     }
     return of(undefined);
   }

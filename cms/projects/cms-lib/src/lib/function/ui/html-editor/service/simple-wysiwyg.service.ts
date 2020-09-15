@@ -292,7 +292,7 @@ export class SimpleWysiwygService {
   }
 
   findRowRoot(containerNode: Node, from: HTMLElement) {
-    const possibleTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'];
+    const possibleTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'ul', 'ol'];
     let el = from;
     while (el) {
       if (el === containerNode || !this.isChildOf(el, containerNode as any)) {
