@@ -43,3 +43,16 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-container *ngIf="cmsLoadingToggle.isOpen|async">
+  <div class="loading bar">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</ng-container>

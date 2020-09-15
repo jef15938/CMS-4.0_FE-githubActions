@@ -5,7 +5,7 @@ import { CmsRoutingModule } from './cms-routing.module';
 import { CmsComponent } from './cms.component';
 import { MenuNodeComponent } from './global/layouts/menu-node.component';
 import { WithCredentialsInterceptor, HttpError401Interceptor, ManageHttpInterceptor } from './global/interceptor/cms-http-interceptor';
-import { CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver } from './global/service';
+import { CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver, CmsLoadingToggle } from './global/service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CmsDateAdapter, CMS_DATE_FORMATS_DATETIME, CmsDateTimeAdapter } from './global/util/mat-date/mat-date';
 import { DynamicRoutingComponent } from './global/component/dynamic-routing/dynamic-routing.component';
@@ -54,6 +54,7 @@ export class CmsModule {
       ngModule: CmsModule,
       providers: [
         { provide: ErrorHandler, useClass: CmsErrorHandler },
+        CmsLoadingToggle,
         CmsAuthGuard,
         CmsCanDeactiveGuard,
         DialogFlowMessengerService,

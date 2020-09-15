@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DialogFlowMessengerService } from './global/service';
+import { DialogFlowMessengerService, CmsLoadingToggle } from './global/service';
 import { RippleScreen } from './global/util/cfx';
 import { AuthorizationService } from './global/api/service';
 import { MenuInfoModel } from './global/api/data-model/models/menu-info.model';
@@ -27,6 +27,7 @@ export class CmsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private cms: Cms,
+    public cmsLoadingToggle: CmsLoadingToggle,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authorizationService: AuthorizationService,

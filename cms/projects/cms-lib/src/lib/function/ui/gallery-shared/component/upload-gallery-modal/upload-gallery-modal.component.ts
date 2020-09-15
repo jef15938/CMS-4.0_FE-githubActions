@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit,  ElementRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, ElementRef } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
@@ -9,6 +9,7 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { UploadGalleryInfoCellComponent } from '../upload-gallery-info-cell/upload-gallery-info-cell.component';
 import { UploadGalleryActionCellComponent, UploadGalleryActionCellCustomEvent } from '../upload-gallery-action-cell/upload-gallery-action-cell.component';
 import { UploadGalleryProgressCellComponent } from '../upload-gallery-progress-cell/upload-gallery-progress-cell.component';
+import { CmsLoadingToggle } from '../../../../../global/service';
 
 @Component({
   selector: 'cms-upload-gallery-modal',
@@ -62,6 +63,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
     private modalService: ModalService,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { super(); }
 
   ngOnInit() {
@@ -217,8 +219,16 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   create() {
+    this.cmsLoadingToggle.open();
     forkJoin(this.files.map(file => this.galleryService.createGallery(file, this.categoryId)))
+      .pipe(
+        CmsErrorHandler.rxHandleError((error, showMessage) => {
+          this.cmsLoadingToggle.close();
+          showMessage();
+        })
+      )
       .subscribe(results => {
+        this.cmsLoadingToggle.close();
         const failedUploads = results.filter(r => !r.success);
         if (!failedUploads.length) {
           this.close(true);
@@ -232,8 +242,16 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   update() {
     const file = this.files[0];
+    this.cmsLoadingToggle.open();
     this.galleryService.updateGallery(file, this.galleryId)
+      .pipe(
+        CmsErrorHandler.rxHandleError((error, showMessage) => {
+          this.cmsLoadingToggle.close();
+          showMessage();
+        })
+      )
       .subscribe(result => {
+        this.cmsLoadingToggle.close();
         if (result.success) {
           this.close(true);
         } else {

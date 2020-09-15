@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
 import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interface';
 import { ContentService } from '../../../../../global/api/service';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
 import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
-import { of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { CmsLoadingToggle } from '../../../../../global/service';
 
 @Component({
   selector: 'cms-content-editor-container-modal',
@@ -29,7 +30,8 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
 
   constructor(
     private contentService: ContentService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { super(); }
 
   ngOnInit(): void {
@@ -72,14 +74,25 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
       return;
     }
 
+
     const action = event.save
       ? this.contentService
         .updateContent(this.contentID, convertedContentInfo)
         .pipe(
-          tap(_ => this.modalService.openMessage({ message: '內容儲存成功' }).subscribe()),
-          CmsErrorHandler.rxHandleError()
+          tap(_ => {
+            this.cmsLoadingToggle.close();
+            this.modalService.openMessage({ message: '內容儲存成功' }).subscribe();
+          }),
+          CmsErrorHandler.rxHandleError((error, showMessage) => {
+            this.cmsLoadingToggle.close();
+            showMessage();
+          })
         )
       : of(undefined);
+
+    if (event.save) {
+      this.cmsLoadingToggle.open();
+    }
 
     action.subscribe(_ => {
       console.warn('closeAfterSave = ', closeAfterSave);

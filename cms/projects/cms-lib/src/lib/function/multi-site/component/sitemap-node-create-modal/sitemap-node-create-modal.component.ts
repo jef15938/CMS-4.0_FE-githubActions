@@ -10,6 +10,7 @@ import { GroupInfoModel } from '../../../../global/api/data-model/models/group-i
 import { LayoutInfoModel } from '../../../../global/api/data-model/models/layout-info.model';
 import { UserSiteMapPostRequestModel } from '../../../../global/api/data-model/models/user-sitemap-post-request.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { CmsLoadingToggle } from '../../../../global/service';
 
 class SiteMapCreateModel extends UserSiteMapPostRequestModel {
 
@@ -94,6 +95,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     private contentService: ContentService,
     private gallerySharedService: GallerySharedService,
     private groupService: GroupService,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { super(); }
 
   ngOnInit(): void {
@@ -118,8 +120,12 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
 
   confirm() {
     this.sitemapMaintainModel.assignGroupId = this.assignGroupIds.join(',');
+    this.cmsLoadingToggle.open();
     this.sitemapService.createSiteNode(this.siteId, this.sitemapMaintainModel).pipe(
-      CmsErrorHandler.rxHandleError(),
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        this.cmsLoadingToggle.close();
+        showMessage();
+      })
     ).subscribe(_ => {
       this.close('Created');
     });

@@ -7,6 +7,7 @@ import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/m
 import { UserSiteMapPutRequestModel } from '../../../../global/api/data-model/models/user-sitemap-put-request.model';
 import { SiteNodeDetailInfoModel } from '../../../../global/api/data-model/models/site-node-detail-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { CmsLoadingToggle } from '../../../../global/service/cms-loading-toggle.service';
 
 @Component({
   selector: 'cms-sitemap-node-update-modal',
@@ -44,6 +45,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
   constructor(
     private sitemapService: SitemapService,
     private gallerySharedService: GallerySharedService,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { super(); }
 
   ngOnInit(): void {
@@ -70,11 +72,17 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
   }
 
   confirm() {
+    this.cmsLoadingToggle.open();
     this.sitemapService.updateSiteNode(
       this.sitemapNode.nodeId,
       this.putRequest.details,
       this.putRequest
-    ).pipe(CmsErrorHandler.rxHandleError()).subscribe(_ => {
+    ).pipe(
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        this.cmsLoadingToggle.close();
+        showMessage();
+      })
+    ).subscribe(_ => {
       this.close('Updated');
     });
   }
