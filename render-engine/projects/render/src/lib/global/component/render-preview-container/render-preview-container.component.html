@@ -1,0 +1,17 @@
+<div class="btn-container" *ngIf="!runtime && mode==='preview'">
+  <button type="button" (click)="toggleCompare()" [class.active]="funcCompare.on">{{funcCompare.on?'取消比較':'比較版本'}}</button>
+</div>
+<div *ngIf="templates" [class.preview]="!runtime && mode==='preview'">
+  <div class="view-container" [class.compare]="funcCompare.on">
+    <div class="previous" [style.display]="funcCompare.on ? 'block' : 'none'" *ngIf="!runtime && mode==='preview' && previousTemplates">
+      <rdr-templates-container #previous [mode]="mode" [runtime]="runtime" [templates]="previousTemplates"
+        [sites]="sites" [fixed]="false">
+      </rdr-templates-container>
+    </div>
+    <div class="current">
+      <rdr-templates-container #current [mode]="mode" [runtime]="runtime" [templates]="templates" [sites]="sites"
+        [fixed]="false">
+      </rdr-templates-container>
+    </div>
+  </div>
+</div>

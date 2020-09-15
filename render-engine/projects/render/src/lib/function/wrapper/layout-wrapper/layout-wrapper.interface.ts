@@ -11,14 +11,14 @@ export enum TemplateType {
   CUSTOMIZE = 'Customize',
 }
 
-export interface LayoutWrapperBaseInterface {
+export interface WithRenderInfo {
   mode: 'preview' | 'edit';
   runtime: boolean;
   sites: SitesResponseModel;
   fixed: boolean;
 }
 
-export interface LayoutWrapper extends LayoutWrapperBaseInterface{
+export interface LayoutWrapper extends WithRenderInfo{
   parentTemplatesContainer: { templates: ContentTemplateInfoModel[]; };
 }
 

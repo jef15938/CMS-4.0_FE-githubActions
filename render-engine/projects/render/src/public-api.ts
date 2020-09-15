@@ -3,7 +3,6 @@
  */
 export * from './lib/render.module';
 export * from './lib/global/service/index';
-export * from './lib/global/component/render/render.component';
 export * from './lib/global/injection-token/injection-token';
 export * from './lib/global/interceptor/index';
 export * from './lib/global/component/index';

@@ -68,7 +68,6 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
   }
 
   ngAfterViewInit(): void {
-    // console.warn(456, this);
     this.parentLayoutWrapper.checkEventBinding();
     this.parentLayoutWrapper.setInstanceData(this, true);
     merge(
@@ -80,7 +79,6 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
       this.layoutFieldImgDirectives.changes,
       this.layoutFieldHtmlEditorDirectives.changes,
     ).pipe(takeUntil(this.destroy$)).subscribe(_ => {
-      // console.warn(789, this);
       this.parentLayoutWrapper.checkEventBinding();
       this.parentLayoutWrapper.setInstanceData(this, true);
     });

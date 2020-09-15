@@ -1,3 +1,5 @@
+export * from './render/render.component';
+export * from './render-preview-container/render-preview-container.component';
 export * from './slider/slider.component';
 export * from './news/news.component';
 export * from './qa/qa.component';
