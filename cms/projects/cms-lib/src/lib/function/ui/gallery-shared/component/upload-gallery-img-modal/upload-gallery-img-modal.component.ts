@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit,  ElementRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, ElementRef } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
@@ -11,11 +11,11 @@ import { UploadGalleryActionCellComponent, UploadGalleryActionCellCustomEvent } 
 import { UploadGalleryProgressCellComponent } from '../upload-gallery-progress-cell/upload-gallery-progress-cell.component';
 
 @Component({
-  selector: 'cms-upload-gallery-modal',
-  templateUrl: './upload-gallery-modal.component.html',
-  styleUrls: ['./upload-gallery-modal.component.scss'],
+  selector: 'cms-upload-gallery-img-modal',
+  templateUrl: './upload-gallery-img-modal.component.html',
+  styleUrls: ['./upload-gallery-img-modal.component.scss'],
 })
-export class UploadGalleryModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
+export class UploadGalleryImgModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 

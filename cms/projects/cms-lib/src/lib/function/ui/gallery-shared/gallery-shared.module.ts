@@ -15,6 +15,7 @@ import { GallerySharedContainerModalComponent } from './component/gallery-shared
 import { GellerySizePipe } from './pipe/gallery-size.pipe';
 import { UploadGalleryInfoCellComponent } from './component/upload-gallery-info-cell/upload-gallery-info-cell.component';
 import { UploadGalleryProgressCellComponent } from './component/upload-gallery-progress-cell/upload-gallery-progress-cell.component';
+import { UploadGalleryImgModalComponent } from './component/upload-gallery-img-modal/upload-gallery-img-modal.component';
 
 const COMPONENTS_PIPES = [
   GallerySharedComponent,
@@ -24,6 +25,7 @@ const COMPONENTS_PIPES = [
   GalleryActionCellComponent,
   GalleryInfoCellComponent,
   UploadGalleryModalComponent,
+  UploadGalleryImgModalComponent,
   UploadGalleryActionCellComponent,
   UploadGalleryInfoCellComponent,
   UploadGalleryProgressCellComponent,
