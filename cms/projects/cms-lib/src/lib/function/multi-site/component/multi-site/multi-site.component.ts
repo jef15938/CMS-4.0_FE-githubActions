@@ -241,7 +241,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   test() {
-    this.gallerySharedService.addGalleryImg().subscribe(res => {
+    this.gallerySharedService.addGalleryFile().subscribe(res => {
       console.warn('res = ', res);
     });
   }

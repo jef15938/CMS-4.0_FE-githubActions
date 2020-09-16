@@ -42,7 +42,7 @@
       [disabled]="currentStepState!==StepState.CROP_FILE"
       (click)="cropFile(formGroupChooseFile?.get('value')?.value)">裁切{{typeText}}</button>
     <button type="button" tabindex="0" mat-raised-button class="btn btn-edit"
-      [disabled]="currentStepState!==StepState.UPLOAD" (click)="upload(galleryType)">上傳{{typeText}}</button>
+      [disabled]="currentStepState!==StepState.UPLOAD" (click)="addToServer(galleryType)">上傳{{typeText}}</button>
   </div>
   <div class="info-container" *ngIf="galleryType===GalleryType.IMAGE">
     <div class="info-content width-max-half" *ngIf="formGroupChooseFile?.get('value')?.value; let file;">

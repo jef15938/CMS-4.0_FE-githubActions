@@ -170,14 +170,14 @@ export class AddGalleryModalComponent extends CustomModalBase implements OnInit 
     }
   }
 
-  upload(galleryType: GalleryType) {
+  addToServer(galleryType: GalleryType) {
     (galleryType === GalleryType.FILE
-      ? this.uploadFile()
-      : this.uploadImage()
+      ? this.addFileToServer()
+      : this.addImageToServer()
     ).subscribe(res => this.close(res));
   }
 
-  private uploadFile() {
+  private addFileToServer() {
     const gallery = this.formGroupChooseFile.get('value').value;
     return this.galleryService.addFile(gallery).pipe(
       map(({ galleryId, path }) => {
@@ -186,7 +186,7 @@ export class AddGalleryModalComponent extends CustomModalBase implements OnInit 
     );
   }
 
-  private uploadImage() {
+  private addImageToServer() {
     const origin = this.formGroupChooseFile.get('value').value;
     const cropped = this.formGroupCropFile.get('value').value;
     const setting = this.formGroupCropFile.get('setting').value;
