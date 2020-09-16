@@ -1,0 +1,19 @@
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+
+rdr-breadcrumb {
+  @include rdr-breadcrumb-theme();
+  @include nx-breadcrumb-config($mode: 'customize',
+    $arrow-margin: 8px,
+    $arrow-width: 2px,
+    $arrow-height: 4px);
+
+  nx-breadcrumb.nx-cp {
+    .grain {
+      &__text {
+        @include fz-body-16-left-bold;
+      }
+    }
+  }
+}

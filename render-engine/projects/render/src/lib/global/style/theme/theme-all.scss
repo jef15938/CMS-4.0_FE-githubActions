@@ -2,8 +2,10 @@
 @import './helper/config';
 
 @import './components/collpase';
+@import './components//breadcrumb';
 
 
 @mixin rdr-theme-core($core-theme) {
   @include rdr-collapse-theme($theme: $core-theme);
+  @include rdr-breadcrumb-theme($theme: $core-theme)
 }

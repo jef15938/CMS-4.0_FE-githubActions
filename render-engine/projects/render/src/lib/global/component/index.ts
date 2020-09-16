@@ -18,3 +18,4 @@ export * from './fixed-wrapper/fixed-wrapper.component';
 export * from './banner/banner.component';
 export * from './list/list.component';
 export * from './public-component/collapse/collapse.component';
+export * from './public-component/breadcrumb/breadcrumb.component';

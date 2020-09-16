@@ -32,6 +32,7 @@ import { HtmlEditorContentComponent } from './function/ui/html-editor-content/ht
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
 import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
+import { BreadcrumbComponent } from './global/component/public-component/breadcrumb/breadcrumb.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -50,6 +51,8 @@ const COMPONENTS = [
   HtmlEditorContentComponent,
   BannerComponent,
   ListComponent,
+  CollapseComponent,
+  BreadcrumbComponent,
 ];
 
 @NgModule({
@@ -66,8 +69,7 @@ const COMPONENTS = [
   ],
   declarations: [
     RenderComponent,
-    ...COMPONENTS,
-    CollapseComponent,
+    ...COMPONENTS
   ],
   exports: [
     RenderComponent,
