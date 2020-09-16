@@ -2,10 +2,12 @@
 @import './helper/config';
 
 @import './components/collpase';
-@import './components//breadcrumb';
+@import './components/breadcrumb';
+@import './components/card-link';
 
 
 @mixin rdr-theme-core($core-theme) {
   @include rdr-collapse-theme($theme: $core-theme);
-  @include rdr-breadcrumb-theme($theme: $core-theme)
+  @include rdr-breadcrumb-theme($theme: $core-theme);
+  @include rdr-card-link-theme($theme: $core-theme);
 }

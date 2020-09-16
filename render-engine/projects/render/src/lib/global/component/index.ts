@@ -19,3 +19,4 @@ export * from './banner/banner.component';
 export * from './list/list.component';
 export * from './public-component/collapse/collapse.component';
 export * from './public-component/breadcrumb/breadcrumb.component';
+export * from './public-component/card-link/card-link.component';

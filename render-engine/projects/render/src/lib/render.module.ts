@@ -33,6 +33,7 @@ import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
 import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
 import { BreadcrumbComponent } from './global/component/public-component/breadcrumb/breadcrumb.component';
+import { CardLinkComponent } from './global/component/public-component/card-link/card-link.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -53,6 +54,7 @@ const COMPONENTS = [
   ListComponent,
   CollapseComponent,
   BreadcrumbComponent,
+  CardLinkComponent
 ];
 
 @NgModule({
@@ -69,7 +71,7 @@ const COMPONENTS = [
   ],
   declarations: [
     RenderComponent,
-    ...COMPONENTS
+    ...COMPONENTS,
   ],
   exports: [
     RenderComponent,

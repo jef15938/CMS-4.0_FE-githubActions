@@ -1,0 +1,32 @@
+@mixin rdr-card-link-theme($theme: $rdr-theme-config) {
+
+  $tl-font-color: map-get($theme, black_1) !default;
+  $tl-arrow-color: map-get($theme, color_primary) !default;
+  $tl-bg-color: map-get($theme, white_1) !default;
+  $tl-hover-color: #a0c7c0;
+  $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
+
+  .card-link {
+    background-color: $tl-bg-color;
+
+    &:hover {
+      border: 2px solid $tl-hover-color;
+    }
+
+    &:active,
+    &:focus {
+      border: none;
+      background-color: $tl-pressed-color;
+    }
+
+    &__title {
+      color: $tl-font-color;
+    }
+
+    &__icon {
+      &:after {
+        border-color: $tl-arrow-color;
+      }
+    }
+  }
+}
