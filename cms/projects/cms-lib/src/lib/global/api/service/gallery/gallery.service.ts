@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEventType, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, Subscription, of } from 'rxjs';
 import { map, catchError, last } from 'rxjs/operators';
 import { ParamsError, ModelMapper } from '@neux/core';
@@ -260,8 +260,19 @@ export class GalleryService {
     );
   }
 
-  addGallery(): Observable<SaveGalleryResponseModel> {
-    return this.respAPIService.AddGallery({}).pipe(
+  addGallery(original: FileUploadModel, cropped: FileUploadModel, cropSetting): Observable<SaveGalleryResponseModel> {
+    const formData = new FormData();
+    formData.append('originalFile', original.data);
+    formData.append('file', cropped.data);
+    formData.append('setting', cropSetting ? JSON.stringify(cropSetting) : '');
+
+    const params = {
+      requestBody: formData
+    };
+
+    const header = new HttpHeaders().append('Content-Type', 'multipart/form-data');
+
+    return this.respAPIService.AddGallery(params, { header }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('addGallery')),
       ModelMapper.rxMapModelTo(SaveGalleryResponseModel),
     );

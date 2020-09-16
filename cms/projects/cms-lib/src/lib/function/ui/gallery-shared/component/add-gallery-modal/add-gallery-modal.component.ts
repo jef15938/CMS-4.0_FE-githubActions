@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
 import { ColDef } from '../../../../ui/table';
@@ -9,6 +9,7 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { FormBuilder, FormGroup, ValidationErrors, AbstractControl, Validators } from '@angular/forms';
 import { MatHorizontalStepper } from '@angular/material/stepper';
+import { map } from 'rxjs/operators';
 
 export enum GalleryType {
   FILE = 'FILE',
@@ -169,6 +170,29 @@ export class AddGalleryModalComponent extends CustomModalBase implements OnInit 
       this.formGroupCropFile.get('value').patchValue(null);
       this.formGroupCropFile.get('setting').patchValue(null);
     }
+  }
+
+  upload(galleryType: GalleryType){
+    (galleryType === GalleryType.FILE
+      ? this.uploadFile()
+      : this.uploadImage()
+    ).subscribe(res => this.close(res));
+  }
+
+  private uploadFile(){
+    const gallery = this.formGroupChooseFile.get('value').value;
+    return of(null);
+  }
+
+  private uploadImage(){
+    const origin = this.formGroupChooseFile.get('value').value;
+    const cropped = this.formGroupCropFile.get('value').value;
+    const setting = this.formGroupCropFile.get('setting').value;
+    return this.galleryService.addGallery(origin, cropped, setting).pipe(
+      map(({galleryId, path}) => {
+        return {galleryId, path};
+      })
+    );
   }
 
 }

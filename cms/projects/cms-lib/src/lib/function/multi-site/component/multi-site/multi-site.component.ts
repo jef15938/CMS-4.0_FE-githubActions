@@ -11,6 +11,7 @@ import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/m
 import { SiteInfoModel } from '../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 
 enum EditModeType {
   SITE, NODE,
@@ -48,6 +49,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalService: ModalService,
     private sitemapService: SitemapService,
     private htmlEditorService: HtmlEditorService,
+    private gallerySharedService: GallerySharedService,
   ) { }
 
   ngOnInit(): void {
@@ -235,6 +237,12 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
       ).subscribe(_ => {
         this.onNodeUpdate();
       });
+    });
+  }
+
+  test() {
+    this.gallerySharedService.addGalleryImg().subscribe(res => {
+      console.warn('res = ', res);
     });
   }
 
