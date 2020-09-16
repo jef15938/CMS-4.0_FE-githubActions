@@ -5,7 +5,7 @@
 </div>
 <ng-container *ngIf="fieldInfo">
   <div class="btn-container">
-    <button class="float-right btn btn-dark" type="button" tabindex="-1" mat-raised-button
+    <button class="float-right btn btn-dark" type="button" tabindex="-1" mat-raised-button [disabled]="!isTemplateMode"
       (click)="changeGallery()">媒體庫</button>
   </div>
   <mat-form-field appearance="outline">
