@@ -276,6 +276,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       }).subscribe(confirm => {
         if (confirm) {
           this.contentControlPanel.preserveChanges();
+          ev.target.dispatchEvent(ev);
         } else {
           this.resetSelected();
           this.contentControlPanel.hasChange = false;
@@ -283,7 +284,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
           this.contentViewRenderer.checkView();
           this.cancelScale();
         }
-        ev.target.dispatchEvent(ev);
       });
     } else {
       this.resetSelected();
