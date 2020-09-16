@@ -4,6 +4,7 @@ import { ModalService, ModalSetting } from '../../../ui/modal';
 import { GallerySharedContainerModalComponent } from '../component/gallery-shared-container-modal/gallery-shared-container-modal.component';
 import { GalleryFileType } from '../type/gallery-shared.type';
 import { GalleryInfoModel } from '../../../../global/api/data-model/models/gallery-info.model';
+import { AddGalleryModalComponent, GalleryType } from '../component/add-gallery-modal/add-gallery-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,40 @@ export class GallerySharedService {
     return this.modalService.openComponent({
       component: GallerySharedContainerModalComponent,
       componentInitData: { allowedFileTypes },
+      modalSetting
+    });
+  }
+
+  addGalleryImg() {
+    const modalSetting: ModalSetting = {
+      id: `add-gallery-modal`,
+      // width: '80%',
+      // maxWidth: '90%',
+      // height: '90%',
+    };
+
+    return this.modalService.openComponent({
+      component: AddGalleryModalComponent,
+      componentInitData: {
+        galleryType: GalleryType.IMAGE,
+      },
+      modalSetting
+    });
+  }
+
+  addGalleryFile() {
+    const modalSetting: ModalSetting = {
+      id: `add-gallery-modal`,
+      // width: '80%',
+      // maxWidth: '90%',
+      // height: '90%',
+    };
+
+    return this.modalService.openComponent({
+      component: AddGalleryModalComponent,
+      componentInitData: {
+        galleryType: GalleryType.FILE,
+      },
       modalSetting
     });
   }

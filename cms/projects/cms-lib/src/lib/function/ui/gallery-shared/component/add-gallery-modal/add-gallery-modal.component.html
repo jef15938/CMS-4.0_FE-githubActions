@@ -1,0 +1,59 @@
+<input type="file" [id]="fileUploadInputIdentifier" [name]="fileUploadInputIdentifier" [accept]="accept"
+  style="display:none;" />
+<div class="cms-add-gallery-modal">
+  <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="onStepSelectionChange($event)">
+    <mat-step [state]="StepState.CHOOSE_FILE" [stepControl]="formGroupChooseFile"
+      [hasError]="formGroupChooseFile?.invalid" [errorMessage]="'請選擇'+typeText">
+      <ng-template matStepLabel>選擇{{typeText}}</ng-template>
+      <div *ngIf="formGroupChooseFile?.invalid" class="text-center text-danger">
+        <span>請選擇{{typeText}}</span>
+      </div>
+      <div *ngIf="formGroupChooseFile?.valid" class="text-center">
+        <span>{{typeText}}名稱：{{formGroupChooseFile?.get('value')?.value.fileName}}</span>
+      </div>
+    </mat-step>
+    <mat-step [state]="StepState.CROP_FILE" [stepControl]="formGroupCropFile" *ngIf="galleryType===GalleryType.IMAGE"
+      [hasError]="formGroupCropFile?.invalid" [errorMessage]="'請裁切'+typeText">
+      <ng-template matStepLabel>裁切{{typeText}}</ng-template>
+      <div *ngIf="imageHeightWidth||formGroupCropFile?.invalid" class="text-center">
+        <span *ngIf="formGroupCropFile?.invalid" class="text-danger">請裁切圖片</span>
+        <span *ngIf="imageHeightWidth&&formGroupCropFile?.invalid">：</span>
+        <span>解析度 {{imageHeightWidth.width > -1 ? imageHeightWidth.width : '任意'}} x
+          {{imageHeightWidth.height > -1 ? imageHeightWidth.height : '任意'}}</span>
+      </div>
+    </mat-step>
+    <mat-step [state]="StepState.UPLOAD">
+      <ng-template matStepLabel>上傳{{typeText}}</ng-template>
+      <div class="info-container"
+        *ngIf="(galleryType===GalleryType.IMAGE?formGroupCropFile:formGroupChooseFile)?.get('value')?.value; let file;">
+        <div class="info-content">
+          {{typeText}}名稱：<br>{{file.fileName}}
+        </div>
+        <div class="info-content">
+          {{typeText}}大小：<br>{{file.fileSize}}
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+  <div class="btn-group">
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit"
+      [disabled]="currentStepState!==StepState.CHOOSE_FILE" (click)="addFile()">選擇{{typeText}}</button>
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" *ngIf="galleryType===GalleryType.IMAGE"
+      [disabled]="currentStepState!==StepState.CROP_FILE"
+      (click)="cropFile(formGroupChooseFile?.get('value')?.value)">裁切{{typeText}}</button>
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit"
+      [disabled]="currentStepState!==StepState.UPLOAD" (click)="addFile()">上傳{{typeText}}</button>
+  </div>
+  <div class="info-container" *ngIf="galleryType===GalleryType.IMAGE">
+    <div class="info-content width-max-half" *ngIf="formGroupChooseFile?.get('value')?.value; let file;">
+      原圖
+      <br>
+      <img [src]="file.url">
+    </div>
+    <div class="info-content width-max-half" *ngIf="formGroupCropFile?.get('value')?.value; let file;">
+      裁切
+      <br>
+      <img [src]="file.url">
+    </div>
+  </div>
+</div>
