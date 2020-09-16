@@ -1,0 +1,9 @@
+@import './helper/variables';
+@import './helper/config';
+
+@import './components/collpase';
+
+
+@mixin rdr-theme-core($core-theme) {
+  @include rdr-collapse-theme($theme: $core-theme);
+}

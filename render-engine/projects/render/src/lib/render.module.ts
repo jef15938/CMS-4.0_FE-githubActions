@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NxUiModule } from '@neux/ui';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { RenderComponent } from './global/component/render/render.component';
 import { WrapperModule } from './function/wrapper/wrapper.module';
@@ -30,6 +31,7 @@ import { HttpErrorHandlerInterceptor } from './global/interceptor/http-error-han
 import { HtmlEditorContentComponent } from './function/ui/html-editor-content/html-editor-content.component';
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
+import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -59,11 +61,13 @@ const COMPONENTS = [
     WrapperModule,
     SwiperModule,
     StoreModule.forFeature(fromRenderStore.renderFeatureKey, fromRenderStore.reducer),
-    EffectsModule.forFeature([RenderEffects])
+    EffectsModule.forFeature([RenderEffects]),
+    NxUiModule
   ],
   declarations: [
     RenderComponent,
     ...COMPONENTS,
+    CollapseComponent,
   ],
   exports: [
     RenderComponent,

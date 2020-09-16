@@ -1,0 +1,53 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-collapse-theme($theme: $rdr-theme-config) {
+
+  $tl-primary-color: map-get($theme, brownish_grey) !default;
+  $tl-back-light-color: map-get($theme, white_1) !default;
+  $tl-null-color: map-get($theme, white_1) !default;
+  $tl-plain-color: map-get($theme, black_1) !default;
+  $tl-icon-color: map-get($theme, color_primary) !default;
+  $tl-line-color: map-get($theme, brown_grey_1) !default;
+  $tl-hover-color: map-get($theme, ice) !default;
+  $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
+
+  $collapse-theme: nx-ui-theme-config-gen($color-primary: $tl-primary-color,
+      $color-back-light: $tl-back-light-color,
+      $color-null: $tl-null-color,
+      $color-plain: $tl-plain-color);
+
+  @include nx-collapse-theme($collapse-theme);
+  @include nx-collapse-accordion-theme($collapse-theme);
+
+  nx-collapse.nx-cp {
+    +nx-collapse.nx-cp {
+      .collapse-container__trigger {
+        border-color: $tl-line-color;
+      }
+    }
+
+    &.style--icon-arrowLine .collapse-container__suffix:after {
+      border-color: $tl-icon-color;
+    }
+
+    .collapse-container__trigger {
+      &:hover {
+        background-color: $tl-hover-color;
+      }
+
+      &:active {
+        background-color: $tl-pressed-color;
+      }
+    }
+
+    .collapse-container__content {
+      background-color: $tl-back-light-color;
+    }
+
+    .collapse-container[collapse-status=true] {
+      .collapse-container__trigger {
+        border-color: $tl-line-color;
+      }
+    }
+  }
+}

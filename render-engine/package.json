@@ -20,6 +20,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.1.0",
+    "@angular/cdk": "^10.2.1",
     "@angular/common": "~10.1.0",
     "@angular/compiler": "~10.1.0",
     "@angular/core": "~10.1.0",
@@ -29,6 +30,7 @@
     "@angular/platform-server": "~10.1.0",
     "@angular/router": "~10.1.0",
     "@neux/core": "^0.1.15",
+    "@neux/ui": "0.0.28-next.1",
     "@ngrx/effects": "^10.0.0",
     "@ngrx/schematics": "^10.0.0",
     "@ngrx/store": "^10.0.0",
