@@ -1,0 +1,25 @@
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+
+:host {
+  display: block;
+  background-color: #eeeeee;
+  padding: 40px 0;
+
+  @include rwd($nx-screen-bs-large) {
+    padding: 40px 20px;
+  }
+
+  @include rwd($nx-screen-normal-phone-portrait) {
+    padding: 24px 20px;
+  }
+}
+
+.block {
+  max-width: 944px;
+  margin: 0 auto 40px;
+
+  &__title {
+    @include fz-large-title-36;
+    margin-bottom: 40px;
+  }
+}

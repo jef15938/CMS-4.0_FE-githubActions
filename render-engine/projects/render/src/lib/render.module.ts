@@ -34,6 +34,9 @@ import { ListComponent } from './global/component/list/list.component';
 import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
 import { BreadcrumbComponent } from './global/component/public-component/breadcrumb/breadcrumb.component';
 import { CardLinkComponent } from './global/component/public-component/card-link/card-link.component';
+import { CardNewsComponent } from './global/component/public-component/card-news/card-news.component';
+import { ComponentsOverviewComponent } from './global/component/public-component/components-overview/components-overview.component';
+import { CardLinkFrameComponent } from './global/component/public-component/card-link-frame/card-link-frame.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -54,7 +57,10 @@ const COMPONENTS = [
   ListComponent,
   CollapseComponent,
   BreadcrumbComponent,
-  CardLinkComponent
+  CardLinkComponent,
+  CardNewsComponent,
+  ComponentsOverviewComponent,
+  CardLinkFrameComponent,
 ];
 
 @NgModule({

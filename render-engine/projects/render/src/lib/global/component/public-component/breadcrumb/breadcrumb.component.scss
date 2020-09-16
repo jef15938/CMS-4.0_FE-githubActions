@@ -10,6 +10,11 @@ rdr-breadcrumb {
     $arrow-height: 4px);
 
   nx-breadcrumb.nx-cp {
+    .pile {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
     .grain {
       &__text {
         @include fz-body-16-left-bold;

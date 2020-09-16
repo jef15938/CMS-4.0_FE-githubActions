@@ -20,3 +20,6 @@ export * from './list/list.component';
 export * from './public-component/collapse/collapse.component';
 export * from './public-component/breadcrumb/breadcrumb.component';
 export * from './public-component/card-link/card-link.component';
+export * from './public-component/card-news/card-news.component';
+export * from './public-component/card-link-frame/card-link-frame.component';
+export * from './public-component/components-overview/components-overview.component';
