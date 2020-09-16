@@ -1,0 +1,31 @@
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+
+@mixin arrow-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+
+  @include rwd($nx-screen-normal-phone-portrait) {
+    width: 14px;
+    height: 14px;
+
+    &:after {
+      width: 6px;
+      height: 6px;
+      border-width: 0 0 1.6px 1.6px;
+    }
+  }
+
+  &:after {
+    content: '';
+    display: inline-block;
+    box-sizing: border-box;
+    width: 9px;
+    height: 9px;
+    border-style: solid;
+    border-width: 0 0 2.8px 2.8px;
+    transform: rotate(-135deg);
+  }
+}

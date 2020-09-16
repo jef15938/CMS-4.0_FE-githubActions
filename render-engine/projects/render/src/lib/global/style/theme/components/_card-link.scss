@@ -1,26 +1,90 @@
-@mixin rdr-card-link-theme($theme: $rdr-theme-config) {
-
-  $tl-font-color: map-get($theme, black_1) !default;
-  $tl-arrow-color: map-get($theme, color_primary) !default;
+@mixin rdr-card-link-frame-theme($theme: $rdr-theme-config) {
   $tl-bg-color: map-get($theme, white_1) !default;
   $tl-hover-color: #a0c7c0;
   $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
 
-  .card-link {
+  .card-link-frame {
     background-color: $tl-bg-color;
 
     &:hover {
-      border: 2px solid $tl-hover-color;
+      border-color: $tl-hover-color;
     }
 
     &:active,
     &:focus {
-      border: none;
+      border-color: transparent;
       background-color: $tl-pressed-color;
     }
+  }
+}
+
+//base card link
+@mixin rdr-card-link-theme($theme: $rdr-theme-config) {
+
+  $tl-font-color: map-get($theme, black_1) !default;
+  $tl-arrow-color: map-get($theme, color_primary) !default;
+  // $tl-bg-color: map-get($theme, white_1) !default;
+  // $tl-hover-color: #a0c7c0;
+  // $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
+
+  .card-link {
+    // background-color: $tl-bg-color;
+
+    // &:hover {
+    //   border-color: $tl-hover-color;
+    // }
+
+    // &:active,
+    // &:focus {
+    //   background-color: $tl-pressed-color;
+    // }
 
     &__title {
       color: $tl-font-color;
+    }
+
+    &__icon {
+      &:after {
+        border-color: $tl-arrow-color;
+      }
+    }
+  }
+}
+
+
+//card news link
+@mixin rdr-card-news-theme($theme: $rdr-theme-config) {
+
+  $tl-date-font-color: map-get($theme, brown_grey_1) !default;
+  $tl-title-font-color: map-get($theme, black_0) !default;
+  $tl-desc-font-color: map-get($theme, brownish_grey) !default;
+  $tl-arrow-color: map-get($theme, color_primary) !default;
+  // $tl-bg-color: map-get($theme, white_1) !default;
+  // $tl-hover-color: #a0c7c0;
+  // $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
+
+  .card-news {
+    // background-color: $tl-bg-color;
+
+    // &:hover {
+    //   border-color: $tl-hover-color;
+    // }
+
+    // &:active,
+    // &:focus {
+    //   background-color: $tl-pressed-color;
+    // }
+
+    &__date {
+      color: $tl-date-font-color;
+    }
+
+    &__title {
+      color: $tl-title-font-color;
+    }
+
+    &__desc {
+      color: $tl-desc-font-color;
     }
 
     &__icon {

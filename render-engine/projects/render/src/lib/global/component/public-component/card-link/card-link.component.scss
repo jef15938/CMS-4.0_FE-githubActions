@@ -1,5 +1,6 @@
 @import "~@neux/ui/tool-mixins/style-import-app-global";
 @import "../../../style/theme/theme-all.scss";
+@import "../../../style/abstracts/mixin";
 
 rdr-card-link {
   @include rdr-card-link-theme;
@@ -8,7 +9,7 @@ rdr-card-link {
   +rdr-card-link {
     margin-top: 16px;
 
-    @include rwd(600px) {
+    @include rwd($nx-screen-normal-phone-portrait) {
       margin-top: 8px;
     }
   }
@@ -17,12 +18,9 @@ rdr-card-link {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 10px;
     padding: 16px 20px 16px 24px;
-    box-sizing: border-box;
 
-    @include rwd(600px) {
-      border-radius: 8px;
+    @include rwd($nx-screen-normal-phone-portrait) {
       padding: 8px 12px 8px 16px;
     }
 
@@ -30,40 +28,14 @@ rdr-card-link {
       @include fz-body-18-left-bold;
       margin-right: 16px;
 
-      @include rwd(600px) {
+      @include rwd($nx-screen-normal-phone-portrait) {
         @include fz-footnote-15-left-bold;
         margin-right: 12px;
       }
     }
 
     &__icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 20px;
-      height: 20px;
-
-      @include rwd(600px) {
-        width: 14px;
-        height: 14px;
-
-        &:after {
-          width: 6px;
-          height: 6px;
-          border-width: 0 0 1.6px 1.6px;
-        }
-      }
-
-      &:after {
-        content: '';
-        display: inline-block;
-        box-sizing: border-box;
-        width: 9px;
-        height: 9px;
-        border-style: solid;
-        border-width: 0 0 2.8px 2.8px;
-        transform: rotate(-135deg);
-      }
+      @include arrow-icon;
     }
   }
 }
