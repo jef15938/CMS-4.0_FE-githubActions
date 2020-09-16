@@ -36,6 +36,10 @@ import { GetFarmTreeResponse } from './bean/GetFarmTreeResponse';
 import { ListGroupResponst } from './bean/ListGroupResponst';
 import { GalleryConfigResponse } from './bean/GalleryConfigResponse';
 import { GetSliderTypeRangeResponse } from './bean/GetSliderTypeRangeResponse';
+import { GetGallerySettingResponse } from './bean/GetGallerySettingResponse';
+import { SaveFileResponse } from './bean/SaveFileResponse';
+import { ListFormTypeResponse } from './bean/ListFormTypeResponse';
+import { ListFilesResponse } from './bean/ListFilesResponse';
 
 import { GalleryCategoryPutRequest } from './bean/GalleryCategoryPutRequest';
 import { LoginRequest } from './bean/LoginRequest';
@@ -868,6 +872,71 @@ export class RestApiService {
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GetSliderTypeRangeResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetGallerySettingByGalleryID',
+    method: 'get',
+    path: '/GallerySetting/{galleryID}',
+    mock: './assets/mock/GetGallerySettingByGalleryID.json',
+    responseType: GetGallerySettingResponse
+  })
+  GetGallerySetting(
+    params: { galleryID: string, },
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<GetGallerySettingResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'PostFile',
+    method: 'post',
+    path: '/File',
+    mock: './assets/mock/PostFile.json',
+    responseType: SaveFileResponse
+  })
+  AddFile(
+    params: {},
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<SaveFileResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'PutFileByGalleryID',
+    method: 'put',
+    path: '/File/{galleryID}',
+    mock: './assets/mock/PutFileByGalleryID.json',
+    responseType: SaveFileResponse
+  })
+  UpdateFile(
+    params: { galleryID: string, },
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<SaveFileResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetFormType',
+    method: 'get',
+    path: '/FormType',
+    mock: './assets/mock/GetFormType.json',
+    responseType: ListFormTypeResponse
+  })
+  ListFormType(
+    params: {},
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<ListFormTypeResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetFormTypeByTypeID',
+    method: 'get',
+    path: '/FormType/{typeID}',
+    mock: './assets/mock/GetFormTypeByTypeID.json',
+    responseType: ListFilesResponse
+  })
+  ListFiles(
+    params: { typeID: string, },
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<ListFilesResponse> { return null; }
 
   private getUrlByPathAndParams(path: string, params: { [key: string]: any }) {
     let url = path;

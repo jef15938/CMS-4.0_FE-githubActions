@@ -1888,6 +1888,148 @@ paths:
       operationId: get-SliderType-Range
       description: 取得輪播分類的圖片限制範圍
     parameters: []
+  '/GallerySetting/{galleryID}':
+    get:
+      summary: GetGallerySetting
+      tags:
+        - Gallery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetGallerySettingResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-GallerySetting
+      description: ''
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+  /File:
+    post:
+      summary: AddFile
+      operationId: post-File
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveFileResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - File
+      description: |-
+        用formData型式傳入
+        file:處理後檔案
+  '/File/{galleryID}':
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+    put:
+      summary: UpdateFile
+      operationId: put-File-galleryID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveFileResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - File
+      description: |-
+        用formData型式傳入
+        file:處理後檔案
+  /FormType:
+    get:
+      summary: ListFormType
+      tags:
+        - Form
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFormTypeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FormType
+      description: 取得所有表單下載分類
+  '/FormType/{typeID}':
+    parameters:
+      - schema:
+          type: string
+        name: typeID
+        in: path
+        required: true
+    get:
+      summary: ListFiles
+      tags:
+        - Form
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFilesResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FormType-typeID
+      description: 取得表單下載檔案清單
 components:
   schemas:
     LoginRequest:
@@ -2626,6 +2768,7 @@ components:
                   - TREE
                   - LABEL
                   - LINK
+                  - FILE
               value:
                 type: string
                 description: 欄位值
@@ -2669,9 +2812,6 @@ components:
                   img_limit_height:
                     type: number
                     description: 圖片限制高度
-                  img_crop_setting:
-                    type: string
-                    description: 裁切設定(json format)
               is_readonly:
                 type: boolean
             required:
@@ -3486,4 +3626,90 @@ components:
       required:
         - width
         - height
+    GetGallerySettingResponse:
+      title: GetGallerySettingResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        crop_setting:
+          type: string
+          description: 裁切設定(json format)
+      required:
+        - crop_setting
+    SaveFileResponse:
+      title: SaveFileResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        gallery_id:
+          type: number
+        path:
+          type: string
+        success:
+          type: boolean
+        identity:
+          type: string
+      required:
+        - gallery_id
+        - path
+        - success
+        - identity
+    ListFormTypeResponse:
+      title: ListFormTypeResponse
+      type: object
+      x-tags:
+        - Model
+      description: ''
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListFormTypeInfo'
+      required:
+        - datas
+    ListFormTypeInfo:
+      title: ListFormTypeInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        id:
+          type: string
+          description: 表單下載分類代碼
+        name:
+          type: string
+          description: 表單下載分類名稱
+      required:
+        - id
+        - name
+    ListFilesResponse:
+      title: ListFilesResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListFilesInfo'
+      required:
+        - datas
+    ListFilesInfo:
+      title: ListFilesInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        gallery_id:
+          type: number
+        name:
+          type: string
+        path:
+          type: string
+      required:
+        - gallery_id
+        - name
+        - path
   securitySchemes: {}

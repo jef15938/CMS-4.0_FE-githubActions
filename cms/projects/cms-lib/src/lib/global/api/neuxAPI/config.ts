@@ -62,6 +62,11 @@ GetSitemapContentUnlockBySiteIdAndNodeId: `${BASE_URL}\/SitemapContentUnlock/{si
 PostGallery: `${BASE_URL}\/Gallery`,
 GetGalleryShowOriginalByGalleryID: `${BASE_URL}\/Gallery/ShowOriginal/{galleryID}`,
 GetSliderTypeRange: `${BASE_URL}\/SliderType/Range`,
+GetGallerySettingByGalleryID: `${BASE_URL}\/GallerySetting/{galleryID}`,
+PostFile: `${BASE_URL}\/File`,
+PutFileByGalleryID: `${BASE_URL}\/File/{galleryID}`,
+GetFormType: `${BASE_URL}\/FormType`,
+GetFormTypeByTypeID: `${BASE_URL}\/FormType/{typeID}`,
 
 };
 const API_TYPE = {
@@ -126,5 +131,10 @@ GetSitemapContentUnlockBySiteIdAndNodeId: 'Restful',
 PostGallery: 'Restful',
 GetGalleryShowOriginalByGalleryID: 'Restful',
 GetSliderTypeRange: 'Restful',
+GetGallerySettingByGalleryID: 'Restful',
+PostFile: 'Restful',
+PutFileByGalleryID: 'Restful',
+GetFormType: 'Restful',
+GetFormTypeByTypeID: 'Restful',
 
 };

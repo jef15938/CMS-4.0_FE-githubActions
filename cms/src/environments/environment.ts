@@ -69,6 +69,11 @@ export const environment = {
     PostGallery: `${BASE_URL}\/Gallery`,
     GetGalleryShowOriginalByGalleryID: `${BASE_URL}\/Gallery/ShowOriginal/{galleryID}`,
     GetSliderTypeRange: `${BASE_URL}\/SliderType/Range`,
+    GetGallerySettingByGalleryID: `${BASE_URL}\/GallerySetting/{galleryID}`,
+    PostFile: `${BASE_URL}\/File`,
+    PutFileByGalleryID: `${BASE_URL}\/File/{galleryID}`,
+    GetFormType: `${BASE_URL}\/FormType`,
+    GetFormTypeByTypeID: `${BASE_URL}\/FormType/{typeID}`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -132,6 +137,11 @@ export const environment = {
     PostGallery: 'Restful',
     GetGalleryShowOriginalByGalleryID: 'Restful',
     GetSliderTypeRange: 'Restful',
+    GetGallerySettingByGalleryID: 'Restful',
+    PostFile: 'Restful',
+    PutFileByGalleryID: 'Restful',
+    GetFormType: 'Restful',
+    GetFormTypeByTypeID: 'Restful',
   },
   chatbot: {
     apiUrl: 'https://labs.decoder.com.tw/chatbot-api'
