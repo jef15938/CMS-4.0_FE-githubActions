@@ -15,6 +15,7 @@ import { GalleryServiceError, CmsErrorHandler } from '../../../error-handling';
 import { SaveGalleryResponseModel } from '../../data-model/models/save-gallery-response.model';
 import { GetSliderTypeRangeResponseModel } from '../../data-model/models/get-slider-type-range-response.model';
 import { SaveFileResponseModel } from '../../data-model/models/save-file-response.model';
+import { GetGallerySettingResponseModel } from '../../data-model/models/get-gallery-setting-response.model';
 
 export class FileUploadModel {
   fileName: string;
@@ -299,6 +300,13 @@ export class GalleryService {
     return this.respAPIService.GetSliderTypeRange({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getSliderTypeRange')),
       ModelMapper.rxMapModelTo(GetSliderTypeRangeResponseModel),
+    );
+  }
+
+  getGallerySetting(galleryID: string): Observable<GetGallerySettingResponseModel> {
+    return this.respAPIService.GetGallerySetting({ galleryID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getGallerySetting')),
+      ModelMapper.rxMapModelTo(GetGallerySettingResponseModel),
     );
   }
 
