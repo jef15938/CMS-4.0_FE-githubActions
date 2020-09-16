@@ -1,13 +1,11 @@
-import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { forkJoin, of } from 'rxjs';
+import { Component, OnInit, Input, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
-import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { FormBuilder, FormGroup, ValidationErrors, AbstractControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { map } from 'rxjs/operators';
 
@@ -172,25 +170,29 @@ export class AddGalleryModalComponent extends CustomModalBase implements OnInit 
     }
   }
 
-  upload(galleryType: GalleryType){
+  upload(galleryType: GalleryType) {
     (galleryType === GalleryType.FILE
       ? this.uploadFile()
       : this.uploadImage()
     ).subscribe(res => this.close(res));
   }
 
-  private uploadFile(){
+  private uploadFile() {
     const gallery = this.formGroupChooseFile.get('value').value;
-    return of(null);
+    return this.galleryService.addFile(gallery).pipe(
+      map(({ galleryId, path }) => {
+        return { galleryId, path };
+      })
+    );
   }
 
-  private uploadImage(){
+  private uploadImage() {
     const origin = this.formGroupChooseFile.get('value').value;
     const cropped = this.formGroupCropFile.get('value').value;
     const setting = this.formGroupCropFile.get('setting').value;
     return this.galleryService.addGallery(origin, cropped, setting).pipe(
-      map(({galleryId, path}) => {
-        return {galleryId, path};
+      map(({ galleryId, path }) => {
+        return { galleryId, path };
       })
     );
   }

@@ -14,6 +14,7 @@ import { GalleryConfigResponseModel } from '../../data-model/models/gallery-conf
 import { GalleryServiceError, CmsErrorHandler } from '../../../error-handling';
 import { SaveGalleryResponseModel } from '../../data-model/models/save-gallery-response.model';
 import { GetSliderTypeRangeResponseModel } from '../../data-model/models/get-slider-type-range-response.model';
+import { SaveFileResponseModel } from '../../data-model/models/save-file-response.model';
 
 export class FileUploadModel {
   fileName: string;
@@ -275,6 +276,22 @@ export class GalleryService {
     return this.respAPIService.AddGallery(params, { header }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('addGallery')),
       ModelMapper.rxMapModelTo(SaveGalleryResponseModel),
+    );
+  }
+
+  addFile(file: FileUploadModel): Observable<SaveFileResponseModel> {
+    const formData = new FormData();
+    formData.append('file', file.data);
+
+    const params = {
+      requestBody: formData
+    };
+
+    const header = new HttpHeaders().append('Content-Type', 'multipart/form-data');
+
+    return this.respAPIService.AddFile(params, { header }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('addFile')),
+      ModelMapper.rxMapModelTo(SaveFileResponseModel),
     );
   }
 
