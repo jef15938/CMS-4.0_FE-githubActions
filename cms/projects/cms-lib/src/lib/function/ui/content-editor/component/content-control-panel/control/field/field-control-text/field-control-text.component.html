@@ -4,5 +4,6 @@
 <br>
 <mat-form-field appearance="outline">
   <mat-label>內文</mat-label>
-  <input matInput [maxlength]="maxLength" [(ngModel)]="selected.fieldInfo.fieldVal" (keydown)="change.emit()">
+  <input matInput [maxlength]="maxLength" [(ngModel)]="selected.fieldInfo.fieldVal" [disabled]="!isTemplateMode"
+    (keydown)="change.emit()">
 </mat-form-field>

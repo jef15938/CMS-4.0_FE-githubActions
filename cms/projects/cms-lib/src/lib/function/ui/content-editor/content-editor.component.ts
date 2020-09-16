@@ -37,7 +37,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
   @ViewChild(ContentControlPanelComponent) contentControlPanel: ContentControlPanelComponent;
 
-  @ViewChildren('clickCapturelistenerBlock') clickCapturelistenerBlocks: QueryList<ElementRef>;
+  @ViewChild('clickCapturelistenerBlock') clickCapturelistenerBlock: ElementRef;
+  @ViewChild('clickCapturelistenerBlockToolBar') clickCapturelistenerBlockToolBar: ElementRef;
 
   // 使用模式
   @Input() editorMode: EditorMode = EditorMode.EDIT;
@@ -226,17 +227,43 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
    *
    */
   private registerClickCaptureListener(action: 'register' | 'unregister') {
-    this.clickCapturelistenerBlocks?.forEach(block => {
-      const element = block?.nativeElement as HTMLDivElement;
-      switch (action) {
-        case 'register':
-          element?.addEventListener('click', this.clickCaptureEventListener, true);
-          break;
-        case 'unregister':
-          element?.removeEventListener('click', this.clickCaptureEventListener, true);
-          break;
-      }
-    });
+    const clickCapturelistenerBlockEl = (this.clickCapturelistenerBlock?.nativeElement as HTMLElement);
+    const clickCapturelistenerBlockToolBarEl = (this.clickCapturelistenerBlockToolBar?.nativeElement as HTMLElement);
+    switch (action) {
+      case 'register':
+        clickCapturelistenerBlockEl?.addEventListener('click', this.clickCaptureEventListener, true);
+        clickCapturelistenerBlockToolBarEl?.addEventListener('click', this.clickCaptureEventListenerForToolBar, true);
+        break;
+      case 'unregister':
+        clickCapturelistenerBlockEl?.removeEventListener('click', this.clickCaptureEventListener, true);
+        clickCapturelistenerBlockToolBarEl?.removeEventListener('click', this.clickCaptureEventListenerForToolBar, true);
+        break;
+    }
+  }
+
+  clickCaptureEventListenerForToolBar = (ev: MouseEvent) => {
+    if (this.contentControlPanel?.hasChange) {
+      ev.stopPropagation();
+      this.modalService.openConfirm({
+        message: '選取的版面有尚未套用的變更，請選擇是否套用',
+        confirmBtnMessage: '套用變更',
+        cancelBtnMessage: '復原變更'
+      }).subscribe(confirm => {
+        if (confirm) {
+          this.contentControlPanel.preserveChanges();
+        } else {
+          this.resetSelected();
+          this.contentControlPanel.hasChange = false;
+          this.manager.stateManager.resetState();
+          this.contentViewRenderer.checkView();
+          this.cancelScale();
+        }
+        ev.target.dispatchEvent(ev);
+      });
+    } else {
+      // this.resetSelected();
+      // this.cancelScale();
+    }
   }
 
   clickCaptureEventListener = (ev: MouseEvent) => {

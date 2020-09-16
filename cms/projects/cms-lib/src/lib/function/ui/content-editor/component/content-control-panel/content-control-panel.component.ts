@@ -8,6 +8,7 @@ import { ContentInfoModel } from '../../../../../global/api/data-model/models/co
 import { LanguageInfoModel } from '../../../../../global/api/data-model/models/language-info.model';
 import { ContentBlockInfoModel } from '../../../../../global/api/data-model/models/content-block-info.model';
 import { ContentFieldInfoFieldType } from '../../../../../global/api/data-model/models/content-field-info.model';
+import { ModalService } from '../../../modal';
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -44,6 +45,7 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   constructor(
     private contentEditorService: ContentEditorService,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -63,6 +65,10 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       }
       this.show = !!current;
     }
+  }
+
+  showTemplateRule() {
+    this.modalService.openShowImage({ imageUrl: './assets/img/CMS-login-bg.png' }).subscribe();
   }
 
   /**
@@ -90,14 +96,23 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
    * 顯示版型info
    */
   templateShowInfo() {
-    const languageInfo = new LanguageInfoModel();
-    const contentBlockInfo = new ContentBlockInfoModel();
-    contentBlockInfo.templates = [this.selected.templateInfo as any];
-    languageInfo.blocks = [contentBlockInfo];
-    const contentInfo = new ContentInfoModel();
-    contentInfo.languages = [languageInfo];
+    const templateId = this.selected?.templateInfo?.templateId;
+    if (!templateId) {
+      this.modalService.openMessage({ message: '沒有版面資訊' }).subscribe();
+      return;
+    }
 
-    this.contentEditorService.openEditorInfo(contentInfo).subscribe();
+    const imageUrl = `./assets/img/template-rule/${templateId}.png`;
+    this.modalService.openShowImage({ imageUrl }).subscribe();
+    // 舊程式
+    // const languageInfo = new LanguageInfoModel();
+    // const contentBlockInfo = new ContentBlockInfoModel();
+    // contentBlockInfo.templates = [this.selected.templateInfo as any];
+    // languageInfo.blocks = [contentBlockInfo];
+    // const contentInfo = new ContentInfoModel();
+    // contentInfo.languages = [languageInfo];
+
+    // this.contentEditorService.openEditorInfo(contentInfo).subscribe();
   }
 
   moveTemplate(direction: 'up' | 'down') {

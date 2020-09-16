@@ -7,6 +7,7 @@ import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.c
 import { MessageModalComponent } from './component/message-modal/message-modal.component';
 import { concatMap } from 'rxjs/operators';
 import { of, NEVER } from 'rxjs';
+import { ShowImageModalComponent } from './component/show-image-modal/show-image-modal.component';
 
 let modalId = 0;
 
@@ -61,6 +62,20 @@ export class ModalService {
     return this.openComponent({
       component: ConfirmModalComponent,
       componentInitData
+    });
+  }
+
+  openShowImage(componentInitData: { imageUrl: string }) {
+    return this.openComponent({
+      component: ShowImageModalComponent,
+      componentInitData,
+      modalSetting: {
+        id: `show-image-modal`,
+        width: '800px',
+        maxWidth: '80%',
+        // minWidth: '80%',
+        // height: '80%',
+      }
     });
   }
 

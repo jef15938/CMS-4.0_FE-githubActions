@@ -7,15 +7,17 @@
   </div>
   <div>
     <mat-list class="template-control-tab__list list" cdkDropList (cdkDropListDropped)="onListDropped($event)">
-      <mat-list-item class="list__item" *ngFor="let tabInfo of templateInfo.tabList" cdkDrag>
+      <mat-list-item class="list__item" *ngFor="let tabInfo of templateInfo.tabList" cdkDrag
+        [disabled]="!isTemplateMode">
         <div class="item-container">
           <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
           <input [(ngModel)]="tabInfo.tabId">
           <button type="button" tabindex="0" mat-icon-button
-            [disabled]="templateInfo.tabList.length>=parseInt(''+maxItemCount)" (click)="copyTab(tabInfo)">
+            [disabled]="!isTemplateMode || templateInfo.tabList.length>=parseInt(''+maxItemCount)"
+            (click)="copyTab(tabInfo)">
             <mat-icon class="pointer">file_copy</mat-icon>
           </button>
-          <button type="button" tabindex="0" mat-icon-button (click)="removeTab(tabInfo)">
+          <button type="button" tabindex="0" mat-icon-button [disabled]="!isTemplateMode" (click)="removeTab(tabInfo)">
             <mat-icon class="pointer">remove_circle</mat-icon>
           </button>
         </div>

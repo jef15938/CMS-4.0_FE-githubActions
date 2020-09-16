@@ -2,22 +2,23 @@
   Source: {{templateInfo?.source}}
   <br>
   SourceType: {{sourceType}}
+  <br>
   <div class="btn-group text-right">
     <button type="button" tabindex="-1" mat-raised-button class="btn btn-edit" #menuTrigger="matMenuTrigger"
-      [matMenuTriggerFor]="actionMenu">
+      [matMenuTriggerFor]="actionMenu" [disabled]="!isTemplateMode">
       操作
     </button>
   </div>
   <mat-form-field appearance="outline">
     <mat-label>資料來源</mat-label>
-    <mat-select [(ngModel)]="templateInfo.source" (selectionChange)="change.emit()">
+    <mat-select [(ngModel)]="templateInfo.source" (selectionChange)="change.emit()" [disabled]="!isTemplateMode">
       <mat-option *ngFor="let source of sources" [value]="source.id">
         {{source.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-menu #actionMenu="matMenu">
-    <button type="button" tabindex="-1" mat-menu-item *ngFor="let action of actions"
+    <button type="button" tabindex="-1" mat-menu-item *ngFor="let action of actions" [disabled]="!isTemplateMode"
       (click)="doAction(action)">{{action.actionName}}</button>
   </mat-menu>
 </div>
