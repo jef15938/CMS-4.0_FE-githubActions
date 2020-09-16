@@ -285,14 +285,6 @@ export class GallerySharedComponent implements OnInit, OnDestroy {
         case event.ActionType.EDIT:
           action = this.updateGallery(event.data);
           break;
-        case event.ActionType.DELETE:
-          action = of(undefined).pipe(
-            this.modalService.confirmDelete,
-            concatMap(_ => this.galleryService.deleteGallery(event.data.galleryId).pipe(
-              map(res => 'Deleted')
-            ))
-          );
-          break;
         case event.ActionType.COPY_URL:
           this.copyToClipBoard(event.data.url);
           action = NEVER;

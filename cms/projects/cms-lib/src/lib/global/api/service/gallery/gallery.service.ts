@@ -12,7 +12,8 @@ import { GalleryCategoryGetResponseModel } from '../../data-model/models/gallery
 import { GalleryCategoryPutRequest } from '../../neuxAPI/bean/GalleryCategoryPutRequest';
 import { GalleryConfigResponseModel } from '../../data-model/models/gallery-config-response.model';
 import { GalleryServiceError, CmsErrorHandler } from '../../../error-handling';
-import { stringify } from 'querystring';
+import { SaveGalleryResponseModel } from '../../data-model/models/save-gallery-response.model';
+import { GetSliderTypeRangeResponseModel } from '../../data-model/models/get-slider-type-range-response.model';
 
 export class FileUploadModel {
   fileName: string;
@@ -151,16 +152,6 @@ export class GalleryService {
     );
   }
 
-  deleteGallery(galleryID: number) {
-    if (!galleryID) {
-      throw new ParamsError('galleryID', 'deleteGallery', 'number', galleryID);
-    }
-
-    return this.respAPIService.DeleteGallery({ galleryID: `${galleryID}` }).pipe(
-      CmsErrorHandler.rxMapError(this.error.setMessage('deleteGallery')),
-    );
-  }
-
   createGallery(file: FileUploadModel, categoryID: string) {
     const formData = new FormData();
     formData.append('file', file.data);
@@ -266,6 +257,20 @@ export class GalleryService {
     return this.respAPIService.GetGalleryConfig({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGalleryConfig')),
       ModelMapper.rxMapModelTo(GalleryConfigResponseModel),
+    );
+  }
+
+  addGallery(): Observable<SaveGalleryResponseModel> {
+    return this.respAPIService.AddGallery({}).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('addGallery')),
+      ModelMapper.rxMapModelTo(SaveGalleryResponseModel),
+    );
+  }
+
+  getSliderTypeRange(): Observable<GetSliderTypeRangeResponseModel> {
+    return this.respAPIService.GetSliderTypeRange({}).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getSliderTypeRange')),
+      ModelMapper.rxMapModelTo(GetSliderTypeRangeResponseModel),
     );
   }
 

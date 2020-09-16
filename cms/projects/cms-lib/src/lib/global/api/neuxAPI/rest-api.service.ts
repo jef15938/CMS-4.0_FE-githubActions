@@ -27,6 +27,7 @@ import { SiteMapNodeGetResponse } from './bean/SiteMapNodeGetResponse';
 import { GroupMenuGetResponse } from './bean/GroupMenuGetResponse';
 import { GroupSiteMapGetResponse } from './bean/GroupSiteMapGetResponse';
 import { TemplateGetResponse } from './bean/TemplateGetResponse';
+import { SaveGalleryResponse } from './bean/SaveGalleryResponse';
 import { LayoutGetResponse } from './bean/LayoutGetResponse';
 import { ListContentDataSourceResponse } from './bean/ListContentDataSourceResponse';
 import { ListContentVersionResponse } from './bean/ListContentVersionResponse';
@@ -34,6 +35,7 @@ import { ListFarmTriggerDataResponse } from './bean/ListFarmTriggerDataResponse'
 import { GetFarmTreeResponse } from './bean/GetFarmTreeResponse';
 import { ListGroupResponst } from './bean/ListGroupResponst';
 import { GalleryConfigResponse } from './bean/GalleryConfigResponse';
+import { GetSliderTypeRangeResponse } from './bean/GetSliderTypeRangeResponse';
 
 import { GalleryCategoryPutRequest } from './bean/GalleryCategoryPutRequest';
 import { LoginRequest } from './bean/LoginRequest';
@@ -652,25 +654,12 @@ export class RestApiService {
     method: 'put',
     path: '/Gallery/{galleryID}',
     mock: './assets/mock/PutGalleryByGalleryID.json',
-    responseType: GenerationHeader
+    responseType: SaveGalleryResponse
   })
   UpdateGallery(
     params: { galleryID: string, requestBody: any },
     apiDispatchOptions?: ApiDispatchOptions,
-  ): Observable<GenerationHeader> { return null; }
-
-  // @dynamic
-  @RestApi({
-    apiName: 'DeleteGalleryByGalleryID',
-    method: 'delete',
-    path: '/Gallery/{galleryID}',
-    mock: './assets/mock/DeleteGalleryByGalleryID.json',
-    responseType: GenerationHeader
-  })
-  DeleteGallery(
-    params: { galleryID: string, },
-    apiDispatchOptions?: ApiDispatchOptions,
-  ): Observable<GenerationHeader> { return null; }
+  ): Observable<SaveGalleryResponse> { return null; }
 
   // @dynamic
   @RestApi({
@@ -840,6 +829,45 @@ export class RestApiService {
     params: { siteId: string, nodeId: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'PostGallery',
+    method: 'post',
+    path: '/Gallery',
+    mock: './assets/mock/PostGallery.json',
+    responseType: SaveGalleryResponse
+  })
+  AddGallery(
+    params: {},
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<SaveGalleryResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetGalleryShowOriginalByGalleryID',
+    method: 'get',
+    path: '/Gallery/ShowOriginal/{galleryID}',
+    mock: './assets/mock/GetGalleryShowOriginalByGalleryID.json',
+    responseType: null
+  })
+  GetGalleryShowOriginal(
+    params: { galleryID: string, },
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<any> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetSliderTypeRange',
+    method: 'get',
+    path: '/SliderType/Range',
+    mock: './assets/mock/GetSliderTypeRange.json',
+    responseType: GetSliderTypeRangeResponse
+  })
+  GetSliderTypeRange(
+    params: {},
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<GetSliderTypeRangeResponse> { return null; }
 
   private getUrlByPathAndParams(path: string, params: { [key: string]: any }) {
     let url = path;

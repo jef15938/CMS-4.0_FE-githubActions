@@ -53,7 +53,6 @@ export const environment = {
     PutGroupSiteMapBySiteIDAndGroupID: `${BASE_URL}\/Group/SiteMap/{siteID}/{groupID}`,
     GetTemplateByControlID: `${BASE_URL}\/Template/{controlID}`,
     PutGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
-    DeleteGalleryByGalleryID: `${BASE_URL}\/Gallery/{galleryID}`,
     PostSitemapAuditingByNodeId: `${BASE_URL}\/SitemapAuditing/{nodeId}`,
     GetLayout: `${BASE_URL}\/Layout`,
     GetFarmTakeOffByFuncID: `${BASE_URL}\/FarmTakeOff/{funcID}`,
@@ -67,6 +66,9 @@ export const environment = {
     GetGroup: `${BASE_URL}\/Group`,
     GetGalleryConfig: `${BASE_URL}\/GalleryConfig`,
     GetSitemapContentUnlockBySiteIdAndNodeId: `${BASE_URL}\/SitemapContentUnlock/{siteId}/{nodeId}`,
+    PostGallery: `${BASE_URL}\/Gallery`,
+    GetGalleryShowOriginalByGalleryID: `${BASE_URL}\/Gallery/ShowOriginal/{galleryID}`,
+    GetSliderTypeRange: `${BASE_URL}\/SliderType/Range`,
   },
   API_TYPE: {
     GetGalleryByCategoryID: 'Restful',
@@ -114,7 +116,6 @@ export const environment = {
     PutGroupSiteMapBySiteIDAndGroupID: 'Restful',
     GetTemplateByControlID: 'Restful',
     PutGalleryByGalleryID: 'Restful',
-    DeleteGalleryByGalleryID: 'Restful',
     PostSitemapAuditingByNodeId: 'Restful',
     GetLayout: 'Restful',
     GetFarmTakeOffByFuncID: 'Restful',
@@ -128,6 +129,9 @@ export const environment = {
     GetGroup: 'Restful',
     GetGalleryConfig: 'Restful',
     GetSitemapContentUnlockBySiteIdAndNodeId: 'Restful',
+    PostGallery: 'Restful',
+    GetGalleryShowOriginalByGalleryID: 'Restful',
+    GetSliderTypeRange: 'Restful',
   },
   chatbot: {
     apiUrl: 'https://labs.decoder.com.tw/chatbot-api'

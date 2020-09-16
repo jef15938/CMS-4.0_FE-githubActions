@@ -17,6 +17,8 @@ public limit_character: string;
 @ValidateNested()
 @IsNotEmpty()
 public file_limits: Array<GalleryFileLimitConfig>;
+@IsNotEmpty()
+public img_filename_ext: string;
 
 
 }

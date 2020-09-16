@@ -11,6 +11,7 @@ import { GalleryFileLimitConfigModel } from './gallery-file-limit-config.model';
     model.maxUploadSize = bean.max_upload_size;
     model.limitCharacter = bean.limit_character;
     model.fileLimits = ModelMapper.mapArrayTo(GalleryFileLimitConfigModel, bean.file_limits);
+    model.imgFilenameExt = bean.img_filename_ext;
   }
 )
 export class GalleryConfigResponseModel {
@@ -24,5 +25,6 @@ export class GalleryConfigResponseModel {
   @ValidateNested()
   @IsNotEmpty()
   public fileLimits: Array<GalleryFileLimitConfigModel>;
-
+  @IsNotEmpty()
+  public imgFilenameExt: string;
 }

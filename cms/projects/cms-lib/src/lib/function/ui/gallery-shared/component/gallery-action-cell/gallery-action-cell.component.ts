@@ -3,7 +3,7 @@ import { CustomCellRenderer, CmsTable } from '../../../../ui/table';
 import { GalleryInfoModel } from '../../../../../global/api/data-model/models/gallery-info.model';
 
 enum ActionType {
-  EDIT, DELETE, COPY_URL,
+  EDIT, COPY_URL,
 }
 
 export class GalleryActionCellCustomEvent {
