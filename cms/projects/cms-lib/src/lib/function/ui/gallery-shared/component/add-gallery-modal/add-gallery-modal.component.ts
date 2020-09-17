@@ -12,7 +12,7 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { MatRadioChange } from '@angular/material/radio';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token';
 import { CmsEnviroment } from '../../../../../global/interface';
-import { CmsLoadingToggle } from 'projects/cms-lib/src/lib/global/service';
+import { CmsLoadingToggle } from '../../../../../global/service';
 
 export enum GalleryType {
   FILE = 'FILE',
