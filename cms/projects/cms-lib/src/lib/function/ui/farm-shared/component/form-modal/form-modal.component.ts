@@ -5,7 +5,7 @@ import { FormService } from '../../../../../global/api/service/form/form.service
 import { ListFormTypeInfo } from '../../../../../global/api/neuxAPI/bean/ListFormTypeInfo';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal/base/custom-modal-base';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
-import { ListFilesInfoModel } from 'projects/cms-lib/src/lib/global/api/data-model/models/list-files-info.model';
+import { ListFilesInfoModel } from '../../../../../global/api/data-model/models/list-files-info.model';
 import { MatSelect } from '@angular/material/select';
 import { ColDef } from '../../../table/table.interface';
 
