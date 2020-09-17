@@ -279,6 +279,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   selectImage(col: FarmFormInfoModelColumn) {
     const galleryID = col.value;
     const galleryName = col.setting.fileName;
+    const limitFileNameExt = col.setting.limitFileNameExt;
+    const accept = limitFileNameExt
+      ? (limitFileNameExt.split(',').map(ext => `.${ext.toLowerCase()}`) as GalleryFileType[]).join(',')
+      : undefined;
     const imageHeightWidth = col.setting.imgLimitWidth > 0 && col.setting.imgLimitHeight > 0
       ? { width: col.setting.imgLimitWidth, height: col.setting.imgLimitHeight }
       : null;
@@ -288,10 +292,10 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
         ? this.gallerySharedService.updateGalleryImage(
           `${galleryID}`,
           galleryName,
-          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
           imageHeightWidth,
         )
-        : this.gallerySharedService.addGalleryImage()
+        : this.gallerySharedService.addGalleryImage(accept)
     ).subscribe(res => {
       if (res) {
         this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
@@ -303,14 +307,18 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   selectFile(col: FarmFormInfoModelColumn) {
     const galleryID = col.value;
     const galleryName = col.setting.fileName;
+    const limitFileNameExt = col.setting.limitFileNameExt;
+    const accept = limitFileNameExt
+      ? (limitFileNameExt.split(',').map(ext => `.${ext.toLowerCase()}`) as GalleryFileType[]).join(',')
+      : undefined;
     (
       galleryID
         ? this.gallerySharedService.updateGalleryFile(
           `${galleryID}`,
           galleryName,
-          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
         )
-        : this.gallerySharedService.addGalleryFile()
+        : this.gallerySharedService.addGalleryFile(accept)
     ).subscribe(res => {
       if (res) {
         this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);

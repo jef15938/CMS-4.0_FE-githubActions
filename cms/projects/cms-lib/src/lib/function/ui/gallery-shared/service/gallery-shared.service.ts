@@ -78,8 +78,8 @@ export class GallerySharedService {
     });
   }
 
-  addGalleryImage(): Observable<UploadResponse> {
-    return this.openAddGalleryModalComponent({ galleryType: GalleryType.IMAGE });
+  addGalleryImage(accept?: string): Observable<UploadResponse> {
+    return this.openAddGalleryModalComponent({ galleryType: GalleryType.IMAGE, accept });
   }
 
   updateGalleryImage(
@@ -99,8 +99,8 @@ export class GallerySharedService {
     });
   }
 
-  addGalleryFile(): Observable<UploadResponse> {
-    return this.openAddGalleryModalComponent({ galleryType: GalleryType.FILE });
+  addGalleryFile(accept?: string): Observable<UploadResponse> {
+    return this.openAddGalleryModalComponent({ galleryType: GalleryType.FILE, accept });
   }
 
   updateGalleryFile(
