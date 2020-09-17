@@ -178,9 +178,9 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   cropFile(file: FileUploadModel) {
     if (file) {
-      this.cropperService.openEditor(file.url).subscribe((dataUrl: string) => {
-        if (!dataUrl) { return; }
-        const blob = this.dataURItoBlob(dataUrl);
+      this.cropperService.openEditor(file.url).subscribe(result => {
+        if (!result) { return; }
+        const blob = this.dataURItoBlob(result.dataUrl);
         const newFile = this.galleryService.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
         this.files.splice(this.files.indexOf(file), 1, newFile);
         this.files = [...this.files];

@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { CropperComponent as CropperWrapper } from 'angular-cropperjs';
 import { CustomModalBase, CustomModalActionButton } from '../modal';
 import { CropperOption } from './cropper.type';
+import { CropSetting, CropResult } from './cropper.service';
 
 @Component({
   selector: 'cms-cropper',
   templateUrl: './cropper.component.html',
   styleUrls: ['./cropper.component.scss']
 })
-export class CropperComponent extends CustomModalBase implements OnInit, AfterViewInit {
+export class CropperComponent extends CustomModalBase implements OnInit, AfterViewInit, AfterViewChecked {
 
   @Input() title: string | (() => string) = '';
   actions: CustomModalActionButton[];
@@ -17,6 +18,9 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
   private get cropper() { return this.cropperWrapper.cropper; }
 
   @Input() imgUrl = '';
+  @Input() cropSetting: CropSetting;
+
+  private isSettingInit = false;
 
   cropperOption: CropperOption = {
     checkCrossOrigin: false,
@@ -41,15 +45,46 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
     this.changeDetectorRef.detectChanges();
   }
 
+  ngAfterViewChecked(): void {
+    this.initCropSetting();
+  }
+
+  private initCropSetting() {
+    if (this.isSettingInit) { return; }
+    if (this.cropSetting && this.cropper) {
+      try {
+        const { data, canvasData, containerData, cropBoxData, imageData } = this.cropSetting;
+        this.cropper.setData(data);
+        this.cropper.setCanvasData(canvasData);
+        this.cropper.setCropBoxData(cropBoxData);
+        this.isSettingInit = true;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   onImageLoaded(ev) {
     console.warn('onImageLoaded() ev = ', ev);
   }
 
   confirm() {
     this.cropper.crop();
+    const cropSetting = this.exportCropSetting();
     const dataUrl = this.cropper.getCroppedCanvas().toDataURL();
     this.cropper.destroy();
-    this.close(dataUrl);
+    const result: CropResult = { dataUrl, cropSetting };
+    this.close(result);
+  }
+
+  private exportCropSetting(): CropSetting {
+    return {
+      data: { ...this.cropper.getData() },
+      imageData: { ...this.cropper.getImageData() },
+      canvasData: { ...this.cropper.getCanvasData() },
+      containerData: { ...this.cropper.getContainerData() },
+      cropBoxData: { ...this.cropper.getCropBoxData() },
+    };
   }
 
   showInfo() {

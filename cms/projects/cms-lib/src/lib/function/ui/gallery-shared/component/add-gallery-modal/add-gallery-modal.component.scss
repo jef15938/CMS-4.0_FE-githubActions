@@ -15,6 +15,12 @@
   }
 }
 
+mat-radio-group {
+  mat-radio-button:not(:first-child) {
+    margin-left: 10px;
+  }
+}
+
 .width-max-half {
   max-width: 50%;
   min-width: 50%;

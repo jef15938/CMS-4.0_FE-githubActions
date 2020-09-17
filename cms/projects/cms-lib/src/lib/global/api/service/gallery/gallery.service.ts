@@ -262,6 +262,25 @@ export class GalleryService {
     );
   }
 
+  getSliderTypeRange(): Observable<GetSliderTypeRangeResponseModel> {
+    return this.respAPIService.GetSliderTypeRange({}).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getSliderTypeRange')),
+      ModelMapper.rxMapModelTo(GetSliderTypeRangeResponseModel),
+    );
+  }
+
+  getGallerySetting(galleryID: string): Observable<GetGallerySettingResponseModel> {
+    return this.respAPIService.GetGallerySetting({ galleryID }).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('getGallerySetting')),
+      ModelMapper.rxMapModelTo(GetGallerySettingResponseModel),
+    );
+  }
+
+  private getDispatchOptionForMultipartFormData() {
+    const header = new HttpHeaders().append('Content-Type', 'multipart/form-data');
+    return { header };
+  }
+
   addGallery(original: FileUploadModel, cropped: FileUploadModel, cropSetting): Observable<SaveGalleryResponseModel> {
     const formData = new FormData();
     formData.append('originalFile', original.data);
@@ -272,10 +291,24 @@ export class GalleryService {
       requestBody: formData
     };
 
-    const header = new HttpHeaders().append('Content-Type', 'multipart/form-data');
-
-    return this.respAPIService.AddGallery(params, { header }).pipe(
+    return this.respAPIService.AddGallery(params, this.getDispatchOptionForMultipartFormData()).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('addGallery')),
+      ModelMapper.rxMapModelTo(SaveGalleryResponseModel),
+    );
+  }
+
+  updateGallery2(galleryID: string, file: FileUploadModel, cropSetting): Observable<SaveGalleryResponseModel> {
+    const formData = new FormData();
+    formData.append('file', file.data);
+    formData.append('setting', cropSetting ? JSON.stringify(cropSetting) : '');
+
+    const params = {
+      galleryID,
+      requestBody: formData
+    };
+
+    return this.respAPIService.UpdateGallery(params, this.getDispatchOptionForMultipartFormData()).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('updateGallery2')),
       ModelMapper.rxMapModelTo(SaveGalleryResponseModel),
     );
   }
@@ -288,25 +321,24 @@ export class GalleryService {
       requestBody: formData
     };
 
-    const header = new HttpHeaders().append('Content-Type', 'multipart/form-data');
-
-    return this.respAPIService.AddFile(params, { header }).pipe(
+    return this.respAPIService.AddFile(params, this.getDispatchOptionForMultipartFormData()).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('addFile')),
       ModelMapper.rxMapModelTo(SaveFileResponseModel),
     );
   }
 
-  getSliderTypeRange(): Observable<GetSliderTypeRangeResponseModel> {
-    return this.respAPIService.GetSliderTypeRange({}).pipe(
-      CmsErrorHandler.rxMapError(this.error.setMessage('getSliderTypeRange')),
-      ModelMapper.rxMapModelTo(GetSliderTypeRangeResponseModel),
-    );
-  }
+  updateFile(galleryID: string, file: FileUploadModel): Observable<SaveFileResponseModel> {
+    const formData = new FormData();
+    formData.append('file', file.data);
 
-  getGallerySetting(galleryID: string): Observable<GetGallerySettingResponseModel> {
-    return this.respAPIService.GetGallerySetting({ galleryID }).pipe(
-      CmsErrorHandler.rxMapError(this.error.setMessage('getGallerySetting')),
-      ModelMapper.rxMapModelTo(GetGallerySettingResponseModel),
+    const params = {
+      galleryID,
+      requestBody: formData
+    };
+
+    return this.respAPIService.UpdateFile(params, this.getDispatchOptionForMultipartFormData()).pipe(
+      CmsErrorHandler.rxMapError(this.error.setMessage('updateFile')),
+      ModelMapper.rxMapModelTo(SaveFileResponseModel),
     );
   }
 

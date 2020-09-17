@@ -1,7 +1,8 @@
 <div class="modal-form-layout" *ngIf="aTagConfig">
   <form class="modal-form-layout__form" #form="ngForm">
     <div class="btn-group text-right">
-      <button type="button" tabindex="-1" mat-raised-button class="btn btn-dark" (click)="changeGallery()">媒體庫</button>
+      <button type="button" tabindex="-1" mat-raised-button class="btn btn-dark"
+        (click)="selectFile()">{{galleryID ? '修改檔案' : '加入本地檔案'}}</button>
     </div>
     <div class="modal-form-layout__content ">
       <!-- <div class="modal-form-layout__source-container">

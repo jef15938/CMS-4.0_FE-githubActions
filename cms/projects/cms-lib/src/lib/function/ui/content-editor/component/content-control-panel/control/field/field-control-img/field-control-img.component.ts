@@ -11,6 +11,7 @@ import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-e
 })
 export class FieldControlImgComponent extends ContentControlBase implements OnInit, OnChanges {
 
+  ATTRIBUTE_GALLERY_ID = ATTRIBUTE_GALLERY_ID;
   fieldInfo: ImgFieldInfo;
 
   adviceFormat = '';
@@ -31,20 +32,45 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
       const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
       const directive = selected.fieldDirective as LayoutFieldImgDirective;
       this.adviceFormat = directive.adviceFormat;
-      this.adviceWidth = directive.adviceWidth;
-      this.adviceHeight = directive.adviceHeight;
+      this.adviceWidth = directive.adviceWidth || 0;
+      this.adviceHeight = directive.adviceHeight || 0;
       this.fieldInfo = selected.fieldInfo as ImgFieldInfo;
       this.fieldInfo.extension = this.fieldInfo.extension || {
-        altValue: ''
+        altValue: '',
+        originID: '',
+        originPath: '',
+        galleryName: '',
       };
     }
   }
 
-  changeGallery() {
-    this.gallerySharedService.openImgGallery().subscribe(selectedGallery => {
-      if (selectedGallery) {
-        this.fieldInfo.fieldVal = selectedGallery.url;
-        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${selectedGallery.galleryId}`;
+  selectImage() {
+    const galleryID = this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID];
+    const path = this.fieldInfo.fieldVal;
+    const galleryName = this.fieldInfo.extension.galleryName;
+    const originID = this.fieldInfo.extension.originID;
+    const originPath = this.fieldInfo.extension.originPath;
+
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryImage(
+          `${galleryID}`,
+          galleryName,
+          path.substring(path.lastIndexOf('.') + 1),
+          `${originID}`,
+          originPath,
+          path,
+          { width: this.adviceWidth || -1, height: this.adviceHeight || -1 }
+        )
+        : this.gallerySharedService.addGalleryImage()
+    ).subscribe(res => {
+      if (res) {
+        const saved = res as any;
+        this.fieldInfo.fieldVal = saved.path;
+        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${saved.galleryId}`;
+        this.fieldInfo.extension.galleryName = saved.galleryName;
+        this.fieldInfo.extension.originID = saved.originalGalleryId;
+        this.fieldInfo.extension.originPath = saved.originalPath;
         this.change.emit();
       }
     });

@@ -14,11 +14,13 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
 
   @Input() fileLink: HTMLAnchorElement;
   @Input() galleryID: number = null;
+  @Input() galleryName: string;
 
   aTagConfig: {
     href: string;
     text: string;
-    galleyID: number;
+    galleryID: number;
+    galleryName: string;
   };
 
   fileType = '';
@@ -35,7 +37,8 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
     this.aTagConfig = {
       href: this.fileLink?.getAttribute('href') || '',
       text: this.fileLink?.innerText || '',
-      galleyID: this.galleryID || null,
+      galleryID: this.galleryID || null,
+      galleryName: this.galleryName || '',
     };
 
     const splitTexts = this.aTagConfig?.text?.split('.');
@@ -51,14 +54,27 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
     this.close(this.aTagConfig);
   }
 
-  changeGallery() {
-    this.gallerySharedService.openFileGallery().subscribe(selectedGallery => {
-      if (selectedGallery) {
-        this.aTagConfig.href = selectedGallery.url;
-        this.aTagConfig.text = selectedGallery.fileName;
-        this.aTagConfig.galleyID = selectedGallery.galleryId;
-        this.fileType = selectedGallery.fileType;
-      }
-    });
+  selectFile() {
+    const galleryID = this.galleryID;
+    const galleryName = this.galleryName;
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryFile(
+          `${galleryID}`,
+          galleryName,
+          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+        )
+        : this.gallerySharedService.addGalleryFile()
+    )
+      // this.gallerySharedService.addGalleryFile()
+      .subscribe(res => {
+        if (res) {
+          this.aTagConfig.href = res.path;
+          this.aTagConfig.galleryName = res.galleryName;
+          this.aTagConfig.text = res.galleryName;
+          this.aTagConfig.galleryID = res.galleryId;
+          this.fileType = res.galleryName.substring(res.galleryName.lastIndexOf('.') + 1);
+        }
+      });
   }
 }
