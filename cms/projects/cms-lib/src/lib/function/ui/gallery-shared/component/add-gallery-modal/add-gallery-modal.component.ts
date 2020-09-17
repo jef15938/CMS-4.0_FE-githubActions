@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
 import { CropperService, CropSetting } from '../../../../ui/cropper';
@@ -161,6 +161,15 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
       value: [null, Validators.required],
       setting: [null],
     });
+
+    this.getGalleryConfig().subscribe();
+  }
+
+  private getGalleryConfig() {
+    return this.galleryService.getGalleryConfig().pipe(
+      CmsErrorHandler.rxHandleError(),
+      tap(config => this.galleryConfig = config),
+    );
   }
 
   private getTypeTextByGalleryType(galleryType: GalleryType) {
@@ -189,17 +198,41 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
   }
 
   chooseFile() {
+    const galleryConfig = this.galleryConfig;
+    if (!galleryConfig) {
+      this.modalService.openMessage({ message: '無法取得上傳設定檔，請重整頁面後再試' }).subscribe();
+      return;
+    }
     try {
       const fileUpload = this.getFileUpload();
       fileUpload.onchange = fileUpload.onchange || (() => {
         const files = Array.from(fileUpload.files);
         fileUpload.value = '';
 
-        if (!files.length) {
+        if (!files.length) { return; }
+
+        const file = this.galleryService.mapFileToFileUploadModel(files[0]);
+
+        if (galleryConfig.limitCharacter) {
+          const limitCharacters = galleryConfig.limitCharacter.split(',');
+          if (limitCharacters.some(c => file.fileName.indexOf(c) > -1)) {
+            this.modalService.openMessage({ message: `檔名不可含有下列字元 : ${galleryConfig.limitCharacter}` }).subscribe();
+            return;
+          }
+        }
+
+        const ext = file.fileName.substring(file.fileName.lastIndexOf('.') + 1);
+        const fileLimit = this.findFileSizeLimitByExt(ext);
+        if (!fileLimit) {
+          this.modalService.openMessage({ message: `不支援 .${ext}` }).subscribe();
           return;
         }
 
-        const file = this.galleryService.mapFileToFileUploadModel(files[0]);
+        if (file.fileSize >= fileLimit.maxFileSize * 1024) {
+          this.modalService.openMessage({ message: `上傳大小過大，${ext} 上傳上限為 ${fileLimit.maxFileSize} kb` }).subscribe();
+          return;
+        }
+
         this.formGroupSelectFile.get('value').patchValue(file);
         this.stepper.next();
       });
@@ -208,6 +241,14 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'AddGalleryModalComponent.addFile()', '加入檔案錯誤');
     }
+  }
+
+  findFileSizeLimitByExt(ext: string) {
+    if (!this.galleryConfig) {
+      return null;
+    }
+    const fileLimit = this.galleryConfig.fileLimits.find(limit => limit.fileNameExt.toLowerCase() === ext?.toLowerCase());
+    return fileLimit;
   }
 
   private dataURItoBlob(dataURI: string): Blob {
