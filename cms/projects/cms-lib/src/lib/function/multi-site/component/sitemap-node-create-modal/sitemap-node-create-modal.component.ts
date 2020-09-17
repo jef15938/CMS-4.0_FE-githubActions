@@ -127,6 +127,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
         showMessage();
       })
     ).subscribe(_ => {
+      this.cmsLoadingToggle.close();
       this.close('Created');
     });
   }

@@ -83,6 +83,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
         showMessage();
       })
     ).subscribe(_ => {
+      this.cmsLoadingToggle.close();
       this.close('Updated');
     });
   }
