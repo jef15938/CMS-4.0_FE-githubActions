@@ -6,7 +6,7 @@
   </div>
   <div class="field-control-bgImg__btn-container btn-container btn-container">
     <button class="field-control-bgImg__btn float-right btn btn-dark" type="button" tabindex="-1" mat-raised-button
-      [disabled]="!isTemplateMode" (click)="changeGallery()">媒體庫</button>
+      [disabled]="!isTemplateMode" (click)="selectImage()">{{fieldInfo.extension[ATTRIBUTE_GALLERY_ID] ? '修改圖片' : '加入本地圖片'}}</button>
   </div>
   <div class="field-control-bgImg__input">
     <mat-form-field appearance="outline">
