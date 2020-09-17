@@ -73,7 +73,7 @@ export class CropperService {
       width: '100%',
       maxWidth: '100%',
       height: '100%',
-      hideCloseBtn: true,
+      // hideCloseBtn: true,
     };
 
     const cropSetting = config?.cropSetting || null;
