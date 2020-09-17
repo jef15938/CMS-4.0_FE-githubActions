@@ -1,18 +1,17 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
 import {IsNotEmpty} from 'class-validator';
-import {PageInfo} from './PageInfo';
 
 import { TypeFactory } from '../type-factory';
 
-export class ListDataSourceDataResponse {
+export class DownloadInfo {
 
 @IsNotEmpty()
-public datas: Array<string>;
-@Type(TypeFactory(PageInfo))
-@ValidateNested()
+public id: string;
 @IsNotEmpty()
-public pageInfo: PageInfo;
+public title: string;
+@IsNotEmpty()
+public url: string;
 
 
 }

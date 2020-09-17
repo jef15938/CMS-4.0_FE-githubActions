@@ -9,6 +9,7 @@ export class ContentInfo {
 @Type(TypeFactory(LanguageInfo))
 @ValidateNested()
 public languages: Array<LanguageInfo>;
+public galleries: Array<string>;
 
 
 }

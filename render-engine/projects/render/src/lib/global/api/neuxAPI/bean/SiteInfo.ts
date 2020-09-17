@@ -1,14 +1,15 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {SiteInfo} from './SiteInfo';
+import {SiteMapInfo} from './SiteMapInfo';
 
 import { TypeFactory } from '../type-factory';
 
-export class SiteMapGetResponse {
+export class SiteInfo {
 
-@Type(TypeFactory(SiteInfo))
+public siteId: string;
+@Type(TypeFactory(SiteMapInfo))
 @ValidateNested()
-public sites: Array<SiteInfo>;
+public siteMap: Array<SiteMapInfo>;
 
 
 }

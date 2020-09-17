@@ -1,7 +1,7 @@
 import { ComponentRef } from '@angular/core';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
-import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
 
 export enum TemplateType {
   COMMON = 'Common',
@@ -14,7 +14,7 @@ export enum TemplateType {
 export interface WithRenderInfo {
   mode: 'preview' | 'edit';
   runtime: boolean;
-  sites: SitesResponseModel;
+  sites: SiteMapGetResponseModel;
   fixed: boolean;
 }
 

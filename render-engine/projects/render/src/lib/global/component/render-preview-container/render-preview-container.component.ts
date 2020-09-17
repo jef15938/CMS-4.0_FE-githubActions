@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
-import { SitesResponseModel } from '../../api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '../../../function/wrapper';
 
@@ -200,7 +200,7 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
   @Input() templates: ContentTemplateInfoModel[];
   @Input() mode: 'preview' | 'edit';
   @Input() runtime: boolean;
-  @Input() sites: SitesResponseModel;
+  @Input() sites: SiteMapGetResponseModel;
   fixed = false;
 
   previousTemplates: any = mockPrevious;

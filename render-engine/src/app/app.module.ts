@@ -36,6 +36,7 @@ import { BrowserStateInterceptor } from '@neux/render';
   ],
   providers: [
     ...RenderModule.forRoot().providers,
+    { provide: 'API_BASE_URL', useValue: environment.apiBaseUrl },
     { provide: RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN, useValue: RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS },
     { provide: API_CONFIG_TOKEN, useValue: environment },
     { provide: RENDER_ENVIROMENT_TOKEN, useValue: environment },

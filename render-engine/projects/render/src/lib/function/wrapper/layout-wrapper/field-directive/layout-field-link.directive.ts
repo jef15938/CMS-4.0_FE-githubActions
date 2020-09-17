@@ -1,7 +1,7 @@
 import { Directive, Input, Injector, AfterContentChecked } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
 import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
-import { SitesResponseModel } from '../../../../global/api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 
 export enum LinkFieldInfoUrlType {
   INSIDE = 'INSIDE',
@@ -42,7 +42,7 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
       if (!isHrefSet) {
         const siteId = aTag.getAttribute('siteid');
         const nodeId = aTag.getAttribute('href');
-        const href = SitesResponseModel.findContentPathBySiteIdAndNodeId(this.sites, siteId, nodeId);
+        const href = SiteMapGetResponseModel.findContentPathBySiteIdAndNodeId(this.sites, siteId, nodeId);
         if (href) {
           aTag.setAttribute('nodeId', nodeId);
           aTag.setAttribute('href', href);

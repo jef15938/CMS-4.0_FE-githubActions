@@ -10,8 +10,8 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ContextApiNameFactory, ApiContext } from '../api/context-api-name-factory';
 import { plainToClass } from 'class-transformer';
-import { SitesResponse } from '../api/neuxAPI/bean/SitesResponse';
-import { SitesResponseModel } from '../api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
+import { SiteMapGetResponse } from '../api/neuxAPI/bean/SiteMapGetResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +34,16 @@ export class RenderService {
   getPageInfo(context: ApiContext, pageID: string, lang: string = null): Observable<PageInfoGetResponseModel> {
 
     const dispatch = !!lang
-      ? this.apiService.dispatchRestApi<PageInfoGetResponse>(ContextApiNameFactory.GetPageByPageIDAndLang(context), { pageID, lang })
-      : this.apiService.dispatchRestApi<PageInfoGetResponse>(ContextApiNameFactory.GetPageByPageID(context), { pageID })
+      ? (
+        context === 'runtime'
+          ? this.apiService.GetPageInfoByLang({ pageID, lang })
+          : this.apiService.GetPreviewPageInfoByLang({ pageID, lang })
+      )
+      : (
+        context === 'runtime'
+          ? this.apiService.GetPageInfo({ pageID })
+          : this.apiService.GetPreviewPageInfo({ pageID })
+      )
       ;
 
     return dispatch.pipe(
@@ -52,17 +60,17 @@ export class RenderService {
    */
   getContentInfo(context: ApiContext, contentID: string): Observable<ContentInfoModel> {
     return (
-      context === 'preview'
-        ? this.apiService.dispatchRestApi<ContentInfo>('GetPreviewContentByContentID', { contentID })
-        : this.apiService.dispatchRestApi<ContentInfo>('GetContentByContentID', { contentID })
+      context === 'runtime'
+        ? this.apiService.GetContentInfo({ contentID })
+        : this.apiService.GetPreviewContent({ contentID })
     ).pipe(
       ModelMapper.rxMapModelTo(ContentInfoModel),
     );
   }
 
-  getSitemapJson(): Observable<SitesResponse> {
-    return this.httpClient.get<SitesResponse>('./sitemap.json').pipe(
-      map(res => plainToClass(SitesResponse, res)),
+  getSitemapJson(): Observable<SiteMapGetResponse> {
+    return this.httpClient.get<SiteMapGetResponse>('./sitemap.json').pipe(
+      map(res => plainToClass(SiteMapGetResponse, res)),
     );
   }
 
@@ -74,15 +82,17 @@ export class RenderService {
    * @returns {Observable<any>}
    * @memberof RenderService
    */
-  getSitemap(context: ApiContext): Observable<SitesResponseModel> {
+  getSitemap(context: ApiContext): Observable<SiteMapGetResponseModel> {
 
     const dispatch = context === 'runtime'
       ? this.getSitemapJson()
-      : this.apiService.dispatchRestApi<SitesResponse>(ContextApiNameFactory.GetSiteMapByNodeId(context), {})
+      : (
+        context === 'batchSSR' ? this.apiService.GetSiteMap({}) : this.apiService.GetPreviewSiteMap({})
+      )
       ;
 
     return dispatch.pipe(
-      ModelMapper.rxMapModelTo(SitesResponseModel),
+      ModelMapper.rxMapModelTo(SiteMapGetResponseModel),
     );
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
+
 
 @Component({
   selector: 'rdr-html-editor-content',
@@ -10,7 +11,7 @@ export class HtmlEditorContentComponent implements OnInit, OnChanges {
 
   @Input() htmlString;
   @Input() runtime = false;
-  @Input() sites: SitesResponseModel = null;
+  @Input() sites: SiteMapGetResponseModel = null;
 
   html: string;
 
@@ -30,7 +31,7 @@ export class HtmlEditorContentComponent implements OnInit, OnChanges {
         if (!isHrefSet) {
           const siteId = node.getAttribute('siteid');
           const nodeId = node.getAttribute('href');
-          const href = SitesResponseModel.findContentPathBySiteIdAndNodeId(this.sites, siteId, nodeId);
+          const href = SiteMapGetResponseModel.findContentPathBySiteIdAndNodeId(this.sites, siteId, nodeId);
           if (href) {
             node.setAttribute('nodeId', nodeId);
             node.setAttribute('href', href);

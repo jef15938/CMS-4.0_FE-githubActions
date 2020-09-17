@@ -1,6 +1,6 @@
 import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef, Injector, Directive, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
 import { WithRenderInfo } from './layout-wrapper.interface';
 
 @Directive()
@@ -8,7 +8,7 @@ export abstract class LayoutWrapperBase implements WithRenderInfo, OnDestroy {
   @Input() mode: 'preview' | 'edit';
   @Input() runtime;
   @Input() fixed;
-  @Input() sites: SitesResponseModel;
+  @Input() sites: SiteMapGetResponseModel;
 
   protected changeDetectorRef: ChangeDetectorRef = null;
   public elementRef: ElementRef = null;

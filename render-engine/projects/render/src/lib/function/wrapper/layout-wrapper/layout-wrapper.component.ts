@@ -12,7 +12,7 @@ import { DynamicWrapperComponent } from '@neux/core';
 import { DynamicComponentFactoryService } from '../../../global/service/dynamic-component-factory.service';
 import { isPlatformServer } from '@angular/common';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
-import { SitesResponseModel } from '../../../global/api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
 
 @Component({
   selector: 'rdr-layout-wrapper',
@@ -27,7 +27,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfoModel>>;
 
   @Input() parentTemplatesContainer: {
-    mode: 'preview' | 'edit', templates: ContentTemplateInfoModel[]; runtime: boolean; sites: SitesResponseModel
+    mode: 'preview' | 'edit', templates: ContentTemplateInfoModel[]; runtime: boolean; sites: SiteMapGetResponseModel
   };
 
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }

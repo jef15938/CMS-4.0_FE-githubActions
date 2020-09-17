@@ -4,7 +4,7 @@ import { PageData } from '../../types';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
-import { SitesResponseModel } from '../../api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 
 @Component({
   selector: 'rdr-render',
@@ -16,7 +16,7 @@ export class RenderComponent implements OnInit {
 
   templates: LayoutInfo[];
   runtime = false;
-  sites: SitesResponseModel = null;
+  sites: SiteMapGetResponseModel = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,

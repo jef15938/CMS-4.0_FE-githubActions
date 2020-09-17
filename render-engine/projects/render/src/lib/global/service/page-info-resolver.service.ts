@@ -14,7 +14,7 @@ import { ContentInfoModel } from '../api/data-model/models/content-info.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiContext } from '../api/context-api-name-factory';
 import { isPlatformBrowser } from '@angular/common';
-import { SitesResponseModel } from '../api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +41,7 @@ export class PageInfoResolverService implements Resolve<PageData> {
     const lang = route.params.languageID;
 
     const pageInfo$: Observable<PageInfoGetResponseModel> = this.renderService.getPageInfo(context, pageID, lang).pipe(shareReplay(1));
-    const sitemap$: Observable<SitesResponseModel> = this.store.pipe(
+    const sitemap$: Observable<SiteMapGetResponseModel> = this.store.pipe(
       select(selectFetchSitemapStatus),
       filter(x => !x.pending && x.result !== null),
       first(),
