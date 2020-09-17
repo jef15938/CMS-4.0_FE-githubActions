@@ -262,8 +262,8 @@ export class GalleryService {
     );
   }
 
-  getSliderTypeRange(): Observable<GetSliderTypeRangeResponseModel> {
-    return this.respAPIService.GetSliderTypeRange({}).pipe(
+  getSliderTypeRange(typeId: string): Observable<GetSliderTypeRangeResponseModel> {
+    return this.respAPIService.GetSliderTypeRange({ typeId }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getSliderTypeRange')),
       ModelMapper.rxMapModelTo(GetSliderTypeRangeResponseModel),
     );

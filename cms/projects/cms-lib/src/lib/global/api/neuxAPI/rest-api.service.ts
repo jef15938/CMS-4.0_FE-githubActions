@@ -862,14 +862,14 @@ export class RestApiService {
 
   // @dynamic
   @RestApi({
-    apiName: 'GetSliderTypeRange',
+    apiName: 'GetSliderTypeRangeByTypeId',
     method: 'get',
-    path: '/SliderType/Range',
-    mock: './assets/mock/GetSliderTypeRange.json',
+    path: '/SliderType/Range/{typeId}',
+    mock: './assets/mock/GetSliderTypeRangeByTypeId.json',
     responseType: GetSliderTypeRangeResponse
   })
   GetSliderTypeRange(
-    params: {},
+    params: { typeId: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GetSliderTypeRangeResponse> { return null; }
 

@@ -1863,7 +1863,7 @@ paths:
           description: Internal Server Error
       operationId: get-Gallery-ShowOriginal-galleryID
       description: 顯示原檔案(圖片的話直接將這個網址放入img src內，檔案的話另開視窗)
-  /SliderType/Range:
+  '/SliderType/Range/{typeId}':
     get:
       summary: GetSliderTypeRange
       tags:
@@ -1887,7 +1887,12 @@ paths:
           description: Internal Server Error
       operationId: get-SliderType-Range
       description: 取得輪播分類的圖片限制範圍
-    parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: typeId
+        in: path
+        required: true
   '/GallerySetting/{galleryID}':
     get:
       summary: GetGallerySetting

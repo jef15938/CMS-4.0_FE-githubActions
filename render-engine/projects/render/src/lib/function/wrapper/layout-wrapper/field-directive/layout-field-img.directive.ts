@@ -5,8 +5,6 @@ import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/
 export interface ImgFieldInfo extends ContentFieldInfoModel {
   extension: {
     altValue: string;
-    originID: string;
-    originPath: string;
     galleryName: string;
   };
 }

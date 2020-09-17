@@ -276,17 +276,60 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     });
   }
 
-  changeGallery(col: FarmFormInfoModelColumn) {
-    const limitFileNameExt = col.setting.limitFileNameExt;
-    this.gallerySharedService.openGallery(
-      limitFileNameExt ? (limitFileNameExt.split(',').map(ext => ext.toLowerCase()) as GalleryFileType[]) : undefined
-    ).subscribe(selectedGallery => {
-      if (selectedGallery) {
-        this.formGroup.get(col.columnId).setValue(`${selectedGallery.galleryId}`);
-        col.setting.fileName = selectedGallery.fileName;
+  selectImage(col: FarmFormInfoModelColumn) {
+    const galleryID = col.value;
+    const galleryName = col.setting.fileName;
+    const imageHeightWidth = col.setting.imgLimitWidth > 0 && col.setting.imgLimitHeight > 0
+      ? { width: col.setting.imgLimitWidth, height: col.setting.imgLimitHeight }
+      : null;
+
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryImage(
+          `${galleryID}`,
+          galleryName,
+          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          imageHeightWidth,
+        )
+        : this.gallerySharedService.addGalleryImage()
+    ).subscribe(res => {
+      if (res) {
+        this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
+        col.setting.fileName = res.galleryName;
       }
     });
   }
+
+  selectFile(col: FarmFormInfoModelColumn) {
+    const galleryID = col.value;
+    const galleryName = col.setting.fileName;
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryFile(
+          `${galleryID}`,
+          galleryName,
+          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+        )
+        : this.gallerySharedService.addGalleryFile()
+    ).subscribe(res => {
+      if (res) {
+        this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
+        col.setting.fileName = res.galleryName;
+      }
+    });
+  }
+
+  // changeGallery(col: FarmFormInfoModelColumn) {
+  //   const limitFileNameExt = col.setting.limitFileNameExt;
+  //   this.gallerySharedService.openGallery(
+  //     limitFileNameExt ? (limitFileNameExt.split(',').map(ext => ext.toLowerCase()) as GalleryFileType[]) : undefined
+  //   ).subscribe(selectedGallery => {
+  //     if (selectedGallery) {
+  //       this.formGroup.get(col.columnId).setValue(`${selectedGallery.galleryId}`);
+  //       col.setting.fileName = selectedGallery.fileName;
+  //     }
+  //   });
+  // }
 
   onNodesCheckedChange(ev: { nodes: FarmTreeInfoModel[] }, columnID: string) {
     const ids = ev.nodes.map(node => node.id);

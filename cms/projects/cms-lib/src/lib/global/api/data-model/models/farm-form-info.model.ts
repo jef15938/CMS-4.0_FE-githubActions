@@ -18,6 +18,7 @@ export enum FarmFormInfoColumnDisplayType {
   LABEL = 'LABEL',
   CUSTOM = 'CUSTOM',
   LINK = 'LINK',
+  FILE = 'FILE',
 }
 
 export enum FarmFormInfoColumnTriggerType {
@@ -49,6 +50,8 @@ type FarmFormInfoColumn = {
     url?: string; // 當type是LINK時提供url網址
     component_id?: string; // for CUSTOM，目前只有前端用
     limit_file_name_ext?: string; // 媒體庫挑選副檔名限制(Gallery Type限定)
+    img_limit_width?: number;
+    img_limit_height?: number;
   };
   is_readonly: boolean;
 };
@@ -75,6 +78,8 @@ export type FarmFormInfoModelColumn = {
     url?: string; // 當type是LINK時提供url網址
     componentId?: string; // for CUSTOM，目前只有前端用
     limitFileNameExt?: string; // 媒體庫挑選副檔名限制(Gallery Type限定)
+    imgLimitWidth?: number;
+    imgLimitHeight?: number;
   };
   isReadonly: boolean;
 };
@@ -111,6 +116,8 @@ export type FarmFormInfoModelColumn = {
           url: c.setting.url,
           componentId: c.setting.component_id,
           limitFileNameExt: c.setting.limit_file_name_ext,
+          imgLimitWidth: c.setting.img_limit_width,
+          imgLimitHeight: c.setting.img_limit_height,
         },
         isReadonly: c.is_readonly,
       };

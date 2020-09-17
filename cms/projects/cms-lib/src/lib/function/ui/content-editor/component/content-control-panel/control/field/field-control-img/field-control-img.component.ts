@@ -37,8 +37,6 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
       this.fieldInfo = selected.fieldInfo as ImgFieldInfo;
       this.fieldInfo.extension = this.fieldInfo.extension || {
         altValue: '',
-        originID: '',
-        originPath: '',
         galleryName: '',
       };
     }
@@ -46,10 +44,7 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
 
   selectImage() {
     const galleryID = this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID];
-    const path = this.fieldInfo.fieldVal;
     const galleryName = this.fieldInfo.extension.galleryName;
-    const originID = this.fieldInfo.extension.originID;
-    const originPath = this.fieldInfo.extension.originPath;
     const imageHeightWidth = this.adviceWidth > 0 && this.adviceHeight > 0
       ? { width: this.adviceWidth, height: this.adviceHeight }
       : null;
@@ -59,11 +54,8 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
         ? this.gallerySharedService.updateGalleryImage(
           `${galleryID}`,
           galleryName,
-          path.substring(path.lastIndexOf('.') + 1),
-          `${originID}`,
-          originPath,
-          path,
-          imageHeightWidth
+          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          imageHeightWidth,
         )
         : this.gallerySharedService.addGalleryImage()
     ).subscribe(res => {
@@ -72,8 +64,6 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
         this.fieldInfo.fieldVal = saved.path;
         this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${saved.galleryId}`;
         this.fieldInfo.extension.galleryName = saved.galleryName;
-        this.fieldInfo.extension.originID = saved.originalGalleryId;
-        this.fieldInfo.extension.originPath = saved.originalPath;
         this.change.emit();
       }
     });

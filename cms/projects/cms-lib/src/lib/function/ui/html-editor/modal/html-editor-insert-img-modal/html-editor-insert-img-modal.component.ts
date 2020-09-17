@@ -24,8 +24,6 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   @Input() height: number = null;
   @Input() galleryID: number = null;
   @Input() galleryName = '';
-  @Input() originID: number = null;
-  @Input() originPath = '';
 
   timestamp = new Date().getTime();
 
@@ -69,20 +67,14 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
 
   selectImage() {
     const galleryID = this.galleryID;
-    const path = this.src;
     const galleryName = this.galleryName;
-    const originID = this.originID;
-    const originPath = this.originPath;
     (
       galleryID
         ? this.gallerySharedService.updateGalleryImage(
           `${galleryID}`,
           galleryName,
-          path.substring(path.lastIndexOf('.') + 1),
-          `${originID}`,
-          originPath,
-          path.replace(this.environment.apiBaseUrl, ''),
-          null
+          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          null,
         )
         : this.gallerySharedService.addGalleryImage()
     ).subscribe(res => {
@@ -92,8 +84,6 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
         this.galleryID = saved.galleryId;
         this.galleryName = saved.galleryName;
         this.src = `${this.environment.apiBaseUrl}${saved.path}`;
-        this.originID = saved.originalGalleryId;
-        this.originPath = saved.originalPath;
         this.checkImgSize();
       }
     });
@@ -107,8 +97,6 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
       height: this.height || 200,
       galleryID: this.galleryID || 200,
       galleryName: this.galleryName,
-      originID: this.originID,
-      originPath: this.originPath,
     });
   }
 

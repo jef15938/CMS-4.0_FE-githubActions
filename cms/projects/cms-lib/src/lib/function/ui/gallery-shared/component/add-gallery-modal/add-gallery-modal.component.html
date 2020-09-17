@@ -1,9 +1,8 @@
 <input type="file" [id]="fileUploadInputIdentifier" [name]="fileUploadInputIdentifier" [accept]="accept"
   style="display:none;" />
-<img #tempOrigin *ngIf="galleryId && imagePath" [src]="(environment.apiBaseUrl+originPath)|safeResource"
-  style="display: none;" crossOrigin="anonymous">
-<img #tempCropped *ngIf="imagePath" [src]="(environment.apiBaseUrl+imagePath)|safeResource" style="display: none;" crossOrigin="anonymous">
-
+<img #tempOrigin *ngIf="galleryId&&galleryType===GalleryType.IMAGE"
+  [src]="(environment.apiBaseUrl+'/Gallery/ShowOriginal/'+galleryId)|safeResource" style="display: none;"
+  crossOrigin="anonymous">
 <div class="cms-add-gallery-modal" *ngIf="currentStepState">
   <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="onStepSelectionChange($event)">
     <mat-step *ngIf="galleryId && galleryType===GalleryType.IMAGE" [state]="StepState.IMAGE_CHOOSE_ACTION"

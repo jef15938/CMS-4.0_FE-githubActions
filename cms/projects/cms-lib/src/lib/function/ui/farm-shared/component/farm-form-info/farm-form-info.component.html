@@ -87,11 +87,23 @@
                     (dateChange)="checkColumnTrigger(col)">
                   </cms-date-picker>
                 </ng-container>
+                <!-- FILE -->
+                <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.FILE">
+                  <input matInput [formControlName]="col.columnId" hidden
+                    [required]="formColumnSettingMap.get(col.columnId).required">
+                  <button type="button" mat-raised-button class="btn btn-dark" (click)="selectFile(col)">檔案</button>
+                  {{col.setting.fileName}}
+                  <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
+                    <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">
+                      {{err}}
+                    </div>
+                  </mat-error>
+                </ng-container>
                 <!-- GALLERY -->
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.GALLERY">
                   <input matInput [formControlName]="col.columnId" hidden
                     [required]="formColumnSettingMap.get(col.columnId).required">
-                  <button type="button" mat-raised-button class="btn btn-dark" (click)="changeGallery(col)">媒體庫</button>
+                  <button type="button" mat-raised-button class="btn btn-dark" (click)="selectImage(col)">圖片</button>
                   {{col.setting.fileName}}
                   <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">

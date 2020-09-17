@@ -106,7 +106,6 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
 
   @ViewChild('stepper') stepper: MatHorizontalStepper;
   @ViewChild('tempOrigin') tempOrigin: ElementRef<HTMLImageElement>;
-  @ViewChild('tempCropped') tempCropped: ElementRef<HTMLImageElement>;
 
   readonly fileUploadInputIdentifier = 'fileUpload';
 
@@ -114,9 +113,6 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
   @Input() galleryId: string;
   @Input() galleryName: string;
   @Input() accept = '';
-  @Input() originID: string;
-  @Input() originPath: string;
-  @Input() imagePath = '';
   @Input() imageHeightWidth: {
     width: number;
     height: number;
@@ -285,13 +281,7 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
         const originImage = this.galleryService.mapFileToFileUploadModel(
           new File([originBlob], this.galleryName, { type: `image/${ext}` }));
 
-        const croppedDataURI = this.getBase64Image(this.tempCropped.nativeElement, ext);
-        const croppedBlob = this.dataURItoBlob(croppedDataURI);
-        const croppedImage = this.galleryService.mapFileToFileUploadModel(
-          new File([croppedBlob], this.galleryName, { type: `image/${ext}` }));
-
         this.formGroupSelectFile.get('value').patchValue(originImage);
-        this.formGroupCropFile.get('value').patchValue(croppedImage);
         this.formGroupCropFile.get('setting').patchValue(res.cropSetting);
         this.stepper.next();
       });

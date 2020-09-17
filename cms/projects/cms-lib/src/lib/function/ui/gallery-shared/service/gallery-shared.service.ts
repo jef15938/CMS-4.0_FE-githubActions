@@ -51,9 +51,6 @@ export class GallerySharedService {
     galleryId?: string;
     galleryName?: string,
     accept?: string;
-    originID?: string;
-    originPath?: string;
-    imagePath?: string;
     imageHeightWidth?: {
       width: number;
       height: number;
@@ -71,10 +68,7 @@ export class GallerySharedService {
       galleryId: config.galleryId,
       galleryName: config.galleryName,
       accept: config.accept,
-      imagePath: config.imagePath,
       imageHeightWidth: config.imageHeightWidth,
-      originID: config.originID,
-      originPath: config.originPath,
     };
 
     return this.modalService.openComponent({
@@ -92,9 +86,6 @@ export class GallerySharedService {
     galleryId: string,
     galleryName: string,
     accept: string,
-    originID: string,
-    originPath: string,
-    imagePath: string,
     imageHeightWidth: {
       width: number;
       height: number;
@@ -104,9 +95,6 @@ export class GallerySharedService {
       galleryId,
       galleryName,
       accept,
-      originID,
-      originPath,
-      imagePath,
       imageHeightWidth,
     });
   }
