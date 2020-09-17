@@ -65,16 +65,14 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
           galleryName.substring(galleryName.lastIndexOf('.') + 1),
         )
         : this.gallerySharedService.addGalleryFile()
-    )
-      // this.gallerySharedService.addGalleryFile()
-      .subscribe(res => {
-        if (res) {
-          this.aTagConfig.href = res.path;
-          this.aTagConfig.galleryName = res.galleryName;
-          this.aTagConfig.text = res.galleryName;
-          this.aTagConfig.galleryID = res.galleryId;
-          this.fileType = res.galleryName.substring(res.galleryName.lastIndexOf('.') + 1);
-        }
-      });
+    ).subscribe(res => {
+      if (res) {
+        this.aTagConfig.href = res.path;
+        this.aTagConfig.galleryName = res.galleryName;
+        this.aTagConfig.text = res.galleryName;
+        this.aTagConfig.galleryID = res.galleryId;
+        this.fileType = res.galleryName.substring(res.galleryName.lastIndexOf('.') + 1);
+      }
+    });
   }
 }
