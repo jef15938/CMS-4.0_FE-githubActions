@@ -12,6 +12,7 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { MatRadioChange } from '@angular/material/radio';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token';
 import { CmsEnviroment } from '../../../../../global/interface';
+import { CmsLoadingToggle } from 'projects/cms-lib/src/lib/global/service';
 
 export enum GalleryType {
   FILE = 'FILE',
@@ -138,6 +139,7 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
     private elementRef: ElementRef,
     public modalService: ModalService,
     @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { super(); }
 
   ngOnInit() {
@@ -272,7 +274,14 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
       this.stepper.next();
     }
     if (imageAction === 'crop') {
-      this.getCropSetting().subscribe(res => {
+      this.cmsLoadingToggle.open();
+      this.getCropSetting().pipe(
+        CmsErrorHandler.rxHandleError((error, showMessage) => {
+          this.cmsLoadingToggle.close();
+          showMessage();
+        })
+      ).subscribe(res => {
+        this.cmsLoadingToggle.close();
         const ext = this.galleryName.substring(this.galleryName.lastIndexOf('.') + 1);
         const originDataURI = this.getBase64Image(this.tempOrigin.nativeElement, ext);
         const originBlob = this.dataURItoBlob(originDataURI);
@@ -353,7 +362,16 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
 
   upload() {
     const resolver = this.getUploadResolver();
-    resolver.resolve(this).subscribe(res => this.close(res));
+    this.cmsLoadingToggle.open();
+    resolver.resolve(this).pipe(
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        this.cmsLoadingToggle.close();
+        showMessage();
+      })
+    ).subscribe(res => {
+      this.cmsLoadingToggle.close();
+      this.close(res);
+    });
   }
 
 }
