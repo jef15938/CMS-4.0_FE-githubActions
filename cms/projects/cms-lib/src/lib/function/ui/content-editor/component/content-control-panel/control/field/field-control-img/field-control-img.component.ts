@@ -50,6 +50,9 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
     const galleryName = this.fieldInfo.extension.galleryName;
     const originID = this.fieldInfo.extension.originID;
     const originPath = this.fieldInfo.extension.originPath;
+    const imageHeightWidth = this.adviceWidth > 0 && this.adviceHeight > 0
+      ? { width: this.adviceWidth, height: this.adviceHeight }
+      : null;
 
     (
       galleryID
@@ -60,7 +63,7 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
           `${originID}`,
           originPath,
           path,
-          { width: this.adviceWidth || -1, height: this.adviceHeight || -1 }
+          imageHeightWidth
         )
         : this.gallerySharedService.addGalleryImage()
     ).subscribe(res => {

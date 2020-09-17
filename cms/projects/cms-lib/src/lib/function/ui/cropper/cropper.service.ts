@@ -60,7 +60,13 @@ export class CropperService {
     private modalService: ModalService,
   ) { }
 
-  openEditor(imgUrl: string, cropSetting?: CropSetting): Observable<CropResult> {
+  openEditor(imgUrl: string, config?: {
+    cropSetting?: CropSetting;
+    imageHeightWidth?: {
+      width: number;
+      height: number;
+    }
+  }): Observable<CropResult> {
 
     const modalSetting: ModalSetting = {
       id: `cropper`,
@@ -70,9 +76,15 @@ export class CropperService {
       hideCloseBtn: true,
     };
 
+    const cropSetting = config?.cropSetting || null;
+
+    const imageHeightWidth =
+      config?.imageHeightWidth?.height > 0 && config?.imageHeightWidth?.height > 0
+        ? config.imageHeightWidth : null;
+
     return this.modalService.openComponent({
       component: CropperComponent,
-      componentInitData: { imgUrl, cropSetting },
+      componentInitData: { imgUrl, cropSetting, imageHeightWidth },
       modalSetting
     }, true);
   }

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
-import { CropperService } from '../../../../ui/cropper';
+import { CropperService, CropSetting } from '../../../../ui/cropper';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { MatRadioChange } from '@angular/material/radio';
@@ -150,10 +150,6 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
       this.currentStepState = StepState.SELECT_FILE;
     }
 
-    this.imageHeightWidth = this.imageHeightWidth || {
-      width: -1,
-      height: -1,
-    };
 
     this.typeText = this.getTypeTextByGalleryType(this.galleryType);
     this.title = `${this.galleryId ? '修改' : '加入'}${this.typeText}`;
@@ -252,8 +248,9 @@ export class AddGalleryModalComponent extends CustomModalBase implements UploadC
   cropFile(file: FileUploadModel) {
     if (file) {
       const cropSettingValue: string = this.formGroupCropFile?.get('setting')?.value;
-      const cropSetting = cropSettingValue ? JSON.parse(cropSettingValue) : null;
-      this.cropperService.openEditor(file.url, cropSetting).subscribe(result => {
+      const cropSetting: CropSetting = cropSettingValue ? JSON.parse(cropSettingValue) : null;
+      const imageHeightWidth = this.imageHeightWidth;
+      this.cropperService.openEditor(file.url, { imageHeightWidth, cropSetting }).subscribe(result => {
         if (!result) { return; }
         const blob = this.dataURItoBlob(result.dataUrl);
         const newFile = this.galleryService.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));

@@ -82,7 +82,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
           `${originID}`,
           originPath,
           path.replace(this.environment.apiBaseUrl, ''),
-          { width: -1, height: -1 }
+          null
         )
         : this.gallerySharedService.addGalleryImage()
     ).subscribe(res => {

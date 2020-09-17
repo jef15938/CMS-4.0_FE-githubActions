@@ -19,17 +19,14 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
 
   @Input() imgUrl = '';
   @Input() cropSetting: CropSetting;
+  @Input() imageHeightWidth: {
+    width: number;
+    height: number;
+  };
 
   private isSettingInit = false;
 
-  cropperOption: CropperOption = {
-    checkCrossOrigin: false,
-    movable: true,
-    scalable: true,
-    zoomable: true,
-    autoCropArea: 1,
-    viewMode: 0,
-  };
+  cropperOption: CropperOption;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -37,8 +34,29 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
     super();
   }
 
+  private getCropperOption(): CropperOption {
+    const option: CropperOption = {
+      checkCrossOrigin: false,
+      movable: true,
+      scalable: true,
+      zoomable: true,
+      autoCropArea: 0,
+      viewMode: 0,
+      dragMode: 'move',
+    };
+
+    if (this.imageHeightWidth) {
+      option.cropBoxMovable = false;
+      option.cropBoxResizable = false;
+      option.initialAspectRatio = this.imageHeightWidth.width / this.imageHeightWidth.height;
+    }
+
+    return option;
+  }
+
   ngOnInit(): void {
     this.modalRef.addPanelClass('cms-cropper-modal');
+    this.cropperOption = this.getCropperOption();
   }
 
   ngAfterViewInit(): void {
@@ -51,12 +69,14 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
 
   private initCropSetting() {
     if (this.isSettingInit) { return; }
-    if (this.cropSetting && this.cropper) {
+    if (this.cropper) {
       try {
-        const { data, canvasData, containerData, cropBoxData, imageData } = this.cropSetting;
-        this.cropper.setData(data);
-        this.cropper.setCanvasData(canvasData);
-        this.cropper.setCropBoxData(cropBoxData);
+        if (this.cropSetting) {
+          const { data, canvasData, containerData, cropBoxData, imageData } = this.cropSetting;
+          this.cropper.setCanvasData(canvasData);
+          this.cropper.setCropBoxData(cropBoxData);
+          this.cropper.setData(data);
+        }
         this.isSettingInit = true;
       } catch (error) {
         console.error(error);
@@ -71,7 +91,7 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
   confirm() {
     this.cropper.crop();
     const cropSetting = this.exportCropSetting();
-    const dataUrl = this.cropper.getCroppedCanvas().toDataURL();
+    const dataUrl = this.cropper.getCroppedCanvas(this.imageHeightWidth).toDataURL();
     this.cropper.destroy();
     const result: CropResult = { dataUrl, cropSetting };
     this.close(result);
