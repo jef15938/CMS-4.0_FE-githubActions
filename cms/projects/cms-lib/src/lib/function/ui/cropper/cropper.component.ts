@@ -92,7 +92,7 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
   confirm() {
     this.cropper.crop();
     const cropSetting = this.exportCropSetting();
-    const dataUrl = this.cropper.getCroppedCanvas(this.imageHeightWidth).toDataURL();
+    const dataUrl = this.cropper.getCroppedCanvas(this.imageHeightWidth || undefined).toDataURL();
     this.cropper.destroy();
     const result: CropResult = { dataUrl, cropSetting };
     this.close(result);
