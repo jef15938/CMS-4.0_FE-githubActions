@@ -5,6 +5,8 @@ import { FarmService } from '../../../global/api/service';
 import { concatMap } from 'rxjs/operators';
 import { FarmFormViewDataModalComponent } from './modal/farm-form-view-data-modal/farm-form-view-data-modal.component';
 import { FarmSharedContainerModalComponent } from './component/farm-shared-container-modal/farm-shared-container-modal.component';
+import { FormModalComponent } from './component/form-modal/form-modal.component';
+import { ListFilesInfoModel } from '../../../global/api/data-model/models/list-files-info.model';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +49,13 @@ export class FarmSharedService {
         });
       })
     );
+  }
+
+  openForm(componentInitData: { typeID?: string }): Observable<ListFilesInfoModel> {
+    return this.modalService.openComponent({
+      component: FormModalComponent,
+      componentInitData
+    });
   }
 
 }

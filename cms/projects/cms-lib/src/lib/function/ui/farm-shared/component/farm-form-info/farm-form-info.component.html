@@ -91,7 +91,12 @@
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.FILE">
                   <input matInput [formControlName]="col.columnId" hidden
                     [required]="formColumnSettingMap.get(col.columnId).required">
-                  <button type="button" mat-raised-button class="btn btn-dark" (click)="selectFile(col)">檔案</button>
+                  <button type="button" mat-raised-button class="btn btn-dark" #menuTrigger="matMenuTrigger"
+                    [matMenuTriggerFor]="fileMenu">檔案設定</button>
+                  <mat-menu #fileMenu="matMenu">
+                    <button type="button" tabindex="0" mat-menu-item (click)="selectFile(col)">本地檔案</button>
+                    <button type="button" tabindex="0" mat-menu-item (click)="openForm(col)">表單下載</button>
+                  </mat-menu>
                   {{col.setting.fileName}}
                   <mat-error *ngIf="useValidation && formGroup.controls[col.columnId]?.errors">
                     <div *ngFor="let err of (formGroup.controls[col.columnId]?.errors | formValidationError)">

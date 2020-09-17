@@ -15,6 +15,7 @@ import { FarmTreeInfoModel } from '../../../../../global/api/data-model/models/f
 import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType } from '../../../../../global/api/data-model/models/farm-form-info.model';
 import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
+import { FarmSharedService } from '../../farm-shared.service';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -47,6 +48,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     private htmlEditorService: HtmlEditorService,
     private gallerySharedService: GallerySharedService,
     private farmService: FarmService,
+    private farmSharedService: FarmSharedService,
     private cmsDateAdapter: CmsDateAdapter,
   ) { }
 
@@ -327,17 +329,14 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     });
   }
 
-  // changeGallery(col: FarmFormInfoModelColumn) {
-  //   const limitFileNameExt = col.setting.limitFileNameExt;
-  //   this.gallerySharedService.openGallery(
-  //     limitFileNameExt ? (limitFileNameExt.split(',').map(ext => ext.toLowerCase()) as GalleryFileType[]) : undefined
-  //   ).subscribe(selectedGallery => {
-  //     if (selectedGallery) {
-  //       this.formGroup.get(col.columnId).setValue(`${selectedGallery.galleryId}`);
-  //       col.setting.fileName = selectedGallery.fileName;
-  //     }
-  //   });
-  // }
+  openForm(col: FarmFormInfoModelColumn) {
+    this.farmSharedService.openForm({}).subscribe(selectedFile => {
+      if (selectedFile) {
+        this.formGroup.get(col.columnId).setValue(`${selectedFile.galleryId}`);
+        col.setting.fileName = selectedFile.name;
+      }
+    });
+  }
 
   onNodesCheckedChange(ev: { nodes: FarmTreeInfoModel[] }, columnID: string) {
     const ids = ev.nodes.map(node => node.id);
