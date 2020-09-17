@@ -40,12 +40,13 @@ export class CropperComponent extends CustomModalBase implements OnInit, AfterVi
       movable: true,
       scalable: true,
       zoomable: true,
-      autoCropArea: 0,
+      autoCropArea: 1,
       viewMode: 0,
       dragMode: 'move',
     };
 
     if (this.imageHeightWidth) {
+      option.autoCropArea = 0;
       option.cropBoxMovable = false;
       option.cropBoxResizable = false;
       option.initialAspectRatio = this.imageHeightWidth.width / this.imageHeightWidth.height;
