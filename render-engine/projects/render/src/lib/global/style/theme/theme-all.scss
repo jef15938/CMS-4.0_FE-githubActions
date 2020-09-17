@@ -12,4 +12,6 @@
   @include rdr-card-link-frame-theme($theme: $core-theme);
   @include rdr-card-link-theme($theme: $core-theme);
   @include rdr-card-news-theme($theme: $core-theme);
+  @include rdr-card-link-frame-theme($theme: $core-theme);
+  @include rdr-card-journal-theme($theme: $core-theme);
 }

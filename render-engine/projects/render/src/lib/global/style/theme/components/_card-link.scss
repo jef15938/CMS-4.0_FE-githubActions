@@ -23,21 +23,8 @@
 
   $tl-font-color: map-get($theme, black_1) !default;
   $tl-arrow-color: map-get($theme, color_primary) !default;
-  // $tl-bg-color: map-get($theme, white_1) !default;
-  // $tl-hover-color: #a0c7c0;
-  // $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
 
   .card-link {
-    // background-color: $tl-bg-color;
-
-    // &:hover {
-    //   border-color: $tl-hover-color;
-    // }
-
-    // &:active,
-    // &:focus {
-    //   background-color: $tl-pressed-color;
-    // }
 
     &__title {
       color: $tl-font-color;
@@ -59,21 +46,8 @@
   $tl-title-font-color: map-get($theme, black_0) !default;
   $tl-desc-font-color: map-get($theme, brownish_grey) !default;
   $tl-arrow-color: map-get($theme, color_primary) !default;
-  // $tl-bg-color: map-get($theme, white_1) !default;
-  // $tl-hover-color: #a0c7c0;
-  // $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
 
   .card-news {
-    // background-color: $tl-bg-color;
-
-    // &:hover {
-    //   border-color: $tl-hover-color;
-    // }
-
-    // &:active,
-    // &:focus {
-    //   background-color: $tl-pressed-color;
-    // }
 
     &__date {
       color: $tl-date-font-color;
@@ -91,6 +65,57 @@
       &:after {
         border-color: $tl-arrow-color;
       }
+    }
+  }
+}
+
+//card activity link
+@mixin rdr-card-activity-theme($theme: $rdr-theme-config) {
+
+  $tl-date-font-color: map-get($theme, brown_grey_1) !default;
+  $tl-subtitle-font-color: map-get($theme, color_primary) !default;
+  $tl-title-font-color: map-get($theme, black_0) !default;
+  $tl-desc-font-color: map-get($theme, brownish_grey) !default;
+
+  .card-activity {
+
+    &__date {
+      color: $tl-date-font-color;
+    }
+
+    &__subtitle {
+      color: $tl-subtitle-font-color;
+    }
+
+    &__title {
+      color: $tl-title-font-color;
+    }
+
+    &__desc {
+      color: $tl-desc-font-color;
+    }
+  }
+}
+
+//card journal link
+@mixin rdr-card-journal-theme($theme: $rdr-theme-config) {
+
+  $tl-title-font-color: map-get($theme, color_primary) !default;
+  $tl-subtitle-font-color: map-get($theme, black_1) !default;
+  $tl-desc-font-color: map-get($theme, brownish_grey) !default;
+
+  .card-journal {
+
+    &__title {
+      color: $tl-title-font-color;
+    }
+
+    &__subtitle {
+      color: $tl-subtitle-font-color;
+    }
+
+    &__desc {
+      color: $tl-desc-font-color;
     }
   }
 }

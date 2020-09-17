@@ -23,3 +23,5 @@ export * from './public-component/card-link/card-link.component';
 export * from './public-component/card-news/card-news.component';
 export * from './public-component/card-link-frame/card-link-frame.component';
 export * from './public-component/components-overview/components-overview.component';
+export * from './public-component/card-activity/card-activity.component';
+export * from './public-component/card-journal/card-journal.component';

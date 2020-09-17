@@ -37,6 +37,8 @@ import { CardLinkComponent } from './global/component/public-component/card-link
 import { CardNewsComponent } from './global/component/public-component/card-news/card-news.component';
 import { ComponentsOverviewComponent } from './global/component/public-component/components-overview/components-overview.component';
 import { CardLinkFrameComponent } from './global/component/public-component/card-link-frame/card-link-frame.component';
+import { CardActivityComponent } from './global/component/public-component/card-activity/card-activity.component';
+import { CardJournalComponent } from './global/component/public-component/card-journal/card-journal.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -61,6 +63,8 @@ const COMPONENTS = [
   CardNewsComponent,
   ComponentsOverviewComponent,
   CardLinkFrameComponent,
+  CardActivityComponent,
+  CardJournalComponent,
 ];
 
 @NgModule({
