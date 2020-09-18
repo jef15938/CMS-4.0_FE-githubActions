@@ -87,13 +87,13 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase implemen
     const galleryName = this.galleryName;
 
     (
-      !galleryID || this.aTagConfig.fileSource === FileSource.FORM
-        ? this.gallerySharedService.addGalleryFile()
-        : this.gallerySharedService.updateGalleryFile(
+      galleryID && this.aTagConfig.fileSource === FileSource.LOCAL
+        ? this.gallerySharedService.updateGalleryFile(
           `${galleryID}`,
           galleryName,
           galleryName.substring(galleryName.lastIndexOf('.') + 1),
         )
+        : this.gallerySharedService.addGalleryFile()
     ).subscribe(res => {
       if (res) {
         this.aTagConfig.href = res.path;
