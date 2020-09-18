@@ -42,6 +42,8 @@ import { CardJournalComponent } from './global/component/public-component/card-j
 import { TlTabItemComponent } from './global/component/public-component/tab-item/tab-item.component';
 import { TabScrollableComponent } from './global/component/public-component/tab-scrollable/tab-scrollable.component';
 import { TabScrollFrameComponent } from './global/component/public-component/tab-scroll-frame/tab-scroll-frame.component';
+import { TabCarouselFrameComponent } from './global/component/public-component/tab-carousel-frame/tab-carousel-frame.component';
+import { TabCarouselComponent } from './global/component/public-component/tab-carousel/tab-carousel.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -71,6 +73,8 @@ const COMPONENTS = [
   TlTabItemComponent,
   TabScrollableComponent,
   TabScrollFrameComponent,
+  TabCarouselFrameComponent,
+  TabCarouselComponent,
 ];
 
 @NgModule({

@@ -28,3 +28,5 @@ export * from './public-component/card-journal/card-journal.component';
 export * from './public-component/tab-scrollable/tab-scrollable.component';
 export * from './public-component/tab-scroll-frame/tab-scroll-frame.component';
 export * from './public-component/tab-item/tab-item.component';
+export * from './public-component/tab-carousel/tab-carousel.component';
+export * from './public-component/tab-carousel-frame/tab-carousel-frame.component';

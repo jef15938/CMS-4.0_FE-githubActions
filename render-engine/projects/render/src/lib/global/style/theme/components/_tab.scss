@@ -34,3 +34,42 @@
     }
   }
 }
+
+@mixin rdr-tab-carousel-theme($theme: $rdr-theme-config) {
+
+  $tl-text-color: map-get($theme, brownish_grey) !default;
+  $tl-border-color: map-get($theme, very_light_pink_0) !default;
+  $tl-hover-color: map-get($theme, duck_egg_blue) !default;
+  $tl-arrow-color: map-get($theme, color_primary) !default;
+  $tl-active-color: map-get($theme, color_primary) !default;
+  $tl-null-color: map-get($theme, white_1) !default;
+
+  .tab-carousel {
+    &__item {
+      border-color: $tl-border-color;
+      background-color: $tl-null-color;
+      color: $tl-text-color;
+
+      &:hover {
+        background-color: $tl-hover-color;
+      }
+
+      &--active {
+        background-color: $tl-active-color;
+        color: $tl-null-color;
+        border-color: $tl-active-color;
+        box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
+
+        &:hover {
+          background-color: $tl-active-color;
+        }
+      }
+    }
+
+    &__nav {
+      &:after {
+        border-color: $tl-arrow-color;
+      }
+    }
+  }
+}
