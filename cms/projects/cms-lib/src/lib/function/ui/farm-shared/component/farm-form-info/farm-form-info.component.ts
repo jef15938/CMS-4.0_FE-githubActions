@@ -286,7 +286,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   selectImage(col: FarmFormInfoModelColumn) {
     const beforeSelecImage$ = this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage
-      ? this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage(col, this.farmFormInfo)
+      ? this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage(col, this.farmFormInfo, this.formGroup)
       : of(undefined);
 
     const selectImage$ = new Observable(subscriber => {
