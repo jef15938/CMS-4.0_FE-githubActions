@@ -35,8 +35,6 @@ import { FarmSharedContainerModalComponent } from './component/farm-shared-conta
 import { FarmFormCheckboxOptionCheckPipe } from './pipe/farm-form-checkbox-option-check';
 import { DirectiveModule } from '../../../global/directive';
 import { MatMenuModule } from '@angular/material/menu';
-import { FormModalComponent } from './component';
-import { TableModule } from '../table';
 
 @NgModule({
   imports: [
@@ -63,7 +61,6 @@ import { TableModule } from '../table';
     TreeModule,
     DatePickerModule,
     DirectiveModule,
-    TableModule,
   ],
   declarations: [
     FarmSharedComponent,
@@ -80,7 +77,6 @@ import { TableModule } from '../table';
     FarmFormModifyDataModalComponent,
     FarmDynamicFormControlDirective,
     FarmSharedContainerModalComponent,
-    FormModalComponent,
   ],
   exports: [
     FarmSharedComponent

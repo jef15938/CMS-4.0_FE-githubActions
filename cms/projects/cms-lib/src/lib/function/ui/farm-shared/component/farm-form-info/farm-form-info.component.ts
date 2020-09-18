@@ -16,6 +16,7 @@ import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayTy
 import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { FarmSharedService } from '../../farm-shared.service';
+import { FormSharedService } from '../../../form-shared/form-shared.service';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -48,7 +49,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     private htmlEditorService: HtmlEditorService,
     private gallerySharedService: GallerySharedService,
     private farmService: FarmService,
-    private farmSharedService: FarmSharedService,
+    private formSharedService: FormSharedService,
     private cmsDateAdapter: CmsDateAdapter,
   ) { }
 
@@ -330,7 +331,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   openForm(col: FarmFormInfoModelColumn) {
-    this.farmSharedService.openForm({}).subscribe(selectedFile => {
+    this.formSharedService.openForm({}).subscribe(selectedFile => {
       if (selectedFile) {
         this.formGroup.get(col.columnId).setValue(`${selectedFile.galleryId}`);
         col.setting.fileName = selectedFile.name;
