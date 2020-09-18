@@ -1,8 +1,8 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HtmlEditorInsertFileModalComponent } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
-import { CLASS_NAME_GALLERY_FILE, ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME } from '../../const/html-editor-container.const';
+import { HtmlEditorInsertFileModalComponent, HtmlEditorInsertFileModalConfig, FileSource } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
+import { CLASS_NAME_GALLERY_FILE, ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME, ATTRIBUTE_FILE_SOURCE } from '../../const/html-editor-container.const';
 
 export class ModifyFile extends HtmlEditorActionBase {
 
@@ -13,6 +13,9 @@ export class ModifyFile extends HtmlEditorActionBase {
     const existingFileLink = this.getExistingFileLink(range);
     const galleryID = +existingFileLink.getAttribute(ATTRIBUTE_GALLERY_ID);
     const galleryName = existingFileLink.getAttribute(ATTRIBUTE_GALLERY_NAME);
+    console.warn({galleryName});
+
+    const fileSource = existingFileLink.getAttribute(ATTRIBUTE_FILE_SOURCE) as FileSource || FileSource.NONE;
 
     return this.context.modalService.openComponent({
       component: HtmlEditorInsertFileModalComponent,
@@ -20,10 +23,11 @@ export class ModifyFile extends HtmlEditorActionBase {
         fileLink: existingFileLink,
         galleryID,
         galleryName,
+        fileSource,
       }
     }).pipe(
       tap(_ => this.context.simpleWysiwygService.restoreSelection(range)),
-      tap((configATag: { href: string; text: string; galleryID: number; galleryName: string }) => {
+      tap((configATag: HtmlEditorInsertFileModalConfig) => {
         if (!configATag) { return; }
         existingFileLink.href = configATag.href;
         existingFileLink.text = configATag.text;
@@ -31,6 +35,7 @@ export class ModifyFile extends HtmlEditorActionBase {
         if (configATag.galleryID) {
           existingFileLink.setAttribute(ATTRIBUTE_GALLERY_ID, `${configATag.galleryID}`);
           existingFileLink.setAttribute(ATTRIBUTE_GALLERY_NAME, `${configATag.galleryName || ''}`);
+          existingFileLink.setAttribute(ATTRIBUTE_FILE_SOURCE, `${configATag.fileSource || ''}`);
         }
       }),
     );

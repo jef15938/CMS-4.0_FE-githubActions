@@ -1,8 +1,8 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HtmlEditorInsertFileModalComponent } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
-import { CLASS_NAME_GALLERY_FILE, ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME } from '../../const/html-editor-container.const';
+import { HtmlEditorInsertFileModalComponent, HtmlEditorInsertFileModalConfig } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
+import { CLASS_NAME_GALLERY_FILE, ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME, ATTRIBUTE_FILE_SOURCE } from '../../const/html-editor-container.const';
 
 export class InsertFile extends HtmlEditorActionBase {
 
@@ -14,7 +14,7 @@ export class InsertFile extends HtmlEditorActionBase {
       component: HtmlEditorInsertFileModalComponent,
     }).pipe(
       tap(_ => this.context.simpleWysiwygService.restoreSelection(range)),
-      tap((configATag: { href: string; text: string; galleryID: number; galleryName: string }) => {
+      tap((configATag: HtmlEditorInsertFileModalConfig) => {
         if (!configATag) { return; }
         const aTag = document.createElement('a');
         aTag.href = configATag.href;
@@ -24,6 +24,7 @@ export class InsertFile extends HtmlEditorActionBase {
         if (configATag.galleryID) {
           aTag.setAttribute(ATTRIBUTE_GALLERY_ID, `${configATag.galleryID}`);
           aTag.setAttribute(ATTRIBUTE_GALLERY_NAME, `${configATag.galleryName || ''}`);
+          aTag.setAttribute(ATTRIBUTE_FILE_SOURCE, `${configATag.fileSource || ''}`);
         }
         const inserted = this.context.simpleWysiwygService.insertHtml(aTag.outerHTML, this.context.editorContainer);
       }),
