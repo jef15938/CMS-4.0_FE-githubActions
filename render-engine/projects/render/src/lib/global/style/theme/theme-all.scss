@@ -4,6 +4,7 @@
 @import './components/collpase';
 @import './components/breadcrumb';
 @import './components/card-link';
+@import './components/tab';
 
 
 @mixin rdr-theme-core($core-theme) {
@@ -14,4 +15,5 @@
   @include rdr-card-news-theme($theme: $core-theme);
   @include rdr-card-link-frame-theme($theme: $core-theme);
   @include rdr-card-journal-theme($theme: $core-theme);
+  @include rdr-tab-scroll-theme($theme: $core-theme);
 }

@@ -25,3 +25,6 @@ export * from './public-component/card-link-frame/card-link-frame.component';
 export * from './public-component/components-overview/components-overview.component';
 export * from './public-component/card-activity/card-activity.component';
 export * from './public-component/card-journal/card-journal.component';
+export * from './public-component/tab-scrollable/tab-scrollable.component';
+export * from './public-component/tab-scroll-frame/tab-scroll-frame.component';
+export * from './public-component/tab-item/tab-item.component';

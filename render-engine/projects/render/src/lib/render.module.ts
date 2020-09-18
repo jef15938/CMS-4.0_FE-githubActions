@@ -39,6 +39,9 @@ import { ComponentsOverviewComponent } from './global/component/public-component
 import { CardLinkFrameComponent } from './global/component/public-component/card-link-frame/card-link-frame.component';
 import { CardActivityComponent } from './global/component/public-component/card-activity/card-activity.component';
 import { CardJournalComponent } from './global/component/public-component/card-journal/card-journal.component';
+import { TlTabItemComponent } from './global/component/public-component/tab-item/tab-item.component';
+import { TabScrollableComponent } from './global/component/public-component/tab-scrollable/tab-scrollable.component';
+import { TabScrollFrameComponent } from './global/component/public-component/tab-scroll-frame/tab-scroll-frame.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -65,6 +68,9 @@ const COMPONENTS = [
   CardLinkFrameComponent,
   CardActivityComponent,
   CardJournalComponent,
+  TlTabItemComponent,
+  TabScrollableComponent,
+  TabScrollFrameComponent,
 ];
 
 @NgModule({

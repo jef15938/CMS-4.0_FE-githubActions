@@ -1,0 +1,36 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-tab-scroll-theme($theme: $rdr-theme-config) {
+
+  $tl-text-color: map-get($theme, black_1) !default;
+  $tl-line-color: map-get($theme, brown_grey_1) !default;
+  $tl-hover-color: map-get($theme, color_secondary) !default;
+  $tl-active-color: map-get($theme, color_primary) !default;
+
+
+  .tab-scroll {
+    &__list {
+
+      &-item {
+        color: $tl-text-color;
+        border-bottom-color: $tl-line-color;
+
+        &:hover {
+          color: $tl-hover-color;
+        }
+
+        &:after {
+          background-color: $tl-active-color;
+        }
+
+        &--active {
+
+          &,
+          &:hover {
+            color: $tl-active-color;
+          }
+        }
+      }
+    }
+  }
+}
