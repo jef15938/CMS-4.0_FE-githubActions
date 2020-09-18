@@ -24,7 +24,7 @@ export class FormService {
    *
    *
    * @returns
-   * @memberof Form
+   * @memberof FormService
    */
   ListFormType(): Observable<ListFormTypeInfoModel[]> {
     return this.restAPIService.ListFormType({}).pipe(

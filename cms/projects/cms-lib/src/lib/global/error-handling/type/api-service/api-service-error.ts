@@ -71,3 +71,9 @@ export class FormServiceError extends CmsApiServiceError {
     super(FormServiceError, 'Form', 1100);
   }
 }
+
+export class SliderServiceError extends CmsApiServiceError {
+  constructor() {
+    super(SliderServiceError, 'Slider', 1200);
+  }
+}

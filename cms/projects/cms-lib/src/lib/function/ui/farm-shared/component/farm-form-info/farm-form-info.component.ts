@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject, Optional } from '@angular/core';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, concat } from 'rxjs';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
-import { FarmFormComp } from '../../farm-shared.interface';
+import { FarmFormComp, FarmCustomHandler } from '../../farm-shared.interface';
 import { ContentEditorService } from './../../../content-editor';
 import { FarmService } from '../../../../../global/api/service';
 import { HtmlEditorService } from '../../../html-editor';
@@ -15,8 +15,8 @@ import { FarmTreeInfoModel } from '../../../../../global/api/data-model/models/f
 import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType } from '../../../../../global/api/data-model/models/farm-form-info.model';
 import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
-import { FarmSharedService } from '../../farm-shared.service';
 import { FormSharedService } from '../../../form-shared/form-shared.service';
+import { FARM_CUSTOM_HANDLER_TOKEN } from '../../farm-shared-injection-token';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -44,6 +44,8 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   treeMap: Map<string, GetFarmTreeResponseModel> = new Map();
   treeNodeSelectedMap: Map<string, FarmTreeInfoModel[]> = new Map();
 
+  private farmCustomHandler: FarmCustomHandler;
+
   constructor(
     private contentEditorService: ContentEditorService,
     private htmlEditorService: HtmlEditorService,
@@ -51,9 +53,12 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     private farmService: FarmService,
     private formSharedService: FormSharedService,
     private cmsDateAdapter: CmsDateAdapter,
+    @Inject(FARM_CUSTOM_HANDLER_TOKEN) @Optional() private farmCustomHandlers: FarmCustomHandler[],
   ) { }
 
   ngOnInit(): void {
+    this.farmCustomHandler = (this.farmCustomHandlers || []).find(h => h.funcId === this.funcID);
+
     this.formGroup = this.createFormGroup(this.farmFormInfo);
     this.formColumnSettingMap = this.createFormColumnSettingMap(this.farmFormInfo);
     this.farmFormInfo.columns.forEach(column => {
@@ -280,31 +285,39 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   selectImage(col: FarmFormInfoModelColumn) {
-    const galleryID = col.value;
-    const galleryName = col.setting.fileName;
-    const limitFileNameExt = col.setting.limitFileNameExt;
-    const accept = limitFileNameExt
-      ? (limitFileNameExt.split(',').map(ext => `.${ext.toLowerCase()}`) as GalleryFileType[]).join(',')
-      : undefined;
-    const imageHeightWidth = col.setting.imgLimitWidth > 0 && col.setting.imgLimitHeight > 0
-      ? { width: col.setting.imgLimitWidth, height: col.setting.imgLimitHeight }
-      : null;
+    const beforeSelecImage$ = this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage
+      ? this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage(col, this.farmFormInfo)
+      : of(undefined);
 
-    (
-      galleryID
-        ? this.gallerySharedService.updateGalleryImage(
-          `${galleryID}`,
-          galleryName,
-          accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
-          imageHeightWidth,
-        )
-        : this.gallerySharedService.addGalleryImage(accept)
-    ).subscribe(res => {
-      if (res) {
-        this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
-        col.setting.fileName = res.galleryName;
-      }
+    const selectImage$ = new Observable(subscriber => {
+      const galleryID = col.value;
+      const galleryName = col.setting.fileName;
+      const limitFileNameExt = col.setting.limitFileNameExt;
+      const accept = limitFileNameExt
+        ? (limitFileNameExt.split(',').map(ext => `.${ext.toLowerCase()}`) as GalleryFileType[]).join(',')
+        : undefined;
+      const imageHeightWidth = col.setting.imgLimitWidth > 0 && col.setting.imgLimitHeight > 0
+        ? { width: col.setting.imgLimitWidth, height: col.setting.imgLimitHeight }
+        : null;
+      (
+        galleryID
+          ? this.gallerySharedService.updateGalleryImage(
+            `${galleryID}`,
+            galleryName,
+            accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
+            imageHeightWidth,
+          )
+          : this.gallerySharedService.addGalleryImage(accept)
+      ).subscribe(res => { subscriber.next(res); }, err => { subscriber.error(err); });
     });
+
+    concat(beforeSelecImage$, selectImage$)
+      .subscribe(res => {
+        if (res) {
+          this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
+          col.setting.fileName = res.galleryName;
+        }
+      });
   }
 
   selectFile(col: FarmFormInfoModelColumn) {
