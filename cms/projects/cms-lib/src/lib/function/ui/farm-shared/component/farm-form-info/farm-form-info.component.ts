@@ -121,10 +121,18 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
             } : null;
           });
         }
-        // alphanumeric TODO: 等 api 改為 regex
+        // alphanumeric
         const alphanumeric = validation.alphanumeric?.find(col => col === column.columnId);
         if (alphanumeric) {
           validatorFns.push((control: AbstractControl) => {
+            if (control.value) {
+              const tester = new RegExp(/^[a-z0-9]+$/i, 'g');
+              if (!tester.test(control.value)) {
+                return Validators.email(control) ? {
+                  alphanumeric: '限英數字'
+                } : null;
+              }
+            }
             return null;
           });
         }
