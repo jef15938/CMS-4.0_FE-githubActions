@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Inject, Optional } from '@angular/core';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
-import { Observable, throwError, of, concat } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
 import { FarmFormComp, FarmCustomHandler } from '../../farm-shared.interface';
 import { ContentEditorService } from './../../../content-editor';
@@ -17,6 +18,7 @@ import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.typ
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { FormSharedService } from '../../../form-shared/form-shared.service';
 import { FARM_CUSTOM_HANDLER_TOKEN } from '../../farm-shared-injection-token';
+import { UploadResponse } from '../../../gallery-shared/component/add-gallery-modal/add-gallery-modal.component';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -289,7 +291,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       ? this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage(col, this.farmFormInfo, this.formGroup)
       : of(undefined);
 
-    const selectImage$ = new Observable(subscriber => {
+    const selectImage$ = new Observable<UploadResponse>(subscriber => {
       const galleryID = col.value;
       const galleryName = col.setting.fileName;
       const limitFileNameExt = col.setting.limitFileNameExt;
@@ -311,13 +313,15 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       ).subscribe(res => { subscriber.next(res); }, err => { subscriber.error(err); });
     });
 
-    concat(beforeSelecImage$, selectImage$)
-      .subscribe(res => {
-        if (res) {
-          this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
-          col.setting.fileName = res.galleryName;
-        }
-      });
+    beforeSelecImage$.pipe(
+      concatMap(_ => selectImage$)
+    ).subscribe(res => {
+      if (res) {
+        console.warn(456);
+        this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
+        col.setting.fileName = res.galleryName;
+      }
+    });
   }
 
   selectFile(col: FarmFormInfoModelColumn) {
