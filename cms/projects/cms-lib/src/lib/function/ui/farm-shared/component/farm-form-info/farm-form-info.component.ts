@@ -219,7 +219,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     const triggers = column?.triggers;
     if (!triggers?.length) { return; }
     triggers.forEach(trigger => {
-      const affectedColumns = trigger.triggerTarget; // 受影響的所有 column
       if (trigger.triggerType === FarmFormInfoColumnTriggerType.DATATRIGGER) {
         const triggerID = trigger.triggerSetting.triggerId;
         this.farmService.listFarmTriggerData(triggerID)
@@ -232,28 +231,26 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
           });
       } else {
         const columnValue = this.formGroup?.get(column.columnId).value;
-        const triggeredColumn = trigger.triggerSetting[columnValue]; // 當前 trigger 的 column
-        affectedColumns.forEach(affectedColumn => {
-          const columnSetting = this.formColumnSettingMap.get(affectedColumn);
+        for (const condition of Object.keys(trigger.triggerSetting)) {
+          const tiggeredValue = columnValue === condition;
+          const affectedColumns  // 受影響的所有 column
+            = trigger.triggerSetting[condition].split(',').filter(v => !!v);
+          affectedColumns.forEach(affectedColumn => {
 
-          switch (trigger.triggerType) {
-            case FarmFormInfoColumnTriggerType.ENABLETRIGGER:
-              affectedColumn === triggeredColumn
-                ? columnSetting.enable = true
-                : columnSetting.enable = false;
-              break;
-            case FarmFormInfoColumnTriggerType.READONLYTRIGGER:
-              affectedColumn === triggeredColumn
-                ? columnSetting.readonly = true
-                : columnSetting.readonly = false;
-              break;
-            case FarmFormInfoColumnTriggerType.REQUIREDTRIGGER:
-              affectedColumn === triggeredColumn
-                ? columnSetting.required = true
-                : columnSetting.required = false;
-              break;
-          }
-        });
+            const columnSetting = this.formColumnSettingMap.get(affectedColumn);
+            switch (trigger.triggerType) {
+              case FarmFormInfoColumnTriggerType.ENABLETRIGGER:
+                columnSetting.enable = tiggeredValue;
+                break;
+              case FarmFormInfoColumnTriggerType.READONLYTRIGGER:
+                columnSetting.readonly = tiggeredValue;
+                break;
+              case FarmFormInfoColumnTriggerType.REQUIREDTRIGGER:
+                columnSetting.required = tiggeredValue;
+                break;
+            }
+          });
+        }
       }
     });
   }
