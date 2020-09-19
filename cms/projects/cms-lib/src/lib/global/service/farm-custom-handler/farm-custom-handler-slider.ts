@@ -1,5 +1,5 @@
 import { FarmCustomHandler } from '../../../function/ui/farm-shared/farm-shared.interface';
-import { Observable } from 'rxjs';
+import { NEVER, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SliderService } from '../../api/service/slider/slider.service';
 import { FarmFormInfoModelColumn, FarmFormInfoModel } from '../../api/data-model/models/farm-form-info.model';
@@ -31,7 +31,8 @@ export class FarmCustomHandlerSlider implements FarmCustomHandler {
 
     const typeId = typeColumnControl.value;
     if (!typeId) {
-      return this.modalService.openMessage({ message: '請先選擇分類' });
+      this.modalService.openMessage({ message: '請先選擇分類' }).subscribe();
+      return NEVER;
     }
 
     return this.sliderService.getSliderTypeRange(typeId).pipe(
