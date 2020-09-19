@@ -13,7 +13,7 @@ import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo'
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GetFarmTreeResponseModel } from '../../../../../global/api/data-model/models/get-farm-tree-response.model';
 import { FarmTreeInfoModel } from '../../../../../global/api/data-model/models/farm-tree-info.model';
-import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType } from '../../../../../global/api/data-model/models/farm-form-info.model';
+import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType, FarmFormInfoColumnFileUploadOption } from '../../../../../global/api/data-model/models/farm-form-info.model';
 import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { FormSharedService } from '../../../form-shared/form-shared.service';
@@ -34,6 +34,7 @@ interface FormColumnSetting {
 export class FarmFormInfoComponent implements FarmFormComp, OnInit {
 
   FarmFormInfoColumnDisplayType = FarmFormInfoColumnDisplayType;
+  FarmFormInfoColumnFileUploadOption = FarmFormInfoColumnFileUploadOption;
 
   @Input() farmFormInfo: FarmFormInfoModel;
   @Input() useValidation = false;
@@ -332,13 +333,15 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       ? (limitFileNameExt.split(',').map(ext => `.${ext.toLowerCase()}`) as GalleryFileType[]).join(',')
       : undefined;
     (
-      galleryID
-        ? this.gallerySharedService.updateGalleryFile(
-          `${galleryID}`,
-          galleryName,
-          accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
-        )
-        : this.gallerySharedService.addGalleryFile(accept)
+      !galleryID
+        ? this.gallerySharedService.addGalleryFile(accept)
+        : col.setting.fileUploadOption === FarmFormInfoColumnFileUploadOption.LOCAL
+          ? this.gallerySharedService.updateGalleryFile(
+            `${galleryID}`,
+            galleryName,
+            accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          )
+          : this.gallerySharedService.addGalleryFile(accept)
     ).subscribe(res => {
       if (res) {
         this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);

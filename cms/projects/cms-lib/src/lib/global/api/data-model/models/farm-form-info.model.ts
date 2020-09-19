@@ -21,6 +21,11 @@ export enum FarmFormInfoColumnDisplayType {
   FILE = 'FILE',
 }
 
+export enum FarmFormInfoColumnFileUploadOption {
+  LOCAL = 'LOCAL',
+  FORMDOWNLOAD = 'FORMDOWNLOAD',
+}
+
 export enum FarmFormInfoColumnTriggerType {
   DATATRIGGER = 'DATA',
   ENABLETRIGGER = 'ENABLE',
@@ -47,6 +52,7 @@ type FarmFormInfoColumn = {
     placeholder?: string; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
     tree_source?: string; // Type為TREE才會有，主要放長TREE的API路徑
     file_name?: string; // 上傳後的檔名
+    file_upload_option; // LOCAL | FORMDOWNLOAD
     url?: string; // 當type是LINK時提供url網址
     component_id?: string; // for CUSTOM，目前只有前端用
     limit_file_name_ext?: string; // 媒體庫挑選副檔名限制(Gallery Type限定)
@@ -75,6 +81,7 @@ export type FarmFormInfoModelColumn = {
     placeholder?: string; // 最大長度(只有 TEXT 跟 TEXTAREA 才有)
     treeSource?: string; // Type為TREE才會有，主要放長TREE的API路徑
     fileName?: string; // 上傳後的檔名
+    fileUploadOption?: string; // LOCAL | FORMDOWNLOAD | both
     url?: string; // 當type是LINK時提供url網址
     componentId?: string; // for CUSTOM，目前只有前端用
     limitFileNameExt?: string; // 媒體庫挑選副檔名限制(Gallery Type限定)
@@ -113,6 +120,7 @@ export type FarmFormInfoModelColumn = {
           placeholder: c.setting.placeholder,
           treeSource: c.setting.tree_source,
           fileName: c.setting.file_name,
+          fileUploadOption: c.setting.file_upload_option,
           url: c.setting.url,
           componentId: c.setting.component_id,
           limitFileNameExt: c.setting.limit_file_name_ext,
@@ -132,5 +140,4 @@ export class FarmFormInfoModel {
   public columns: Array<FarmFormInfoModelColumn>;
   @ValidateNested()
   public validation: FarmValidationInfoModel;
-
 }
