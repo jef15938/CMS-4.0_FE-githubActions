@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ContentChildren, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { fromEvent, interval, Observable, Subject } from 'rxjs';
-import { debounceTime, scan, startWith, switchMap, takeWhile, tap } from 'rxjs/operators';
+import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
+import { debounceTime, scan, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { TlTabItemComponent } from '../tab-item/tab-item.component';
 
 @Component({
@@ -11,17 +12,17 @@ import { TlTabItemComponent } from '../tab-item/tab-item.component';
 })
 export class TabScrollFrameComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
-
   @ContentChildren(TlTabItemComponent) tabs: QueryList<TlTabItemComponent>;
   @ViewChild('tabShell') tabShell: ElementRef;
   @ViewChildren('tabItem') tabItemList: QueryList<ElementRef>;
 
   private scrollToItem: Subject<any> = new Subject<any>();
+  private selectedIndex: number;
+  private increment: number;
   listItemWidth: string;
-  selectedIndex = 0;
   selectedTab: TlTabItemComponent;
-  increment: number;
+
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -33,7 +34,7 @@ export class TabScrollFrameComponent implements OnInit, AfterViewInit {
     ).subscribe();
 
     this.scrollToItem.pipe(
-      switchMap((targetX) => this.animateScroll(targetX, this.increment))
+      switchMap((targetX) => this.animateScroll(targetX, this.increment, 1)),
     ).subscribe();
 
     setTimeout(() => {
@@ -43,14 +44,17 @@ export class TabScrollFrameComponent implements OnInit, AfterViewInit {
   }
 
   /** 當選取到tab */
-  onSelect(tab, index) {
+  onSelect(tab: TlTabItemComponent, index: number) {
+    if (this.selectedIndex === index) {
+      return;
+    }
     this.increment = this.getIncrement(this.selectedIndex, index);
     this.select(tab);
     this.scrollToPosition(index);
   }
 
   /** 打開選取到的tab，關掉其他tab */
-  select(tab) {
+  select(tab: TlTabItemComponent) {
     this.tabs.forEach((item) => {
       item.show = false;
     });
@@ -61,7 +65,7 @@ export class TabScrollFrameComponent implements OnInit, AfterViewInit {
   }
 
   /** 滑動到指定的位置 */
-  scrollToPosition(index) {
+  scrollToPosition(index: number) {
     const parentElement = this.tabShell.nativeElement;
     const childElement = this.tabItemList.toArray()[index].nativeElement;
     const activeoffsetLeft = childElement.offsetLeft - parentElement.offsetLeft;
@@ -71,15 +75,24 @@ export class TabScrollFrameComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /** smooth scroll animation */
-  animateScroll(targetXPosition, navagation): Observable<any> {
-    const step = 20;
-    const initValue = this.tabShell.nativeElement.scrollLeft - (navagation * step);
+  /**
+   * smooth scroll animation
+   * @param {number} targetXPosition
+   * @param {number} navagation
+   * @param {number} duration 單位:秒 seconds
+   * @returns {Observable<any>}
+   */
+  animateScroll(targetXPosition: number, navagation: number, duration: number): Observable<any> {
+    const progress = 60 * duration;
+    const startPosition = this.tabShell.nativeElement.scrollLeft;
+    const step = Math.abs(targetXPosition - startPosition) / progress;
 
-    return interval(50).pipe(
-      scan((acc, curr) => acc + (navagation * step), initValue),
-      tap(position => { this.tabShell.nativeElement.scrollTo(position, 0); }),
-      takeWhile(val => val < targetXPosition)
+    return interval(0, animationFrame).pipe(
+      scan((acc, curr) => acc + (navagation * step), startPosition),
+      tap(position => {
+        this.tabShell.nativeElement.scrollTo(position, 0);
+      }),
+      takeWhile((val) => navagation === 1 ? val < targetXPosition : val > targetXPosition)
     );
   }
 
@@ -89,8 +102,8 @@ export class TabScrollFrameComponent implements OnInit, AfterViewInit {
   }
 
   /** 取得累加方向 */
-  getIncrement(start, end) {
-    return end > start ? 1 : -1;
+  getIncrement(start, end): number {
+    return end >= start ? 1 : -1;
   }
 
   /** 依據tab數量給容器寬度 */

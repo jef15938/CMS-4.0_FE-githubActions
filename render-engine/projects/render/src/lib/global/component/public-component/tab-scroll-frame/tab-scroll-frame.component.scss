@@ -25,6 +25,9 @@ rdr-tab-scroll-frame {
       &-item {
         @include fz-callout-17-center;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         flex-shrink: 0;
         position: relative;
         padding: 8px 6px;
@@ -53,12 +56,12 @@ rdr-tab-scroll-frame {
 
     &__title {
       display: inline-block;
-      position: relative;
-      top: calc(50% - 8px);
+      // position: relative;
+      // top: calc(50% - 8px);
       max-width: 106px;
       min-height: 22px;
       max-height: 40px;
-      transform: translateY(-50%);
+      // transform: translateY(-50%);
     }
 
     &__content {}
