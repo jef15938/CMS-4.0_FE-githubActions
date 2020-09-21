@@ -49,7 +49,7 @@
     <mat-form-field appearance="outline">
       <mat-label>節點</mat-label>
       <mat-select #select [(ngModel)]="fieldInfo.fieldVal" name="node" required #modelNode="ngModel"
-        [disabled]="!isTemplateMode">
+        [disabled]="!isTemplateMode" (selectionChange)="change.emit()">
         <ng-container *ngIf="nodes$|async; let nodes;">
           <mat-option *ngFor="let node of nodes" [value]="node.nodeId">
             <pre>{{node.nodeName}}</pre>
