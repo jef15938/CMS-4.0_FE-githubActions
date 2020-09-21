@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,9 @@ export class HtmlEditorContentComponent implements OnInit, OnChanges {
 
   html: string;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -31,10 +34,13 @@ export class HtmlEditorContentComponent implements OnInit, OnChanges {
         if (!isHrefSet) {
           const siteId = node.getAttribute('siteid');
           const nodeId = node.getAttribute('href');
-          const href = SiteMapGetResponseModel.findContentPathBySiteIdAndNodeId(this.sites, siteId, nodeId);
+          const sites = this.sites;
+          const href = SiteMapGetResponseModel.findContentPathBySiteIdAndNodeId(sites, siteId, nodeId);
           if (href) {
             node.setAttribute('nodeId', nodeId);
-            node.setAttribute('href', href);
+            const paths = this.router.url.split('/').filter(v => !!v);
+            paths[paths.length - 1] = href;
+            node.setAttribute('href', `/${paths.join('/')}`);
           }
         }
       } else {
