@@ -75,15 +75,17 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   private getCategoryTableInfo(category: FarmCategoryInfoModel) {
     const page = this.currentTablePage;
     return of(undefined).pipe(
-      concatMap(_ => this.searchInfoFormComponentMap.get(category)?.requestFormInfo() || throwError('No Category in Map.')),
+      concatMap(_ => this.searchInfoFormComponentMap.get(category)?.requestFormInfo() || of(undefined)),
       concatMap(searchFormInfo => {
         const queryParams: { [key: string]: string } = {};
-        searchFormInfo.columns.forEach(column => {
-          if (column.value) { queryParams[column.columnId] = `${column.value}`; }
-        });
+        if (searchFormInfo) {
+          searchFormInfo.columns.forEach(column => {
+            if (column.value) { queryParams[column.columnId] = `${column.value}`; }
+          });
+        }
         return this.farmService.getFarmTableInfoByFuncID(category.categoryId, page, queryParams)
           .pipe(
-            CmsErrorHandler.rxHandleError(),
+            // CmsErrorHandler.rxHandleError(),
             tap(farmTableInfo => {
               category.tableInfo = farmTableInfo;
             })
@@ -97,6 +99,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onTablePageChange(category: FarmCategoryInfoModel, page: number) {
+    console.warn({ category, page });
     this.currentTablePage = page;
     this.getCategoryTableInfo(category).subscribe();
   }
