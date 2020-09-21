@@ -30,8 +30,6 @@ export class RenderComponent implements OnInit {
     const url = this.router.url;
     this.runtime = url.indexOf('/preview/') < 0;
 
-
-
     const { pageInfo, sitemap, contentInfo } = this.activatedRoute.snapshot.data.data as PageData;
 
     this.sites = sitemap;
@@ -59,7 +57,7 @@ export class RenderComponent implements OnInit {
     const metaDescription = pageInfo.metaDescription || '';
     const metaImage = pageInfo.metaImage || '';
 
-    const titles = document.head.querySelectorAll('title');
+    const titles = Array.from(document.head.querySelectorAll('title'));
     titles.forEach(title => title.innerText = metaTitle || '');
 
     const metas = [
