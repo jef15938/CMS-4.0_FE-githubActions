@@ -11,6 +11,7 @@ import { ModelMapping, ModelMapper } from '@neux/core';
   (bean, model) => {
     model.nodeId = bean.node_id;
     model.layoutId = bean.layout_id;
+    model.isMegaMenu = bean.is_mega_menu;
     model.nodeType = bean.node_type;
     model.funcId = bean.func_id;
     model.contentId = bean.content_id;
@@ -35,6 +36,7 @@ export class SiteMapNodeGetResponseModel {
 
   @IsNotEmpty()
   public nodeId: string;
+  public isMegaMenu: boolean;
   public layoutId: string;
   public nodeType: string;
   public funcId: string;

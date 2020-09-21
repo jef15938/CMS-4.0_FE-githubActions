@@ -6,6 +6,7 @@ import { TypeFactory } from '../type-factory';
 
 export class UserSiteMapPutRequest {
 
+public is_mega_menu: boolean;
 public parent_id: string;
 public url_type: string;
 public url_link_node_id: string;

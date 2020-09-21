@@ -68,6 +68,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
     model.urlBlank = sitemapNode.urlBlank;
     model.urlLinkNodeId = sitemapNode.urlLinkNodeId;
     model.urlType = sitemapNode.urlType;
+    model.isMegaMenu = sitemapNode.isMegaMenu;
     return model;
   }
 

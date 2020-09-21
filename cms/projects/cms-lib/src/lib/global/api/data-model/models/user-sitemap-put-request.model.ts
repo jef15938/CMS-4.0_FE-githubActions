@@ -14,6 +14,7 @@ import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
     model.url = bean.url;
     model.urlBlank = bean.url_blank;
     model.contentPath = bean.content_path;
+    model.isMegaMenu = bean.is_mega_menu;
     model.details = ModelMapper.mapArrayTo(SiteNodeDetailInfoModel, bean.details);
   }
 )
@@ -21,6 +22,7 @@ import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
   UserSiteMapPutRequestModel, UserSiteMapPutRequest,
   (model, bean) => {
     bean.parent_id = model.parentId;
+    bean.is_mega_menu = model.isMegaMenu;
     bean.url_type = model.urlType;
     bean.url_link_node_id = model.urlLinkNodeId;
     bean.url = model.url;
@@ -32,6 +34,7 @@ import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
 export class UserSiteMapPutRequestModel {
 
   public parentId: string;
+  public isMegaMenu: boolean;
   public urlType: string;
   public urlLinkNodeId: string;
   public url: string;

@@ -10,6 +10,7 @@ export class SiteMapNodeGetResponse {
 
 @IsNotEmpty()
 public node_id: string;
+public is_mega_menu: boolean;
 public layout_id: string;
 public node_type: string;
 public func_id: string;
