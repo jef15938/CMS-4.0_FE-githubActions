@@ -1,11 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageData } from '../../types';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-get-response.model';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'rdr-render',
@@ -24,6 +24,7 @@ export class RenderComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) { }
 
   ngOnInit(): void {
@@ -48,10 +49,13 @@ export class RenderComponent implements OnInit {
     }];
     console.warn('this.templates = ', this.templates);
 
+    const isBrowser = isPlatformBrowser(this.platformId);
+    if (isBrowser) { return; } // 產檔時產生 meta 就好
     this.createMetas(this.document, this.pageInfo);
   }
 
   private createMetas(document: Document, pageInfo: PageInfoGetResponseModel) {
+
     const metaTitle = pageInfo.metaTitle || '';
     const metaKeyword = pageInfo.metaKeyword || '';
     const metaDescription = pageInfo.metaDescription || '';
