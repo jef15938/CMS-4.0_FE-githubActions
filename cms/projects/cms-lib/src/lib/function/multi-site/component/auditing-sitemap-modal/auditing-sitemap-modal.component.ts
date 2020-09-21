@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CmsFormValidator } from '../../../../global/util/form-validator';
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { CmsLoadingToggle } from '../../../../global/service';
 
 @Component({
   selector: 'cms-auditing-sitemap-modal',
@@ -25,6 +26,7 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
     formBuilder: FormBuilder,
     private siteMapService: SitemapService,
     private cmsDateAdapter: CmsDateAdapter,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) {
     super();
     const now = new Date();
@@ -47,13 +49,20 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
   }
 
   confirm() {
+    this.cmsLoadingToggle.open();
     this.siteMapService.auditingSitemap(
       this.sitemapNode.nodeId,
       this.cmsDateAdapter.format(this.form.controls.startTime.value),
       this.cmsDateAdapter.format(this.form.controls.endTime.value),
       this.form.controls.memo.value,
       this.siteId,
-    ).pipe(CmsErrorHandler.rxHandleError()).subscribe(_ => {
+    ).pipe(
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        this.cmsLoadingToggle.close();
+        showMessage();
+      })
+    ).subscribe(_ => {
+      this.cmsLoadingToggle.close();
       this.close('Created');
     });
   }
