@@ -23,7 +23,7 @@ export class RenderComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    @Inject(DOCUMENT) private document: Document,
+    @Inject(DOCUMENT) private document: any,
     @Inject(PLATFORM_ID) private platformId: any,
   ) { }
 
