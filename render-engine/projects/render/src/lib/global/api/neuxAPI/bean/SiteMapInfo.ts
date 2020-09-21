@@ -17,7 +17,7 @@ public url_blank: string;
 public children: Array<SiteMapInfo>;
 public content_id: string;
 public content_path: string;
-public is_megamenu: boolean;
+public is_mega_menu: boolean;
 
 
 }

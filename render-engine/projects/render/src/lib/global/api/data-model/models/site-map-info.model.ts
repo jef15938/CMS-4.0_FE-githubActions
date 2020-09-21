@@ -12,7 +12,7 @@ import { SiteMapLanguageInfoModel } from './site-map-language-info.model';
     model.urlBlank = bean.url_blank;
     model.contentId = bean.content_id;
     model.contentPath = bean.content_path;
-    model.isMegamenu = bean.is_megamenu;
+    model.isMegamenu = bean.is_mega_menu;
     model.children = ModelMapper.mapArrayTo(SiteMapInfoModel, bean.children);
     model.languages = ModelMapper.mapArrayTo(SiteMapLanguageInfoModel, bean.languages);
   }
