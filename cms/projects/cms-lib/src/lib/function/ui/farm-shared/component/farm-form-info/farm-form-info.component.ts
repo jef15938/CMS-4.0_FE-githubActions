@@ -104,7 +104,9 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
         const required = validation.required?.find(col => col === column.columnId);
         if (required) {
           validatorFns.push((control: AbstractControl) => {
-            if (!CmsValidator.hasValue(control.value)) {
+
+            const columnSetting = this.formColumnSettingMap?.get(column.columnId);
+            if (columnSetting?.enable && !CmsValidator.hasValue(control.value)) {
               return {
                 required: '必填欄位'
               };
@@ -244,7 +246,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
           const affectedColumns  // 受影響的所有 column
             = trigger.triggerSetting[condition].split(',').filter(v => !!v);
           affectedColumns.forEach(affectedColumn => {
-
+            const affectedControl = this.formGroup.get(affectedColumn);
             const columnSetting = this.formColumnSettingMap.get(affectedColumn);
             switch (trigger.triggerType) {
               case FarmFormInfoColumnTriggerType.ENABLETRIGGER:
@@ -257,10 +259,12 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
                 columnSetting.required = tiggeredValue;
                 break;
             }
+            affectedControl.updateValueAndValidity();
           });
         }
       }
     });
+    this.formGroup.updateValueAndValidity();
   }
 
   openContentEditor(col: FarmFormInfoModelColumn) {
