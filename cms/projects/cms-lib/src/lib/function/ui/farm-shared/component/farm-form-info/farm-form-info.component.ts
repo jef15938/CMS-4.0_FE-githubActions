@@ -224,12 +224,13 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   }
 
   checkColumnTrigger(column: FarmFormInfoModelColumn) {
+    const columnValue = this.formGroup?.get(column.columnId).value;
     const triggers = column?.triggers;
     if (!triggers?.length) { return; }
     triggers.forEach(trigger => {
       if (trigger.triggerType === FarmFormInfoColumnTriggerType.DATATRIGGER) {
         const triggerID = trigger.triggerSetting.triggerId;
-        this.farmService.listFarmTriggerData(triggerID)
+        this.farmService.listFarmTriggerData(triggerID, { [column.columnId]: columnValue })
           .pipe(CmsErrorHandler.rxHandleError())
           .subscribe(options => {
             trigger.triggerTarget.forEach(target => {
@@ -238,7 +239,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
             });
           });
       } else {
-        const columnValue = this.formGroup?.get(column.columnId).value;
         for (const condition of Object.keys(trigger.triggerSetting)) {
           const tiggeredValue = columnValue === condition;
           const affectedColumns  // 受影響的所有 column

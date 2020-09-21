@@ -218,11 +218,16 @@ export class FarmService {
    * @returns
    * @memberof FarmService
    */
-  listFarmTriggerData(triggerID: string): Observable<FarmOptionInfoModel[]> {
+  listFarmTriggerData(triggerID: string, params: { [columnId: string]: any }): Observable<FarmOptionInfoModel[]> {
     if (!triggerID) {
       throw new ParamsError('triggerID', 'listFarmTriggerData', 'string', triggerID);
     }
-    return this.restAPIService.ListFarmTriggerData({ triggerID }).pipe(
+    params = params || {};
+    const paramsKeys = Object.keys(params);
+    paramsKeys.forEach(k => {
+      params[k] = params[k] || '';
+    });
+    return this.restAPIService.ListFarmTriggerData({ ...params, triggerID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('listFarmTriggerData')),
       ModelMapper.rxMapModelTo(ListFarmTriggerDataResponseModel),
       map(res => res.datas)
