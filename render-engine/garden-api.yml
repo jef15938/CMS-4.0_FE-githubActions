@@ -8,7 +8,7 @@ info:
 servers:
   - url: 'http://runtime.decoder.com.tw'
 paths:
-  '/Page/{pageID}/{lang}':
+  '/Page/{page_id}/{lang}':
     get:
       summary: GetPageInfo
       responses:
@@ -33,7 +33,7 @@ paths:
     parameters:
       - schema:
           type: string
-        name: pageID
+        name: page_id
         in: path
         required: true
         description: 頁面代碼
@@ -43,7 +43,7 @@ paths:
         in: path
         required: true
         description: 語系
-  '/Page/{pageID}':
+  '/Page/{page_id}':
     get:
       summary: GetPageInfo
       responses:
@@ -61,14 +61,14 @@ paths:
                 $ref: '#/components/schemas/ErrorInfo'
         '500':
           description: Internal Server Error
-      operationId: get-Page
+      operationId: get-Page-DefaultLang
       description: 取得該節點內容以及Layout
       tags:
         - Garden
     parameters:
       - schema:
           type: string
-        name: pageID
+        name: page_id
         in: path
         required: true
         description: 頁面代碼
@@ -96,7 +96,7 @@ paths:
       description: 取得全部網站SiteMap節點樹
       parameters: []
     parameters: []
-  '/Preview/Page/{pageID}/{lang}':
+  '/Preview/Page/{page_id}/{lang}':
     get:
       summary: GetPreviewPageInfo
       responses:
@@ -121,7 +121,7 @@ paths:
     parameters:
       - schema:
           type: string
-        name: pageID
+        name: page_id
         in: path
         required: true
         description: 頁面代碼
@@ -131,7 +131,7 @@ paths:
         in: path
         required: true
         description: 語系
-  '/Preview/Page/{pageID}':
+  '/Preview/Page/{page_id}':
     get:
       summary: GetPreviewPageInfo
       responses:
@@ -149,14 +149,14 @@ paths:
                 $ref: '#/components/schemas/ErrorInfo'
         '500':
           description: Internal Server Error
-      operationId: get-Preview-Page
+      operationId: get-Preview-Page-DefaultLang
       description: CMS預覽使用取得Temp的PageInfo
       tags:
         - Preview
     parameters:
       - schema:
           type: string
-        name: pageID
+        name: page_id
         in: path
         required: true
         description: 頁面代碼
@@ -183,7 +183,7 @@ paths:
       tags:
         - Preview
     parameters: []
-  '/Preview/Compare/{pageID}':
+  '/Preview/Compare/{page_id}':
     get:
       summary: GetPreviewCompareInfo
       tags:
@@ -204,7 +204,7 @@ paths:
     parameters:
       - schema:
           type: string
-        name: pageID
+        name: page_id
         in: path
         required: true
         description: 頁面代碼
@@ -236,7 +236,7 @@ paths:
         in: path
         required: true
         description: 下載格式
-  '/Content/{contentID}':
+  '/Content/{content_id}':
     get:
       summary: GetContentInfo
       tags:
@@ -261,11 +261,11 @@ paths:
     parameters:
       - schema:
           type: string
-        name: contentID
+        name: content_id
         in: path
         required: true
         description: Content代碼
-  '/Preview/Content/{contentID}':
+  '/Preview/Content/{content_id}':
     get:
       summary: GetPreviewContent
       tags:
@@ -289,15 +289,16 @@ paths:
     parameters:
       - schema:
           type: string
-        name: contentID
+        name: content_id
         in: path
         required: true
         description: 內容代碼
-  '/DataSource/{typeID}/{id}':
+
+  '/DataSource/{type_id}/{id}':
     parameters:
       - schema:
           type: string
-        name: typeID
+        name: type_id
         in: path
         required: true
       - schema:
@@ -321,7 +322,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./cms-apis.v1.yaml#/components/schemas/ErrorInfo
+                $ref: './cms-apis.v1.yaml#/components/schemas/ErrorInfo'
         '500':
           description: Internal Server Error
       operationId: get-typeID-data-id
@@ -516,7 +517,7 @@ components:
           type: array
           items:
             type: string
-        pageInfo:
+        page_info:
           $ref: '#/components/schemas/PageInfo'
       required:
         - datas
@@ -525,10 +526,10 @@ components:
       title: PageInfo
       type: object
       properties:
-        totalPageSize:
+        total_page_size:
           type: number
           description: 總頁數
-        totalRecSize:
+        total_rec_size:
           type: number
           description: 總筆數
         page:
@@ -660,6 +661,9 @@ components:
         content_path:
           type: string
           description: ''
+        is_megamenu:
+          type: boolean
+          description: true
     SiteMapLanguageInfo:
       title: SiteMapLanguageInfo
       type: object

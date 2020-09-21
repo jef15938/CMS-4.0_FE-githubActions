@@ -11,8 +11,7 @@ export class ListDataSourceDataResponse {
 public datas: Array<string>;
 @Type(TypeFactory(PageInfo))
 @ValidateNested()
-@IsNotEmpty()
-public pageInfo: PageInfo;
+public page_info: PageInfo;
 
 
 }

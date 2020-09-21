@@ -8,7 +8,7 @@ import { PageInfoModel } from './page-info.model';
   ListDataSourceDataResponse, ListDataSourceDataResponseModel,
   (bean, model) => {
     (model as any).datas = bean.datas as any[];
-    (model as any).pageInfo = ModelMapper.mapModelTo(PageInfoModel, bean.pageInfo);
+    (model as any).pageInfo = ModelMapper.mapModelTo(PageInfoModel, bean.page_info);
   }
 )
 export class ListDataSourceDataResponseModel<T> {

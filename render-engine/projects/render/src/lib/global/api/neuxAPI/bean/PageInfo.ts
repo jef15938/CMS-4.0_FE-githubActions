@@ -6,10 +6,8 @@ import { TypeFactory } from '../type-factory';
 
 export class PageInfo {
 
-@IsNotEmpty()
-public totalPageSize: number;
-@IsNotEmpty()
-public totalRecSize: number;
+public total_page_size: number;
+public total_rec_size: number;
 @IsNotEmpty()
 public page: number;
 

@@ -45,27 +45,27 @@ export class RestApiService {
 
   // @dynamic
   @RestApi({
-    apiName: 'GetPageByPageIDAndLang',
+    apiName: 'GetPageByPageIdAndLang',
     method: 'get',
-    path: '/Page/{pageID}/{lang}',
-    mock: './assets/mock/GetPageByPageIDAndLang.json',
+    path: '/Page/{page_id}/{lang}',
+    mock: './assets/mock/GetPageByPageIdAndLang.json',
     responseType: PageInfoGetResponse
   })
   GetPageInfoByLang(
-    params: { pageID: string, lang: string, },
+    params: { page_id: string, lang: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PageInfoGetResponse> { return null; }
 
   // @dynamic
   @RestApi({
-    apiName: 'GetPageByPageID',
+    apiName: 'GetPageByPageId',
     method: 'get',
-    path: '/Page/{pageID}',
-    mock: './assets/mock/GetPageByPageID.json',
+    path: '/Page/{page_id}',
+    mock: './assets/mock/GetPageByPageId.json',
     responseType: PageInfoGetResponse
   })
   GetPageInfo(
-    params: { pageID: string, },
+    params: { page_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PageInfoGetResponse> { return null; }
 
@@ -84,27 +84,27 @@ export class RestApiService {
 
   // @dynamic
   @RestApi({
-    apiName: 'GetPreviewPageByPageIDAndLang',
+    apiName: 'GetPreviewPageByPageIdAndLang',
     method: 'get',
-    path: '/Preview/Page/{pageID}/{lang}',
-    mock: './assets/mock/GetPreviewPageByPageIDAndLang.json',
+    path: '/Preview/Page/{page_id}/{lang}',
+    mock: './assets/mock/GetPreviewPageByPageIdAndLang.json',
     responseType: PageInfoGetResponse
   })
   GetPreviewPageInfoByLang(
-    params: { pageID: string, lang: string, },
+    params: { page_id: string, lang: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PageInfoGetResponse> { return null; }
 
   // @dynamic
   @RestApi({
-    apiName: 'GetPreviewPageByPageID',
+    apiName: 'GetPreviewPageByPageId',
     method: 'get',
-    path: '/Preview/Page/{pageID}',
-    mock: './assets/mock/GetPreviewPageByPageID.json',
+    path: '/Preview/Page/{page_id}',
+    mock: './assets/mock/GetPreviewPageByPageId.json',
     responseType: PageInfoGetResponse
   })
   GetPreviewPageInfo(
-    params: { pageID: string, },
+    params: { page_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PageInfoGetResponse> { return null; }
 
@@ -123,14 +123,14 @@ export class RestApiService {
 
   // @dynamic
   @RestApi({
-    apiName: 'GetPreviewCompareByPageID',
+    apiName: 'GetPreviewCompareByPageId',
     method: 'get',
-    path: '/Preview/Compare/{pageID}',
-    mock: './assets/mock/GetPreviewCompareByPageID.json',
+    path: '/Preview/Compare/{page_id}',
+    mock: './assets/mock/GetPreviewCompareByPageId.json',
     responseType: null
   })
   GetPreviewCompareInfo(
-    params: { pageID: string, },
+    params: { page_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<any> { return null; }
 
@@ -149,40 +149,40 @@ export class RestApiService {
 
   // @dynamic
   @RestApi({
-    apiName: 'GetContentByContentID',
+    apiName: 'GetContentByContentId',
     method: 'get',
-    path: '/Content/{contentID}',
-    mock: './assets/mock/GetContentByContentID.json',
+    path: '/Content/{content_id}',
+    mock: './assets/mock/GetContentByContentId.json',
     responseType: ContentInfo
   })
   GetContentInfo(
-    params: { contentID: string, },
+    params: { content_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ContentInfo> { return null; }
 
   // @dynamic
   @RestApi({
-    apiName: 'GetPreviewContentByContentID',
+    apiName: 'GetPreviewContentByContentId',
     method: 'get',
-    path: '/Preview/Content/{contentID}',
-    mock: './assets/mock/GetPreviewContentByContentID.json',
+    path: '/Preview/Content/{content_id}',
+    mock: './assets/mock/GetPreviewContentByContentId.json',
     responseType: ContentInfo
   })
   GetPreviewContent(
-    params: { contentID: string, },
+    params: { content_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ContentInfo> { return null; }
 
   // @dynamic
   @RestApi({
-    apiName: 'GetDataSourceByTypeIDAndId',
+    apiName: 'GetDataSourceByTypeIdAndId',
     method: 'get',
-    path: '/DataSource/{typeID}/{id}',
-    mock: './assets/mock/GetDataSourceByTypeIDAndId.json',
+    path: '/DataSource/{type_id}/{id}',
+    mock: './assets/mock/GetDataSourceByTypeIdAndId.json',
     responseType: ListDataSourceDataResponse
   })
   ListDataSourceData(
-    params: { typeID: string, id: string, page?: number, },
+    params: { type_id: string, id: string, page?: number, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListDataSourceDataResponse> { return null; }
 

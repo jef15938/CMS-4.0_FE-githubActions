@@ -6,8 +6,8 @@ import { IsNotEmpty } from 'class-validator';
 @ModelMapping(
   PageInfo, PageInfoModel,
   (bean, model) => {
-    model.totalPageSize = bean.totalPageSize;
-    model.totalRecSize = bean.totalRecSize;
+    model.totalPageSize = bean.total_page_size;
+    model.totalRecSize = bean.total_rec_size;
     model.page = bean.page;
   }
 )
