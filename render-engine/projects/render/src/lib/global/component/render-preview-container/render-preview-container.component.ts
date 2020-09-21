@@ -4,7 +4,7 @@ import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-ge
 import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '../../../function/wrapper';
 import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-get-response.model';
-import { RenderService } from '../../service';
+import { RenderService } from '../../service/render.service';
 import { map } from 'rxjs/operators';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 

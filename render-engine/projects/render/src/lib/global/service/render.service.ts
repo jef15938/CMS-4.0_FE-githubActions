@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { RestApiService } from '../api/neuxAPI/rest-api.service';
-import { PageInfoGetResponse } from '../api/neuxAPI/bean/PageInfoGetResponse';
-import { PageInfoGetResponseModel } from '../api/data-model/models/page-info-get-response.model';
-import { ModelMapper } from '@neux/core';
-import { ContentInfoModel } from '../api/data-model/models/content-info.model';
-import { ContentInfo } from '../api/neuxAPI/bean/ContentInfo';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ContextApiNameFactory, ApiContext } from '../api/context-api-name-factory';
 import { plainToClass } from 'class-transformer';
+import { ModelMapper } from '@neux/core';
+import { RestApiService } from '../api/neuxAPI/rest-api.service';
+import { PageInfoGetResponseModel } from '../api/data-model/models/page-info-get-response.model';
+import { ContentInfoModel } from '../api/data-model/models/content-info.model';
+import { ApiContext } from '../api/context-api-name-factory';
 import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
 import { SiteMapGetResponse } from '../api/neuxAPI/bean/SiteMapGetResponse';
 
