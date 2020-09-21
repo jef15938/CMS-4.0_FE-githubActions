@@ -16,6 +16,7 @@ import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/
 import { ContentFieldInfo } from '../../../global/api/neuxAPI/bean/ContentFieldInfo';
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
 import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
+import { PageInfoGetResponseModel } from '../../../global/api/data-model/models/page-info-get-response.model';
 
 @Directive()
 export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel>
@@ -51,6 +52,7 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
   @Input() runtime;
   @Input() fixed;
   @Input() sites: SiteMapGetResponseModel = null;
+  @Input() pageInfo: PageInfoGetResponseModel;
   @Input() templateInfo: TInfo;
 
   protected destroy$ = new Subject();

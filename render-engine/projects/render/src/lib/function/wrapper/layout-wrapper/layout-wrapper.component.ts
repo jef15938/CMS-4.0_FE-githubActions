@@ -120,6 +120,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
       mode: instance.mode,
       runtime: instance.runtime,
       sites: instance.sites,
+      pageInfo: instance.pageInfo,
       templateInfo: instance.templateInfo,
       fixed: instance.fixed,
     };
@@ -128,6 +129,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
       mode: this.mode,
       runtime: this.runtime,
       sites: this.sites,
+      pageInfo: this.pageInfo,
       templateInfo: this.templateInfo,
       fixed: this.templateInfo?.templateId === 'FixedWrapper',
     };
@@ -163,6 +165,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
       comp.mode = newData.mode;
       comp.runtime = newData.runtime;
       comp.sites = newData.sites;
+      comp.pageInfo = newData.pageInfo;
       comp.fixed = newData.fixed;
 
       const compAny = comp as any;

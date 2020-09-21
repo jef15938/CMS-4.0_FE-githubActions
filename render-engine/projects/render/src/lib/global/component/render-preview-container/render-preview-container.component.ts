@@ -3,189 +3,10 @@ import { ContentTemplateInfoModel } from '../../api/data-model/models/content-te
 import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '../../../function/wrapper';
-
-const mockPrevious = [
-  {
-    id: '',
-    templateId: 'content-left',
-    fields: [],
-    children: [
-      {
-        id: '7533967',
-        templateId: 'banner',
-        fields: [
-          {
-            fieldId: 'title',
-            fieldType: 'TEXT',
-            fieldVal: 'Mock 資料',
-            extension: {}
-          },
-          {
-            fieldId: 'subtitle',
-            fieldType: 'TEXT',
-            fieldVal: '路由請用 /preview/zh_TW/1558',
-            extension: {}
-          }
-        ],
-        attributes: {
-          templates: []
-        }
-      },
-      {
-        id: '1599616944827',
-        templateId: 'banner',
-        fields: [
-          {
-            fieldId: 'title',
-            fieldType: 'TEXT',
-            fieldVal: 'Banner123',
-            extension: {}
-          },
-          {
-            fieldId: 'subtitle',
-            fieldType: 'TEXT',
-            fieldVal: '我是Banner In Table我是Banner In Table456',
-            extension: {}
-          }
-        ],
-        attributes: {
-          templates: []
-        }
-      },
-      {
-        id: '1599620859110',
-        templateId: 'list',
-        fields: [],
-        attributes: {},
-        itemList: [
-          [
-            {
-              extension: {},
-              fieldId: 'title',
-              fieldType: 'TEXT',
-              fieldVal: '標題1'
-            },
-            {
-              extension: {},
-              fieldId: 'text',
-              fieldType: 'TEXT',
-              fieldVal: '內文1'
-            }
-          ],
-          [
-            {
-              extension: {},
-              fieldId: 'title',
-              fieldType: 'TEXT',
-              fieldVal: '標題2'
-            },
-            {
-              extension: {},
-              fieldId: 'text',
-              fieldType: 'TEXT',
-              fieldVal: '內文2'
-            }
-          ],
-          [
-            {
-              extension: {},
-              fieldId: 'title',
-              fieldType: 'TEXT',
-              fieldVal: '標題3'
-            },
-            {
-              extension: {},
-              fieldId: 'text',
-              fieldType: 'TEXT',
-              fieldVal: '內文3'
-            }
-          ]
-        ]
-      },
-      {
-        id: '1599622612445',
-        templateId: 'Tab',
-        fields: [],
-        attributes: {},
-        tabList: [
-          {
-            fieldId: 'f1',
-            fieldType: 'GROUP',
-            fieldVal: '',
-            extension: {},
-            tabId: 't1',
-            children: [
-              {
-                id: '1599622630427',
-                templateId: 'HTML',
-                fields: [
-                  {
-                    fieldId: 'html',
-                    fieldType: 'HTMLEDITOR',
-                    fieldVal: '<p>HTMLEDITOR測試</p>',
-                    extension: {}
-                  }
-                ],
-                attributes: {}
-              }
-            ]
-          },
-          {
-            fieldId: 'f2',
-            fieldType: 'GROUP',
-            fieldVal: '',
-            extension: {},
-            tabId: 't2',
-            children: [
-              {
-                id: 'banner-in-table-test-deleted',
-                templateId: 'banner',
-                fields: [
-                  {
-                    fieldId: 'title',
-                    fieldType: 'TEXT',
-                    fieldVal: 'Banner In Table',
-                    extension: {}
-                  },
-                  {
-                    fieldId: 'subtitle',
-                    fieldType: 'TEXT',
-                    fieldVal: '我是banner我是banner456',
-                    extension: {}
-                  }
-                ],
-                attributes: {
-                  templates: []
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        id: '1599622698533',
-        templateId: 'qa',
-        fields: [],
-        source: 'portal',
-        attributes: {
-          height: '592px'
-        }
-      },
-      {
-        id: '1599622682030',
-        templateId: 'download',
-        fields: [],
-        source: '555',
-        attributes: {
-          height: '592px'
-        }
-      }
-    ],
-    attributes: {
-      sitemap: null
-    }
-  }
-];
+import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-get-response.model';
+import { RenderService } from '../../service';
+import { map } from 'rxjs/operators';
+import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 
 @Component({
   selector: 'rdr-render-preview-container',
@@ -201,18 +22,40 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
   @Input() mode: 'preview' | 'edit';
   @Input() runtime: boolean;
   @Input() sites: SiteMapGetResponseModel;
+  @Input() pageInfo: PageInfoGetResponseModel;
   fixed = false;
 
-  previousTemplates: any = mockPrevious;
+  previousTemplates;
 
   funcCompare = {
     on: false,
     inited: false,
   };
 
-  constructor() { }
+  constructor(
+    private renderService: RenderService,
+  ) { }
 
   ngOnInit(): void {
+    if (this.mode === 'preview' && !this.runtime) {
+      this.renderService.getContentInfo('runtime', this.pageInfo.contentId).pipe(
+        map(contentTemplateInfo => {
+          if (contentTemplateInfo) {
+            const templateList = ContentInfoModel.getTemplateInfoByLanguageId(contentTemplateInfo, this.pageInfo.lang);
+            return [{
+              id: '',
+              templateId: this.pageInfo.layoutId,
+              fields: [],
+              children: templateList,
+              attributes: {
+                sitemap: null // TODO: 修正
+              }
+            }];
+          }
+          return null;
+        })
+      ).subscribe(previousTemplates => this.previousTemplates = previousTemplates);
+    }
   }
 
   toggleCompare() {

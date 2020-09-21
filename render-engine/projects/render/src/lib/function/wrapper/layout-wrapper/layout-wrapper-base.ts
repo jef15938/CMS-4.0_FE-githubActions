@@ -2,6 +2,7 @@ import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetect
 import { Subject } from 'rxjs';
 import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
 import { WithRenderInfo } from './layout-wrapper.interface';
+import { PageInfoGetResponseModel } from '../../../global/api/data-model/models/page-info-get-response.model';
 
 @Directive()
 export abstract class LayoutWrapperBase implements WithRenderInfo, OnDestroy {
@@ -9,6 +10,7 @@ export abstract class LayoutWrapperBase implements WithRenderInfo, OnDestroy {
   @Input() runtime;
   @Input() fixed;
   @Input() sites: SiteMapGetResponseModel;
+  @Input() pageInfo: PageInfoGetResponseModel;
 
   protected changeDetectorRef: ChangeDetectorRef = null;
   public elementRef: ElementRef = null;

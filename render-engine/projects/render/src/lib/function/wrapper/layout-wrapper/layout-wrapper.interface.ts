@@ -2,6 +2,7 @@ import { ComponentRef } from '@angular/core';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
 import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
+import { PageInfoGetResponseModel } from '../../../global/api/data-model/models/page-info-get-response.model';
 
 export enum TemplateType {
   COMMON = 'Common',
@@ -16,6 +17,7 @@ export interface WithRenderInfo {
   runtime: boolean;
   sites: SiteMapGetResponseModel;
   fixed: boolean;
+  pageInfo: PageInfoGetResponseModel;
 }
 
 export interface LayoutWrapper extends WithRenderInfo{
