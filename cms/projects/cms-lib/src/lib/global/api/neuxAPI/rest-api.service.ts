@@ -940,9 +940,17 @@ export class RestApiService {
 
   private getUrlByPathAndParams(path: string, params: { [key: string]: any }) {
     let url = path;
+    const pathParameters = [];
     for (const key in params) {
-      url = url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
+      const tester = new RegExp(`{${key}}`, 'g');
+      if (tester.test(url)) {
+        pathParameters.push(key);
+        url = url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
+      }
     }
+    pathParameters.forEach(p => {
+      delete params[p];
+    });
     return `${this.apiBaseUrl}/${url}`;
   }
 
