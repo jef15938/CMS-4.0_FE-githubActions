@@ -6,30 +6,30 @@
 const BASE_URL = 'http://runtime.decoder.com.tw';
 const RESOUCE_BASE_URL = 'https://cms.decoder.com.tw';
 const API_URL = {
-  GetPageByPageIDAndLang: `${BASE_URL}\/Page/{pageID}/{lang}`,
-  GetPageByPageID: `${BASE_URL}\/Page/{pageID}`,
+  GetPageByPageIdAndLang: `${BASE_URL}\/Page/{page_id}/{lang}`,
+  GetPageByPageId: `${BASE_URL}\/Page/{page_id}`,
   GetSiteMap: `${BASE_URL}\/SiteMap`,
-  GetPreviewPageByPageIDAndLang: `${BASE_URL}\/Preview/Page/{pageID}/{lang}`,
-  GetPreviewPageByPageID: `${BASE_URL}\/Preview/Page/{pageID}`,
+  GetPreviewPageByPageIdAndLang: `${BASE_URL}\/Preview/Page/{page_id}/{lang}`,
+  GetPreviewPageByPageId: `${BASE_URL}\/Preview/Page/{page_id}`,
   GetPreviewSiteMap: `${BASE_URL}\/Preview/SiteMap`,
-  GetPreviewCompareByPageID: `${BASE_URL}\/Preview/Compare/{pageID}`,
+  GetPreviewCompareByPageId: `${BASE_URL}\/Preview/Compare/{page_id}`,
   GetSiteMapDownloadByFormat: `${BASE_URL}\/SiteMap/Download/{format}`,
-  GetContentByContentID: `${BASE_URL}\/Content/{contentID}`,
-  GetPreviewContentByContentID: `${BASE_URL}\/Preview/Content/{contentID}`,
-  GetDataSourceByTypeIDAndId: `${BASE_URL}\/DataSource/{typeID}/{id}`,
+  GetContentByContentId: `${BASE_URL}\/Content/{content_id}`,
+  GetPreviewContentByContentId: `${BASE_URL}\/Preview/Content/{content_id}`,
+  GetDataSourceByTypeIdAndId: `${BASE_URL}\/DataSource/{type_id}/{id}`,
 };
 const API_TYPE = {
-  GetPageByPageIDAndLang: 'Restful',
-  GetPageByPageID: 'Restful',
+  GetPageByPageIdAndLang: 'Restful',
+  GetPageByPageId: 'Restful',
   GetSiteMap: 'Restful',
-  GetPreviewPageByPageIDAndLang: 'Restful',
-  GetPreviewPageByPageID: 'Restful',
+  GetPreviewPageByPageIdAndLang: 'Restful',
+  GetPreviewPageByPageId: 'Restful',
   GetPreviewSiteMap: 'Restful',
-  GetPreviewCompareByPageID: 'Restful',
+  GetPreviewCompareByPageId: 'Restful',
   GetSiteMapDownloadByFormat: 'Restful',
-  GetContentByContentID: 'Restful',
-  GetPreviewContentByContentID: 'Restful',
-  GetDataSourceByTypeIDAndId: 'Restful',
+  GetContentByContentId: 'Restful',
+  GetPreviewContentByContentId: 'Restful',
+  GetDataSourceByTypeIdAndId: 'Restful',
 };
 
 export const environment = {
