@@ -1,0 +1,77 @@
+@startuml
+Title Farm : table action
+
+actor user
+participant "FarmSharedComponent" as main << component >>
+participant "[child of FarmSharedComponent]\nFarmTableInfoComponent\n TableInfo" as tableInfo << component >>
+participant "FarmFormModifyDataModalComponent" as modifyDataModal << component >>
+participant "AuditingFarmDataModalComponent" as auditingModal << component >>
+participant "FarmService" as farmService << service >>
+participant "FarmSharedService" as farmSharedService << service >>
+
+== user interaction ==
+user -> tableInfo
+note left: 按下 "新增" 或 "編輯"
+user -> tableInfo
+note left: 按下 "刪除"
+user -> tableInfo
+note left: 按下 "送審"
+user -> tableInfo
+note left: 按下 "下架"
+user -> tableInfo
+note left: 按下 "預覽"
+user -> tableInfo
+note left: 按下 "看更多"
+tableInfo -> tableInfo: onActionClick()
+tableInfo -> tableInfo: actionClick.emit
+tableInfo --> main
+note right: 通知按鈕觸發
+main -> main: onTableActionClick()
+note left: 收到通知
+
+== CREATE / MODIFY ==
+main -> main: openModifyDataModal()
+main -> farmService: getFarmFormInfoByFuncID()
+activate farmService
+note left: 取得 "新增" 或 "編輯" 需要的欄位資料
+return FarmFormInfoModel
+main -> modifyDataModal: 帶入 FarmFormInfoModel
+note left: 開 "新增" 或 "編輯" 窗
+modifyDataModal -> farmService: createFarmForm() / updateFarmForm()
+note left: "新增" 或 "編輯"
+
+' == DELETE ==
+
+== PUBLISH ==
+main -> main: auditingData()
+main -> auditingModal
+note left: 開 "送審" 窗
+auditingModal -> farmService: auditingFarmData()
+note left: 送審
+
+== OFF ==
+main -> main: takeOffData()
+main -> farmService: takeOffFormData()
+note left: 下架
+
+== PREVIEW ==
+main -> main: preview()
+main -> farmService: getPreviewInfo()
+activate farmService
+note left: 取得預覽資訊
+return PreviewInfoModel
+main -> main: window.open()
+note left: ONE_PAGE : 開新分頁
+main -> farmSharedService: openFarmPreview()
+note left: FARM : 開預覽窗
+
+== MORE ==
+main -> main: seeMore()
+main -> farmService: getFarmByFuncID({{moreFuncId}})
+note left: 取得看更多的資料
+activate farmService
+return FarmInfoGetResponseModel
+main -> main
+note left: 動態產生看更多的元件
+
+@enduml
