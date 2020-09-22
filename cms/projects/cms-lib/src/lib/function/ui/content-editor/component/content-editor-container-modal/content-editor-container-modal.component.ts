@@ -9,6 +9,12 @@ import { ContentInfoModel } from '../../../../../global/api/data-model/models/co
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { CmsLoadingToggle } from '../../../../../global/service';
 
+export interface ContentEditorResponse {
+  contentInfo: ContentInfoModel;
+  /** 是否存檔過 */
+  saved: boolean;
+}
+
 @Component({
   selector: 'cms-content-editor-container-modal',
   templateUrl: './content-editor-container-modal.component.html',
@@ -27,6 +33,8 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   @Input() onSaved: () => void;
 
   templates: TemplateGetResponseModel;
+
+  private saved = false;
 
   constructor(
     private contentService: ContentService,
@@ -57,7 +65,8 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
   }
 
   close(currentContentInfo: ContentInfoModel) {
-    super.close(currentContentInfo);
+    const res: ContentEditorResponse = { contentInfo: currentContentInfo, saved: this.saved };
+    super.close(res);
     if (this.siteID && this.nodeID) {
       this.contentService.getSitemapContentUnlockBySiteIdAndNodeId(this.siteID, this.nodeID)
         .pipe(CmsErrorHandler.rxHandleError())
@@ -80,6 +89,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
         .updateContent(this.contentID, convertedContentInfo)
         .pipe(
           tap(_ => {
+            this.saved = true;
             this.cmsLoadingToggle.close();
             this.modalService.openMessage({ message: '內容儲存成功' }).subscribe();
           }),

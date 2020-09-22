@@ -279,8 +279,8 @@ export class FarmFormInfoComponent implements OnInit {
       if (this.mode === 'preview') {
         this.contentEditorService.openEditorPreview(content, controlID).subscribe();
       } else {
-        this.contentEditorService.openEditorByContent(content, controlID).subscribe(result => {
-          control.setValue(JSON.stringify(result));
+        this.contentEditorService.openEditorByContent(content, controlID).subscribe(res => {
+          control.setValue(JSON.stringify(res.contentInfo));
         });
       }
     } catch (error) {

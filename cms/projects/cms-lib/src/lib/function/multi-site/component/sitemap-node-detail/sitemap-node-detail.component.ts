@@ -88,11 +88,14 @@ export class SitemapNodeDetailComponent implements OnInit {
 
     switch (noteType) {
       case SiteMapNodeType.CONTENT:
-        this.contentEditorService.openEditorByIDs(siteID, nodeID, contentID, controlID).subscribe(_ => this.update.emit(this.sitemapNode));
+        this.contentEditorService.openEditorByIDs(siteID, nodeID, contentID, controlID)
+          .subscribe(res => {
+            if (res?.saved) { this.update.emit(this.sitemapNode); }
+          });
         break;
       case SiteMapNodeType.FARM:
         const funcID = this.sitemapNode.funcId;
-        this.farmSharedService.openFarm(funcID).subscribe(_ => this.update.emit(this.sitemapNode));
+        this.farmSharedService.openFarm(funcID).subscribe();
         break;
     }
   }

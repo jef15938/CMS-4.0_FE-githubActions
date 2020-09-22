@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ModalService, ModalSetting } from '../modal';
 import { EditorMode } from './content-editor.interface';
-import { ContentEditorContainerModalComponent } from './component/content-editor-container-modal/content-editor-container-modal.component';
+import { ContentEditorContainerModalComponent, ContentEditorResponse } from './component/content-editor-container-modal/content-editor-container-modal.component';
 import { ContentInfo } from '../../../global/api/neuxAPI/bean/ContentInfo';
 import { ContentService } from '../../../global/api/service';
 import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
 import { map } from 'rxjs/operators';
 
+export interface ContentEditorServiceResponse {
+  contentInfo: ContentInfo;
+  /** 是否存檔過 */
+  saved: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -88,8 +93,12 @@ export class ContentEditorService {
     }, true).pipe(map(this.mapContentInfoModelToContentInfo));
   }
 
-  private mapContentInfoModelToContentInfo = (contentInfoModel: ContentInfoModel) => {
-    return this.contentService.convertContentInfoModelToContentInfo(contentInfoModel);
+  private mapContentInfoModelToContentInfo = (res: ContentEditorResponse) => {
+    const response: ContentEditorServiceResponse = {
+      contentInfo: this.contentService.convertContentInfoModelToContentInfo(res.contentInfo),
+      saved: res.saved,
+    };
+    return response;
   }
 
 }
