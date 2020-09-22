@@ -8,13 +8,19 @@
         <mat-tab *ngFor="let category of farm.category"
           [label]="(categoryName ? categoryName + ' > ' : '') + category.categoryName">
           <ng-template matTabContent>
-            <div class="detail-info-container" *ngIf="farm.detailInfo">
-              <cms-farm-detail-info [detailInfo]="farm.detailInfo"></cms-farm-detail-info>
+            <div class="detail-info-container" *ngIf="farm.detailInfo?.columns?.length">
+              <cms-farm-form-info [farmFormInfo]="farm.detailInfo"></cms-farm-form-info>
               <hr>
             </div>
             <div class="search-info-container" *ngIf="category.searchInfo?.columns?.length">
-              <cms-farm-search-info #FarmSearchComp [searchInfo]="category.searchInfo"
-                (needQuery)="onSearchInfoNeedQuery(category)"></cms-farm-search-info>
+              <cms-farm-form-info #FarmSearchComp [farmFormInfo]="category.searchInfo" [useValidation]="true">
+              </cms-farm-form-info>
+              <div class="btn-group">
+                <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel"
+                  (click)="clearSearchInfoAndQueryData(category)">清除</button>
+                <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm"
+                  (click)="queryData(category)" [disabled]="!(FarmSearchComp?.formGroup?.valid)">查詢</button>
+              </div>
               <hr>
             </div>
             <div class="table-info-container page-content-container" *ngIf="category.tableInfo">

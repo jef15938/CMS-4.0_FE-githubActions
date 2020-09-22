@@ -17,8 +17,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FarmSharedComponent } from './farm-shared.component';
-import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detail-info.component';
-import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
 import { FarmTableInfoComponent } from './component/farm-table-info/farm-table-info.component';
 import { GetFarmTableDisplayColsPipe } from './pipe/get-farm-table-display-cols.pipe';
 import { GetFarmTableColDataPipe } from './pipe/get-farm-table-col-data.pipe';
@@ -64,8 +62,6 @@ import { MatMenuModule } from '@angular/material/menu';
   ],
   declarations: [
     FarmSharedComponent,
-    FarmDetailInfoComponent,
-    FarmSearchInfoComponent,
     FarmTableInfoComponent,
     GetFarmTableDisplayColsPipe,
     GetFarmTableColDataPipe,

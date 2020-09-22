@@ -15,7 +15,8 @@ import { FarmCategoryInfoModel } from '../../../global/api/data-model/models/far
 import { FarmInfoGetResponseModel } from '../../../global/api/data-model/models/farm-info-get-response.model';
 import { FarmTableDataInfoAction, FarmTableDataInfoModel } from '../../../global/api/data-model/models/farm-table-data-info.model';
 import { CmsErrorHandler } from '../../../global/error-handling';
-import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
+import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
+import { FarmFormInfoModel } from '../../../global/api/data-model/models/farm-form-info.model';
 
 @Component({
   selector: 'cms-farm-shared',
@@ -24,7 +25,7 @@ import { FarmSearchInfoComponent } from './component/farm-search-info/farm-searc
 })
 export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
-  @ViewChild(FarmSearchInfoComponent) searchInfoComponent: FarmSearchInfoComponent;
+  @ViewChild('FarmSearchComp') searchInfoComponent: FarmFormInfoComponent;
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
 
   // @Input() title: string;
@@ -34,7 +35,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   subComponentRef: ComponentRef<FarmSharedComponent>;
 
-  currentTablePage = 1;
+  private currentTablePage = 1;
 
   destroyMe = new Subject();
   private destroy$ = new Subject();
@@ -49,8 +50,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.farm) {
       this.destroySub();
-      this.farm = changes.farm.currentValue;
-      this.currentTablePage = 1;
+      this.resetTablePage();
     }
   }
 
@@ -64,11 +64,26 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     this.destroy$.unsubscribe();
   }
 
+  private resetTablePage() {
+    this.currentTablePage = 1;
+  }
+
+  queryData(category: FarmCategoryInfoModel) {
+    this.resetTablePage();
+    this.getCategoryTableInfo(category).subscribe();
+  }
+
+  clearSearchInfoAndQueryData(category: FarmCategoryInfoModel) {
+    this.searchInfoComponent.clearForm();
+    this.resetTablePage();
+    this.getCategoryTableInfo(category).subscribe();
+  }
+
   private getCategoryTableInfo(category: FarmCategoryInfoModel) {
     const page = this.currentTablePage;
     return of(undefined).pipe(
       concatMap(_ => this.searchInfoComponent?.getFormInfo() || of(undefined)),
-      concatMap(searchFormInfo => {
+      concatMap((searchFormInfo: FarmFormInfoModel) => {
         const queryParams: { [key: string]: string } = {};
         if (searchFormInfo) {
           searchFormInfo.columns.forEach(column => {
@@ -92,11 +107,6 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   onTablePageChange(category: FarmCategoryInfoModel, page: number) {
     this.currentTablePage = page;
-    this.getCategoryTableInfo(category).subscribe();
-  }
-
-  onSearchInfoNeedQuery(category: FarmCategoryInfoModel) {
-    this.currentTablePage = 1;
     this.getCategoryTableInfo(category).subscribe();
   }
 
