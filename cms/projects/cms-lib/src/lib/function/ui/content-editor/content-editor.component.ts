@@ -1,9 +1,10 @@
 import {
   Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild,
-  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener, Inject
+  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, HostListener, Inject
 } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
+import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 import { ContentEditorSaveEvent, EditorMode, ContentEditorActionMode, ContentEditorContext } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
@@ -11,17 +12,16 @@ import { ContentControlPanelComponent } from './component/content-control-panel/
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactive-guardian.interface';
 import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
-import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 import { ModalService } from '../modal';
 import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
 import { ContentService } from '../../../global/api/service';
-import { ContentVersionInfo } from '../../../global/api/neuxAPI/bean/ContentVersionInfo';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
 import { TemplateGetResponseModel } from '../../../global/api/data-model/models/template-get-response.model';
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
 import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
-import { CmsErrorHandler } from '../../../global/error-handling';
+import { CmsErrorHandler } from '../../../global/error-handling/cms-error-handler';
+import { ContentVersionInfoModel } from '../../../global/api/data-model/models/content-version-info.model';
 
 @Component({
   selector: 'cms-content-editor',
@@ -329,7 +329,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       componentInitData: {
         contentID: this.contentID,
       }
-    }).subscribe((version: ContentVersionInfo) => {
+    }).subscribe((version: ContentVersionInfoModel) => {
       if (version) {
         this.contentService.getContentById(this.contentID, version.version)
           .pipe(CmsErrorHandler.rxHandleError())
