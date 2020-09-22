@@ -9,11 +9,12 @@
           [label]="(categoryName ? categoryName + ' > ' : '') + category.categoryName">
           <ng-template matTabContent>
             <div class="detail-info-container" *ngIf="farm.detailInfo?.columns?.length">
-              <cms-farm-form-info [farmFormInfo]="farm.detailInfo"></cms-farm-form-info>
+              <cms-farm-form-info [funcID]="funcID" [farmFormInfo]="farm.detailInfo"></cms-farm-form-info>
               <hr>
             </div>
             <div class="search-info-container" *ngIf="category.searchInfo?.columns?.length">
-              <cms-farm-form-info #FarmSearchComp [farmFormInfo]="category.searchInfo" [useValidation]="true">
+              <cms-farm-form-info #FarmSearchComp [funcID]="category.categoryId" [farmFormInfo]="category.searchInfo"
+                [useValidation]="true">
               </cms-farm-form-info>
               <div class="btn-group">
                 <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel"

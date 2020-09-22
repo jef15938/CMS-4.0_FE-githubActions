@@ -31,6 +31,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   // @Input() title: string;
   @Input() categoryName: string;
   @Input() isSub = false;
+  @Input() funcID = '';
   @Input() farm: FarmInfoGetResponseModel;
 
   subComponentRef: ComponentRef<FarmSharedComponent>;
