@@ -162,11 +162,19 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     ev.preventDefault();
   }
 
-  openGallery() {
-    return this.gallerySharedService.openImgGallery().subscribe(selected => {
-      if (selected) {
-        this.metaImageName = selected.fileName;
-        this.sitemapMaintainModel.metaImage = `${selected.galleryId}`;
+  selectImage() {
+    const galleryID = this.sitemapMaintainModel.metaImage;
+    const galleryName = this.metaImageName;
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryImage(`${galleryID}`, galleryName, null, null)
+        : this.gallerySharedService.addGalleryImage()
+    ).subscribe(res => {
+      if (res) {
+        if (res) {
+          this.metaImageName = res.galleryName;
+          this.sitemapMaintainModel.metaImage = `${res.galleryId}`;
+        }
       }
     });
   }

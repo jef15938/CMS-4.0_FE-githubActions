@@ -43,7 +43,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
 
   confirm() {
     of(undefined).pipe(
-      concatMap(_ => this.farmFormInfoComponent.requestFormInfo()),
+      concatMap(_ => this.farmFormInfoComponent.getFormInfo()),
       concatMap(formInfo => {
         const formData = new FormData();
         formInfo.columns.forEach(col => {

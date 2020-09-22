@@ -4,7 +4,7 @@
       <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="destroySelf()">回上層</button>
     </div>
     <div>
-      <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)" animationDuration="0ms">
+      <mat-tab-group animationDuration="0ms">
         <mat-tab *ngFor="let category of farm.category"
           [label]="(categoryName ? categoryName + ' > ' : '') + category.categoryName">
           <ng-template matTabContent>
@@ -14,8 +14,7 @@
             </div>
             <div class="search-info-container" *ngIf="category.searchInfo?.columns?.length">
               <cms-farm-search-info #FarmSearchComp [searchInfo]="category.searchInfo"
-                (needQuery)="onSearchInfoNeedQuery(category)"
-                (farmFormInfoCompEmit)="onSearchInfoFarmFormInfoCompEmit(category, $event)"></cms-farm-search-info>
+                (needQuery)="onSearchInfoNeedQuery(category)"></cms-farm-search-info>
               <hr>
             </div>
             <div class="table-info-container page-content-container" *ngIf="category.tableInfo">

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from
 import { Observable, throwError, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
-import { FarmFormComp, FarmCustomHandler } from '../../farm-shared.interface';
+import { FarmCustomHandler } from '../../farm-shared.interface';
 import { ContentEditorService } from './../../../content-editor';
 import { FarmService } from '../../../../../global/api/service';
 import { HtmlEditorService } from '../../../html-editor';
@@ -13,7 +13,10 @@ import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo'
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GetFarmTreeResponseModel } from '../../../../../global/api/data-model/models/get-farm-tree-response.model';
 import { FarmTreeInfoModel } from '../../../../../global/api/data-model/models/farm-tree-info.model';
-import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType, FarmFormInfoColumnFileUploadOption } from '../../../../../global/api/data-model/models/farm-form-info.model';
+import {
+  FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType,
+  FarmFormInfoColumnFileUploadOption
+} from '../../../../../global/api/data-model/models/farm-form-info.model';
 import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { FormSharedService } from '../../../form-shared/form-shared.service';
@@ -31,7 +34,7 @@ interface FormColumnSetting {
   templateUrl: './farm-form-info.component.html',
   styleUrls: ['./farm-form-info.component.scss']
 })
-export class FarmFormInfoComponent implements FarmFormComp, OnInit {
+export class FarmFormInfoComponent implements OnInit {
 
   FarmFormInfoColumnDisplayType = FarmFormInfoColumnDisplayType;
   FarmFormInfoColumnFileUploadOption = FarmFormInfoColumnFileUploadOption;
@@ -192,7 +195,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.formGroup.reset();
   }
 
-  requestFormInfo(): Observable<FarmFormInfoModel> {
+  getFormInfo(): Observable<FarmFormInfoModel> {
     try {
       const formGroup = this.formGroup;
 
@@ -220,7 +223,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       if (!formGroup.valid) { return throwError('Form is not valid.'); }
       return of(info);
     } catch (error) {
-      CmsErrorHandler.throwAndShow(error, 'FarmFormInfoComponent.requestFormInfo()', '處理表單資料錯誤');
+      CmsErrorHandler.throwAndShow(error, 'FarmFormInfoComponent.getFormInfo()', '處理表單資料錯誤');
     }
     return null;
   }
@@ -327,7 +330,6 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       concatMap(_ => selectImage$)
     ).subscribe(res => {
       if (res) {
-        console.warn(456);
         this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
         col.setting.fileName = res.galleryName;
       }

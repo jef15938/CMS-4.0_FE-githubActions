@@ -2,12 +2,10 @@ import {
   Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver,
   OnChanges, SimpleChanges
 } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
-import { Subject, of, throwError } from 'rxjs';
-import { tap, takeUntil, concatMap } from 'rxjs/operators';
+import { Subject, of, Observable } from 'rxjs';
+import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
 import { FarmService } from '../../../global/api/service';
 import { ModalService } from '../modal';
-import { FarmFormComp } from './farm-shared.interface';
 import { FarmTableInfoActionEvent } from './component/farm-table-info/farm-table-info.type';
 import { FarmFormModifyDataModalComponent } from './modal/farm-form-modify-data-modal/farm-form-modify-data-modal.component';
 import { AuditingFarmDataModalComponent } from './modal/auditing-farm-data-modal/auditing-farm-data-modal.component';
@@ -17,6 +15,7 @@ import { FarmCategoryInfoModel } from '../../../global/api/data-model/models/far
 import { FarmInfoGetResponseModel } from '../../../global/api/data-model/models/farm-info-get-response.model';
 import { FarmTableDataInfoAction, FarmTableDataInfoModel } from '../../../global/api/data-model/models/farm-table-data-info.model';
 import { CmsErrorHandler } from '../../../global/error-handling';
+import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
 
 @Component({
   selector: 'cms-farm-shared',
@@ -25,18 +24,13 @@ import { CmsErrorHandler } from '../../../global/error-handling';
 })
 export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
+  @ViewChild(FarmSearchInfoComponent) searchInfoComponent: FarmSearchInfoComponent;
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
-
-  private searchInfoFormComponentMap = new Map<FarmCategoryInfoModel, FarmFormComp>();
 
   // @Input() title: string;
   @Input() categoryName: string;
-  @Input() categoryId: string;
   @Input() isSub = false;
-
   @Input() farm: FarmInfoGetResponseModel;
-
-  activedCategory: FarmCategoryInfoModel;
 
   subComponentRef: ComponentRef<FarmSharedComponent>;
 
@@ -53,11 +47,9 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-
     if (changes.farm) {
       this.destroySub();
       this.farm = changes.farm.currentValue;
-      this.activedCategory = this.farm?.category[0];
       this.currentTablePage = 1;
     }
   }
@@ -75,7 +67,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   private getCategoryTableInfo(category: FarmCategoryInfoModel) {
     const page = this.currentTablePage;
     return of(undefined).pipe(
-      concatMap(_ => this.searchInfoFormComponentMap.get(category)?.requestFormInfo() || of(undefined)),
+      concatMap(_ => this.searchInfoComponent?.getFormInfo() || of(undefined)),
       concatMap(searchFormInfo => {
         const queryParams: { [key: string]: string } = {};
         if (searchFormInfo) {
@@ -85,10 +77,10 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
         }
         return this.farmService.getFarmTableInfoByFuncID(category.categoryId, page, queryParams)
           .pipe(
-            // CmsErrorHandler.rxHandleError(),
             tap(farmTableInfo => {
               category.tableInfo = farmTableInfo;
-            })
+            }),
+            CmsErrorHandler.rxHandleError(),
           );
       }),
     );
@@ -99,17 +91,8 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onTablePageChange(category: FarmCategoryInfoModel, page: number) {
-    console.warn({ category, page });
     this.currentTablePage = page;
     this.getCategoryTableInfo(category).subscribe();
-  }
-
-  onSelectedTabChange(ev: MatTabChangeEvent) {
-    this.activedCategory = this.farm.category[ev.index];
-  }
-
-  onSearchInfoFarmFormInfoCompEmit(category: FarmCategoryInfoModel, comp: FarmFormComp) {
-    this.searchInfoFormComponentMap.set(category, comp);
   }
 
   onSearchInfoNeedQuery(category: FarmCategoryInfoModel) {
@@ -118,26 +101,28 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private seeMore(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {
-    if (!category) { return; }
+    if (!category) { return of(undefined); }
 
-    this.farmService.getFarmByFuncID(rowData.moreFuncId, rowData.dataId, category.categoryId)
-      .pipe(CmsErrorHandler.rxHandleError())
-      .subscribe(farm => {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmSharedComponent);
-        const viewContainerRef = this.subContainerViewContainerRef;
-        viewContainerRef.clear();
-        this.subComponentRef = undefined;
+    return this.farmService.getFarmByFuncID(rowData.moreFuncId, rowData.dataId, category.categoryId)
+      .pipe(
+        tap(farm => {
+          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FarmSharedComponent);
+          const viewContainerRef = this.subContainerViewContainerRef;
+          viewContainerRef.clear();
+          this.subComponentRef = undefined;
 
-        const subComponentRef = viewContainerRef.createComponent(componentFactory);
-        subComponentRef.instance.isSub = true;
-        subComponentRef.instance.farm = farm;
-        subComponentRef.instance.categoryName = `${this.categoryName || ''}${this.categoryName ? ' > ' : ''}${category.categoryName}`;
-        this.subComponentRef = subComponentRef;
-        this.subComponentRef.instance.destroyMe.pipe(
-          takeUntil(this.destroy$),
-          tap(_ => this.destroySub()),
-        ).subscribe();
-      });
+          const subComponentRef = viewContainerRef.createComponent(componentFactory);
+          subComponentRef.instance.isSub = true;
+          subComponentRef.instance.farm = farm;
+          subComponentRef.instance.categoryName = `${this.categoryName || ''}${this.categoryName ? ' > ' : ''}${category.categoryName}`;
+          this.subComponentRef = subComponentRef;
+          this.subComponentRef.instance.destroyMe.pipe(
+            takeUntil(this.destroy$),
+            tap(_ => this.destroySub()),
+          ).subscribe();
+        }),
+        CmsErrorHandler.rxHandleError(),
+      );
   }
 
   private destroySub() {
@@ -156,52 +141,57 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onTableActionClick(category: FarmCategoryInfoModel, event: FarmTableInfoActionEvent) {
+    let action: Observable<{ refresh: boolean }> = of({ refresh: false });
     switch (event.action) {
       case FarmTableDataInfoAction.CREATE:
-        this.openModifyDataModal('create', category);
+        action = this.openModifyDataModal('create', category).pipe(map(confirm => ({ refresh: confirm })));
         break;
       case FarmTableDataInfoAction.MODIFY:
-        this.openModifyDataModal('edit', category, event.rowData);
-        break;
-      case FarmTableDataInfoAction.DELETE:
-        this.deleteData(category, event.rowData);
+        action = this.openModifyDataModal('edit', category, event.rowData).pipe(map(confirm => ({ refresh: confirm })));
         break;
       case FarmTableDataInfoAction.PUBLISH:
-        this.auditingData(category, event.rowData);
+        action = this.auditingData(category, event.rowData).pipe(map(confirm => ({ refresh: confirm })));
         break;
       case FarmTableDataInfoAction.OFF:
-        this.takeOffData(category, event.rowData);
+        action = this.takeOffData(category, event.rowData).pipe(map(_ => ({ refresh: true })));
         break;
       case FarmTableDataInfoAction.PREVIEW:
-        this.preview(category, event.rowData);
+        action = this.preview(category, event.rowData).pipe(map(_ => ({ refresh: false })));
         break;
       case FarmTableDataInfoAction.MORE:
-        this.seeMore(category, event.rowData);
+        action = this.seeMore(category, event.rowData).pipe(map(_ => ({ refresh: false })));
         break;
     }
+    action.subscribe(res => {
+      if (res?.refresh) {
+        this.getCategoryTableInfo(category).subscribe();
+      }
+    });
   }
 
   private preview(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {
     const funcID = category.categoryId;
     const dataID = rowData.dataId;
-    this.farmService.getPreviewInfo(funcID, dataID)
-      .pipe(CmsErrorHandler.rxHandleError())
-      .subscribe(previewInfo => {
-        switch (previewInfo.previewType) {
-          case PreviewInfoType.ONE_PAGE:
-            window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
-            break;
-          case PreviewInfoType.FARM:
-            this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
-            break;
-        }
-      });
+    return this.farmService.getPreviewInfo(funcID, dataID)
+      .pipe(
+        tap(previewInfo => {
+          switch (previewInfo.previewType) {
+            case PreviewInfoType.ONE_PAGE:
+              window.open(previewInfo.url, '_blank', 'noopener=yes,noreferrer=yes');
+              break;
+            case PreviewInfoType.FARM:
+              this.farmSharedService.openFarmPreview(previewInfo.funcId, previewInfo.dataId).subscribe();
+              break;
+          }
+        }),
+        CmsErrorHandler.rxHandleError(),
+      );
   }
 
   private openModifyDataModal(action: 'create' | 'edit', category: FarmCategoryInfoModel, rowData?: FarmTableDataInfoModel) {
     const funcID = category.categoryId;
     const dataID = rowData?.dataId || '';
-    of(undefined).pipe(
+    return of(undefined).pipe(
       concatMap(_ => this.farmService.getFarmFormInfoByFuncID(funcID, rowData?.dataId).pipe(CmsErrorHandler.rxHandleError())),
       concatMap(farmFormInfo => {
         return this.modalService.openComponent({
@@ -217,37 +207,23 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
           }
         });
       })
-    ).subscribe(confirm => {
-      if (confirm) {
-        this.getCategoryTableInfo(category).subscribe();
-      }
-    });
+    );
   }
 
   private takeOffData(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {
-    this.farmService.takeOffFormData(category.categoryId, rowData.dataId)
-      .pipe(CmsErrorHandler.rxHandleError())
-      .subscribe(_ => {
-        this.modalService.openMessage({ message: `資料已下架 : ${rowData.dataId}` }).subscribe();
-        this.getCategoryTableInfo(category).subscribe();
-      });
-  }
-
-  private deleteData(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {
-    // TODO: 刪除 Farm Table 資料
-    this.modalService.openMessage({ message: '功能準備中' }).subscribe();
+    return this.farmService.takeOffFormData(category.categoryId, rowData.dataId)
+      .pipe(
+        CmsErrorHandler.rxHandleError(),
+        tap(_ => this.modalService.openMessage({ message: `資料已下架 : ${rowData.dataId}` }).subscribe())
+      );
   }
 
   private auditingData(category: FarmCategoryInfoModel, rowData: FarmTableDataInfoModel) {
-    this.modalService.openComponent({
+    return this.modalService.openComponent({
       component: AuditingFarmDataModalComponent,
       componentInitData: {
         funcId: category.categoryId,
         dataId: rowData.dataId,
-      }
-    }).subscribe(confirm => {
-      if (confirm) {
-        this.getCategoryTableInfo(category).subscribe();
       }
     });
   }

@@ -177,7 +177,7 @@
             <input matInput [value]="metaImageName" name="meta_image" readonly>
           </mat-form-field>
           <button class="modal-form-layout__btn gallery-btn btn btn-dark" type="button" tabindex="0" mat-raised-button
-            (click)="openGallery()">媒體庫</button>
+            (click)="selectImage()">{{sitemapMaintainModel.metaImage?'修改':'加入'}}圖片</button>
         </div>
       </div>
     </ng-container>

@@ -89,11 +89,19 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
     });
   }
 
-  openGallery(detail: SiteNodeDetailInfoModel) {
-    return this.gallerySharedService.openImgGallery().subscribe(selected => {
-      if (selected) {
-        detail.metaImageName = selected.fileName;
-        detail.metaImage = `${selected.galleryId}`;
+  selectImage(detail: SiteNodeDetailInfoModel) {
+    const galleryID = detail.metaImage;
+    const galleryName = detail.metaImageName;
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryImage(`${galleryID}`, galleryName, null, null)
+        : this.gallerySharedService.addGalleryImage()
+    ).subscribe(res => {
+      if (res) {
+        if (res) {
+          detail.metaImageName = res.galleryName;
+          detail.metaImage = `${res.galleryId}`;
+        }
       }
     });
   }

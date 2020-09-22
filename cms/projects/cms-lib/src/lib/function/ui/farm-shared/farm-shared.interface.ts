@@ -5,10 +5,6 @@ import { FarmTableDataInfoModel } from '../../../global/api/data-model/models/fa
 import { FarmTableInfoModel } from '../../../global/api/data-model/models/farm-table-info.model';
 import { FormGroup } from '@angular/forms';
 
-export interface FarmFormComp {
-  requestFormInfo(): Observable<FarmFormInfoModel>;
-}
-
 export interface FarmCustomHandler {
   funcId: string;
   onFormGalleryColumnBeforeSelectImage?(

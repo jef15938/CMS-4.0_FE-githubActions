@@ -28,10 +28,6 @@ export class AuditingComponent implements OnInit {
   refreshPage$ = new BehaviorSubject(1);
   auditings$: Observable<Model>;
 
-  // auditings: AuditingInfoModel[];
-  // pageInfo: PageInfoModel;
-  // checkedData: AuditingInfoModel[] = [];
-
   colDefs: ColDef<AuditingInfoModel>[] = [
     {
       colId: 'orderId',
@@ -57,18 +53,6 @@ export class AuditingComponent implements OnInit {
       title: '意見',
       width: '60%',
     },
-    // {
-    //   colId: 'start_time',
-    //   field: 'start_time',
-    //   title: '上架時間',
-    //   format: 'DATETIME',
-    // },
-    // {
-    //   colId: 'end_time',
-    //   field: 'end_time',
-    //   title: '下架時間',
-    //   format: 'DATETIME',
-    // },
     {
       colId: 'action',
       field: 'action',

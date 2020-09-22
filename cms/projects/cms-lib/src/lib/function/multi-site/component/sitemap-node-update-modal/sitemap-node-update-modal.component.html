@@ -151,7 +151,7 @@
                 <input matInput [value]="detail.metaImageName" name="meta_image" readonly>
               </mat-form-field>
               <button class="modal-form-layout__btn gallery-btn  btn btn-dark" type="button" tabindex="0"
-                mat-raised-button (click)="openGallery(detail)">媒體庫</button>
+                mat-raised-button (click)="selectImage(detail)">{{detail.metaImage?'修改':'加入'}}圖片</button>
             </div>
           </div>
         </ng-template>
