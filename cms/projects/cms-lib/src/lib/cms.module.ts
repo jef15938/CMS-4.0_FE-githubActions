@@ -5,10 +5,7 @@ import { CmsRoutingModule } from './cms-routing.module';
 import { CmsComponent } from './cms.component';
 import { MenuNodeComponent } from './global/layouts/menu-node.component';
 import { WithCredentialsInterceptor, HttpError401Interceptor, ManageHttpInterceptor } from './global/interceptor/cms-http-interceptor';
-import {
-  CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver, CmsLoadingToggle,
-  FarmCustomHandlerSlider
-} from './global/service';
+import { CmsAuthGuard, CmsCanDeactiveGuard, DialogFlowMessengerService, CmsUserMenuResolver, CmsLoadingToggle } from './global/service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CmsDateAdapter, CMS_DATE_FORMATS_DATETIME, CmsDateTimeAdapter } from './global/util/mat-date/mat-date';
 import { DynamicRoutingComponent } from './global/component/dynamic-routing/dynamic-routing.component';
@@ -20,6 +17,7 @@ import { CmsErrorHandler } from './global/error-handling';
 import { ModalService } from './function/ui';
 import { SliderService } from './global/api/service/slider/slider.service';
 import { FarmCustomHandlerAdminGroup } from './global/service/farm-custom-handler/farm-custom-handler-admin-group';
+import { FarmCustomHandlerSlider } from './global/service/farm-custom-handler/farm-custom-handler-slider';
 
 const LAYOUTS = [
   MenuNodeComponent,
