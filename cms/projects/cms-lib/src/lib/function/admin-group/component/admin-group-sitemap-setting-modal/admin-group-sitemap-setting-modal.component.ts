@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { CustomModalActionButton, CustomModalBase, TreeComponent } from '../../../ui';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { MatSelect } from '@angular/material/select';
+import { forkJoin, Observable, of } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { SitemapService, GroupService } from '../../../../global/api/service';
 import { AdminGroupSitemapSettingNodeComponent } from '../admin-group-sitemap-setting-node/admin-group-sitemap-setting-node.component';
-import { forkJoin, Observable, fromEvent, iif, of } from 'rxjs';
 import { GroupSitemapInfoModel } from '../../../../global/api/data-model/models/group-sitemap-info.model';
 import { SiteInfoModel } from '../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
-import { MatSelect } from '@angular/material/select';
-import { switchMap, map } from 'rxjs/operators';
+import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal/base/custom-modal-base';
+import { TreeComponent } from '../../../ui/tree/tree.component';
 
 class Node extends SiteMapGetResponseModel {
   groupSitemapInfo: GroupSitemapInfoModel;

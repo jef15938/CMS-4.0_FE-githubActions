@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton, TreeComponent } from '../../../ui';
-import { GroupService, MenuService } from '../../../../global/api/service';
 import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { GroupService, MenuService } from '../../../../global/api/service';
 import { MenuInfoModel } from '../../../../global/api/data-model/models/menu-info.model';
 import { GroupMenuInfoModel } from '../../../../global/api/data-model/models/group-menu-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
-import { map } from 'rxjs/operators';
+import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal/base/custom-modal-base';
+import { TreeComponent } from '../../../ui/tree/tree.component';
 
 interface TreeData {
   menus: MenuInfoModel[];
