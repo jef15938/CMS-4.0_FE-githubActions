@@ -9,7 +9,8 @@ import { GalleryInfoModel } from '../../../../../global/api/data-model/models/ga
   templateUrl: './gallery-shared-container-modal.component.html',
   styleUrls: ['./gallery-shared-container-modal.component.scss']
 })
-export class GallerySharedContainerModalComponent extends CustomModalBase implements OnInit {
+export class GallerySharedContainerModalComponent extends CustomModalBase<GallerySharedContainerModalComponent, GalleryInfoModel>
+  implements OnInit {
 
   @ViewChild(GallerySharedComponent) gallerySharedComponent: GallerySharedComponent;
 

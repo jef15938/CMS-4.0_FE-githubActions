@@ -13,7 +13,8 @@ import { CmsLoadingToggle } from '../../../../../global/service/cms-loading-togg
   templateUrl: './farm-form-modify-data-modal.component.html',
   styleUrls: ['./farm-form-modify-data-modal.component.scss']
 })
-export class FarmFormModifyDataModalComponent extends CustomModalBase implements OnInit, AfterContentChecked {
+export class FarmFormModifyDataModalComponent extends CustomModalBase<FarmFormModifyDataModalComponent, 'Success'>
+  implements OnInit, AfterContentChecked {
 
   @ViewChild(FarmFormInfoComponent) farmFormInfoComponent: FarmFormInfoComponent;
 
@@ -63,7 +64,7 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase implements
       })
     ).subscribe(() => {
       this.cmsLoadingToggle.close();
-      this.close(true);
+      this.close('Success');
     });
   }
 

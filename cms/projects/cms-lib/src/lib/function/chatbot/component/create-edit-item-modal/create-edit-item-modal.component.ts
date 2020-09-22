@@ -10,7 +10,7 @@ import { ChatbotItem, ChatbotReply } from '../../../../global/model/chatbot.mode
   templateUrl: './create-edit-item-modal.component.html',
   styleUrls: ['./create-edit-item-modal.component.scss']
 })
-export class CreateEditItemModalComponent extends CustomModalBase implements OnInit {
+export class CreateEditItemModalComponent extends CustomModalBase<CreateEditItemModalComponent, 'Success'> implements OnInit {
 
   actions: CustomModalActionButton[] = [];
 
@@ -94,7 +94,7 @@ export class CreateEditItemModalComponent extends CustomModalBase implements OnI
 
   confirm() {
     this.save().subscribe(_ => {
-      this.close('Confirm');
+      this.close('Success');
     });
   }
 

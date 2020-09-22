@@ -1,12 +1,17 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
 
+interface Response {
+  rows: number;
+  cols: number;
+}
+
 @Component({
   selector: 'cms-html-editor-insert-table-modal',
   templateUrl: './html-editor-insert-table-modal.component.html',
   styleUrls: ['./html-editor-insert-table-modal.component.scss']
 })
-export class HtmlEditorInsertTableModalComponent extends CustomModalBase implements OnInit {
+export class HtmlEditorInsertTableModalComponent extends CustomModalBase<HtmlEditorInsertTableModalComponent, Response> implements OnInit {
 
   @ViewChild('Table') table: ElementRef<HTMLTableElement>;
 

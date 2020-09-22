@@ -6,12 +6,12 @@ export interface CustomModalActionButton {
   onClick: (ev?: any) => void;
 }
 
-export abstract class CustomModalBase {
+export abstract class CustomModalBase<C, R> {
 
   abstract title: null | string | (() => string);
   abstract actions: CustomModalActionButton[];
 
-  modalRef: MatDialogRef<any>;
+  modalRef: MatDialogRef<C, R>;
 
   constructor() {
 
@@ -21,7 +21,7 @@ export abstract class CustomModalBase {
     this.modalRef.updateSize(width, height);
   }
 
-  close(result?: any) {
+  close(result?: R) {
     this.modalRef.close(result);
   }
 }

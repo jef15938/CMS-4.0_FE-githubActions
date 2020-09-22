@@ -27,7 +27,8 @@ interface TreeData {
   templateUrl: './admin-group-sitemap-setting-modal.component.html',
   styleUrls: ['./admin-group-sitemap-setting-modal.component.scss']
 })
-export class AdminGroupSitemapSettingModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
+export class AdminGroupSitemapSettingModalComponent extends CustomModalBase<AdminGroupSitemapSettingModalComponent, 'Success'>
+  implements OnInit, AfterViewInit {
   title = '設定前台節點';
   actions: CustomModalActionButton[];
 

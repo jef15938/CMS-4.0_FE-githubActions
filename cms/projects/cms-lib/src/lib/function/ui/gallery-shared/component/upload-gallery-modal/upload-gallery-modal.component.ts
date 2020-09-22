@@ -16,7 +16,7 @@ import { CmsLoadingToggle } from '../../../../../global/service';
   templateUrl: './upload-gallery-modal.component.html',
   styleUrls: ['./upload-gallery-modal.component.scss'],
 })
-export class UploadGalleryModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
+export class UploadGalleryModalComponent extends CustomModalBase<UploadGalleryModalComponent, 'Success'> implements OnInit, AfterViewInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 
@@ -231,7 +231,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
         this.cmsLoadingToggle.close();
         const failedUploads = results.filter(r => !r.success);
         if (!failedUploads.length) {
-          this.close(true);
+          this.close('Success');
         } else {
           this.modalService.openMessage({
             message: `以下檔案上傳失敗 : ${failedUploads.map(failed => `<p>${failed.fileName}</p>`)}`
@@ -253,7 +253,7 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
       .subscribe(result => {
         this.cmsLoadingToggle.close();
         if (result.success) {
-          this.close(true);
+          this.close('Success');
         } else {
           this.modalService.openMessage({ message: '檔案上傳失敗' }).subscribe();
         }

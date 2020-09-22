@@ -13,7 +13,7 @@ import { CmsLoadingToggle } from '../../../../global/service';
   templateUrl: './auditing-sitemap-modal.component.html',
   styleUrls: ['./auditing-sitemap-modal.component.scss']
 })
-export class AuditingSitemapModalComponent extends CustomModalBase implements OnInit {
+export class AuditingSitemapModalComponent extends CustomModalBase<AuditingSitemapModalComponent, 'Success'> implements OnInit {
   title = '節點送審';
   actions: CustomModalActionButton[];
 
@@ -63,7 +63,7 @@ export class AuditingSitemapModalComponent extends CustomModalBase implements On
       })
     ).subscribe(_ => {
       this.cmsLoadingToggle.close();
-      this.close('Created');
+      this.close('Success');
     });
   }
 

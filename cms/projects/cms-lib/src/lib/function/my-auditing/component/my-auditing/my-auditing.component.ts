@@ -86,7 +86,7 @@ export class MyAuditingComponent implements OnInit {
             componentInitData: {
               orderId: event.data.orderId
             }
-          });
+          }).subscribe();
           break;
         case event.ActionType.PREVIEW:
           this.preview(event.data);

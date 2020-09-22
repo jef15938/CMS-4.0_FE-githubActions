@@ -14,7 +14,7 @@ import { ColDef } from '../../table/table.interface';
   templateUrl: './form-modal.component.html',
   styleUrls: ['./form-modal.component.scss']
 })
-export class FormModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
+export class FormModalComponent extends CustomModalBase<FormModalComponent, ListFilesInfoModel> implements OnInit, AfterViewInit {
   title: string | (() => string) = '選擇表單下載';
   actions: CustomModalActionButton[];
 

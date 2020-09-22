@@ -9,7 +9,7 @@ import { CropSetting, CropResult } from './cropper.service';
   templateUrl: './cropper.component.html',
   styleUrls: ['./cropper.component.scss']
 })
-export class CropperComponent extends CustomModalBase implements OnInit, AfterViewInit, AfterViewChecked {
+export class CropperComponent extends CustomModalBase<CropperComponent, CropResult> implements OnInit, AfterViewInit, AfterViewChecked {
 
   @Input() title: string | (() => string) = '';
   actions: CustomModalActionButton[];

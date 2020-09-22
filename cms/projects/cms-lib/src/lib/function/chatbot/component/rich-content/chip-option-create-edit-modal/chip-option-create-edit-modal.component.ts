@@ -16,7 +16,7 @@ interface ChipOption {
   templateUrl: './chip-option-create-edit-modal.component.html',
   styleUrls: ['./chip-option-create-edit-modal.component.scss']
 })
-export class ChipOptionCreateEditModalComponent extends CustomModalBase implements OnInit {
+export class ChipOptionCreateEditModalComponent extends CustomModalBase<ChipOptionCreateEditModalComponent, any> implements OnInit {
 
   title = '建議項目';
   actions: CustomModalActionButton[] = [];

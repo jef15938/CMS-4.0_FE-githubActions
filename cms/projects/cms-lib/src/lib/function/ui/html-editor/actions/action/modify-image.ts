@@ -40,7 +40,7 @@ export class ModifyImage extends HtmlEditorActionBase {
         galleryName,
       }
     }).pipe(
-      tap((config: ModifyImageConfig) => {
+      tap(config => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
         this.editImg(image, config);

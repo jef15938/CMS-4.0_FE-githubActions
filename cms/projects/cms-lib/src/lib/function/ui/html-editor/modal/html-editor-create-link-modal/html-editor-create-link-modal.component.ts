@@ -21,7 +21,7 @@ export interface ATagConfig {
   templateUrl: './html-editor-create-link-modal.component.html',
   styleUrls: ['./html-editor-create-link-modal.component.scss']
 })
-export class HtmlEditorCreateLinkModalComponent extends CustomModalBase implements OnInit {
+export class HtmlEditorCreateLinkModalComponent extends CustomModalBase<HtmlEditorCreateLinkModalComponent, ATagConfig> implements OnInit {
 
   LinkFieldInfoUrlType = LinkFieldInfoUrlType;
 

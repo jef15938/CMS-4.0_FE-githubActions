@@ -6,7 +6,7 @@ import { CustomModalBase, CustomModalActionButton } from '../../base/custom-moda
   templateUrl: './confirm-modal.component.html',
   styleUrls: ['./confirm-modal.component.scss']
 })
-export class ConfirmModalComponent extends CustomModalBase implements OnInit {
+export class ConfirmModalComponent extends CustomModalBase<ConfirmModalComponent, boolean> implements OnInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [
     {

@@ -97,7 +97,7 @@ class UpdateFile implements UploadResolver {
   templateUrl: './add-gallery-modal.component.html',
   styleUrls: ['./add-gallery-modal.component.scss'],
 })
-export class AddGalleryModalComponent extends CustomModalBase implements UploadComponent, OnInit {
+export class AddGalleryModalComponent extends CustomModalBase<AddGalleryModalComponent, UploadResponse> implements UploadComponent, OnInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 

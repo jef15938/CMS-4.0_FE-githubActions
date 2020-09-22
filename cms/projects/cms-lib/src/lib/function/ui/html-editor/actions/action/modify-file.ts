@@ -1,7 +1,7 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HtmlEditorInsertFileModalComponent, HtmlEditorInsertFileModalConfig, FileSource } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
+import { HtmlEditorInsertFileModalComponent, FileSource } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
 import { CLASS_NAME_GALLERY_FILE, ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME, ATTRIBUTE_FILE_SOURCE } from '../../const/html-editor-container.const';
 
 export class ModifyFile extends HtmlEditorActionBase {
@@ -13,7 +13,7 @@ export class ModifyFile extends HtmlEditorActionBase {
     const existingFileLink = this.getExistingFileLink(range);
     const galleryID = +existingFileLink.getAttribute(ATTRIBUTE_GALLERY_ID);
     const galleryName = existingFileLink.getAttribute(ATTRIBUTE_GALLERY_NAME);
-    console.warn({galleryName});
+    console.warn({ galleryName });
 
     const fileSource = existingFileLink.getAttribute(ATTRIBUTE_FILE_SOURCE) as FileSource || FileSource.NONE;
 
@@ -27,7 +27,7 @@ export class ModifyFile extends HtmlEditorActionBase {
       }
     }).pipe(
       tap(_ => this.context.simpleWysiwygService.restoreSelection(range)),
-      tap((configATag: HtmlEditorInsertFileModalConfig) => {
+      tap(configATag => {
         if (!configATag) { return; }
         existingFileLink.href = configATag.href;
         existingFileLink.text = configATag.text;

@@ -12,7 +12,7 @@ import { CmsLoadingToggle } from '../../../../../global/service/cms-loading-togg
   templateUrl: './auditing-farm-data-modal.component.html',
   styleUrls: ['./auditing-farm-data-modal.component.scss']
 })
-export class AuditingFarmDataModalComponent extends CustomModalBase implements OnInit {
+export class AuditingFarmDataModalComponent extends CustomModalBase<AuditingFarmDataModalComponent, 'Success'> implements OnInit {
   title = '送審';
   actions: CustomModalActionButton[];
 
@@ -62,7 +62,7 @@ export class AuditingFarmDataModalComponent extends CustomModalBase implements O
       })
     ).subscribe(_ => {
       this.cmsLoadingToggle.close();
-      this.close('Created');
+      this.close('Success');
     });
   }
 

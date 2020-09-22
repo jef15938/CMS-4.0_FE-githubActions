@@ -20,7 +20,7 @@ export class InsertImage extends HtmlEditorActionBase {
       component: HtmlEditorInsertImgModalComponent,
       componentInitData: { title: '插入圖片' },
     }).pipe(
-      tap((config: InsertImageConfig) => {
+      tap(config => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
         this.addImg(config);

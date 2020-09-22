@@ -20,7 +20,8 @@ export interface ContentEditorResponse {
   templateUrl: './content-editor-container-modal.component.html',
   styleUrls: ['./content-editor-container-modal.component.scss']
 })
-export class ContentEditorContainerModalComponent extends CustomModalBase implements OnInit {
+export class ContentEditorContainerModalComponent extends CustomModalBase<ContentEditorContainerModalComponent, ContentEditorResponse>
+  implements OnInit {
   title = '';
   actions: CustomModalActionButton[];
 
@@ -57,14 +58,14 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
       this.contentService.getTemplateByControlID(this.controlID)
         .pipe(CmsErrorHandler.rxHandleError((error, showMessage) => {
           showMessage();
-          this.close(null);
+          this.closeModal(null);
         }))
         .subscribe(templates => this.templates = templates);
     }
 
   }
 
-  close(currentContentInfo: ContentInfoModel) {
+  closeModal(currentContentInfo: ContentInfoModel) {
     const res: ContentEditorResponse = { contentInfo: currentContentInfo, saved: this.saved };
     super.close(res);
     if (this.siteID && this.nodeID) {
@@ -79,7 +80,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
     if (!this.siteID || !this.nodeID || !this.contentID) {
       event.editorSave();
       this.modalService.openMessage({ message: '內容儲存成功' }).subscribe();
-      this.close(event.contentInfo);
+      this.closeModal(event.contentInfo);
       return;
     }
 
@@ -110,7 +111,7 @@ export class ContentEditorContainerModalComponent extends CustomModalBase implem
       }
       event.editorSave();
       if (closeAfterSave) {
-        this.close(event.contentInfo);
+        this.closeModal(event.contentInfo);
       }
     }, err => {
       this.modalService.openMessage({ message: '內容儲存失敗' }).subscribe();

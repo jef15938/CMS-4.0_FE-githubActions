@@ -7,7 +7,7 @@ import { HtmlEditorComponent } from '../html-editor.component';
   templateUrl: './html-editor-container-modal.component.html',
   styleUrls: ['./html-editor-container-modal.component.scss']
 })
-export class HtmlEditorContainerModalComponent extends CustomModalBase implements OnInit {
+export class HtmlEditorContainerModalComponent extends CustomModalBase<HtmlEditorContainerModalComponent, string> implements OnInit {
 
   @ViewChild(HtmlEditorComponent) htmlEditorComponent: HtmlEditorComponent;
 

@@ -6,7 +6,7 @@ import { CustomModalBase, CustomModalActionButton } from '../../base/custom-moda
   templateUrl: './show-image-modal.component.html',
   styleUrls: ['./show-image-modal.component.scss']
 })
-export class ShowImageModalComponent extends CustomModalBase implements OnInit {
+export class ShowImageModalComponent extends CustomModalBase<ShowImageModalComponent, any> implements OnInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 

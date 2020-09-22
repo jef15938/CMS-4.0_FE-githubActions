@@ -21,7 +21,6 @@ import { TemplateGetResponseModel } from '../../../global/api/data-model/models/
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
 import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
 import { CmsErrorHandler } from '../../../global/error-handling/cms-error-handler';
-import { ContentVersionInfoModel } from '../../../global/api/data-model/models/content-version-info.model';
 
 @Component({
   selector: 'cms-content-editor',
@@ -329,7 +328,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       componentInitData: {
         contentID: this.contentID,
       }
-    }).subscribe((version: ContentVersionInfoModel) => {
+    }).subscribe(version => {
       if (version) {
         this.contentService.getContentById(this.contentID, version.version)
           .pipe(CmsErrorHandler.rxHandleError())

@@ -6,7 +6,7 @@ import { CustomModalBase, CustomModalActionButton } from '../../../modal';
   templateUrl: './html-editor-description.component.html',
   styleUrls: ['./html-editor-description.component.scss']
 })
-export class HtmlEditorDescriptionComponent extends CustomModalBase implements OnInit {
+export class HtmlEditorDescriptionComponent extends CustomModalBase<HtmlEditorDescriptionComponent, any> implements OnInit {
 
   title = '編輯器說明';
   actions: CustomModalActionButton[];

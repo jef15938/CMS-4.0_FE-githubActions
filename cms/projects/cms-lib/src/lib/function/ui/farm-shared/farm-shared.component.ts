@@ -155,13 +155,13 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     let action: Observable<{ refresh: boolean }> = of({ refresh: false });
     switch (event.action) {
       case FarmTableDataInfoAction.CREATE:
-        action = this.openModifyDataModal('create', category).pipe(map(confirm => ({ refresh: confirm })));
+        action = this.openModifyDataModal('create', category).pipe(map(confirm => ({ refresh: !!confirm })));
         break;
       case FarmTableDataInfoAction.MODIFY:
-        action = this.openModifyDataModal('edit', category, event.rowData).pipe(map(confirm => ({ refresh: confirm })));
+        action = this.openModifyDataModal('edit', category, event.rowData).pipe(map(confirm => ({ refresh: !!confirm })));
         break;
       case FarmTableDataInfoAction.PUBLISH:
-        action = this.auditingData(category, event.rowData).pipe(map(confirm => ({ refresh: confirm })));
+        action = this.auditingData(category, event.rowData).pipe(map(confirm => ({ refresh: !!confirm })));
         break;
       case FarmTableDataInfoAction.OFF:
         action = this.takeOffData(category, event.rowData).pipe(map(_ => ({ refresh: true })));

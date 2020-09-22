@@ -9,7 +9,6 @@ import { ApproveAuditingModalComponent, AuditingApproveStatus } from '../approve
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { AuditingInfoModel } from '../../../../global/api/data-model/models/auditing-info.model';
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
-import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { AuditingGetResponseModel } from '../../../../global/api/data-model/models/auditing-get-response.model';
 import { CmsLoadingToggle } from '../../../../global/service/cms-loading-toggle.service';
@@ -142,7 +141,7 @@ export class AuditingComponent implements OnInit {
         batch: Array.isArray(orderId),
         status,
       },
-    }).subscribe((res: AuditingSubmitRequestModel) => {
+    }).subscribe(res => {
       if (!res) { return; }
       this.cmsLoadingToggle.open();
       this.auditingService.approveAuditing(

@@ -55,7 +55,7 @@ class SiteMapCreateModel extends UserSiteMapPostRequestModel {
   templateUrl: './sitemap-node-create-modal.component.html',
   styleUrls: ['./sitemap-node-create-modal.component.scss']
 })
-export class SitemapNodeCreateModalComponent extends CustomModalBase implements OnInit {
+export class SitemapNodeCreateModalComponent extends CustomModalBase<SitemapNodeCreateModalComponent, 'Success'> implements OnInit {
   title = '新增節點';
   actions: CustomModalActionButton[];
 
@@ -128,7 +128,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
       })
     ).subscribe(_ => {
       this.cmsLoadingToggle.close();
-      this.close('Created');
+      this.close('Success');
     });
   }
 

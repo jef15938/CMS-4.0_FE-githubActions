@@ -6,12 +6,22 @@ import { GallerySharedService } from '../../../gallery-shared/service/gallery-sh
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../../../global/interface';
 
+interface Response {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  galleryID: number;
+  galleryName: string;
+}
+
 @Component({
   selector: 'cms-html-editor-insert-img-modal',
   templateUrl: './html-editor-insert-img-modal.component.html',
   styleUrls: ['./html-editor-insert-img-modal.component.scss']
 })
-export class HtmlEditorInsertImgModalComponent extends CustomModalBase implements OnInit, OnDestroy {
+export class HtmlEditorInsertImgModalComponent extends CustomModalBase<HtmlEditorInsertImgModalComponent, Response>
+  implements OnInit, OnDestroy {
 
   @ViewChild('Img') img: ElementRef<HTMLImageElement>;
 

@@ -14,7 +14,7 @@ import { CmsLoadingToggle } from '../../../../global/service/cms-loading-toggle.
   templateUrl: './sitemap-node-update-modal.component.html',
   styleUrls: ['./sitemap-node-update-modal.component.scss']
 })
-export class SitemapNodeUpdateModalComponent extends CustomModalBase implements OnInit {
+export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNodeUpdateModalComponent, 'Success'> implements OnInit {
   title = '修改節點';
   actions: CustomModalActionButton[];
 
@@ -85,7 +85,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase implements 
       })
     ).subscribe(_ => {
       this.cmsLoadingToggle.close();
-      this.close('Updated');
+      this.close('Success');
     });
   }
 

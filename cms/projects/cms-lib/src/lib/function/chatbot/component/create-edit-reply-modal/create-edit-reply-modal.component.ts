@@ -87,7 +87,7 @@ class Factory {
   templateUrl: './create-edit-reply-modal.component.html',
   styleUrls: ['./create-edit-reply-modal.component.scss']
 })
-export class CreateEditReplyModalComponent extends CustomModalBase implements OnInit {
+export class CreateEditReplyModalComponent extends CustomModalBase<CreateEditReplyModalComponent, 'Success'> implements OnInit {
 
   actions: CustomModalActionButton[] = [];
 
@@ -136,7 +136,7 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
 
   confirm() {
     this.save().subscribe(_ => {
-      this.close('Confirm');
+      this.close('Success');
     });
   }
 
@@ -218,7 +218,7 @@ export class CreateEditReplyModalComponent extends CustomModalBase implements On
         chatbotService: this.chatbotService
       },
     }).pipe(
-      tap((res: RichContent) => {
+      tap(res => {
         if (res) {
           const index = this.replyModel.richContents.indexOf(content);
           if (index < 0) { // add

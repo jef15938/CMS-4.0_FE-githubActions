@@ -6,7 +6,7 @@ import { CustomModalBase } from './base/custom-modal-base';
 import { ConfirmModalComponent } from './component/confirm-modal/confirm-modal.component';
 import { MessageModalComponent } from './component/message-modal/message-modal.component';
 import { concatMap } from 'rxjs/operators';
-import { of, NEVER } from 'rxjs';
+import { of, NEVER, Observable } from 'rxjs';
 import { ShowImageModalComponent } from './component/show-image-modal/show-image-modal.component';
 
 let modalId = 0;
@@ -26,8 +26,8 @@ export class ModalService {
     this.matDialog.closeAll();
   }
 
-  openComponent<TComponent extends CustomModalBase>(
-    config: ModalOpenComponentConfig<TComponent>,
+  openComponent<TComponent extends CustomModalBase<TComponent, R>, R>(
+    config: ModalOpenComponentConfig<TComponent, R>,
     fullScreen = false,
   ) {
     const modalConfig = new MatDialogConfig();
@@ -48,7 +48,7 @@ export class ModalService {
 
     modalConfig.data = config;
     const modalModal = this.matDialog.open(ModalCustomWrapperComponent, modalConfig);
-    return modalModal.afterClosed();
+    return modalModal.afterClosed() as Observable<R>;
   }
 
   openMessage(componentInitData: { message: string, title?: string }) {

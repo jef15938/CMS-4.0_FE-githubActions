@@ -18,7 +18,8 @@ interface TreeData {
   templateUrl: './admin-group-menu-setting-modal.component.html',
   styleUrls: ['./admin-group-menu-setting-modal.component.scss']
 })
-export class AdminGroupMenuSettingModalComponent extends CustomModalBase implements OnInit {
+export class AdminGroupMenuSettingModalComponent extends CustomModalBase<AdminGroupMenuSettingModalComponent, 'Success'>
+  implements OnInit {
   title = '設定後台功能';
   actions: CustomModalActionButton[];
 

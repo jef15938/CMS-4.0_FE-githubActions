@@ -35,7 +35,7 @@ export class InsertTable extends HtmlEditorActionBase {
     return this.context.modalService.openComponent({
       component: HtmlEditorInsertTableModalComponent,
     }).pipe(
-      tap((config: { src: string, alt: string, rows: number, cols: number }) => {
+      tap(config => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
         const table = this.tableControllerService.createTable(config);

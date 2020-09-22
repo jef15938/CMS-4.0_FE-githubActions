@@ -22,7 +22,8 @@ export interface HtmlEditorInsertFileModalConfig {
   templateUrl: './html-editor-insert-file-modal.component.html',
   styleUrls: ['./html-editor-insert-file-modal.component.scss']
 })
-export class HtmlEditorInsertFileModalComponent extends CustomModalBase implements OnInit {
+export class HtmlEditorInsertFileModalComponent extends CustomModalBase<HtmlEditorInsertFileModalComponent, HtmlEditorInsertFileModalConfig>
+  implements OnInit {
 
   FileSource = FileSource;
 

@@ -1,7 +1,7 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HtmlEditorInsertFileModalComponent, HtmlEditorInsertFileModalConfig } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
+import { HtmlEditorInsertFileModalComponent } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
 import { CLASS_NAME_GALLERY_FILE, ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME, ATTRIBUTE_FILE_SOURCE } from '../../const/html-editor-container.const';
 
 export class InsertFile extends HtmlEditorActionBase {
@@ -14,7 +14,7 @@ export class InsertFile extends HtmlEditorActionBase {
       component: HtmlEditorInsertFileModalComponent,
     }).pipe(
       tap(_ => this.context.simpleWysiwygService.restoreSelection(range)),
-      tap((configATag: HtmlEditorInsertFileModalConfig) => {
+      tap(configATag => {
         if (!configATag) { return; }
         const aTag = document.createElement('a');
         aTag.href = configATag.href;

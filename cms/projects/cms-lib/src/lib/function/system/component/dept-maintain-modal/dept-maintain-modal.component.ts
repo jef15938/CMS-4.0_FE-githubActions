@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
   templateUrl: './dept-maintain-modal.component.html',
   styleUrls: ['./dept-maintain-modal.component.scss']
 })
-export class DeptMaintainModalComponent extends CustomModalBase implements OnInit {
+export class DeptMaintainModalComponent extends CustomModalBase<DeptMaintainModalComponent, 'Success'> implements OnInit {
 
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];
@@ -58,7 +58,7 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
 
   confirm(dept: DepartmentDetailInfoModel) {
     this.save(dept).subscribe(_ => {
-      this.close('Confirm');
+      this.close('Success');
     });
   }
 

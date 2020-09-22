@@ -26,7 +26,7 @@ export class TableControllerService {
     return td;
   }
 
-  createTable(config: { src: string, alt: string, rows: number, cols: number }) {
+  createTable(config: { rows: number, cols: number }) {
     const table = document.createElement('table');
 
     table.classList.add('neux-table');
