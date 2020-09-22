@@ -7,6 +7,9 @@ import { FormGroup } from '@angular/forms';
 
 export interface FarmCustomHandler {
   funcId: string;
+
+  tableActions?: FarmTableActionBtn[];
+
   onFormGalleryColumnBeforeSelectImage?(
     column: FarmFormInfoModelColumn,
     farmFormInfo: FarmFormInfoModel,
@@ -21,10 +24,4 @@ export interface FarmTableActionBtn {
   tooltip?: string;
   class?: string;
   click: (row: FarmTableDataInfoModel, table: FarmTableInfoModel, injector: Injector) => void;
-}
-
-
-export interface FarmTableAction {
-  funcID: string;
-  btns: FarmTableActionBtn[];
 }

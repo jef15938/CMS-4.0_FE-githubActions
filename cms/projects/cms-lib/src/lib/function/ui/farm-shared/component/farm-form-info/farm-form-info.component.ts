@@ -63,7 +63,7 @@ export class FarmFormInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.farmCustomHandler = (this.farmCustomHandlers || []).find(h => h.funcId === this.funcID);
+    this.farmCustomHandler = (this.farmCustomHandlers || []).reverse().find(h => h.funcId === this.funcID);
 
     this.formGroup = this.createFormGroup(this.farmFormInfo);
     this.formColumnSettingMap = this.createFormColumnSettingMap(this.farmFormInfo);
