@@ -3,7 +3,7 @@ import { CustomModalBase, CustomModalActionButton, ModalService } from '../../..
 import { YoutubeUtil } from '../../service/youtube-util';
 import { FormControl } from '@angular/forms';
 
-interface Response {
+interface HtmlEditorInsertVideoModalResponse {
   src: string;
   frameId: string;
 }
@@ -13,7 +13,9 @@ interface Response {
   templateUrl: './html-editor-insert-video-modal.component.html',
   styleUrls: ['./html-editor-insert-video-modal.component.scss']
 })
-export class HtmlEditorInsertVideoModalComponent extends CustomModalBase<HtmlEditorInsertVideoModalComponent, Response> implements OnInit {
+export class HtmlEditorInsertVideoModalComponent
+  extends CustomModalBase<HtmlEditorInsertVideoModalComponent, HtmlEditorInsertVideoModalResponse>
+  implements OnInit {
 
   YoutubeUtil = YoutubeUtil;
 

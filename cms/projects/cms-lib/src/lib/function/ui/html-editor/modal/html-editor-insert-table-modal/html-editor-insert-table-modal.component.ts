@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
 
-interface Response {
+interface HtmlEditorInsertTableModalResponse {
   rows: number;
   cols: number;
 }
@@ -11,7 +11,9 @@ interface Response {
   templateUrl: './html-editor-insert-table-modal.component.html',
   styleUrls: ['./html-editor-insert-table-modal.component.scss']
 })
-export class HtmlEditorInsertTableModalComponent extends CustomModalBase<HtmlEditorInsertTableModalComponent, Response> implements OnInit {
+export class HtmlEditorInsertTableModalComponent
+  extends CustomModalBase<HtmlEditorInsertTableModalComponent, HtmlEditorInsertTableModalResponse>
+  implements OnInit {
 
   @ViewChild('Table') table: ElementRef<HTMLTableElement>;
 

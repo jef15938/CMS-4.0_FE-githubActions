@@ -6,7 +6,7 @@ import { GallerySharedService } from '../../../gallery-shared/service/gallery-sh
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../../../global/interface';
 
-interface Response {
+interface HtmlEditorInsertImgModalResponse {
   src: string;
   alt: string;
   width: number;
@@ -20,7 +20,8 @@ interface Response {
   templateUrl: './html-editor-insert-img-modal.component.html',
   styleUrls: ['./html-editor-insert-img-modal.component.scss']
 })
-export class HtmlEditorInsertImgModalComponent extends CustomModalBase<HtmlEditorInsertImgModalComponent, Response>
+export class HtmlEditorInsertImgModalComponent
+  extends CustomModalBase<HtmlEditorInsertImgModalComponent, HtmlEditorInsertImgModalResponse>
   implements OnInit, OnDestroy {
 
   @ViewChild('Img') img: ElementRef<HTMLImageElement>;
