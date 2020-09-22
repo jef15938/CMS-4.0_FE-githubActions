@@ -951,7 +951,7 @@ export class RestApiService {
     pathParameters.forEach(p => {
       delete params[p];
     });
-    return `${this.apiBaseUrl}/${url}`;
+    return `${this.apiBaseUrl}${url}`;
   }
 
   private creatApiRequest(method: string, url: string, params: { [key: string]: any }, ) {
