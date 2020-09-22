@@ -238,4 +238,8 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  treeTrackBy(index: number, item: SiteMapGetResponseModel) {
+    return item.nodeId;
+  }
+
 }

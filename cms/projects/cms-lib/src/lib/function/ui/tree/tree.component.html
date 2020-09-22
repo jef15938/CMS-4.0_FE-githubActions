@@ -1,5 +1,5 @@
 <div class="cms-tree" (selectstart)="onSelectstart($event)">
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="cms-tree__body">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [trackBy]="trackBy" class="cms-tree__body">
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node class="cms-tree__node pointer" *matTreeNodeDef="let node" matTreeNodeToggle>
       <div class="cms-tree__node__head " [class.cms-tree__node__head--selected]="node===selectedNode"

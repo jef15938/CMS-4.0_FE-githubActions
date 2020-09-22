@@ -50,7 +50,7 @@
       </div>
       <div class="page-content-container multi-site__block__content">
         <cms-tree #userSitemapTree class="list-block__tree" [context]="this" [nodeDatas]="userSitemaps"
-          [draggable]="true" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
+          [trackBy]="treeTrackBy" [draggable]="true" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
           (customEvent)="onUserSiteMapTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
           (afterRender)="afterTreeRender($event)" (dragToNode)="onTreeDragToNode($event)"
           (dragToPosition)="onTreeDragToPosition($event)" [canDragNode]="canDragNode" [canDropOnNode]="canDropOnNode"
