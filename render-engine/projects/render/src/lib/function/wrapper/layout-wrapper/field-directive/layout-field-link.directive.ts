@@ -13,7 +13,7 @@ export interface LinkFieldInfo extends ContentFieldInfoModel {
   extension: {
     isTargetBlank: 'true' | 'false';
     urlType: LinkFieldInfoUrlType;
-    siteId: '';
+    siteId: string;
   };
 }
 

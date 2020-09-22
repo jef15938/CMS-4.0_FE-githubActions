@@ -1,11 +1,12 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LinkFieldInfo, LinkFieldInfoUrlType } from '@neux/render';
-import { SitemapService } from '../../../../../../../../global/api/service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+import { TemplateFieldSelectEvent, LinkFieldInfo, LinkFieldInfoUrlType } from '@neux/render';
+import { ContentControlBase } from '../../_base';
+import { SitemapService } from '../../../../../../../../global/api/service';
 import { SiteInfoModel } from '../../../../../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../../../../../global/api/data-model/models/site-map-get-response.model';
+import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
 
 @Component({
   selector: 'cms-field-control-link',
@@ -30,10 +31,20 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
 
   ngOnInit(): void {
     this.sites$ = this.sitemapService.getSiteList();
-    this.nodes$ = this.refreshNodes$.pipe(switchMap(_ =>
+    this.nodes$ = this.getNodes();
+  }
+
+  getNodes() {
+    return this.refreshNodes$.pipe(switchMap(_ =>
       (
-        this.fieldInfo?.extension.siteId
-          ? this.sitemapService.getCMSSiteMap(this.fieldInfo?.extension.siteId)
+        this.fieldInfo?.extension?.siteId
+          ? this.sitemapService.getCMSSiteMap(this.fieldInfo.extension.siteId).pipe(
+            CmsErrorHandler.rxHandleError((error, showMessage) => {
+              this.fieldInfo.extension.siteId = '';
+              this.nodes$ = this.getNodes();
+              showMessage();
+            })
+          )
           : of([])
       ).pipe(
         map(nodes => this.sitemapService.flattenNodes(nodes).filter(node => node.contentType === 'CONTENT'))
