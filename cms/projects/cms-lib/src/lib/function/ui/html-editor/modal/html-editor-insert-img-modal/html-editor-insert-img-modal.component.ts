@@ -6,7 +6,7 @@ import { GallerySharedService } from '../../../gallery-shared/service/gallery-sh
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../../../global/interface';
 
-interface HtmlEditorInsertImgModalResponse {
+export interface HtmlEditorInsertImgModalResponse {
   src: string;
   alt: string;
   width: number;

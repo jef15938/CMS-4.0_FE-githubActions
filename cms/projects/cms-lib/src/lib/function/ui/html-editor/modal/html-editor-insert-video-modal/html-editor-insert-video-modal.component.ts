@@ -3,7 +3,7 @@ import { CustomModalBase, CustomModalActionButton, ModalService } from '../../..
 import { YoutubeUtil } from '../../service/youtube-util';
 import { FormControl } from '@angular/forms';
 
-interface HtmlEditorInsertVideoModalResponse {
+export interface HtmlEditorInsertVideoModalResponse {
   src: string;
   frameId: string;
 }

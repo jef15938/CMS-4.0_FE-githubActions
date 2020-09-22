@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
 
-interface HtmlEditorInsertTableModalResponse {
+export interface HtmlEditorInsertTableModalResponse {
   rows: number;
   cols: number;
 }
