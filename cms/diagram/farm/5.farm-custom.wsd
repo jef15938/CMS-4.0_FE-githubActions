@@ -1,0 +1,19 @@
+@startuml
+
+Title Farm : custom
+participant "CmsModule/AppModule" as module << module >>
+participant "(FARM_CUSTOM_HANDLER_TOKEN)\nFarmCustomHandler" as customHandler << interface >>
+participant "FarmFormInfoComponent" as formInfo << component >>
+participant "FarmTableInfoComponent" as tableInfo << component >>
+
+module -> customHandler: provide, multiple
+
+customHandler -> formInfo: inject
+formInfo -> formInfo
+note right: onFormGalleryColumnBeforeSelectImage?(...args): Observable<any>
+
+customHandler -> tableInfo: inject
+tableInfo -> tableInfo
+note right: tableActions?: FarmTableActionBtn[]
+
+@enduml
