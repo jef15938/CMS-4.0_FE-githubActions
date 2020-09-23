@@ -80,12 +80,11 @@ rdr-select {
 
     .searchbar {
       position: relative;
-      padding-bottom: 0;
 
       &:before {
         content: '';
         position: absolute;
-        top: calc(50% + 6px);
+        top: 50%;
         left: 21.5px;
         width: 19px;
         height: 19px;

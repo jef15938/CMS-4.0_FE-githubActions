@@ -38,6 +38,10 @@ $maxWidth: 944px;
   &__col {
     flex-basis: 25%;
 
+    +.block__col {
+      margin-left: 20px;
+    }
+
     &-title {
       @include fz-title-20-left;
       margin-bottom: 20px;

@@ -4,7 +4,7 @@
 
   $tl-note-color: map-get($theme, brown_grey_0) !default;
   $tl-form-color: map-get($theme, black_1) !default;
-  $tl-from-color-error: #d82229 !default;
+  $tl-form-color-error: #d82229 !default;
 
   .form-frame {
 
@@ -18,7 +18,7 @@
     }
 
     &__error {
-      color: $tl-from-color-error;
+      color: $tl-form-color-error;
     }
   }
 }
@@ -30,14 +30,14 @@
   $tl-border-color-active: #a0c7c0 !default;
   $tl-placholder-color: map-get($theme, brown_grey_0) !default;
   $tl-form-color: map-get($theme, black_1) !default;
-  $tl-from-color-error: #d82229 !default;
-  $tl-from-color-disabled: map-get($theme, very_light_pink_0) !default;
+  $tl-form-color-error: #d82229 !default;
+  $tl-form-color-disabled: map-get($theme, very_light_pink_0) !default;
   $tl-form-bg-color: map-get($theme, white_1) !default;
   $tl-form-bg-color-disabled: map-get($theme, white_0) !default;
 
 
   $input-theme: nx-ui-theme-config-gen($color-plain: $tl-form-color,
-      $color-warn: $tl-from-color-error,
+      $color-warn: $tl-form-color-error,
       $color-back-light: $tl-form-bg-color);
 
   @include nx-input-theme($input-theme);
@@ -63,16 +63,16 @@
       }
 
       &~.error-msg {
-        color: $tl-from-color-error;
+        color: $tl-form-color-error;
       }
     }
 
     &.style--disable {
-      color: $tl-from-color-disabled;
+      color: $tl-form-color-disabled;
       background-color: $tl-form-bg-color-disabled;
 
       &::placeholder {
-        color: $tl-from-color-disabled;
+        color: $tl-form-color-disabled;
       }
     }
 
@@ -92,7 +92,7 @@
       }
 
       &.style--error {
-        border-color: $tl-from-color-error;
+        border-color: $tl-form-color-error;
       }
     }
   }
@@ -109,8 +109,8 @@
   $tl-placholder-color: map-get($theme, brown_grey_0) !default;
   $tl-icon-color: map-get($theme, color_primary) !default;
   $tl-form-color: map-get($theme, black_1) !default;
-  $tl-from-color-error: #d82229 !default;
-  $tl-from-color-disabled: map-get($theme, very_light_pink_0) !default;
+  $tl-form-color-error: #d82229 !default;
+  $tl-form-color-disabled: map-get($theme, very_light_pink_0) !default;
   $tl-form-bg-color: map-get($theme, white_1) !default;
   $tl-form-bg-color-disabled: map-get($theme, white_0) !default;
   $tl-searchbar-placeholder-color: map-get($theme, brown_grey_1) !default;
@@ -118,7 +118,7 @@
   $tl-scrollbar-color: map-get($theme, brown_grey_1) !default;
 
   $select-theme: nx-ui-theme-config-gen($color-plain: $tl-form-color,
-      $color-warn: $tl-from-color-error,
+      $color-warn: $tl-form-color-error,
       $color-back-light: $tl-form-bg-color,
       $color-back: $tl-form-color);
 
@@ -142,7 +142,7 @@
 
       &.style--error {
         .select-container {
-          border-color: $tl-from-color-error;
+          border-color: $tl-form-color-error;
         }
       }
     }
@@ -151,7 +151,7 @@
       background-color: $tl-form-bg-color-disabled;
 
       a {
-        color: $tl-from-color-disabled;
+        color: $tl-form-color-disabled;
       }
 
       .select-container {
@@ -159,6 +159,16 @@
           border-color: $tl-icon-color;
           opacity: 0.5;
         }
+      }
+    }
+
+    &.style--error {
+      a {
+        color: $tl-form-color;
+      }
+
+      .select-ele__selected--default {
+        color: $tl-placholder-color;
       }
     }
 
