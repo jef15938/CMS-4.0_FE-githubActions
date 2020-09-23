@@ -37,3 +37,4 @@ export * from './public-component/radio/radio.component';
 export * from './public-component/checkbox/checkbox.component';
 export * from './public-component/search-bar/search-bar.component';
 export * from './public-component/fast-tool/fast-tool.component';
+export * from './public-component/button/button.component';

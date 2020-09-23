@@ -1,0 +1,86 @@
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+@import "../../../style/abstracts/mixin";
+
+rdr-button {
+  @include rdr-button-theme();
+  @include nx-btn-config($mode: 'customize',
+    $btn-radius: 4px,
+    $btn-border-size: 1.2px,
+    $btn-height: 46px,
+    $btn-max-width: 176px);
+
+  display: block;
+
+  [nx-btn].nx-cp {
+    @include fz-callout-18-left;
+
+    &.nx-color--distinct {
+      >.btn--full {
+        border-style: solid;
+        border-width: 1.5px;
+      }
+
+      >.btn--border {
+        @include fz-callout-16-left;
+      }
+    }
+
+    &.nx-color--back {
+      >.btn--full {
+        border-style: solid;
+        border-width: 0.5px;
+      }
+    }
+
+    &.style--disable {
+      &.nx-color--primary {
+        >.btn--full {
+          opacity: 0.4;
+        }
+      }
+
+      &.nx-color--distinct {
+
+        >.btn--full,
+        >.btn--border {
+          opacity: 0.6;
+        }
+      }
+
+      &.nx-color--back {
+        >.btn--full {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  .button__link {
+    display: inline-flex;
+    align-items: center;
+
+    &.style--disabled {
+      opacity: 0.5;
+    }
+
+    &.style--quaternary {
+      @include on-event() {
+        text-decoration: none;
+      }
+    }
+
+    &.style--text {
+      text-decoration: underline;
+    }
+
+    &-text {
+      @include fz-callout-16-left;
+    }
+
+    &-icon {
+      @include arrow-icon;
+    }
+  }
+}

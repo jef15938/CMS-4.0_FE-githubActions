@@ -1,0 +1,47 @@
+<ng-container [ngSwitch]="styleType">
+
+  <ng-container *ngSwitchCase="'secondary'">
+    <ng-container *ngTemplateOutlet="button; context: {$implicit: 'distinct', type: 'full'}"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'tertiary'">
+    <ng-container *ngTemplateOutlet="button; context: {$implicit: 'back', type: 'full'}"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'quaternary'">
+    <ng-container *ngTemplateOutlet="link; context: {$implicit: 'quaternary'}"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'textButton'">
+    <ng-container *ngTemplateOutlet="link; context: {$implicit: 'text'}"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'other'">
+    <ng-container *ngTemplateOutlet="button; context: {$implicit: 'distinct', type: 'border'}"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <ng-container *ngTemplateOutlet="button; context: {$implicit: 'primary', type: 'full'}"></ng-container>
+  </ng-container>
+
+</ng-container>
+
+<ng-template #button let-color let-type="type">
+  <button nx-btn [color]="color" [style-type]="type" [radiused]="true" [disabled]="disabled">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </button>
+</ng-template>
+
+<ng-template #link let-type>
+  <a href="#" class="button__link" [class.style--disabled]="disabled"
+    [ngClass]="type === 'text' ? 'style--text':'style--quaternary'">
+    <div class="button__link-text">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+    <div *ngIf="type === 'quaternary'" class="button__link-icon"></div>
+  </a>
+</ng-template>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

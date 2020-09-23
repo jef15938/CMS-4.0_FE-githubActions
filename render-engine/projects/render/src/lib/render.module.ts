@@ -52,6 +52,7 @@ import { RadioComponent } from './global/component/public-component/radio/radio.
 import { CheckboxComponent } from './global/component/public-component/checkbox/checkbox.component';
 import { SearchBarComponent } from './global/component/public-component/search-bar/search-bar.component';
 import { FastToolComponent } from './global/component/public-component/fast-tool/fast-tool.component';
+import { ButtonComponent } from './global/component/public-component/button/button.component';
 
 
 const COMPONENTS = [
@@ -91,6 +92,7 @@ const COMPONENTS = [
   CheckboxComponent,
   SearchBarComponent,
   FastToolComponent,
+  ButtonComponent,
 ];
 
 @NgModule({

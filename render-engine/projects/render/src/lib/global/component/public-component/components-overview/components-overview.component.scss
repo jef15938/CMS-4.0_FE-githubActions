@@ -27,4 +27,20 @@ $maxWidth: 944px;
     max-width: $maxWidth;
     margin: 0 auto 40px;
   }
+
+  &__row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  &__col {
+    flex-basis: 25%;
+
+    &-title {
+      @include fz-title-20-left;
+      margin-bottom: 20px;
+    }
+  }
 }
