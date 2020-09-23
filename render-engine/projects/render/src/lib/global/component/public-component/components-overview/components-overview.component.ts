@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComponentsOverviewComponent implements OnInit {
 
+  test = '123s';
+  test2: string;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+
+  log(event) {
+    console.log(event);
+  }
+
+  valueChange(event) {
+    console.log('raio test ngModel', event, this.test2);
+  }
 }

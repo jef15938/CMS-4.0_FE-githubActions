@@ -1,0 +1,33 @@
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+
+rdr-input {
+  @include rdr-input-theme();
+  @include nx-input-config($mode: 'customize',
+    $form-height: 46px,
+    $form-radius: 4px,
+    $form-border-width: 0.5px,
+    $form-padding: 12px 12px);
+
+  display: block;
+
+  [nx-input].nx-cp {
+    @include fz-callout-18-left;
+    box-sizing: border-box;
+
+    // &.style--error {
+    //   &~.error-msg {
+    //     @include fz-footnote-15-left-bold;
+    //     margin-top: 8px;
+    //   }
+    // }
+
+    &.style-border--all {
+      &:focus {
+        outline: 0;
+        border-width: 0.5px;
+      }
+    }
+  }
+}

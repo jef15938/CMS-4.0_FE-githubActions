@@ -1,0 +1,53 @@
+import { Component, forwardRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+
+export const RDR_INPUT_CONTROL_VALUE_ACCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => InputComponent),
+  multi: true
+};
+
+@Component({
+  selector: 'rdr-input',
+  providers: [RDR_INPUT_CONTROL_VALUE_ACCESSOR],
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.scss'],
+  encapsulation: ViewEncapsulation.None
+})
+export class InputComponent implements OnInit, ControlValueAccessor {
+
+  @Input() placeholder = '請選擇';
+  @Input() disabled = false;
+  @Input() isError = false;
+
+  value: string;
+
+  onChange = (value) => { };
+  onTouched = () => { };
+
+  constructor() {
+  }
+
+  ngOnInit(): void {
+  }
+
+  writeValue(value: any) {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  valueChange() {
+    this.onChange(this.value);
+  }
+}

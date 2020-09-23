@@ -30,3 +30,8 @@ export * from './public-component/tab-scroll-frame/tab-scroll-frame.component';
 export * from './public-component/tab-item/tab-item.component';
 export * from './public-component/tab-carousel/tab-carousel.component';
 export * from './public-component/tab-carousel-frame/tab-carousel-frame.component';
+export * from './public-component/input/input.component';
+export * from './public-component/form-frame/form-frame.component';
+export * from './public-component/select/select.component';
+export * from './public-component/radio/radio.component';
+export * from './public-component/checkbox/checkbox.component';

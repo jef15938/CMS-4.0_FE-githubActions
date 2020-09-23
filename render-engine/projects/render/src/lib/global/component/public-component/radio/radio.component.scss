@@ -1,0 +1,29 @@
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+
+rdr-radio {
+  @include rdr-radio-theme();
+  @include nx-radio-config($mode: 'customize',
+    $choice-type-size: 20px,
+    $choice-type-text-figure-gap: 11px,
+    $icon-box-icon-size: 47%,
+    $radio-icon-box-border-width: 1.5px);
+
+  display: block;
+
+  nx-radio.nx-cp {
+    .choice-type {
+
+      &__label {
+        display: flex;
+        align-items: center;
+      }
+
+      .choice-type__text {
+        @include fz-body-16-left-bold;
+        min-width: 142px;
+      }
+    }
+  }
+}

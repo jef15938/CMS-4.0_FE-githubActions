@@ -1,4 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NxUiModule } from '@neux/ui';
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -44,6 +45,12 @@ import { TabScrollableComponent } from './global/component/public-component/tab-
 import { TabScrollFrameComponent } from './global/component/public-component/tab-scroll-frame/tab-scroll-frame.component';
 import { TabCarouselFrameComponent } from './global/component/public-component/tab-carousel-frame/tab-carousel-frame.component';
 import { TabCarouselComponent } from './global/component/public-component/tab-carousel/tab-carousel.component';
+import { InputComponent } from './global/component/public-component/input/input.component';
+import { FormFrameComponent } from './global/component/public-component/form-frame/form-frame.component';
+import { SelectComponent } from './global/component/public-component/select/select.component';
+import { RadioComponent } from './global/component/public-component/radio/radio.component';
+import { CheckboxComponent } from './global/component/public-component/checkbox/checkbox.component';
+
 
 const COMPONENTS = [
   SliderComponent,
@@ -75,6 +82,11 @@ const COMPONENTS = [
   TabScrollFrameComponent,
   TabCarouselFrameComponent,
   TabCarouselComponent,
+  InputComponent,
+  FormFrameComponent,
+  SelectComponent,
+  RadioComponent,
+  CheckboxComponent,
 ];
 
 @NgModule({
@@ -87,7 +99,8 @@ const COMPONENTS = [
     SwiperModule,
     StoreModule.forFeature(fromRenderStore.renderFeatureKey, fromRenderStore.reducer),
     EffectsModule.forFeature([RenderEffects]),
-    NxUiModule
+    NxUiModule,
+    FormsModule
   ],
   declarations: [
     RenderComponent,

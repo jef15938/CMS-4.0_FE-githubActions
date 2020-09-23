@@ -1,0 +1,63 @@
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+
+rdr-form-frame {
+  @include rdr-form-frame-theme();
+
+  .form-frame {
+    display: block;
+
+    &--inline {
+      display: flex;
+
+      .form-frame__title {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        height: 46px;
+        margin-right: 12px;
+      }
+    }
+
+    &__title {
+      @include fz-title-20-left;
+      margin-bottom: 8px;
+
+      &[has-note] {
+        margin-bottom: 0;
+      }
+    }
+
+    &__content {
+      display: flex;
+      align-items: flex-start;
+
+      .form-frame__suffix {
+        flex-shrink: 0;
+        margin-left: 12px;
+      }
+    }
+
+    &__wrap {
+      width: 100%;
+    }
+
+    &__note {
+      @include fz-footnote-15-left-bold;
+      margin-bottom: 12px;
+    }
+
+    &__suffix {
+      @include fz-body-18-left-bold;
+      display: flex;
+      align-items: center;
+      height: 46px;
+    }
+
+    &__error {
+      @include fz-footnote-15-left-bold;
+      margin-top: 8px;
+    }
+  }
+}

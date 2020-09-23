@@ -50,3 +50,85 @@
     <rdr-tab-carousel></rdr-tab-carousel>
   </div>
 </div>
+<div class="block">
+  <div class="block__title">Input</div>
+  <div class="block__content">
+    <rdr-input ngModel></rdr-input>
+  </div>
+  <div class="block__content">
+    <rdr-input ngModel [disabled]="true"></rdr-input>
+  </div>
+  <div class="block__content">
+    <rdr-input [(ngModel)]="test" (ngModelChange)="log($event)"></rdr-input>
+  </div>
+</div>
+<div class="block">
+  <div class="block__title">Input - Styles</div>
+  <div class="block__content">
+    <rdr-form-frame>
+      <rdr-input fields></rdr-input>
+    </rdr-form-frame>
+  </div>
+  <div class="block__content">
+    <rdr-form-frame suffix="萬">
+      <rdr-input fields></rdr-input>
+      <ng-container error-msg>
+        <div>錯誤文字寬度隨著輸入框</div>
+      </ng-container>
+    </rdr-form-frame>
+  </div>
+  <div class="block__content">
+    <rdr-form-frame [inline]="true">
+      <rdr-input fields></rdr-input>
+    </rdr-form-frame>
+  </div>
+  <div class="block__content">
+    <rdr-form-frame note="備註說明文字">
+      <rdr-input fields></rdr-input>
+    </rdr-form-frame>
+  </div>
+</div>
+<div class="block">
+  <div class="block__title">Select</div>
+  <div class="block__content">
+    <rdr-select fields></rdr-select>
+  </div>
+</div>
+<div class="block">
+  <div class="block__title">Select - Styles</div>
+  <div class="block__content">
+    <rdr-form-frame>
+      <rdr-select fields></rdr-select>
+    </rdr-form-frame>
+  </div>
+  <div class="block__content">
+    <rdr-form-frame suffix="萬">
+      <rdr-select fields></rdr-select>
+    </rdr-form-frame>
+  </div>
+  <div class="block__content">
+    <rdr-form-frame [inline]="true">
+      <rdr-select fields></rdr-select>
+      <ng-container error-msg>
+        <div>錯誤文字寬度隨著輸入框</div>
+      </ng-container>
+    </rdr-form-frame>
+  </div>
+  <div class="block__content">
+    <rdr-form-frame note="備註說明文字">
+      <rdr-select fields></rdr-select>
+    </rdr-form-frame>
+  </div>
+</div>
+<div class="block">
+  <div class="block__title">Radio Button</div>
+  <div class="block__content">
+    <rdr-radio [(ngModel)]="test2" (ngModelChange)="valueChange($event)"></rdr-radio>
+  </div>
+</div>
+<div class="block">
+  <div class="block__title">Checkbox</div>
+  <div class="block__content">
+    <rdr-checkbox></rdr-checkbox>
+  </div>
+</div>

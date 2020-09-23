@@ -1,0 +1,103 @@
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+
+rdr-select {
+  @include rdr-select-theme();
+  @include nx-select-config($mode: 'customize',
+    $form-height: 46px,
+    $form-radius: 4px,
+    $form-border-width: 0.5px,
+    $triange-width: 6px,
+    $triange-right-gap: 12px,
+    $option-max-height: 205px,
+    $option-text-padding: 12px 12px);
+
+  display: block;
+
+  nx-select.nx-cp {
+    &[class*="style-border--"] {
+      border: 0;
+
+      .select-container {
+        border-width: 1px;
+        border-style: solid;
+      }
+    }
+
+    .select-options {
+      top: 52px;
+    }
+
+    .select-container {
+      &:after {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 9px;
+        height: 9px;
+        border-style: solid;
+        border-width: 0 0 2.8px 2.8px;
+        transform-origin: 50% 50%;
+        transform: rotate(-45deg) translateY(-50%);
+      }
+
+      &.style--option-show {
+        &:after {
+          transform: rotate(135deg) translateY(50%);
+        }
+      }
+    }
+
+    .select-ele {
+      &--customize {
+        @include fz-callout-16-left;
+
+        +.select-options {
+          .select-options__list {
+            &::-webkit-scrollbar {
+              width: 11px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border: 4px solid transparent;
+              border-radius: 11px;
+            }
+
+            &::-webkit-scrollbar-track {
+              box-shadow: inset 0 0 11px 11px transparent;
+              border: 4px solid transparent;
+            }
+          }
+
+          .select-options__item {
+            @include fz-callout-16-left;
+          }
+        }
+      }
+    }
+
+    .searchbar {
+      position: relative;
+      padding-bottom: 0;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: calc(50% + 6px);
+        left: 21.5px;
+        width: 19px;
+        height: 19px;
+        background-image: url('../../../images/icon_search.svg');
+        background-repeat: no-repeat;
+        transform: translateY(-50%);
+      }
+
+      [nx-input] {
+        @include fz-callout-16-left;
+        height: 36px;
+        padding: 8px 8px 8px 34px;
+        border-radius: 6px;
+      }
+    }
+  }
+}

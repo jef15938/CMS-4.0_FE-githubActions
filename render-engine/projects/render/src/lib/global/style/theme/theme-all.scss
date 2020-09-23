@@ -5,6 +5,8 @@
 @import './components/breadcrumb';
 @import './components/card-link';
 @import './components/tab';
+@import './components/form';
+@import './components/choice';
 
 
 @mixin rdr-theme-core($core-theme) {
@@ -16,4 +18,9 @@
   @include rdr-card-link-frame-theme($theme: $core-theme);
   @include rdr-card-journal-theme($theme: $core-theme);
   @include rdr-tab-scroll-theme($theme: $core-theme);
+  @include rdr-form-frame-theme($theme: $core-theme);
+  @include rdr-input-theme($theme: $core-theme);
+  @include rdr-radio-theme($theme: $core-theme);
+  @include rdr-checkbox-theme($theme: $core-theme);
+  @include rdr-select-theme($theme: $core-theme);
 }

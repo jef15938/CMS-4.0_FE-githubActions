@@ -1,0 +1,3 @@
+<nx-radio-group [name]="groupName" [(ngModel)]="value" (ngModelChange)="valueChange($event)">
+  <nx-radio *ngFor="let item of dataList" [disabled]="item.disabled" [value]="item.value">{{item.title}}</nx-radio>
+</nx-radio-group>

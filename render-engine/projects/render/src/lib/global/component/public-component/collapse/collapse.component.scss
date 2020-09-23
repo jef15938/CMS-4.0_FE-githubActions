@@ -11,6 +11,15 @@ rdr-collapse {
     $collapse-toggle-icon-size: 20px,
     $collapse-suffix-gutter: 20px);
 
+  nx-collapse-accordion {
+    nx-collapse {
+      +nx-collapse {
+        margin-top: 0;
+      }
+
+    }
+  }
+
   nx-collapse.nx-cp {
     &:first-child {
       .collapse-container {
