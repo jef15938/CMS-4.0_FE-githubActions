@@ -16,7 +16,7 @@ import { SelectData } from './select.interface';
 })
 export class SelectComponent implements OnInit, ControlValueAccessor {
 
-  @ViewChild(NxSelectComponent) selectRef: NxSelectComponent;
+  @ViewChild(NxSelectComponent, { static: true }) selectRef: NxSelectComponent;
 
   @Input() data: SelectData = {
     hasSearchbar: true,

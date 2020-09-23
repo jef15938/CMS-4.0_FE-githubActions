@@ -15,7 +15,7 @@ import { CheckboxData } from './checkbox.interface';
   }]
 })
 export class CheckboxComponent implements OnInit, ControlValueAccessor {
-  @ViewChild(NxCheckboxComponent) checkboxRef: NxCheckboxComponent;
+  @ViewChild(NxCheckboxComponent, { static: true }) checkboxRef: NxCheckboxComponent;
 
   @Input() data: CheckboxData = {
     id: '',

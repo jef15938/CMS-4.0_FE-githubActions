@@ -16,7 +16,7 @@ import { RadioData } from './radio.interface';
 })
 export class RadioComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
-  @ViewChild(NxRadioGroup) radioGroupRef: NxRadioGroup;
+  @ViewChild(NxRadioGroup, { static: true }) radioGroupRef: NxRadioGroup;
 
   @Input() groupName: string;
   @Input() dataList: Array<RadioData> = [
@@ -24,7 +24,6 @@ export class RadioComponent implements OnInit, AfterViewInit, ControlValueAccess
     { title: '女', value: '1' }
   ] as any;
 
-  value: string;
   constructor() { }
 
   ngOnInit(): void {
@@ -46,9 +45,5 @@ export class RadioComponent implements OnInit, AfterViewInit, ControlValueAccess
 
   setDisabledState?(isDisabled: boolean): void {
     this.radioGroupRef.setDisabledState(isDisabled);
-  }
-
-  valueChange(event) {
-    this.writeValue(event);
   }
 }
