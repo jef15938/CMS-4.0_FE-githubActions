@@ -35,3 +35,5 @@ export * from './public-component/form-frame/form-frame.component';
 export * from './public-component/select/select.component';
 export * from './public-component/radio/radio.component';
 export * from './public-component/checkbox/checkbox.component';
+export * from './public-component/search-bar/search-bar.component';
+export * from './public-component/fast-tool/fast-tool.component';

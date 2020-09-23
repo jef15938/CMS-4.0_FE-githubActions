@@ -2,6 +2,8 @@
 @import "~@neux/ui/tool-mixins/style-import-app-global";
 @import "../../../style/theme/theme-all.scss";
 
+@include nx-reset;
+
 rdr-select {
   @include rdr-select-theme();
   @include nx-select-config($mode: 'customize',

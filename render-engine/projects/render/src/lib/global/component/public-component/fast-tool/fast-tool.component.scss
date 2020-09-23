@@ -1,0 +1,31 @@
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+
+rdr-fast-tool {
+  @include rdr-fast-tool-theme;
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  width: 54px;
+  padding: 16px 16px 20px;
+  border-width: 0.5px;
+  border-style: solid;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+
+  .fast-tool {
+    &__text {
+      @include fz-callout-18-center;
+      margin-bottom: 8px;
+    }
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    width: 19px;
+    height: 19px;
+    background-image: url('../../../images/icon_arrow.svg');
+    background-repeat: no-repeat;
+  }
+}

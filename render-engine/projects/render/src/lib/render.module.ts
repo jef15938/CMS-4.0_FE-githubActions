@@ -50,6 +50,8 @@ import { FormFrameComponent } from './global/component/public-component/form-fra
 import { SelectComponent } from './global/component/public-component/select/select.component';
 import { RadioComponent } from './global/component/public-component/radio/radio.component';
 import { CheckboxComponent } from './global/component/public-component/checkbox/checkbox.component';
+import { SearchBarComponent } from './global/component/public-component/search-bar/search-bar.component';
+import { FastToolComponent } from './global/component/public-component/fast-tool/fast-tool.component';
 
 
 const COMPONENTS = [
@@ -87,6 +89,8 @@ const COMPONENTS = [
   SelectComponent,
   RadioComponent,
   CheckboxComponent,
+  SearchBarComponent,
+  FastToolComponent,
 ];
 
 @NgModule({

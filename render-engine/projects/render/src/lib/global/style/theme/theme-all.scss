@@ -7,6 +7,7 @@
 @import './components/tab';
 @import './components/form';
 @import './components/choice';
+@import './components/fast-tool';
 
 
 @mixin rdr-theme-core($core-theme) {
@@ -23,4 +24,5 @@
   @include rdr-radio-theme($theme: $core-theme);
   @include rdr-checkbox-theme($theme: $core-theme);
   @include rdr-select-theme($theme: $core-theme);
+  @include rdr-fast-tool-theme($theme: $core-theme);
 }

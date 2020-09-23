@@ -1,0 +1,33 @@
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+
+rdr-search-bar {
+  @include rdr-input-theme();
+  @include nx-input-config($mode: 'customize',
+    $form-height: 36px,
+    $form-radius: 8px,
+    $form-padding: 7px 7px 7px 41px);
+
+
+  display: block;
+  position: relative;
+
+  [nx-input].nx-cp {
+    @include fz-callout-17-left;
+    box-sizing: border-box;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    width: 19px;
+    height: 19px;
+    background-image: url('../../../images/icon_search_primary.svg');
+    background-repeat: no-repeat;
+    transform: translateY(-50%);
+  }
+}
