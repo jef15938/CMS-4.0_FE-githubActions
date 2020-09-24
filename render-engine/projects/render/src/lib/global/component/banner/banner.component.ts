@@ -1,14 +1,15 @@
 import { Component, OnInit, Injector } from '@angular/core';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 import { ContentFieldInfoFieldType } from '../../api/data-model/models/content-field-info.model';
+import { CustomizeTemplateBaseComponent } from '../../../function/wrapper/layout-base/customize-template-base.component';
 
 @Component({
   selector: 'rdr-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.scss']
 })
-export class BannerComponent extends CommonTemplateBaseComponent implements OnInit {
+export class BannerComponent extends CustomizeTemplateBaseComponent implements OnInit {
+  sourceType = 'news';
 
   defaultTemplateInfo: ContentTemplateInfoModel = {
     id: '',

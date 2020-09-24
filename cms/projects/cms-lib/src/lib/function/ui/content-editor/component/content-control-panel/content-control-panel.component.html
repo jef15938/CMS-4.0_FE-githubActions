@@ -11,6 +11,7 @@
     <span class="info__text">editorActionMode = {{editorActionMode}}</span> -->
   </div>
   <hr>
+
   <ng-container *ngIf="selected.wrapper?.fixed">
     <mat-checkbox class="form__checkbox" [checked]="!!selected.templateInfo.hidden"
       (change)="selected.templateInfo.hidden = !(!!selected.templateInfo.hidden); hasChange=true;"
@@ -19,6 +20,7 @@
     </mat-checkbox>
     <br>
   </ng-container>
+
   <div class="cms-content-control-panel__btn-group btn-group">
     <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="版型限制"
       (click)="templateShowInfo()">
@@ -40,25 +42,47 @@
     </button>
   </div>
   <hr>
+
+  <ng-container *ngIf="dataSourceManager">
+    <div class="btn-group text-right">
+      <button type="button" tabindex="-1" mat-raised-button class="btn btn-edit" #menuTrigger="matMenuTrigger"
+        [matMenuTriggerFor]="actionMenu"
+        [disabled]="editorActionMode !== ContentEditorActionMode.TEMPLATE || !dataSourceManager.isActionable">
+        操作
+      </button>
+    </div>
+    <mat-menu #actionMenu="matMenu">
+      <button type="button" tabindex="-1" mat-menu-item
+        *ngFor="let action of ((dataSourceManager?.info$|async)?.actions || [])"
+        [disabled]="editorActionMode !== ContentEditorActionMode.TEMPLATE"
+        (click)="doAction(action)">{{action.actionName}}</button>
+    </mat-menu>
+    <hr>
+  </ng-container>
+
   <ng-container *ngIf="selected.selectedTargetType=== LayoutWrapperSelectedTargetType.TEMPLATE">
     <div [ngSwitch]="selected.templateType">
       <ng-container *ngSwitchCase="TemplateType.TAB">
         <cms-template-control-tab [selected]="selected" [editorActionMode]="editorActionMode"
           (change)="hasChange=true;"></cms-template-control-tab>
+        <hr>
       </ng-container>
       <ng-container *ngSwitchCase="TemplateType.GROUP">
         <cms-template-control-group [selected]="selected" [editorActionMode]="editorActionMode"
           (change)="hasChange=true;"></cms-template-control-group>
+        <hr>
       </ng-container>
       <div *ngSwitchCase="TemplateType.DATA_SOURCE">
         <cms-template-control-data-source [selected]="selected" [editorActionMode]="editorActionMode"
-          (change)="hasChange=true;">
+          [sources]="(dataSourceManager?.info$|async)?.datas || []" (change)="hasChange=true;">
         </cms-template-control-data-source>
+        <hr>
       </div>
       <div *ngSwitchCase="TemplateType.CUSTOMIZE">
 
       </div>
     </div>
+
   </ng-container>
 
   <ng-container *ngIf="selected.selectedTargetType === LayoutWrapperSelectedTargetType.FIELD">
@@ -72,31 +96,37 @@
       <ng-container *ngSwitchCase="FieldType.TEXT">
         <cms-field-control-text [selected]="selected" [editorActionMode]="editorActionMode" (change)="hasChange=true;">
         </cms-field-control-text>
+        <hr>
       </ng-container>
       <ng-container *ngSwitchCase="FieldType.TEXTEREA">
         <cms-field-control-textarea [selected]="selected" [editorActionMode]="editorActionMode"
           (change)="hasChange=true;"></cms-field-control-textarea>
+        <hr>
       </ng-container>
       <ng-container *ngSwitchCase="FieldType.LINK">
         <cms-field-control-link [selected]="selected" [editorActionMode]="editorActionMode" (change)="hasChange=true;">
         </cms-field-control-link>
+        <hr>
       </ng-container>
       <ng-container *ngSwitchCase="FieldType.BGIMG">
         <cms-field-control-bgimg [selected]="selected" [editorActionMode]="editorActionMode" (change)="hasChange=true;">
         </cms-field-control-bgimg>
+        <hr>
       </ng-container>
       <ng-container *ngSwitchCase="FieldType.IMG">
         <cms-field-control-img [selected]="selected" [editorActionMode]="editorActionMode" (change)="hasChange=true;">
         </cms-field-control-img>
+        <hr>
       </ng-container>
       <ng-container *ngSwitchCase="FieldType.HTMLEDITOR">
         <cms-field-control-html-editor [selected]="selected" [editorActionMode]="editorActionMode"
           (change)="hasChange=true;">
         </cms-field-control-html-editor>
+        <hr>
       </ng-container>
     </div>
   </ng-container>
-  <hr>
+
   <button type="button" tabindex="0" mat-raised-button style="width: 100%;" [disabled]="!hasChange"
     (click)="preserveChanges()">套用變更</button>
 </div>

@@ -12,7 +12,5 @@ export abstract class TabTemplateBaseComponent extends LayoutBaseComponent<TabTe
 
   abstract defaultTemplateInfo: TabTemplateInfo;
 
-  constructor(
-    injector: Injector,
-  ) { super(injector); }
+  constructor(injector: Injector) { super(injector); }
 }

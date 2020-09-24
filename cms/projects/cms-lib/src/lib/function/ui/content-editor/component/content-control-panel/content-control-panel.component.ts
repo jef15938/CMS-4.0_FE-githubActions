@@ -1,14 +1,78 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, LayoutWrapperSelectedTargetType, TemplateType, TemplatesContainerComponent } from '@neux/render';
+import {
+  LayoutWrapperSelectEvent, LayoutWrapperSelectedTargetType, CustomizeTemplateBaseComponent,
+  TemplateType, TemplatesContainerComponent, DataSourceTemplateBaseComponent
+} from '@neux/render';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { switchMap, shareReplay } from 'rxjs/operators';
 import { ContentEditorManager } from '../../service/content-editor-manager';
 import { ContentEditorActionMode, ContentEditorContext } from '../../content-editor.interface';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
-import { ContentEditorService } from '../../content-editor.service';
-import { ContentInfoModel } from '../../../../../global/api/data-model/models/content-info.model';
-import { LanguageInfoModel } from '../../../../../global/api/data-model/models/language-info.model';
-import { ContentBlockInfoModel } from '../../../../../global/api/data-model/models/content-block-info.model';
 import { ContentFieldInfoFieldType } from '../../../../../global/api/data-model/models/content-field-info.model';
 import { ModalService } from '../../../modal';
+import { ListContentDataSourceResponseModel } from '../../../../../global/api/data-model/models/list-content-data-source-response.model';
+import { ContentService } from '../../../../../global/api/service';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
+import { ContentDataSourceActionModel, ContentDataSourceActionType } from '../../../../../global/api/data-model/models/content-data-source-action.model';
+import { FarmSharedService } from '../../../farm-shared/farm-shared.service';
+
+class DataSourceManager {
+  private instance: any;
+  /** 讓 template 區分是不是有效(有typeId)可以實行 actions，或是有 typeId 但沒有 actions 資料 */
+  isActionable = false;
+  info$: Observable<ListContentDataSourceResponseModel>;
+
+  private refresh$ = new BehaviorSubject<string>('');
+
+  constructor(
+    private contentService: ContentService,
+  ) {
+    this.info$ = this.getData();
+  }
+
+  private getData() {
+    return this.refresh$.pipe(
+      switchMap(sourceType => {
+        if (!sourceType) { return of(null); }
+        return this.contentService.getContentDataSourceByTypeID(sourceType).pipe(
+          CmsErrorHandler.rxHandleError((error, showMessage) => {
+            showMessage();
+            this.info$ = this.getData();
+          }),
+        );
+      }),
+      shareReplay()
+    );
+  }
+
+  private checkInstanceIsDataSourceOrCustomize(instance: any) {
+    if (!instance) { return false; }
+    let isDataSource = false;
+    let isCustomize = false;
+    if (instance instanceof DataSourceTemplateBaseComponent) {
+      isDataSource = true;
+    } else if (instance instanceof CustomizeTemplateBaseComponent) {
+      isCustomize = true;
+    }
+    return isDataSource || isCustomize;
+  }
+
+  private getSourceTypeByInstance(instance: any): string {
+    if (!instance) { return ''; }
+    let sourceType = '';
+    sourceType = instance.sourceType || '';
+    return sourceType;
+  }
+
+  refresh(instance: any) {
+    this.instance = instance;
+    const isInstanceDataSourceOrCustomize = this.checkInstanceIsDataSourceOrCustomize(instance);
+    this.isActionable = isInstanceDataSourceOrCustomize;
+    const sourceType = isInstanceDataSourceOrCustomize ? this.getSourceTypeByInstance(instance) : '';
+    this.refresh$.next(sourceType);
+    return this;
+  }
+}
 
 @Component({
   selector: 'cms-content-control-panel',
@@ -43,16 +107,21 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   canTemplateMoveUp = false;
   canTemplateMoveDown = false;
 
-  constructor(
-    private contentEditorService: ContentEditorService,
-    private modalService: ModalService,
-  ) { }
+  dataSourceManager: DataSourceManager;
 
-  ngOnInit(): void {
+  constructor(
+    private modalService: ModalService,
+    private contentService: ContentService,
+    private farmSharedService: FarmSharedService,
+  ) {
+    this.dataSourceManager = new DataSourceManager(this.contentService);
   }
+
+  ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
+
       const previous = changes.selected.previousValue as LayoutWrapperSelectEvent;
       const current = changes.selected.currentValue as LayoutWrapperSelectEvent;
       if (previous) {
@@ -63,6 +132,10 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
         current.selectedTarget.scrollIntoView(this.scrollIntoViewOptions);
         this.calCanTemplateMove();
       }
+
+      const instance = current?.componentRef?.instance;
+      this.dataSourceManager.refresh(instance);
+
       this.show = !!current;
     }
   }
@@ -191,6 +264,14 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     this.canTemplateMoveDown =
       this.selected?.wrapper?.parentTemplatesContainer?.templates.indexOf(this.selected.templateInfo)
       !== this.selected?.wrapper?.parentTemplatesContainer?.templates?.length - 1;
+  }
+
+  doAction(action: ContentDataSourceActionModel) {
+    switch (action.actionType) {
+      case ContentDataSourceActionType.FARM:
+        this.farmSharedService.openFarm(action.funcId);
+        break;
+    }
   }
 
 }

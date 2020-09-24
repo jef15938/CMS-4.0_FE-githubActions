@@ -1,11 +1,8 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { DataSourceTemplateInfo, LayoutWrapperSelectEvent, DataSourceTemplateBaseComponent } from '@neux/render';
-import { ContentService } from '../../../../../../../../global/api/service/content/content.service';
 import { ContentDataSourceModel } from '../../../../../../../../global/api/data-model/models/content-data-source.model';
-import { ContentDataSourceActionModel, ContentDataSourceActionType } from '../../../../../../../../global/api/data-model/models/content-data-source-action.model';
-import { FarmSharedService } from '../../../../../../farm-shared/farm-shared.service';
-import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
+import { ContentDataSourceActionModel } from '../../../../../../../../global/api/data-model/models/content-data-source-action.model';
 
 @Component({
   selector: 'cms-template-control-data-source',
@@ -17,13 +14,10 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
   templateInfo: DataSourceTemplateInfo;
   sourceType: string;
 
-  sources: ContentDataSourceModel[] = [];
+  @Input() sources: ContentDataSourceModel[] = [];
   actions: ContentDataSourceActionModel[] = [];
 
-  constructor(
-    private contentService: ContentService,
-    private farmSharedService: FarmSharedService,
-  ) {
+  constructor() {
     super();
   }
 
@@ -35,20 +29,6 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
       const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as DataSourceTemplateInfo;
       this.sourceType = (event.componentRef.instance as DataSourceTemplateBaseComponent<any>).sourceType;
-      this.contentService.getContentDataSourceByTypeID(this.sourceType)
-        .pipe(CmsErrorHandler.rxHandleError())
-        .subscribe(res => {
-          this.sources = res.datas || [];
-          this.actions = res.actions || [];
-        });
-    }
-  }
-
-  doAction(action: ContentDataSourceActionModel) {
-    switch (action.actionType) {
-      case ContentDataSourceActionType.FARM:
-        this.farmSharedService.openFarm(action.funcId);
-        break;
     }
   }
 
