@@ -21,7 +21,14 @@ pipeline {
       steps {
         echo 'NPM Installing..'
         checkout scm
-        sh 'npm install'
+        sh '''
+          cd ./cms
+          npm install
+        '''
+        sh '''
+          cd ./render-engine
+          npm install
+        '''
       }
     }
     stage('Build CMS') {
