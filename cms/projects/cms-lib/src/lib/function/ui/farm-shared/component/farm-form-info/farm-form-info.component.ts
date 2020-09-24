@@ -272,7 +272,7 @@ export class FarmFormInfoComponent implements OnInit {
 
   openContentEditor(col: FarmFormInfoModelColumn) {
     try {
-      const controlID = this.funcID;
+      const controlID = col?.setting?.editorControlId;
       const control = this.formGroup.get(col.columnId);
 
       const content = JSON.parse((control.value) as string) as ContentInfo;

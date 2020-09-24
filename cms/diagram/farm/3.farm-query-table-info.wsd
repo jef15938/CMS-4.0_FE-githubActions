@@ -12,6 +12,8 @@ participant "FarmService" as farmService << service >>
 user -> main
 note left: 按下 "查詢"
 main -> main: queryData()
+main -> main: resetTablePage()
+note left: 重設當前page
 
 user -> main
 note left: 按下 "清除"
@@ -44,8 +46,9 @@ return FarmTableInfoModel
 main -> main: 帶回 category.tableInfo
 note left: 套用資料
 
+==presentation==
+
 main -> tableInfo: input farm.category.tableInfo
 note right: FarmTableInfoModel
-note left: presentation
 
 @enduml

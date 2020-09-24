@@ -58,6 +58,7 @@ type FarmFormInfoColumn = {
     limit_file_name_ext?: string; // 媒體庫挑選副檔名限制(Gallery Type限定)
     img_limit_width?: number;
     img_limit_height?: number;
+    editor_control_id?: string;
   };
   is_readonly: boolean;
 };
@@ -87,6 +88,7 @@ export type FarmFormInfoModelColumn = {
     limitFileNameExt?: string; // 媒體庫挑選副檔名限制(Gallery Type限定)
     imgLimitWidth?: number;
     imgLimitHeight?: number;
+    editorControlId?: string;
   };
   isReadonly: boolean;
 };
@@ -126,6 +128,7 @@ export type FarmFormInfoModelColumn = {
           limitFileNameExt: c.setting.limit_file_name_ext,
           imgLimitWidth: c.setting.img_limit_width,
           imgLimitHeight: c.setting.img_limit_height,
+          editorControlId: c.setting.editor_control_id,
         },
         isReadonly: c.is_readonly,
       };
