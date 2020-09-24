@@ -37,7 +37,9 @@ export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData>
     grabCursor: true,
     loop: true,
     slidesPerView: 1,
-    a11y: true,
+    a11y: {
+      enabled: true,
+    },
     keyboard: true,
     scrollbar: false,
     pagination: {
