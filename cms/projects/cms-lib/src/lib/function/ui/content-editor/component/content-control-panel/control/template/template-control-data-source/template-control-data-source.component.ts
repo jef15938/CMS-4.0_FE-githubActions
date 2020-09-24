@@ -12,7 +12,7 @@ import { ContentDataSourceActionModel } from '../../../../../../../../global/api
 export class TemplateControlDataSourceComponent extends ContentControlBase implements OnInit, OnChanges {
 
   templateInfo: DataSourceTemplateInfo;
-  sourceType: string;
+  typeId: string;
 
   @Input() sources: ContentDataSourceModel[] = [];
   actions: ContentDataSourceActionModel[] = [];
@@ -28,7 +28,7 @@ export class TemplateControlDataSourceComponent extends ContentControlBase imple
     if (changes.selected) {
       const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as DataSourceTemplateInfo;
-      this.sourceType = (event.componentRef.instance as DataSourceTemplateBaseComponent<any>).sourceType;
+      this.typeId = (event.componentRef.instance as DataSourceTemplateBaseComponent<any>).TYPE_ID;
     }
   }
 

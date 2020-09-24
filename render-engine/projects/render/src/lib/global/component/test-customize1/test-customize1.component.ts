@@ -1,15 +1,16 @@
 import { Component, Injector } from '@angular/core';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
+import { CustomizeTemplateBaseComponent } from '../../../function/wrapper/layout-base/customize-template-base.component';
 
-const TEMPLATE_ID = 'IconPage';
+const TEMPLATE_ID = 'test_customize1';
 
 @Component({
-  selector: 'rdr-icon-page',
-  templateUrl: './icon-page.component.html',
-  styleUrls: ['./icon-page.component.scss']
+  selector: 'rdr-test-customize1',
+  templateUrl: './test-customize1.component.html',
+  styleUrls: ['./test-customize1.component.scss']
 })
-export class IconPageComponent extends CommonTemplateBaseComponent {
+export class TestCustomize1Component extends CustomizeTemplateBaseComponent {
+
   defaultTemplateInfo: ContentTemplateInfoModel = {
     id: '',
     templateId: TEMPLATE_ID,

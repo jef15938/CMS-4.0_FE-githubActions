@@ -12,7 +12,8 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
   implements OnInit, OnChanges {
 
   abstract defaultTemplateInfo: DataSourceTemplateInfo;
-  abstract sourceType: string;
+
+  get TYPE_ID() { return this.TEMPLATE_ID; }
 
   protected hasSendInitGetDataRequest = false;
 
@@ -23,11 +24,11 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
 
   constructor(
     injector: Injector,
+    templateId: string,
     protected mockData?: TData[]
   ) {
-    super(injector);
+    super(injector, templateId);
     this.dataSourceService = this.injector.get(DataSourceService);
-
   }
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
   }
 
   getSourceData(): Observable<ListDataSourceDataResponseModel<TData>> {
-    return this.dataSourceService.getDataSourceByTypeIDAndId<TData>(this.sourceType, this.templateInfo?.source).pipe(
+    return this.dataSourceService.getDataSourceByTypeIDAndId<TData>(this.TYPE_ID, this.templateInfo?.source).pipe(
       takeUntil(this.destroy$),
       tap(sourceData => {
         this.sourceData = sourceData;

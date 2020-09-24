@@ -19,3 +19,4 @@ export * from './layout/layout.component';
 export * from './fixed-wrapper/fixed-wrapper.component';
 export * from './banner/banner.component';
 export * from './list/list.component';
+export * from './test-customize1/test-customize1.component';

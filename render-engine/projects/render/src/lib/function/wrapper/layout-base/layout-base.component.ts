@@ -1,11 +1,11 @@
 import { OnInit, Input, AfterViewInit, ViewChildren, QueryList, Injector, OnDestroy, OnChanges, SimpleChanges, Directive } from '@angular/core';
+import { Subject, merge } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { LayoutBase } from './layout-base.interface';
 import { LayoutWrapperComponent } from '../layout-wrapper/layout-wrapper.component';
 import { TemplateFieldDirective } from '../layout-wrapper/field-directive/template-field.directive';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
-import { takeUntil } from 'rxjs/operators';
-import { Subject, merge } from 'rxjs';
 import { LayoutFieldTextDirective } from '../layout-wrapper/field-directive/layout-field-text.directive';
 import { LayoutFieldTextareaDirective } from '../layout-wrapper/field-directive/layout-field-textarea.directive';
 import { LayoutFieldLinkDirective } from '../layout-wrapper/field-directive/layout-field-link.directive';
@@ -22,6 +22,7 @@ import { PageInfoGetResponseModel } from '../../../global/api/data-model/models/
 export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel>
   implements LayoutBase<TInfo>, OnInit, AfterViewInit, OnDestroy, OnChanges {
 
+  get TEMPLATE_ID() { return this.templateId; }
   abstract templateType: TemplateType;
   abstract defaultTemplateInfo: TInfo;
 
@@ -59,6 +60,7 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
 
   constructor(
     protected injector: Injector,
+    private templateId: string,
   ) { }
 
   ngOnInit(): void {
@@ -70,6 +72,7 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
   }
 
   ngAfterViewInit(): void {
+    if (this.defaultTemplateInfo) { this.defaultTemplateInfo.templateId = this.TEMPLATE_ID; }
     this.parentLayoutWrapper.checkEventBinding();
     this.parentLayoutWrapper.setInstanceData(this, true);
     merge(

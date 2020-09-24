@@ -2,7 +2,8 @@ import { Component, Injector } from '@angular/core';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { QaData } from './qa.interface';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
-import { DataSourceType } from '../../enum';
+
+const TEMPLATE_ID = 'qa';
 
 @Component({
   selector: 'rdr-qa',
@@ -13,7 +14,7 @@ export class QaComponent extends DataSourceTemplateBaseComponent<QaData> {
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
-    templateId: 'qa',
+    templateId: TEMPLATE_ID,
     fields: [],
     source: '',
     attributes: {
@@ -21,14 +22,6 @@ export class QaComponent extends DataSourceTemplateBaseComponent<QaData> {
     }
   };
 
-  sourceType = DataSourceType.QA;
-
-  constructor(
-    injector: Injector,
-  ) {
-    super(injector);
-  }
-
-
+  constructor(injector: Injector) { super(injector, TEMPLATE_ID); }
 
 }

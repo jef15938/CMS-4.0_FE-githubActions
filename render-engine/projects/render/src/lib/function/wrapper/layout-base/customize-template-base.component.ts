@@ -7,9 +7,10 @@ import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/
 export abstract class CustomizeTemplateBaseComponent extends LayoutBaseComponent<ContentTemplateInfoModel> {
 
   abstract defaultTemplateInfo: ContentTemplateInfoModel;
-  abstract sourceType: string;
+
+  get TYPE_ID() { return this.TEMPLATE_ID; }
 
   templateType = TemplateType.CUSTOMIZE;
 
-  constructor(injector: Injector) { super(injector); }
+  constructor(injector: Injector, templateId: string) { super(injector, templateId); }
 }

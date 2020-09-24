@@ -4,6 +4,8 @@ import { map, debounceTime, startWith, tap } from 'rxjs/operators';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 
+const TEMPLATE_ID = 'layout-full';
+
 @Component({
   selector: 'rdr-layout-full',
   templateUrl: './layout-full.component.html',
@@ -16,9 +18,7 @@ export class LayoutFullComponent extends CommonTemplateBaseComponent implements 
   isMobile = false;
   windowWidth = window.innerWidth;
 
-  constructor(injector: Injector) {
-    super(injector);
-  }
+  constructor(injector: Injector) { super(injector, TEMPLATE_ID); }
 
   ngOnInit(): void {
     fromEvent(window, 'resize').pipe(

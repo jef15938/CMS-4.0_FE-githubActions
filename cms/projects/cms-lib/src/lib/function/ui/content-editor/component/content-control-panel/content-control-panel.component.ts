@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import {
   LayoutWrapperSelectEvent, LayoutWrapperSelectedTargetType, CustomizeTemplateBaseComponent,
-  TemplateType, TemplatesContainerComponent, DataSourceTemplateBaseComponent
+  TemplateType, TemplatesContainerComponent, DataSourceTemplateBaseComponent, LayoutBaseComponent
 } from '@neux/render';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { switchMap, shareReplay } from 'rxjs/operators';
@@ -32,9 +32,9 @@ class DataSourceManager {
 
   private getData() {
     return this.refresh$.pipe(
-      switchMap(sourceType => {
-        if (!sourceType) { return of(null); }
-        return this.contentService.getContentDataSourceByTypeID(sourceType).pipe(
+      switchMap(typeId => {
+        if (!typeId) { return of(null); }
+        return this.contentService.getContentDataSourceByTypeID(typeId).pipe(
           CmsErrorHandler.rxHandleError((error, showMessage) => {
             showMessage();
             this.info$ = this.getData();
@@ -57,19 +57,24 @@ class DataSourceManager {
     return isDataSource || isCustomize;
   }
 
-  private getSourceTypeByInstance(instance: any): string {
+  private getTypeIdByInstance(instance: LayoutBaseComponent<any>): string {
     if (!instance) { return ''; }
-    let sourceType = '';
-    sourceType = instance.sourceType || '';
-    return sourceType;
+    let typeId = '';
+    if (
+      instance instanceof DataSourceTemplateBaseComponent
+      || instance instanceof CustomizeTemplateBaseComponent
+    ) {
+      typeId = instance.TYPE_ID;
+    }
+    return typeId;
   }
 
-  refresh(instance: any) {
+  refresh(instance: LayoutBaseComponent<any>) {
     this.instance = instance;
     const isInstanceDataSourceOrCustomize = this.checkInstanceIsDataSourceOrCustomize(instance);
     this.isActionable = isInstanceDataSourceOrCustomize;
-    const sourceType = isInstanceDataSourceOrCustomize ? this.getSourceTypeByInstance(instance) : '';
-    this.refresh$.next(sourceType);
+    const typeId = isInstanceDataSourceOrCustomize ? this.getTypeIdByInstance(instance) : '';
+    this.refresh$.next(typeId);
     return this;
   }
 }

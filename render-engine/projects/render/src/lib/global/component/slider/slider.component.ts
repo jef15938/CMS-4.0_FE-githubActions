@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Injector, Inject } from '@angular/core';
+import { Component, ViewChild, Injector, Inject } from '@angular/core';
 import {
   SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface
@@ -6,28 +6,27 @@ import {
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { SliderData } from './slider.interface';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
-import { DataSourceType } from '../../enum';
 import { RENDER_ENVIROMENT_TOKEN } from '../../injection-token/injection-token';
 import { RenderEnvironment } from '../../interface/render-environment.interface';
+
+const TEMPLATE_ID = 'slider';
 
 @Component({
   selector: 'rdr-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss'],
 })
-export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData> implements OnInit {
+export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData> {
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
-    templateId: 'slider',
+    templateId: TEMPLATE_ID,
     fields: [],
     source: '',
     attributes: {
       height: '592px'
     }
   };
-
-  sourceType = DataSourceType.Slider;
 
   disabled = false;
 
@@ -58,7 +57,7 @@ export class SliderComponent extends DataSourceTemplateBaseComponent<SliderData>
     injector: Injector,
     @Inject(RENDER_ENVIROMENT_TOKEN) public enviroment: RenderEnvironment,
   ) {
-    super(injector);
+    super(injector, TEMPLATE_ID);
   }
 
   onIndexChange(index: number): void {

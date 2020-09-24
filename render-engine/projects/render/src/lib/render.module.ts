@@ -31,6 +31,7 @@ import { HtmlEditorContentComponent } from './function/ui/html-editor-content/ht
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
 import { RenderPreviewContainerComponent } from './global/component/render-preview-container/render-preview-container.component';
+import { TestCustomize1Component } from './global/component/test-customize1/test-customize1.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -49,6 +50,7 @@ const COMPONENTS = [
   HtmlEditorContentComponent,
   BannerComponent,
   ListComponent,
+  TestCustomize1Component,
 ];
 
 @NgModule({
