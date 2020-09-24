@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 
-const BASE_URL = 'https://sit.walkflow.biz/cms-api';
+const BASE_URL = 'https://dev.walkflow.biz/cms-api';
 const RESOUCE_BASE_URL = '';
 const API_URL = {
   GetPageByPageIdAndLang: `${BASE_URL}\/Page/{page_id}/{lang}`,
