@@ -9,6 +9,9 @@ pipeline {
   stages {
     stage('Show Info') {
       steps {
+        script {
+          currentBuild.displayName = "#${currentBuild.number} : ${params.env}"
+        }
         sh '''
           echo "env=${env}"
           node -v
@@ -83,8 +86,8 @@ pipeline {
           ssr_dist="${pwd}/render-engine/dist/render-engine"
           ssr_destination="/root/dist/render-engine"
           ssh "root@${ssr_server_ip}" mkdir -p "${ssr_destination}/browser" "${ssr_destination}/server"
-          scp -r "${ssr_dist}/server" "root@${ssr_server_ip}:${ssr_destination}/server"
-          scp -r "${ssr_dist}/browser" "root@${ssr_server_ip}:${ssr_destination}/browser"
+          scp -r "${ssr_dist}/server" "root@${ssr_server_ip}:${ssr_destination}"
+          scp -r "${ssr_dist}/browser" "root@${ssr_server_ip}:${ssr_destination}"
           ssh "root@${ssr_server_ip}" node "${ssr_destination}/server/main.js" > /dev/null 2>&1 &
         '''
       }
