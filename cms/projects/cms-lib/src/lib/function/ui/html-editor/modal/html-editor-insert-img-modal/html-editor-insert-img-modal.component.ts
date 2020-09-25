@@ -87,7 +87,7 @@ export class HtmlEditorInsertImgModalComponent
           galleryName.substring(galleryName.lastIndexOf('.') + 1),
           null,
         )
-        : this.gallerySharedService.addGalleryImage()
+        : this.gallerySharedService.addGalleryImage('', null)
     ).subscribe(res => {
       if (res) {
         this.timestamp = new Date().getTime();

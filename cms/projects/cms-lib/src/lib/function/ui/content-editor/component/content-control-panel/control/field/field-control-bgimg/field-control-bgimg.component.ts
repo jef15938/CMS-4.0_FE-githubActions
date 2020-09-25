@@ -55,7 +55,7 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
           galleryName.substring(galleryName.lastIndexOf('.') + 1),
           imageHeightWidth,
         )
-        : this.gallerySharedService.addGalleryImage()
+        : this.gallerySharedService.addGalleryImage('', imageHeightWidth)
     ).subscribe(res => {
       if (res) {
         const saved = res as any;

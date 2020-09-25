@@ -95,7 +95,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNode
     (
       galleryID
         ? this.gallerySharedService.updateGalleryImage(`${galleryID}`, galleryName, null, null)
-        : this.gallerySharedService.addGalleryImage()
+        : this.gallerySharedService.addGalleryImage('', null)
     ).subscribe(res => {
       if (res) {
         if (res) {

@@ -21,7 +21,7 @@ import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.typ
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { FormSharedService } from '../../../form-shared/form-shared.service';
 import { FARM_CUSTOM_HANDLER_TOKEN } from '../../farm-shared-injection-token';
-import { UploadResponse } from '../../../gallery-shared/component/add-gallery-modal/add-gallery-modal.component';
+import { UploadResponse } from '../../../gallery-shared/component/gallery-add-update-modal/gallery-add-update-modal.component';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -322,7 +322,7 @@ export class FarmFormInfoComponent implements OnInit {
             accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
             imageHeightWidth,
           )
-          : this.gallerySharedService.addGalleryImage(accept)
+          : this.gallerySharedService.addGalleryImage(accept, imageHeightWidth)
       ).subscribe(res => { subscriber.next(res); }, err => { subscriber.error(err); });
     });
 

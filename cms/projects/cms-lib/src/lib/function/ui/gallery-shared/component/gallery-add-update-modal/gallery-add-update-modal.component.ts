@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, ElementRef, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatHorizontalStepper } from '@angular/material/stepper';
@@ -93,11 +93,13 @@ class UpdateFile implements UploadResolver {
 }
 
 @Component({
-  selector: 'cms-add-gallery-modal',
-  templateUrl: './add-gallery-modal.component.html',
-  styleUrls: ['./add-gallery-modal.component.scss'],
+  selector: 'cms-gallery-add-update-modal',
+  templateUrl: './gallery-add-update-modal.component.html',
+  styleUrls: ['./gallery-add-update-modal.component.scss'],
 })
-export class AddGalleryModalComponent extends CustomModalBase<AddGalleryModalComponent, UploadResponse> implements UploadComponent, OnInit {
+export class GalleryAddUpdateModalComponent
+  extends CustomModalBase<GalleryAddUpdateModalComponent, UploadResponse>
+  implements UploadComponent, OnInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 
@@ -131,7 +133,6 @@ export class AddGalleryModalComponent extends CustomModalBase<AddGalleryModalCom
     private formBuilder: FormBuilder,
     private cropperService: CropperService,
     public galleryService: GalleryService,
-    private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
     public modalService: ModalService,
     @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
@@ -239,7 +240,7 @@ export class AddGalleryModalComponent extends CustomModalBase<AddGalleryModalCom
 
       fileUpload.click();
     } catch (error) {
-      CmsErrorHandler.throwAndShow(error, 'AddGalleryModalComponent.addFile()', '加入檔案錯誤');
+      CmsErrorHandler.throwAndShow(error, 'GalleryAddUpdateModalComponent.addFile()', '加入檔案錯誤');
     }
   }
 
