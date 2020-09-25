@@ -1,0 +1,41 @@
+<form (ngSubmit)="send(calculatePolicyLoanForm)" #calculatePolicyLoanForm="ngForm">
+  <fieldset ngModelGroup="condition">
+    <div>
+      <label for="policyLoan">貸款金額(元)</label>
+      <input #policyLoan="ngModel" [(ngModel)]="condition.loan" type="text" id="policyLoan" name="loan" maxlength="8"
+        pattern="[0-9]+" placeholder="貸款金額" />
+      <div *ngIf="policyLoan.errors && policyLoan.touched" class="error-msg">
+        貸款金額請輸入整數。
+      </div>
+    </div>
+    <div>
+      <label for="otherInterestRate">信用卡循環利率或小額信貸借款利率(%)</label>
+      <input #otherInterestRate="ngModel" [(ngModel)]="condition.otherInterestRate" type="text" id="otherInterestRate"
+        name="otherInterestRate" maxlength="5" placeholder="信用卡循環利率或小額信貸借款利率" />
+    </div>
+    <div>
+      <label for="ourInterestRate">本公司的保單借款利率(%)</label>
+      <input #ourInterestRate="ngModel" [(ngModel)]="condition.ourInterestRate" type="text" id="ourInterestRate"
+        name="ourInterestRate" maxlength="5" placeholder="本公司的保單借款利率" />
+    </div>
+  </fieldset>
+  <button type="submit">利率試算</button>
+</form>
+
+<div *ngIf="calculateResult">
+  <h2>保單借款利率試算結果</h2>
+
+  <table>
+    <tr>
+      <th>信用卡 或小額借貸年利息</th>
+      <th>本公司的保單借款年利息</th>
+      <th>每年可省下利息</th>
+    </tr>
+    <tr>
+      <td>NT{{ calculateResult.otherInterest | number }}元</td>
+      <td>NT{{ calculateResult.ourInterest | number }}元</td>
+      <td>NT{{ calculateResult.saveTotal | number }}元</td>
+    </tr>
+  </table>
+  <div>備註：以上試算僅提供概算結果，未考慮利率變動、通貨膨脹、所得稅、複利…等因素。</div>
+</div>
