@@ -60,6 +60,8 @@ export class RenderComponent implements OnInit {
     const metaKeyword = pageInfo.metaKeyword || '';
     const metaDescription = pageInfo.metaDescription || '';
     const metaImage = pageInfo.metaImage || '';
+    const domain = pageInfo.domain || '';
+
 
     const titles = Array.from(document.head.querySelectorAll('title'));
     titles.forEach(title => title.innerText = metaTitle || '');
@@ -69,6 +71,7 @@ export class RenderComponent implements OnInit {
       { key: 'keywords', value: metaKeyword },
       { key: 'description', value: metaDescription },
       { key: 'image', value: metaImage },
+      { key: 'url', value: domain },
     ];
 
     metas.map(meta => {

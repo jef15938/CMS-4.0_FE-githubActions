@@ -15,6 +15,7 @@ import { ModelMapping } from '@neux/core';
     model.lang = bean.lang;
     model.nodeRoot = bean.node_root;
     model.nodeParent = bean.node_parent;
+    model.domain = bean.domain;
   }
 )
 export class PageInfoGetResponseModel {
@@ -33,4 +34,6 @@ export class PageInfoGetResponseModel {
   @IsNotEmpty()
   public nodeRoot: string;
   public nodeParent: string;
+  @IsNotEmpty()
+  public domain: string;
 }
