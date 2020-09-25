@@ -5,11 +5,11 @@
   crossOrigin="anonymous">
 <div class="cms-gallery-add-update-modal" *ngIf="currentStepState">
   <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="onStepSelectionChange($event)">
-    <mat-step *ngIf="galleryId && galleryType===GalleryType.IMAGE" [state]="StepState.IMAGE_CHOOSE_ACTION"
-      [stepControl]="formGroupImageChooseAction" [hasError]="formGroupImageChooseAction?.invalid">
+    <mat-step *ngIf="galleryId && galleryType===GalleryType.IMAGE" [state]="StepState.MODIFY_IMAGE_APPROACH"
+      [stepControl]="formGroupModifyImageApproach" [hasError]="formGroupModifyImageApproach?.invalid">
       <ng-template matStepLabel>修改方式</ng-template>
-      <div class="text-center" [formGroup]="formGroupImageChooseAction">
-        <mat-radio-group formControlName="value" (change)="onImageChooseActionChange($event)">
+      <div class="text-center" [formGroup]="formGroupModifyImageApproach">
+        <mat-radio-group formControlName="value" (change)="onModifyImageApproachChange($event)">
           <mat-radio-button value="new">
             上傳新圖
           </mat-radio-button>
@@ -20,7 +20,7 @@
       </div>
     </mat-step>
     <mat-step [state]="StepState.SELECT_FILE" [stepControl]="formGroupSelectFile"
-      *ngIf="!galleryId ||formGroupImageChooseAction?.get('value')?.value!=='crop'"
+      *ngIf="!galleryId ||formGroupModifyImageApproach?.get('value')?.value!=='crop'"
       [hasError]="formGroupSelectFile?.invalid">
       <ng-template matStepLabel>選擇{{typeText}}</ng-template>
       <div *ngIf="formGroupSelectFile?.invalid" class="text-center text-danger">

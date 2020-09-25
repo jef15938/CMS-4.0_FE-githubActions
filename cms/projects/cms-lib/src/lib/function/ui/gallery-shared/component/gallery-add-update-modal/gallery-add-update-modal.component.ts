@@ -20,7 +20,7 @@ export enum GalleryType {
 }
 
 enum StepState {
-  IMAGE_CHOOSE_ACTION = 'IMAGE_CHOOSE_ACTION',
+  MODIFY_IMAGE_APPROACH = 'MODIFY_IMAGE_APPROACH',
   SELECT_FILE = 'SELECT_FILE',
   CROP_FILE = 'CROP_FILE',
   UPLOAD = 'UPLOAD',
@@ -125,7 +125,7 @@ export class GalleryAddUpdateModalComponent
   typeText = '';
   currentStepState: StepState;
 
-  formGroupImageChooseAction: FormGroup;
+  formGroupModifyImageApproach: FormGroup;
   formGroupSelectFile: FormGroup;
   formGroupCropFile: FormGroup;
 
@@ -142,7 +142,7 @@ export class GalleryAddUpdateModalComponent
   ngOnInit() {
     // this.updateSize('1280px');
     if (this.galleryId && this.galleryType === GalleryType.IMAGE) {
-      this.currentStepState = StepState.IMAGE_CHOOSE_ACTION;
+      this.currentStepState = StepState.MODIFY_IMAGE_APPROACH;
     } else {
       this.currentStepState = StepState.SELECT_FILE;
     }
@@ -152,7 +152,7 @@ export class GalleryAddUpdateModalComponent
     this.title = `${this.galleryId ? '修改' : '加入'}${this.typeText}`;
 
     this.accept = this.accept || this.getAcceptByGalleryType(this.galleryType);
-    this.formGroupImageChooseAction = this.formBuilder.group({
+    this.formGroupModifyImageApproach = this.formBuilder.group({
       value: [null, Validators.required],
     });
     this.formGroupSelectFile = this.formBuilder.group({
@@ -299,10 +299,10 @@ export class GalleryAddUpdateModalComponent
     }
   }
 
-  onImageChooseActionChange(ev: MatRadioChange) {
+  onModifyImageApproachChange(ev: MatRadioChange) {
     const imageAction: ImageUpdateAction = ev.value;
     if (!imageAction) { return; }
-    this.formGroupImageChooseAction.get('value').patchValue(imageAction);
+    this.formGroupModifyImageApproach.get('value').patchValue(imageAction);
     if (imageAction === 'new') {
       this.clearFormGroupSelectFile();
       this.clearFormGroupCropFile();
@@ -338,18 +338,18 @@ export class GalleryAddUpdateModalComponent
 
   onStepSelectionChange(ev: StepperSelectionEvent) {
     this.currentStepState = ev.selectedStep.state as StepState;
-    if (this.currentStepState === StepState.IMAGE_CHOOSE_ACTION) {
+    if (this.currentStepState === StepState.MODIFY_IMAGE_APPROACH) {
       this.clearFormGroupCropFile();
       this.clearFormGroupSelectFile();
-      this.clearFormGroupImageChooseAction();
+      this.clearFormGroupModifyImageApproach();
     }
     if (this.currentStepState === StepState.SELECT_FILE) {
       this.clearFormGroupCropFile();
     }
   }
 
-  private clearFormGroupImageChooseAction() {
-    this.formGroupImageChooseAction.get('value').patchValue(null);
+  private clearFormGroupModifyImageApproach() {
+    this.formGroupModifyImageApproach.get('value').patchValue(null);
   }
 
   private clearFormGroupSelectFile() {
@@ -369,7 +369,7 @@ export class GalleryAddUpdateModalComponent
         resolver = new UpdateFile();
       }
       if (this.galleryType === GalleryType.IMAGE) {
-        const imageAction: ImageUpdateAction = this.formGroupImageChooseAction.get('value').value;
+        const imageAction: ImageUpdateAction = this.formGroupModifyImageApproach.get('value').value;
         if (imageAction === 'new') {
           resolver = new AddImage();
         }

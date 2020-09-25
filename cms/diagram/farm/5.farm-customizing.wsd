@@ -1,6 +1,6 @@
 @startuml
 
-Title Farm : custom
+Title Farm : Customizing
 participant "CmsModule/AppModule" as module << module >>
 participant "(FARM_CUSTOM_HANDLER_TOKEN)\nFarmCustomHandler" as customHandler << interface >>
 participant "FarmFormInfoComponent" as formInfo << component >>

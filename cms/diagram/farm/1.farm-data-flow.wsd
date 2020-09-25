@@ -1,6 +1,6 @@
 @startuml
 
-Title Farm : data flow
+Title Farm : Data Flow
 actor user
 participant "CmsFarmDataResolver" as dataProviderRouter << service >>
 participant "DynamicRoutingComponent" as dynamicComp << component >>
@@ -12,20 +12,20 @@ participant "FarmSharedComponent" as main << component >>
 ==enter func by router==
 user -> dataProviderRouter: funcId
 note left: 透過 menu 路由進入 Farm
-dataProviderRouter -> farmService: getFarmByFuncID()
+dataProviderRouter -> farmService: FarmService.getFarmByFuncID()
 activate farmService
 return FarmInfoGetResponseModel
 dataProviderRouter -> dynamicComp: routing => activatedRoute.data.farm
 dynamicComp -> dynamicComp : ActivatedRoute.data.subscribe()
-dynamicComp -> main: input : FarmInfoGetResponseModel
+dynamicComp -> main: use \n @Input FarmInfoGetResponseModel
 
 ==enter func by modal==
 user -> farmSharedService: openFarm(funcID)
 note left: 透過 modal 外部開啟 Farm
 farmSharedService -> dataProviderModal: funcId
-dataProviderModal -> farmService: getFarmByFuncID()
+dataProviderModal -> farmService: FarmService.getFarmByFuncID()
 activate farmService
 return FarmInfoGetResponseModel
-dataProviderModal -> main: input : FarmInfoGetResponseModel
+dataProviderModal -> main: use \n @Input FarmInfoGetResponseModel
 
 @enduml
