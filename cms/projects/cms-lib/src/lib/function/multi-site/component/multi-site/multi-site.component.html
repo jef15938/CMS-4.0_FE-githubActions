@@ -1,67 +1,73 @@
 <!-- 網站編輯 -->
-<div class="multi-site">
-  <div #SiteBlock [hidden]="editMode===EditModeType.NODE" class="multi-site__block list-block" cmsResizer>
-    <div class="list-block__inner multi-site__block__inner">
-      <div class="multi-site__block__title page-title-container">
-        <h1>網站列表</h1>
-        <button type="button" tabindex="0" mat-raised-button class="btn btn-edit line-hight-normal"
-          (click)="testHtmlEditor()">Html測試</button>
+<div style="height: 100%;" #SiteBlock>
+  <div class="multi-site" style="height: 100%;">
+    <div [hidden]="editMode===EditModeType.NODE" class="multi-site__block list-block" cmsResizer
+      [heightBase]="SiteBlock">
+      <div class="list-block__inner multi-site__block__inner">
+        <div class="multi-site__block__title page-title-container">
+          <h1>網站列表</h1>
+          <button type="button" tabindex="0" mat-raised-button class="btn btn-edit line-hight-normal"
+            (click)="testHtmlEditor()">Html測試</button>
+        </div>
+        <mat-list class="list-block__list">
+          <ng-container *ngFor="let site of sites">
+            <mat-list-item class="list-block__list__item" [class.list-block__list__item--selected]="selectedSite===site"
+              (click)="selectSite(site)">{{site.siteName}}
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
       </div>
-      <mat-list class="list-block__list">
-        <ng-container *ngFor="let site of sites">
-          <mat-list-item class="list-block__list__item" [class.list-block__list__item--selected]="selectedSite===site"
-            (click)="selectSite(site)">{{site.siteName}}
-          </mat-list-item>
-        </ng-container>
-      </mat-list>
+    </div>
+
+    <div class="multi-site__block set-block">
+      <div class="set-block__inner multi-site__block__inner">
+        <div class="multi-site__block__title page-title-container">
+          <h1>網站設定</h1>
+          <button type="button" tabindex="0" mat-raised-button class="btn btn-edit line-hight-normal"
+            (click)="swichMode(EditModeType.NODE)">編輯節點</button>
+        </div>
+        <div class="page-content-container" *ngIf="selectedSite">
+          <mat-form-field appearance="outline">
+            <mat-label>網站名稱</mat-label>
+            <input matInput [(ngModel)]="selectedSite.siteName" name="siteName" required #modelName="ngModel" readonly>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="outline">
+            <mat-label>子目錄名稱</mat-label>
+            <input matInput [(ngModel)]="selectedSite.siteId" name="siteId" required #modelId="ngModel" readonly>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="multi-site__block set-block">
-    <div class="set-block__inner multi-site__block__inner">
-      <div class="multi-site__block__title page-title-container">
-        <h1>網站設定</h1>
-        <button type="button" tabindex="0" mat-raised-button class="btn btn-edit line-hight-normal"
-          (click)="swichMode(EditModeType.NODE)">編輯節點</button>
-      </div>
-      <div class="page-content-container" *ngIf="selectedSite">
-        <mat-form-field appearance="outline">
-          <mat-label>網站名稱</mat-label>
-          <input matInput [(ngModel)]="selectedSite.siteName" name="siteName" required #modelName="ngModel" readonly>
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="outline">
-          <mat-label>子目錄名稱</mat-label>
-          <input matInput [(ngModel)]="selectedSite.siteId" name="siteId" required #modelId="ngModel" readonly>
-        </mat-form-field>
+  <!-- 節點編輯 -->
+  <div [hidden]="editMode===EditModeType.SITE" class="multi-site multi-site_cover">
+    <div class="multi-site__block list-block" cmsResizer [heightBase]="SiteBlock">
+      <div class="list-block__inner multi-site__block__inner">
+        <div class="page-title-container multi-site__block__title">
+          <h1>{{selectedSite?.siteName}}</h1>
+          <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel line-hight-normal"
+            (click)="swichMode(EditModeType.SITE)">返回</button>
+        </div>
+        <div class="page-content-container multi-site__block__content">
+          <cms-tree #userSitemapTree class="list-block__tree" [context]="this" [nodeDatas]="userSitemaps"
+            [trackBy]="treeTrackBy" [draggable]="true" [customNodeRenderer]="customNodeRenderer"
+            [defaultExpandLevel]="-1" (customEvent)="onUserSiteMapTreeCustomEvent($event)"
+            (nodeSelect)="onNodeSelected($event)" (afterRender)="afterTreeRender($event)"
+            (dragToNode)="onTreeDragToNode($event)" (dragToPosition)="onTreeDragToPosition($event)"
+            [canDragNode]="canDragNode" [canDropOnNode]="canDropOnNode"
+            [canDropOnNodePreviousNext]="canDropOnNodePreviousNext">
+          </cms-tree>
+        </div>
       </div>
     </div>
+    <div *ngIf="selectedSitemapNode" class="multi-site__block set-block">
+      <cms-sitemap-node-detail [siteID]="selectedSite?.siteId" [sitemapNode]="selectedSitemapNode"
+        [sitemapNodeParentID]="selectedSitemapNodeParentID" [userSitemap]="selectedUserSitemap"
+        (update)="onNodeUpdate()">
+      </cms-sitemap-node-detail>
+    </div>
   </div>
-</div>
 
-<!-- 節點編輯 -->
-<div [hidden]="editMode===EditModeType.SITE" class="multi-site multi-site_cover">
-  <div class="multi-site__block list-block" cmsResizer [heightBase]="SiteBlock">
-    <div class="list-block__inner multi-site__block__inner">
-      <div class="page-title-container multi-site__block__title">
-        <h1>{{selectedSite?.siteName}}</h1>
-        <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel line-hight-normal"
-          (click)="swichMode(EditModeType.SITE)">返回</button>
-      </div>
-      <div class="page-content-container multi-site__block__content">
-        <cms-tree #userSitemapTree class="list-block__tree" [context]="this" [nodeDatas]="userSitemaps"
-          [trackBy]="treeTrackBy" [draggable]="true" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
-          (customEvent)="onUserSiteMapTreeCustomEvent($event)" (nodeSelect)="onNodeSelected($event)"
-          (afterRender)="afterTreeRender($event)" (dragToNode)="onTreeDragToNode($event)"
-          (dragToPosition)="onTreeDragToPosition($event)" [canDragNode]="canDragNode" [canDropOnNode]="canDropOnNode"
-          [canDropOnNodePreviousNext]="canDropOnNodePreviousNext">
-        </cms-tree>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="selectedSitemapNode" class="multi-site__block set-block">
-    <cms-sitemap-node-detail [siteID]="selectedSite?.siteId" [sitemapNode]="selectedSitemapNode"
-      [sitemapNodeParentID]="selectedSitemapNodeParentID" [userSitemap]="selectedUserSitemap" (update)="onNodeUpdate()">
-    </cms-sitemap-node-detail>
-  </div>
 </div>
