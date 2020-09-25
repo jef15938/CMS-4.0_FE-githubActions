@@ -32,6 +32,7 @@ import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
 import { RenderPreviewContainerComponent } from './global/component/render-preview-container/render-preview-container.component';
 import { TestCustomize1Component } from './global/component/test-customize1/test-customize1.component';
+import { MetaService } from './global/service/meta.service';
 
 const COMPONENTS = [
   SliderComponent,
@@ -80,7 +81,8 @@ export class RenderModule {
       ngModule: RenderModule,
       providers: [
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptor, multi: true },
-        { provide: RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN, useValue: RENDER_DEFAULT_COMPONENT_MAPPINGS }
+        { provide: RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN, useValue: RENDER_DEFAULT_COMPONENT_MAPPINGS },
+        MetaService,
       ]
     };
   }

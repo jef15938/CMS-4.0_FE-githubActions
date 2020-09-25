@@ -34,4 +34,30 @@ export class SiteMapGetResponseModel {
     const children = sources.reduce((a, b) => a.concat(b.children || []), [] as SiteMapInfoModel[]);
     return SiteMapGetResponseModel.findNodeByNodeId(children, nodeId);
   }
+
+  static findNodeByContentPathFromSitemaps(sources: SiteMapInfoModel[], contentPath: string): SiteMapInfoModel {
+    if (!sources?.length) { return null; }
+    const node = sources.find(n => n.contentPath === contentPath);
+    if (node) { return node; }
+    const children = sources.reduce((a, b) => a.concat(b.children || []), [] as SiteMapInfoModel[]);
+    return SiteMapGetResponseModel.findNodeByContentPathFromSitemaps(children, contentPath);
+  }
+
+  static findNodeByContentPathFromSites(sites: SiteInfoModel[], contentPath: string): SiteMapInfoModel {
+    if (!sites) { return null; }
+    return (sites || []).map(site => {
+      return SiteMapGetResponseModel.findNodeByContentPathFromSitemaps(site.siteMap || [], contentPath);
+    }).filter(v => !!v).find(n => n.contentPath === contentPath);
+  }
+
+  static flattenNodes(
+    source: SiteMapInfoModel[], level = 0, result: SiteMapInfoModel[] = [], parent?: SiteMapInfoModel
+  ) {
+    if (!source?.length) { return []; }
+    source.forEach(node => {
+      result.push(node);
+      this.flattenNodes(node.children, level + 1, result, node);
+    });
+    return result;
+  }
 }

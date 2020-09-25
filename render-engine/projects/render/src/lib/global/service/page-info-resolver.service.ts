@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { RenderService } from './render.service';
 import { ActivatedRouteSnapshot, Router, Resolve } from '@angular/router';
 import { Observable, forkJoin, throwError, iif } from 'rxjs';
-import { shareReplay, switchMap, catchError, tap, filter, first } from 'rxjs/operators';
+import { shareReplay, switchMap, catchError, tap, filter, first, map } from 'rxjs/operators';
 import { PageData } from '../types';
 import { Store, select } from '@ngrx/store';
 import * as RenderStore from '../store/reducers/render.reducer';
@@ -37,9 +37,8 @@ export class PageInfoResolverService implements Resolve<PageData> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<PageData> {
     const context: ApiContext = isPlatformBrowser(this.platformId) ? route.data.context : 'batchSSR';
-    const pageID = route.params.pageID;
-    const lang = route.params.languageID;
-
+    const pageID = route.params.pageID as string;
+    const lang = route.params.languageID as string;
     const pageInfo$: Observable<PageInfoGetResponseModel> = this.renderService.getPageInfo(context, pageID, lang).pipe(shareReplay(1));
     const sitemap$: Observable<SiteMapGetResponseModel> = this.store.pipe(
       select(selectFetchSitemapStatus),
@@ -64,11 +63,13 @@ export class PageInfoResolverService implements Resolve<PageData> {
     pageInfo$.pipe(
       tap(x => this.store.dispatch(fetchSitemap({ context, lang: x.lang, root: x.nodeRoot })))
     ).subscribe();
+
     return forkJoin({
       pageInfo: pageInfo$,
       sitemap: sitemap$,
       contentInfo: contentInfo$
     }).pipe(
+      map(res => ({ pageID, ...res })),
       catchError((error: HttpErrorResponse) => {
         console.error('PageInfoResolverService.resolve() error = ', error);
         this.router.navigate(['error-page'], {
