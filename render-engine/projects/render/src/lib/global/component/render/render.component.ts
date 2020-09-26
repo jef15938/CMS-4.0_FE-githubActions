@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageData } from '../../types';
 import { LayoutInfo } from '../../interface/layout-info.interface';
@@ -8,6 +8,7 @@ import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-
 import { MetaService } from '../../service/meta.service';
 import { SiteMapInfoModel } from '../../api/data-model/models/site-map-info.model';
 import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'rdr-render',
@@ -26,6 +27,8 @@ export class RenderComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private metaService: MetaService,
+    @Inject(DOCUMENT) private document: any,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) { }
 
   ngOnInit(): void {
@@ -51,12 +54,15 @@ export class RenderComponent implements OnInit {
     console.warn('this.templates = ', this.templates);
 
     const pageNode = SiteMapGetResponseModel.findNodeByContentPathFromSites(this.sites?.sites, pageID);
-    const title = this.getPageTitleByNode(this.sites?.sites, pageNode) || this.pageInfo.domain;
+    const title = this.getPageTitleByNode(this.sites?.sites, pageNode, this.pageInfo.lang) || this.pageInfo.domain;
+    this.metaService.setPageTitle(title);
 
-    this.metaService.setPageMeta({ title, ...this.pageInfo });
+    const isBrowser = isPlatformBrowser(this.platformId);
+    if (isBrowser) { return; } // 產檔時產生 meta 就好
+    this.metaService.setPageMeta({ ...this.pageInfo });
   }
 
-  private getPageTitleByNode(sites: SiteInfoModel[], node: SiteMapInfoModel): string {
+  private getPageTitleByNode(sites: SiteInfoModel[], node: SiteMapInfoModel, lang: string): string {
     if (!sites?.length || !node) { return ''; }
 
     sites = sites || [];
@@ -65,7 +71,10 @@ export class RenderComponent implements OnInit {
       if (flattenedNodes.indexOf(node) < 0) { return; }
 
       const flattenedParents = this.getFlattenedParentsFromNode(flattenedNodes, node);
-      return [node, ...flattenedParents].map(n => n.nodeId).join(' - ');
+      return [node, ...flattenedParents]
+        .map(n => n.languages?.find(l => l.languageId === lang)?.nodeName || '')
+        .filter(v => !!v)
+        .join(' - ');
     }).find(v => !!v);
   }
 
