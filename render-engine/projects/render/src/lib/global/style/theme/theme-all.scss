@@ -9,6 +9,7 @@
 @import './components/choice';
 @import './components/fast-tool';
 @import './components/button';
+@import './components/pagination';
 
 
 @mixin rdr-theme-core($core-theme) {
@@ -27,4 +28,5 @@
   @include rdr-select-theme($theme: $core-theme);
   @include rdr-fast-tool-theme($theme: $core-theme);
   @include rdr-button-theme($theme: $core-theme);
+  @include rdr-pagination-theme($theme: $core-theme);
 }

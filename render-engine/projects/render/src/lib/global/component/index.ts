@@ -38,3 +38,6 @@ export * from './public-component/checkbox/checkbox.component';
 export * from './public-component/search-bar/search-bar.component';
 export * from './public-component/fast-tool/fast-tool.component';
 export * from './public-component/button/button.component';
+export * from './public-component/pagination/pagination.component';
+export * from './public-component/monthly-payment-calculation/monthly-payment-calculation.component';
+export * from './public-component/policyloan-calculation/policyloan-calculation.component';

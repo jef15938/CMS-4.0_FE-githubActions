@@ -1,0 +1,56 @@
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/theme/theme-all.scss";
+@import "../../../style/abstracts/mixin";
+
+rdr-pagination {
+  @include rdr-pagination-theme();
+  display: block;
+  text-align: center;
+
+  .pagination {
+    &__control {
+      @include arrow-icon;
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+
+      &--disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+      }
+
+      &--prev {
+        margin-right: 16px;
+
+        &:after {
+          transform: rotate(45deg);
+        }
+      }
+
+      &--next {
+        margin-left: 16px;
+      }
+    }
+
+    &__list {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0;
+    }
+
+    &__item {
+      @include fz-callout-18-center;
+      display: inline-block;
+      vertical-align: middle;
+      user-select: none;
+      min-width: 34px;
+      margin: 0 8px;
+    }
+
+    &__link {
+      @include on-event {
+        text-decoration: none;
+      }
+    }
+  }
+}

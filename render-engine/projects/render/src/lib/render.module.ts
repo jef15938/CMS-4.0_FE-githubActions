@@ -53,6 +53,9 @@ import { CheckboxComponent } from './global/component/public-component/checkbox/
 import { SearchBarComponent } from './global/component/public-component/search-bar/search-bar.component';
 import { FastToolComponent } from './global/component/public-component/fast-tool/fast-tool.component';
 import { ButtonComponent } from './global/component/public-component/button/button.component';
+import { PaginationComponent } from './global/component/public-component/pagination/pagination.component';
+import { MonthlyPaymentCalculationComponent } from './global/component/public-component/monthly-payment-calculation/monthly-payment-calculation.component';
+import { PolicyloanCalculationComponent } from './global/component/public-component/policyloan-calculation/policyloan-calculation.component';
 
 
 const COMPONENTS = [
@@ -93,6 +96,9 @@ const COMPONENTS = [
   SearchBarComponent,
   FastToolComponent,
   ButtonComponent,
+  PaginationComponent,
+  MonthlyPaymentCalculationComponent,
+  PolicyloanCalculationComponent,
 ];
 
 @NgModule({

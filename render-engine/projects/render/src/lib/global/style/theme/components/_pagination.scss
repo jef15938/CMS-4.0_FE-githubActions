@@ -1,0 +1,35 @@
+@mixin rdr-pagination-theme($theme: $rdr-theme-config) {
+
+  $tl-pagination-color: map-get($theme, brownish_grey) !default;
+  $tl-pagination-active-color: map-get($theme, color_primary) !default;
+
+  .pagination {
+    &__control {
+      &:after {
+        border-color: $tl-pagination-active-color;
+      }
+    }
+
+    &__item {
+      color: $tl-pagination-color;
+
+      &--active {
+        .pagination__link {
+          color: $tl-pagination-active-color;
+        }
+      }
+    }
+
+    &__link {
+      color: $tl-pagination-color;
+
+      &:hover {
+        color: #00918a;
+      }
+
+      &:active {
+        color: #00635b;
+      }
+    }
+  }
+}
