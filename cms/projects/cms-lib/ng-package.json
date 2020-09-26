@@ -1,6 +1,10 @@
 {
-  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "dest": "../../dist/cms-lib",
+  "assets": [
+    "./assets/**/*",
+    "./src/lib/global/style/**/*"
+  ],
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {

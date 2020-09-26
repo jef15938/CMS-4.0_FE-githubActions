@@ -25,6 +25,11 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/cms-lib/assets",
+                "output": "assets/"
+              },
               "src/favicon.ico",
               "src/assets"
             ],

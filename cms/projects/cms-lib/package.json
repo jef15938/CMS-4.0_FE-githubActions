@@ -1,4 +1,5 @@
 {
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "@neux/cms-core",
   "version": "0.0.1",
   "peerDependencies": {
