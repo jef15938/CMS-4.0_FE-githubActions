@@ -25,13 +25,13 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "projects/cms-lib/assets",
                 "output": "assets/"
-              },
-              "src/favicon.ico",
-              "src/assets"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
