@@ -62,10 +62,10 @@
         </div>
       </div>
     </div>
-    <div *ngIf="selectedSitemapNode" class="multi-site__block set-block">
-      <cms-sitemap-node-detail [siteID]="selectedSite?.siteId" [sitemapNode]="selectedSitemapNode"
-        [sitemapNodeParentID]="selectedSitemapNodeParentID" [userSitemap]="selectedUserSitemap"
-        (update)="onNodeUpdate()">
+    <div class="multi-site__block set-block">
+      <cms-sitemap-node-detail *ngIf="selectedSitemapNode" [siteID]="selectedSite?.siteId"
+        [sitemapNode]="selectedSitemapNode" [sitemapNodeParentID]="selectedSitemapNodeParentID"
+        [userSitemap]="selectedUserSitemap" (update)="onNodeUpdate()">
       </cms-sitemap-node-detail>
     </div>
   </div>
