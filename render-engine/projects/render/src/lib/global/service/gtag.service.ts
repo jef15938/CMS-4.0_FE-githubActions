@@ -33,7 +33,7 @@ export class GTagService {
 
     (window as any).dataLayer = (window as any).dataLayer || [];
     // tslint:disable-next-line: only-arrow-functions
-    (window as any).gtag = function () {
+    (window as any).gtag = () => {
       (window as any).dataLayer.push(arguments);
     };
 
