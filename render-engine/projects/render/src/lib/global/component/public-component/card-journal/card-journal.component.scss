@@ -2,7 +2,7 @@
 @import "../../../style/theme/theme-all.scss";
 
 rdr-card-journal {
-  @include rdr-card-journal-theme();
+  @include tl-card-journal-theme();
   display: block;
 
   +rdr-card-journal {
@@ -62,7 +62,6 @@ rdr-card-journal {
       margin-bottom: 24px;
 
       @include rwd($nx-screen-bs-phone-landscape) {
-        // @include fz-title-16-left;
         @include fz-body-16-left-bold;
         margin-bottom: 16px;
       }

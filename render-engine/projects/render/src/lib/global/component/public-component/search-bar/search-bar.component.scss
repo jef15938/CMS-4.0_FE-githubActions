@@ -1,9 +1,10 @@
 @import "~@neux/ui/component-customizing-mixins/config-all";
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
 
 rdr-search-bar {
-  @include rdr-input-theme();
+  @include tl-input-theme();
   @include nx-input-config($mode: 'customize',
     $form-height: 36px,
     $form-radius: 8px,
@@ -15,19 +16,17 @@ rdr-search-bar {
 
   [nx-input].nx-cp {
     @include fz-callout-17-left;
+    line-height: normal;
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.9);
   }
 
   &:before {
+    @include tl-icon(1, 1, 19px);
     content: '';
-    display: block;
     position: absolute;
     top: 50%;
     left: 12px;
-    width: 19px;
-    height: 19px;
-    background-image: url('../../../images/icon_search_primary.svg');
-    background-repeat: no-repeat;
     transform: translateY(-50%);
   }
 }

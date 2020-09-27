@@ -3,7 +3,7 @@
 @import "../../../style/theme/theme-all.scss";
 
 rdr-form-frame {
-  @include rdr-form-frame-theme();
+  @include tl-form-frame-theme();
 
   .form-frame {
     display: block;

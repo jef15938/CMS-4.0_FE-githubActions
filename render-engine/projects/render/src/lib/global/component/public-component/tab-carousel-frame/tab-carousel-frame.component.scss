@@ -1,9 +1,9 @@
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
-@import "../../../style/abstracts/mixin";
 
 rdr-tab-carousel-frame {
-  @include rdr-tab-carousel-theme();
+  @include tl-tab-carousel-theme();
 
   .tab-carousel {
 
@@ -56,7 +56,6 @@ rdr-tab-carousel-frame {
     }
 
     &__nav {
-      @include arrow-icon;
       cursor: pointer;
 
       &:focus {

@@ -1,9 +1,9 @@
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
-@import "../../../style/abstracts/mixin";
 
 rdr-card-news {
-  @include rdr-card-news-theme();
+  @include tl-card-news-theme();
   display: block;
 
   +rdr-card-news {
@@ -59,7 +59,7 @@ rdr-card-news {
     }
 
     &__icon {
-      @include arrow-icon;
+      flex-shrink: 0;
     }
   }
 }

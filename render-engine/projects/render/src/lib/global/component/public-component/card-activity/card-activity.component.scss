@@ -2,7 +2,7 @@
 @import "../../../style/theme/theme-all.scss";
 
 rdr-card-activity {
-  @include rdr-card-activity-theme();
+  @include tl-card-activity-theme();
   display: block;
 
   +rdr-card-activity {

@@ -1,5 +1,5 @@
-@import './helper/variables';
-@import './helper/config';
+@import '../abstracts/variables';
+@import '../abstracts/function';
 
 @import './components/collpase';
 @import './components/breadcrumb';
@@ -10,23 +10,25 @@
 @import './components/fast-tool';
 @import './components/button';
 @import './components/pagination';
+@import './components/mega-menu';
 
 
-@mixin rdr-theme-core($core-theme) {
-  @include rdr-collapse-theme($theme: $core-theme);
-  @include rdr-breadcrumb-theme($theme: $core-theme);
-  @include rdr-card-link-frame-theme($theme: $core-theme);
-  @include rdr-card-link-theme($theme: $core-theme);
-  @include rdr-card-news-theme($theme: $core-theme);
-  @include rdr-card-link-frame-theme($theme: $core-theme);
-  @include rdr-card-journal-theme($theme: $core-theme);
-  @include rdr-tab-scroll-theme($theme: $core-theme);
-  @include rdr-form-frame-theme($theme: $core-theme);
-  @include rdr-input-theme($theme: $core-theme);
-  @include rdr-radio-theme($theme: $core-theme);
-  @include rdr-checkbox-theme($theme: $core-theme);
-  @include rdr-select-theme($theme: $core-theme);
-  @include rdr-fast-tool-theme($theme: $core-theme);
-  @include rdr-button-theme($theme: $core-theme);
-  @include rdr-pagination-theme($theme: $core-theme);
+@mixin tl-theme-core($core-theme) {
+  @include tl-collapse-theme($theme: $core-theme);
+  @include tl-breadcrumb-theme($theme: $core-theme);
+  @include tl-card-link-frame-theme($theme: $core-theme);
+  @include tl-card-link-theme($theme: $core-theme);
+  @include tl-card-news-theme($theme: $core-theme);
+  @include tl-card-link-frame-theme($theme: $core-theme);
+  @include tl-card-journal-theme($theme: $core-theme);
+  @include tl-tab-scroll-theme($theme: $core-theme);
+  @include tl-form-frame-theme($theme: $core-theme);
+  @include tl-input-theme($theme: $core-theme);
+  @include tl-radio-theme($theme: $core-theme);
+  @include tl-checkbox-theme($theme: $core-theme);
+  @include tl-select-theme($theme: $core-theme);
+  @include tl-fast-tool-theme($theme: $core-theme);
+  @include tl-button-theme($theme: $core-theme);
+  @include tl-pagination-theme($theme: $core-theme);
+  @include tl-mega-menu-theme($theme: $core-theme);
 }

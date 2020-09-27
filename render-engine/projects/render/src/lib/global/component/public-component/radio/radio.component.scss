@@ -3,12 +3,12 @@
 @import "../../../style/theme/theme-all.scss";
 
 rdr-radio {
-  @include rdr-radio-theme();
+  @include tl-radio-theme();
   @include nx-radio-config($mode: 'customize',
     $choice-type-size: 20px,
     $choice-type-text-figure-gap: 11px,
     $icon-box-icon-size: 47%,
-    $radio-icon-box-border-width: 1.5px);
+    $radio-icon-box-border-width: 1px);
 
   display: block;
 

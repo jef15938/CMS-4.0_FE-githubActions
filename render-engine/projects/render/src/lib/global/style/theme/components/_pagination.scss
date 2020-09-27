@@ -1,4 +1,4 @@
-@mixin rdr-pagination-theme($theme: $rdr-theme-config) {
+@mixin tl-pagination-theme($theme: $tl-theme-config) {
 
   $tl-pagination-color: map-get($theme, brownish_grey) !default;
   $tl-pagination-active-color: map-get($theme, color_primary) !default;

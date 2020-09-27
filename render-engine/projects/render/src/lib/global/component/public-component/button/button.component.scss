@@ -1,10 +1,10 @@
 @import "~@neux/ui/component-customizing-mixins/config-all";
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
-@import "../../../style/abstracts/mixin";
 
 rdr-button {
-  @include rdr-button-theme();
+  @include tl-button-theme();
   @include nx-btn-config($mode: 'customize',
     $btn-radius: 4px,
     $btn-border-size: 1.2px,
@@ -79,8 +79,6 @@ rdr-button {
       @include fz-callout-16-left;
     }
 
-    &-icon {
-      @include arrow-icon;
-    }
+    &-icon {}
   }
 }

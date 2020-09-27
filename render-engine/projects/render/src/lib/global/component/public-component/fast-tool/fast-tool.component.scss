@@ -1,8 +1,9 @@
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
 
 rdr-fast-tool {
-  @include rdr-fast-tool-theme;
+  @include tl-fast-tool-theme;
   cursor: pointer;
   user-select: none;
   display: inline-block;
@@ -21,11 +22,8 @@ rdr-fast-tool {
   }
 
   &:after {
+    @include tl-icon(5, 2, 19px);
     content: '';
-    display: block;
-    width: 19px;
-    height: 19px;
-    background-image: url('../../../images/icon_arrow.svg');
-    background-repeat: no-repeat;
+    transform: rotate(180deg);
   }
 }

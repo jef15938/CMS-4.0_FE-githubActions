@@ -1,9 +1,10 @@
 @import "~@neux/ui/component-customizing-mixins/config-all";
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
 
 rdr-checkbox {
-  @include rdr-checkbox-theme();
+  @include tl-checkbox-theme();
   @include nx-checkbox-config($mode: 'customize',
     $choice-type-size: 22px,
     $choice-type-text-figure-gap: 10px,
@@ -29,10 +30,10 @@ rdr-checkbox {
         &:checked {
           +.choice-type__icon-box {
             .choice-type__icon-box__icon {
-              border-style: hidden solid solid hidden;
-              right: 50%;
-              transform: scale(.7) rotate(45deg) translate(-65%, -80%);
-              width: 55%;
+              @include tl-icon(1, 3, 22px);
+              left: 50%;
+              border-width: 0;
+              transform: translate(-50%, -50%);
             }
           }
         }

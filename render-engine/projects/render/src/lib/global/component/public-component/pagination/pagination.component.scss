@@ -1,17 +1,15 @@
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
-@import "../../../style/abstracts/mixin";
 
 rdr-pagination {
-  @include rdr-pagination-theme();
+  @include tl-pagination-theme();
   display: block;
   text-align: center;
 
   .pagination {
     &__control {
-      @include arrow-icon;
-      display: inline-block;
-      vertical-align: middle;
+      @include tl-icon(4, 2, 19px);
       cursor: pointer;
 
       &--disabled {
@@ -21,10 +19,7 @@ rdr-pagination {
 
       &--prev {
         margin-right: 16px;
-
-        &:after {
-          transform: rotate(45deg);
-        }
+        transform: rotate(180deg);
       }
 
       &--next {

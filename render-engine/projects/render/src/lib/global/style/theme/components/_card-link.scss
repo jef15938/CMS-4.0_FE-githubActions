@@ -1,4 +1,4 @@
-@mixin rdr-card-link-frame-theme($theme: $rdr-theme-config) {
+@mixin tl-card-link-frame-theme($theme: $tl-theme-config) {
   $tl-bg-color: map-get($theme, white_1) !default;
   $tl-hover-color: #a0c7c0;
   $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
@@ -19,7 +19,7 @@
 }
 
 //base card link
-@mixin rdr-card-link-theme($theme: $rdr-theme-config) {
+@mixin tl-card-link-theme($theme: $tl-theme-config) {
 
   $tl-font-color: map-get($theme, black_1) !default;
   $tl-arrow-color: map-get($theme, color_primary) !default;
@@ -29,18 +29,12 @@
     &__title {
       color: $tl-font-color;
     }
-
-    &__icon {
-      &:after {
-        border-color: $tl-arrow-color;
-      }
-    }
   }
 }
 
 
 //card news link
-@mixin rdr-card-news-theme($theme: $rdr-theme-config) {
+@mixin tl-card-news-theme($theme: $tl-theme-config) {
 
   $tl-date-font-color: map-get($theme, brown_grey_1) !default;
   $tl-title-font-color: map-get($theme, black_0) !default;
@@ -60,17 +54,11 @@
     &__desc {
       color: $tl-desc-font-color;
     }
-
-    &__icon {
-      &:after {
-        border-color: $tl-arrow-color;
-      }
-    }
   }
 }
 
 //card activity link
-@mixin rdr-card-activity-theme($theme: $rdr-theme-config) {
+@mixin tl-card-activity-theme($theme: $tl-theme-config) {
 
   $tl-date-font-color: map-get($theme, brown_grey_1) !default;
   $tl-subtitle-font-color: map-get($theme, color_primary) !default;
@@ -98,7 +86,7 @@
 }
 
 //card journal link
-@mixin rdr-card-journal-theme($theme: $rdr-theme-config) {
+@mixin tl-card-journal-theme($theme: $tl-theme-config) {
 
   $tl-title-font-color: map-get($theme, color_primary) !default;
   $tl-subtitle-font-color: map-get($theme, black_1) !default;

@@ -1,6 +1,6 @@
 @import "~@neux/ui/component-customizing-mixins/theme-all";
 
-@mixin rdr-radio-theme($theme: $rdr-theme-config) {
+@mixin tl-radio-theme($theme: $tl-theme-config) {
 
   $tl-border-color: map-get($theme, brown_grey_0) !default;
   $tl-border-color-disabled: map-get($theme, very_light_pink_0) !default;
@@ -48,7 +48,7 @@
 
 }
 
-@mixin rdr-checkbox-theme($theme: $rdr-theme-config) {
+@mixin tl-checkbox-theme($theme: $tl-theme-config) {
   $tl-border-color: map-get($theme, color_primary) !default;
   $tl-icon-color: map-get($theme, white_1) !default;
   $tl-icon-color-active: map-get($theme, color_primary) !default;
@@ -80,9 +80,6 @@
 
         &:checked,
         &:focus {
-          +.choice-type__icon-box {
-            border-color: $tl-icon-color-active;
-          }
 
           ~.choice-type__text {
             color: $tl-form-color-active;

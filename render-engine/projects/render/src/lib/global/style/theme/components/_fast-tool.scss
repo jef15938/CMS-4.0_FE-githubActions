@@ -1,4 +1,4 @@
-@mixin rdr-fast-tool-theme($theme: $rdr-theme-config) {
+@mixin tl-fast-tool-theme($theme: $tl-theme-config) {
 
   $tl-border-color: map-get($theme, brown_grey_1) !default;
   $tl-fast-tool-bg-color: map-get($theme, color_primary) !default;

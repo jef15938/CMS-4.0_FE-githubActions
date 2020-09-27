@@ -1,6 +1,6 @@
 @import "~@neux/ui/component-customizing-mixins/theme-all";
 
-@mixin rdr-button-theme($theme: $rdr-theme-config) {
+@mixin tl-button-theme($theme: $tl-theme-config) {
 
   $tl-primary-color: map-get($theme, color_primary) !default;
   $tl-secondary-color: map-get($theme, color_secondary) !default;

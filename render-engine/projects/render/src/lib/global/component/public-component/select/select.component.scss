@@ -1,11 +1,12 @@
 @import "~@neux/ui/component-customizing-mixins/config-all";
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
 
 @include nx-reset;
 
 rdr-select {
-  @include rdr-select-theme();
+  @include tl-select-theme();
   @include nx-select-config($mode: 'customize',
     $form-height: 46px,
     $form-radius: 4px,
@@ -33,19 +34,17 @@ rdr-select {
 
     .select-container {
       &:after {
+        @include tl-icon(4, 2, 18px);
+
         display: inline-block;
-        box-sizing: border-box;
-        width: 9px;
-        height: 9px;
-        border-style: solid;
-        border-width: 0 0 2.8px 2.8px;
-        transform-origin: 50% 50%;
-        transform: rotate(-45deg) translateY(-50%);
+        border-width: 0;
+        transform: translateY(-50%) rotate(90deg);
+        transition: all 0.3s;
       }
 
       &.style--option-show {
         &:after {
-          transform: rotate(135deg) translateY(50%);
+          transform: translateY(-50%) rotate(-90deg);
         }
       }
     }
@@ -82,19 +81,17 @@ rdr-select {
       position: relative;
 
       &:before {
+        @include tl-icon(2, 1, 22px);
         content: '';
         position: absolute;
         top: 50%;
         left: 21.5px;
-        width: 19px;
-        height: 19px;
-        background-image: url('../../../images/icon_search.svg');
-        background-repeat: no-repeat;
         transform: translateY(-50%);
       }
 
       [nx-input] {
         @include fz-callout-16-left;
+        line-height: normal;
         height: 36px;
         padding: 8px 8px 8px 34px;
         border-radius: 6px;

@@ -48,7 +48,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.totalPage = this.pageInfo.totalPage || this.getTotalPage();
+    this.totalPage = this.pageInfo.totalPage;
     this.goToPage(1);
   }
 

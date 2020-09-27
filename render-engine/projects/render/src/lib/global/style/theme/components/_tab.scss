@@ -1,6 +1,6 @@
 @import "~@neux/ui/component-customizing-mixins/theme-all";
 
-@mixin rdr-tab-scroll-theme($theme: $rdr-theme-config) {
+@mixin tl-tab-scroll-theme($theme: $tl-theme-config) {
 
   $tl-text-color: map-get($theme, black_1) !default;
   $tl-line-color: map-get($theme, brown_grey_1) !default;
@@ -35,7 +35,7 @@
   }
 }
 
-@mixin rdr-tab-carousel-theme($theme: $rdr-theme-config) {
+@mixin tl-tab-carousel-theme($theme: $tl-theme-config) {
 
   $tl-text-color: map-get($theme, brownish_grey) !default;
   $tl-border-color: map-get($theme, very_light_pink_0) !default;
@@ -63,12 +63,6 @@
         &:hover {
           background-color: $tl-active-color;
         }
-      }
-    }
-
-    &__nav {
-      &:after {
-        border-color: $tl-arrow-color;
       }
     }
   }

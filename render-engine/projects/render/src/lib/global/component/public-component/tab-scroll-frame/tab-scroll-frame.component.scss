@@ -2,7 +2,7 @@
 @import "../../../style/theme/theme-all.scss";
 
 rdr-tab-scroll-frame {
-  @include rdr-tab-scroll-theme();
+  @include tl-tab-scroll-theme();
 
   .tab-scroll {
     &__shell {

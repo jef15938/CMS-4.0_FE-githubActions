@@ -1,4 +1,4 @@
-@function rdr-theme-config-gen($color-primary: $color-primary,
+@function tl-theme-config-gen($color-primary: $color-primary,
   $color-secondary: $color-secondary,
   $ice: $ice,
   $duck-egg-blue: $duck-egg-blue,
@@ -29,4 +29,4 @@
   @return $config-gen;
 }
 
-$rdr-theme-config: rdr-theme-config-gen() !default;
+$tl-theme-config: tl-theme-config-gen() !default;

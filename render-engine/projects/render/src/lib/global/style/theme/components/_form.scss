@@ -1,6 +1,6 @@
 @import "~@neux/ui/component-customizing-mixins/theme-all";
 
-@mixin rdr-form-frame-theme($theme: $rdr-theme-config) {
+@mixin tl-form-frame-theme($theme: $tl-theme-config) {
 
   $tl-note-color: map-get($theme, brown_grey_0) !default;
   $tl-form-color: map-get($theme, black_1) !default;
@@ -23,7 +23,7 @@
   }
 }
 
-@mixin rdr-input-theme($theme: $rdr-theme-config) {
+@mixin tl-input-theme($theme: $tl-theme-config) {
 
   $tl-border-color: map-get($theme, brown_grey_1) !default;
   $tl-border-color-disabled: map-get($theme, very_light_pink_1) !default;
@@ -98,7 +98,7 @@
   }
 }
 
-@mixin rdr-select-theme($theme: $rdr-theme-config) {
+@mixin tl-select-theme($theme: $tl-theme-config) {
 
   $tl-border-color: map-get($theme, brown_grey_1) !default;
   $tl-border-color-disabled: map-get($theme, very_light_pink_1) !default;
@@ -174,10 +174,6 @@
 
     .select-container {
       background-color: $tl-form-bg-color;
-
-      &:after {
-        border-color: $tl-icon-color;
-      }
 
       &.style--option-show {
         background-color: $tl-form-bg-color;

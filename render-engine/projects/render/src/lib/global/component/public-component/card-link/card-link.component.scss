@@ -1,9 +1,9 @@
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
-@import "../../../style/abstracts/mixin";
 
 rdr-card-link {
-  @include rdr-card-link-theme;
+  @include tl-card-link-theme;
   display: block;
 
   +rdr-card-link {
@@ -35,7 +35,7 @@ rdr-card-link {
     }
 
     &__icon {
-      @include arrow-icon;
+      flex-shrink: 0;
     }
   }
 }

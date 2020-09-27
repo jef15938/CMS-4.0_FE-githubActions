@@ -1,9 +1,10 @@
 @import "~@neux/ui/component-customizing-mixins/config-all";
 @import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
 @import "../../../style/theme/theme-all.scss";
 
 rdr-collapse {
-  @include rdr-collapse-theme();
+  @include tl-collapse-theme();
   @include nx-collapse-config($mode: 'customize',
     $collapse-header-padding: 16px 56px 16px 75px,
     $collapse-content-padding: 24px 56px 32px 75px,
@@ -29,7 +30,7 @@ rdr-collapse {
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
 
-          @include rwd(600px) {
+          @include rwd($nx-screen-normal-phone-portrait) {
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
           }
@@ -47,7 +48,7 @@ rdr-collapse {
           border-bottom-left-radius: 10px;
           border-bottom-right-radius: 10px;
 
-          @include rwd(600px) {
+          @include rwd($nx-screen-normal-phone-portrait) {
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
           }
@@ -59,36 +60,38 @@ rdr-collapse {
       top: 16px;
       transform: none;
 
-      @include rwd(600px) {
+      @include rwd($nx-screen-normal-phone-portrait) {
         top: 8px;
         left: 12px;
       }
     }
 
     .collapse-container__suffix {
-      @include rwd(600px) {
+      @include rwd($nx-screen-normal-phone-portrait) {
         right: 12px;
       }
     }
 
     &.style--icon-arrowLine {
       .collapse-container {
-        .collapse-container__suffix {
-          @include rwd(600px) {
-            width: 14px;
-            height: 14px;
-          }
-        }
 
         &__suffix {
-          &:after {
-            width: 7px;
-            height: 7px;
-            border-right-style: hidden;
 
-            @include rwd(600px) {
-              width: 5px;
-              height: 5px;
+          &:after {
+            @include tl-icon(4, 2, 20px);
+            transform: translate(-50%, -50%) rotate(90deg);
+            border-width: 0;
+          }
+
+          @include rwd($nx-screen-normal-phone-portrait) {
+            width: 14px;
+            height: 14px;
+
+            &:after {
+              width: 14px;
+              height: 14px;
+              background-position: -42px -14px;
+              background-size: auto 42px;
             }
           }
         }
@@ -105,7 +108,7 @@ rdr-collapse {
     .collapse-container__trigger {
       @include fz-body-18-left-bold;
 
-      @include rwd(600px) {
+      @include rwd($nx-screen-normal-phone-portrait) {
         @include fz-footnote-15-left-bold;
         padding: 8px 38px 8px 51px;
       }
@@ -114,7 +117,7 @@ rdr-collapse {
     .collapse-container__content {
       @include fz-body-16-left-bold;
 
-      @include rwd(600px) {
+      @include rwd($nx-screen-normal-phone-portrait) {
         @include fz-footnote-14-left-bold;
         padding: 16px 16px 24px 16px;
       }

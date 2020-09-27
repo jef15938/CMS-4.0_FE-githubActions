@@ -1,6 +1,6 @@
 @import "~@neux/ui/component-customizing-mixins/theme-all";
 
-@mixin rdr-collapse-theme($theme: $rdr-theme-config) {
+@mixin tl-collapse-theme($theme: $tl-theme-config) {
 
   $tl-primary-color: map-get($theme, brownish_grey) !default;
   $tl-back-light-color: map-get($theme, white_1) !default;
@@ -24,10 +24,6 @@
       .collapse-container__trigger {
         border-color: $tl-line-color;
       }
-    }
-
-    &.style--icon-arrowLine .collapse-container__suffix:after {
-      border-color: $tl-icon-color;
     }
 
     .collapse-container__trigger {
