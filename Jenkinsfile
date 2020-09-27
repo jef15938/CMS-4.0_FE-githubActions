@@ -75,16 +75,16 @@ pipeline {
           fi
 
           echo 'deploy cms'
-          cms_destination="/root/var/www"
+          cms_destination="/var/www"
           ssh "root@${web_server_ip}" mkdir -p "${cms_destination}"
           scp -r "${pwd}/cms/dist/cms" "root@${web_server_ip}:${cms_destination}"
 
           echo 'deploy ssr_browser'
-          scp -r "${pwd}/render-engine/dist/render-engine/html" "root@${web_server_ip}:/root/var/www"
+          scp -r "${pwd}/render-engine/dist/render-engine/html" "root@${web_server_ip}:/var/www"
 
           echo 'deploy ssr_server'
           ssr_dist="${pwd}/render-engine/dist/render-engine"
-          ssr_destination="/root/dist/render-engine"
+          ssr_destination="/dist/render-engine"
           ssh "root@${ssr_server_ip}" mkdir -p "${ssr_destination}/browser" "${ssr_destination}/server"
           scp -r "${ssr_dist}/server" "root@${ssr_server_ip}:${ssr_destination}"
           scp -r "${ssr_dist}/browser" "root@${ssr_server_ip}:${ssr_destination}"
