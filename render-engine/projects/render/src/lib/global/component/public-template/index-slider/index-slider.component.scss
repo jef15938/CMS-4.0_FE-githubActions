@@ -1,0 +1,89 @@
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
+
+:host {
+  position: relative;
+  display: block;
+
+  ::ng-deep {
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none;
+    }
+  }
+}
+
+.banner {
+  position: relative;
+
+  &__img {
+    >img {
+      width: 100%;
+      vertical-align: middle;
+    }
+  }
+
+  &__content {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 23.88%;
+    transform: translateY(-50%);
+  }
+
+  &__title {
+    // 字體問題
+    @include fz-large-title-40-left;
+    margin-bottom: 8px;
+    color: $white-two;
+  }
+
+  &__sub-title {
+    @include fz-title-20-left;
+    margin-bottom: 32px;
+    color: $white-two;
+    opacity: 0.85;
+  }
+
+  &__btn {
+    max-width: 176px;
+  }
+}
+
+.slider {
+  &__wrapper {}
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+
+    ::ng-deep {
+      .swiper-pagination-bullet {
+        width: 60px;
+        height: 3px;
+        border-radius: 1.5px;
+        background-color: $brown-grey-two;
+        opacity: 1;
+
+        &-active {
+          background-color: $color-primary;
+        }
+
+        +.swiper-pagination-bullet {
+          margin-left: 16px;
+        }
+      }
+    }
+  }
+
+  &__tool {
+    position: absolute;
+    z-index: 10;
+    top: calc(50% - 35px + 7px);
+    right: 0;
+    transform: translateY(-50%);
+  }
+}

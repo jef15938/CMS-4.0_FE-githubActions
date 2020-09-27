@@ -1,0 +1,91 @@
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
+
+
+$bg-gradient: linear-gradient(to bottom, rgba($color-primary, 0.5), rgba($color-secondary, 0.5));
+
+:host {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-image: $bg-gradient;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -10%;
+    display: block;
+    width: 120%;
+    height: 100%;
+  }
+
+  &:before {
+    z-index: -2;
+    background-color: rgba($color-secondary, 0.5);
+    transform: rotate(-5deg);
+  }
+
+  &:after {
+    content: '';
+    z-index: -1;
+    background-image: $bg-gradient;
+  }
+}
+
+.product-search {
+  padding: 80px 0;
+
+  &__title {
+    @include fz-large-title-32-left;
+    margin-bottom: 16px;
+    color: $white-two;
+  }
+
+  &__searchBar {
+    margin-bottom: 40px;
+  }
+
+  &__type {
+    &-list {
+      @include fixed-gutter-flex-grid($column_number:7, $column_gutter:16px, $min_screen_width: $nx-screen-pad-portrait);
+    }
+
+    &-item {
+      border-radius: 6px;
+      background-color: rgba($white-two, 0.9);
+      box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.15);
+      padding-bottom: calc(1.24*(100% - 96px)/7);
+    }
+  }
+}
+
+.type-item {
+  position: relative;
+
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__icon {
+    margin-bottom: 12px;
+
+    &-inner {
+      @include genIcon('type-item__icon-inner', 'product-type-icon.svg', 7, 43px);
+    }
+  }
+
+  &__text {
+    @include fz-title-20-center;
+    color: $black-two;
+  }
+}

@@ -1,0 +1,21 @@
+<div class="slider__wrapper">
+  <swiper #Swiper [config]="config">
+    <div class="banner" *ngFor="let item of [0,1,2]">
+      <div class="banner__img">
+        <img src="https://picsum.photos/1440/420">
+      </div>
+      <div class="banner__content">
+        <div class="banner__title">放心，<br />才能盡享人生。</div>
+        <div class="banner__sub-title">最貼切的保障</div>
+        <div class="banner__btn">
+          <rdr-button>前往了解</rdr-button>
+        </div>
+      </div>
+    </div>
+  </swiper>
+
+  <div class="slider__pagination"></div>
+</div>
+<div class="slider__tool">
+  <rdr-fast-tool></rdr-fast-tool>
+</div>

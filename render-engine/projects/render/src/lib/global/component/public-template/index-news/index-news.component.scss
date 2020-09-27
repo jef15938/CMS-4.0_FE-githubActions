@@ -1,0 +1,32 @@
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+@import "../../../style/abstracts/abstracts-all.scss";
+
+$bg-gradient: linear-gradient(to bottom, #ebf4f1, $duck-egg-blue);
+
+:host {
+  position: relative;
+  display: block;
+  background-image: $bg-gradient;
+}
+
+.news {
+  padding: 24px 0 80px;
+
+  &__title {
+    @include fz-large-title-32-left;
+    margin-bottom: 16px;
+    color: $black;
+  }
+
+  &__content {
+    display: flex;
+  }
+
+  &__block {
+    flex-basis: 50%;
+
+    +.news__block {
+      margin-left: 16px;
+    }
+  }
+}

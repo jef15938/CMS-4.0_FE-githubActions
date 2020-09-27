@@ -1,0 +1,15 @@
+<div class="news-list__title">
+  <ng-content></ng-content>
+</div>
+<ul class="news-list__content">
+  <li *ngFor="let item of newsList" class="news-list__item">
+    <a class="item news-list__link" herf="#">
+      <div class="item__title">{{item.title | ellipsis: '...':19:-1}}</div>
+      <div class="item__date">{{item.date | date:'yyyy/MM/dd'}}</div>
+    </a>
+  </li>
+</ul>
+
+<div class="news-list__btn">
+  <rdr-button styleType="tertiary">More</rdr-button>
+</div>

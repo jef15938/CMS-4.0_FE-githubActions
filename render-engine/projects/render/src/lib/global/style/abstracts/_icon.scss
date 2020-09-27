@@ -13,6 +13,25 @@
   @include sprite($image-position-x, $image-position-y, $size, $size);
 }
 
+// 產icon
+@mixin genIcon($selector: 'icon', $image: null, $total: 0, $size: 0) {
+  $lastNumber: $total - 1;
+
+  @if $image {
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url('../../../images/'+ #{$image});
+    background-repeat: no-repeat;
+
+    @for $i from 0 through $lastNumber {
+      &.#{$selector}--#{$i} {
+        @include sprite(-$size * $i, 0, $size, $size);
+      }
+    }
+  }
+}
+
+
 //共用 icon
 .tl-arrow-icon {
   @include tl-icon(4, 2, 20px);

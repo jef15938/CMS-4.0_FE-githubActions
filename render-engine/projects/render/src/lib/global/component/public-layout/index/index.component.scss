@@ -1,0 +1,7 @@
+// 全域style 暫時放這裡
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+
+@include nx-reset;
+
+@import "../../../style/base/helper";

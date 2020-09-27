@@ -1,0 +1,122 @@
+@import "../../../style/abstracts/abstracts-all.scss";
+@import "../../../style/theme/theme-all.scss";
+
+$bg-gradient: linear-gradient(to bottom, #ebf4f1, $duck-egg-blue);
+
+.footer {
+
+  &__nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    background-color: #fff;
+  }
+
+  &__bottom {
+    background-color: $very-light-pink-two;
+
+    &-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1136px;
+      margin: 0 auto;
+      padding-left: 4px;
+    }
+  }
+
+  &__info {
+    margin-right: 40px;
+    padding: 24px 0 16px;
+
+    &-item {
+      @include fz-footnote-14-left;
+      display: inline-block;
+      color: $black-two;
+      margin-bottom: 8px;
+
+      &:first-child {
+        margin-right: 40px;
+      }
+
+      &:last-child {
+        display: block;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__copyright {
+    @include fz-footnote-14-left;
+    flex-grow: 1;
+    align-self: flex-start;
+    padding: 24px 0 16px;
+    color: $black-two;
+  }
+
+  &__community {
+    font-size: 0;
+
+    &-item {
+      display: inline-block;
+
+      +.footer__community-item {
+        margin-left: 16px;
+      }
+    }
+
+    &-icon {
+      @include genIcon('footer__community-icon', 'community-icon.svg', 5, 28px);
+    }
+  }
+}
+
+
+//主選單
+.main-nav {
+
+  &__item {
+    @include fz-callout-18-center;
+    display: inline-block;
+
+    +.main-nav__item {
+      margin-left: 112px;
+    }
+  }
+
+  &__link {
+    color: $black-two;
+  }
+}
+
+//子選單
+.sub-nav {
+
+  &__toggle {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    margin-bottom: -15px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: $white-two;
+    transform: translateX(-50%);
+
+    &:after {
+      @include tl-icon(4, 2, 14px);
+      content: '';
+      transform: rotate(90deg);
+    }
+  }
+}

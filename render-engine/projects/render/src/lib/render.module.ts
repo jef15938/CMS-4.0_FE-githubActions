@@ -56,6 +56,18 @@ import { ButtonComponent } from './global/component/public-component/button/butt
 import { PaginationComponent } from './global/component/public-component/pagination/pagination.component';
 import { MonthlyPaymentCalculationComponent } from './global/component/public-component/monthly-payment-calculation/monthly-payment-calculation.component';
 import { PolicyloanCalculationComponent } from './global/component/public-component/policyloan-calculation/policyloan-calculation.component';
+import { IndexComponent } from './global/component/public-layout/index/index.component';
+import { IndexSliderComponent } from './global/component/public-template/index-slider/index-slider.component';
+import { IndexExploreComponent } from './global/component/public-template/index-explore/index-explore.component';
+import { IndexProductSearchComponent } from './global/component/public-template/index-product-search/index-product-search.component';
+import { IndexConsultantComponent } from './global/component/public-template/index-consultant/index-consultant.component';
+import { IndexActivityComponent } from './global/component/public-template/index-activity/index-activity.component';
+import { IndexNewsComponent } from './global/component/public-template/index-news/index-news.component';
+import { HeaderComponent } from './global/component/public-component/header/header.component';
+import { FooterComponent } from './global/component/public-component/footer/footer.component';
+import { TlMegaMenuComponent } from './global/component/public-component/mega-menu/mega-menu.component';
+import { NewsListComponent } from './global/component/public-component/news-list/news-list.component';
+import { FeatureBarComponent } from './global/component/public-component/feature-bar/feature-bar.component';
 
 
 const COMPONENTS = [
@@ -99,6 +111,18 @@ const COMPONENTS = [
   PaginationComponent,
   MonthlyPaymentCalculationComponent,
   PolicyloanCalculationComponent,
+  IndexComponent,
+  IndexSliderComponent,
+  IndexExploreComponent,
+  IndexProductSearchComponent,
+  IndexConsultantComponent,
+  IndexActivityComponent,
+  IndexNewsComponent,
+  HeaderComponent,
+  FooterComponent,
+  TlMegaMenuComponent,
+  NewsListComponent,
+  FeatureBarComponent,
 ];
 
 @NgModule({

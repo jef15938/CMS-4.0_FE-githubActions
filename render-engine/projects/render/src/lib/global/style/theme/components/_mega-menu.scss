@@ -1,0 +1,26 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin tl-mega-menu-theme($theme: $tl-theme-config) {
+
+  $tl-primary-color: map-get($theme, color_primary) !default;
+  $tl-plain-color: map-get($theme, black_1) !default;
+
+  $mega-menu-theme: nx-ui-theme-config-gen($color-primary: $tl-primary-color,
+      $color-plain: $tl-plain-color);
+
+  @include nx-mega-menu-theme($mega-menu-theme);
+
+
+  .nav-tools {
+    &__link {
+
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        color: $tl-primary-color;
+      }
+
+    }
+  }
+}

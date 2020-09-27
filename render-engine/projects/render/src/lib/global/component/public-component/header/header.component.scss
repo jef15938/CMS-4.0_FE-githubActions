@@ -1,0 +1,43 @@
+@import "../../../style/abstracts/abstracts-all.scss";
+@import "../../../style/theme/theme-all.scss";
+
+:host {
+  display: block;
+}
+
+.header {
+  &__top {
+    @include borderHalf($direction: 'bottom');
+    height: 35px;
+    background-color: $ice;
+  }
+
+  &__nav {
+    width: 100%;
+    max-width: 1136px;
+    margin: 0 auto;
+    padding-right: 4px;
+    text-align: right;
+
+    &-item {
+      @include fz-footnote-14-center;
+      display: inline-block;
+      max-width: 96px;
+      min-width: 64px;
+
+      +.header__nav-item {
+        margin-left: 24px;
+      }
+    }
+
+    &-link {
+      @include on-event($self: true) {
+        color: $color-primary;
+        text-decoration: none;
+      }
+
+      display: block;
+      padding: 6px 0;
+    }
+  }
+}
