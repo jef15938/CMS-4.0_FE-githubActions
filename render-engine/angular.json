@@ -27,12 +27,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/sitemap.json",
-              {
-                "glob": "**/*",
-                "input": "projects/render/src/lib/global/images",
-                "output": "assets/images/"
-              }
+              "src/sitemap.json"
             ],
             "styles": [
               "src/styles.scss"
