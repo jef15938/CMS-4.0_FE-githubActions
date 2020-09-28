@@ -23,7 +23,6 @@ export class FieldControlHtmlEditorComponent extends ContentControlBase implemen
       // title: `Html編輯 : ${this.selected.fieldInfo.fieldId}`,
       content: this.selected.fieldInfo.fieldVal
     }).subscribe(content => {
-      console.warn('content = ', content);
       if (content || content === '') {
         this.selected.fieldInfo.fieldVal = content;
         this.change.emit();

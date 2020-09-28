@@ -1,3 +1,5 @@
+export * from './render/render.component';
+export * from './render-preview-container/render-preview-container.component';
 export * from './slider/slider.component';
 export * from './news/news.component';
 export * from './qa/qa.component';
@@ -17,6 +19,7 @@ export * from './layout/layout.component';
 export * from './fixed-wrapper/fixed-wrapper.component';
 export * from './banner/banner.component';
 export * from './list/list.component';
+export * from './test-customize1/test-customize1.component';
 export * from './public-component/collapse/collapse.component';
 export * from './public-component/breadcrumb/breadcrumb.component';
 export * from './public-component/card-link/card-link.component';

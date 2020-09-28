@@ -11,6 +11,7 @@ import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-e
 })
 export class FieldControlImgComponent extends ContentControlBase implements OnInit, OnChanges {
 
+  ATTRIBUTE_GALLERY_ID = ATTRIBUTE_GALLERY_ID;
   fieldInfo: ImgFieldInfo;
 
   adviceFormat = '';
@@ -31,20 +32,38 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
       const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
       const directive = selected.fieldDirective as LayoutFieldImgDirective;
       this.adviceFormat = directive.adviceFormat;
-      this.adviceWidth = directive.adviceWidth;
-      this.adviceHeight = directive.adviceHeight;
+      this.adviceWidth = directive.adviceWidth || 0;
+      this.adviceHeight = directive.adviceHeight || 0;
       this.fieldInfo = selected.fieldInfo as ImgFieldInfo;
       this.fieldInfo.extension = this.fieldInfo.extension || {
-        altValue: ''
+        altValue: '',
+        galleryName: '',
       };
     }
   }
 
-  changeGallery() {
-    this.gallerySharedService.openImgGallery().subscribe(selectedGallery => {
-      if (selectedGallery) {
-        this.fieldInfo.fieldVal = selectedGallery.url;
-        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${selectedGallery.galleryId}`;
+  selectImage() {
+    const galleryID = this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID];
+    const galleryName = this.fieldInfo.extension.galleryName;
+    const imageHeightWidth = this.adviceWidth > 0 && this.adviceHeight > 0
+      ? { width: this.adviceWidth, height: this.adviceHeight }
+      : null;
+
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryImage(
+          `${galleryID}`,
+          galleryName,
+          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          imageHeightWidth,
+        )
+        : this.gallerySharedService.addGalleryImage('', imageHeightWidth)
+    ).subscribe(res => {
+      if (res) {
+        const saved = res as any;
+        this.fieldInfo.fieldVal = saved.path;
+        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${saved.galleryId}`;
+        this.fieldInfo.extension.galleryName = saved.galleryName;
         this.change.emit();
       }
     });

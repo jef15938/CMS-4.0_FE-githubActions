@@ -1,9 +1,10 @@
 import {
   Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild,
-  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener, Inject
+  AfterContentChecked, ChangeDetectorRef, ElementRef, AfterViewInit, HostListener, Inject
 } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
+import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 import { ContentEditorSaveEvent, EditorMode, ContentEditorActionMode, ContentEditorContext } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
@@ -11,17 +12,15 @@ import { ContentControlPanelComponent } from './component/content-control-panel/
 import { ContentViewRendererComponent } from './component/content-view-renderer/content-view-renderer.component';
 import { CmsCanDeactiveGuardian } from '../../../global/interface/cms-candeactive-guardian.interface';
 import { CmsCanDeactiveGuard } from '../../../global/service/cms-candeactive-guard';
-import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
 import { ModalService } from '../modal';
 import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
 import { ContentService } from '../../../global/api/service';
-import { ContentVersionInfo } from '../../../global/api/neuxAPI/bean/ContentVersionInfo';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
 import { TemplateGetResponseModel } from '../../../global/api/data-model/models/template-get-response.model';
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
 import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
-import { CmsErrorHandler } from '../../../global/error-handling';
+import { CmsErrorHandler } from '../../../global/error-handling/cms-error-handler';
 
 @Component({
   selector: 'cms-content-editor',
@@ -37,7 +36,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
   @ViewChild(ContentControlPanelComponent) contentControlPanel: ContentControlPanelComponent;
 
-  @ViewChildren('clickCapturelistenerBlock') clickCapturelistenerBlocks: QueryList<ElementRef>;
+  @ViewChild('clickCapturelistenerBlock') clickCapturelistenerBlock: ElementRef;
+  @ViewChild('clickCapturelistenerBlockToolBar') clickCapturelistenerBlockToolBar: ElementRef;
 
   // 使用模式
   @Input() editorMode: EditorMode = EditorMode.EDIT;
@@ -226,20 +226,21 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
    *
    */
   private registerClickCaptureListener(action: 'register' | 'unregister') {
-    this.clickCapturelistenerBlocks?.forEach(block => {
-      const element = block?.nativeElement as HTMLDivElement;
-      switch (action) {
-        case 'register':
-          element?.addEventListener('click', this.clickCaptureEventListener, true);
-          break;
-        case 'unregister':
-          element?.removeEventListener('click', this.clickCaptureEventListener, true);
-          break;
-      }
-    });
+    const clickCapturelistenerBlockEl = (this.clickCapturelistenerBlock?.nativeElement as HTMLElement);
+    const clickCapturelistenerBlockToolBarEl = (this.clickCapturelistenerBlockToolBar?.nativeElement as HTMLElement);
+    switch (action) {
+      case 'register':
+        clickCapturelistenerBlockEl?.addEventListener('click', this.clickCaptureEventListener, true);
+        clickCapturelistenerBlockToolBarEl?.addEventListener('click', this.clickCaptureEventListenerForToolBar, true);
+        break;
+      case 'unregister':
+        clickCapturelistenerBlockEl?.removeEventListener('click', this.clickCaptureEventListener, true);
+        clickCapturelistenerBlockToolBarEl?.removeEventListener('click', this.clickCaptureEventListenerForToolBar, true);
+        break;
+    }
   }
 
-  clickCaptureEventListener = (ev: MouseEvent) => {
+  clickCaptureEventListenerForToolBar = (ev: MouseEvent) => {
     if (this.contentControlPanel?.hasChange) {
       ev.stopPropagation();
       this.modalService.openConfirm({
@@ -257,6 +258,31 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
           this.cancelScale();
         }
         ev.target.dispatchEvent(ev);
+      });
+    } else {
+      // this.resetSelected();
+      // this.cancelScale();
+    }
+  }
+
+  clickCaptureEventListener = (ev: MouseEvent) => {
+    if (this.contentControlPanel?.hasChange) {
+      ev.stopPropagation();
+      this.modalService.openConfirm({
+        message: '選取的版面有尚未套用的變更，請選擇是否套用',
+        confirmBtnMessage: '套用變更',
+        cancelBtnMessage: '復原變更'
+      }).subscribe(confirm => {
+        if (confirm) {
+          this.contentControlPanel.preserveChanges();
+          ev.target.dispatchEvent(ev);
+        } else {
+          this.resetSelected();
+          this.contentControlPanel.hasChange = false;
+          this.manager.stateManager.resetState();
+          this.contentViewRenderer.checkView();
+          this.cancelScale();
+        }
       });
     } else {
       this.resetSelected();
@@ -302,7 +328,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       componentInitData: {
         contentID: this.contentID,
       }
-    }).subscribe((version: ContentVersionInfo) => {
+    }).subscribe(version => {
       if (version) {
         this.contentService.getContentById(this.contentID, version.version)
           .pipe(CmsErrorHandler.rxHandleError())

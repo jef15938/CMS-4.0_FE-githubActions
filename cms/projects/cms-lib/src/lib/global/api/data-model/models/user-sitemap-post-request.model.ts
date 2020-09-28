@@ -20,6 +20,7 @@ import { ModelMapping } from '@neux/core';
     model.metaKeyword = bean.meta_keyword;
     model.metaImage = bean.meta_image;
     model.assignGroupId = bean.assign_group_id;
+    model.isMegaMenu = bean.is_mega_menu;
   }
 )
 @ModelMapping(
@@ -39,6 +40,7 @@ import { ModelMapping } from '@neux/core';
     bean.meta_keyword = model.metaKeyword;
     bean.meta_image = model.metaImage;
     bean.assign_group_id = model.assignGroupId;
+    bean.is_mega_menu = model.isMegaMenu;
   }
 )
 export class UserSiteMapPostRequestModel {
@@ -46,6 +48,7 @@ export class UserSiteMapPostRequestModel {
   @IsNotEmpty()
   public nodeName: string;
   public layoutId: string;
+  public isMegaMenu: boolean;
   public parentId: string;
   public nodeType: string;
   public urlType: string;

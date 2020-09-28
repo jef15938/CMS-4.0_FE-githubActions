@@ -6,6 +6,6 @@
 <mat-form-field appearance="outline">
   <mat-label>內文</mat-label>
   <textarea matInput [(ngModel)]="selected.fieldInfo.fieldVal" [maxlength]="maxLength" rows="10" cols="50"
-    (keydown.enter)="onEnterDown($event, selected.fieldInfo.fieldVal)" (paste)="onPaste($event)"
-    (keydown)="change.emit()"></textarea>
+    [disabled]="!isTemplateMode" (keydown.enter)="onEnterDown($event, selected.fieldInfo.fieldVal)"
+    (paste)="onPaste($event)" (keydown)="change.emit()"></textarea>
 </mat-form-field>

@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
-import { LinkFieldInfoUrlType } from '@neux/render';
 import { Observable, BehaviorSubject, of } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+import { LinkFieldInfoUrlType } from '@neux/render';
+import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { SiteInfoModel } from '../../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../../global/api/data-model/models/site-map-get-response.model';
 import { SitemapService } from '../../../../../global/api/service';
-import { switchMap, map } from 'rxjs/operators';
-import { ATTRIBUTE_GALLERY_ID } from '../../const/html-editor-container.const';
+import { CmsErrorHandler } from '../../../../../global/error-handling';
 
 export interface ATagConfig {
   href: string;
@@ -21,7 +21,7 @@ export interface ATagConfig {
   templateUrl: './html-editor-create-link-modal.component.html',
   styleUrls: ['./html-editor-create-link-modal.component.scss']
 })
-export class HtmlEditorCreateLinkModalComponent extends CustomModalBase implements OnInit {
+export class HtmlEditorCreateLinkModalComponent extends CustomModalBase<HtmlEditorCreateLinkModalComponent, ATagConfig> implements OnInit {
 
   LinkFieldInfoUrlType = LinkFieldInfoUrlType;
 
@@ -55,10 +55,20 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase implemen
           : LinkFieldInfoUrlType.OUTSITE,
     };
     this.sites$ = this.sitemapService.getSiteList();
-    this.nodes$ = this.refreshNodes$.pipe(switchMap(_ =>
+    this.nodes$ = this.getNodes();
+  }
+
+  getNodes() {
+    return this.refreshNodes$.pipe(switchMap(_ =>
       (
         this.aTagConfig?.siteId
-          ? this.sitemapService.getCMSSiteMap(this.aTagConfig.siteId)
+          ? this.sitemapService.getCMSSiteMap(this.aTagConfig.siteId).pipe(
+            CmsErrorHandler.rxHandleError((error, showMessage) => {
+              this.aTagConfig.siteId = null;
+              this.nodes$ = this.getNodes();
+              showMessage();
+            })
+          )
           : of([])
       ).pipe(
         map(nodes => this.sitemapService.flattenNodes(nodes))

@@ -1,7 +1,7 @@
 import { RenderComponentMapping } from '../interface';
 import {
   TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent,
-  NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent, FixedWrapperComponent
+  NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent, FixedWrapperComponent, TestCustomize1Component
 } from '../component';
 import { HtmlComponent } from '../component/html/html.component';
 import { BannerComponent } from '../component/banner/banner.component';
@@ -75,5 +75,9 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'list',
     component: ListComponent,
+  },
+  {
+    component_id: 'test_customize1',
+    component: TestCustomize1Component,
   },
 ];

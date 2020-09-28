@@ -1,6 +1,7 @@
 <ng-container *ngIf="fieldInfo">
   <br>
-  <mat-radio-group [(ngModel)]="fieldInfo.extension['isTargetBlank']" (change)="change.emit()">
+  <mat-radio-group [(ngModel)]="fieldInfo.extension['isTargetBlank']" [disabled]="!isTemplateMode"
+    (change)="change.emit()">
     <mat-radio-button [value]="'true'">
       另開分頁
     </mat-radio-button>
@@ -10,7 +11,8 @@
   </mat-radio-group>
   <br>
   <br>
-  <mat-radio-group [(ngModel)]="fieldInfo.extension['urlType']" (change)="onUrlTypeChange(fieldInfo);change.emit()">
+  <mat-radio-group [(ngModel)]="fieldInfo.extension['urlType']" [disabled]="!isTemplateMode"
+    (change)="onUrlTypeChange(fieldInfo);change.emit()">
     <mat-radio-button [value]="'INSIDE'">
       站內
     </mat-radio-button>
@@ -25,8 +27,8 @@
   <ng-template #input>
     <mat-form-field appearance="outline">
       <mat-label>站外連結</mat-label>
-      <input matInput [(ngModel)]="fieldInfo.fieldVal" (keydown)="change.emit()" type="url" name="url"
-        pattern="https?://.+" required #modelUrl="ngModel">
+      <input matInput [(ngModel)]="fieldInfo.fieldVal" [disabled]="!isTemplateMode" (keydown)="change.emit()" type="url"
+        name="url" pattern="https?://.+" required #modelUrl="ngModel">
       <mat-error *ngIf="modelUrl?.errors?.required">必填欄位</mat-error>
       <mat-error *ngIf="modelUrl?.errors?.pattern">請輸入 http(s)://</mat-error>
     </mat-form-field>
@@ -35,7 +37,7 @@
     <mat-form-field appearance="outline">
       <mat-label>網站</mat-label>
       <mat-select #select [(ngModel)]="fieldInfo.extension.siteId" name="site" required #modelSite="ngModel"
-        (selectionChange)="onSiteChange(fieldInfo);change.emit()">
+        [disabled]="!isTemplateMode" (selectionChange)="onSiteChange(fieldInfo);change.emit()">
         <ng-container *ngIf="sites$|async; let sites;">
           <mat-option *ngFor="let site of sites" [value]="site.siteId">
             {{site.siteName}}
@@ -46,7 +48,8 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>節點</mat-label>
-      <mat-select #select [(ngModel)]="fieldInfo.fieldVal" name="node" required #modelNode="ngModel">
+      <mat-select #select [(ngModel)]="fieldInfo.fieldVal" name="node" required #modelNode="ngModel"
+        [disabled]="!isTemplateMode" (selectionChange)="change.emit()">
         <ng-container *ngIf="nodes$|async; let nodes;">
           <mat-option *ngFor="let node of nodes" [value]="node.nodeId">
             <pre>{{node.nodeName}}</pre>

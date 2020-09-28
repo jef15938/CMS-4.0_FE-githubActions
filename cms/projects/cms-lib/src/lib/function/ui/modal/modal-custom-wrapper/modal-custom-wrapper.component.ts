@@ -11,20 +11,20 @@ import { DynamicWrapperDirective } from '@neux/core';
 })
 export class ModalCustomWrapperComponent {
 
-  @ViewChild(DynamicWrapperDirective) dynamicWrapperDirective: DynamicWrapperDirective<CustomModalBase>;
+  @ViewChild(DynamicWrapperDirective) dynamicWrapperDirective: DynamicWrapperDirective<CustomModalBase<any, any>>;
 
   componentClass;
 
-  instance: CustomModalBase;
+  instance: CustomModalBase<any, any>;
 
   instanceTitle = '';
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public config: ModalOpenComponentConfig<any>,
+    @Inject(MAT_DIALOG_DATA) public config: ModalOpenComponentConfig<any, any>,
     public modalRef: MatDialogRef<ModalCustomWrapperComponent>,
   ) { }
 
-  onComponentLoad = (componentRef: ComponentRef<CustomModalBase>) => {
+  onComponentLoad = (componentRef: ComponentRef<CustomModalBase<any, any>>) => {
     const instance = componentRef.instance;
     if (this.config.componentInitData) {
       for (const k of Object.keys(this.config.componentInitData)) {

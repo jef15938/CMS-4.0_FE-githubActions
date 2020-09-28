@@ -6,3 +6,4 @@ export * from './html-editor';
 export * from './modal';
 export * from './table';
 export * from './tree';
+export * from './form-shared';

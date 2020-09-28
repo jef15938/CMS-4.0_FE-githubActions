@@ -118,7 +118,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onUserSiteMapTreeCustomEvent(event: MultiSiteNodeCustomEvent) {
     if (event instanceof MultiSiteNodeCustomEvent) {
-      let action: Observable<any>;
+      let action: Observable<'Success'>;
       switch (event.action) {
         case event.ActionType.CREATE:
           action = this.modalService.openComponent({
@@ -132,16 +132,16 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
         case event.ActionType.DELETE:
           action = of(undefined).pipe(
             this.modalService.confirmDelete,
-            concatMap(_ => this.sitemapService.deleteUserSiteMap(event.data.nodeId).pipe(
+            concatMap(confirm => (confirm ? this.sitemapService.deleteUserSiteMap(event.data.nodeId) : of(undefined)).pipe(
               CmsErrorHandler.rxHandleError(),
-              map(res => 'Deleted')
-            ))
+            )),
+            map(res => 'Success'),
           );
           break;
       }
 
       if (action) {
-        action.pipe(tap(res => res ? this.swichMode(EditModeType.NODE) : null)).subscribe();
+        action.pipe(tap(res => !!res ? this.swichMode(EditModeType.NODE) : null)).subscribe();
       }
     }
   }
@@ -236,6 +236,10 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
         this.onNodeUpdate();
       });
     });
+  }
+
+  treeTrackBy(index: number, item: SiteMapGetResponseModel) {
+    return item.nodeId;
   }
 
 }

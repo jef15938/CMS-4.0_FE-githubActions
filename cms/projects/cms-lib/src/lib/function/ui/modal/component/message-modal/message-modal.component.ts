@@ -6,7 +6,7 @@ import { CustomModalActionButton, CustomModalBase } from '../../base/custom-moda
   templateUrl: './message-modal.component.html',
   styleUrls: ['./message-modal.component.scss']
 })
-export class MessageModalComponent extends CustomModalBase implements OnInit {
+export class MessageModalComponent extends CustomModalBase<MessageModalComponent, any> implements OnInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];
 

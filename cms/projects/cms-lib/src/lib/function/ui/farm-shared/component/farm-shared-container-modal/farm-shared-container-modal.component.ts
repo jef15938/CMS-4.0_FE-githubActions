@@ -9,7 +9,7 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
   templateUrl: './farm-shared-container-modal.component.html',
   styleUrls: ['./farm-shared-container-modal.component.scss']
 })
-export class FarmSharedContainerModalComponent extends CustomModalBase implements OnInit {
+export class FarmSharedContainerModalComponent extends CustomModalBase<FarmSharedContainerModalComponent, any> implements OnInit {
 
   @Input() title: string | (() => string) = '';
   actions: CustomModalActionButton[];

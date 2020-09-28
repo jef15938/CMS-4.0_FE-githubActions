@@ -10,7 +10,7 @@ export class InsertUnorderedList extends DomCmdAction {
     // console.warn('selected = ', selected);
 
     if (selected === this.context.editorContainer) {
-      return of(undefined);
+      return super.do();
     }
 
     const closestUl = this.findClosestUl(selected, this.context.editorContainer);

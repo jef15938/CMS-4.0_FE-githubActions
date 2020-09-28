@@ -1,8 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, Inject, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, ElementRef } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
-import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
-import { CmsEnviroment } from '../../../../../global/interface/cms-enviroment.interface';
 import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
 import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
@@ -11,13 +9,14 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { UploadGalleryInfoCellComponent } from '../upload-gallery-info-cell/upload-gallery-info-cell.component';
 import { UploadGalleryActionCellComponent, UploadGalleryActionCellCustomEvent } from '../upload-gallery-action-cell/upload-gallery-action-cell.component';
 import { UploadGalleryProgressCellComponent } from '../upload-gallery-progress-cell/upload-gallery-progress-cell.component';
+import { CmsLoadingToggle } from '../../../../../global/service';
 
 @Component({
   selector: 'cms-upload-gallery-modal',
   templateUrl: './upload-gallery-modal.component.html',
   styleUrls: ['./upload-gallery-modal.component.scss'],
 })
-export class UploadGalleryModalComponent extends CustomModalBase implements OnInit, AfterViewInit {
+export class UploadGalleryModalComponent extends CustomModalBase<UploadGalleryModalComponent, 'Success'> implements OnInit, AfterViewInit {
   title: string | (() => string) = '';
   actions: CustomModalActionButton[];
 
@@ -60,11 +59,11 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   constructor(
     private cropperService: CropperService,
-    @Inject(CMS_ENVIROMENT_TOKEN) private environment: CmsEnviroment,
     private galleryService: GalleryService,
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
     private modalService: ModalService,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { super(); }
 
   ngOnInit() {
@@ -179,9 +178,9 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   cropFile(file: FileUploadModel) {
     if (file) {
-      this.cropperService.openEditor(file.url).subscribe((dataUrl: string) => {
-        if (!dataUrl) { return; }
-        const blob = this.dataURItoBlob(dataUrl);
+      this.cropperService.openEditor(file.url).subscribe(result => {
+        if (!result) { return; }
+        const blob = this.dataURItoBlob(result.dataUrl);
         const newFile = this.galleryService.mapFileToFileUploadModel(new File([blob], file.data.name, { type: file.fileType }));
         this.files.splice(this.files.indexOf(file), 1, newFile);
         this.files = [...this.files];
@@ -220,11 +219,19 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
   }
 
   create() {
+    this.cmsLoadingToggle.open();
     forkJoin(this.files.map(file => this.galleryService.createGallery(file, this.categoryId)))
+      .pipe(
+        CmsErrorHandler.rxHandleError((error, showMessage) => {
+          this.cmsLoadingToggle.close();
+          showMessage();
+        })
+      )
       .subscribe(results => {
+        this.cmsLoadingToggle.close();
         const failedUploads = results.filter(r => !r.success);
         if (!failedUploads.length) {
-          this.close(true);
+          this.close('Success');
         } else {
           this.modalService.openMessage({
             message: `以下檔案上傳失敗 : ${failedUploads.map(failed => `<p>${failed.fileName}</p>`)}`
@@ -235,10 +242,18 @@ export class UploadGalleryModalComponent extends CustomModalBase implements OnIn
 
   update() {
     const file = this.files[0];
+    this.cmsLoadingToggle.open();
     this.galleryService.updateGallery(file, this.galleryId)
+      .pipe(
+        CmsErrorHandler.rxHandleError((error, showMessage) => {
+          this.cmsLoadingToggle.close();
+          showMessage();
+        })
+      )
       .subscribe(result => {
+        this.cmsLoadingToggle.close();
         if (result.success) {
-          this.close(true);
+          this.close('Success');
         } else {
           this.modalService.openMessage({ message: '檔案上傳失敗' }).subscribe();
         }

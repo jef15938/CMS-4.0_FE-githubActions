@@ -16,7 +16,5 @@ export abstract class GroupTemplateBaseComponent extends LayoutBaseComponent<Gro
 
   abstract defaultTemplateInfo: GroupTemplateInfo;
 
-  constructor(
-    injector: Injector,
-  ) { super(injector); }
+  constructor(injector: Injector, templateId: string) { super(injector, templateId); }
 }

@@ -17,8 +17,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FarmSharedComponent } from './farm-shared.component';
-import { FarmDetailInfoComponent } from './component/farm-detail-info/farm-detail-info.component';
-import { FarmSearchInfoComponent } from './component/farm-search-info/farm-search-info.component';
 import { FarmTableInfoComponent } from './component/farm-table-info/farm-table-info.component';
 import { GetFarmTableDisplayColsPipe } from './pipe/get-farm-table-display-cols.pipe';
 import { GetFarmTableColDataPipe } from './pipe/get-farm-table-col-data.pipe';
@@ -34,6 +32,7 @@ import { DatePickerModule } from '../date-picker/date-picker.module';
 import { FarmSharedContainerModalComponent } from './component/farm-shared-container-modal/farm-shared-container-modal.component';
 import { FarmFormCheckboxOptionCheckPipe } from './pipe/farm-form-checkbox-option-check';
 import { DirectiveModule } from '../../../global/directive';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -55,6 +54,7 @@ import { DirectiveModule } from '../../../global/directive';
     MatPaginatorModule,
     MatButtonModule,
     MatTooltipModule,
+    MatMenuModule,
     PipeModule,
     TreeModule,
     DatePickerModule,
@@ -62,8 +62,6 @@ import { DirectiveModule } from '../../../global/directive';
   ],
   declarations: [
     FarmSharedComponent,
-    FarmDetailInfoComponent,
-    FarmSearchInfoComponent,
     FarmTableInfoComponent,
     GetFarmTableDisplayColsPipe,
     GetFarmTableColDataPipe,

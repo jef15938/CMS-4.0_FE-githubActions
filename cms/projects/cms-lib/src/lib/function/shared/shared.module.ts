@@ -27,7 +27,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { MatStepperModule } from '@angular/material/stepper';
 // @neux/core
 import { CoreModule } from '@neux/core';
 // cms-lib
@@ -74,6 +74,7 @@ import { DatePickerModule } from '../ui/date-picker';
     MatRippleModule,
     MatTabsModule,
     MatTooltipModule,
+    MatStepperModule,
     // @neux/core
     CoreModule,
     // cms-lib

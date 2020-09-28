@@ -6,7 +6,5 @@ import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/
 export abstract class CommonTemplateBaseComponent extends LayoutBaseComponent<ContentTemplateInfoModel> {
   templateType = TemplateType.COMMON;
 
-  constructor(
-    injector: Injector,
-  ) { super(injector); }
+  constructor(injector: Injector, templateId: string) { super(injector, templateId); }
 }

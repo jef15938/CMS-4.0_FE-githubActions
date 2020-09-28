@@ -1,6 +1,7 @@
 import {
   Component, OnInit, Input, OnChanges, Output, EventEmitter,
-  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy, SimpleChanges, AfterViewChecked, ChangeDetectorRef, ElementRef,
+  AfterViewInit, ViewChildren, QueryList, HostListener, OnDestroy,
+  SimpleChanges, AfterViewChecked, ChangeDetectorRef, ElementRef, TrackByFunction,
 } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -29,6 +30,7 @@ export class TreeComponent<TData> implements CmsTree<TData>, OnInit, AfterViewIn
   @Input() nodeDatas: TData[] = []; // 樹資料
   @Input() defaultExpandLevel = 0; // 預設展開層數：-1=全展開
   @Input() selectedNode: TData;
+  @Input() trackBy: TrackByFunction<TData>;
 
   private selectedNode$ = new Subject();
 

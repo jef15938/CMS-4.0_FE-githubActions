@@ -9,7 +9,8 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
   templateUrl: './gallery-category-maintain-modal.component.html',
   styleUrls: ['./gallery-category-maintain-modal.component.scss']
 })
-export class GalleryCategoryMaintainModalComponent extends CustomModalBase implements OnInit {
+export class GalleryCategoryMaintainModalComponent extends CustomModalBase<GalleryCategoryMaintainModalComponent, 'Success'>
+  implements OnInit {
 
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];

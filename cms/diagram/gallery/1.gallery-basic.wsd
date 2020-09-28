@@ -1,0 +1,111 @@
+@startuml
+
+Title Gallery : Basic
+participant "外部元件" as outer
+participant "GallerySharedService" as gallerySharedService << service >>
+participant "ModalService" as modalService << service >>
+participant "GalleryAddUpdateModalComponent" as component << component >>
+
+box "GalleryAddUpdateModalComponent\nSteps" #LightBlue
+participant "修改圖片方式" as stepModifyImageApproach << step >>
+participant "選擇本地檔案/圖片" as stepSelectFile << step >>
+participant "裁切圖片" as stepCropImage << step >>
+participant "上傳檔案/圖片" as stepUpload << step >>
+end box
+
+participant "GalleryService" as galleryService << service >>
+
+==add image==
+outer -> gallerySharedService: GallerySharedService.addGalleryImage()
+note left: 加入圖片
+note right: accept?:string 接受格式 \nimageHeightWidth 圖片寬高
+gallerySharedService -> modalService: ModalService.openComponent()
+modalService -> component: use \n @Input() GalleryType.IMAGE
+note right: 加入圖片
+
+component -> stepSelectFile
+note right: 選擇本地圖片
+stepSelectFile -> stepCropImage
+note right: 裁切
+stepCropImage -> stepUpload
+note right: 上傳 (push)
+
+stepUpload -> galleryService: GalleryService.addGallery()
+activate galleryService
+galleryService --> component: SaveGalleryResponseModel
+deactivate galleryService
+component --> outer: SaveGalleryResponseModel
+
+==update image==
+outer -> gallerySharedService: GallerySharedService.updateGalleryImage()
+note left: 修改圖片
+note right: galleryId \ngalleryName \naccept?:string 接受格式 \nimageHeightWidth 圖片寬高
+gallerySharedService -> modalService: ModalService.openComponent()
+modalService -> component: use \n @Input() GalleryType.IMAGE \n @Input() galleryId
+note right: 修改圖片
+
+component -> stepModifyImageApproach
+note right: 選擇修改方式
+
+group 選擇新圖片
+  stepModifyImageApproach -> stepSelectFile
+  note right: 選擇本地圖片
+  stepSelectFile -> stepCropImage
+  note right: 裁切
+  stepCropImage -> stepUpload
+  note right: 上傳 (push)
+  stepUpload -> galleryService: GalleryService.addGallery()
+  activate galleryService
+end
+
+group 裁切原圖片
+  stepModifyImageApproach -> stepCropImage
+  note right: 裁切
+  stepCropImage -> stepUpload
+  note right: 上傳 (pull)
+  stepUpload -> galleryService: GalleryService.updateGallery2()
+end
+
+  galleryService --> component: SaveGalleryResponseModel
+  deactivate galleryService
+  component --> outer: SaveGalleryResponseModel
+
+==add file==
+outer -> gallerySharedService: GallerySharedService.addGalleryImage()
+note left: 加入檔案
+note right: accept?:string 接受格式
+gallerySharedService -> modalService: ModalService.openComponent()
+modalService -> component: use \n @Input() GalleryType.FILE
+note right: 加入檔案
+
+component -> stepSelectFile
+note right: 選擇本地檔案
+stepSelectFile -> stepUpload
+note right: 上傳 (push)
+
+stepUpload -> galleryService: GalleryService.addFile()
+activate galleryService
+galleryService --> component: SaveFileResponseModel
+deactivate galleryService
+component --> outer: SaveFileResponseModel
+
+==update file==
+outer -> gallerySharedService: GallerySharedService.updateGalleryImage()
+note left: 修改檔案
+note right: galleryId \ngalleryName \naccept?:string 接受格式
+gallerySharedService -> modalService: ModalService.openComponent()
+modalService -> component: use \n @Input() GalleryType.FILE \n @Input() galleryId
+note right: 修改檔案
+
+component -> stepSelectFile
+note right: 選擇本地檔案
+stepSelectFile -> stepUpload
+note right: 上傳 (pull)
+
+stepUpload -> galleryService: GalleryService.updateFile()
+activate galleryService
+galleryService --> component: SaveFileResponseModel
+deactivate galleryService
+component --> outer: SaveFileResponseModel
+
+@enduml

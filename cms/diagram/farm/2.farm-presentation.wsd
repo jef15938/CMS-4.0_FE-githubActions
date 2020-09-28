@@ -1,0 +1,16 @@
+@startuml
+
+Title Farm : Presentation
+participant "FarmSharedComponent" as main << component >>
+participant "[child of FarmSharedComponent]\nFarmFormInfoComponent\n DetailInfo" as detailInfo << component >>
+participant "[child of FarmSharedComponent]\nFarmFormInfoComponent\n SearchInfo" as searchInfo << component >>
+participant "[child of FarmSharedComponent]\nFarmTableInfoComponent\n TableInfo" as tableInfo << component >>
+
+main -> detailInfo: use \n @Input farm.detailInfo
+note right: FarmFormInfoModel
+main -> searchInfo: use \n @Input farm.category.searchInfo
+note right: FarmFormInfoModel
+main -> tableInfo: use \n @Input farm.category.tableInfo
+note right: FarmTableInfoModel
+
+@enduml

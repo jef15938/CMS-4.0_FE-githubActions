@@ -24,7 +24,7 @@ export class InsertVideo extends HtmlEditorActionBase {
         frameId: image?.getAttribute(ATTRIBUTE_FRAME_ID)
       }
     }).pipe(
-      tap((config: { src: string, frameId: string }) => {
+      tap(config => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
 

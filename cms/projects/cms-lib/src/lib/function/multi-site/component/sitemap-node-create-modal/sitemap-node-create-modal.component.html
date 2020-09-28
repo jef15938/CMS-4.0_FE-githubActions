@@ -1,5 +1,14 @@
 <div class="sitemap-node-creat-modal modal-form-layout" *ngIf="sitemapMaintainModel">
   <form class="modal-form-layout__form" #form="ngForm">
+
+    <div class="modal-form-layout__row">
+      <div class="modal-form-layout__col">
+        <mat-checkbox class="form__checkbox" [(ngModel)]="sitemapMaintainModel.isMegaMenu" name="megamenu">
+          MegaMenu
+        </mat-checkbox>
+      </div>
+    </div>
+
     <div class="modal-form-layout__row">
       <div class="modal-form-layout__col">
         <mat-form-field appearance="outline">
@@ -11,6 +20,7 @@
         </mat-form-field>
       </div>
     </div>
+
     <div class="modal-form-layout__row">
       <div class="modal-form-layout__col">
         <mat-form-field appearance="outline">
@@ -119,8 +129,8 @@
           <div class="modal-form-layout__col">
             <mat-form-field appearance="outline">
               <mat-label>節點連結路徑</mat-label>
-              <input type="input" matInput [(ngModel)]="sitemapMaintainModel.contentPath" name="contentPath" maxlength="100"
-                rows="1" pattern="^[A-Za-z0-9\-]*$" #modelContentPath="ngModel">
+              <input type="input" matInput [(ngModel)]="sitemapMaintainModel.contentPath" name="contentPath"
+                maxlength="100" rows="1" pattern="^[A-Za-z0-9\-]*$" #modelContentPath="ngModel">
               <div matSuffix class="input-suffix">({{sitemapMaintainModel?.contentPath?.length||0}}/100)</div>
               <mat-error *ngIf="modelContentPath?.errors?.pattern">限英數字和-</mat-error>
             </mat-form-field>
@@ -132,8 +142,8 @@
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>Meta標題</mat-label>
-            <input type="input" matInput [(ngModel)]="sitemapMaintainModel.metaTitle" name="metaTitle" required maxlength="500"
-              rows="1" #modelMetaTitle="ngModel">
+            <input type="input" matInput [(ngModel)]="sitemapMaintainModel.metaTitle" name="metaTitle" required
+              maxlength="500" rows="1" #modelMetaTitle="ngModel">
             <div matSuffix class="input-suffix">({{sitemapMaintainModel?.metaTitle?.length||0}}/500)</div>
             <mat-error *ngIf="modelMetaTitle?.errors?.required">必填欄位</mat-error>
           </mat-form-field>
@@ -144,8 +154,8 @@
         <div class="modal-form-layout__col">
           <mat-form-field appearance="outline">
             <mat-label>Meta描述</mat-label>
-            <input type="input" matInput [(ngModel)]="sitemapMaintainModel.metaDescription" name="metaDescription" rows="1"
-              maxlength="500">
+            <input type="input" matInput [(ngModel)]="sitemapMaintainModel.metaDescription" name="metaDescription"
+              rows="1" maxlength="500">
             <div matSuffix class="input-suffix">({{sitemapMaintainModel?.metaDescription?.length||0}}/500)</div>
           </mat-form-field>
         </div>
@@ -167,7 +177,7 @@
             <input matInput [value]="metaImageName" name="meta_image" readonly>
           </mat-form-field>
           <button class="modal-form-layout__btn gallery-btn btn btn-dark" type="button" tabindex="0" mat-raised-button
-            (click)="openGallery()">媒體庫</button>
+            (click)="selectImage()">{{sitemapMaintainModel.metaImage?'修改':'加入'}}圖片</button>
         </div>
       </div>
     </ng-container>

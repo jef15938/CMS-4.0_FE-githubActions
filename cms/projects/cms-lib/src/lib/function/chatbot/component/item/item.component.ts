@@ -84,7 +84,7 @@ export class ItemComponent implements OnInit {
       }
     }).pipe(
       concatMap(res => {
-        return res ? this.getItems() : of(undefined);
+        return !!res ? this.getItems() : of(undefined);
       }),
     ).subscribe();
   }

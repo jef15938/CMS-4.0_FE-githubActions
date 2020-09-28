@@ -70,16 +70,16 @@ const routes: Routes = [
             loadChildren: getChatbotModule
           },
           {
-            path: ':funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+            path: ':funcId', component: DynamicRoutingComponent, resolve: { data: CmsFarmDataResolver },
           },
           {
-            path: ':category1/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+            path: ':category1/:funcId', component: DynamicRoutingComponent, resolve: { data: CmsFarmDataResolver },
           },
           {
-            path: ':category1/:category2/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+            path: ':category1/:category2/:funcId', component: DynamicRoutingComponent, resolve: { data: CmsFarmDataResolver },
           },
           {
-            path: ':category1/:category2/:category3/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+            path: ':category1/:category2/:category3/:funcId', component: DynamicRoutingComponent, resolve: { data: CmsFarmDataResolver },
           }
         ]
       },
@@ -89,16 +89,16 @@ const routes: Routes = [
         loadChildren: getExtensionModule
       },
       {
-        path: ':funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+        path: ':funcId', component: DynamicRoutingComponent, resolve: { data: CmsFarmDataResolver },
       },
       {
-        path: ':category1/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+        path: ':category1/:funcId', component: DynamicRoutingComponent, resolve: { data: CmsFarmDataResolver },
       },
       {
-        path: ':category1/:category2/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+        path: ':category1/:category2/:funcId', component: DynamicRoutingComponent, resolve: { data: CmsFarmDataResolver },
       },
       {
-        path: ':category1/:category2/:category3/:funcId', component: DynamicRoutingComponent, resolve: { farm: CmsFarmDataResolver },
+        path: ':category1/:category2/:category3/:funcId', component: DynamicRoutingComponent, resolve: { data: CmsFarmDataResolver },
       }
     ]
   },

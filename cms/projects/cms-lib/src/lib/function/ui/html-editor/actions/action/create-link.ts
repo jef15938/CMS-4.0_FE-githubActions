@@ -1,7 +1,7 @@
 import { DomCmdAction } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HtmlEditorCreateLinkModalComponent, ATagConfig } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
+import { HtmlEditorCreateLinkModalComponent } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
 import { ATTRIBUTE_FRAME_ID, CLASS_NAME_EDITOR_LINK, CLASS_NAME_GALLERY_FILE } from '../../const/html-editor-container.const';
 
 export class CreateLink extends DomCmdAction {
@@ -31,7 +31,7 @@ export class CreateLink extends DomCmdAction {
         isGallery,
       }
     }).pipe(
-      tap((atagConfig: ATagConfig) => {
+      tap(atagConfig => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!atagConfig) { return; }
 

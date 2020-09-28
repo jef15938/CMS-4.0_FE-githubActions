@@ -12,7 +12,8 @@ export enum AuditingApproveStatus {
   templateUrl: './approve-auditing-modal.component.html',
   styleUrls: ['./approve-auditing-modal.component.scss']
 })
-export class ApproveAuditingModalComponent extends CustomModalBase implements OnInit {
+export class ApproveAuditingModalComponent extends CustomModalBase<ApproveAuditingModalComponent, AuditingSubmitRequestModel>
+  implements OnInit {
 
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];

@@ -2,7 +2,8 @@ import { Component, Injector } from '@angular/core';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { DownloadData } from './download.interface';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
-import { DataSourceType } from '../../enum';
+
+const TEMPLATE_ID = 'download';
 
 @Component({
   selector: 'rdr-download',
@@ -13,7 +14,7 @@ export class DownloadComponent extends DataSourceTemplateBaseComponent<DownloadD
 
   defaultTemplateInfo: DataSourceTemplateInfo = {
     id: '',
-    templateId: 'download',
+    templateId: TEMPLATE_ID,
     fields: [],
     source: '',
     attributes: {
@@ -21,13 +22,7 @@ export class DownloadComponent extends DataSourceTemplateBaseComponent<DownloadD
     }
   };
 
-  sourceType = DataSourceType.Download;
-
-  constructor(
-    injector: Injector,
-  ) {
-    super(injector);
-  }
+  constructor(injector: Injector, ) { super(injector, TEMPLATE_ID); }
 
 
 

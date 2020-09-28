@@ -1428,7 +1428,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerationHeader'
+                $ref: '#/components/schemas/SaveGalleryResponse'
       parameters: []
       description: ''
       requestBody:
@@ -1436,31 +1436,10 @@ paths:
           multipart/form-data:
             schema:
               description: Form data格式
-        description: >-
+        description: |-
           用formData型式傳入
-
-          file:媒體庫檔案(filename max length:300)，要擋副檔名只能有png / jpg / jpeg / gif /
-          pdf / xls / xlsx / doc / docx(建議挖成extension)
-
-          description:檔案描述(Max length:300)
-      tags:
-        - Gallery
-    delete:
-      summary: DeleteGallery
-      operationId: delete-Gallery-galleryID
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenerationHeader'
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: Content-Type
-          description: application/json
+          file:處理後檔案
+          setting：放額外的JSON參數
       tags:
         - Gallery
   '/SitemapAuditing/{nodeId}':
@@ -1828,6 +1807,234 @@ paths:
         in: path
         required: true
         description: 節點Id
+  /Gallery:
+    post:
+      summary: AddGallery
+      operationId: post-Gallery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveGalleryResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: |-
+        用formData型式傳入
+        originalFile：原檔
+        file:處理後檔案
+        setting：放額外的JSON參數
+      tags:
+        - Gallery
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+  '/Gallery/ShowOriginal/{galleryID}':
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+    get:
+      summary: GetGalleryShowOriginal
+      tags:
+        - Gallery
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-Gallery-ShowOriginal-galleryID
+      description: 顯示原檔案(圖片的話直接將這個網址放入img src內，檔案的話另開視窗)
+  '/SliderType/Range/{typeId}':
+    get:
+      summary: GetSliderTypeRange
+      tags:
+        - Slider
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSliderTypeRangeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-SliderType-Range
+      description: 取得輪播分類的圖片限制範圍
+    parameters:
+      - schema:
+          type: string
+        name: typeId
+        in: path
+        required: true
+  '/GallerySetting/{galleryID}':
+    get:
+      summary: GetGallerySetting
+      tags:
+        - Gallery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetGallerySettingResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-GallerySetting
+      description: ''
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+  /File:
+    post:
+      summary: AddFile
+      operationId: post-File
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveFileResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - File
+      description: |-
+        用formData型式傳入
+        file:處理後檔案
+  '/File/{galleryID}':
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+    put:
+      summary: UpdateFile
+      operationId: put-File-galleryID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveFileResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      tags:
+        - File
+      description: |-
+        用formData型式傳入
+        file:處理後檔案
+  /FormType:
+    get:
+      summary: ListFormType
+      tags:
+        - Form
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFormTypeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FormType
+      description: 取得所有表單下載分類
+  '/FormType/{typeID}':
+    parameters:
+      - schema:
+          type: string
+        name: typeID
+        in: path
+        required: true
+    get:
+      summary: ListFiles
+      tags:
+        - Form
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFilesResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-FormType-typeID
+      description: 取得表單下載檔案清單
 components:
   schemas:
     LoginRequest:
@@ -2566,6 +2773,7 @@ components:
                   - TREE
                   - LABEL
                   - LINK
+                  - FILE
               value:
                 type: string
                 description: 欄位值
@@ -2603,6 +2811,12 @@ components:
                   limit_file_name_ext:
                     type: string
                     description: 媒體庫挑選副檔名限制(Gallery Type限定)
+                  img_limit_width:
+                    type: number
+                    description: 圖片限制寬度
+                  img_limit_height:
+                    type: number
+                    description: 圖片限制高度
               is_readonly:
                 type: boolean
             required:
@@ -3313,11 +3527,16 @@ components:
           description: 各檔案上傳限制
           items:
             $ref: '#/components/schemas/GalleryFileLimitConfig'
+        img_filename_ext:
+          type: string
+          description: 圖檔類型副檔名
+          example: 'PNG,JPG,GIF,JPEG'
       required:
         - max_upload_number
         - max_upload_size
         - limit_character
         - file_limits
+        - img_filename_ext
     GalleryFileLimitConfig:
       title: GalleryFileLimitConfig
       type: object
@@ -3368,4 +3587,134 @@ components:
       required:
         - action_type
         - action_name
+    SaveGalleryResponse:
+      title: SaveGalleryResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        original_gallery_id:
+          type: number
+          description: 原檔galery_id
+        gallery_id:
+          type: number
+          description: 處理後的gallery_id
+        success:
+          type: boolean
+        identity:
+          type: string
+        original_path:
+          type: string
+          description: 原始檔案路徑
+        path:
+          type: string
+          description: 處理後的路徑
+      required:
+        - original_gallery_id
+        - gallery_id
+        - success
+        - identity
+        - original_path
+        - path
+    GetSliderTypeRangeResponse:
+      title: GetSliderTypeRangeResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        width:
+          type: number
+          description: 寬度(如果給-1就不限制)
+        height:
+          type: number
+          description: 高度(如果給-1就不限制)
+      required:
+        - width
+        - height
+    GetGallerySettingResponse:
+      title: GetGallerySettingResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        crop_setting:
+          type: string
+          description: 裁切設定(json format)
+      required:
+        - crop_setting
+    SaveFileResponse:
+      title: SaveFileResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        gallery_id:
+          type: number
+        path:
+          type: string
+        success:
+          type: boolean
+        identity:
+          type: string
+      required:
+        - gallery_id
+        - path
+        - success
+        - identity
+    ListFormTypeResponse:
+      title: ListFormTypeResponse
+      type: object
+      x-tags:
+        - Model
+      description: ''
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListFormTypeInfo'
+      required:
+        - datas
+    ListFormTypeInfo:
+      title: ListFormTypeInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        id:
+          type: string
+          description: 表單下載分類代碼
+        name:
+          type: string
+          description: 表單下載分類名稱
+      required:
+        - id
+        - name
+    ListFilesResponse:
+      title: ListFilesResponse
+      type: object
+      x-tags:
+        - Model
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListFilesInfo'
+      required:
+        - datas
+    ListFilesInfo:
+      title: ListFilesInfo
+      type: object
+      x-tags:
+        - Model
+      properties:
+        gallery_id:
+          type: number
+        name:
+          type: string
+        path:
+          type: string
+      required:
+        - gallery_id
+        - name
+        - path
   securitySchemes: {}

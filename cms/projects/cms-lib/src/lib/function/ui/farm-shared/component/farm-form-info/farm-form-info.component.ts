@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject, Optional } from '@angular/core';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
 import { Observable, throwError, of } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
-import { FarmFormComp } from '../../farm-shared.interface';
+import { FarmCustomHandler } from '../../farm-shared.interface';
 import { ContentEditorService } from './../../../content-editor';
 import { FarmService } from '../../../../../global/api/service';
 import { HtmlEditorService } from '../../../html-editor';
@@ -12,9 +13,15 @@ import { ContentInfo } from '../../../../../global/api/neuxAPI/bean/ContentInfo'
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GetFarmTreeResponseModel } from '../../../../../global/api/data-model/models/get-farm-tree-response.model';
 import { FarmTreeInfoModel } from '../../../../../global/api/data-model/models/farm-tree-info.model';
-import { FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType } from '../../../../../global/api/data-model/models/farm-form-info.model';
+import {
+  FarmFormInfoModel, FarmFormInfoModelColumn, FarmFormInfoColumnDisplayType, FarmFormInfoColumnTriggerType,
+  FarmFormInfoColumnFileUploadOption
+} from '../../../../../global/api/data-model/models/farm-form-info.model';
 import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
+import { FormSharedService } from '../../../form-shared/form-shared.service';
+import { FARM_CUSTOM_HANDLER_TOKEN } from '../../farm-shared-injection-token';
+import { UploadResponse } from '../../../gallery-shared/component/gallery-add-update-modal/gallery-add-update-modal.component';
 
 interface FormColumnSetting {
   enable: boolean;
@@ -27,9 +34,10 @@ interface FormColumnSetting {
   templateUrl: './farm-form-info.component.html',
   styleUrls: ['./farm-form-info.component.scss']
 })
-export class FarmFormInfoComponent implements FarmFormComp, OnInit {
+export class FarmFormInfoComponent implements OnInit {
 
   FarmFormInfoColumnDisplayType = FarmFormInfoColumnDisplayType;
+  FarmFormInfoColumnFileUploadOption = FarmFormInfoColumnFileUploadOption;
 
   @Input() farmFormInfo: FarmFormInfoModel;
   @Input() useValidation = false;
@@ -42,15 +50,21 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
   treeMap: Map<string, GetFarmTreeResponseModel> = new Map();
   treeNodeSelectedMap: Map<string, FarmTreeInfoModel[]> = new Map();
 
+  private farmCustomHandler: FarmCustomHandler;
+
   constructor(
     private contentEditorService: ContentEditorService,
     private htmlEditorService: HtmlEditorService,
     private gallerySharedService: GallerySharedService,
     private farmService: FarmService,
+    private formSharedService: FormSharedService,
     private cmsDateAdapter: CmsDateAdapter,
+    @Inject(FARM_CUSTOM_HANDLER_TOKEN) @Optional() private farmCustomHandlers: FarmCustomHandler[],
   ) { }
 
   ngOnInit(): void {
+    this.farmCustomHandler = (this.farmCustomHandlers || []).reverse().find(h => h.funcId === this.funcID);
+
     this.formGroup = this.createFormGroup(this.farmFormInfo);
     this.formColumnSettingMap = this.createFormColumnSettingMap(this.farmFormInfo);
     this.farmFormInfo.columns.forEach(column => {
@@ -93,7 +107,9 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
         const required = validation.required?.find(col => col === column.columnId);
         if (required) {
           validatorFns.push((control: AbstractControl) => {
-            if (!CmsValidator.hasValue(control.value)) {
+
+            const columnSetting = this.formColumnSettingMap?.get(column.columnId);
+            if (columnSetting?.enable && !CmsValidator.hasValue(control.value)) {
               return {
                 required: '必填欄位'
               };
@@ -110,10 +126,18 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
             } : null;
           });
         }
-        // alphanumeric TODO: 等 api 改為 regex
+        // alphanumeric
         const alphanumeric = validation.alphanumeric?.find(col => col === column.columnId);
         if (alphanumeric) {
           validatorFns.push((control: AbstractControl) => {
+            if (control.value) {
+              const tester = new RegExp(/^[a-z0-9]+$/i, 'g');
+              if (!tester.test(control.value)) {
+                return Validators.email(control) ? {
+                  alphanumeric: '限英數字'
+                } : null;
+              }
+            }
             return null;
           });
         }
@@ -171,7 +195,7 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     this.formGroup.reset();
   }
 
-  requestFormInfo(): Observable<FarmFormInfoModel> {
+  getFormInfo(): Observable<FarmFormInfoModel> {
     try {
       const formGroup = this.formGroup;
 
@@ -199,19 +223,19 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
       if (!formGroup.valid) { return throwError('Form is not valid.'); }
       return of(info);
     } catch (error) {
-      CmsErrorHandler.throwAndShow(error, 'FarmFormInfoComponent.requestFormInfo()', '處理表單資料錯誤');
+      CmsErrorHandler.throwAndShow(error, 'FarmFormInfoComponent.getFormInfo()', '處理表單資料錯誤');
     }
     return null;
   }
 
   checkColumnTrigger(column: FarmFormInfoModelColumn) {
+    const columnValue = this.formGroup?.get(column.columnId).value;
     const triggers = column?.triggers;
     if (!triggers?.length) { return; }
     triggers.forEach(trigger => {
-      const affectedColumns = trigger.triggerTarget; // 受影響的所有 column
       if (trigger.triggerType === FarmFormInfoColumnTriggerType.DATATRIGGER) {
         const triggerID = trigger.triggerSetting.triggerId;
-        this.farmService.listFarmTriggerData(triggerID)
+        this.farmService.listFarmTriggerData(triggerID, { [column.columnId]: columnValue })
           .pipe(CmsErrorHandler.rxHandleError())
           .subscribe(options => {
             trigger.triggerTarget.forEach(target => {
@@ -220,44 +244,43 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
             });
           });
       } else {
-        const columnValue = this.formGroup?.get(column.columnId).value;
-        const triggeredColumn = trigger.triggerSetting[columnValue]; // 當前 trigger 的 column
-        affectedColumns.forEach(affectedColumn => {
-          const columnSetting = this.formColumnSettingMap.get(affectedColumn);
-
-          switch (trigger.triggerType) {
-            case FarmFormInfoColumnTriggerType.ENABLETRIGGER:
-              affectedColumn === triggeredColumn
-                ? columnSetting.enable = true
-                : columnSetting.enable = false;
-              break;
-            case FarmFormInfoColumnTriggerType.READONLYTRIGGER:
-              affectedColumn === triggeredColumn
-                ? columnSetting.readonly = true
-                : columnSetting.readonly = false;
-              break;
-            case FarmFormInfoColumnTriggerType.REQUIREDTRIGGER:
-              affectedColumn === triggeredColumn
-                ? columnSetting.required = true
-                : columnSetting.required = false;
-              break;
-          }
-        });
+        for (const condition of Object.keys(trigger.triggerSetting)) {
+          const tiggeredValue = columnValue === condition;
+          const affectedColumns  // 受影響的所有 column
+            = trigger.triggerSetting[condition].split(',').filter(v => !!v);
+          affectedColumns.forEach(affectedColumn => {
+            const affectedControl = this.formGroup.get(affectedColumn);
+            const columnSetting = this.formColumnSettingMap.get(affectedColumn);
+            switch (trigger.triggerType) {
+              case FarmFormInfoColumnTriggerType.ENABLETRIGGER:
+                columnSetting.enable = tiggeredValue;
+                break;
+              case FarmFormInfoColumnTriggerType.READONLYTRIGGER:
+                columnSetting.readonly = tiggeredValue;
+                break;
+              case FarmFormInfoColumnTriggerType.REQUIREDTRIGGER:
+                columnSetting.required = tiggeredValue;
+                break;
+            }
+            affectedControl.updateValueAndValidity();
+          });
+        }
       }
     });
+    this.formGroup.updateValueAndValidity();
   }
 
   openContentEditor(col: FarmFormInfoModelColumn) {
     try {
-      const controlID = this.funcID;
+      const controlID = col?.setting?.editorControlId;
       const control = this.formGroup.get(col.columnId);
 
       const content = JSON.parse((control.value) as string) as ContentInfo;
       if (this.mode === 'preview') {
         this.contentEditorService.openEditorPreview(content, controlID).subscribe();
       } else {
-        this.contentEditorService.openEditorByContent(content, controlID).subscribe(result => {
-          control.setValue(JSON.stringify(result));
+        this.contentEditorService.openEditorByContent(content, controlID).subscribe(res => {
+          control.setValue(JSON.stringify(res.contentInfo));
         });
       }
     } catch (error) {
@@ -276,14 +299,73 @@ export class FarmFormInfoComponent implements FarmFormComp, OnInit {
     });
   }
 
-  changeGallery(col: FarmFormInfoModelColumn) {
+  selectImage(col: FarmFormInfoModelColumn) {
+    const beforeSelecImage$ = this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage
+      ? this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage(col, this.farmFormInfo, this.formGroup)
+      : of(undefined);
+
+    const selectImage$ = new Observable<UploadResponse>(subscriber => {
+      const galleryID = col.value;
+      const galleryName = col.setting.fileName;
+      const limitFileNameExt = col.setting.limitFileNameExt;
+      const accept = limitFileNameExt
+        ? (limitFileNameExt.split(',').map(ext => `.${ext.toLowerCase()}`) as GalleryFileType[]).join(',')
+        : undefined;
+      const imageHeightWidth = col.setting.imgLimitWidth > 0 && col.setting.imgLimitHeight > 0
+        ? { width: col.setting.imgLimitWidth, height: col.setting.imgLimitHeight }
+        : null;
+      (
+        galleryID
+          ? this.gallerySharedService.updateGalleryImage(
+            `${galleryID}`,
+            galleryName,
+            accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
+            imageHeightWidth,
+          )
+          : this.gallerySharedService.addGalleryImage(accept, imageHeightWidth)
+      ).subscribe(res => { subscriber.next(res); }, err => { subscriber.error(err); });
+    });
+
+    beforeSelecImage$.pipe(
+      concatMap(_ => selectImage$)
+    ).subscribe(res => {
+      if (res) {
+        this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
+        col.setting.fileName = res.galleryName;
+      }
+    });
+  }
+
+  selectFile(col: FarmFormInfoModelColumn) {
+    const galleryID = col.value;
+    const galleryName = col.setting.fileName;
     const limitFileNameExt = col.setting.limitFileNameExt;
-    this.gallerySharedService.openGallery(
-      limitFileNameExt ? (limitFileNameExt.split(',').map(ext => ext.toLowerCase()) as GalleryFileType[]) : undefined
-    ).subscribe(selectedGallery => {
-      if (selectedGallery) {
-        this.formGroup.get(col.columnId).setValue(`${selectedGallery.galleryId}`);
-        col.setting.fileName = selectedGallery.fileName;
+    const accept = limitFileNameExt
+      ? (limitFileNameExt.split(',').map(ext => `.${ext.toLowerCase()}`) as GalleryFileType[]).join(',')
+      : undefined;
+    (
+      !galleryID
+        ? this.gallerySharedService.addGalleryFile(accept)
+        : col.setting.fileUploadOption === FarmFormInfoColumnFileUploadOption.LOCAL
+          ? this.gallerySharedService.updateGalleryFile(
+            `${galleryID}`,
+            galleryName,
+            accept || galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          )
+          : this.gallerySharedService.addGalleryFile(accept)
+    ).subscribe(res => {
+      if (res) {
+        this.formGroup.get(col.columnId).setValue(`${res.galleryId}`);
+        col.setting.fileName = res.galleryName;
+      }
+    });
+  }
+
+  openForm(col: FarmFormInfoModelColumn) {
+    this.formSharedService.openForm({}).subscribe(selectedFile => {
+      if (selectedFile) {
+        this.formGroup.get(col.columnId).setValue(`${selectedFile.galleryId}`);
+        col.setting.fileName = selectedFile.name;
       }
     });
   }

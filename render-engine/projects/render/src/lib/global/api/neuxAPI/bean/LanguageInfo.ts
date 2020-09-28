@@ -1,10 +1,9 @@
 import {ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
 import {IsNotEmpty} from 'class-validator';
-import {ContentTemplateInfo} from './ContentTemplateInfo';
+import {ContentBlockInfo} from './ContentBlockInfo';
 
 import { TypeFactory } from '../type-factory';
-import { ContentBlockInfo } from './ContentBlockInfo';
 
 export class LanguageInfo {
 

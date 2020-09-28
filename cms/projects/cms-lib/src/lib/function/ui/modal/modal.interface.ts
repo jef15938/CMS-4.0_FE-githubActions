@@ -32,8 +32,8 @@ export interface ModalSetting {
   hideCloseBtn?: boolean;
 }
 
-export interface ModalOpenComponentConfig<TComponent extends CustomModalBase> {
-  component: Type<TComponent> | TemplateRef<TComponent>;
+export interface ModalOpenComponentConfig<TComponent extends CustomModalBase<TComponent, R>, R> {
+  component: Type<CustomModalBase<TComponent, R>> | TemplateRef<CustomModalBase<TComponent, R>>;
   componentInitData?: Partial<TComponent>;
   modalSetting?: ModalSetting;
 }

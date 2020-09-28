@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   templateUrl: './my-auditing-detail-modal.component.html',
   styleUrls: ['./my-auditing-detail-modal.component.scss']
 })
-export class MyAuditingDetailModalComponent extends CustomModalBase implements OnInit {
+export class MyAuditingDetailModalComponent extends CustomModalBase<MyAuditingDetailModalComponent, any> implements OnInit {
   title = '審核紀錄';
   actions;
 

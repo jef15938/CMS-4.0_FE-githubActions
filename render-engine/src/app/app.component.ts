@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { GTagService } from './global/service/gtag.service';
+import { GTagService } from '@neux/render';
 
 @Component({
   selector: 'rdr-root',

@@ -15,6 +15,8 @@
     "build:ssr": "ng build --prod && ng run render-engine:server:production",
     "build:sit": "ng build --configuration=sit && ng run render-engine:server:sit",
     "build:uat": "ng build --configuration=uat && ng run render-engine:server:uat",
+    "build:dev": "ng build --configuration=dev && ng run render-engine:server:dev",
+    "build:prod": "ng build --prod && ng run render-engine:server:production",
     "prerender": "ng run render-engine:prerender"
   },
   "private": true,
@@ -29,7 +31,7 @@
     "@angular/platform-browser-dynamic": "~10.1.0",
     "@angular/platform-server": "~10.1.0",
     "@angular/router": "~10.1.0",
-    "@neux/core": "^0.1.15",
+    "@neux/core": "^0.1.16",
     "@neux/ui": "0.0.28-next.4",
     "@ngrx/effects": "^10.0.0",
     "@ngrx/schematics": "^10.0.0",
@@ -39,8 +41,9 @@
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "express": "^4.15.2",
-    "ngx-swiper-wrapper": "^9.0.1",
+    "ngx-swiper-wrapper": "^10.0.0",
     "rxjs": "~6.5.4",
+    "swiper": "^6.2.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

@@ -10,6 +10,7 @@ import { GroupInfoModel } from '../../../../global/api/data-model/models/group-i
 import { LayoutInfoModel } from '../../../../global/api/data-model/models/layout-info.model';
 import { UserSiteMapPostRequestModel } from '../../../../global/api/data-model/models/user-sitemap-post-request.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { CmsLoadingToggle } from '../../../../global/service';
 
 class SiteMapCreateModel extends UserSiteMapPostRequestModel {
 
@@ -54,7 +55,7 @@ class SiteMapCreateModel extends UserSiteMapPostRequestModel {
   templateUrl: './sitemap-node-create-modal.component.html',
   styleUrls: ['./sitemap-node-create-modal.component.scss']
 })
-export class SitemapNodeCreateModalComponent extends CustomModalBase implements OnInit {
+export class SitemapNodeCreateModalComponent extends CustomModalBase<SitemapNodeCreateModalComponent, 'Success'> implements OnInit {
   title = '新增節點';
   actions: CustomModalActionButton[];
 
@@ -94,6 +95,7 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     private contentService: ContentService,
     private gallerySharedService: GallerySharedService,
     private groupService: GroupService,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { super(); }
 
   ngOnInit(): void {
@@ -118,10 +120,15 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
 
   confirm() {
     this.sitemapMaintainModel.assignGroupId = this.assignGroupIds.join(',');
+    this.cmsLoadingToggle.open();
     this.sitemapService.createSiteNode(this.siteId, this.sitemapMaintainModel).pipe(
-      CmsErrorHandler.rxHandleError(),
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        this.cmsLoadingToggle.close();
+        showMessage();
+      })
     ).subscribe(_ => {
-      this.close('Created');
+      this.cmsLoadingToggle.close();
+      this.close('Success');
     });
   }
 
@@ -155,11 +162,19 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase implements 
     ev.preventDefault();
   }
 
-  openGallery() {
-    return this.gallerySharedService.openImgGallery().subscribe(selected => {
-      if (selected) {
-        this.metaImageName = selected.fileName;
-        this.sitemapMaintainModel.metaImage = `${selected.galleryId}`;
+  selectImage() {
+    const galleryID = this.sitemapMaintainModel.metaImage;
+    const galleryName = this.metaImageName;
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryImage(`${galleryID}`, galleryName, null, null)
+        : this.gallerySharedService.addGalleryImage('', null)
+    ).subscribe(res => {
+      if (res) {
+        if (res) {
+          this.metaImageName = res.galleryName;
+          this.sitemapMaintainModel.metaImage = `${res.galleryId}`;
+        }
       }
     });
   }

@@ -10,7 +10,8 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
   templateUrl: './content-version-recover-modal.component.html',
   styleUrls: ['./content-version-recover-modal.component.scss']
 })
-export class ContentVersionRecoverModalComponent extends CustomModalBase implements OnInit {
+export class ContentVersionRecoverModalComponent extends CustomModalBase<ContentVersionRecoverModalComponent, ContentVersionInfoModel>
+  implements OnInit {
   title = '歷史版本';
   actions: CustomModalActionButton[];
 

@@ -1,18 +1,28 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Inject } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
-import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
-import { GalleryService } from '../../../../../global/api/service';
 import { Subject, fromEvent } from 'rxjs';
 import { switchMap, tap, takeUntil } from 'rxjs/operators';
+import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../../../global/interface';
+
+export interface HtmlEditorInsertImgModalResponse {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  galleryID: number;
+  galleryName: string;
+}
 
 @Component({
   selector: 'cms-html-editor-insert-img-modal',
   templateUrl: './html-editor-insert-img-modal.component.html',
   styleUrls: ['./html-editor-insert-img-modal.component.scss']
 })
-export class HtmlEditorInsertImgModalComponent extends CustomModalBase implements OnInit, OnDestroy {
+export class HtmlEditorInsertImgModalComponent
+  extends CustomModalBase<HtmlEditorInsertImgModalComponent, HtmlEditorInsertImgModalResponse>
+  implements OnInit, OnDestroy {
 
   @ViewChild('Img') img: ElementRef<HTMLImageElement>;
 
@@ -24,12 +34,14 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
   @Input() width: number = null;
   @Input() height: number = null;
   @Input() galleryID: number = null;
+  @Input() galleryName = '';
+
+  timestamp = new Date().getTime();
 
   private srcChange$ = new Subject();
   private destroy$ = new Subject();
 
   constructor(
-    private galleryService: GalleryService,
     private gallerySharedService: GallerySharedService,
     @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
   ) { super(); }
@@ -39,7 +51,8 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
     this.alt = this.alt || '';
     this.width = this.width || null;
     this.height = this.height || null;
-    this.galleryID = this.height || null;
+    this.galleryID = this.galleryID || null;
+    this.galleryName = this.galleryName || '';
 
     this.srcChange$.pipe(
       takeUntil(this.destroy$),
@@ -63,11 +76,25 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
     this.height = img.height;
   }
 
-  changeGallery() {
-    this.gallerySharedService.openImgGallery().subscribe(selectedGallery => {
-      if (selectedGallery) {
-        this.galleryID = selectedGallery.galleryId;
-        this.src = `${this.environment.apiBaseUrl}${selectedGallery.url}`;
+  selectImage() {
+    const galleryID = this.galleryID;
+    const galleryName = this.galleryName;
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryImage(
+          `${galleryID}`,
+          galleryName,
+          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          null,
+        )
+        : this.gallerySharedService.addGalleryImage('', null)
+    ).subscribe(res => {
+      if (res) {
+        this.timestamp = new Date().getTime();
+        const saved = res as any;
+        this.galleryID = saved.galleryId;
+        this.galleryName = saved.galleryName;
+        this.src = `${this.environment.apiBaseUrl}${saved.path}`;
         this.checkImgSize();
       }
     });
@@ -80,6 +107,7 @@ export class HtmlEditorInsertImgModalComponent extends CustomModalBase implement
       width: this.width || 200,
       height: this.height || 200,
       galleryID: this.galleryID || 200,
+      galleryName: this.galleryName,
     });
   }
 

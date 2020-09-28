@@ -1,9 +1,17 @@
 <div class="sitemap-node-update-modal modal-form-layout">
-  <form class="sitemap-node-update-modal__form modal-form-layout__form" #form="ngForm">
+  <form class="sitemap-node-update-modal__form modal-form-layout__form" #form="ngForm" *ngIf="putRequest">
 
     <div class="modal-form-layout__row">
       <div class="modal-form-layout__col">
-        <mat-form-field appearance="outline" *ngIf="putRequest">
+        <mat-checkbox class="form__checkbox" [(ngModel)]="putRequest.isMegaMenu" name="megamenu">
+          MegaMenu
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div class="modal-form-layout__row">
+      <div class="modal-form-layout__col">
+        <mat-form-field appearance="outline">
           <mat-label>節點類型</mat-label>
           <mat-select [(ngModel)]="sitemapNode.nodeType" name="nodeType" disabled
             [compareWith]="compareOptionWithModel">
@@ -77,8 +85,8 @@
           <div class="modal-form-layout__col">
             <mat-form-field appearance="outline">
               <mat-label>節點連結路徑</mat-label>
-              <input type="input" matInput [(ngModel)]="putRequest.contentPath" name="contentPath" maxlength="100" rows="1"
-                pattern="^[A-Za-z0-9\-]*$" #modelContentPath="ngModel">
+              <input type="input" matInput [(ngModel)]="putRequest.contentPath" name="contentPath" maxlength="100"
+                rows="1" pattern="^[A-Za-z0-9\-]*$" #modelContentPath="ngModel">
               <div matSuffix class="input-suffix">({{putRequest?.contentPath?.length||0}}/100)</div>
               <mat-error *ngIf="modelContentPath?.errors?.pattern">限英數字和-</mat-error>
             </mat-form-field>
@@ -109,8 +117,8 @@
             <div class="modal-form-layout__col">
               <mat-form-field appearance="outline">
                 <mat-label>Meta標題</mat-label>
-                <input type="input" matInput [(ngModel)]="detail.metaTitle" name="metaTitle" required maxlength="500" rows="1"
-                  #modelMetaTitle="ngModel">
+                <input type="input" matInput [(ngModel)]="detail.metaTitle" name="metaTitle" required maxlength="500"
+                  rows="1" #modelMetaTitle="ngModel">
                 <div matSuffix class="input-suffix">({{detail?.metaTitle?.length||0}}/500)</div>
                 <mat-error *ngIf="modelMetaTitle?.errors?.required">必填欄位</mat-error>
               </mat-form-field>
@@ -143,7 +151,7 @@
                 <input matInput [value]="detail.metaImageName" name="meta_image" readonly>
               </mat-form-field>
               <button class="modal-form-layout__btn gallery-btn  btn btn-dark" type="button" tabindex="0"
-                mat-raised-button (click)="openGallery(detail)">媒體庫</button>
+                mat-raised-button (click)="selectImage(detail)">{{detail.metaImage?'修改':'加入'}}圖片</button>
             </div>
           </div>
         </ng-template>

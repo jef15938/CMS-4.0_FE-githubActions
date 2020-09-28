@@ -1,7 +1,8 @@
-import { Directive, Input, Injector, AfterContentChecked } from '@angular/core';
+import { Directive, Input, Injector, OnChanges, SimpleChanges } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
 import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
-import { SitesResponseModel } from '../../../../global/api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
+import { Router } from '@angular/router';
 
 export enum LinkFieldInfoUrlType {
   INSIDE = 'INSIDE',
@@ -12,7 +13,7 @@ export interface LinkFieldInfo extends ContentFieldInfoModel {
   extension: {
     isTargetBlank: 'true' | 'false';
     urlType: LinkFieldInfoUrlType;
-    siteId: '';
+    siteId: string;
   };
 }
 
@@ -20,32 +21,36 @@ export interface LinkFieldInfo extends ContentFieldInfoModel {
   selector: '[libLayoutFieldLink]',
   exportAs: 'field',
 })
-export class LayoutFieldLinkDirective extends TemplateFieldDirective implements AfterContentChecked {
+export class LayoutFieldLinkDirective extends TemplateFieldDirective implements OnChanges {
   @Input('libLayoutFieldLink') fieldInfo: LinkFieldInfo;
 
   constructor(
     injector: Injector,
+    private router: Router,
   ) {
     super(injector);
   }
 
-  ngAfterContentChecked(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (this.runtime) {
       const el = this.elementRef.nativeElement as HTMLElement;
       const aTag = (el?.tagName?.toLowerCase() === 'a' ? el : el.querySelector('a')) as HTMLAnchorElement;
       if (!aTag) { return; }
 
-      const isInside = aTag.getAttribute('urltype') === 'INSIDE';
+      const isInside = this.fieldInfo.extension.urlType === 'INSIDE';
       if (!isInside) { return; }
 
       const isHrefSet = !!aTag.getAttribute('nodeId');
       if (!isHrefSet) {
-        const siteId = aTag.getAttribute('siteid');
+        const siteId = this.fieldInfo.extension.siteId;
         const nodeId = aTag.getAttribute('href');
-        const href = SitesResponseModel.findContentPathBySiteIdAndNodeId(this.sites, siteId, nodeId);
+        const sites = this.sites;
+        const href = SiteMapGetResponseModel.findContentPathBySiteIdAndNodeId(sites, siteId, nodeId);
         if (href) {
           aTag.setAttribute('nodeId', nodeId);
-          aTag.setAttribute('href', href);
+          const paths = this.router.url.split('/').filter(v => !!v);
+          paths[paths.length - 1] = href;
+          aTag.setAttribute('href', `/${paths.join('/')}`);
         }
       }
     }
@@ -55,7 +60,7 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
     if (this.mode === 'edit' || !this.runtime) {
       ev.preventDefault(); // 避免真的開連結，但也會讓 Base 的 TemplateFieldDirective.click() 收不到 event
       super.click(ev);
-      // ev.stopPropagation(); // 會讓 Base 的 TemplateFieldDirective.click() 收不到 event
+      ev.stopPropagation(); // 會讓 Base 的 TemplateFieldDirective.click() 收不到 event
     }
   }
 }

@@ -16,7 +16,7 @@ export class FarmSharedService {
     private modalService: ModalService,
   ) { }
 
-  openFarm(funcID: string): Observable<any> {
+  openFarm(funcID: string, fullScreen = true): Observable<any> {
     return this.modalService.openComponent({
       component: FarmSharedContainerModalComponent,
       componentInitData: {
@@ -26,7 +26,7 @@ export class FarmSharedService {
         width: '1440px',
         maxHeight: '90%',
       }
-    });
+    }, fullScreen);
   }
 
   openFarmPreview(funcID: string, dataID: string): Observable<any> {

@@ -7,7 +7,7 @@ import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/f
   templateUrl: './farm-form-view-data-modal.component.html',
   styleUrls: ['./farm-form-view-data-modal.component.scss']
 })
-export class FarmFormViewDataModalComponent extends CustomModalBase implements OnInit {
+export class FarmFormViewDataModalComponent extends CustomModalBase<FarmFormViewDataModalComponent, any> implements OnInit {
 
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];

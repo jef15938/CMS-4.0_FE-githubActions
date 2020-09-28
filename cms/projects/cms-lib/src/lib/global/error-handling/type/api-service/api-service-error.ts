@@ -65,3 +65,15 @@ export class SitemapServiceError extends CmsApiServiceError {
     super(SitemapServiceError, 'Sitemap', 1090);
   }
 }
+
+export class FormServiceError extends CmsApiServiceError {
+  constructor() {
+    super(FormServiceError, 'Form', 1100);
+  }
+}
+
+export class SliderServiceError extends CmsApiServiceError {
+  constructor() {
+    super(SliderServiceError, 'Slider', 1200);
+  }
+}

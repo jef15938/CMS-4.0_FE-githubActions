@@ -4,15 +4,16 @@
   </div>
   <div>
     <mat-list cdkDropList (cdkDropListDropped)="onListDropped($event)">
-      <mat-list-item *ngFor="let group of templateInfo.itemList; let i = index;" cdkDrag>
+      <mat-list-item *ngFor="let group of templateInfo.itemList; let i = index;" cdkDrag [disabled]="!isTemplateMode">
         <div class="item-container">
           <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
           <span>{{!groupItemDisplayFieldId?i:findFieldByFieldId(group, groupItemDisplayFieldId)?.fieldVal}}</span>
           <button type="button" tabindex="0" mat-icon-button
-            [disabled]="templateInfo.itemList.length>=parseInt(''+maxItemCount)" (click)="copyGroup(group)">
+            [disabled]="!isTemplateMode || (templateInfo.itemList.length>=parseInt(''+maxItemCount))"
+            (click)="copyGroup(group)">
             <mat-icon class="pointer">file_copy</mat-icon>
           </button>
-          <button type="button" tabindex="0" mat-icon-button (click)="removeGroup(group)">
+          <button type="button" tabindex="0" mat-icon-button [disabled]="!isTemplateMode" (click)="removeGroup(group)">
             <mat-icon class="pointer">remove_circle</mat-icon>
           </button>
         </div>

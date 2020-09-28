@@ -1,7 +1,7 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
-import { ATTRIBUTE_GALLERY_ID } from '../../const/html-editor-container.const';
+import { ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME } from '../../const/html-editor-container.const';
 
 export interface InsertImageConfig {
   src: string;
@@ -9,6 +9,7 @@ export interface InsertImageConfig {
   width: number;
   height: number;
   galleryID: number;
+  galleryName: string;
 }
 
 export class InsertImage extends HtmlEditorActionBase {
@@ -19,7 +20,7 @@ export class InsertImage extends HtmlEditorActionBase {
       component: HtmlEditorInsertImgModalComponent,
       componentInitData: { title: '插入圖片' },
     }).pipe(
-      tap((config: InsertImageConfig) => {
+      tap(config => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
         this.addImg(config);
@@ -39,9 +40,9 @@ export class InsertImage extends HtmlEditorActionBase {
       img.setAttribute('height', `${config.height}`);
       img.setAttribute('width', `${config.width}`);
       img.setAttribute('alt', `${config.alt}`);
-      if (config.galleryID) {
-        img.setAttribute(ATTRIBUTE_GALLERY_ID, `${config.galleryID}`);
-      }
+      img.setAttribute(ATTRIBUTE_GALLERY_ID, `${config.galleryID || ''}`);
+      img.setAttribute(ATTRIBUTE_GALLERY_NAME, `${config.galleryName || ''}`);
+
       return img;
     }
     return undefined;

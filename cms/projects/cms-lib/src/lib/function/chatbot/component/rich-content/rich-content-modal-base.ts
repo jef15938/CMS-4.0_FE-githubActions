@@ -5,7 +5,8 @@ import { CustomModalBase, CustomModalActionButton, ModalService } from '../../..
 import { ChatbotService } from '../../service/chatbot.service';
 
 @Directive()
-export abstract class RichContentModalComponent<TContent extends RichContent> extends CustomModalBase implements OnInit {
+export abstract class RichContentModalComponent<TContent extends RichContent>
+  extends CustomModalBase<RichContentModalComponent<any>, RichContent> implements OnInit {
   abstract title: string;
   actions: CustomModalActionButton[] = [];
 

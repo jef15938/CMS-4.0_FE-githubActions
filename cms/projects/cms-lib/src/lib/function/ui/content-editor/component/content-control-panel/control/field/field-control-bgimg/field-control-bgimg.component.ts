@@ -12,6 +12,8 @@ import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-m
 })
 export class FieldControlBgimgComponent extends ContentControlBase implements OnInit, OnChanges {
 
+  ATTRIBUTE_GALLERY_ID = ATTRIBUTE_GALLERY_ID;
+
   fieldInfo: ContentFieldInfoModel;
 
   adviceFormat = '';
@@ -38,11 +40,28 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
     }
   }
 
-  changeGallery() {
-    this.gallerySharedService.openImgGallery().subscribe(selectedGallery => {
-      if (selectedGallery) {
-        this.fieldInfo.fieldVal = selectedGallery.url;
-        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${selectedGallery.galleryId}`;
+  selectImage() {
+    const galleryID = this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID];
+    const galleryName = this.fieldInfo.extension.galleryName;
+    const imageHeightWidth = this.adviceWidth > 0 && this.adviceHeight > 0
+      ? { width: this.adviceWidth, height: this.adviceHeight }
+      : null;
+
+    (
+      galleryID
+        ? this.gallerySharedService.updateGalleryImage(
+          `${galleryID}`,
+          galleryName,
+          galleryName.substring(galleryName.lastIndexOf('.') + 1),
+          imageHeightWidth,
+        )
+        : this.gallerySharedService.addGalleryImage('', imageHeightWidth)
+    ).subscribe(res => {
+      if (res) {
+        const saved = res as any;
+        this.fieldInfo.fieldVal = saved.path;
+        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${saved.galleryId}`;
+        this.fieldInfo.extension.galleryName = saved.galleryName;
         this.change.emit();
       }
     });

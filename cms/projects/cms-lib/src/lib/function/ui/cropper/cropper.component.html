@@ -11,7 +11,7 @@
   <cms-cropper-menu-setting [cropper]="cropperWrapper.cropper"></cms-cropper-menu-setting>
 </div>
 
-<ng-container *ngIf="imgUrl">
+<ng-container *ngIf="imgUrl && cropperOption">
   <div class="cropper__ele">
     <angular-cropper #Cropper [cropperOptions]="cropperOption" [imageUrl]="imgUrl | safeResource"
       (imageLoaded)="onImageLoaded($event)">

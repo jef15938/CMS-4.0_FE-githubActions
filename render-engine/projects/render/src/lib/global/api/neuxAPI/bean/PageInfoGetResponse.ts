@@ -19,6 +19,8 @@ public content_id: string;
 public lang: string;
 @IsNotEmpty()
 public node_root: string;
-
+public node_parent: string;
+@IsNotEmpty()
+public domain: string;
 
 }

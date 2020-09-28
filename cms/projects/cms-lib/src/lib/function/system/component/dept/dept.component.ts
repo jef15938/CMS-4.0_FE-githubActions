@@ -42,7 +42,7 @@ export class DeptComponent implements OnInit {
 
   onCustomEvent(event: DeptNodeCustomEvent, depts: DepartmentInfoModel[]) {
     if (event instanceof DeptNodeCustomEvent) {
-      let actionOb: Observable<any> = of(undefined);
+      let actionOb: Observable<'Success'> = of(undefined);
       switch (event.action) {
         case event.ActionType.CREATE:
           actionOb = this.openDeptMaintainModal('Create', event.data, depts);
@@ -56,7 +56,7 @@ export class DeptComponent implements OnInit {
       }
 
       actionOb.subscribe(res => {
-        if (res) {
+        if (!!res) {
           this.refresh$.next(undefined);
         }
       });

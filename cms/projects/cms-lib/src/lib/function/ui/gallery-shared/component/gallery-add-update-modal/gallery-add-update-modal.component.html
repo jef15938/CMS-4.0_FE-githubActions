@@ -1,0 +1,79 @@
+<input type="file" [id]="fileUploadInputIdentifier" [name]="fileUploadInputIdentifier" [accept]="accept"
+  style="display:none;" />
+<img #tempOrigin *ngIf="galleryId&&galleryType===GalleryType.IMAGE"
+  [src]="(environment.apiBaseUrl+'/GalleryShowOriginal/'+galleryId)|safeResource" style="display: none;"
+  crossOrigin="anonymous">
+<div class="cms-gallery-add-update-modal" *ngIf="currentStepState">
+  <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="onStepSelectionChange($event)">
+    <mat-step *ngIf="galleryId && galleryType===GalleryType.IMAGE" [state]="StepState.MODIFY_IMAGE_APPROACH"
+      [stepControl]="formGroupModifyImageApproach" [hasError]="formGroupModifyImageApproach?.invalid">
+      <ng-template matStepLabel>修改方式</ng-template>
+      <div class="text-center" [formGroup]="formGroupModifyImageApproach">
+        <mat-radio-group formControlName="value" (change)="onModifyImageApproachChange($event)">
+          <mat-radio-button value="new">
+            上傳新圖
+          </mat-radio-button>
+          <mat-radio-button value="crop">
+            重新裁切
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-step>
+    <mat-step [state]="StepState.SELECT_FILE" [stepControl]="formGroupSelectFile"
+      *ngIf="!galleryId ||formGroupModifyImageApproach?.get('value')?.value!=='crop'"
+      [hasError]="formGroupSelectFile?.invalid">
+      <ng-template matStepLabel>選擇{{typeText}}</ng-template>
+      <div *ngIf="formGroupSelectFile?.invalid" class="text-center text-danger">
+        <span>請選擇{{typeText}}</span>
+      </div>
+      <div *ngIf="formGroupSelectFile?.valid" class="text-center">
+        <span>{{typeText}}名稱：{{formGroupSelectFile?.get('value')?.value.fileName}}</span>
+      </div>
+    </mat-step>
+    <mat-step *ngIf="galleryType===GalleryType.IMAGE" [state]="StepState.CROP_FILE" [stepControl]="formGroupCropFile"
+      [hasError]="formGroupCropFile?.invalid">
+      <ng-template matStepLabel>裁切{{typeText}}</ng-template>
+      <div *ngIf="imageHeightWidth||formGroupCropFile?.invalid" class="text-center">
+        <span *ngIf="formGroupCropFile?.invalid" class="text-danger">請裁切圖片</span>
+        <ng-container *ngIf="imageHeightWidth">
+          <span *ngIf="imageHeightWidth&&formGroupCropFile?.invalid">：</span>
+          <span>解析度 {{imageHeightWidth.width > -1 ? imageHeightWidth.width : '任意'}} x
+            {{imageHeightWidth.height > -1 ? imageHeightWidth.height : '任意'}}</span>
+        </ng-container>
+      </div>
+    </mat-step>
+    <mat-step [state]="StepState.UPLOAD">
+      <ng-template matStepLabel>上傳{{typeText}}</ng-template>
+      <div class="info-container"
+        *ngIf="(galleryType===GalleryType.IMAGE?formGroupCropFile:formGroupSelectFile)?.get('value')?.value; let file;">
+        <div class="info-content">
+          {{typeText}}名稱：<br>{{file.fileName}}
+        </div>
+        <div class="info-content">
+          {{typeText}}大小：<br>{{file.fileSize | gellerySize}}
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+  <div class="btn-group">
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit"
+      [disabled]="currentStepState!==StepState.SELECT_FILE" (click)="chooseFile()">選擇{{typeText}}</button>
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" *ngIf="galleryType===GalleryType.IMAGE"
+      [disabled]="currentStepState!==StepState.CROP_FILE"
+      (click)="cropFile(formGroupSelectFile?.get('value')?.value)">裁切{{typeText}}</button>
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit"
+      [disabled]="currentStepState!==StepState.UPLOAD" (click)="upload()">上傳{{typeText}}</button>
+  </div>
+  <div class="info-container" *ngIf="galleryType===GalleryType.IMAGE">
+    <div class="info-content width-max-half" *ngIf="formGroupSelectFile?.get('value')?.value; let file;">
+      原圖
+      <br>
+      <img [src]="file.url">
+    </div>
+    <div class="info-content width-max-half" *ngIf="formGroupCropFile?.get('value')?.value; let file;">
+      裁切
+      <br>
+      <img [src]="file.url">
+    </div>
+  </div>
+</div>

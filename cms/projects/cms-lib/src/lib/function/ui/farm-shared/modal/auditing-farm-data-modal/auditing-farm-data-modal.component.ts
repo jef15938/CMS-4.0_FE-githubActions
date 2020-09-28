@@ -5,13 +5,14 @@ import { FarmService } from '../../../../../global/api/service';
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
 import { CmsFormValidator } from '../../../../../global/util/form-validator';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
+import { CmsLoadingToggle } from '../../../../../global/service/cms-loading-toggle.service';
 
 @Component({
   selector: 'cms-auditing-farm-data-modal',
   templateUrl: './auditing-farm-data-modal.component.html',
   styleUrls: ['./auditing-farm-data-modal.component.scss']
 })
-export class AuditingFarmDataModalComponent extends CustomModalBase implements OnInit {
+export class AuditingFarmDataModalComponent extends CustomModalBase<AuditingFarmDataModalComponent, 'Success'> implements OnInit {
   title = '送審';
   actions: CustomModalActionButton[];
 
@@ -24,6 +25,7 @@ export class AuditingFarmDataModalComponent extends CustomModalBase implements O
     formBuilder: FormBuilder,
     private farmService: FarmService,
     private cmsDateAdapter: CmsDateAdapter,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) {
     super();
     const now = new Date();
@@ -46,14 +48,21 @@ export class AuditingFarmDataModalComponent extends CustomModalBase implements O
   }
 
   confirm() {
+    this.cmsLoadingToggle.open();
     this.farmService.auditingFarmData(
       this.funcId,
       this.dataId,
       this.cmsDateAdapter.format(this.form.controls.startTime.value),
       this.cmsDateAdapter.format(this.form.controls.endTime.value),
       this.form.controls.memo.value,
-    ).pipe(CmsErrorHandler.rxHandleError()).subscribe(_ => {
-      this.close('Created');
+    ).pipe(
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        this.cmsLoadingToggle.close();
+        showMessage();
+      })
+    ).subscribe(_ => {
+      this.cmsLoadingToggle.close();
+      this.close('Success');
     });
   }
 

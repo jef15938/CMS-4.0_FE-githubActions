@@ -240,11 +240,6 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit, OnCh
 
   onSelect(ev: LayoutWrapperSelectEvent) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
-    if (
-      this.editorActionMode === ContentEditorActionMode.LAYOUT
-      && ev.selectedTargetType === LayoutWrapperSelectedTargetType.FIELD
-      && ev.templateInfo.templateId !== 'HTML'
-    ) { return; }
     this.select.emit(ev);
   }
 

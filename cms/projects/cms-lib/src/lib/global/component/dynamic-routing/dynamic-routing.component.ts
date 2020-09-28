@@ -11,8 +11,7 @@ import { FarmInfoGetResponseModel } from '../../api/data-model/models/farm-info-
 export class DynamicRoutingComponent implements OnInit, OnDestroy {
 
   componentId: string;
-  funcId: string;
-
+  funcID: string;
   farm: FarmInfoGetResponseModel;
 
   subscription: Subscription;
@@ -22,7 +21,9 @@ export class DynamicRoutingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscription = this.activatedRoute.data.subscribe(data => {
+    this.subscription = this.activatedRoute.data.subscribe((resolved: { data: { farm, funcID } }) => {
+      const data = resolved?.data;
+      this.funcID = data?.funcID;
       this.farm = data?.farm;
     });
   }

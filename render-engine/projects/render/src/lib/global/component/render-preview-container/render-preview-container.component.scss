@@ -1,0 +1,108 @@
+.btn-container {
+  height: 36px;
+  background: #393939;
+  color: #fff;
+
+  button {
+    color: inherit;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  button.active {
+    color: yellow;
+  }
+}
+
+.preview {
+  .view-container.compare {
+
+    display: flex;
+
+    & .previous,
+    & .current {
+      flex: 1;
+      min-width: 50%;
+      max-width: 50%;
+      box-sizing: border-box;
+    }
+
+    & .previous {
+      border-right: 1px solid black;
+    }
+
+    & ::ng-deep .field-modified {
+      box-sizing: content-box;
+      border: 2px solid orange;
+    }
+
+    & ::ng-deep .modified {
+      &>neux-dynamic-wrapper>* {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      &.added>neux-dynamic-wrapper>* {
+        // background-color: rgba(0, 255, 255, 0.25);
+        border: 5px solid green;
+      }
+
+      &.deleted>neux-dynamic-wrapper>* {
+        // background-color: rgba(255, 0, 0, 0.25);
+        border: 5px solid red;
+      }
+
+      &.changed>neux-dynamic-wrapper>* {
+        // background-color: rgba(255, 130, 0, 0.25);
+        border: 5px solid orange;
+      }
+
+      // &>neux-dynamic-wrapper {
+      //   display: block;
+      //   position: relative;
+
+      //   &::before {
+      //     content: '';
+      //     position: absolute;
+      //     top: 0;
+      //     left: 0;
+      //     height: 100%;
+      //     width: 100%;
+      //     z-index: 9998;
+      //     box-sizing: border-box;
+      //   }
+      // }
+
+      // &.added>neux-dynamic-wrapper::before {
+      //   // background-color: rgba(0, 255, 255, 0.25);
+      //   border: 5px solid green;
+      // }
+
+      // &.deleted>neux-dynamic-wrapper::before {
+      //   // background-color: rgba(255, 0, 0, 0.25);
+      //   border: 5px solid red;
+      // }
+
+      // &.changed>neux-dynamic-wrapper::before {
+      //   // background-color: rgba(255, 130, 0, 0.25);
+      //   border: 5px solid orange;
+      // }
+    }
+  }
+}

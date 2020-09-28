@@ -9,9 +9,9 @@ import { ApproveAuditingModalComponent, AuditingApproveStatus } from '../approve
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { AuditingInfoModel } from '../../../../global/api/data-model/models/auditing-info.model';
 import { PreviewInfoType } from '../../../../global/api/data-model/models/preview-info.model';
-import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { AuditingGetResponseModel } from '../../../../global/api/data-model/models/auditing-get-response.model';
+import { CmsLoadingToggle } from '../../../../global/service/cms-loading-toggle.service';
 
 interface Model extends AuditingGetResponseModel {
   checkedData: AuditingInfoModel[];
@@ -26,10 +26,6 @@ export class AuditingComponent implements OnInit {
 
   refreshPage$ = new BehaviorSubject(1);
   auditings$: Observable<Model>;
-
-  // auditings: AuditingInfoModel[];
-  // pageInfo: PageInfoModel;
-  // checkedData: AuditingInfoModel[] = [];
 
   colDefs: ColDef<AuditingInfoModel>[] = [
     {
@@ -56,18 +52,6 @@ export class AuditingComponent implements OnInit {
       title: '意見',
       width: '60%',
     },
-    // {
-    //   colId: 'start_time',
-    //   field: 'start_time',
-    //   title: '上架時間',
-    //   format: 'DATETIME',
-    // },
-    // {
-    //   colId: 'end_time',
-    //   field: 'end_time',
-    //   title: '下架時間',
-    //   format: 'DATETIME',
-    // },
     {
       colId: 'action',
       field: 'action',
@@ -81,6 +65,7 @@ export class AuditingComponent implements OnInit {
     private auditingService: AuditingService,
     private modalService: ModalService,
     private farmSharedService: FarmSharedService,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { }
 
   ngOnInit(): void {
@@ -156,13 +141,22 @@ export class AuditingComponent implements OnInit {
         batch: Array.isArray(orderId),
         status,
       },
-    }).subscribe((res: AuditingSubmitRequestModel) => {
+    }).subscribe(res => {
       if (!res) { return; }
+      this.cmsLoadingToggle.open();
       this.auditingService.approveAuditing(
         orderId,
         res.status,
         res.comment,
-      ).pipe(CmsErrorHandler.rxHandleError()).subscribe(_ => this.refreshPage$.next(auditings.pageInfo.page));
+      ).pipe(
+        CmsErrorHandler.rxHandleError((error, showMessage) => {
+          this.cmsLoadingToggle.close();
+          showMessage();
+        })
+      ).subscribe(_ => {
+        this.cmsLoadingToggle.close();
+        this.refreshPage$.next(auditings.pageInfo.page);
+      });
     });
   }
 

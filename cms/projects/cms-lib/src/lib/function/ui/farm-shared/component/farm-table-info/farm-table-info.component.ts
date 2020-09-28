@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject, Injector, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Injector, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
 import { ACTION_COLUMN, CHECKBOX_COLUMN, FarmTableInfoActionEvent } from './farm-table-info.type';
-import { FARM_TABLE_ACTION_TOKEN } from '../../farm-shared-injection-token';
-import { FarmTableAction } from '../../farm-shared.interface';
+import { FarmCustomHandler } from '../../farm-shared.interface';
 import { Sort } from '@angular/material/sort';
 import { FarmTableDataInfoModel, FarmTableDataInfoAction, FarmTableDataInfoColumnDisplayType } from '../../../../../global/api/data-model/models/farm-table-data-info.model';
 import { FarmTableInfoModel } from '../../../../../global/api/data-model/models/farm-table-info.model';
+import { FARM_CUSTOM_HANDLER_TOKEN } from '../../farm-shared-injection-token';
 
 @Component({
   selector: 'cms-farm-table-info',
@@ -25,7 +25,8 @@ export class FarmTableInfoComponent implements OnInit, OnChanges {
   @Output() pageChange = new EventEmitter<number>();
 
   totalChecked = false;
-  customAction: FarmTableAction;
+
+  farmCustomHandler: FarmCustomHandler;
 
   sortedData: FarmTableDataInfoModel[];
 
@@ -33,12 +34,12 @@ export class FarmTableInfoComponent implements OnInit, OnChanges {
 
   constructor(
     public injector: Injector,
-    @Inject(FARM_TABLE_ACTION_TOKEN) private farmTableActions: FarmTableAction[],
+    @Inject(FARM_CUSTOM_HANDLER_TOKEN) @Optional() private farmCustomHandlers: FarmCustomHandler[],
   ) { }
 
 
   ngOnInit(): void {
-    this.customAction = this.farmTableActions.reverse().find(action => action.funcID === this.funcID);
+    this.farmCustomHandler = (this.farmCustomHandlers || []).reverse().find(h => h.funcId === this.funcID);
     this.sortData();
     this.onRowCheckChange();
   }

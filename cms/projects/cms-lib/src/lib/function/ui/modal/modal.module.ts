@@ -9,12 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { DynamicWrapperModule } from '@neux/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ShowImageModalComponent } from './component/show-image-modal/show-image-modal.component';
 
 @NgModule({
   declarations: [
     ModalCustomWrapperComponent,
     MessageModalComponent,
     ConfirmModalComponent,
+    ShowImageModalComponent,
   ],
   imports: [
     CommonModule,

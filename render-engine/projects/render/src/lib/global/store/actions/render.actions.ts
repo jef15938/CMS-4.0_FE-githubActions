@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ApiContext } from '../../api/context-api-name-factory';
-import { SitesResponseModel } from '../../api/data-model/models/sites-response.model';
+import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 
 export const fetchSitemap = createAction(
   '[Render] Fetch Sitemap',
@@ -9,7 +9,7 @@ export const fetchSitemap = createAction(
 
 export const fetchSitemapSuccess = createAction(
   '[Render] Fetch Sitemap Success',
-  props<{ sitemap: SitesResponseModel }>()
+  props<{ sitemap: SiteMapGetResponseModel }>()
 );
 
 export const fetchSitemapFailure = createAction(

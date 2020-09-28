@@ -4,13 +4,15 @@ import { DepartmentService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
 import { DepartmentDetailInfoModel } from '../../../../global/api/data-model/models/department-detail-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { CmsLoadingToggle } from '../../../../global/service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'cms-dept-maintain-modal',
   templateUrl: './dept-maintain-modal.component.html',
   styleUrls: ['./dept-maintain-modal.component.scss']
 })
-export class DeptMaintainModalComponent extends CustomModalBase implements OnInit {
+export class DeptMaintainModalComponent extends CustomModalBase<DeptMaintainModalComponent, 'Success'> implements OnInit {
 
   title: string | (() => string) = '';
   actions: CustomModalActionButton[] = [];
@@ -22,7 +24,8 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   dept$: Observable<DepartmentDetailInfoModel>;
 
   constructor(
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) {
     super();
   }
@@ -39,17 +42,23 @@ export class DeptMaintainModalComponent extends CustomModalBase implements OnIni
   }
 
   private save(dept: DepartmentDetailInfoModel) {
-    const action = this.action === 'Create' ? '新增' : '更新';
+    this.cmsLoadingToggle.open();
     return (
       this.action === 'Create'
         ? this.departmentService.createDepartment(dept.deptId, dept.deptName, this.parentId)
         : this.departmentService.updateDepartment(dept.deptId, dept.deptName, this.parentId)
-    ).pipe(CmsErrorHandler.rxHandleError());
+    ).pipe(
+      tap(_ => this.cmsLoadingToggle.close()),
+      CmsErrorHandler.rxHandleError((error, showMessage) => {
+        this.cmsLoadingToggle.close();
+        showMessage();
+      })
+    );
   }
 
   confirm(dept: DepartmentDetailInfoModel) {
     this.save(dept).subscribe(_ => {
-      this.close('Confirm');
+      this.close('Success');
     });
   }
 

@@ -54,6 +54,11 @@
           <div class="form__content">{{nodeTypes[sitemapNode.nodeType] || '無'}}</div>
         </div>
 
+        <div class="form__container">
+          <div class="form__label">MegaMenu</div>
+          <div class="form__content">{{sitemapNode.isMegaMenu ? '是' : '否'}}</div>
+        </div>
+
         <ng-container [ngSwitch]="sitemapNode.nodeType">
           <!-- URL -->
           <ng-container *ngSwitchCase="SiteMapNodeType.URL">

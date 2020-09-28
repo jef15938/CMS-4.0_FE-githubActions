@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../api/neuxAPI/rest-api.service';
 import { Observable } from 'rxjs';
-import { ListDataSourceDataResponse } from '../api/neuxAPI/bean/ListDataSourceDataResponse';
 import { ListDataSourceDataResponseModel } from '../api/data-model/models/list-data-source-data-response.model';
 import { ModelMapper } from '@neux/core';
 
@@ -22,8 +21,8 @@ export class DataSourceService {
    * @returns
    * @memberof DataSourceService
    */
-  getDataSourceByTypeIDAndId<TData>(typeID: string, id: string): Observable<ListDataSourceDataResponseModel<TData>> {
-    return this.restAPIService.dispatchRestApi<ListDataSourceDataResponse>('GetDataSourceByTypeIDAndId', { typeID, id }).pipe(
+  getDataSourceByTypeIDAndId<TData>(typeId: string, id: string): Observable<ListDataSourceDataResponseModel<TData>> {
+    return this.restAPIService.ListDataSourceData({ type_id: typeId, id }).pipe(
       ModelMapper.rxMapModelTo(ListDataSourceDataResponseModel),
     );
   }

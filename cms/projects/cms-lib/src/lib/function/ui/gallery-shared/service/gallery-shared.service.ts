@@ -4,6 +4,7 @@ import { ModalService, ModalSetting } from '../../../ui/modal';
 import { GallerySharedContainerModalComponent } from '../component/gallery-shared-container-modal/gallery-shared-container-modal.component';
 import { GalleryFileType } from '../type/gallery-shared.type';
 import { GalleryInfoModel } from '../../../../global/api/data-model/models/gallery-info.model';
+import { GalleryAddUpdateModalComponent, GalleryType, UploadResponse } from '../component/gallery-add-update-modal/gallery-add-update-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,86 @@ export class GallerySharedService {
       component: GallerySharedContainerModalComponent,
       componentInitData: { allowedFileTypes },
       modalSetting
+    });
+  }
+
+  private openGalleryAddUpdateModalComponent(config: {
+    galleryType: GalleryType;
+    galleryId?: string;
+    galleryName?: string,
+    accept?: string;
+    imageHeightWidth?: {
+      width: number;
+      height: number;
+    };
+  }) {
+
+    const modalSetting: ModalSetting = {
+      id: `gallery-add-update-modal`,
+      width: '80%',
+      maxWidth: '90%',
+    };
+
+    const componentInitData: Partial<GalleryAddUpdateModalComponent> = {
+      galleryType: config.galleryType,
+      galleryId: config.galleryId,
+      galleryName: config.galleryName,
+      accept: config.accept,
+      imageHeightWidth: config.imageHeightWidth,
+    };
+
+    return this.modalService.openComponent({
+      component: GalleryAddUpdateModalComponent,
+      componentInitData,
+      modalSetting
+    });
+  }
+
+  addGalleryImage(
+    accept: string,
+    imageHeightWidth: {
+      width: number;
+      height: number;
+    }
+  ): Observable<UploadResponse> {
+    return this.openGalleryAddUpdateModalComponent({
+      galleryType: GalleryType.IMAGE,
+      accept,
+      imageHeightWidth,
+    });
+  }
+
+  updateGalleryImage(
+    galleryId: string,
+    galleryName: string,
+    accept: string,
+    imageHeightWidth: {
+      width: number;
+      height: number;
+    }): Observable<UploadResponse> {
+    return this.openGalleryAddUpdateModalComponent({
+      galleryType: GalleryType.IMAGE,
+      galleryId,
+      galleryName,
+      accept,
+      imageHeightWidth,
+    });
+  }
+
+  addGalleryFile(accept?: string): Observable<UploadResponse> {
+    return this.openGalleryAddUpdateModalComponent({ galleryType: GalleryType.FILE, accept });
+  }
+
+  updateGalleryFile(
+    galleryId: string,
+    galleryName: string,
+    accept: string,
+  ): Observable<UploadResponse> {
+    return this.openGalleryAddUpdateModalComponent({
+      galleryType: GalleryType.FILE,
+      galleryId,
+      galleryName,
+      accept,
     });
   }
 

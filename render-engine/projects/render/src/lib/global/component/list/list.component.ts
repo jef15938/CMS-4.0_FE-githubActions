@@ -1,18 +1,20 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { GroupTemplateBaseComponent } from '../../../function/wrapper/layout-base/group-template-base.component';
 import { GroupTemplateInfo } from '../../interface/group-template-info.interface';
 import { ContentFieldInfoFieldType } from '../../api/data-model/models/content-field-info.model';
+
+const TEMPLATE_ID = 'list';
 
 @Component({
   selector: 'rdr-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent extends GroupTemplateBaseComponent implements OnInit {
+export class ListComponent extends GroupTemplateBaseComponent {
 
   defaultTemplateInfo: GroupTemplateInfo = {
     id: '',
-    templateId: 'list',
+    templateId: TEMPLATE_ID,
     fields: [],
     attributes: {},
     itemList: [
@@ -36,13 +38,6 @@ export class ListComponent extends GroupTemplateBaseComponent implements OnInit 
   maxItemCount = 4;
   groupItemDisplayFieldId = 'title';
 
-  constructor(
-    injector: Injector,
-  ) {
-    super(injector);
-  }
-
-  ngOnInit(): void {
-  }
+  constructor(injector: Injector) { super(injector, TEMPLATE_ID); }
 
 }

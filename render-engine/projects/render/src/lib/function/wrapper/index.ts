@@ -5,6 +5,7 @@ export * from './layout-base/common-template-base.component';
 export * from './layout-base/data-source-template-base.component';
 export * from './layout-base/group-template-base.component';
 export * from './layout-base/tab-template-base.component';
+export * from './layout-base/customize-template-base.component';
 // wrappers
 export * from './layout-wrapper/layout-wrapper.interface';
 export * from './layout-wrapper/layout-wrapper.component';
