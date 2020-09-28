@@ -86,8 +86,8 @@ pipeline {
           ssr_dist="${pwd}/render-engine/dist/render-engine"
           ssr_destination="/dist/render-engine"
           ssh "root@${ssr_server_ip}" mkdir -p "${ssr_destination}/browser" "${ssr_destination}/server"
-          scp -r "${ssr_dist}/server" "root@${ssr_server_ip}:${ssr_destination}"
-          scp -r "${ssr_dist}/browser" "root@${ssr_server_ip}:${ssr_destination}"
+          scp -r "${ssr_dist}/server" "root@${ssr_server_ip}:root/${ssr_destination}"
+          scp -r "${ssr_dist}/browser" "root@${ssr_server_ip}:root/${ssr_destination}"
           ssh "root@${ssr_server_ip}" node "root/${ssr_destination}/server/main.js" > /dev/null 2>&1 &
         '''
       }
