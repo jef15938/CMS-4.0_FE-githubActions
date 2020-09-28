@@ -22,3 +22,4 @@ export * from './list/list.component';
 export * from './test-customize1/test-customize1.component';
 export * from './public-component/monthly-payment-calculation/monthly-payment-calculation.component';
 export * from './public-component/policyloan-calculation/policyloan-calculation.component';
+export * from './public-component/collapse/collapse.component';
