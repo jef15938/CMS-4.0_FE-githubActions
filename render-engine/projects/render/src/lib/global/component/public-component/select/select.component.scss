@@ -1,9 +1,4 @@
-@import "~@neux/ui/component-customizing-mixins/config-all";
-@import "~@neux/ui/tool-mixins/style-import-app-global";
-@import "../../../style/abstracts/abstracts-all.scss";
-@import "../../../style/theme/theme-all.scss";
-
-@include nx-reset;
+@import "../../../style/public-style.scss";
 
 rdr-select {
   @include tl-select-theme();

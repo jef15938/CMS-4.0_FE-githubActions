@@ -1,5 +1,4 @@
-@import "~@neux/ui/tool-mixins/style-import-app-global";
-@import "../../../style/theme/theme-all.scss";
+@import "../../../style/public-style.scss";
 
 rdr-card-link-frame {
   @include tl-card-link-frame-theme;

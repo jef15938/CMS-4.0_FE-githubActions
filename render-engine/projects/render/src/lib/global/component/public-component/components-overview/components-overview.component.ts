@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'rdr-components-overview',
   templateUrl: './components-overview.component.html',
-  styleUrls: ['./components-overview.component.scss']
+  styleUrls: ['./components-overview.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ComponentsOverviewComponent implements OnInit {
 

@@ -1,6 +1,4 @@
-@import "~@neux/ui/tool-mixins/style-import-app-global";
-@import "../../../style/abstracts/abstracts-all.scss";
-@import "../../../style/theme/theme-all.scss";
+@import "../../../style/public-style.scss";
 
 rdr-fast-tool {
   @include tl-fast-tool-theme;

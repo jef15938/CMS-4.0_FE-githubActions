@@ -1,10 +1,11 @@
-@import "~@neux/ui/tool-mixins/style-import-app-global";
-@import "../../../style/abstracts/abstracts-all.scss";
-@import "../../../style/base/helper";
+@import "../../../style/public-style.scss";
+
+// 全域style 暫時放這裡
+@include nx-reset;
 
 $maxWidth: 944px;
 
-:host {
+rdr-components-overview {
   display: block;
   background-color: #eeeeee;
   padding: 40px 0;

@@ -1,6 +1,4 @@
-@import "~@neux/ui/component-customizing-mixins/config-all";
-@import "~@neux/ui/tool-mixins/style-import-app-global";
-@import "../../../style/theme/theme-all.scss";
+@import "../../../style/public-style.scss";
 
 rdr-radio {
   @include tl-radio-theme();
