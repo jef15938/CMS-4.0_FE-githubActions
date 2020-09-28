@@ -26,8 +26,7 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/sitemap.json"
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
@@ -130,7 +129,7 @@
                   "maximumError": "10kb"
                 }
               ]
-            },
+            }
           }
         },
         "serve": {

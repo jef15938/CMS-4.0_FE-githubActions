@@ -7,7 +7,7 @@ import { HttpUtil } from '../utils/http-util';
 @Injectable()
 export class ServerStateInterceptor implements HttpInterceptor {
 
-  readonly ignotCaches = [
+  readonly ignorCaches = [
     '/DataSource/', 'sitemap.json',
   ];
 
@@ -17,7 +17,7 @@ export class ServerStateInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       tap(event => {
-        if (event instanceof HttpResponse && !this.ignotCaches.some(s => req.url.indexOf(s) > -1)) {
+        if (event instanceof HttpResponse && !this.ignorCaches.some(s => req.url.indexOf(s) > -1)) {
           try {
             HttpUtil.checkErrorResponse(event);
             this.transferState.set(makeStateKey(req.url), event.body);
