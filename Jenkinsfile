@@ -88,7 +88,7 @@ pipeline {
           ssh "root@${ssr_server_ip}" mkdir -p "${ssr_destination}/browser" "${ssr_destination}/server"
           scp -r "${ssr_dist}/server" "root@${ssr_server_ip}:${ssr_destination}"
           scp -r "${ssr_dist}/browser" "root@${ssr_server_ip}:${ssr_destination}"
-          ssh "root@${ssr_server_ip}" node "${ssr_destination}/server/main.js" > /dev/null 2>&1 &
+          ssh "root@${ssr_server_ip}" node "root/${ssr_destination}/server/main.js" > /dev/null 2>&1 &
         '''
       }
     }
