@@ -1,0 +1,13 @@
+@import 'public-style.scss';
+
+:host {
+  display: block;
+  background-color: $very-light-pink-three;
+}
+
+.qa {
+
+  &__title {}
+
+  &__content {}
+}
