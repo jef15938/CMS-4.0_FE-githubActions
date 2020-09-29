@@ -40,6 +40,7 @@ export class TemplatesContainerComponent extends LayoutWrapperBase implements On
     if (this.layoutWrapperComponents) {
       this.layoutWrapperComponents.forEach(lw => lw.parentTemplatesContainer = this);
     }
+    this.changeDetectorRef.detectChanges();
   }
 
   mouseenter() {

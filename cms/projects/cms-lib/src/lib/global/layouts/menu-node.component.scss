@@ -47,7 +47,8 @@
     text-decoration: none;
     padding: 1em 1em;
     width: 100%;
-    cursor: pointer
+    cursor: pointer;
+    color: white;
   }
 
   &__link.disabled {
@@ -71,7 +72,7 @@
           cms-menu-node {
             .item__link {
               padding-left: 2.9em;
-
+              color: white;
               &.router-active {
                 &:before {
                   content: '';
