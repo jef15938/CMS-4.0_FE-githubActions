@@ -7,6 +7,15 @@
     <div style="height: 50px; line-height: 50px; vertical-align: middle; background-color: lightblue;">
       常見問題
     </div>
-    <rdr-collapse [collapseList]="sourceData?.datas | transformData:collapseData"></rdr-collapse>
+    <!-- <rdr-collapse [collapseList]="sourceData?.datas | transformData:collapseData"></rdr-collapse> -->
+    <ng-container *ngIf="sourceData?.datas && pageInfo?.lang">
+      <ng-container *ngFor="let data of (sourceData?.datas||[])">
+        <ng-container *ngIf="data.answer|stringToContentInfoModel|getLanguageInfo:pageInfo.lang; let languageInfo">
+          <rdr-templates-container *ngFor="let block of (languageInfo?.blocks || []);" [templates]="block.templates">
+          </rdr-templates-container>
+        </ng-container>
+
+      </ng-container>
+    </ng-container>
   </div>
 </div>

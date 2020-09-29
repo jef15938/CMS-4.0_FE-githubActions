@@ -24,8 +24,8 @@
           頁面編輯
         </ng-container>
       </button>
-      <button type="button" tabindex="0" mat-raised-button *ngIf="sitemapNode.nodeType===SiteMapNodeType.CONTENT"
-        [disabled]="!userSitemap?.canSubmit" (click)="auditingSiteMap()">頁面送審</button>
+      <button type="button" tabindex="0" mat-raised-button [disabled]="!userSitemap?.canSubmit"
+        (click)="auditingSiteMap()">頁面送審</button>
     </div>
   </div>
   <div class="sitemap-node-detail__content page-content-container">
