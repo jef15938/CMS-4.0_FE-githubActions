@@ -6,6 +6,7 @@
     "umdModuleIds": {
       "ngx-swiper-wrapper": "ngx-swiper-wrapper",
       "@neux/core": "@neux/core",
+      "@neux/ui": "@neux/ui",
       "class-transformer": "class-transformer",
       "class-validator": "class-validator",
       "@ngrx/store": "@ngrx/store",
