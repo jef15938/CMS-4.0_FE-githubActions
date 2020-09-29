@@ -1,0 +1,43 @@
+@mixin rdr-pagination-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-pagination' !default;
+  $pagination-color: map-get($theme, brownish_grey) !default;
+  $pagination-active-color: map-get($theme, color_primary) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-pagination.rdr-cp';
+  }
+
+  #{$selector} {
+    .pagination {
+      &__control {
+        &:after {
+          border-color: $pagination-active-color;
+        }
+      }
+
+      &__item {
+        color: $pagination-color;
+
+        &--active {
+          .pagination__link {
+            color: $pagination-active-color;
+          }
+        }
+      }
+
+      &__link {
+        color: $pagination-color;
+
+        &:hover {
+          color: #00918a;
+        }
+
+        &:active {
+          color: #00635b;
+        }
+      }
+    }
+  }
+
+}

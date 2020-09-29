@@ -1,0 +1,51 @@
+@import "public-style.scss";
+
+@include rdr-pagination-theme();
+
+rdr-pagination {
+
+  display: block;
+  text-align: center;
+
+  .pagination {
+    &__control {
+      @include rdr-icon(4, 2, 19px);
+      cursor: pointer;
+
+      &--disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+      }
+
+      &--prev {
+        margin-right: 16px;
+        transform: rotate(180deg);
+      }
+
+      &--next {
+        margin-left: 16px;
+      }
+    }
+
+    &__list {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0;
+    }
+
+    &__item {
+      @include fz-callout-18-center;
+      display: inline-block;
+      vertical-align: middle;
+      user-select: none;
+      min-width: 34px;
+      margin: 0 8px;
+    }
+
+    &__link {
+      @include on-event($self: true) {
+        text-decoration: none;
+      }
+    }
+  }
+}

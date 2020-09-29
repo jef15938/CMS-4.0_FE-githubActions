@@ -33,6 +33,12 @@ import { HtmlEditorContentComponent } from './function/ui/html-editor-content/ht
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
 import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
+import { CardLinkFrameComponent } from './global/component/public-component/card-link-frame/card-link-frame.component';
+import { CardLinkComponent } from './global/component/public-component/card-link/card-link.component';
+import { CardNewsComponent } from './global/component/public-component/card-news/card-news.component';
+import { CardActivityComponent } from './global/component/public-component/card-activity/card-activity.component';
+import { CardJournalComponent } from './global/component/public-component/card-journal/card-journal.component';
+import { PaginationComponent } from './global/component/public-component/pagination/pagination.component';
 import { RenderPreviewContainerComponent } from './global/component/render-preview-container/render-preview-container.component';
 import { TestCustomize1Component } from './global/component/test-customize1/test-customize1.component';
 import { MetaService } from './global/service/meta.service';
@@ -55,7 +61,13 @@ const COMPONENTS = [
   BannerComponent,
   ListComponent,
   TestCustomize1Component,
-  CollapseComponent
+  CollapseComponent,
+  CardLinkFrameComponent,
+  CardLinkComponent,
+  CardNewsComponent,
+  CardActivityComponent,
+  CardJournalComponent,
+  PaginationComponent,
 ];
 
 @NgModule({

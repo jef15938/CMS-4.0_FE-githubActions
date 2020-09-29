@@ -7,6 +7,8 @@ import { AddResourceBaseUrlPipe } from './add-resource-base-url.pipe';
 import { TransformDataPipe } from './transform-data.pipe';
 import { GetLanguageInfoPipe } from './get-language-info.pipe';
 import { StringToContentInfoModelPipe } from './string-to-content-info-model.pipe';
+import { EllipsisPipe } from './string-filter-format.pipe';
+import { PageInfoPipe } from './transform-page.pipe';
 
 const PIPES = [
   SafeHtmlPipe,
@@ -16,6 +18,8 @@ const PIPES = [
   TransformDataPipe,
   StringToContentInfoModelPipe,
   GetLanguageInfoPipe,
+  EllipsisPipe,
+  PageInfoPipe
 ];
 
 @NgModule({

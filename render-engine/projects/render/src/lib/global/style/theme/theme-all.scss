@@ -1,7 +1,15 @@
 // components theme
 @import './components/collpase';
+@import './components/card-link';
+@import './components/pagination';
 
 
 @mixin rdr-theme-core($core-theme) {
   @include rdr-collapse-theme($theme: $core-theme);
+  @include rdr-card-link-frame-theme($theme: $core-theme);
+  @include rdr-card-link-theme($theme: $core-theme);
+  @include rdr-card-news-theme($theme: $core-theme);
+  @include rdr-card-activity-theme($theme: $core-theme);
+  @include rdr-card-journal-theme($theme: $core-theme);
+  @include rdr-pagination-theme($theme: $core-theme)
 }
