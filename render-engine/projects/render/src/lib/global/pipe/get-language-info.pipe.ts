@@ -11,7 +11,6 @@ export class GetLanguageInfoPipe implements PipeTransform {
 
   transform(value: ContentInfoModel, lang: string): LanguageInfoModel {
     if (!value || !lang) { return null; }
-    console.warn({ value, lang });
     return (value.languages || []).find(languageInfoModel => languageInfoModel.languageId === lang);
   }
 

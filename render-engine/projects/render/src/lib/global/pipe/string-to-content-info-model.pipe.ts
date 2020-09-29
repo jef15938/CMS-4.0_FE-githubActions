@@ -12,7 +12,6 @@ export class StringToContentInfoModelPipe implements PipeTransform {
   constructor() { }
 
   transform(value: string): ContentInfoModel {
-    console.warn({ value });
     if (!value) { return null; }
     const contentInfoJSON = JSON.parse(value);
     const contentInfoBean = plainToClass(ContentInfo, contentInfoJSON);
