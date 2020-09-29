@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 
-const BASE_URL = 'http://runtime.decoder.com.tw';
+// const BASE_URL = 'http://runtime.decoder.com.tw';
+const BASE_URL = 'https://dev.walkflow.biz/api';
 const RESOUCE_BASE_URL = 'https://cms.decoder.com.tw';
 const API_URL = {
   GetPageByPageIdAndLang: `${BASE_URL}\/Page/{page_id}/{lang}`,

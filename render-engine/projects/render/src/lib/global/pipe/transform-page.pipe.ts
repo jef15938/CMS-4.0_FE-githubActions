@@ -7,6 +7,9 @@ export class PageInfoPipe implements PipeTransform {
   constructor() { }
 
   transform(value: PageInfoModel): PaginationInfo {
+    if (!value) {
+      return null;
+    }
     return {
       totalItems: value.totalRecSize,
       totalPage: value.totalPageSize,

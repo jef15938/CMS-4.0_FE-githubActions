@@ -17,12 +17,7 @@ export interface PageChangeEvent {
 export class PaginationComponent extends CustomizeBaseDirective implements OnInit, OnChanges {
 
   /** page info */
-  @Input() pageInfo: PaginationInfo = {
-    totalItems: 100,
-    totalPage: 10,
-    currentPage: 1,
-    pageSize: 10,
-  };
+  @Input() pageInfo: PaginationInfo;
 
   /** 頁碼一次呈現幾頁 */
   @Input() pagePerView = 4;
@@ -31,7 +26,7 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
   activePage: number;
 
   /** 總頁碼 */
-  totalPage: number;
+  totalPage = 0;
 
   firstPage = 1;
   headShow: boolean;
@@ -46,13 +41,13 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
     super(injector);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.totalPage = this.pageInfo.totalPage || this.getTotalPage();
+  ngOnChanges() {
+    this.totalPage = this.pageInfo?.totalPage;
+    this.goToPage(this.pageInfo?.currentPage);
   }
 
   ngOnInit(): void {
-    this.totalPage = this.pageInfo.totalPage;
-    this.goToPage(1);
+
   }
 
   /** 點擊更改頁碼 */
@@ -63,13 +58,8 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
 
   /** 移動到特定那一頁 */
   goToPage(index: number): void {
-    if (this.activePage === index) {
-      return;
-    }
     const previousPage = this.activePage;
     this.activePage = index;
-    this.headShow = this.hasHead();
-    this.tailShow = this.hasTail();
     this.pageList = this.getDisplayPageList(index);
     this.emitPageEvent(previousPage);
   }
@@ -121,16 +111,6 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
     return nextPageIndex <= this.totalPage;
   }
 
-  /** 是否需要顯示在頭 */
-  private hasHead(): boolean {
-    return this.activePage > this.pagePerView && this.totalPage > 5;
-  }
-
-  /** 是否需要顯示在尾 */
-  private hasTail(): boolean {
-    return this.activePage <= (this.totalPage - this.pagePerView) && this.totalPage > 5;
-  }
-
   /** 取得當前頁數呈現 */
   private getDisplayPageList(activeIndex: number) {
     const perView = { length: this.pagePerView };
@@ -151,15 +131,6 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
     }
 
     return pages;
-  }
-
-  /** 取得總頁數 */
-  private getTotalPage(): number {
-    if (!this.pageInfo.pageSize) {
-      return 0;
-    }
-
-    return Math.ceil(this.pageInfo.totalItems / this.pageInfo.pageSize);
   }
 
   /** 觸發page event */

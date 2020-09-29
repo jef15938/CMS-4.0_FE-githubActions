@@ -1,20 +1,21 @@
 <div *ngIf="totalPage !== 1" (click)="previousPage()" [class.pagination__control--disabled]="activePage === 1"
   class="pagination__control pagination__control--prev"></div>
 <ul class="pagination__list">
-  <li *ngIf="headShow" class="pagination__item">
+  <li *ngIf="activePage > pagePerView && totalPage > 5" class="pagination__item">
     <a (click)="goToFirstPage($event)" class="pagination__link" href="#">{{firstPage}}</a>
   </li>
-  <li *ngIf="headShow" class="pagination__item">
+  <li *ngIf="activePage > pagePerView && totalPage > 5" class="pagination__item">
     <span>...</span>
   </li>
   <li *ngFor="let item of pageList;index as i" [class.pagination__item--active]="activePage === item"
     class="pagination__item">
     <a (click)="changePage($event, item)" class="pagination__link" href="#">{{item}}</a>
   </li>
-  <li *ngIf="tailShow && pageList[pagePerView-1] !== totalPage-1" class="pagination__item">
+  <li *ngIf="activePage <= (totalPage - pagePerView) && totalPage > 5 && pageList[pagePerView-1] !== totalPage-1"
+    class="pagination__item">
     <span>...</span>
   </li>
-  <li *ngIf="tailShow" class="pagination__item">
+  <li *ngIf="activePage <= (totalPage - pagePerView) && totalPage > 5" class="pagination__item">
     <a (click)="goToLastPage($event)" class="pagination__link" href="#">{{totalPage}}</a>
   </li>
 </ul>
