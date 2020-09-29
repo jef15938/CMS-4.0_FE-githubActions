@@ -10,6 +10,11 @@
       "class-validator": "class-validator",
       "@ngrx/store": "@ngrx/store",
       "@ngrx/effects": "@ngrx/effects"
-    }
-  }
+    },
+    "styleIncludePaths": ["./src/lib/global/style/"]
+  },
+  "assets": [
+    "./src/lib/global/style/**/*",
+    "./src/lib/global/images/*"
+  ]
 }

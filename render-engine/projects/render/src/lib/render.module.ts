@@ -1,5 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NxUiModule } from '@neux/ui';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { RenderComponent } from './global/component/render/render.component';
 import { WrapperModule } from './function/wrapper/wrapper.module';
@@ -30,6 +32,7 @@ import { HttpErrorHandlerInterceptor } from './global/interceptor/http-error-han
 import { HtmlEditorContentComponent } from './function/ui/html-editor-content/html-editor-content.component';
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
+import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
 import { RenderPreviewContainerComponent } from './global/component/render-preview-container/render-preview-container.component';
 import { TestCustomize1Component } from './global/component/test-customize1/test-customize1.component';
 import { MetaService } from './global/service/meta.service';
@@ -52,6 +55,7 @@ const COMPONENTS = [
   BannerComponent,
   ListComponent,
   TestCustomize1Component,
+  CollapseComponent
 ];
 
 @NgModule({
@@ -63,7 +67,9 @@ const COMPONENTS = [
     WrapperModule,
     SwiperModule,
     StoreModule.forFeature(fromRenderStore.renderFeatureKey, fromRenderStore.reducer),
-    EffectsModule.forFeature([RenderEffects])
+    EffectsModule.forFeature([RenderEffects]),
+    NxUiModule,
+    FormsModule
   ],
   declarations: [
     RenderComponent,

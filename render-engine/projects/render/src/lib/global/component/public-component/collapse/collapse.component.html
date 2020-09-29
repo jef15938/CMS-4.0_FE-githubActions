@@ -1,0 +1,10 @@
+<nx-collapse-accordion hasList>
+  <nx-collapse *ngFor="let item of collapseList" arrowLine>
+    <ng-container trigger>
+      {{item.title}}
+    </ng-container>
+    <ng-container content>
+      {{item.content}}
+    </ng-container>
+  </nx-collapse>
+</nx-collapse-accordion>
