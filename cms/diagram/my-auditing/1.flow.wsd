@@ -1,0 +1,55 @@
+@startuml
+
+Title MyAuditing : Flow
+actor user
+participant "MyAuditingComponent" as main << component >>
+participant "TableComponent" as table << component >>
+participant "ModalService" as modalService << service >>
+participant "MyAuditingDetailModalComponent" as detailComponent << component >>
+participant "AuditingService" as auditingService << service >>
+participant "FarmSharedService" as farmSharedService << service >>
+
+user -> main
+note left: 透過 menu 路由進入 Farm
+
+==initial==
+main -> main: ngOnInit()
+main -> auditingService: AuditingService.getMyAuditingList()
+activate auditingService
+auditingService --> main: MyAuditingGetResponseModel
+deactivate
+main -> table
+
+==審核紀錄==
+user -> table
+note left: 按下審核紀錄
+table --> main: 發送事件通知
+main -> main: onCustomEvent()
+main -> modalService: ModalService.openComponent
+modalService -> detailComponent: use
+detailComponent -> auditingService: AuditingService.getMyAuditingDetail()
+activate auditingService
+auditingService --> detailComponent
+deactivate
+
+==預覽==
+user -> table
+note left: 按下預覽
+table --> main: 發送事件通知
+main -> main: onCustomEvent()
+main -> main: preview()
+main -> auditingService: AuditingService.getPreviewInfo()
+note left: 取得預覽資訊
+activate auditingService
+auditingService --> main
+deactivate
+
+alt PreviewInfoType.ONE_PAGE
+main -> main: window.open()
+note left: 另開分頁預覽
+else PreviewInfoType.FARM
+main -> farmSharedService: FarmSharedService.openFarmPreview
+note left: 開啟 Farm 預覽
+end
+
+@enduml
