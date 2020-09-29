@@ -51,6 +51,7 @@ pipeline {
           cd ./render-engine
           npm run build-render-lib
           npm run build:$env
+          rm -rf ./dist/render-engine/html
           cp -R ./dist/render-engine/browser ./dist/render-engine/html
         '''
       }
