@@ -13,7 +13,8 @@
       </ng-container>
     </div>
     <div class="news__pagination">
-      <rdr-pagination [pageInfo]="sourceData?.pageInfo | transformPageInfo"></rdr-pagination>
+      <rdr-pagination [totalPage]="sourceData?.pageInfo.totalPageSize" [currentPage]="sourceData?.pageInfo.page">
+      </rdr-pagination>
     </div>
   </div>
 </div>

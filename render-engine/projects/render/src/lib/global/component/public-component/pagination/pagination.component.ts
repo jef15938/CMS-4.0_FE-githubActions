@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CustomizeBaseDirective } from '../base-component';
-import { PaginationInfo } from './pagination.interface';
 
 export interface PageChangeEvent {
   currentPage: number;
@@ -16,24 +15,21 @@ export interface PageChangeEvent {
 })
 export class PaginationComponent extends CustomizeBaseDirective implements OnInit, OnChanges {
 
-  /** page info */
-  @Input() pageInfo: PaginationInfo;
+  /** 總頁碼 */
+  @Input() totalPage = 0;
+
+  /** 當前頁碼 */
+  @Input() currentPage = 1;
 
   /** 頁碼一次呈現幾頁 */
   @Input() pagePerView = 4;
-
-  /** 當前頁碼 */
-  activePage: number;
-
-  /** 總頁碼 */
-  totalPage = 0;
 
   firstPage = 1;
   headShow: boolean;
   tailShow: boolean;
 
   /** 當前頁數呈現 */
-  pageList: Array<number | string>;
+  pageList: Array<number>;
 
   @Output() pagesChange: EventEmitter<PageChangeEvent> = new EventEmitter<PageChangeEvent>();
 
@@ -42,8 +38,7 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
   }
 
   ngOnChanges() {
-    this.totalPage = this.pageInfo?.totalPage;
-    this.goToPage(this.pageInfo?.currentPage);
+    this.goToPage(this.currentPage);
   }
 
   ngOnInit(): void {
@@ -58,8 +53,10 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
 
   /** 移動到特定那一頁 */
   goToPage(index: number): void {
-    const previousPage = this.activePage;
-    this.activePage = index;
+    const previousPage = this.currentPage;
+    this.currentPage = index;
+    this.headShow = this.hasHead();
+    this.tailShow = this.hasTail();
     this.pageList = this.getDisplayPageList(index);
     this.emitPageEvent(previousPage);
   }
@@ -69,7 +66,7 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
     if (!this.hasPreviousPage()) {
       return;
     }
-    const privious = this.activePage - 1;
+    const privious = this.currentPage - 1;
     this.goToPage(privious);
   }
 
@@ -78,7 +75,7 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
     if (!this.hasNextPage()) {
       return;
     }
-    const next = this.activePage + 1;
+    const next = this.currentPage + 1;
     this.goToPage(next);
   }
 
@@ -102,13 +99,23 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
 
   /** 是否還有前一頁 */
   private hasPreviousPage(): boolean {
-    return this.activePage > 1;
+    return this.currentPage > 1;
   }
 
   /** 是否還有下一頁 */
   private hasNextPage(): boolean {
-    const nextPageIndex = this.activePage + 1;
+    const nextPageIndex = this.currentPage + 1;
     return nextPageIndex <= this.totalPage;
+  }
+
+  /** 是否需要顯示在頭 */
+  private hasHead(): boolean {
+    return this.currentPage > this.pagePerView && this.totalPage > this.pagePerView + 1;
+  }
+
+  /** 是否需要顯示在尾 */
+  private hasTail(): boolean {
+    return this.currentPage <= (this.totalPage - this.pagePerView) && this.totalPage > this.pagePerView + 1;
   }
 
   /** 取得當前頁數呈現 */
@@ -136,7 +143,7 @@ export class PaginationComponent extends CustomizeBaseDirective implements OnIni
   /** 觸發page event */
   private emitPageEvent(priviousPageIndex: number): void {
     this.pagesChange.emit({
-      currentPage: this.activePage,
+      currentPage: this.currentPage,
       previousPage: priviousPageIndex,
       totalPage: this.totalPage
     });
