@@ -1,7 +1,7 @@
 @import "~@neux/ui/component-customizing-mixins/theme-all";
 
-@mixin tl-collapse-theme($theme: $tl-theme-config) {
-
+@mixin rdr-collapse-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-collapse' !default;
   $tl-primary-color: map-get($theme, brownish_grey) !default;
   $tl-back-light-color: map-get($theme, white_1) !default;
   $tl-null-color: map-get($theme, white_1) !default;
@@ -16,34 +16,42 @@
       $color-null: $tl-null-color,
       $color-plain: $tl-plain-color);
 
-  @include nx-collapse-theme($collapse-theme);
-  @include nx-collapse-accordion-theme($collapse-theme);
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-collapse.rdr-cp';
+  }
 
-  nx-collapse.nx-cp {
-    +nx-collapse.nx-cp {
+  #{$selector} {
+
+    @include nx-collapse-theme($collapse-theme);
+    @include nx-collapse-accordion-theme($collapse-theme);
+
+    nx-collapse.nx-cp {
+      +nx-collapse.nx-cp {
+        .collapse-container__trigger {
+          border-color: $tl-line-color;
+        }
+      }
+
       .collapse-container__trigger {
-        border-color: $tl-line-color;
+        &:hover {
+          background-color: $tl-hover-color;
+        }
+
+        &:active,
+        &:focus {
+          background-color: $tl-pressed-color;
+        }
       }
-    }
 
-    .collapse-container__trigger {
-      &:hover {
-        background-color: $tl-hover-color;
+      .collapse-container__content {
+        background-color: $tl-back-light-color;
       }
 
-      &:active,
-      &:focus {
-        background-color: $tl-pressed-color;
-      }
-    }
-
-    .collapse-container__content {
-      background-color: $tl-back-light-color;
-    }
-
-    .collapse-container[collapse-status=true] {
-      .collapse-container__trigger {
-        border-color: $tl-line-color;
+      .collapse-container[collapse-status=true] {
+        .collapse-container__trigger {
+          border-color: $tl-line-color;
+        }
       }
     }
   }

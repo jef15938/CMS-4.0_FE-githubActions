@@ -2,6 +2,6 @@
 @import './components/collpase';
 
 
-@mixin tl-theme-core($core-theme) {
-  @include tl-collapse-theme($theme: $core-theme);
+@mixin rdr-theme-core($core-theme) {
+  @include rdr-collapse-theme($theme: $core-theme);
 }

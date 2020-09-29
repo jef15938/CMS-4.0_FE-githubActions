@@ -1,5 +1,5 @@
-// taiwan life icon
-@mixin tl-icon($positionX:1, $positionY:1, $size: 22px) {
+// icon lists
+@mixin rdr-icon($positionX:1, $positionY:1, $size: 22px) {
   $image-size: $size * 3; //圖片icon列數
   $image-position-x: -$size * ($positionX - 1);
   $image-position-y: -$size * ($positionY - 1);
@@ -31,10 +31,9 @@
   }
 }
 
-
 //共用 icon
-.tl-arrow-icon {
-  @include tl-icon(4, 2, 20px);
+.arrow-icon {
+  @include rdr-icon(4, 2, 20px);
 
   @include rwd($nx-screen-normal-phone-portrait) {
     width: 14px;

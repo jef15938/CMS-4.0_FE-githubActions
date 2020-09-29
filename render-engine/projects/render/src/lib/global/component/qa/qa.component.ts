@@ -2,6 +2,7 @@ import { Component, Injector } from '@angular/core';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { QaData } from './qa.interface';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
+import { CollapseData } from '../public-component/collapse/collapse.interface';
 
 const TEMPLATE_ID = 'qa';
 
@@ -24,4 +25,7 @@ export class QaComponent extends DataSourceTemplateBaseComponent<QaData> {
 
   constructor(injector: Injector) { super(injector, TEMPLATE_ID); }
 
+  collapseData(item): CollapseData {
+    return { title: item.question, content: item.answer };
+  }
 }

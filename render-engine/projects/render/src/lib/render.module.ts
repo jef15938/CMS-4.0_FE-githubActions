@@ -32,8 +32,6 @@ import { HttpErrorHandlerInterceptor } from './global/interceptor/http-error-han
 import { HtmlEditorContentComponent } from './function/ui/html-editor-content/html-editor-content.component';
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
-import { MonthlyPaymentCalculationComponent } from './global/component/public-component/monthly-payment-calculation/monthly-payment-calculation.component';
-import { PolicyloanCalculationComponent } from './global/component/public-component/policyloan-calculation/policyloan-calculation.component';
 import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
 import { RenderPreviewContainerComponent } from './global/component/render-preview-container/render-preview-container.component';
 import { TestCustomize1Component } from './global/component/test-customize1/test-customize1.component';
@@ -56,8 +54,6 @@ const COMPONENTS = [
   HtmlEditorContentComponent,
   BannerComponent,
   ListComponent,
-  MonthlyPaymentCalculationComponent,
-  PolicyloanCalculationComponent,
   TestCustomize1Component,
   CollapseComponent
 ];

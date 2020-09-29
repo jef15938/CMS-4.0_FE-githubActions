@@ -1,7 +1,8 @@
-@import "../../../style/public-style.scss";
+@import "public-style.scss";
+
+@include rdr-collapse-theme();
 
 rdr-collapse {
-  @include tl-collapse-theme();
   @include nx-collapse-config($mode: 'customize',
     $collapse-header-padding: 16px 56px 16px 75px,
     $collapse-content-padding: 24px 56px 32px 75px,
@@ -14,7 +15,6 @@ rdr-collapse {
       +nx-collapse {
         margin-top: 0;
       }
-
     }
   }
 
@@ -75,7 +75,7 @@ rdr-collapse {
         &__suffix {
 
           &:after {
-            @include tl-icon(4, 2, 20px);
+            @include rdr-icon(4, 2, 20px);
             transform: translate(-50%, -50%) rotate(90deg);
             border-width: 0;
           }
