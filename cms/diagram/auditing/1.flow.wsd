@@ -10,7 +10,7 @@ participant "AuditingService" as auditingService << service >>
 participant "FarmSharedService" as farmSharedService << service >>
 
 user -> main
-note left: 透過 menu 路由進入 Farm
+note left: 透過 menu 路由進入 "審核/放行"
 
 ==initial==
 main -> main: ngOnInit()

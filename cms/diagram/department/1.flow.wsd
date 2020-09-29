@@ -1,0 +1,56 @@
+@startuml
+
+Title Department : Flow
+actor user
+participant "DeptComponent" as main << component >>
+participant "TreeComponent<DepartmentInfoModel>" as tree << component >>
+participant "ModalService" as modalService << service >>
+participant "DeptMaintainModalComponent" as maintainModal << component >>
+participant "DepartmentService" as departmentService << service >>
+
+user -> main
+note left: 透過 menu 路由進入 "部門管理"
+
+==initial==
+main -> main: ngOnInit()
+main -> departmentService: DepartmentService.getAllDepartment()
+activate departmentService
+departmentService --> main: DepartmentInfoModel
+deactivate
+main -> tree : use \n@Input DepartmentInfoModel
+
+==新增/修改==
+user -> tree
+note left: 按下 "新增/修改"
+tree --> main: 發送事件通知
+main -> main: onCustomEvent()
+main -> main: openDeptMaintainModal()
+main -> modalService: ModalService.openComponent()
+modalService -> maintainModal: use
+maintainModal -> maintainModal: 使用者編輯
+
+alt 新增
+  maintainModal -> departmentService: DepartmentService.createDepartment()
+  note left: 存檔
+else 修改
+  maintainModal -> departmentService: DepartmentService.updateDepartment()
+  note left: 存檔
+end
+
+activate departmentService
+departmentService --> maintainModal
+deactivate departmentService
+maintainModal --> main
+
+==刪除==
+user -> tree
+note left: 按下 "刪除"
+tree --> main: 發送事件通知
+main -> main: onCustomEvent()
+main -> main: deleteDepartment()
+main -> departmentService: DepartmentService.deleteDepartment()
+activate departmentService
+departmentService --> main
+deactivate departmentService
+
+@enduml
