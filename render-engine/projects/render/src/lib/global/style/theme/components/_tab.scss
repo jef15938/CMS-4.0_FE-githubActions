@@ -1,0 +1,80 @@
+@mixin rdr-tab-scroll-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-tab-scroll-frame' !default;
+  $text-color: map-get($theme, black_1) !default;
+  $line-color: map-get($theme, brown_grey_1) !default;
+  $hover-color: map-get($theme, color_secondary) !default;
+  $active-color: map-get($theme, color_primary) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-tab-scroll-frame.rdr-cp';
+  }
+
+  #{$selector} {
+    .tab-scroll {
+      &__list {
+
+        &-item {
+          color: $text-color;
+          border-bottom-color: $line-color;
+
+          &:hover {
+            color: $hover-color;
+          }
+
+          &:after {
+            background-color: $active-color;
+          }
+
+          &--active {
+
+            &,
+            &:hover {
+              color: $active-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin rdr-tab-carousel-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-tab-carousel-frame' !default;
+  $text-color: map-get($theme, brownish_grey) !default;
+  $border-color: map-get($theme, very_light_pink_0) !default;
+  $hover-color: map-get($theme, duck_egg_blue) !default;
+  $arrow-color: map-get($theme, color_primary) !default;
+  $active-color: map-get($theme, color_primary) !default;
+  $null-color: map-get($theme, white_1) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-tab-carousel-frame.rdr-cp';
+  }
+
+  #{$selector} {
+    .tab-carousel {
+      &__item {
+        border-color: $border-color;
+        background-color: $null-color;
+        color: $text-color;
+
+        &:hover {
+          background-color: $hover-color;
+        }
+
+        &--active {
+          background-color: $active-color;
+          color: $null-color;
+          border-color: $active-color;
+          box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
+
+          &:hover {
+            background-color: $active-color;
+          }
+        }
+      }
+    }
+  }
+}

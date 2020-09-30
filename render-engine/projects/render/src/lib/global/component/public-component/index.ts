@@ -17,3 +17,4 @@ export * from './card-news/card-news.component';
 export * from './card-activity/card-activity.component';
 export * from './card-journal/card-journal.component';
 export * from './pagination/pagination.component';
+export * from './tab';

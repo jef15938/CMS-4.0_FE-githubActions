@@ -8,6 +8,7 @@
 @import './components/fast-tool';
 @import './components/button';
 @import './components/mega-menu';
+@import './components/tab';
 
 
 @mixin rdr-theme-core($core-theme) {
@@ -28,4 +29,6 @@
   @include rdr-fast-tool-theme($theme: $core-theme);
   @include rdr-button-theme($theme: $core-theme);
   @include rdr-mega-menu-theme($theme: $core-theme);
+  @include rdr-tab-scroll-theme($theme: $core-theme);
+  @include rdr-tab-carousel-theme($theme: $color-theme)
 }

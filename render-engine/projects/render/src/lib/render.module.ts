@@ -6,7 +6,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { RenderComponent } from './global/component/render/render.component';
 import { WrapperModule } from './function/wrapper/wrapper.module';
 import { PipeModule } from './global/pipe/pipe.module';
-import { TabModule } from './global/component/tab/tab.module';
+import { TabModule } from './global/component/public-component/tab/tab.module';
 import { RenderRoutingModule } from './render-routing.module';
 import { IconPageComponent } from './global/component/icon-page/icon-page.component';
 import { SliderComponent } from './global/component/slider/slider.component';
@@ -54,6 +54,8 @@ import { ButtonComponent } from './global/component/public-component/button/butt
 import { MegaMenuComponent } from './global/component/public-component/mega-menu/mega-menu.component';
 import { NewsListComponent } from './global/component/public-component/news-list/news-list.component';
 import { FeatureBarComponent } from './global/component/public-component/feature-bar/feature-bar.component';
+import { TabScrollableComponent } from './global/component/tab-scrollable/tab-scrollable.component';
+import { TabCarouselComponent } from './global/component/tab-carousel/tab-carousel.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -96,6 +98,8 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
   MegaMenuComponent,
   NewsListComponent,
   FeatureBarComponent,
+  TabScrollableComponent,
+  TabCarouselComponent,
 ];
 
 @NgModule({

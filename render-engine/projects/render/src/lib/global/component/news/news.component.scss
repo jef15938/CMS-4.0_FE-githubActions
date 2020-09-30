@@ -6,15 +6,7 @@
 }
 
 .news {
-  max-width: 994px;
-  margin: 0 auto;
-  padding: 40px 0 72px;
-
-  &__title {
-    @include fz-title-28-left;
-    margin-bottom: 24px;
-    color: $black-two;
-  }
+  &__title {}
 
   &__content {
     margin-bottom: 32px;

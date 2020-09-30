@@ -1,6 +1,6 @@
 import { RenderComponentMapping } from '../interface';
 import {
-  TabDemoComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent,
+  TabScrollableComponent, TabCarouselComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent,
   NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent, FixedWrapperComponent, TestCustomize1Component
 } from '../component';
 import { HtmlComponent } from '../component/html/html.component';
@@ -14,7 +14,11 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   },
   {
     component_id: 'Tab',
-    component: TabDemoComponent,
+    component: TabCarouselComponent,
+  },
+  {
+    component_id: 'Tab',
+    component: TabScrollableComponent,
   },
   {
     component_id: 'fixed-demo-1',

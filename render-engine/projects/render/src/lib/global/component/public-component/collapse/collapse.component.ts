@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChild, Injector, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { CustomizeBaseDirective } from '../base-component';
 import { CollapseData } from './collapse.interface';
 
@@ -11,6 +11,9 @@ import { CollapseData } from './collapse.interface';
 export class CollapseComponent extends CustomizeBaseDirective implements OnInit {
 
   @Input() collapseList: Array<CollapseData>;
+
+  @ContentChild('title') titleTemplateRef: TemplateRef<any>;
+  @ContentChild('content') contentTemplateRef: TemplateRef<any>;
 
   constructor(injector: Injector) {
     super(injector);

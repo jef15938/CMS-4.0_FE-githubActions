@@ -3,18 +3,25 @@
     *ngIf="mode==='edit'">
     常見消息資料呈現區域
   </div>
-  <div class="transglobe-source-news-002" *ngIf="mode==='preview'">
-    <div style="height: 50px; line-height: 50px; vertical-align: middle; background-color: lightblue;">
+  <div class="layout-block qa" *ngIf="mode==='preview'">
+    <div class="layout-title qa__title">
       常見問題
     </div>
-    <!-- <rdr-collapse [collapseList]="sourceData?.datas | transformData:collapseData"></rdr-collapse> -->
-    <ng-container *ngIf="sourceData?.datas && pageInfo?.lang">
-      <ng-container *ngFor="let data of (sourceData?.datas||[])">
-        <ng-container *ngIf="data.answer|stringToContentInfoModel|getLanguageInfo:pageInfo.lang; let languageInfo">
-          <rdr-templates-container *ngFor="let block of (languageInfo?.blocks || []);" [templates]="block.templates">
-          </rdr-templates-container>
-        </ng-container>
+    <div class="qa__content">
+      <ng-container *ngIf="sourceData?.datas && pageInfo?.lang">
+        <rdr-collapse [collapseList]="sourceData?.datas | transformData:collapseData">
+          <ng-template #title let-item>
+            {{item.title}}
+          </ng-template>
+          <ng-template #content let-item>
+            <ng-container *ngIf="item.content|stringToContentInfoModel|getLanguageInfo:pageInfo.lang; let languageInfo">
+              <rdr-templates-container *ngFor="let block of (languageInfo?.blocks || []);"
+                [templates]="block.templates">
+              </rdr-templates-container>
+            </ng-container>
+          </ng-template>
+        </rdr-collapse>
       </ng-container>
-    </ng-container>
+    </div>
   </div>
 </div>

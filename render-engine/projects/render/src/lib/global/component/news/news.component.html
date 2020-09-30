@@ -3,8 +3,8 @@
     *ngIf="mode==='edit'">
     最新消息資料呈現區域
   </div>
-  <div class="news" *ngIf="mode==='preview'">
-    <div class="news__title">
+  <div class="layout-block news" *ngIf="mode==='preview'">
+    <div class="layout-title news__title">
       最新消息
     </div>
     <div class="news__content">
@@ -13,7 +13,8 @@
       </ng-container>
     </div>
     <div class="news__pagination">
-      <rdr-pagination [pageInfo]="sourceData?.pageInfo | transformPageInfo"></rdr-pagination>
+      <rdr-pagination [totalPage]="sourceData?.pageInfo.totalPageSize" [currentPage]="sourceData?.pageInfo.page">
+      </rdr-pagination>
     </div>
   </div>
 </div>
