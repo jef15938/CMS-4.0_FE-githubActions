@@ -9,7 +9,6 @@ export * from './fast-tool/fast-tool.component';
 export * from './button/button.component';
 export * from './mega-menu/mega-menu.component';
 export * from './news-list/news-list.component';
-export * from './feature-bar/feature-bar.component';
 export * from './collapse/collapse.component';
 export * from './card-link-frame/card-link-frame.component';
 export * from './card-link/card-link.component';

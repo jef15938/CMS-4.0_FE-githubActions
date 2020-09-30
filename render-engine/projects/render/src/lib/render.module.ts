@@ -53,7 +53,6 @@ import { FastToolComponent } from './global/component/public-component/fast-tool
 import { ButtonComponent } from './global/component/public-component/button/button.component';
 import { MegaMenuComponent } from './global/component/public-component/mega-menu/mega-menu.component';
 import { NewsListComponent } from './global/component/public-component/news-list/news-list.component';
-import { FeatureBarComponent } from './global/component/public-component/feature-bar/feature-bar.component';
 import { TabCarouselTemplateComponent } from './global/component/tab-carousel-template/tab-carousel-template.component';
 import { TabScrollableTemplateComponent } from './global/component/tab-scrollable-template/tab-scrollable-template.component';
 
@@ -97,7 +96,6 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
   ButtonComponent,
   MegaMenuComponent,
   NewsListComponent,
-  FeatureBarComponent,
   TabCarouselTemplateComponent,
   TabScrollableTemplateComponent,
 ];
