@@ -2,16 +2,17 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { TabTemplateBaseComponent } from '../../../function/wrapper/layout-base/tab-template-base.component';
 import { TabTemplateInfo } from '../../interface/tab-template-info.interface';
 import { ContentFieldInfoFieldType } from '../../api/data-model/models/content-field-info.model';
+import { TabData } from '../public-component/tab/tab.inerface';
 
 const TEMPLATE_ID = 'Tab';
 
 @Component({
-  selector: 'rdr-tab-carousel',
-  templateUrl: './tab-carousel.component.html',
-  styleUrls: ['./tab-carousel.component.scss']
+  selector: 'rdr-tab-scrollable-template',
+  templateUrl: './tab-scrollable-template.component.html',
+  styleUrls: ['./tab-scrollable-template.component.scss']
 })
-export class TabCarouselComponent extends TabTemplateBaseComponent implements OnInit {
-  maxItemCount = 20;
+export class TabScrollableTemplateComponent extends TabTemplateBaseComponent implements OnInit {
+  maxItemCount = 8;
   defaultTemplateInfo: TabTemplateInfo = {
     id: 'tp1',
     templateId: TEMPLATE_ID,
@@ -22,7 +23,7 @@ export class TabCarouselComponent extends TabTemplateBaseComponent implements On
       fieldType: ContentFieldInfoFieldType.GROUP,
       fieldVal: '',
       extension: {},
-      tabId: '標籤最多十五個字標籤最多十五個',
+      tabId: '標籤最多六字',
       children: [{
         id: 'c1',
         templateId: 'IconPage',
@@ -35,7 +36,7 @@ export class TabCarouselComponent extends TabTemplateBaseComponent implements On
       fieldType: ContentFieldInfoFieldType.GROUP,
       fieldVal: '',
       extension: {},
-      tabId: '標籤最多十五個字',
+      tabId: '標籤最多六字',
       children: []
     }
     ]
@@ -48,4 +49,7 @@ export class TabCarouselComponent extends TabTemplateBaseComponent implements On
   ngOnInit(): void {
   }
 
+  tabData(item): TabData {
+    return { title: item.tabId, content: item.children };
+  }
 }

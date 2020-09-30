@@ -1,4 +1,5 @@
-import { AfterContentInit, Component, ContentChildren, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, Injector, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
+import { CustomizeBaseDirective } from '../../base-component';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { TabItemComponent } from '../tab-item/tab-item.component';
 
@@ -8,7 +9,7 @@ import { TabItemComponent } from '../tab-item/tab-item.component';
   styleUrls: ['./tab-carousel-frame.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TabCarouselFrameComponent implements OnInit, AfterContentInit {
+export class TabCarouselFrameComponent extends CustomizeBaseDirective implements OnInit, AfterContentInit {
 
   perView = 4;
 
@@ -26,7 +27,9 @@ export class TabCarouselFrameComponent implements OnInit, AfterContentInit {
 
   @ContentChildren(TabItemComponent) tabs: QueryList<TabItemComponent>;
   selectedTab: TabItemComponent;
-  constructor() { }
+  constructor(injector: Injector) {
+    super(injector);
+  }
 
   ngOnInit(): void {
   }

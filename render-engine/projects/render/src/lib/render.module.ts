@@ -54,8 +54,8 @@ import { ButtonComponent } from './global/component/public-component/button/butt
 import { MegaMenuComponent } from './global/component/public-component/mega-menu/mega-menu.component';
 import { NewsListComponent } from './global/component/public-component/news-list/news-list.component';
 import { FeatureBarComponent } from './global/component/public-component/feature-bar/feature-bar.component';
-import { TabScrollableComponent } from './global/component/tab-scrollable/tab-scrollable.component';
-import { TabCarouselComponent } from './global/component/tab-carousel/tab-carousel.component';
+import { TabCarouselTemplateComponent } from './global/component/tab-carousel-template/tab-carousel-template.component';
+import { TabScrollableTemplateComponent } from './global/component/tab-scrollable-template/tab-scrollable-template.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -98,8 +98,8 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
   MegaMenuComponent,
   NewsListComponent,
   FeatureBarComponent,
-  TabScrollableComponent,
-  TabCarouselComponent,
+  TabCarouselTemplateComponent,
+  TabScrollableTemplateComponent,
 ];
 
 @NgModule({
