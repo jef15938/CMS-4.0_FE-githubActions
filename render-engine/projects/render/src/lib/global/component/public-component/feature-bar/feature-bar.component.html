@@ -1,0 +1,6 @@
+<ul class="features">
+  <li *ngFor="let item of featureList;index as i" class="features__item">
+    <i [class]="'features__icon features__icon--'+i"></i>
+    <span class="features__text">{{item}}</span>
+  </li>
+</ul>

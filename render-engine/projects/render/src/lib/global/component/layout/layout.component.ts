@@ -6,7 +6,7 @@ import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-ge
 const TEMPLATE_ID = 'layout';
 
 @Component({
-  selector: 'lib-layout',
+  selector: 'rdr-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })

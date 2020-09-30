@@ -1,0 +1,17 @@
+@mixin rdr-fast-tool-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-fast-tool' !default;
+  $tl-border-color: map-get($theme, brown_grey_1) !default;
+  $tl-fast-tool-bg-color: map-get($theme, color_primary) !default;
+  $tl-fast-tool-color: map-get($theme, white_0) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-fast-tool.rdr-cp';
+  }
+
+  #{$selector} {
+    border-color: $tl-border-color;
+    background-color: transparentize($tl-fast-tool-bg-color, 0.5);
+    color: $tl-fast-tool-color;
+  }
+}

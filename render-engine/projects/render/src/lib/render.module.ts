@@ -17,7 +17,7 @@ import { RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN } from './global/injection-toke
 import { RENDER_DEFAULT_COMPONENT_MAPPINGS } from './global/const/component-mapping';
 import { LayoutComponent } from './global/component/layout/layout.component';
 import { LayoutFullComponent } from './global/component/layout-full/layout-full.component';
-import { MegaMenuComponent } from './global/component/layout-full/mega-menu/mega-menu.component';
+import { MegaMenuOldComponent } from './global/component/layout-full/mega-menu-old/mega-menu-old.component';
 import { MobileMegaMenuComponent } from './global/component/layout-full/mobile-mega-menu/mobile-mega-menu.component';
 import { QaComponent } from './global/component/qa/qa.component';
 import { DownloadComponent } from './global/component/download/download.component';
@@ -30,6 +30,9 @@ import { FixedWrapperComponent } from './global/component/fixed-wrapper/fixed-wr
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandlerInterceptor } from './global/interceptor/http-error-handler.interceptor';
 import { HtmlEditorContentComponent } from './function/ui/html-editor-content/html-editor-content.component';
+import { RenderPreviewContainerComponent } from './global/component/render-preview-container/render-preview-container.component';
+import { TestCustomize1Component } from './global/component/test-customize1/test-customize1.component';
+import { MetaService } from './global/service/meta.service';
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
 import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
@@ -39,9 +42,18 @@ import { CardNewsComponent } from './global/component/public-component/card-news
 import { CardActivityComponent } from './global/component/public-component/card-activity/card-activity.component';
 import { CardJournalComponent } from './global/component/public-component/card-journal/card-journal.component';
 import { PaginationComponent } from './global/component/public-component/pagination/pagination.component';
-import { RenderPreviewContainerComponent } from './global/component/render-preview-container/render-preview-container.component';
-import { TestCustomize1Component } from './global/component/test-customize1/test-customize1.component';
-import { MetaService } from './global/service/meta.service';
+import { BreadcrumbComponent } from './global/component/public-component/breadcrumb/breadcrumb.component';
+import { FormFrameComponent } from './global/component/public-component/form-frame/form-frame.component';
+import { InputComponent } from './global/component/public-component/input/input.component';
+import { SelectComponent } from './global/component/public-component/select/select.component';
+import { RadioComponent } from './global/component/public-component/radio/radio.component';
+import { CheckboxComponent } from './global/component/public-component/checkbox/checkbox.component';
+import { SearchBarComponent } from './global/component/public-component/search-bar/search-bar.component';
+import { FastToolComponent } from './global/component/public-component/fast-tool/fast-tool.component';
+import { ButtonComponent } from './global/component/public-component/button/button.component';
+import { MegaMenuComponent } from './global/component/public-component/mega-menu/mega-menu.component';
+import { NewsListComponent } from './global/component/public-component/news-list/news-list.component';
+import { FeatureBarComponent } from './global/component/public-component/feature-bar/feature-bar.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -61,6 +73,10 @@ const COMPONENTS = [
   BannerComponent,
   ListComponent,
   TestCustomize1Component,
+  MegaMenuOldComponent,
+];
+
+const PUBLIC_COMPONENTS_TEMPLATES = [
   CollapseComponent,
   CardLinkFrameComponent,
   CardLinkComponent,
@@ -68,6 +84,18 @@ const COMPONENTS = [
   CardActivityComponent,
   CardJournalComponent,
   PaginationComponent,
+  BreadcrumbComponent,
+  InputComponent,
+  FormFrameComponent,
+  SelectComponent,
+  RadioComponent,
+  CheckboxComponent,
+  SearchBarComponent,
+  FastToolComponent,
+  ButtonComponent,
+  MegaMenuComponent,
+  NewsListComponent,
+  FeatureBarComponent,
 ];
 
 @NgModule({
@@ -85,12 +113,14 @@ const COMPONENTS = [
   ],
   declarations: [
     RenderComponent,
-    ...COMPONENTS,
     RenderPreviewContainerComponent,
+    ...COMPONENTS,
+    ...PUBLIC_COMPONENTS_TEMPLATES,
   ],
   exports: [
     RenderComponent,
     ...COMPONENTS,
+    ...PUBLIC_COMPONENTS_TEMPLATES,
   ]
 })
 export class RenderModule {

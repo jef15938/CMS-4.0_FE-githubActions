@@ -1,0 +1,105 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-radio-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-radio' !default;
+  $tl-border-color: map-get($theme, brown_grey_0) !default;
+  $tl-border-color-disabled: map-get($theme, very_light_pink_0) !default;
+  $tl-icon-color-active: map-get($theme, color_primary) !default;
+  $tl-form-color: map-get($theme, brownish_grey) !default;
+  $tl-form-color-disabled: map-get($theme, brown_grey_1) !default;
+  $tl-form-color-active: map-get($theme, black_0) !default;
+
+  $radio-theme: nx-ui-theme-config-gen($color-plain: $tl-form-color,
+      $color-null: $tl-border-color,
+      $color_primary: $tl-icon-color-active);
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-radio.rdr-cp';
+  }
+
+  @include nx-radio-theme($radio-theme);
+
+  #{$selector} {
+    nx-radio.nx-cp {
+
+      &.style--disable {
+        .choice-type {
+          .choice-type__icon-box {
+            border-color: $tl-border-color-disabled;
+          }
+
+          .choice-type__text {
+            color: $tl-form-color-disabled
+          }
+        }
+      }
+
+      .choice-type_radio {
+        .choice-type__input {
+
+          &:checked,
+          &:focus {
+            +.choice-type__icon-box {
+              border-color: $tl-icon-color-active;
+            }
+
+            ~.choice-type__text {
+              color: $tl-form-color-active;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin rdr-checkbox-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-checkbox' !default;
+  $tl-border-color: map-get($theme, color_primary) !default;
+  $tl-icon-color: map-get($theme, white_1) !default;
+  $tl-icon-color-active: map-get($theme, color_primary) !default;
+  $tl-form-color: map-get($theme, brownish_grey) !default;
+  $tl-form-color-disabled: map-get($theme, brown_grey_1) !default;
+  $tl-form-color-active: map-get($theme, black_1) !default;
+
+  $checkbox-theme: nx-ui-theme-config-gen($color-plain: $tl-form-color,
+      $color-null: $tl-border-color,
+      $color_primary: $tl-icon-color-active);
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-checkbox.rdr-cp';
+  }
+
+  @include nx-checkbox-theme($checkbox-theme);
+
+  #{$selector} {
+    nx-checkbox.nx-cp {
+      &.style--disable {
+        .choice-type {
+          .choice-type__icon-box {
+            opacity: 0.5;
+          }
+
+          .choice-type__text {
+            color: $tl-form-color-disabled
+          }
+        }
+      }
+
+      .choice-type_checkbox {
+        .choice-type__input {
+
+          &:checked,
+          &:focus {
+
+            ~.choice-type__text {
+              color: $tl-form-color-active;
+            }
+          }
+        }
+      }
+    }
+  }
+}

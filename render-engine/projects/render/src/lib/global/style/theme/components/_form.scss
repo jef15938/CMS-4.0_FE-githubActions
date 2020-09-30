@@ -1,0 +1,255 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-form-frame-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-form-frame' !default;
+  $tl-note-color: map-get($theme, brown_grey_0) !default;
+  $tl-form-color: map-get($theme, black_1) !default;
+  $tl-form-color-error: #d82229 !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-form-frame.rdr-cp';
+  }
+
+  #{$selector} {
+    .form-frame {
+
+      &__title,
+      &__suffix {
+        color: $tl-form-color;
+      }
+
+      &__note {
+        color: $tl-note-color;
+      }
+
+      &__error {
+        color: $tl-form-color-error;
+      }
+    }
+  }
+}
+
+@mixin rdr-input-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-input' !default;
+  $tl-border-color: map-get($theme, brown_grey_1) !default;
+  $tl-border-color-disabled: map-get($theme, very_light_pink_1) !default;
+  $tl-border-color-active: #a0c7c0 !default;
+  $tl-placholder-color: map-get($theme, brown_grey_0) !default;
+  $tl-form-color: map-get($theme, black_1) !default;
+  $tl-form-color-error: #d82229 !default;
+  $tl-form-color-disabled: map-get($theme, very_light_pink_0) !default;
+  $tl-form-bg-color: map-get($theme, white_1) !default;
+  $tl-form-bg-color-disabled: map-get($theme, white_0) !default;
+
+  $input-theme: nx-ui-theme-config-gen($color-plain: $tl-form-color,
+      $color-warn: $tl-form-color-error,
+      $color-back-light: $tl-form-bg-color);
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-input.rdr-cp';
+  }
+
+  @include nx-input-theme($input-theme);
+
+  #{$selector} {
+    [nx-input].nx-cp {
+      &:focus {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      &::placeholder {
+        color: $tl-placholder-color;
+      }
+
+      &.style--error {
+        color: $tl-form-color;
+
+        &:focus {
+          box-shadow: none;
+        }
+
+        &::placeholder {
+          color: $tl-placholder-color;
+        }
+
+        &~.error-msg {
+          color: $tl-form-color-error;
+        }
+      }
+
+      &.style--disable {
+        color: $tl-form-color-disabled;
+        background-color: $tl-form-bg-color-disabled;
+
+        &::placeholder {
+          color: $tl-form-color-disabled;
+        }
+      }
+
+      &[class*="style-border--"] {
+        border-color: $tl-border-color;
+
+        &:focus {
+          border-color: $tl-border-color;
+        }
+
+        &:active {
+          border-color: $tl-border-color-active;
+        }
+
+        &.style--disable {
+          border-color: $tl-border-color-disabled;
+        }
+
+        &.style--error {
+          border-color: $tl-form-color-error;
+        }
+      }
+    }
+  }
+
+}
+
+@mixin rdr-select-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-select' !default;
+  $tl-border-color: map-get($theme, brown_grey_1) !default;
+  $tl-border-color-disabled: map-get($theme, very_light_pink_1) !default;
+  $tl-border-color-active: #a0c7c0 !default;
+  $tl-option-border-color: map-get($theme, very_light_pink_2) !default;
+  $tl-option-border-color-hover: map-get($theme, ice) !default;
+  $tl-option-border-color-active: map-get($theme, duck_egg_blue) !default;
+  $tl-placholder-color: map-get($theme, brown_grey_0) !default;
+  $tl-icon-color: map-get($theme, color_primary) !default;
+  $tl-form-color: map-get($theme, black_1) !default;
+  $tl-form-color-error: #d82229 !default;
+  $tl-form-color-disabled: map-get($theme, very_light_pink_0) !default;
+  $tl-form-bg-color: map-get($theme, white_1) !default;
+  $tl-form-bg-color-disabled: map-get($theme, white_0) !default;
+  $tl-searchbar-placeholder-color: map-get($theme, brown_grey_1) !default;
+  $tl-searchbar-bg-color: map-get($theme, very_light_pink_2) !default;
+  $tl-scrollbar-color: map-get($theme, brown_grey_1) !default;
+
+  $select-theme: nx-ui-theme-config-gen($color-plain: $tl-form-color,
+      $color-warn: $tl-form-color-error,
+      $color-back-light: $tl-form-bg-color,
+      $color-back: $tl-form-color);
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-select.rdr-cp';
+  }
+
+  @include nx-select-theme($select-theme);
+
+  #{$selector} {
+    nx-select.nx-cp {
+      &[class*="style-border--"] {
+        .select-container {
+          border-color: $tl-border-color;
+
+          &.style--option-show {
+            border-color: $tl-border-color-active;
+          }
+        }
+
+        &.style--disable {
+          .select-container {
+            border-color: $tl-border-color-disabled;
+          }
+        }
+
+        &.style--error {
+          .select-container {
+            border-color: $tl-form-color-error;
+          }
+        }
+      }
+
+      &.style--disable {
+        background-color: $tl-form-bg-color-disabled;
+
+        a {
+          color: $tl-form-color-disabled;
+        }
+
+        .select-container {
+          &:after {
+            border-color: $tl-icon-color;
+            opacity: 0.5;
+          }
+        }
+      }
+
+      &.style--error {
+        a {
+          color: $tl-form-color;
+        }
+
+        .select-ele__selected--default {
+          color: $tl-placholder-color;
+        }
+      }
+
+      .select-container {
+        background-color: $tl-form-bg-color;
+
+        &.style--option-show {
+          background-color: $tl-form-bg-color;
+        }
+      }
+
+      .select-ele {
+        &--customize {
+
+          +.select-options {
+            border-color: $tl-border-color;
+            background-color: $tl-form-bg-color;
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+
+            .select-options__list {
+              &::-webkit-scrollbar-thumb {
+                box-shadow: inset 0 0 11px 11px transparentize($tl-scrollbar-color, 0.4);
+              }
+            }
+
+            .select-options__item {
+              &:hover {
+                background-color: $tl-option-border-color-hover;
+
+                .select-options__text {
+                  color: $tl-form-color;
+                }
+              }
+
+              &:active {
+                background-color: $tl-option-border-color-active;
+              }
+
+              +.select-options__item {
+                border-top: 1px solid $tl-option-border-color;
+              }
+            }
+          }
+
+        }
+      }
+
+      .select-ele__selected--default {
+        color: $tl-placholder-color;
+      }
+
+      .searchbar {
+        [nx-input] {
+          background-color: $tl-searchbar-bg-color;
+          color: $tl-form-color;
+
+          &::placeholder {
+            color: $tl-searchbar-placeholder-color;
+          }
+        }
+      }
+    }
+  }
+}

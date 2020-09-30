@@ -1,0 +1,33 @@
+@import "public-style.scss";
+
+@include rdr-breadcrumb-theme();
+
+rdr-breadcrumb {
+  @include nx-breadcrumb-config($mode: 'customize',
+    $arrow-margin: 8px,
+    $arrow-width: 0px,
+    $arrow-height: 0px);
+
+  nx-breadcrumb.nx-cp {
+    .pile {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .grain {
+      +.grain {
+        &:before {
+          @include rdr-icon(1, 2, 18px);
+          border-width: 0;
+          transform: none;
+        }
+      }
+
+      &__text {
+        @include fz-body-16-left-bold;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+}

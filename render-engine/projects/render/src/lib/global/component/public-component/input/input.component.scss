@@ -1,0 +1,26 @@
+@import "public-style.scss";
+
+@include rdr-input-theme();
+
+rdr-input {
+  @include nx-input-config($mode: 'customize',
+    $form-height: 46px,
+    $form-radius: 4px,
+    $form-border-width: 0.5px,
+    $form-padding: 12px 12px);
+
+  display: block;
+
+  [nx-input].nx-cp {
+    @include fz-callout-18-left;
+    line-height: normal;
+    box-sizing: border-box;
+
+    &.style-border--all {
+      &:focus {
+        outline: 0;
+        border-width: 0.5px;
+      }
+    }
+  }
+}
