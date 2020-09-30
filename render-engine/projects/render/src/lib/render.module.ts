@@ -6,7 +6,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { RenderComponent } from './global/component/render/render.component';
 import { WrapperModule } from './function/wrapper/wrapper.module';
 import { PipeModule } from './global/pipe/pipe.module';
-import { TabModule } from './global/component/tab/tab.module';
+import { TabModule } from './global/component/public-component/tab/tab.module';
 import { RenderRoutingModule } from './render-routing.module';
 import { IconPageComponent } from './global/component/icon-page/icon-page.component';
 import { SliderComponent } from './global/component/slider/slider.component';
@@ -42,6 +42,8 @@ import { PaginationComponent } from './global/component/public-component/paginat
 import { RenderPreviewContainerComponent } from './global/component/render-preview-container/render-preview-container.component';
 import { TestCustomize1Component } from './global/component/test-customize1/test-customize1.component';
 import { MetaService } from './global/service/meta.service';
+import { TabScrollableComponent } from './global/component/tab-scrollable/tab-scrollable.component';
+import { TabCarouselComponent } from './global/component/tab-carousel/tab-carousel.component';
 
 const COMPONENTS = [
   SliderComponent,
@@ -68,6 +70,8 @@ const COMPONENTS = [
   CardActivityComponent,
   CardJournalComponent,
   PaginationComponent,
+  TabScrollableComponent,
+  TabCarouselComponent,
 ];
 
 @NgModule({

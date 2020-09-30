@@ -2,6 +2,7 @@
 @import './components/collpase';
 @import './components/card-link';
 @import './components/pagination';
+@import './components/tab';
 
 
 @mixin rdr-theme-core($core-theme) {
@@ -11,5 +12,7 @@
   @include rdr-card-news-theme($theme: $core-theme);
   @include rdr-card-activity-theme($theme: $core-theme);
   @include rdr-card-journal-theme($theme: $core-theme);
-  @include rdr-pagination-theme($theme: $core-theme)
+  @include rdr-pagination-theme($theme: $core-theme);
+  @include rdr-tab-scroll-theme($theme: $core-theme);
+  @include rdr-tab-carousel-theme($theme: $color-theme)
 }

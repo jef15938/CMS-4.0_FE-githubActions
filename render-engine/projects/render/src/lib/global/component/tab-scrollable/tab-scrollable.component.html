@@ -1,0 +1,8 @@
+<div class="layout-block">
+  <rdr-tab-scroll-frame *ngIf="templateInfo">
+    <rdr-tab-item *ngFor="let tabInfo of templateInfo.tabList" [tabTitle]="tabInfo.tabId">
+      <rdr-templates-container [templates]="tabInfo.children">
+      </rdr-templates-container>
+    </rdr-tab-item>
+  </rdr-tab-scroll-frame>
+</div>

@@ -1,8 +1,0 @@
-<ul class="tab-list">
-    <li *ngFor="let tab of tabs" [class.active]="selectedTab===tab" (click)="onSelect(tab)">
-        {{tab.tabTitle}}
-    </li>
-</ul>
-<div class="content">
-    <ng-content></ng-content>
-</div>
