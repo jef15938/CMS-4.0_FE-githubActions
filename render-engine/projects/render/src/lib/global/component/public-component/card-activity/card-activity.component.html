@@ -1,15 +1,15 @@
-<rdr-card-link-frame [linkUrl]="cardActivityData.url">
+<rdr-card-link-frame [linkUrl]="cardActivityData?.url">
   <div class="card-activity">
     <div class="card-activity__img">
-      <img [src]="cardActivityData.imgUrl" [alt]="cardActivityData.title">
+      <img [src]="cardActivityData?.imgUrl" [alt]="cardActivityData?.title">
     </div>
     <div class="card-activity__info">
       <div class="card-activity__date">
-        {{cardActivityData.startDate | date:'yyyy/MM/dd'}}-{{cardActivityData.endDate | date:'yyyy/MM/dd'}}
+        {{cardActivityData?.startDate | date:'yyyy/MM/dd'}}-{{cardActivityData?.endDate | date:'yyyy/MM/dd'}}
       </div>
-      <div class="card-activity__subtitle">{{cardActivityData.subTitle}}</div>
-      <div class="card-activity__title">{{cardActivityData.title}}</div>
-      <div class="card-activity__desc">{{cardActivityData.content}}</div>
+      <div class="card-activity__subtitle">{{cardActivityData?.subTitle}}</div>
+      <div class="card-activity__title">{{cardActivityData?.title}}</div>
+      <div class="card-activity__desc">{{cardActivityData?.content}}</div>
     </div>
   </div>
 </rdr-card-link-frame>
