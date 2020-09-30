@@ -1,7 +1,6 @@
 @import "public-style.scss";
 
-// TODO 修正編譯錯誤
-// @include rdr-fast-tool-theme;
+@include rdr-fast-tool-theme;
 
 rdr-fast-tool {
   cursor: pointer;
