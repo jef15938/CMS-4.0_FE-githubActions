@@ -8,11 +8,7 @@ import { TabData } from '../tab.inerface';
 })
 export class TabScrollableComponent implements OnInit {
 
-  @Input() tabList: TabData[] = [
-    { title: '標籤最多六字', content: '' },
-    { title: '標籤最多六字', content: '' },
-    { title: '標籤最多六字', content: '' },
-  ];
+  @Input() tabList: TabData[];
 
   @ContentChild('content') contentTemplateRef: TemplateRef<any>;
   constructor() {

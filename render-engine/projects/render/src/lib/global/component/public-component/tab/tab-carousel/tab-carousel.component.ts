@@ -8,13 +8,7 @@ import { TabData } from '../tab.inerface';
 })
 export class TabCarouselComponent implements OnInit {
 
-  @Input() tabList: TabData[] = [
-    { title: '標籤最多十五字', content: '' },
-    { title: '標籤最多十五字', content: '' },
-    { title: '標籤最多十五字', content: '' },
-    { title: '標籤最多十五字', content: '' },
-    { title: '標籤最多十五字', content: '' },
-  ];
+  @Input() tabList: TabData[];
 
   @ContentChild('content') contentTemplateRef: TemplateRef<any>;
   constructor() {
