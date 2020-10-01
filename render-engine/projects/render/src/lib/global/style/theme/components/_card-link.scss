@@ -143,3 +143,43 @@
     }
   }
 }
+
+//card news list
+@mixin rdr-card-news-list-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-card-news-list' !default;
+  $bg-color: map-get($theme, white_1) !default;
+  $title-font-color: map-get($theme, color_primary) !default;
+  $line-color: map-get($theme, very_light_pink_1) !default;
+  $item-font-color: map-get($theme, black_0) !default;
+  $item-date-font-color: map-get($theme, brown_grey_0) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-card-news-list.rdr-cp';
+  }
+
+  #{$selector} {
+    background-color: $bg-color;
+
+    .card-news-list {
+
+      &__title {
+        color: $title-font-color;
+      }
+
+      &__item {
+        +.card-news-list__item {
+          border-color: $line-color;
+        }
+
+        &-title {
+          color: $item-font-color;
+        }
+
+        &-date {
+          color: $item-date-font-color;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<div class="card-news-list__title">
+  {{title}}
+</div>
+<ul class="card-news-list__content">
+  <li *ngFor="let item of newsList" class="card-news-list__item">
+    <a class="card-news-list__link" [href]="item.url">
+      <div class="card-news-list__item-title">{{item.title | ellipsis: '...':19:-1}}</div>
+      <div class="card-news-list__item-date">{{item.date | date:'yyyy/MM/dd'}}</div>
+    </a>
+  </li>
+</ul>
+<div class="card-news-list__footer">
+  <ng-content select="[footer]"></ng-content>
+</div>

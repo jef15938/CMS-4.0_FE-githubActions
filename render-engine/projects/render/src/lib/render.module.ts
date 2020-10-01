@@ -8,6 +8,7 @@ import { WrapperModule } from './function/wrapper/wrapper.module';
 import { PipeModule } from './global/pipe/pipe.module';
 import { TabModule } from './global/component/public-component/tab/tab.module';
 import { RenderRoutingModule } from './render-routing.module';
+import { CardModule } from './global/component/public-component/card/card.module';
 import { IconPageComponent } from './global/component/icon-page/icon-page.component';
 import { SliderComponent } from './global/component/slider/slider.component';
 import { FieldsDemoComponent } from './global/component/fields-demo/fields-demo.component';
@@ -36,11 +37,6 @@ import { MetaService } from './global/service/meta.service';
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
 import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
-import { CardLinkFrameComponent } from './global/component/public-component/card-link-frame/card-link-frame.component';
-import { CardLinkComponent } from './global/component/public-component/card-link/card-link.component';
-import { CardNewsComponent } from './global/component/public-component/card-news/card-news.component';
-import { CardActivityComponent } from './global/component/public-component/card-activity/card-activity.component';
-import { CardJournalComponent } from './global/component/public-component/card-journal/card-journal.component';
 import { PaginationComponent } from './global/component/public-component/pagination/pagination.component';
 import { BreadcrumbComponent } from './global/component/public-component/breadcrumb/breadcrumb.component';
 import { FormFrameComponent } from './global/component/public-component/form-frame/form-frame.component';
@@ -52,7 +48,6 @@ import { SearchBarComponent } from './global/component/public-component/search-b
 import { FastToolComponent } from './global/component/public-component/fast-tool/fast-tool.component';
 import { ButtonComponent } from './global/component/public-component/button/button.component';
 import { MegaMenuComponent } from './global/component/public-component/mega-menu/mega-menu.component';
-import { NewsListComponent } from './global/component/public-component/news-list/news-list.component';
 import { TabCarouselTemplateComponent } from './global/component/tab-carousel-template/tab-carousel-template.component';
 import { TabScrollableTemplateComponent } from './global/component/tab-scrollable-template/tab-scrollable-template.component';
 
@@ -75,15 +70,12 @@ const COMPONENTS = [
   ListComponent,
   TestCustomize1Component,
   MegaMenuOldComponent,
+  TabCarouselTemplateComponent,
+  TabScrollableTemplateComponent,
 ];
 
 const PUBLIC_COMPONENTS_TEMPLATES = [
   CollapseComponent,
-  CardLinkFrameComponent,
-  CardLinkComponent,
-  CardNewsComponent,
-  CardActivityComponent,
-  CardJournalComponent,
   PaginationComponent,
   BreadcrumbComponent,
   InputComponent,
@@ -95,9 +87,6 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
   FastToolComponent,
   ButtonComponent,
   MegaMenuComponent,
-  NewsListComponent,
-  TabCarouselTemplateComponent,
-  TabScrollableTemplateComponent,
 ];
 
 @NgModule({
@@ -111,7 +100,8 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
     StoreModule.forFeature(fromRenderStore.renderFeatureKey, fromRenderStore.reducer),
     EffectsModule.forFeature([RenderEffects]),
     NxUiModule,
-    FormsModule
+    FormsModule,
+    CardModule
   ],
   declarations: [
     RenderComponent,

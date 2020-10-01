@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { CustomizeBaseDirective } from '../base-component';
+import { CustomizeBaseDirective } from '../../base-component';
 import { CardLinkData } from './card-link.interface';
 
 @Component({

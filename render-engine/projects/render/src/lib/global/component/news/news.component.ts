@@ -2,7 +2,7 @@ import { Component, Injector } from '@angular/core';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { NewsData } from './news.interface';
 import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
-import { CardNewsData } from '../public-component/card-news/card-news.interface';
+import { CardNewsData } from '../public-component/card/card-news/card-news.interface';
 
 const TEMPLATE_ID = 'news';
 
