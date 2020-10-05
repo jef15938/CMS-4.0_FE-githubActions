@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { plainToClass } from 'class-transformer';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service/sitemap/sitemap.service';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum';
@@ -8,6 +9,7 @@ import { UserSiteMapPutRequestModel } from '../../../../global/api/data-model/mo
 import { SiteNodeDetailInfoModel } from '../../../../global/api/data-model/models/site-node-detail-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { CmsLoadingToggle } from '../../../../global/service/cms-loading-toggle.service';
+
 
 @Component({
   selector: 'cms-sitemap-node-update-modal',
@@ -63,7 +65,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNode
     const model = new UserSiteMapPutRequestModel();
     model.parentId = parentID || '';
     model.contentPath = sitemapNode.contentPath;
-    model.details = [...sitemapNode.details];
+    model.details = [...(sitemapNode.details || []).map(detail => plainToClass(SiteNodeDetailInfoModel, detail))];
     model.url = sitemapNode.url;
     model.urlBlank = sitemapNode.urlBlank;
     model.urlLinkNodeId = sitemapNode.urlLinkNodeId;
