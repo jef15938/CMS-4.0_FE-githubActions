@@ -25,6 +25,30 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
     component: LayoutFullComponent,
   },
   {
+    component_id: 'portal-index',
+    component: LayoutFullComponent,
+  },
+  {
+    component_id: 'portal-layout1',
+    component: LayoutFullComponent,
+  },
+  {
+    component_id: 'portal-layout2',
+    component: LayoutFullComponent,
+  },
+  {
+    component_id: 'portal-oversea_calc',
+    component: LayoutFullComponent,
+  },
+  {
+    component_id: 'portal-product-detail',
+    component: LayoutFullComponent,
+  },
+  {
+    component_id: 'portal-product-list',
+    component: LayoutFullComponent,
+  },
+  {
     component_id: 'full',
     component: LayoutFullComponent,
   },

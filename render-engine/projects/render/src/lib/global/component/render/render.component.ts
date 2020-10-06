@@ -9,6 +9,7 @@ import { MetaService } from '../../service/meta.service';
 import { SiteMapInfoModel } from '../../api/data-model/models/site-map-info.model';
 import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { SitemapUtil } from '../../utils/sitemap-util';
 
 @Component({
   selector: 'rdr-render',
@@ -53,7 +54,7 @@ export class RenderComponent implements OnInit {
     }];
     console.warn('this.templates = ', this.templates);
 
-    const pageNode = SiteMapGetResponseModel.findNodeByContentPathFromSites(this.sites?.sites, pageID);
+    const pageNode = SitemapUtil.findNodeByContentPathFromSites(this.sites?.sites, pageID);
     const title = this.getPageTitleByNode(this.sites?.sites, pageNode, this.pageInfo.lang) || this.pageInfo.domain;
     this.metaService.setPageTitle(title);
 
@@ -67,7 +68,7 @@ export class RenderComponent implements OnInit {
 
     sites = sites || [];
     return sites.map(site => {
-      const flattenedNodes = SiteMapGetResponseModel.flattenNodes(site.siteMap);
+      const flattenedNodes = SitemapUtil.flattenNodes(site.siteMap);
       if (flattenedNodes.indexOf(node) < 0) { return; }
 
       const flattenedParents = this.getFlattenedParentsFromNode(flattenedNodes, node);

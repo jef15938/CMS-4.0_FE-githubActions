@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
 import { Router } from '@angular/router';
+import { SitemapUtil } from '../../../global/utils/sitemap-util';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class HtmlEditorContentComponent implements OnInit, OnChanges {
           const siteId = node.getAttribute('siteid');
           const nodeId = node.getAttribute('href');
           const sites = this.sites;
-          const href = SiteMapGetResponseModel.findContentPathBySiteIdAndNodeId(sites, siteId, nodeId);
+          const href = SitemapUtil.findContentPathBySiteIdAndNodeId(sites, siteId, nodeId);
           if (href) {
             node.setAttribute('nodeId', nodeId);
             const paths = this.router.url.split('/').filter(v => !!v);

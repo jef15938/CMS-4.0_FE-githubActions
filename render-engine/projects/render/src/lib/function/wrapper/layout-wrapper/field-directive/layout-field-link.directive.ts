@@ -1,8 +1,8 @@
 import { Directive, Input, Injector, OnChanges, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { TemplateFieldDirective } from './template-field.directive';
 import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
-import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
-import { Router } from '@angular/router';
+import { SitemapUtil } from '../../../../global/utils/sitemap-util';
 
 export enum LinkFieldInfoUrlType {
   INSIDE = 'INSIDE',
@@ -45,7 +45,7 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
         const siteId = this.fieldInfo.extension.siteId;
         const nodeId = aTag.getAttribute('href');
         const sites = this.sites;
-        const href = SiteMapGetResponseModel.findContentPathBySiteIdAndNodeId(sites, siteId, nodeId);
+        const href = SitemapUtil.findContentPathBySiteIdAndNodeId(sites, siteId, nodeId);
         if (href) {
           aTag.setAttribute('nodeId', nodeId);
           const paths = this.router.url.split('/').filter(v => !!v);
