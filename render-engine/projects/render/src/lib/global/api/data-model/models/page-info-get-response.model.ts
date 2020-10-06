@@ -13,7 +13,6 @@ import { ModelMapping } from '@neux/core';
     model.metaImage = bean.meta_image;
     model.contentId = bean.content_id;
     model.lang = bean.lang;
-    model.nodeRoot = bean.node_root;
     model.nodeParent = bean.node_parent;
     model.domain = bean.domain;
   }
@@ -31,8 +30,6 @@ export class PageInfoGetResponseModel {
   public contentId: string;
   @IsNotEmpty()
   public lang: string;
-  @IsNotEmpty()
-  public nodeRoot: string;
   public nodeParent: string;
   @IsNotEmpty()
   public domain: string;

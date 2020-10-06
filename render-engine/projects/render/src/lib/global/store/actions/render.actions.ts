@@ -4,7 +4,7 @@ import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-ge
 
 export const fetchSitemap = createAction(
   '[Render] Fetch Sitemap',
-  props<{ context: ApiContext, lang: string, root: string }>()
+  props<{ context: ApiContext }>()
 );
 
 export const fetchSitemapSuccess = createAction(

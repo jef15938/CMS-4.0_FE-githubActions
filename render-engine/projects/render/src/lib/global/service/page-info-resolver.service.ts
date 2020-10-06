@@ -49,7 +49,7 @@ export class PageInfoResolverService implements Resolve<PageData> {
           return state.result === RequestStatus.Success;
         },
         pageInfo$.pipe(switchMap(x => this.store.pipe(
-          select(selectSitemap, { root: x.nodeRoot, lang: x.lang }),
+          select(selectSitemap),
           first()
         ))),
         // TODO: handle sitemap not found error
@@ -61,7 +61,7 @@ export class PageInfoResolverService implements Resolve<PageData> {
 
     // fetch Sitemap first
     pageInfo$.pipe(
-      tap(x => this.store.dispatch(fetchSitemap({ context, lang: x.lang, root: x.nodeRoot })))
+      tap(x => this.store.dispatch(fetchSitemap({ context })))
     ).subscribe();
 
     return forkJoin({
