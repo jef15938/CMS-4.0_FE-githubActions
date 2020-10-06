@@ -10,5 +10,5 @@ export * from './button/button.component';
 export * from './mega-menu/mega-menu.component';
 export * from './collapse/collapse.component';
 export * from './pagination/pagination.component';
-export * from './tab';
-export * from './card';
+export * from './tab/index';
+export * from './card/index';
