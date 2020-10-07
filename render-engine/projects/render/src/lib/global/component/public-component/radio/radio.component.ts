@@ -1,8 +1,17 @@
 import { AfterViewInit, Component, forwardRef, Input, OnInit, ViewChild, ViewEncapsulation, Injector } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NxRadioGroup } from '@neux/ui';
-import { RadioData } from './radio.interface';
 import { CustomizeBaseDirective } from '../base-component';
+
+export interface RadioData {
+  id: string;
+  value: string;
+  title: string;
+  name: string;
+  checked: boolean;
+  required: boolean;
+  disabled: boolean;
+}
 
 @Component({
   selector: 'rdr-radio',

@@ -1,6 +1,10 @@
 import { Component, ContentChild, Injector, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { CustomizeBaseDirective } from '../base-component';
-import { CollapseData } from './collapse.interface';
+
+export interface CollapseData {
+  title: string;
+  content: string;
+}
 
 @Component({
   selector: 'rdr-collapse',

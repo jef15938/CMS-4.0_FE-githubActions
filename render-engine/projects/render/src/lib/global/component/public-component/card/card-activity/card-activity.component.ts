@@ -1,6 +1,15 @@
 import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CustomizeBaseDirective } from '../../base-component';
-import { CardActivityData } from './card-activity.interface';
+
+export interface CardActivityData {
+  url: string;
+  imgUrl: string;
+  title: string;
+  subTitle: string;
+  content: string;
+  startDate: Date;
+  endDate: Date;
+}
 
 @Component({
   selector: 'rdr-card-activity',

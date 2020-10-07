@@ -1,6 +1,13 @@
 import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CustomizeBaseDirective } from '../../base-component';
-import { CardJournalData } from './card-journal.interface';
+
+export interface CardJournalData {
+  url: string;
+  imgUrl: string;
+  title: string;
+  subTitle: string;
+  content: string;
+}
 
 @Component({
   selector: 'rdr-card-journal',

@@ -1,6 +1,12 @@
 import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CustomizeBaseDirective } from '../../base-component';
-import { CardNewsData } from './card-news.interface';
+
+export interface CardNewsData {
+  url: string;
+  date: Date;
+  title: string;
+  content: string;
+}
 
 @Component({
   selector: 'rdr-card-news',

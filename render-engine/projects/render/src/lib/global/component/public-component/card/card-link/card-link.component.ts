@@ -1,6 +1,10 @@
 import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CustomizeBaseDirective } from '../../base-component';
-import { CardLinkData } from './card-link.interface';
+
+export interface CardLinkData {
+  url: string;
+  title: string;
+}
 
 @Component({
   selector: 'rdr-card-link',

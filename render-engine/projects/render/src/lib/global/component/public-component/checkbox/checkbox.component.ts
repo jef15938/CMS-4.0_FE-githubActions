@@ -1,8 +1,15 @@
 import { Component, forwardRef, Input, OnInit, ViewChild, ViewEncapsulation, Injector } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NxCheckboxComponent } from '@neux/ui';
-import { CheckboxData } from './checkbox.interface';
 import { CustomizeBaseDirective } from '../base-component';
+
+export interface CheckboxData {
+  id: string;
+  value: string;
+  title: string;
+  checked: boolean;
+  disabled: boolean;
+}
 
 @Component({
   selector: 'rdr-checkbox',

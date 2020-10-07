@@ -1,7 +1,7 @@
 import { Component, Injector } from '@angular/core';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
 import { DataSourceTemplateInfo, QaData } from '../../interface/data-source.interface';
-import { CollapseData } from '../public-component/collapse/collapse.interface';
+import { CollapseData } from '../public-component/collapse/collapse.component';
 
 const TEMPLATE_ID = 'qa';
 

@@ -1,8 +1,16 @@
 import { Component, forwardRef, Input, OnInit, ViewChild, ViewEncapsulation, Injector } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NxSelectComponent } from '@neux/ui';
-import { SelectData } from './select.interface';
 import { CustomizeBaseDirective } from '../base-component';
+import { SelectOption } from '@neux/ui';
+
+export interface SelectData {
+  hasSearchbar: boolean;
+  defaultOptionText: string;
+  isError: boolean;
+  disabled: boolean;
+  optionList: SelectOption[];
+}
 
 @Component({
   selector: 'rdr-select',
