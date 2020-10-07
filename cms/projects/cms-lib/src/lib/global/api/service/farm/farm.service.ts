@@ -141,7 +141,7 @@ export class FarmService {
       console.log('formData ' + k + ' = ' + v);
     });
 
-    return this.restAPIService.UpdateFarmForm({ funcID, dataID, requestBody: formData } as any, { header }).pipe(
+    return this.restAPIService.CreateFarmForm({ funcID, dataID, requestBody: formData } as any, { header }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateFarmForm')),
     );
   }
