@@ -1,5 +1,5 @@
 import { LayoutBaseComponent } from './layout-base.component';
-import { DataSourceTemplateInfo } from '../../../global/interface/data-source-template-info.interface';
+import { DataSourceTemplateInfo } from '../../../global/interface/data-source.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { OnChanges, SimpleChanges, OnInit, Injector, Directive } from '@angular/core';
 import { of, Observable } from 'rxjs';

@@ -4,8 +4,7 @@ import {
   SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
 import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
-import { SliderData } from './slider.interface';
-import { DataSourceTemplateInfo } from '../../interface/data-source-template-info.interface';
+import { DataSourceTemplateInfo, SliderData } from '../../interface/data-source.interface';
 import { RENDER_ENVIROMENT_TOKEN } from '../../injection-token/injection-token';
 import { RenderEnvironment } from '../../interface/render-environment.interface';
 

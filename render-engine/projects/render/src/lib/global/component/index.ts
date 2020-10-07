@@ -2,7 +2,6 @@ export * from './render/render.component';
 export * from './render-preview-container/render-preview-container.component';
 export * from './slider/slider.component';
 export * from './news/news.component';
-export * from './news/news.interface';
 export * from './qa/qa.component';
 export * from './download/download.component';
 export * from './icon-page/icon-page.component';
