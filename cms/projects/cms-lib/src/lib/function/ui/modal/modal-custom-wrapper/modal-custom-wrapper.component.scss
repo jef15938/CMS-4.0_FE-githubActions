@@ -2,16 +2,17 @@
   height: 100%;
   display: block;
   width: 100%;
-  position: relative;
+  // position: relative;
 }
 
 .modal-custom {
   height: 100%;
 
   &__close {
-    position: absolute;
-    right: -10px;
-    top: -10px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    opacity: 0;
   }
 
   &__head {
