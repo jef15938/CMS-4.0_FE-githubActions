@@ -42,7 +42,7 @@ export class RestApiService {
   ) {
     this.apiConfig = this.configGetter.getApiConfig();
   }
-
+  
   // @dynamic
   @RestApi({
     apiName: 'GetPageByPageIdAndLang',
@@ -51,7 +51,7 @@ export class RestApiService {
     mock: './assets/mock/GetPageByPageIdAndLang.json',
     responseType: PageInfoGetResponse
   })
-  GetPageInfoByLang(
+  GetPageByPageIdAndLang(
     params: { page_id: string, lang: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PageInfoGetResponse> { return null; }
@@ -64,7 +64,7 @@ export class RestApiService {
     mock: './assets/mock/GetPageByPageId.json',
     responseType: PageInfoGetResponse
   })
-  GetPageInfo(
+  GetPageByPageId(
     params: { page_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PageInfoGetResponse> { return null; }
@@ -90,7 +90,7 @@ export class RestApiService {
     mock: './assets/mock/GetPreviewPageByPageIdAndLang.json',
     responseType: PageInfoGetResponse
   })
-  GetPreviewPageInfoByLang(
+  GetPreviewPageByPageIdAndLang(
     params: { page_id: string, lang: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PageInfoGetResponse> { return null; }
@@ -103,7 +103,7 @@ export class RestApiService {
     mock: './assets/mock/GetPreviewPageByPageId.json',
     responseType: PageInfoGetResponse
   })
-  GetPreviewPageInfo(
+  GetPreviewPageByPageId(
     params: { page_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PageInfoGetResponse> { return null; }
@@ -129,7 +129,7 @@ export class RestApiService {
     mock: './assets/mock/GetPreviewCompareByPageId.json',
     responseType: null
   })
-  GetPreviewCompareInfo(
+  GetPreviewCompareByPageId(
     params: { page_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<any> { return null; }
@@ -142,7 +142,7 @@ export class RestApiService {
     mock: './assets/mock/GetSiteMapDownloadByFormat.json',
     responseType: null
   })
-  DownloadSiteMap(
+  GetSiteMapDownloadByFormat(
     params: { format: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<any> { return null; }
@@ -155,7 +155,7 @@ export class RestApiService {
     mock: './assets/mock/GetContentByContentId.json',
     responseType: ContentInfo
   })
-  GetContentInfo(
+  GetContentByContentId(
     params: { content_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ContentInfo> { return null; }
@@ -168,7 +168,7 @@ export class RestApiService {
     mock: './assets/mock/GetPreviewContentByContentId.json',
     responseType: ContentInfo
   })
-  GetPreviewContent(
+  GetPreviewContentByContentId(
     params: { content_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ContentInfo> { return null; }
@@ -181,7 +181,7 @@ export class RestApiService {
     mock: './assets/mock/GetDataSourceByTypeIdAndId.json',
     responseType: ListDataSourceDataResponse
   })
-  ListDataSourceData(
+  GetDataSourceByTypeIdAndId(
     params: { type_id: string, id: string, page?: number, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListDataSourceDataResponse> { return null; }
@@ -233,7 +233,7 @@ export class RestApiService {
       getRequestData() { return apiRequest; }
     };
     console.log(`RestApiService.dispatch()`, { restAPI });
-
+    
     return this.dispatcher.dispatch(restAPI, apiDispatchOptions).pipe(
       map((x: any) => {
         x._body = responseType ? plainToClass(responseType, x.body) : responseType;
@@ -260,14 +260,14 @@ export class RestApiService {
   }
 
   private setAPIParams(api: any, params: any) {
-    for (const key in params) {
+    for (let key in params) {
         api[key] = params[key];
     }
   }
 
   private setUrl(api: any, params: any) {
     let _url = this.apiConfig.API_URL[api.getApiName()];
-    for (const key in params) {
+    for (let key in params) {
         _url = _url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
     }
     api.url = _url;
@@ -275,7 +275,7 @@ export class RestApiService {
 
   private async validateBodyClass(obj) {
     try {
-        console.log(obj);
+        console.log(obj)
         await validateOrReject(obj.body);
         return obj;
     } catch (error) {

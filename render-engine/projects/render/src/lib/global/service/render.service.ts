@@ -34,13 +34,13 @@ export class RenderService {
     const dispatch = !!lang
       ? (
         context === 'runtime'
-          ? this.apiService.GetPageInfoByLang({ page_id: pageID, lang })
-          : this.apiService.GetPreviewPageInfoByLang({ page_id: pageID, lang })
+          ? this.apiService.GetPageByPageIdAndLang({ page_id: pageID, lang })
+          : this.apiService.GetPreviewPageByPageIdAndLang({ page_id: pageID, lang })
       )
       : (
         context === 'runtime'
-          ? this.apiService.GetPageInfo({ page_id: pageID })
-          : this.apiService.GetPreviewPageInfo({ page_id: pageID })
+          ? this.apiService.GetPageByPageId({ page_id: pageID })
+          : this.apiService.GetPreviewPageByPageId({ page_id: pageID })
       )
       ;
 
@@ -59,8 +59,8 @@ export class RenderService {
   getContentInfo(context: ApiContext, contentID: string): Observable<ContentInfoModel> {
     return (
       context === 'runtime'
-        ? this.apiService.GetContentInfo({ content_id: contentID })
-        : this.apiService.GetPreviewContent({ content_id: contentID })
+        ? this.apiService.GetContentByContentId({ content_id: contentID })
+        : this.apiService.GetPreviewContentByContentId({ content_id: contentID })
     ).pipe(
       ModelMapper.rxMapModelTo(ContentInfoModel),
     );

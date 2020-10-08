@@ -1,6 +1,6 @@
 
 const BASE_URL = 'http://runtime.decoder.com.tw';
-const API_URL = {
+export const API_URL = {
     GetPageByPageIdAndLang: `${BASE_URL}\/Page/{page_id}/{lang}`,
 GetPageByPageId: `${BASE_URL}\/Page/{page_id}`,
 GetSiteMap: `${BASE_URL}\/SiteMap`,
@@ -14,7 +14,7 @@ GetPreviewContentByContentId: `${BASE_URL}\/Preview/Content/{content_id}`,
 GetDataSourceByTypeIdAndId: `${BASE_URL}\/DataSource/{type_id}/{id}`,
 
 };
-const API_TYPE = {
+export const API_TYPE = {
     GetPageByPageIdAndLang: 'Restful',
 GetPageByPageId: 'Restful',
 GetSiteMap: 'Restful',

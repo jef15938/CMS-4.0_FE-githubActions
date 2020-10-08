@@ -2,6 +2,7 @@
  * Public API Surface of render
  */
 export * from './lib/render.module';
+export * from './lib/global/api/index';
 export * from './lib/global/service/index';
 export * from './lib/global/injection-token/injection-token';
 export * from './lib/global/interceptor/index';

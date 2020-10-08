@@ -22,7 +22,7 @@ export class DataSourceService {
    * @memberof DataSourceService
    */
   getDataSourceByTypeIDAndId<TData>(typeId: string, id: string): Observable<ListDataSourceDataResponseModel<TData>> {
-    return this.restAPIService.ListDataSourceData({ type_id: typeId, id }).pipe(
+    return this.restAPIService.GetDataSourceByTypeIdAndId({ type_id: typeId, id }).pipe(
       ModelMapper.rxMapModelTo(ListDataSourceDataResponseModel),
     );
   }
