@@ -47,7 +47,7 @@ export class DepartmentService {
       requestBody,
     };
 
-    return this.restAPIService.CreateDepartment(params).pipe(
+    return this.restAPIService.PostDepartmentByDeptID(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('createDepartment')),
     );
   }
@@ -64,7 +64,7 @@ export class DepartmentService {
       throw new ParamsError('deptID', 'deleteDepartment', 'string', deptID);
     }
 
-    return this.restAPIService.DeleteDepartment({ deptID }).pipe(
+    return this.restAPIService.DeleteDepartmentByDeptID({ deptID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('deleteDepartment')),
     );
   }
@@ -95,7 +95,7 @@ export class DepartmentService {
       throw new ParamsError('deptID', 'getDepartmentByID', 'string', deptID);
     }
 
-    return this.restAPIService.GetDepartmentInfo({ deptID }).pipe(
+    return this.restAPIService.GetDepartmentByDeptID({ deptID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getDepartmentByID')),
       ModelMapper.rxMapModelTo(DepartmentDetailInfoModel)
     );
@@ -126,7 +126,7 @@ export class DepartmentService {
       requestBody,
     };
 
-    return this.restAPIService.UpdateDepartment(params).pipe(
+    return this.restAPIService.PutDepartmentByDeptID(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateDepartment')),
     );
   }

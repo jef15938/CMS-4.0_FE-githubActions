@@ -88,7 +88,7 @@ export class RestApiService {
     mock: './assets/mock/GetGalleryByCategoryID.json',
     responseType: GalleryGetResponse
   })
-  GetGallery(
+  GetGalleryByCategoryID(
     params: { categoryID: string, page?: number, fileType?: string, fileName?: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GalleryGetResponse> { return null; }
@@ -101,7 +101,7 @@ export class RestApiService {
     mock: './assets/mock/PostGalleryByCategoryID.json',
     responseType: GenerationHeader
   })
-  CreateGallery(
+  PostGalleryByCategoryID(
     params: { categoryID: string, requestBody: any },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -127,7 +127,7 @@ export class RestApiService {
     mock: './assets/mock/PostGalleryCategory.json',
     responseType: GenerationHeader
   })
-  CreateGalleryCategory(
+  PostGalleryCategory(
     params: { requestBody: GalleryCategoryPutRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -140,7 +140,7 @@ export class RestApiService {
     mock: './assets/mock/PostLogin.json',
     responseType: LoginResponse
   })
-  Login(
+  PostLogin(
     params: { requestBody: LoginRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<LoginResponse> { return null; }
@@ -166,7 +166,7 @@ export class RestApiService {
     mock: './assets/mock/DeleteGalleryCategoryByCategoryID.json',
     responseType: GenerationHeader
   })
-  DeleteGalleryCategory(
+  DeleteGalleryCategoryByCategoryID(
     params: { categoryID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -179,7 +179,7 @@ export class RestApiService {
     mock: './assets/mock/PutGalleryCategoryByCategoryID.json',
     responseType: GenerationHeader
   })
-  UpdateGalleryCategory(
+  PutGalleryCategoryByCategoryID(
     params: { categoryID: string, requestBody: GalleryCategoryPutRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -192,7 +192,7 @@ export class RestApiService {
     mock: './assets/mock/GetUserMenu.json',
     responseType: MenuGetResponse
   })
-  GetLoginUserCMSMenu(
+  GetUserMenu(
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<MenuGetResponse> { return null; }
@@ -205,7 +205,7 @@ export class RestApiService {
     mock: './assets/mock/GetLogout.json',
     responseType: GenerationHeader
   })
-  Logout(
+  GetLogout(
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -218,7 +218,7 @@ export class RestApiService {
     mock: './assets/mock/PutDepartmentByDeptID.json',
     responseType: GenerationHeader
   })
-  UpdateDepartment(
+  PutDepartmentByDeptID(
     params: { deptID: string, requestBody: DepartmentMaintainRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -231,7 +231,7 @@ export class RestApiService {
     mock: './assets/mock/DeleteDepartmentByDeptID.json',
     responseType: GenerationHeader
   })
-  DeleteDepartment(
+  DeleteDepartmentByDeptID(
     params: { deptID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -244,7 +244,7 @@ export class RestApiService {
     mock: './assets/mock/PostDepartmentByDeptID.json',
     responseType: GenerationHeader
   })
-  CreateDepartment(
+  PostDepartmentByDeptID(
     params: { deptID: string, requestBody: DepartmentMaintainRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -257,7 +257,7 @@ export class RestApiService {
     mock: './assets/mock/GetDepartmentByDeptID.json',
     responseType: DepartmentDetailInfo
   })
-  GetDepartmentInfo(
+  GetDepartmentByDeptID(
     params: { deptID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<DepartmentDetailInfo> { return null; }
@@ -270,7 +270,7 @@ export class RestApiService {
     mock: './assets/mock/GetAuditing.json',
     responseType: AuditingGetResponse
   })
-  GetAuditingList(
+  GetAuditing(
     params: { page?: number, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<AuditingGetResponse> { return null; }
@@ -283,7 +283,7 @@ export class RestApiService {
     mock: './assets/mock/PostAuditingByOrderID.json',
     responseType: GenerationHeader
   })
-  ApproveAuditing(
+  PostAuditingByOrderID(
     params: { orderID: number, requestBody: AuditingSubmitRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -309,7 +309,7 @@ export class RestApiService {
     mock: './assets/mock/GetCMSMenu.json',
     responseType: MenuGetResponse
   })
-  GetCMSAllMenu(
+  GetCMSMenu(
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<MenuGetResponse> { return null; }
@@ -322,7 +322,7 @@ export class RestApiService {
     mock: './assets/mock/GetUserSiteMapBySiteID.json',
     responseType: SiteMapGetResponse
   })
-  GetUserSiteMap(
+  GetUserSiteMapBySiteID(
     params: { siteID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SiteMapGetResponse> { return null; }
@@ -335,7 +335,7 @@ export class RestApiService {
     mock: './assets/mock/PostUserSiteMapBySiteID.json',
     responseType: GenerationHeader
   })
-  CreateSiteNode(
+  PostUserSiteMapBySiteID(
     params: { siteID: string, requestBody: UserSiteMapPostRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -348,7 +348,7 @@ export class RestApiService {
     mock: './assets/mock/PutUserSiteMapByNodeID.json',
     responseType: GenerationHeader
   })
-  UpdateUserSiteMap(
+  PutUserSiteMapByNodeID(
     params: { nodeID: string, requestBody: UserSiteMapPutRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -361,7 +361,7 @@ export class RestApiService {
     mock: './assets/mock/DeleteUserSiteMapByNodeID.json',
     responseType: GenerationHeader
   })
-  DeleteUserSiteMap(
+  DeleteUserSiteMapByNodeID(
     params: { nodeID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -374,7 +374,7 @@ export class RestApiService {
     mock: './assets/mock/GetContentById.json',
     responseType: ContentInfo
   })
-  GetContent(
+  GetContentById(
     params: { id: string, version?: number, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ContentInfo> { return null; }
@@ -387,7 +387,7 @@ export class RestApiService {
     mock: './assets/mock/PutContentById.json',
     responseType: GenerationHeader
   })
-  UpdateContent(
+  PutContentById(
     params: { id: string, requestBody: ContentInfo },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -400,7 +400,7 @@ export class RestApiService {
     mock: './assets/mock/GetSitemapContentBySiteIdAndNodeId.json',
     responseType: ContentInfo
   })
-  GetSitemapContent(
+  GetSitemapContentBySiteIdAndNodeId(
     params: { siteId: string, nodeId: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ContentInfo> { return null; }
@@ -413,7 +413,7 @@ export class RestApiService {
     mock: './assets/mock/GetMyAuditingByOrderID.json',
     responseType: MyAuditingDetailGetResponse
   })
-  GetMyAuditingDetail(
+  GetMyAuditingByOrderID(
     params: { orderID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<MyAuditingDetailGetResponse> { return null; }
@@ -439,7 +439,7 @@ export class RestApiService {
     mock: './assets/mock/GetFarmByFuncID.json',
     responseType: FarmInfoGetResponse
   })
-  GetFarmInfo(
+  GetFarmByFuncID(
     params: { funcID: string, dataID?: string, parentID?: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FarmInfoGetResponse> { return null; }
@@ -452,7 +452,7 @@ export class RestApiService {
     mock: './assets/mock/GetFarmTableInfoByFuncID.json',
     responseType: FarmTableInfo
   })
-  GetFarmTableInfo(
+  GetFarmTableInfoByFuncID(
     params: { funcID: string, page?: number, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FarmTableInfo> { return null; }
@@ -465,7 +465,7 @@ export class RestApiService {
     mock: './assets/mock/GetFarmFormInfoByFuncID.json',
     responseType: FarmFormInfo
   })
-  GetFarmFormInfo(
+  GetFarmFormInfoByFuncID(
     params: { funcID: string, dataID?: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FarmFormInfo> { return null; }
@@ -478,7 +478,7 @@ export class RestApiService {
     mock: './assets/mock/PostFarmFormInfoByFuncID.json',
     responseType: GenerationHeader
   })
-  CreateFarmForm(
+  PostFarmFormInfoByFuncID(
     params: { funcID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -491,7 +491,7 @@ export class RestApiService {
     mock: './assets/mock/PutFarmFormInfoByFuncID.json',
     responseType: GenerationHeader
   })
-  UpdateFarmForm(
+  PutFarmFormInfoByFuncID(
     params: { funcID: string, dataID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -504,7 +504,7 @@ export class RestApiService {
     mock: './assets/mock/PostFarmAuditingByFuncId.json',
     responseType: GenerationHeader
   })
-  AuditingFarmData(
+  PostFarmAuditingByFuncId(
     params: { funcId: string, requestBody: FarmAuditingRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -517,7 +517,7 @@ export class RestApiService {
     mock: './assets/mock/GetFarmDetailInfoByFuncID.json',
     responseType: FarmFormInfo
   })
-  GetFarmDetailInfo(
+  GetFarmDetailInfoByFuncID(
     params: { funcID: string, dataID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FarmFormInfo> { return null; }
@@ -530,7 +530,7 @@ export class RestApiService {
     mock: './assets/mock/GetFarmPreviewByFuncID.json',
     responseType: PreviewInfo
   })
-  GetFarmPreview(
+  GetFarmPreviewByFuncID(
     params: { funcID: string, dataID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PreviewInfo> { return null; }
@@ -543,7 +543,7 @@ export class RestApiService {
     mock: './assets/mock/GetGalleryShowByGalleryID.json',
     responseType: null
   })
-  GetGalleryShow(
+  GetGalleryShowByGalleryID(
     params: { galleryID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<any> { return null; }
@@ -556,7 +556,7 @@ export class RestApiService {
     mock: './assets/mock/GetSite.json',
     responseType: SiteGetResponse
   })
-  GetSiteList(
+  GetSite(
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SiteGetResponse> { return null; }
@@ -569,7 +569,7 @@ export class RestApiService {
     mock: './assets/mock/GetSiteBySiteID.json',
     responseType: SiteMapGetResponse
   })
-  GetSiteMap(
+  GetSiteBySiteID(
     params: { siteID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SiteMapGetResponse> { return null; }
@@ -582,7 +582,7 @@ export class RestApiService {
     mock: './assets/mock/GetSiteBySiteIDAndNodeID.json',
     responseType: SiteMapNodeGetResponse
   })
-  GetSiteNode(
+  GetSiteBySiteIDAndNodeID(
     params: { siteID: string, nodeID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SiteMapNodeGetResponse> { return null; }
@@ -595,7 +595,7 @@ export class RestApiService {
     mock: './assets/mock/GetGroupMenuByGroupID.json',
     responseType: GroupMenuGetResponse
   })
-  GetGroupMenuList(
+  GetGroupMenuByGroupID(
     params: { groupID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GroupMenuGetResponse> { return null; }
@@ -608,7 +608,7 @@ export class RestApiService {
     mock: './assets/mock/PutGroupMenuByGroupID.json',
     responseType: GenerationHeader
   })
-  PutGroupMenuList(
+  PutGroupMenuByGroupID(
     params: { groupID: string, requestBody: GroupMenuGetResponse },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -621,7 +621,7 @@ export class RestApiService {
     mock: './assets/mock/GetGroupSiteMapBySiteIDAndGroupID.json',
     responseType: GroupSiteMapGetResponse
   })
-  GetGroupSiteMapList(
+  GetGroupSiteMapBySiteIDAndGroupID(
     params: { groupID: string, siteID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GroupSiteMapGetResponse> { return null; }
@@ -634,7 +634,7 @@ export class RestApiService {
     mock: './assets/mock/PutGroupSiteMapBySiteIDAndGroupID.json',
     responseType: GenerationHeader
   })
-  PutGroupSiteMapList(
+  PutGroupSiteMapBySiteIDAndGroupID(
     params: { groupID: string, siteID: string, requestBody: GroupSiteMapGetResponse },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -647,7 +647,7 @@ export class RestApiService {
     mock: './assets/mock/GetTemplateByControlID.json',
     responseType: TemplateGetResponse
   })
-  GetTemplate(
+  GetTemplateByControlID(
     params: { controlID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<TemplateGetResponse> { return null; }
@@ -660,7 +660,7 @@ export class RestApiService {
     mock: './assets/mock/PutGalleryByGalleryID.json',
     responseType: SaveGalleryResponse
   })
-  UpdateGallery(
+  PutGalleryByGalleryID(
     params: { galleryID: string, requestBody: any },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SaveGalleryResponse> { return null; }
@@ -673,7 +673,7 @@ export class RestApiService {
     mock: './assets/mock/PostSitemapAuditingByNodeId.json',
     responseType: GenerationHeader
   })
-  AuditingSitemap(
+  PostSitemapAuditingByNodeId(
     params: { nodeId: string, requestBody: SitemapAuditingRequest },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -699,7 +699,7 @@ export class RestApiService {
     mock: './assets/mock/GetFarmTakeOffByFuncID.json',
     responseType: GenerationHeader
   })
-  TakeOffFarmData(
+  GetFarmTakeOffByFuncID(
     params: { funcID: string, dataID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -712,7 +712,7 @@ export class RestApiService {
     mock: './assets/mock/GetSitemapPreviewByNodeID.json',
     responseType: PreviewInfo
   })
-  GetSitemapPreview(
+  GetSitemapPreviewByNodeID(
     params: { nodeID: string, language_id?: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PreviewInfo> { return null; }
@@ -725,7 +725,7 @@ export class RestApiService {
     mock: './assets/mock/GetAuditingPreviewByOrderID.json',
     responseType: PreviewInfo
   })
-  GetAuditingPreview(
+  GetAuditingPreviewByOrderID(
     params: { orderID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<PreviewInfo> { return null; }
@@ -738,7 +738,7 @@ export class RestApiService {
     mock: './assets/mock/GetContentDataSourceByTypeID.json',
     responseType: ListContentDataSourceResponse
   })
-  ListContentDataSource(
+  GetContentDataSourceByTypeID(
     params: { typeID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListContentDataSourceResponse> { return null; }
@@ -751,7 +751,7 @@ export class RestApiService {
     mock: './assets/mock/GetContentVersionByContentID.json',
     responseType: ListContentVersionResponse
   })
-  ListContentVersion(
+  GetContentVersionByContentID(
     params: { contentID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListContentVersionResponse> { return null; }
@@ -764,7 +764,7 @@ export class RestApiService {
     mock: './assets/mock/PutReOrderSiteMapByNodeID.json',
     responseType: GenerationHeader
   })
-  ReOrderSitemap(
+  PutReOrderSiteMapByNodeID(
     params: { nodeID: string, node_order: number, parent_id: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -777,7 +777,7 @@ export class RestApiService {
     mock: './assets/mock/GetFarmTriggerByTriggerID.json',
     responseType: ListFarmTriggerDataResponse
   })
-  ListFarmTriggerData(
+  GetFarmTriggerByTriggerID(
     params: { triggerID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListFarmTriggerDataResponse> { return null; }
@@ -790,7 +790,7 @@ export class RestApiService {
     mock: './assets/mock/GetFarmTreeBySourceID.json',
     responseType: GetFarmTreeResponse
   })
-  GetFarmTree(
+  GetFarmTreeBySourceID(
     params: { sourceID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GetFarmTreeResponse> { return null; }
@@ -803,7 +803,7 @@ export class RestApiService {
     mock: './assets/mock/GetGroup.json',
     responseType: ListGroupResponst
   })
-  GetGroupList(
+  GetGroup(
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListGroupResponst> { return null; }
@@ -829,7 +829,7 @@ export class RestApiService {
     mock: './assets/mock/GetSitemapContentUnlockBySiteIdAndNodeId.json',
     responseType: GenerationHeader
   })
-  SitemapContentUnlock(
+  GetSitemapContentUnlockBySiteIdAndNodeId(
     params: { siteId: string, nodeId: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GenerationHeader> { return null; }
@@ -842,7 +842,7 @@ export class RestApiService {
     mock: './assets/mock/PostGallery.json',
     responseType: SaveGalleryResponse
   })
-  AddGallery(
+  PostGallery(
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SaveGalleryResponse> { return null; }
@@ -855,7 +855,7 @@ export class RestApiService {
     mock: './assets/mock/GetGalleryShowOriginalByGalleryID.json',
     responseType: null
   })
-  GetGalleryShowOriginal(
+  GetGalleryShowOriginalByGalleryID(
     params: { galleryID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<any> { return null; }
@@ -868,7 +868,7 @@ export class RestApiService {
     mock: './assets/mock/GetSliderTypeRangeByTypeId.json',
     responseType: GetSliderTypeRangeResponse
   })
-  GetSliderTypeRange(
+  GetSliderTypeRangeByTypeId(
     params: { typeId: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GetSliderTypeRangeResponse> { return null; }
@@ -881,7 +881,7 @@ export class RestApiService {
     mock: './assets/mock/GetGallerySettingByGalleryID.json',
     responseType: GetGallerySettingResponse
   })
-  GetGallerySetting(
+  GetGallerySettingByGalleryID(
     params: { galleryID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<GetGallerySettingResponse> { return null; }
@@ -894,7 +894,7 @@ export class RestApiService {
     mock: './assets/mock/PostFile.json',
     responseType: SaveFileResponse
   })
-  AddFile(
+  PostFile(
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SaveFileResponse> { return null; }
@@ -907,7 +907,7 @@ export class RestApiService {
     mock: './assets/mock/PutFileByGalleryID.json',
     responseType: SaveFileResponse
   })
-  UpdateFile(
+  PutFileByGalleryID(
     params: { galleryID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<SaveFileResponse> { return null; }
@@ -920,7 +920,7 @@ export class RestApiService {
     mock: './assets/mock/GetFormType.json',
     responseType: ListFormTypeResponse
   })
-  ListFormType(
+  GetFormType(
     params: {},
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListFormTypeResponse> { return null; }
@@ -933,7 +933,7 @@ export class RestApiService {
     mock: './assets/mock/GetFormTypeByTypeID.json',
     responseType: ListFilesResponse
   })
-  ListFiles(
+  GetFormTypeByTypeID(
     params: { typeID: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListFilesResponse> { return null; }

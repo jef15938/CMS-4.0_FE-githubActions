@@ -10,3 +10,4 @@ export * from './lib/global/interface';
 export * from './lib/global/injection-token';
 export * from './lib/global/util';
 export * from './lib/global/service';
+export * from './lib/global/api';

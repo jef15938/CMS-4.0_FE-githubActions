@@ -36,7 +36,7 @@ export class ContentService {
     if (!id) {
       throw new ParamsError('id', 'getContentById', 'string', id);
     }
-    return this.restAPIService.GetContent({ id, version }).pipe(
+    return this.restAPIService.GetContentById({ id, version }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getContentById')),
       ModelMapper.rxMapModelTo(ContentInfoModel),
     );
@@ -57,7 +57,7 @@ export class ContentService {
     if (!nodeId) {
       throw new ParamsError('siteId', 'getSitemapContentBySiteIdAndNodeId', 'string', nodeId);
     }
-    return this.restAPIService.GetSitemapContent({ siteId, nodeId }).pipe(
+    return this.restAPIService.GetSitemapContentBySiteIdAndNodeId({ siteId, nodeId }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getSitemapContentBySiteIdAndNodeId')),
       ModelMapper.rxMapModelTo(ContentInfoModel),
     );
@@ -78,7 +78,7 @@ export class ContentService {
     if (!nodeId) {
       throw new ParamsError('siteId', 'getSitemapContentUnlockBySiteIdAndNodeId', 'string', nodeId);
     }
-    return this.restAPIService.SitemapContentUnlock({ siteId, nodeId });
+    return this.restAPIService.GetSitemapContentUnlockBySiteIdAndNodeId({ siteId, nodeId });
   }
 
   /**
@@ -106,7 +106,7 @@ export class ContentService {
     if (!controlID) {
       throw new ParamsError('controlID', 'getTemplateByControlID', 'string', controlID);
     }
-    return this.restAPIService.GetTemplate({ controlID }).pipe(
+    return this.restAPIService.GetTemplateByControlID({ controlID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getTemplateByControlID')),
       ModelMapper.rxMapModelTo(TemplateGetResponseModel),
     );
@@ -151,7 +151,7 @@ export class ContentService {
       requestBody: contentInfo,
     };
 
-    return this.restAPIService.UpdateContent(params).pipe(
+    return this.restAPIService.PutContentById(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateContent')),
     );
   }
@@ -168,7 +168,7 @@ export class ContentService {
     if (!typeID) {
       throw new ParamsError('typeID', 'getContentDataSourceByTypeID', 'string', typeID);
     }
-    return this.restAPIService.ListContentDataSource({ typeID }).pipe(
+    return this.restAPIService.GetContentDataSourceByTypeID({ typeID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getContentDataSourceByTypeID')),
       ModelMapper.rxMapModelTo(ListContentDataSourceResponseModel),
     );
@@ -185,7 +185,7 @@ export class ContentService {
     if (!contentID) {
       throw new ParamsError('contentID', 'getContentVersionByContentID', 'string', contentID);
     }
-    return this.restAPIService.ListContentVersion({ contentID }).pipe(
+    return this.restAPIService.GetContentVersionByContentID({ contentID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getContentVersionByContentID')),
       ModelMapper.rxMapModelTo(ListContentVersionResponseModel),
       map(res => res.datas)

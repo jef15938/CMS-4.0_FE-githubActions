@@ -25,7 +25,7 @@ export class MenuService {
    * @memberof MenuService
    */
   getCMSMenu(): Observable<MenuInfoModel[]> {
-    return this.restAPIService.GetCMSAllMenu({}).pipe(
+    return this.restAPIService.GetCMSMenu({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getCMSMenu')),
       ModelMapper.rxMapModelTo(MenuGetResponseModel),
       map(res => res.datas)
@@ -39,7 +39,7 @@ export class MenuService {
    * @memberof MenuService
    */
   getUserMenu(): Observable<MenuInfoModel[]> {
-    return this.restAPIService.GetLoginUserCMSMenu({}).pipe(
+    return this.restAPIService.GetUserMenu({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getUserMenu')),
       ModelMapper.rxMapModelTo(MenuGetResponseModel),
       map(res => res.datas),

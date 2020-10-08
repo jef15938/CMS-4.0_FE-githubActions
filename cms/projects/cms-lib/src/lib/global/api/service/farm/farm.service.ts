@@ -42,7 +42,7 @@ export class FarmService {
     if (!funcID) {
       throw new ParamsError('funcID', 'getFarmByFuncID', 'string', funcID);
     }
-    return this.restAPIService.GetFarmInfo({ funcID, dataID, parentID }).pipe(
+    return this.restAPIService.GetFarmByFuncID({ funcID, dataID, parentID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getFarmByFuncID')),
       map(x => plainToClass(FarmInfoGetResponse, x)),
       ModelMapper.rxMapModelTo(FarmInfoGetResponseModel)
@@ -60,7 +60,7 @@ export class FarmService {
   getFarmTableInfoByFuncID(funcID: string, page: number, extraQueryParams: { [key: string]: string }): Observable<FarmTableInfoModel> {
     if (!funcID) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'string', funcID); }
     if (!page) { throw new ParamsError('funcID', 'getFarmTableInfoByFuncID', 'number', page); }
-    return this.restAPIService.GetFarmTableInfo({ funcID, page }, { extraQueryParams }).pipe(
+    return this.restAPIService.GetFarmTableInfoByFuncID({ funcID, page }, { extraQueryParams }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getFarmTableInfoByFuncID')),
       ModelMapper.rxMapModelTo(FarmTableInfoModel)
     );
@@ -79,7 +79,7 @@ export class FarmService {
     if (!dataID) {
       throw new ParamsError('dataID', 'GetFarmDetailInfoByFuncID', 'string', dataID);
     }
-    return this.restAPIService.GetFarmDetailInfo({ funcID, dataID }).pipe(
+    return this.restAPIService.GetFarmDetailInfoByFuncID({ funcID, dataID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getFarmDetailInfoByFuncID')),
       ModelMapper.rxMapModelTo(FarmFormInfoModel),
     );
@@ -95,7 +95,7 @@ export class FarmService {
    */
   getFarmFormInfoByFuncID(funcID: string, dataID?: string): Observable<FarmFormInfoModel> {
     if (!funcID) { throw new ParamsError('funcID', 'getFarmFormInfoByFuncID', 'string', funcID); }
-    return this.restAPIService.GetFarmFormInfo({ funcID, dataID }).pipe(
+    return this.restAPIService.GetFarmFormInfoByFuncID({ funcID, dataID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getFarmFormInfoByFuncID')),
       ModelMapper.rxMapModelTo(FarmFormInfoModel),
     );
@@ -116,7 +116,7 @@ export class FarmService {
       'Content-Type': 'multipart/form-data'
     });
 
-    return this.restAPIService.CreateFarmForm({ funcID, requestBody: formData } as any, { header }).pipe(
+    return this.restAPIService.PostFarmFormInfoByFuncID({ funcID, requestBody: formData } as any, { header }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('createFarmForm')),
     );
   }
@@ -141,7 +141,7 @@ export class FarmService {
       console.log('formData ' + k + ' = ' + v);
     });
 
-    return this.restAPIService.CreateFarmForm({ funcID, dataID, requestBody: formData } as any, { header }).pipe(
+    return this.restAPIService.PostFarmFormInfoByFuncID({ funcID, dataID, requestBody: formData } as any, { header }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateFarmForm')),
     );
   }
@@ -171,7 +171,7 @@ export class FarmService {
       requestBody,
     };
 
-    return this.restAPIService.AuditingFarmData(params).pipe(
+    return this.restAPIService.PostFarmAuditingByFuncId(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('auditingFarmData')),
     );
   }
@@ -190,7 +190,7 @@ export class FarmService {
       dataID,
     };
 
-    return this.restAPIService.TakeOffFarmData(params).pipe(
+    return this.restAPIService.GetFarmTakeOffByFuncID(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('takeOffFormData')),
     );
   }
@@ -205,7 +205,7 @@ export class FarmService {
   getPreviewInfo(funcID: string, dataID: string): Observable<PreviewInfoModel> {
     if (!funcID) { throw new ParamsError('funcID', 'getPreviewInfo', 'string', funcID); }
     if (!dataID) { throw new ParamsError('dataID', 'getPreviewInfo', 'string', dataID); }
-    return this.restAPIService.GetFarmPreview({ funcID, dataID }).pipe(
+    return this.restAPIService.GetFarmPreviewByFuncID({ funcID, dataID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getPreviewInfo')),
       ModelMapper.rxMapModelTo(PreviewInfoModel),
     );
@@ -227,7 +227,7 @@ export class FarmService {
     paramsKeys.forEach(k => {
       params[k] = params[k] || '';
     });
-    return this.restAPIService.ListFarmTriggerData({ ...params, triggerID }).pipe(
+    return this.restAPIService.GetFarmTriggerByTriggerID({ ...params, triggerID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('listFarmTriggerData')),
       ModelMapper.rxMapModelTo(ListFarmTriggerDataResponseModel),
       map(res => res.datas)
@@ -245,7 +245,7 @@ export class FarmService {
     if (!sourceID) {
       throw new ParamsError('sourceID', 'getFarmTree', 'string', sourceID);
     }
-    return this.restAPIService.GetFarmTree({ sourceID }).pipe(
+    return this.restAPIService.GetFarmTreeBySourceID({ sourceID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getFarmTree')),
       ModelMapper.rxMapModelTo(GetFarmTreeResponseModel),
     );

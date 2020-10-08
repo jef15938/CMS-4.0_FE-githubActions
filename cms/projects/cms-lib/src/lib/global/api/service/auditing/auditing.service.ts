@@ -50,7 +50,7 @@ export class AuditingService {
     if (!orderID) {
       throw new ParamsError('orderID', 'getMyAuditingDetail', 'number', orderID);
     }
-    return this.restAPIService.GetMyAuditingDetail({ orderID: `${orderID}` }).pipe(
+    return this.restAPIService.GetMyAuditingByOrderID({ orderID: `${orderID}` }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getMyAuditingDetail')),
       ModelMapper.rxMapModelTo(MyAuditingDetailGetResponseModel),
       map(res => res.datas)
@@ -68,7 +68,7 @@ export class AuditingService {
     if (!pageNumber) {
       throw new ParamsError('pageNumber', 'getAuditingListForManager', 'number', pageNumber);
     }
-    return this.restAPIService.GetAuditingList({ page: pageNumber }).pipe(
+    return this.restAPIService.GetAuditing({ page: pageNumber }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getAuditingListForManager')),
       ModelMapper.rxMapModelTo(AuditingGetResponseModel)
     );
@@ -97,7 +97,7 @@ export class AuditingService {
       requestBody,
     };
 
-    return this.restAPIService.ApproveAuditing(params).pipe(
+    return this.restAPIService.PostAuditingByOrderID(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('PostAuditingByOrderID')),
     );
   }
@@ -113,7 +113,7 @@ export class AuditingService {
     if (!orderID) {
       throw new ParamsError('orderID', 'getPreviewInfo', 'number', orderID);
     }
-    return this.restAPIService.GetAuditingPreview({ orderID: `${orderID}` }).pipe(
+    return this.restAPIService.GetAuditingPreviewByOrderID({ orderID: `${orderID}` }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('GetAuditingPreviewByOrderID')),
       ModelMapper.rxMapModelTo(PreviewInfoModel),
     );

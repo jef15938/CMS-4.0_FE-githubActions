@@ -67,7 +67,7 @@ export class GalleryService {
       parent_id: parentId || '',
     };
 
-    return this.respAPIService.CreateGalleryCategory({ requestBody }).pipe(
+    return this.respAPIService.PostGalleryCategory({ requestBody }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('createGalleryCategory')),
     );
   }
@@ -83,7 +83,7 @@ export class GalleryService {
     if (!categoryID) {
       throw new ParamsError('categoryID', 'deleteGalleryCategory', 'string', categoryID);
     }
-    return this.respAPIService.DeleteGalleryCategory({ categoryID }).pipe(
+    return this.respAPIService.DeleteGalleryCategoryByCategoryID({ categoryID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('deleteGalleryCategory')),
     );
   }
@@ -111,7 +111,7 @@ export class GalleryService {
     if (filter?.fileName) { params.fileName = filter.fileName; }
     if (filter?.fileTypes?.length) { params.fileType = filter.fileTypes.join(','); }
 
-    return this.respAPIService.GetGallery(params).pipe(
+    return this.respAPIService.GetGalleryByCategoryID(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGalleryByCategoryID')),
       ModelMapper.rxMapModelTo(GalleryGetResponseModel),
     );
@@ -149,7 +149,7 @@ export class GalleryService {
       parent_id: parentId || '',
     };
 
-    return this.respAPIService.UpdateGalleryCategory({ categoryID, requestBody }).pipe(
+    return this.respAPIService.PutGalleryCategoryByCategoryID({ categoryID, requestBody }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('putGalleryCategoryByCategoryID')),
     );
   }
@@ -263,14 +263,14 @@ export class GalleryService {
   }
 
   getSliderTypeRange(typeId: string): Observable<GetSliderTypeRangeResponseModel> {
-    return this.respAPIService.GetSliderTypeRange({ typeId }).pipe(
+    return this.respAPIService.GetSliderTypeRangeByTypeId({ typeId }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getSliderTypeRange')),
       ModelMapper.rxMapModelTo(GetSliderTypeRangeResponseModel),
     );
   }
 
   getGallerySetting(galleryID: string): Observable<GetGallerySettingResponseModel> {
-    return this.respAPIService.GetGallerySetting({ galleryID }).pipe(
+    return this.respAPIService.GetGalleryConfig({ galleryID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGallerySetting')),
       ModelMapper.rxMapModelTo(GetGallerySettingResponseModel),
     );
@@ -291,7 +291,7 @@ export class GalleryService {
       requestBody: formData
     };
 
-    return this.respAPIService.AddGallery(params, this.getDispatchOptionForMultipartFormData()).pipe(
+    return this.respAPIService.PostGallery(params, this.getDispatchOptionForMultipartFormData()).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('addGallery')),
       ModelMapper.rxMapModelTo(SaveGalleryResponseModel),
     );
@@ -307,7 +307,7 @@ export class GalleryService {
       requestBody: formData
     };
 
-    return this.respAPIService.UpdateGallery(params, this.getDispatchOptionForMultipartFormData()).pipe(
+    return this.respAPIService.PutGalleryByGalleryID(params, this.getDispatchOptionForMultipartFormData()).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateGallery2')),
       ModelMapper.rxMapModelTo(SaveGalleryResponseModel),
     );
@@ -321,7 +321,7 @@ export class GalleryService {
       requestBody: formData
     };
 
-    return this.respAPIService.AddFile(params, this.getDispatchOptionForMultipartFormData()).pipe(
+    return this.respAPIService.PostFile(params, this.getDispatchOptionForMultipartFormData()).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('addFile')),
       ModelMapper.rxMapModelTo(SaveFileResponseModel),
     );
@@ -336,7 +336,7 @@ export class GalleryService {
       requestBody: formData
     };
 
-    return this.respAPIService.UpdateFile(params, this.getDispatchOptionForMultipartFormData()).pipe(
+    return this.respAPIService.PutFileByGalleryID(params, this.getDispatchOptionForMultipartFormData()).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('updateFile')),
       ModelMapper.rxMapModelTo(SaveFileResponseModel),
     );

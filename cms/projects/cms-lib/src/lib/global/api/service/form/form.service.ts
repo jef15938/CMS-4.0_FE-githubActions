@@ -27,7 +27,7 @@ export class FormService {
    * @memberof FormService
    */
   ListFormType(): Observable<ListFormTypeInfoModel[]> {
-    return this.restAPIService.ListFormType({}).pipe(
+    return this.restAPIService.GetFormType({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('ListFormType')),
       ModelMapper.rxMapModelTo(ListFormTypeResponseModel),
       map(x => x.datas),
@@ -45,7 +45,7 @@ export class FormService {
     if (!typeID) {
       throw new ParamsError('typeID', 'ListFiles', 'string', typeID);
     }
-    return this.restAPIService.ListFiles({ typeID }).pipe(
+    return this.restAPIService.GetFormTypeByTypeID({ typeID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('ListFiles')),
       ModelMapper.rxMapModelTo(ListFilesResponseModel),
       map(x => x.datas),

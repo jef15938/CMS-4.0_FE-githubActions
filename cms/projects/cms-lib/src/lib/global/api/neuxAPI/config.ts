@@ -1,6 +1,6 @@
 
 const BASE_URL = 'https://cms.decoder.com.tw';
-const API_URL = {
+export const API_URL = {
     GetGalleryByCategoryID: `${BASE_URL}\/Gallery/{categoryID}`,
 PostGalleryByCategoryID: `${BASE_URL}\/Gallery/{categoryID}`,
 GetGalleryCategory: `${BASE_URL}\/GalleryCategory`,
@@ -69,7 +69,7 @@ GetFormType: `${BASE_URL}\/FormType`,
 GetFormTypeByTypeID: `${BASE_URL}\/FormType/{typeID}`,
 
 };
-const API_TYPE = {
+export const API_TYPE = {
     GetGalleryByCategoryID: 'Restful',
 PostGalleryByCategoryID: 'Restful',
 GetGalleryCategory: 'Restful',

@@ -57,7 +57,7 @@ export class SitemapService {
     const requestBody: UserSiteMapPostRequest = ModelMapper
       .map(UserSiteMapPostRequestModel, UserSiteMapPostRequest, userSiteMapPostRequestModel);
 
-    return this.restAPIService.CreateSiteNode({ siteID, requestBody }).pipe(
+    return this.restAPIService.PostUserSiteMapBySiteID({ siteID, requestBody }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('createSiteNode')),
     );
   }
@@ -73,7 +73,7 @@ export class SitemapService {
     if (!nodeID) {
       throw new ParamsError('nodeID', 'deleteUserSiteMap', 'string', nodeID);
     }
-    return this.restAPIService.DeleteUserSiteMap({ nodeID }).pipe(
+    return this.restAPIService.DeleteUserSiteMapByNodeID({ nodeID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('deleteUserSiteMap')),
     );
   }
@@ -85,7 +85,7 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getCMSSiteMap(siteID: string): Observable<SiteMapGetResponseModel[]> {
-    return this.restAPIService.GetSiteMap({ siteID }).pipe(
+    return this.restAPIService.GetSiteBySiteID({ siteID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getCMSSiteMap')),
       ModelMapper.rxMapModelTo(SiteMapGetResponseModel),
       map(res => [res])
@@ -99,7 +99,7 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getUserSiteMapNodes(siteID: string): Observable<SiteMapGetResponseModel[]> {
-    return this.restAPIService.GetUserSiteMap({ siteID }).pipe(
+    return this.restAPIService.GetUserSiteMapBySiteID({ siteID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getUserSiteMapNodes')),
       ModelMapper.rxMapModelTo(SiteMapGetResponseModel),
       map(res => [res])
@@ -114,7 +114,7 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getUserSiteMapNodeByNodeId(siteID: string, nodeID: string): Observable<SiteMapNodeGetResponseModel> {
-    return this.restAPIService.GetSiteNode({ siteID, nodeID }).pipe(
+    return this.restAPIService.GetSiteBySiteIDAndNodeID({ siteID, nodeID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getUserSiteMapNodeByNodeId')),
       ModelMapper.rxMapModelTo(SiteMapNodeGetResponseModel),
     );
@@ -154,7 +154,7 @@ export class SitemapService {
       requestBody,
     };
 
-    return this.restAPIService.UpdateUserSiteMap(params).pipe(
+    return this.restAPIService.PutUserSiteMapByNodeID(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('PutUserSiteMapByNodeID')),
     );
   }
@@ -165,7 +165,7 @@ export class SitemapService {
    * @memberof SitemapService
    */
   getSiteList(): Observable<SiteInfoModel[]> {
-    return this.restAPIService.GetSiteList({}).pipe(
+    return this.restAPIService.GetSite({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getSiteList')),
       ModelMapper.rxMapModelTo(SiteGetResponseModel),
       map(res => res.datas)
@@ -196,7 +196,7 @@ export class SitemapService {
       requestBody,
     };
 
-    return this.restAPIService.AuditingSitemap(params).pipe(
+    return this.restAPIService.PostSitemapAuditingByNodeId(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('PostSitemapAuditingByNodeId')),
     );
   }
@@ -210,7 +210,7 @@ export class SitemapService {
    */
   getPreviewInfo(nodeID: string, languageID?: string): Observable<PreviewInfoModel> {
     if (!nodeID) { throw new ParamsError('nodeID', 'getPreviewInfo', 'string', nodeID); }
-    return this.restAPIService.GetSitemapPreview({ nodeID, language_id: languageID }).pipe(
+    return this.restAPIService.GetSitemapPreviewByNodeID({ nodeID, language_id: languageID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getPreviewInfo')),
       ModelMapper.rxMapModelTo(PreviewInfoModel),
     );
@@ -239,7 +239,7 @@ export class SitemapService {
       requestBody,
     };
 
-    return this.restAPIService.ReOrderSitemap(params).pipe(
+    return this.restAPIService.PutReOrderSiteMapByNodeID(params).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('PutReOrderSiteMapByNodeID')),
     );
   }

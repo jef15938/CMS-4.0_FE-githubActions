@@ -40,7 +40,7 @@ export class AuthorizationService {
       validation_code: validationCode,
     };
 
-    return this.respAPIService.Login({ requestBody }).pipe(
+    return this.respAPIService.PostLogin({ requestBody }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('login')),
     );
   }
@@ -52,7 +52,7 @@ export class AuthorizationService {
    * @memberof AuthorizationService
    */
   logout() {
-    return this.respAPIService.Logout({}).pipe(
+    return this.respAPIService.GetLogout({}).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('logout')),
     );
   }

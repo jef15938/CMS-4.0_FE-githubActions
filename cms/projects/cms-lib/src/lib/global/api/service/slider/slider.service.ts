@@ -27,7 +27,7 @@ export class SliderService {
     if (!typeId) {
       throw new ParamsError('typeId', 'GetSliderTypeRange', 'string', typeId);
     }
-    return this.restAPIService.GetSliderTypeRange({ typeId }).pipe(
+    return this.restAPIService.GetSliderTypeRangeByTypeId({ typeId }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getSliderTypeRange')),
       ModelMapper.rxMapModelTo(GetSliderTypeRangeResponseModel),
     );
