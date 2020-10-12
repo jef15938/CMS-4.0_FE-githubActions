@@ -224,7 +224,8 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
       }
     });
 
-    this.hasChange = true;
+    this.preserveChanges(`移動版型(${direction === 'up' ? '上' : '下'}):${selectedTemplateInfo.id}`);
+    // this.hasChange = true;
     this.calCanTemplateMove();
     this.templateMove.emit(true);
     this.needCheckView.emit();
@@ -257,7 +258,8 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
           layoutWrapper.parentTemplatesContainer.templates.indexOf(layoutWrapper.templateInfo), 1)
       );
 
-      this.hasChange = true;
+      this.preserveChanges(`刪除版型:${selectedTemplateInfo.id}`);
+      // this.hasChange = true;
       this.needCheckView.emit({ select: next });
     }
   }
