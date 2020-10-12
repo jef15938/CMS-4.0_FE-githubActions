@@ -5,7 +5,7 @@ import {
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
-import { ContentEditorSaveEvent, EditorMode, ContentEditorActionMode, ContentEditorContext } from './content-editor.interface';
+import { ContentEditorSaveEvent, EditorMode, ContentEditorContext } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
 import { ContentControlPanelComponent } from './component/content-control-panel/content-control-panel.component';
@@ -30,7 +30,6 @@ import { CmsErrorHandler } from '../../../global/error-handling/cms-error-handle
 export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked,
   CmsCanDeactiveGuardian, ContentEditorContext {
   EditorMode = EditorMode;
-  ContentEditorActionMode = ContentEditorActionMode;
 
   @ViewChild(ContentViewRendererComponent) contentViewRenderer: ContentViewRendererComponent;
   @ViewChild(LayoutControlPanelComponent) layoutControlPanel: LayoutControlPanelComponent;
@@ -41,7 +40,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   // 使用模式
   @Input() editorMode: EditorMode = EditorMode.EDIT;
-  editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
 
   // 編輯對象外部提供資料
   @Input() contentInfo: ContentInfoModel;

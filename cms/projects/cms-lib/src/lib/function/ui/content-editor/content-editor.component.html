@@ -13,16 +13,16 @@
   <!-- 按鈕們 -->
   <div #clickCapturelistenerBlockToolBar class="btn-panel dark-style" *ngIf="editorMode===EditorMode.EDIT">
     <span>
-      <button type="button" tabindex="-1" mat-icon-button alt="save" matTooltip="存檔" (click)="save()" *ngIf="!!contentID"
-        [disabled]="saved">
+      <button type="button" tabindex="-1" mat-icon-button alt="save" matTooltip="存檔" (click)="save()"
+        *ngIf="!!contentID" [disabled]="saved">
         <mat-icon>save</mat-icon>
       </button>
       <button type="button" tabindex="-1" mat-icon-button alt="undo" matTooltip="復原"
         [disabled]="!manager?.stateManager?.hasPreviousState" (click)="resetSelected(); manager?.stateManager?.back();">
         <mat-icon>undo</mat-icon>
       </button>
-      <button type="button" tabindex="-1" mat-icon-button alt="redo" matTooltip="重做" [disabled]="!manager?.stateManager?.hasNextState"
-        (click)="resetSelected(); manager?.stateManager?.forward();">
+      <button type="button" tabindex="-1" mat-icon-button alt="redo" matTooltip="重做"
+        [disabled]="!manager?.stateManager?.hasNextState" (click)="resetSelected(); manager?.stateManager?.forward();">
         <mat-icon>redo</mat-icon>
       </button>
       <button type="button" tabindex="-1" mat-icon-button alt="state list" matTooltip="步驟" #menuTrigger="matMenuTrigger"
@@ -32,20 +32,9 @@
       <button type="button" tabindex="-1" mat-icon-button alt="clear" matTooltip="清除全部" (click)="clear()">
         <mat-icon>delete</mat-icon>
       </button>
-      <button type="button" tabindex="-1" mat-icon-button alt="close" matTooltip="關閉" (click)="close()" *ngIf="btnClose">
+      <button type="button" tabindex="-1" mat-icon-button alt="close" matTooltip="關閉" (click)="close()"
+        *ngIf="btnClose">
         <mat-icon>clear</mat-icon>
-      </button>
-    </span>
-    <span style="text-align: center;">
-      <button type="button" tabindex="-1" mat-button alt="transtorm layout" class="action-mode"
-        [class.active]="editorActionMode===ContentEditorActionMode.LAYOUT"
-        (click)="editorActionMode=ContentEditorActionMode.LAYOUT;">
-        變更版面
-      </button>
-      <button type="button" tabindex="-1" mat-button alt="transtorm template" class="action-mode"
-        [class.active]="editorActionMode===ContentEditorActionMode.TEMPLATE"
-        (click)="editorActionMode=ContentEditorActionMode.TEMPLATE;">
-        編輯內容
       </button>
     </span>
     <span style="text-align: right;" *ngIf="contentID">
@@ -59,7 +48,7 @@
     <!-- 頁面內容 -->
     <div #clickCapturelistenerBlock class="content-panel" [class.scale]="isScaleContent">
       <cms-content-view-renderer [contentInfo]="manager?.stateManager?.currentState?.snapShot" [editorMode]="editorMode"
-        [editorActionMode]="editorActionMode" (select)="onViewSelected($event)"
+        (select)="onViewSelected($event)"
         (addTemplateBtnClick)="resetSelected();manager.selectedTemplateAddBtn=$event;">
       </cms-content-view-renderer>
     </div>
@@ -73,8 +62,8 @@
     <!-- 內容編輯 -->
     <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
       <cms-content-control-panel [context]="this" [manager]="manager" [selected]="manager.selectedViewElementEvent"
-        [editorActionMode]="editorActionMode" (templateMove)="isScaleContent=$event;"
-        (contentChange)="setEditorUnsaved();" (needCheckView)="contentViewRenderer?.checkView($event);">
+        (templateMove)="isScaleContent=$event;" (contentChange)="setEditorUnsaved();"
+        (needCheckView)="contentViewRenderer?.checkView($event);">
       </cms-content-control-panel>
     </div>
   </div>

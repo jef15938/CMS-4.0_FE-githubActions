@@ -5,11 +5,6 @@ export enum EditorMode {
   EDIT, INFO, READ,
 }
 
-export enum ContentEditorActionMode {
-  LAYOUT = 'LAYOUT',
-  TEMPLATE = 'TEMPLATE',
-}
-
 export class ContentEditorSaveEvent {
   save: boolean;
   contentInfo: ContentInfoModel;

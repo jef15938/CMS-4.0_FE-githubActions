@@ -51,6 +51,7 @@ export class ModalCustomWrapperComponent implements AfterViewInit, OnDestroy {
     const parentEl = selfEl.parentElement;
     const overlayPanelEl = parentEl.parentElement;
     const btnEl = this.closeBtn.element.nativeElement as HTMLElement;
+    this.calculateCloseBtnPosition(btnEl, overlayPanelEl);
     setTimeout(() => {
       btnEl.style.transition = '0.5s';
       btnEl.style.opacity = '1';
@@ -58,8 +59,6 @@ export class ModalCustomWrapperComponent implements AfterViewInit, OnDestroy {
         btnEl.style.transition = '';
       }, 501);
     }, 1);
-
-    this.calculateCloseBtnPosition(btnEl, overlayPanelEl);
 
     const mutationObserver = new MutationObserver((records) => {
       this.calculateCloseBtnPosition(btnEl, overlayPanelEl);

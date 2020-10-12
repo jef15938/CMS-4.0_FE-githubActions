@@ -6,7 +6,7 @@ import {
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { switchMap, shareReplay } from 'rxjs/operators';
 import { ContentEditorManager } from '../../service/content-editor-manager';
-import { ContentEditorActionMode, ContentEditorContext } from '../../content-editor.interface';
+import { ContentEditorContext } from '../../content-editor.interface';
 import { CheckViewConfig } from '../content-view-renderer/content-view-renderer.interface';
 import { ContentFieldInfoFieldType } from '../../../../../global/api/data-model/models/content-field-info.model';
 import { ModalService } from '../../../modal';
@@ -85,7 +85,6 @@ class DataSourceManager {
   styleUrls: ['./content-control-panel.component.scss']
 })
 export class ContentControlPanelComponent implements OnInit, OnChanges {
-  ContentEditorActionMode = ContentEditorActionMode;
   TemplateType = TemplateType;
 
   readonly scrollIntoViewOptions: ScrollIntoViewOptions = {
@@ -95,7 +94,6 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
 
   @Input() manager: ContentEditorManager;
   @Input() selected: LayoutWrapperSelectEvent;
-  @Input() editorActionMode: ContentEditorActionMode = ContentEditorActionMode.LAYOUT;
   @Input() context: ContentEditorContext;
 
   @Output() needCheckView = new EventEmitter<CheckViewConfig>();

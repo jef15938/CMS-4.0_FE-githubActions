@@ -5,15 +5,15 @@
 </div>
 <ng-container *ngIf="fieldInfo">
   <div class="btn-container">
-    <button class="float-right btn btn-dark" type="button" tabindex="-1" mat-raised-button [disabled]="!isTemplateMode"
+    <button class="float-right btn btn-dark" type="button" tabindex="-1" mat-raised-button
       (click)="selectImage()">{{fieldInfo.extension[ATTRIBUTE_GALLERY_ID] ? '修改圖片' : '加入本地圖片'}}</button>
   </div>
   <mat-form-field appearance="outline">
     <mat-label>圖片連結</mat-label>
-    <input matInput [(ngModel)]="fieldInfo.fieldVal" [disabled]="!isTemplateMode" (keydown)="change.emit()" readonly>
+    <input matInput [(ngModel)]="fieldInfo.fieldVal" (keydown)="change.emit()" readonly>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>圖片描述</mat-label>
-    <input matInput [(ngModel)]="fieldInfo.extension.altValue" [disabled]="!isTemplateMode" (keydown)="change.emit()">
+    <input matInput [(ngModel)]="fieldInfo.extension.altValue" (keydown)="change.emit()">
   </mat-form-field>
 </ng-container>

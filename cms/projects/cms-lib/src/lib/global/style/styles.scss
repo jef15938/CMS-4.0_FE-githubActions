@@ -47,6 +47,7 @@ mat-form-field {
   position: relative !important;
 
   .mat-dialog-container {
+    overflow: hidden;
     min-height: 100%;
     max-height: 100%;
   }
