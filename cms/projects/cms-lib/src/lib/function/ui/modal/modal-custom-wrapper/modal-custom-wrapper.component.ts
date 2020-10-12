@@ -53,12 +53,12 @@ export class ModalCustomWrapperComponent implements AfterViewInit, OnDestroy {
     const btnEl = this.closeBtn.element.nativeElement as HTMLElement;
     this.calculateCloseBtnPosition(btnEl, overlayPanelEl);
     setTimeout(() => {
-      btnEl.style.transition = '0.5s';
+      // btnEl.style.transition = '0.5s';
       btnEl.style.opacity = '1';
-      setTimeout(() => {
-        btnEl.style.transition = '';
-      }, 501);
-    }, 1);
+      // setTimeout(() => {
+      //   btnEl.style.transition = '';
+      // }, 501);
+    }, 250);
 
     const mutationObserver = new MutationObserver((records) => {
       this.calculateCloseBtnPosition(btnEl, overlayPanelEl);
