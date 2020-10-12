@@ -12,11 +12,19 @@ export class MegaMenuComponent extends CustomizeBaseDirective implements OnInit 
 
   @Input() menu: SitemapNode[] = [];
 
+  showLogin = false;
+  disabled = false;
+
   constructor(injector: Injector) {
     super(injector);
   }
 
   ngOnInit(): void {
+  }
+
+  toggleLogin() {
+    if (this.disabled) { return; }
+    this.showLogin = !this.showLogin;
   }
 
 }

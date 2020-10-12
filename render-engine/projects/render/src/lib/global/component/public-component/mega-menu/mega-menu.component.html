@@ -3,7 +3,13 @@
     <img src="assets/images/logo.svg" alt="台灣人壽">
   </div>
   <ul class="nav-tools" nx-tool>
-    <li class="nav-tools__item"><a class="nav-tools__link" href="#">登入/加入</a></li>
+    <li class="nav-tools__item" #container>
+      <a class="nav-tools__link" (click)="toggleLogin()" style="cursor: pointer;">登入/加入</a>
+      <div style="position: absolute; border: 1px solid black; right: 0;"
+        [ngStyle]="{'display':disabled?'none':showLogin?'block':'none', 'top':(container.offsetTop + container.offsetHeight)+'px'}">
+        <ng-content select=".login"></ng-content>
+      </div>
+    </li>
     <li class="nav-tools__item"><a class="nav-tools__link" href="#"><i class="icon-search"></i></a></li>
   </ul>
 </nx-mega-menu>
