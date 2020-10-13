@@ -13,15 +13,15 @@
       <div class="modal-form-layout__col">
         <mat-label>裝置限制</mat-label>
         <div class="devices">
-          <mat-checkbox [checked]="(sitemapNode?.device||'').indexOf(SiteMapNodeDeviceType.PC)>-1"
+          <mat-checkbox [checked]="(putRequest?.device||'').indexOf(SiteMapNodeDeviceType.PC)>-1"
             (change)="onDeviceCheckboxChange($event, SiteMapNodeDeviceType.PC);">
             {{SiteMapNodeDeviceTypeName.PC}}
           </mat-checkbox>
-          <mat-checkbox [checked]="(sitemapNode?.device||'').indexOf(SiteMapNodeDeviceType.PAD)>-1"
+          <mat-checkbox [checked]="(putRequest?.device||'').indexOf(SiteMapNodeDeviceType.PAD)>-1"
             (change)="onDeviceCheckboxChange($event, SiteMapNodeDeviceType.PAD);">
             {{SiteMapNodeDeviceTypeName.PAD}}
           </mat-checkbox>
-          <mat-checkbox [checked]="(sitemapNode?.device||'').indexOf(SiteMapNodeDeviceType.MOBILE)>-1"
+          <mat-checkbox [checked]="(putRequest?.device||'').indexOf(SiteMapNodeDeviceType.MOBILE)>-1"
             (change)="onDeviceCheckboxChange($event, SiteMapNodeDeviceType.MOBILE);">
             {{SiteMapNodeDeviceTypeName.MOBILE}}
           </mat-checkbox>

@@ -63,6 +63,7 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNode
     model.urlLinkNodeId = sitemapNode.urlLinkNodeId;
     model.urlType = sitemapNode.urlType;
     model.isMegaMenu = sitemapNode.isMegaMenu;
+    model.device = sitemapNode.device;
     return model;
   }
 
@@ -101,15 +102,14 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNode
   }
 
   onDeviceCheckboxChange(ev: MatCheckboxChange, siteMapNodeDeviceType: SiteMapNodeDeviceType) {
-    let devices = (this.sitemapNode.device || '').split(',').filter(v => !!v);
-    console.warn(ev.checked, JSON.parse(JSON.stringify(devices)));
+    let devices = (this.putRequest.device || '').split(',').filter(v => !!v);
     if (ev.checked && devices.indexOf(siteMapNodeDeviceType) < 0) {
       devices.push(siteMapNodeDeviceType);
     }
     if (!ev.checked && devices.indexOf(siteMapNodeDeviceType) > -1) {
       devices = devices.filter(v => v !== siteMapNodeDeviceType);
     }
-    this.sitemapNode.device = devices.join(',');
+    this.putRequest.device = devices.join(',');
   }
 
 }
