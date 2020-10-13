@@ -18,6 +18,7 @@ public children: Array<SiteMapInfo>;
 public content_id: string;
 public content_path: string;
 public is_mega_menu: boolean;
+public device: string;
 
 
 }

@@ -10,6 +10,7 @@ import { PageInfoGetResponse } from './bean/PageInfoGetResponse';
 import { SiteMapGetResponse } from './bean/SiteMapGetResponse';
 import { ContentInfo } from './bean/ContentInfo';
 import { ListDataSourceDataResponse } from './bean/ListDataSourceDataResponse';
+import { FullSearchGetResponse } from './bean/FullSearchGetResponse';
 
 
 
@@ -182,9 +183,22 @@ export class RestApiService {
     responseType: ListDataSourceDataResponse
   })
   GetDataSourceByTypeIdAndId(
-    params: { type_id: string, id: string, page?: number, },
+    params: { type_id: string, id: string, pageSize?: number, page?: number, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListDataSourceDataResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetFullSearch',
+    method: 'get',
+    path: '/FullSearch',
+    mock: './assets/mock/GetFullSearch.json',
+    responseType: FullSearchGetResponse
+  })
+  GetFullSearch(
+    params: { keyword: string, type?: string, pageSize?: string, page?: string, },
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<FullSearchGetResponse> { return null; }
 
   private getUrlByPathAndParams(path: string, params: { [key: string]: any }) {
     let url = path;

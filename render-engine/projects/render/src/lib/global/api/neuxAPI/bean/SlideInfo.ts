@@ -13,6 +13,7 @@ public title: string;
 public description: string;
 @IsNotEmpty()
 public url: string;
+public url_blank: boolean;
 @IsNotEmpty()
 public picture: string;
 

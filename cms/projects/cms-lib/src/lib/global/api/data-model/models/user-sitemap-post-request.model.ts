@@ -65,5 +65,5 @@ export class UserSiteMapPostRequestModel {
   public metaImage: string;
   @IsNotEmpty()
   public assignGroupId: string;
-  public device: 'pc' | 'pad' | 'mobile';
+  public device: '' | 'PC' | 'PAD' | 'MOBILE';
 }

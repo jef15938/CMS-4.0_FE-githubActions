@@ -39,5 +39,5 @@ export class SiteMapGetResponseModel {
   @ValidateNested()
   public children: Array<SiteMapGetResponseModel>;
   public contentType: string;
-  public device: 'pc' | 'pad' | 'mobile';
+  public device: '' | 'PC' | 'PAD' | 'MOBILE';
 }

@@ -44,5 +44,5 @@ export class UserSiteMapPutRequestModel {
   public contentPath: string;
   @ValidateNested()
   public details: Array<SiteNodeDetailInfoModel>;
-  public device: 'pc' | 'pad' | 'mobile';
+  public device: '' | 'PC' | 'PAD' | 'MOBILE';
 }

@@ -293,7 +293,6 @@ paths:
         in: path
         required: true
         description: 內容代碼
-
   '/DataSource/{type_id}/{id}':
     parameters:
       - schema:
@@ -306,6 +305,11 @@ paths:
         name: id
         in: path
         required: true
+      - schema:
+          type: number
+        name: pageSize
+        in: query
+        required: false
     get:
       summary: ListDataSourceData
       tags:
@@ -322,7 +326,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './cms-apis.v1.yaml#/components/schemas/ErrorInfo'
+                $ref: ./cms-apis.v1.yaml#/components/schemas/ErrorInfo
         '500':
           description: Internal Server Error
       operationId: get-typeID-data-id
@@ -332,6 +336,46 @@ paths:
             type: number
           in: query
           name: page
+  /FullSearch:
+    get:
+      summary: ListFullSearch
+      tags:
+        - FullSearch
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullSearchGetResponse'
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-FullSearch
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: keyword
+          required: true
+          description: 關鍵字
+        - schema:
+            type: string
+          in: query
+          name: type
+          description: '查詢分類: qa, news....'
+        - schema:
+            type: string
+          in: query
+          name: pageSize
+          description: 單頁筆數，預設10筆
+        - schema:
+            type: string
+          in: query
+          name: page
+          description: 查詢頁數
+      description: 取得全文檢索資料
 components:
   schemas:
     PageInfoGetResponse:
@@ -368,10 +412,11 @@ components:
         node_parent:
           type: string
           description: 上層節點
+        domain:
+          type: string
+          description: 官網domain
       required:
-        - layout_id
         - meta_title
-        - content_id
         - lang
         - node_root
     ErrorInfo:
@@ -557,6 +602,9 @@ components:
         url:
           type: string
           description: 網址(內頁的話連結至官網內頁或自己外連網址)
+        url_blank:
+          type: boolean
+          description: 是否另開分頁
       required:
         - id
         - title
@@ -595,6 +643,9 @@ components:
           type: string
         url:
           type: string
+        url_blank:
+          type: boolean
+          description: 是否另開分頁
         picture:
           type: string
       required:
@@ -663,7 +714,11 @@ components:
           description: ''
         is_mega_menu:
           type: boolean
-          description: true
+          description: 'true'
+        device:
+          type: string
+          description: 哪些裝置可讀取，多裝置由逗號分開
+          example: 'pc,mobile'
     SiteMapLanguageInfo:
       title: SiteMapLanguageInfo
       type: object
@@ -688,3 +743,59 @@ components:
       required:
         - block_id
         - templates
+    FullSearchGetResponse:
+      title: FullSearchGetResponse
+      type: object
+      properties:
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/FullSearchInfo'
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/FullSearchTypeInfo'
+      required:
+        - page_info
+      description: ''
+    FullSearchTypeInfo:
+      title: FullSearchTypeInfo
+      type: object
+      properties:
+        type_id:
+          type: string
+          description: 類別代號
+        type_name:
+          type: string
+          description: 類別名稱
+        type_total_rec_size:
+          type: string
+          description: 類別資料數
+    FullSearchInfo:
+      title: FullSearchInfo
+      type: object
+      description: |
+        全文檢索資料
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          description: 資料標題
+        search_text:
+          type: string
+          description: 檢索內容
+        url:
+          type: string
+          description: 連結頁面
+        type_id:
+          type: string
+          description: 資料類型
+      required:
+        - id
+        - title
+        - url
+tags:
+  - name: FullSearch

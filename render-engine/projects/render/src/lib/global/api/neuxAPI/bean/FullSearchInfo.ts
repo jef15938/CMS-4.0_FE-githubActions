@@ -4,17 +4,16 @@ import {IsNotEmpty} from 'class-validator';
 
 import { TypeFactory } from '../type-factory';
 
-export class NewsInfo {
+export class FullSearchInfo {
 
 @IsNotEmpty()
 public id: string;
 @IsNotEmpty()
 public title: string;
-@IsNotEmpty()
-public start_date: string;
+public search_text: string;
 @IsNotEmpty()
 public url: string;
-public url_blank: boolean;
+public type_id: string;
 
 
 }

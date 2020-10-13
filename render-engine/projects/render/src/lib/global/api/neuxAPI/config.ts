@@ -12,6 +12,7 @@ GetSiteMapDownloadByFormat: `${BASE_URL}\/SiteMap/Download/{format}`,
 GetContentByContentId: `${BASE_URL}\/Content/{content_id}`,
 GetPreviewContentByContentId: `${BASE_URL}\/Preview/Content/{content_id}`,
 GetDataSourceByTypeIdAndId: `${BASE_URL}\/DataSource/{type_id}/{id}`,
+GetFullSearch: `${BASE_URL}\/FullSearch`,
 
 };
 export const API_TYPE = {
@@ -26,5 +27,6 @@ GetSiteMapDownloadByFormat: 'Restful',
 GetContentByContentId: 'Restful',
 GetPreviewContentByContentId: 'Restful',
 GetDataSourceByTypeIdAndId: 'Restful',
+GetFullSearch: 'Restful',
 
 };

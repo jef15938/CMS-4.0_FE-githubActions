@@ -67,5 +67,5 @@ export class SiteMapNodeGetResponseModel {
   @ValidateNested()
   @IsNotEmpty()
   public details: Array<SiteNodeDetailInfoModel>;
-  public device: 'pc' | 'pad' | 'mobile';
+  public device: '' | 'PC' | 'PAD' | 'MOBILE';
 }
