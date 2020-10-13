@@ -11,7 +11,6 @@ import { PreviewInfoType } from '../../../../global/api/data-model/models/previe
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
-import { MultiSiteConst } from '../../const/multi-site-const';
 
 @Component({
   selector: 'cms-sitemap-node-detail',
@@ -24,6 +23,8 @@ export class SitemapNodeDetailComponent implements OnInit {
 
   SiteMapNodeType = SiteMapNodeType;
   SiteMapUrlType = SiteMapUrlType;
+  SiteMapNodeDeviceType = SiteMapNodeDeviceType;
+  SiteMapNodeDeviceTypeName = SiteMapNodeDeviceTypeName;
 
   @Input() siteID: string;
   @Input() userSitemap: SiteMapGetResponseModel;
@@ -46,13 +47,6 @@ export class SitemapNodeDetailComponent implements OnInit {
     [SiteMapNodeType.NONE]: SiteMapNodeTypeName.NONE,
     [SiteMapNodeType.URL]: SiteMapNodeTypeName.URL,
     [SiteMapNodeType.CONTENT]: SiteMapNodeTypeName.CONTENT,
-  };
-
-  deviceTypes = {
-    [SiteMapNodeDeviceType.ALL]: SiteMapNodeDeviceTypeName.ALL,
-    [SiteMapNodeDeviceType.MOBILE]: SiteMapNodeDeviceTypeName.MOBILE,
-    [SiteMapNodeDeviceType.PAD]: SiteMapNodeDeviceTypeName.PAD,
-    [SiteMapNodeDeviceType.PC]: SiteMapNodeDeviceTypeName.PC,
   };
 
   constructor(

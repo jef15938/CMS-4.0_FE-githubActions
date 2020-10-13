@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service/sitemap/sitemap.service';
-import { SiteMapNodeType, SiteMapUrlType } from '../../../../global/enum';
+import { SiteMapNodeType, SiteMapUrlType, SiteMapNodeDeviceType, SiteMapNodeDeviceTypeName } from '../../../../global/enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { UserSiteMapPutRequestModel } from '../../../../global/api/data-model/models/user-sitemap-put-request.model';
@@ -10,6 +10,7 @@ import { SiteNodeDetailInfoModel } from '../../../../global/api/data-model/model
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { CmsLoadingToggle } from '../../../../global/service/cms-loading-toggle.service';
 import { MultiSiteConst } from '../../const/multi-site-const';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'cms-sitemap-node-update-modal',
@@ -22,6 +23,8 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNode
 
   SiteMapNodeType = SiteMapNodeType;
   SiteMapUrlType = SiteMapUrlType;
+  SiteMapNodeDeviceType = SiteMapNodeDeviceType;
+  SiteMapNodeDeviceTypeName = SiteMapNodeDeviceTypeName;
 
   urlTypeOptions = MultiSiteConst.urlTypeOptions;
   urlBlankTypeOptions = MultiSiteConst.urlBlankTypeOptions;
@@ -95,6 +98,18 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNode
         }
       }
     });
+  }
+
+  onDeviceCheckboxChange(ev: MatCheckboxChange, siteMapNodeDeviceType: SiteMapNodeDeviceType) {
+    let devices = (this.sitemapNode.device || '').split(',').filter(v => !!v);
+    console.warn(ev.checked, JSON.parse(JSON.stringify(devices)));
+    if (ev.checked && devices.indexOf(siteMapNodeDeviceType) < 0) {
+      devices.push(siteMapNodeDeviceType);
+    }
+    if (!ev.checked && devices.indexOf(siteMapNodeDeviceType) > -1) {
+      devices = devices.filter(v => v !== siteMapNodeDeviceType);
+    }
+    this.sitemapNode.device = devices.join(',');
   }
 
 }

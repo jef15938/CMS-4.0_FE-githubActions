@@ -1,15 +1,15 @@
 export enum SiteMapNodeDeviceType {
   ALL = '',
-  PC = 'PC',
-  MOBILE = 'MOBILE',
-  PAD = 'PAD',
+  PC = 'pc',
+  MOBILE = 'mobile',
+  PAD = 'pad',
 }
 
 export enum SiteMapNodeDeviceTypeName {
   ALL = '所有裝置可見',
-  PC = '限 PC 可見',
-  MOBILE = '限 Mobile 可見',
-  PAD = '限 Pad 可見',
+  PC = '限 pc 可見',
+  MOBILE = '限 mobile 可見',
+  PAD = '限 pad 可見',
 }
 
 export enum SiteMapNodeType {

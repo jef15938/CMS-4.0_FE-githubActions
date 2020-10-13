@@ -4,7 +4,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
 import { SitemapService, ContentService, GroupService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
-import { SiteMapNodeType, SiteMapUrlType } from '../../../../global/enum/multi-site.enum';
+import { SiteMapNodeType, SiteMapUrlType, SiteMapNodeDeviceType, SiteMapNodeDeviceTypeName } from '../../../../global/enum/multi-site.enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 import { GroupInfoModel } from '../../../../global/api/data-model/models/group-info.model';
 import { LayoutInfoModel } from '../../../../global/api/data-model/models/layout-info.model';
@@ -62,6 +62,8 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase<SitemapNode
 
   NodeType = SiteMapNodeType;
   UrlType = SiteMapUrlType;
+  SiteMapNodeDeviceType = SiteMapNodeDeviceType;
+  SiteMapNodeDeviceTypeName = SiteMapNodeDeviceTypeName;
 
   @Input() siteId: string;
   @Input() parentId: string;
@@ -167,6 +169,18 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase<SitemapNode
         }
       }
     });
+  }
+
+  onDeviceCheckboxChange(ev: MatCheckboxChange, siteMapNodeDeviceType: SiteMapNodeDeviceType) {
+    let devices = (this.sitemapMaintainModel.device || '').split(',').filter(v => !!v);
+    console.warn(ev.checked, JSON.parse(JSON.stringify(devices)));
+    if (ev.checked && devices.indexOf(siteMapNodeDeviceType) < 0) {
+      devices.push(siteMapNodeDeviceType);
+    }
+    if (!ev.checked && devices.indexOf(siteMapNodeDeviceType) > -1) {
+      devices = devices.filter(v => v !== siteMapNodeDeviceType);
+    }
+    this.sitemapMaintainModel.device = devices.join(',');
   }
 
 }

@@ -7,3 +7,14 @@
     top: 10px;
   }
 }
+
+.devices {
+  display: flex;
+  flex-direction: row;
+  margin: .25em 0;
+  padding-bottom: 1.34375em;
+
+  mat-checkbox {
+    flex: 1;
+  }
+}

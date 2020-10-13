@@ -11,14 +11,21 @@
 
     <div class="modal-form-layout__row">
       <div class="modal-form-layout__col">
-        <mat-form-field appearance="outline">
-          <mat-label>裝置可見設定</mat-label>
-          <mat-select [(ngModel)]="sitemapNode.device" name="device" [compareWith]="compareOptionWithModel">
-            <mat-option *ngFor="let option of deviceTypeOptions" [value]="option.value">
-              {{option.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <mat-label>裝置限制</mat-label>
+        <div class="devices">
+          <mat-checkbox [checked]="(sitemapNode?.device||'').indexOf(SiteMapNodeDeviceType.PC)>-1"
+            (change)="onDeviceCheckboxChange($event, SiteMapNodeDeviceType.PC);">
+            {{SiteMapNodeDeviceTypeName.PC}}
+          </mat-checkbox>
+          <mat-checkbox [checked]="(sitemapNode?.device||'').indexOf(SiteMapNodeDeviceType.PAD)>-1"
+            (change)="onDeviceCheckboxChange($event, SiteMapNodeDeviceType.PAD);">
+            {{SiteMapNodeDeviceTypeName.PAD}}
+          </mat-checkbox>
+          <mat-checkbox [checked]="(sitemapNode?.device||'').indexOf(SiteMapNodeDeviceType.MOBILE)>-1"
+            (change)="onDeviceCheckboxChange($event, SiteMapNodeDeviceType.MOBILE);">
+            {{SiteMapNodeDeviceTypeName.MOBILE}}
+          </mat-checkbox>
+        </div>
       </div>
     </div>
 

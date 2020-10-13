@@ -56,7 +56,9 @@
 
         <div class="form__container">
           <div class="form__label">裝置可見設定</div>
-          <div class="form__content">{{deviceTypes[sitemapNode.device]}}</div>
+          <div class="form__content">
+            {{!sitemapNode?.device ? SiteMapNodeDeviceTypeName.ALL : '限 : ' + sitemapNode.device.split(',').join(', ')}}
+          </div>
         </div>
 
         <div class="form__container">
