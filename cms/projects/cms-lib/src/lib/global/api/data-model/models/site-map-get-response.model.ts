@@ -16,7 +16,7 @@ import { ModelMapping, ModelMapper } from '@neux/core';
     model.canOrder = bean.canOrder;
     model.children = ModelMapper.mapArrayTo(SiteMapGetResponseModel, bean.children);
     model.contentType = bean.content_type;
-    model.device = bean['device'];
+    model.device = bean.device;
   }
 )
 export class SiteMapGetResponseModel {
@@ -39,5 +39,5 @@ export class SiteMapGetResponseModel {
   @ValidateNested()
   public children: Array<SiteMapGetResponseModel>;
   public contentType: string;
-  public device: '' | 'PC' | 'PAD' | 'MOBILE';
+  public device: string;
 }

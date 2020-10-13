@@ -30,7 +30,7 @@ import { ModelMapping, ModelMapper } from '@neux/core';
     model.updateTime = bean.update_time;
     model.publishInfo = ModelMapper.mapModelTo(PublishInfoModel, bean.publish_info);
     model.details = ModelMapper.mapArrayTo(SiteNodeDetailInfoModel, bean.details);
-    model.device = bean['device'] || '';
+    model.device = bean.device;
   }
 )
 export class SiteMapNodeGetResponseModel {
@@ -67,5 +67,5 @@ export class SiteMapNodeGetResponseModel {
   @ValidateNested()
   @IsNotEmpty()
   public details: Array<SiteNodeDetailInfoModel>;
-  public device: '' | 'PC' | 'PAD' | 'MOBILE';
+  public device: string;
 }

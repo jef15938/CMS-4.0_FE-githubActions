@@ -9,7 +9,6 @@ export class UserSiteMapPostRequest {
 @IsNotEmpty()
 public node_name: string;
 public layout_id: string;
-public is_mega_menu: boolean;
 public parent_id: string;
 public node_type: string;
 public url_type: string;
@@ -24,6 +23,8 @@ public meta_keyword: string;
 public meta_image: string;
 @IsNotEmpty()
 public assign_group_id: string;
+public device: string;
+public is_mega_menu: boolean;
 
 
 }

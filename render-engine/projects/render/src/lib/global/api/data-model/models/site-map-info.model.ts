@@ -15,7 +15,7 @@ import { SiteMapLanguageInfoModel } from './site-map-language-info.model';
     model.isMegamenu = bean.is_mega_menu;
     model.children = ModelMapper.mapArrayTo(SiteMapInfoModel, bean.children);
     model.languages = ModelMapper.mapArrayTo(SiteMapLanguageInfoModel, bean.languages);
-    model.device = (bean.device || '') as any;
+    model.device = bean.device;
   }
 )
 export class SiteMapInfoModel {
@@ -32,5 +32,5 @@ export class SiteMapInfoModel {
   public contentId: string;
   public contentPath: string;
   public isMegamenu: boolean;
-  public device: '' | 'PC' | 'PAD' | 'MOBILE';
+  public device: string;
 }

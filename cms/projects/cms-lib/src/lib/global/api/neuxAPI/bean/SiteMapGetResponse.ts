@@ -25,6 +25,8 @@ public canOrder: boolean;
 @ValidateNested()
 public children: Array<SiteMapGetResponse>;
 public content_type: string;
+public device: string;
+public is_mega_menu: boolean;
 
 
 }

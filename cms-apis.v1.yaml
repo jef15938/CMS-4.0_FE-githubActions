@@ -2519,6 +2519,13 @@ components:
         content_type:
           type: string
           description: 節點類型
+        device:
+          type: string
+          description: 哪些裝置可讀取，多裝置由逗號分開
+          example: 'pc,mobile,pad'
+        is_mega_menu:
+          description: 是否顯示於主選單
+          type: boolean
       required:
         - node_id
         - node_name
@@ -2603,6 +2610,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SiteNodeDetailInfo'
+        device:
+          type: string
+          description: 哪些裝置可讀取，多裝置由逗號分開
+          example: 'pc,mobile,pad'
+        is_mega_menu:
+          description: 是否顯示於主選單
+          type: boolean
       required:
         - node_id
         - canModify
@@ -2638,6 +2652,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SiteNodeDetailInfo'
+        device:
+          type: string
+          description: 哪些裝置可讀取，多裝置由逗號分開
+          example: 'pc,mobile,pad'
+        is_mega_menu:
+          description: 是否顯示於主選單
+          type: boolean
     UserSiteMapPostRequest:
       title: UserSiteMapPostRequest
       type: object
@@ -2680,6 +2701,13 @@ components:
         assign_group_id:
           type: string
           description: '指定給哪些群組使用，多個用半形(,)逗點分開'
+        device:
+          type: string
+          description: 哪些裝置可讀取，多裝置由逗號分開
+          example: 'pc,mobile,pad'
+        is_mega_menu:
+          description: 是否顯示於主選單
+          type: boolean
       required:
         - node_name
         - meta_title
@@ -2817,6 +2845,9 @@ components:
                   img_limit_height:
                     type: number
                     description: 圖片限制高度
+                  editor_control_id:
+                    type: string
+                    description: 編輯器控制代碼
               is_readonly:
                 type: boolean
             required:
@@ -2860,10 +2891,10 @@ components:
 
             ReadOnlyTrigger：Readonly連動，把trigger_target欄位改為ReadOnly屬性
           enum:
-            - DATATRIGGER
-            - ENABLETRIGGER
-            - READONLYTRIGGER
-            - REQUIRETRIGGER
+            - DATA
+            - ENABLE
+            - READONLY
+            - REQUIRE
         trigger_target:
           type: array
           description: 放哪些欄位「被連動」
