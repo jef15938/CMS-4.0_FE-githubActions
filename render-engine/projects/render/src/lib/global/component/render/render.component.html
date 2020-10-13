@@ -1,3 +1,5 @@
-<rdr-render-preview-container *ngIf="templates" mode="preview" [runtime]="runtime" [templates]="templates"
-  [sites]="sites" [pageInfo]="pageInfo">
-</rdr-render-preview-container>
+<ng-container *rdrShownByDevice="pageNode">
+  <rdr-render-preview-container *ngIf="templates" mode="preview" [runtime]="runtime" [templates]="templates"
+    [sites]="sites" [pageInfo]="pageInfo">
+  </rdr-render-preview-container>
+</ng-container>

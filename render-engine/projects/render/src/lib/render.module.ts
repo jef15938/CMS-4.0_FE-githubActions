@@ -50,6 +50,11 @@ import { ButtonComponent } from './global/component/public-component/button/butt
 import { MegaMenuComponent } from './global/component/public-component/mega-menu/mega-menu.component';
 import { TabCarouselTemplateComponent } from './global/component/tab-carousel-template/tab-carousel-template.component';
 import { TabScrollableTemplateComponent } from './global/component/tab-scrollable-template/tab-scrollable-template.component';
+import { ShownByDeviceDirective } from './global/directive/show-by-device.directive';
+
+const DIRECTIVES = [
+  ShownByDeviceDirective,
+];
 
 const COMPONENTS = [
   SliderComponent,
@@ -108,11 +113,13 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
     RenderPreviewContainerComponent,
     ...COMPONENTS,
     ...PUBLIC_COMPONENTS_TEMPLATES,
+    ...DIRECTIVES,
   ],
   exports: [
     RenderComponent,
     ...COMPONENTS,
     ...PUBLIC_COMPONENTS_TEMPLATES,
+    ...DIRECTIVES,
   ]
 })
 export class RenderModule {

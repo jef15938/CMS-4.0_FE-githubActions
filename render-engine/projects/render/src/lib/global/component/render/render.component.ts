@@ -23,6 +23,7 @@ export class RenderComponent implements OnInit {
   runtime = false;
   sites: SiteMapGetResponseModel = null;
   pageInfo: PageInfoGetResponseModel;
+  pageNode: SiteMapInfoModel;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,6 +56,8 @@ export class RenderComponent implements OnInit {
     console.warn('this.templates = ', this.templates);
 
     const pageNode = SitemapUtil.findNodeByContentPathFromSites(this.sites?.sites, pageID);
+    this.pageNode = pageNode;
+
     const title = this.getPageTitleByNode(this.sites?.sites, pageNode, this.pageInfo.lang) || this.pageInfo.domain;
     this.metaService.setPageTitle(title);
 
