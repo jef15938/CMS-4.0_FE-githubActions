@@ -270,7 +270,7 @@ export class GalleryService {
   }
 
   getGallerySetting(galleryID: string): Observable<GetGallerySettingResponseModel> {
-    return this.respAPIService.GetGalleryConfig({ galleryID }).pipe(
+    return this.respAPIService.GetGallerySettingByGalleryID({ galleryID }).pipe(
       CmsErrorHandler.rxMapError(this.error.setMessage('getGallerySetting')),
       ModelMapper.rxMapModelTo(GetGallerySettingResponseModel),
     );
