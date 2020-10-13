@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SitemapService, ContentService, GroupService } from '../../../../global/api/service';
-import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
-import { SiteMapNodeType, SiteMapUrlType } from '../../../../global/enum/multi-site.enum';
 import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
+import { SitemapService, ContentService, GroupService } from '../../../../global/api/service';
+import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
+import { SiteMapNodeType, SiteMapUrlType } from '../../../../global/enum/multi-site.enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 import { GroupInfoModel } from '../../../../global/api/data-model/models/group-info.model';
 import { LayoutInfoModel } from '../../../../global/api/data-model/models/layout-info.model';
 import { UserSiteMapPostRequestModel } from '../../../../global/api/data-model/models/user-sitemap-post-request.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { CmsLoadingToggle } from '../../../../global/service';
-import { urlTypeOptions, urlBlankTypeOptions, nodeTypeOptions, deviceTypeOptions } from '../../const/multi-site-const';
+import { MultiSiteConst } from '../../const/multi-site-const';
 
 class SiteMapCreateModel extends UserSiteMapPostRequestModel {
 
@@ -73,10 +73,10 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase<SitemapNode
   groups: GroupInfoModel[] = [];
   assignGroupIds: string[] = [];
 
-  urlTypeOptions = urlTypeOptions;
-  urlBlankTypeOptions = urlBlankTypeOptions;
-  nodeTypeOptions = nodeTypeOptions;
-  deviceTypeOptions = deviceTypeOptions;
+  urlTypeOptions = MultiSiteConst.urlTypeOptions;
+  urlBlankTypeOptions = MultiSiteConst.urlBlankTypeOptions;
+  nodeTypeOptions = MultiSiteConst.nodeTypeOptions;
+  deviceTypeOptions = MultiSiteConst.deviceTypeOptions;
 
   metaImageName = '';
 

@@ -9,8 +9,7 @@ import { UserSiteMapPutRequestModel } from '../../../../global/api/data-model/mo
 import { SiteNodeDetailInfoModel } from '../../../../global/api/data-model/models/site-node-detail-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { CmsLoadingToggle } from '../../../../global/service/cms-loading-toggle.service';
-import { urlTypeOptions, urlBlankTypeOptions, nodeTypeOptions, deviceTypeOptions } from '../../const/multi-site-const';
-
+import { MultiSiteConst } from '../../const/multi-site-const';
 
 @Component({
   selector: 'cms-sitemap-node-update-modal',
@@ -24,10 +23,10 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNode
   SiteMapNodeType = SiteMapNodeType;
   SiteMapUrlType = SiteMapUrlType;
 
-  urlTypeOptions = urlTypeOptions;
-  urlBlankTypeOptions = urlBlankTypeOptions;
-  nodeTypeOptions = nodeTypeOptions;
-  deviceTypeOptions = deviceTypeOptions;
+  urlTypeOptions = MultiSiteConst.urlTypeOptions;
+  urlBlankTypeOptions = MultiSiteConst.urlBlankTypeOptions;
+  nodeTypeOptions = MultiSiteConst.nodeTypeOptions;
+  deviceTypeOptions = MultiSiteConst.deviceTypeOptions;
 
   @Input() parentID: string;
   @Input() sitemapNode: SiteMapNodeGetResponseModel;

@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ModalService } from '../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service';
 import { ContentEditorService } from '../../../ui/content-editor';
-import { SiteMapNodeType, SiteMapUrlType } from '../../../../global/enum/multi-site.enum';
+import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlTypeName, SiteMapUrlBlankType, SiteMapUrlBlankTypeName, SiteMapNodeTypeName, SiteMapNodeDeviceType, SiteMapNodeDeviceTypeName } from '../../../../global/enum/multi-site.enum';
 import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { SitemapNodeUpdateModalComponent } from '../sitemap-node-update-modal/sitemap-node-update-modal.component';
@@ -11,7 +11,7 @@ import { PreviewInfoType } from '../../../../global/api/data-model/models/previe
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
-import { urlTypes, urlBlankTypes, nodeTypes, deviceTypes } from '../../const/multi-site-const';
+import { MultiSiteConst } from '../../const/multi-site-const';
 
 @Component({
   selector: 'cms-sitemap-node-detail',
@@ -32,10 +32,28 @@ export class SitemapNodeDetailComponent implements OnInit {
 
   @Output() update = new EventEmitter<SiteMapNodeGetResponseModel>();
 
-  urlTypes = urlTypes;
-  urlBlankTypes = urlBlankTypes;
-  nodeTypes = nodeTypes;
-  deviceTypes = deviceTypes;
+  urlTypes = {
+    [SiteMapUrlType.INSIDE]: SiteMapUrlTypeName.INSIDE,
+    [SiteMapUrlType.OUTSIDE]: SiteMapUrlTypeName.OUTSIDE,
+  };
+
+  urlBlankTypes = {
+    [SiteMapUrlBlankType.YES]: SiteMapUrlBlankTypeName.YES,
+    [SiteMapUrlBlankType.NO]: SiteMapUrlBlankTypeName.NO,
+  };
+
+  nodeTypes = {
+    [SiteMapNodeType.NONE]: SiteMapNodeTypeName.NONE,
+    [SiteMapNodeType.URL]: SiteMapNodeTypeName.URL,
+    [SiteMapNodeType.CONTENT]: SiteMapNodeTypeName.CONTENT,
+  };
+
+  deviceTypes = {
+    [SiteMapNodeDeviceType.ALL]: SiteMapNodeDeviceTypeName.ALL,
+    [SiteMapNodeDeviceType.MOBILE]: SiteMapNodeDeviceTypeName.MOBILE,
+    [SiteMapNodeDeviceType.PAD]: SiteMapNodeDeviceTypeName.PAD,
+    [SiteMapNodeDeviceType.PC]: SiteMapNodeDeviceTypeName.PC,
+  };
 
   constructor(
     private modalService: ModalService,
