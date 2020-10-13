@@ -16,6 +16,7 @@ import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
     model.contentPath = bean.content_path;
     model.isMegaMenu = bean.is_mega_menu;
     model.details = ModelMapper.mapArrayTo(SiteNodeDetailInfoModel, bean.details);
+    model.device = bean['device'];
   }
 )
 @ModelMapping(
@@ -29,6 +30,7 @@ import { SiteNodeDetailInfo } from '../../neuxAPI/bean/SiteNodeDetailInfo';
     bean.url_blank = model.urlBlank;
     bean.content_path = model.contentPath;
     bean.details = ModelMapper.mapArrayTo(SiteNodeDetailInfo, model.details);
+    bean['device'] = model.device;
   }
 )
 export class UserSiteMapPutRequestModel {
@@ -42,5 +44,5 @@ export class UserSiteMapPutRequestModel {
   public contentPath: string;
   @ValidateNested()
   public details: Array<SiteNodeDetailInfoModel>;
-
+  public device: 'pc' | 'pad' | 'mobile';
 }

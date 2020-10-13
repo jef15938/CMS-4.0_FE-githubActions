@@ -50,13 +50,18 @@
     <form #form="ngForm" class="form">
       <div class="form__top">
         <div class="form__container">
-          <div class="form__label">節點類型</div>
-          <div class="form__content">{{nodeTypes[sitemapNode.nodeType] || '無'}}</div>
+          <div class="form__label">顯示在主選單</div>
+          <div class="form__content">{{sitemapNode.isMegaMenu ? '是' : '否'}}</div>
         </div>
 
         <div class="form__container">
-          <div class="form__label">顯示在主選單</div>
-          <div class="form__content">{{sitemapNode.isMegaMenu ? '是' : '否'}}</div>
+          <div class="form__label">裝置可見設定</div>
+          <div class="form__content">{{deviceTypes[sitemapNode.device]}}</div>
+        </div>
+
+        <div class="form__container">
+          <div class="form__label">節點類型</div>
+          <div class="form__content">{{nodeTypes[sitemapNode.nodeType]}}</div>
         </div>
 
         <ng-container [ngSwitch]="sitemapNode.nodeType">
@@ -64,7 +69,7 @@
           <ng-container *ngSwitchCase="SiteMapNodeType.URL">
             <div class="form__container">
               <div class="form__label">連結類型</div>
-              <div class="form__content">{{urlTypes[sitemapNode.urlType] || ''}}</div>
+              <div class="form__content">{{urlTypes[sitemapNode.urlType]}}</div>
             </div>
             <ng-container [ngSwitch]="sitemapNode.urlType">
               <!-- 站內 -->

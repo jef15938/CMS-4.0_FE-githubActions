@@ -21,6 +21,7 @@ import { ModelMapping } from '@neux/core';
     model.metaImage = bean.meta_image;
     model.assignGroupId = bean.assign_group_id;
     model.isMegaMenu = bean.is_mega_menu;
+    model.device = bean['device'];
   }
 )
 @ModelMapping(
@@ -41,6 +42,7 @@ import { ModelMapping } from '@neux/core';
     bean.meta_image = model.metaImage;
     bean.assign_group_id = model.assignGroupId;
     bean.is_mega_menu = model.isMegaMenu;
+    bean['device'] = model.device;
   }
 )
 export class UserSiteMapPostRequestModel {
@@ -63,5 +65,5 @@ export class UserSiteMapPostRequestModel {
   public metaImage: string;
   @IsNotEmpty()
   public assignGroupId: string;
-
+  public device: 'pc' | 'pad' | 'mobile';
 }

@@ -2,13 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service/sitemap/sitemap.service';
-import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum';
+import { SiteMapNodeType, SiteMapUrlType } from '../../../../global/enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { UserSiteMapPutRequestModel } from '../../../../global/api/data-model/models/user-sitemap-put-request.model';
 import { SiteNodeDetailInfoModel } from '../../../../global/api/data-model/models/site-node-detail-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { CmsLoadingToggle } from '../../../../global/service/cms-loading-toggle.service';
+import { urlTypeOptions, urlBlankTypeOptions, nodeTypeOptions, deviceTypeOptions } from '../../const/multi-site-const';
 
 
 @Component({
@@ -23,21 +24,10 @@ export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNode
   SiteMapNodeType = SiteMapNodeType;
   SiteMapUrlType = SiteMapUrlType;
 
-  urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
-    { value: SiteMapUrlType.INSIDE, name: '站內' },
-    { value: SiteMapUrlType.OUTSIDE, name: '站外' },
-  ];
-
-  urlBlankTypeOptions: { value: SiteMapUrlBlankType, name: string }[] = [
-    { value: SiteMapUrlBlankType.YES, name: '是' },
-    { value: SiteMapUrlBlankType.NO, name: '否' },
-  ];
-
-  nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
-    { value: SiteMapNodeType.NONE, name: '無' },
-    { value: SiteMapNodeType.URL, name: '連結' },
-    { value: SiteMapNodeType.CONTENT, name: '頁面' },
-  ];
+  urlTypeOptions = urlTypeOptions;
+  urlBlankTypeOptions = urlBlankTypeOptions;
+  nodeTypeOptions = nodeTypeOptions;
+  deviceTypeOptions = deviceTypeOptions;
 
   @Input() parentID: string;
   @Input() sitemapNode: SiteMapNodeGetResponseModel;

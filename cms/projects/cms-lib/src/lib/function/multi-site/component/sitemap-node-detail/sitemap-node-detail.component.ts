@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ModalService } from '../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service';
 import { ContentEditorService } from '../../../ui/content-editor';
-import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
+import { SiteMapNodeType, SiteMapUrlType } from '../../../../global/enum/multi-site.enum';
 import { AuditingSitemapModalComponent } from '../auditing-sitemap-modal/auditing-sitemap-modal.component';
 import { FarmSharedService } from '../../../ui/farm-shared/farm-shared.service';
 import { SitemapNodeUpdateModalComponent } from '../sitemap-node-update-modal/sitemap-node-update-modal.component';
@@ -11,6 +11,7 @@ import { PreviewInfoType } from '../../../../global/api/data-model/models/previe
 import { SiteMapNodeGetResponseModel } from '../../../../global/api/data-model/models/site-map-node-get-response.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
+import { urlTypes, urlBlankTypes, nodeTypes, deviceTypes } from '../../const/multi-site-const';
 
 @Component({
   selector: 'cms-sitemap-node-detail',
@@ -31,21 +32,10 @@ export class SitemapNodeDetailComponent implements OnInit {
 
   @Output() update = new EventEmitter<SiteMapNodeGetResponseModel>();
 
-  urlTypes = {
-    [SiteMapUrlType.INSIDE]: '站內',
-    [SiteMapUrlType.OUTSIDE]: '站外',
-  };
-
-  urlBlankTypes = {
-    [SiteMapUrlBlankType.YES]: '是',
-    [SiteMapUrlBlankType.NO]: '否',
-  };
-
-  nodeTypes = {
-    [SiteMapNodeType.NONE]: '無',
-    [SiteMapNodeType.URL]: '連結',
-    [SiteMapNodeType.CONTENT]: '頁面',
-  };
+  urlTypes = urlTypes;
+  urlBlankTypes = urlBlankTypes;
+  nodeTypes = nodeTypes;
+  deviceTypes = deviceTypes;
 
   constructor(
     private modalService: ModalService,

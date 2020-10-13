@@ -12,7 +12,7 @@ import { ModelMapping, ModelMapper } from '@neux/core';
     model.nodeId = bean.node_id;
     model.layoutId = bean.layout_id;
     model.isMegaMenu = bean.is_mega_menu;
-    model.nodeType = bean.node_type;
+    model.nodeType = bean.node_type || '';
     model.funcId = bean.func_id;
     model.contentId = bean.content_id;
     model.urlType = bean.url_type;
@@ -30,6 +30,7 @@ import { ModelMapping, ModelMapper } from '@neux/core';
     model.updateTime = bean.update_time;
     model.publishInfo = ModelMapper.mapModelTo(PublishInfoModel, bean.publish_info);
     model.details = ModelMapper.mapArrayTo(SiteNodeDetailInfoModel, bean.details);
+    model.device = bean['device'] || '';
   }
 )
 export class SiteMapNodeGetResponseModel {
@@ -66,5 +67,5 @@ export class SiteMapNodeGetResponseModel {
   @ValidateNested()
   @IsNotEmpty()
   public details: Array<SiteNodeDetailInfoModel>;
-
+  public device: 'pc' | 'pad' | 'mobile';
 }

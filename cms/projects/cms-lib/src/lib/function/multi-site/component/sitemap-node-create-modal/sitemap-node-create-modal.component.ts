@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SitemapService, ContentService, GroupService } from '../../../../global/api/service';
 import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
-import { SiteMapNodeType, SiteMapUrlType, SiteMapUrlBlankType } from '../../../../global/enum/multi-site.enum';
+import { SiteMapNodeType, SiteMapUrlType } from '../../../../global/enum/multi-site.enum';
 import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
@@ -11,6 +11,7 @@ import { LayoutInfoModel } from '../../../../global/api/data-model/models/layout
 import { UserSiteMapPostRequestModel } from '../../../../global/api/data-model/models/user-sitemap-post-request.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { CmsLoadingToggle } from '../../../../global/service';
+import { urlTypeOptions, urlBlankTypeOptions, nodeTypeOptions, deviceTypeOptions } from '../../const/multi-site-const';
 
 class SiteMapCreateModel extends UserSiteMapPostRequestModel {
 
@@ -72,21 +73,10 @@ export class SitemapNodeCreateModalComponent extends CustomModalBase<SitemapNode
   groups: GroupInfoModel[] = [];
   assignGroupIds: string[] = [];
 
-  urlTypeOptions: { value: SiteMapUrlType, name: string }[] = [
-    { value: SiteMapUrlType.INSIDE, name: '站內' },
-    { value: SiteMapUrlType.OUTSIDE, name: '站外' },
-  ];
-
-  urlBlankTypeOptions: { value: SiteMapUrlBlankType, name: string }[] = [
-    { value: SiteMapUrlBlankType.YES, name: '是' },
-    { value: SiteMapUrlBlankType.NO, name: '否' },
-  ];
-
-  nodeTypeOptions: { value: SiteMapNodeType, name: string }[] = [
-    { value: SiteMapNodeType.NONE, name: '無' },
-    { value: SiteMapNodeType.URL, name: '連結' },
-    { value: SiteMapNodeType.CONTENT, name: '頁面' },
-  ];
+  urlTypeOptions = urlTypeOptions;
+  urlBlankTypeOptions = urlBlankTypeOptions;
+  nodeTypeOptions = nodeTypeOptions;
+  deviceTypeOptions = deviceTypeOptions;
 
   metaImageName = '';
 
