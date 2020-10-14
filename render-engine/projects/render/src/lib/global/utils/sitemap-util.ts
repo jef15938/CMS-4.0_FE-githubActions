@@ -1,10 +1,9 @@
-import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
 import { SiteMapInfoModel } from '../api/data-model/models/site-map-info.model';
 import { SiteInfoModel } from '../api/data-model/models/site-info.model';
 
 export class SitemapUtil {
-  static findContentPathBySiteIdAndNodeId(sites: SiteMapGetResponseModel, siteId: string, nodeId: string) {
-    const site = (sites?.sites || []).find(s => s.siteId === siteId);
+  static findContentPathBySiteIdAndNodeId(sites: SiteInfoModel[], siteId: string, nodeId: string) {
+    const site = (sites || []).find(s => s.siteId === siteId);
     if (site) {
       const node = SitemapUtil.findNodeByNodeId(site.siteMap, nodeId);
       if (node) {

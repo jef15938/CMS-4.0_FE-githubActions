@@ -1,8 +1,10 @@
-import { Directive, Input, Injector, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, Input, Injector, OnChanges, SimpleChanges, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TemplateFieldDirective } from './template-field.directive';
 import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
 import { SitemapUtil } from '../../../../global/utils/sitemap-util';
+import { RenderedPageEnvironment } from '../../../../global/interface/page-environment.interface';
+import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../../../../global/injection-token/injection-token';
 
 export enum LinkFieldInfoUrlType {
   INSIDE = 'INSIDE',
@@ -27,12 +29,13 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
   constructor(
     injector: Injector,
     private router: Router,
+    @Inject(RENDERED_PAGE_ENVIRONMENT_ROKEN) private pageEnv: RenderedPageEnvironment,
   ) {
     super(injector);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.runtime) {
+    if (this.pageEnv.isRuntime) {
       const el = this.elementRef.nativeElement as HTMLElement;
       const aTag = (el?.tagName?.toLowerCase() === 'a' ? el : el.querySelector('a')) as HTMLAnchorElement;
       if (!aTag) { return; }
@@ -57,7 +60,7 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
   }
 
   click(ev) {
-    if (this.mode === 'edit' || !this.runtime) {
+    if (this.mode === 'edit' || !this.pageEnv.isRuntime) {
       ev.preventDefault(); // 避免真的開連結，但也會讓 Base 的 TemplateFieldDirective.click() 收不到 event
       super.click(ev);
       ev.stopPropagation(); // 會讓 Base 的 TemplateFieldDirective.click() 收不到 event

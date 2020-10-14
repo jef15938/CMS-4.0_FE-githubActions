@@ -3,13 +3,13 @@ import { Subject } from 'rxjs';
 import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
 import { WithRenderInfo } from './layout-wrapper.interface';
 import { PageInfoGetResponseModel } from '../../../global/api/data-model/models/page-info-get-response.model';
+import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
 
 @Directive()
 export abstract class LayoutWrapperBase implements WithRenderInfo, OnDestroy {
   @Input() mode: 'preview' | 'edit';
-  @Input() runtime;
   @Input() fixed;
-  @Input() sites: SiteMapGetResponseModel;
+  @Input() sites: SiteInfoModel[] = [];
   @Input() pageInfo: PageInfoGetResponseModel;
 
   protected changeDetectorRef: ChangeDetectorRef = null;

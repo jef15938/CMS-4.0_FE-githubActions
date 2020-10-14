@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
-import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '../../../function/wrapper';
 import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-get-response.model';
 import { RenderService } from '../../service/render.service';
-import { map } from 'rxjs/operators';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
+import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
+import { RenderedPageEnvironment } from '../../interface/page-environment.interface';
 
 @Component({
   selector: 'rdr-render-preview-container',
@@ -20,8 +21,7 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
 
   @Input() templates: ContentTemplateInfoModel[];
   @Input() mode: 'preview' | 'edit';
-  @Input() runtime: boolean;
-  @Input() sites: SiteMapGetResponseModel;
+  @Input() sites: SiteInfoModel[] = [];
   @Input() pageInfo: PageInfoGetResponseModel;
   fixed = false;
 
@@ -34,10 +34,11 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
 
   constructor(
     private renderService: RenderService,
+    @Inject('RENDER_ENGINE_RENDERED_PAGE_ENVIRONMENT') public pageEnv: RenderedPageEnvironment,
   ) { }
 
   ngOnInit(): void {
-    if (this.mode === 'preview' && !this.runtime) {
+    if (this.mode === 'preview' && !this.pageEnv.isRuntime) {
       this.renderService.getContentInfo('runtime', this.pageInfo.contentId).pipe(
         map(contentTemplateInfo => {
           if (contentTemplateInfo) {

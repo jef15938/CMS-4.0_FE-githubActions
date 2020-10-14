@@ -26,9 +26,6 @@ export class ShownByDeviceDirective implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const runtime = this.runtime;
-    const node = this.pageNode;
-    console.warn({runtime, node});
     this.viewContainer.clear();
     if (this.canRender(this.pageNode)) {
       this.viewContainer.createEmbeddedView(this.templateRef);

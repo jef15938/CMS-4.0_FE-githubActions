@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
+import { Component, Input, OnChanges, SimpleChanges, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SitemapUtil } from '../../../global/utils/sitemap-util';
+import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
+import { RenderedPageEnvironment } from '../../../global/interface/page-environment.interface';
+import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../../../global/injection-token/injection-token';
 
 
 @Component({
@@ -9,20 +11,17 @@ import { SitemapUtil } from '../../../global/utils/sitemap-util';
   templateUrl: './html-editor-content.component.html',
   styleUrls: ['./html-editor-content.component.scss']
 })
-export class HtmlEditorContentComponent implements OnInit, OnChanges {
+export class HtmlEditorContentComponent implements OnChanges {
 
   @Input() htmlString;
-  @Input() runtime = false;
-  @Input() sites: SiteMapGetResponseModel = null;
+  @Input() sites: SiteInfoModel[] = [];
 
   html: string;
 
   constructor(
     private router: Router,
+    @Inject(RENDERED_PAGE_ENVIRONMENT_ROKEN) private pageEnv: RenderedPageEnvironment,
   ) { }
-
-  ngOnInit(): void {
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     const div = document.createElement('div');
@@ -30,7 +29,7 @@ export class HtmlEditorContentComponent implements OnInit, OnChanges {
 
     const insides = div.querySelectorAll('a[urltype="INSIDE"]');
     insides.forEach(node => {
-      if (this.runtime) {
+      if (this.pageEnv.isRuntime) {
         const isHrefSet = !!node.getAttribute('nodeId');
         if (!isHrefSet) {
           const siteId = node.getAttribute('siteid');

@@ -15,8 +15,8 @@ import { LayoutFieldHtmlEditorDirective } from '../layout-wrapper/field-directiv
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { ContentFieldInfo } from '../../../global/api/neuxAPI/bean/ContentFieldInfo';
 import { ContentFieldInfoFieldType } from '../../../global/api/data-model/models/content-field-info.model';
-import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
 import { PageInfoGetResponseModel } from '../../../global/api/data-model/models/page-info-get-response.model';
+import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
 
 @Directive()
 export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel>
@@ -50,9 +50,8 @@ export abstract class LayoutBaseComponent<TInfo extends ContentTemplateInfoModel
   @ViewChildren(LayoutFieldHtmlEditorDirective) layoutFieldHtmlEditorDirectives: QueryList<LayoutFieldHtmlEditorDirective>;
 
   @Input() mode: 'preview' | 'edit';
-  @Input() runtime;
   @Input() fixed;
-  @Input() sites: SiteMapGetResponseModel = null;
+  @Input() sites: SiteInfoModel[] = [];
   @Input() pageInfo: PageInfoGetResponseModel;
   @Input() templateInfo: TInfo;
 

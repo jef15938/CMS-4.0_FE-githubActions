@@ -12,7 +12,7 @@ import { DynamicWrapperComponent } from '@neux/core';
 import { DynamicComponentFactoryService } from '../../../global/service/dynamic-component-factory.service';
 import { isPlatformServer } from '@angular/common';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
-import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
+import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
 
 @Component({
   selector: 'rdr-layout-wrapper',
@@ -27,7 +27,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfoModel>>;
 
   @Input() parentTemplatesContainer: {
-    mode: 'preview' | 'edit', templates: ContentTemplateInfoModel[]; runtime: boolean; sites: SiteMapGetResponseModel
+    mode: 'preview' | 'edit', templates: ContentTemplateInfoModel[]; sites: SiteInfoModel[]
   };
 
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
@@ -118,7 +118,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
     const oldData = {
       mode: instance.mode,
-      runtime: instance.runtime,
       sites: instance.sites,
       pageInfo: instance.pageInfo,
       templateInfo: instance.templateInfo,
@@ -127,7 +126,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
     const newData = {
       mode: this.mode,
-      runtime: this.runtime,
       sites: this.sites,
       pageInfo: this.pageInfo,
       templateInfo: this.templateInfo,
@@ -163,7 +161,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
 
     [...templatesContainerComponents, ...templateFieldDirectives].forEach(comp => {
       comp.mode = newData.mode;
-      comp.runtime = newData.runtime;
       comp.sites = newData.sites;
       comp.pageInfo = newData.pageInfo;
       comp.fixed = newData.fixed;

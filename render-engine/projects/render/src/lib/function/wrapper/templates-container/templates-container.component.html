@@ -1,6 +1,6 @@
 <ng-container *ngFor="let template of templates; let templateIndex = index">
   <rdr-layout-wrapper *ngIf="mode==='edit' || !template.hidden" [templateInfo]="template" [mode]="mode"
-    [pageInfo]="pageInfo" [runtime]="runtime" [sites]="sites" [fixed]="fixed" (select)="select.next($event)"
+    [pageInfo]="pageInfo" [sites]="sites" [fixed]="fixed" (select)="select.next($event)"
     (enter)="enter.next($event)" (leave)="leave.next($event)">
   </rdr-layout-wrapper>
 </ng-container>

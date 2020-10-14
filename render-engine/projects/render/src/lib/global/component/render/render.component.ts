@@ -3,25 +3,34 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageData } from '../../types';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
-import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-get-response.model';
 import { MetaService } from '../../service/meta.service';
 import { SiteMapInfoModel } from '../../api/data-model/models/site-map-info.model';
 import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { SitemapUtil } from '../../utils/sitemap-util';
+import { RenderedPageEnvironment } from '../../interface/page-environment.interface';
+
+const RENDERED_PAGE_ENVIRONMENT: RenderedPageEnvironment = {
+  pageSites: [],
+  pageNode: null,
+  pageLang: '',
+  isBrowser: true,
+  isRuntime: false,
+};
 
 @Component({
   selector: 'rdr-render',
   templateUrl: './render.component.html',
-  styles: [
+  providers: [
+    { provide: 'RENDER_ENGINE_RENDERED_PAGE_ENVIRONMENT', useValue: RENDERED_PAGE_ENVIRONMENT }
   ]
 })
 export class RenderComponent implements OnInit {
 
   templates: LayoutInfo[];
   runtime = false;
-  sites: SiteMapGetResponseModel = null;
+  sites: SiteInfoModel[] = [];
   pageInfo: PageInfoGetResponseModel;
   pageNode: SiteMapInfoModel;
 
@@ -29,18 +38,27 @@ export class RenderComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private metaService: MetaService,
-    @Inject(DOCUMENT) private document: any,
     @Inject(PLATFORM_ID) private platformId: any,
   ) { }
 
   ngOnInit(): void {
+
     const url = this.router.url;
     this.runtime = url.indexOf('/preview/') < 0;
 
     const { pageInfo, sitemap, contentInfo, pageID } = this.activatedRoute.snapshot.data.data as PageData;
-    this.sites = sitemap;
+    this.sites = sitemap.sites || [];
     console.warn('this.sites = ', this.sites);
     this.pageInfo = pageInfo;
+    const pageNode = SitemapUtil.findNodeByContentPathFromSites(this.sites, pageID);
+    this.pageNode = pageNode;
+    const isBrowser = isPlatformBrowser(this.platformId);
+
+    RENDERED_PAGE_ENVIRONMENT.pageSites = this.sites;
+    RENDERED_PAGE_ENVIRONMENT.pageLang = this.pageInfo?.lang || '';
+    RENDERED_PAGE_ENVIRONMENT.pageNode = pageNode;
+    RENDERED_PAGE_ENVIRONMENT.isRuntime = this.runtime;
+    RENDERED_PAGE_ENVIRONMENT.isBrowser = isBrowser;
 
     const templateList = ContentInfoModel.getTemplateInfoByLanguageId(contentInfo, pageInfo.lang);
     // 把最外層Layout也放入TemplateList中，sitemap當作Data
@@ -55,13 +73,9 @@ export class RenderComponent implements OnInit {
     }];
     console.warn('this.templates = ', this.templates);
 
-    const pageNode = SitemapUtil.findNodeByContentPathFromSites(this.sites?.sites, pageID);
-    this.pageNode = pageNode;
-
-    const title = this.getPageTitleByNode(this.sites?.sites, pageNode, this.pageInfo.lang) || this.pageInfo.domain;
+    const title = this.getPageTitleByNode(this.sites, pageNode, this.pageInfo.lang) || this.pageInfo.domain;
     this.metaService.setPageTitle(title);
 
-    const isBrowser = isPlatformBrowser(this.platformId);
     if (isBrowser) { return; } // 產檔時產生 meta 就好
     this.metaService.setPageMeta({ ...this.pageInfo });
   }

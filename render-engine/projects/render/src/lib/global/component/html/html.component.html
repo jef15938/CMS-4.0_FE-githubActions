@@ -1,6 +1,6 @@
 <ng-container *ngIf="templateInfo">
   <div [libLayoutFieldHtmlEditor]="templateInfo?.fields | getFieldFromFieldsById:'html'" #fieldHtmlEditor="field">
-    <rdr-html-editor-content [htmlString]="fieldHtmlEditor.fieldInfo?.fieldVal" [runtime]="runtime" [sites]="sites">
+    <rdr-html-editor-content [htmlString]="fieldHtmlEditor.fieldInfo?.fieldVal" [sites]="sites">
     </rdr-html-editor-content>
   </div>
 </ng-container>

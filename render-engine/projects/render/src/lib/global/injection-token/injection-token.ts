@@ -10,3 +10,5 @@ export const RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN
   = new InjectionToken<string[]>('RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS_TOKEN');
 export const RENDER_ENVIROMENT_TOKEN
   = new InjectionToken<RenderEnvironment>('RENDER_ENVIROMENT_TOKEN');
+export const RENDERED_PAGE_ENVIRONMENT_ROKEN
+  = new InjectionToken<RenderEnvironment>('RENDERED_PAGE_ENVIRONMENT_ROKEN');
