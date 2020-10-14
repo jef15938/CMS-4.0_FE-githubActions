@@ -49,7 +49,6 @@ export class TemplatesContainerComponent extends LayoutWrapperBase implements On
     @Inject('RENDER_ENGINE_RENDERED_PAGE_ENVIRONMENT') @Optional() private pageEnv: RenderedPageEnvironment,
   ) {
     super(injector);
-    console.warn('pageEnv = ', pageEnv);
     if (pageEnv) {
       RENDERED_PAGE_ENVIRONMENT.isBrowser = pageEnv.isBrowser;
       RENDERED_PAGE_ENVIRONMENT.isRuntime = pageEnv.isRuntime;
