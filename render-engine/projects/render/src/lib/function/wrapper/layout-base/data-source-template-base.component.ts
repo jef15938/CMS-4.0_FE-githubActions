@@ -42,10 +42,10 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
     this.hasSendInitGetDataRequest = true;
   }
 
-  getSourceData(): Observable<ListDataSourceDataResponseModel<TData>> {
+  getSourceData({ page = 1, pageSize = 0 } = {}): Observable<ListDataSourceDataResponseModel<TData>> {
     const type = this.TYPE_ID;
     const source = this.templateInfo?.source;
-    return this.dataSourceService.getDataSourceByTypeIDAndId<TData>(type, source).pipe(
+    return this.dataSourceService.getDataSourceByTypeIDAndId<TData>(type, source, { page, pageSize }).pipe(
       takeUntil(this.destroy$),
       tap(sourceData => {
         this.sourceData = sourceData;
