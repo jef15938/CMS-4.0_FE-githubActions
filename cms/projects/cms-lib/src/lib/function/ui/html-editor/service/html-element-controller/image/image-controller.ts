@@ -2,6 +2,7 @@ import { HtmlEditorElementController } from '../_base';
 import { fromEvent, Subscription } from 'rxjs';
 import { HtmlEditorContextMenuItem } from '../../../html-editor.interface';
 import { ModifyImage, CreateLink } from '../../../actions/action/_index';
+import { HtmlEditorActionCategory } from '../../../actions/action.enum';
 
 const IS_FAKE = 'IS_FAKE';
 
@@ -16,8 +17,8 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     if (this.el[IS_FAKE]) { return; }
 
     this.contextMenuItems = [
-      { text: '圖片設定', icon: 'edit', action: new ModifyImage(this.context) },
-      { text: '連結', icon: 'link', action: new CreateLink(this.context) },
+      { category: HtmlEditorActionCategory.IMAGE, text: '圖片設定', icon: 'edit', action: new ModifyImage(this.context) },
+      { category: HtmlEditorActionCategory.LINK, text: '連結', icon: 'link', action: new CreateLink(this.context) },
     ];
 
     const parent = this.findParent();

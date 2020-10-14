@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HtmlEditorContext } from '../../html-editor.interface';
+import { HtmlEditorContext, HtmlEditorConfig } from '../../html-editor.interface';
 import { HtmlEditorActions } from '../../actions/actions';
 import { HtmlEditorAction } from '../../actions/action.interface';
 import { ModalService } from '../../../modal';
@@ -13,6 +13,7 @@ import { HtmlEditorDescriptionComponent } from '../../modal/html-editor-descript
 export class EditorToolbarComponent implements OnInit {
 
   @Input() context: HtmlEditorContext;
+  @Input() config: HtmlEditorConfig;
 
   htmlEditorActions: HtmlEditorActions;
 

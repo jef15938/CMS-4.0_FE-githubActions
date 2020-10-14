@@ -3,9 +3,10 @@ import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertVideoModalComponent } from '../../modal/html-editor-insert-video-modal/html-editor-insert-video-modal.component';
 import { ATTRIBUTE_FRAME_ID } from '../../const/html-editor-container.const';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 export class InsertVideo extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.YOUTUBE;
   do() {
     const editorContainer = this.context.editorContainer;
     const selectedTarget = this.context.selectedTarget as HTMLElement;

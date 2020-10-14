@@ -5,6 +5,7 @@ import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
 import { Injector } from '@angular/core';
 import { CmsEnviroment } from '../../../global/interface';
+import { HtmlEditorActionCategory } from './actions/action.enum';
 
 export interface HtmlEditorContext {
   injector: Injector;
@@ -19,6 +20,7 @@ export interface HtmlEditorContext {
 }
 
 export interface HtmlEditorContextMenuItem {
+  category: HtmlEditorActionCategory;
   text: string;
   icon?: string;
   action?: HtmlEditorAction;
@@ -37,4 +39,9 @@ export interface HtmlEditorServiceInterface {
   openEditor(
     config?: { title?: string, content?: string, }
   ): Observable<any>;
+}
+
+export interface HtmlEditorConfig {
+  name: string;
+  actionEnable: { [key in HtmlEditorActionCategory]: boolean };
 }

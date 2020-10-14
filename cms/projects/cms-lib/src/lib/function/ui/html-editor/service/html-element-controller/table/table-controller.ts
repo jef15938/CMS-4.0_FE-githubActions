@@ -12,6 +12,7 @@ import { Split } from './actions/split';
 import { DeleteTable } from './actions/delete-table';
 import { MarkCol } from './actions/mark-col';
 import { AddCol } from './actions/add-col';
+import { HtmlEditorActionCategory } from '../../../actions/action.enum';
 
 let tableIndex = 0;
 
@@ -82,31 +83,38 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   protected onAddToEditor(): void {
     this.contextMenuItemsTemp = [
       {
-        text: '列', children: [
-          { text: '上方列', icon: 'add', action: new AddRow(this.context, this, 'before') },
-          { text: '下方列', icon: 'add', action: new AddRow(this.context, this, 'after') },
-          { text: '刪除列', icon: 'delete', action: new DeleteRow(this.context, this) },
+        text: '列',
+        category: HtmlEditorActionCategory.TABLE,
+        children: [
+          { category: HtmlEditorActionCategory.TABLE, text: '上方列', icon: 'add', action: new AddRow(this.context, this, 'before') },
+          { category: HtmlEditorActionCategory.TABLE, text: '下方列', icon: 'add', action: new AddRow(this.context, this, 'after') },
+          { category: HtmlEditorActionCategory.TABLE, text: '刪除列', icon: 'delete', action: new DeleteRow(this.context, this) },
         ]
       },
       {
-        text: '欄', children: [
-          { text: '標記/取消', action: new MarkCol(this.context, this) },
-          { text: '左側欄', icon: 'add', action: new AddCol(this.context, this, 'left') },
-          { text: '右側欄', icon: 'add', action: new AddCol(this.context, this, 'right') },
-          { text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
+        text: '欄',
+        category: HtmlEditorActionCategory.TABLE,
+        children: [
+          { category: HtmlEditorActionCategory.TABLE, text: '標記/取消', action: new MarkCol(this.context, this) },
+          { category: HtmlEditorActionCategory.TABLE, text: '左側欄', icon: 'add', action: new AddCol(this.context, this, 'left') },
+          { category: HtmlEditorActionCategory.TABLE, text: '右側欄', icon: 'add', action: new AddCol(this.context, this, 'right') },
+          { category: HtmlEditorActionCategory.TABLE, text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
         ]
       },
       {
-        text: '合併', action: new Merge(this.context, this),
+        category: HtmlEditorActionCategory.TABLE, text: '合併', action: new Merge(this.context, this),
       },
       {
-        text: '分割', children: [
-          { text: '水平分割', icon: 'delete', action: new Split(this.context, this, 'horizontal') },
-          { text: '垂直分割', icon: 'delete', action: new Split(this.context, this, 'verticle') },
+        text: '分割',
+        category: HtmlEditorActionCategory.TABLE,
+        children: [
+          { category: HtmlEditorActionCategory.TABLE, text: '水平分割', icon: 'delete', action: new Split(this.context, this, 'horizontal') },
+          { category: HtmlEditorActionCategory.TABLE, text: '垂直分割', icon: 'delete', action: new Split(this.context, this, 'verticle') },
         ]
       },
       {
         text: '表格樣式', type: 'select',
+        category: HtmlEditorActionCategory.TABLE,
         defaultValue: this.getTableStyle(),
         selectionOptions: [
           { text: '滿版縮放', value: TableStyle.PERCENT },
@@ -120,7 +128,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         }
       },
       {
-        text: '刪除表格', action: new DeleteTable(this.context, this),
+        category: HtmlEditorActionCategory.TABLE, text: '刪除表格', action: new DeleteTable(this.context, this),
       },
     ];
     this.checkTableState();

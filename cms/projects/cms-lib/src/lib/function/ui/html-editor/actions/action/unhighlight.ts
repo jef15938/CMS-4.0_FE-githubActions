@@ -1,13 +1,14 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 const HIGH_LIGHT_CLASS = 'highlight';
 
 const HIGH_LIGHT_IDENTIFY_COLOR = '#ffff00';
 
 export class Unhighlight extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.HIGHLIGHT;
   do(): Observable<any> {
     document.execCommand('foreColor', false, HIGH_LIGHT_IDENTIFY_COLOR);
 

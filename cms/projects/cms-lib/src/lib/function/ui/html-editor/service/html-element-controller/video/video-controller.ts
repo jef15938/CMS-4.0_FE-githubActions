@@ -2,6 +2,7 @@ import { HtmlEditorElementController } from '../_base';
 import { fromEvent, Subscription } from 'rxjs';
 import { HtmlEditorContextMenuItem } from '../../../html-editor.interface';
 import { InsertVideo } from '../../../actions/action/insert-video';
+import { HtmlEditorActionCategory } from '../../../actions/action.enum';
 
 export class HtmlEditorVideoController extends HtmlEditorElementController<HTMLImageElement> {
 
@@ -12,7 +13,7 @@ export class HtmlEditorVideoController extends HtmlEditorElementController<HTMLI
 
   protected onAddToEditor(): void {
     this.contextMenuItems = [
-      { text: '影片設定', icon: 'edit', action: new InsertVideo(this.context) },
+      { category: HtmlEditorActionCategory.YOUTUBE, text: '影片設定', icon: 'edit', action: new InsertVideo(this.context) },
     ];
 
     this.subscribeEvents();

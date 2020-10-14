@@ -1,6 +1,6 @@
 <div class="html-editor">
   <div class="html-editor__toolbar no-select">
-    <cms-editor-toolbar [context]="this"></cms-editor-toolbar>
+    <cms-editor-toolbar [context]="this" [config]="config"></cms-editor-toolbar>
   </div>
   <!-- <div class="noSelect">
     <cms-editor-path [context]="this"></cms-editor-path>
@@ -21,6 +21,7 @@
         <mat-form-field appearance="outline">
           <mat-label>{{item.text}}</mat-label>
           <mat-select (click)="evPreventDefaultAndStopPropagation($event)"
+            [disabled]="!config.actionEnable[item.category]"
             (selectionChange)="item.selectionChange($event); MenuTrigger.closeMenu();" [value]="item.defaultValue">
             <mat-option *ngFor="let option of item.selectionOptions" [value]="option.value"
               [disabled]="option.disabled">
@@ -30,19 +31,22 @@
       </ng-container>
       <ng-container *ngIf="item.type!=='select'">
         <ng-container *ngIf="!item.children?.length">
-          <button type="button" tabindex="0" mat-menu-item [disabled]="item.disabled" (click)="doAction(item.action)">
+          <button type="button" tabindex="0" mat-menu-item
+            [disabled]="!config.actionEnable[item.category] || item.disabled" (click)="doAction(item.action)">
             <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
             {{item.text}}
           </button>
         </ng-container>
         <ng-container *ngIf="item.children?.length">
-          <button type="button" tabindex="0" mat-menu-item [matMenuTriggerFor]="SubMenu" [disabled]="item.disabled">
+          <button type="button" tabindex="0" mat-menu-item [matMenuTriggerFor]="SubMenu"
+            [disabled]="!config.actionEnable[item.category] || item.disabled">
             <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
             {{item.text}}
           </button>
           <mat-menu #SubMenu="matMenu">
             <button type="button" tabindex="0" mat-menu-item *ngFor="let child of item.children"
-              [disabled]="child.disabled" (click)="doAction(child.action)">
+              [disabled]="!config.actionEnable[child.category] || child.disabled"
+              (click)="doAction(child.action)">
               <mat-icon *ngIf="child.icon">{{child.icon}}</mat-icon>
               {{child.text}}
             </button>
@@ -57,7 +61,8 @@
   <!-- 即時修改(re-edit)插入內容Dialog的本體:end -->
 
   <div class="html-editor__main">
-    <div class="html-editor__key-in neux-editor" #EditorContainer contenteditable id='editor' cmsRightClickHandler placeholder="請輸入內容"
-      (mousedown)="onClick($event)" (rightClick)="onRightClick($event)" (focus)="onFocus($event)"></div>
+    <div class="html-editor__key-in neux-editor" #EditorContainer contenteditable id='editor' cmsRightClickHandler
+      placeholder="請輸入內容" (mousedown)="onClick($event)" (rightClick)="onRightClick($event)" (focus)="onFocus($event)">
+    </div>
   </div>
 </div>

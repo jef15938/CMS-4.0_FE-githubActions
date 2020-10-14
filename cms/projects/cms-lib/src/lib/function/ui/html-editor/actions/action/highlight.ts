@@ -2,13 +2,14 @@ import { HtmlEditorActionBase } from '../action.base';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorContext } from '../../html-editor.interface';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 const HIGH_LIGHT_CLASS = 'highlight';
 
 const HIGH_LIGHT_IDENTIFY_COLOR = '#FFC0CB';
 
 export class Highlight extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.HIGHLIGHT;
   order: number;
   highlightClass: string;
 

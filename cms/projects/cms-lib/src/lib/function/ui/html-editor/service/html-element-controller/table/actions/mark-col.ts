@@ -2,9 +2,10 @@ import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { HtmlEditorContext } from '../../../../html-editor.interface';
 import { HtmlEditorTableControllerInterface } from '../table-controller.interface';
+import { HtmlEditorActionCategory } from '../../../../actions/action.enum';
 
 export class MarkCol extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.TABLE;
   constructor(
     context: HtmlEditorContext,
     private controller: HtmlEditorTableControllerInterface,

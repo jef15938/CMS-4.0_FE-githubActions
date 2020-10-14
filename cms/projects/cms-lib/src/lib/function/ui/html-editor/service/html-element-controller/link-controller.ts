@@ -2,6 +2,7 @@ import { fromEvent, Subscription } from 'rxjs';
 import { HtmlEditorElementController } from './_base';
 import { HtmlEditorContextMenuItem } from '../../html-editor.interface';
 import { CreateLink } from '../../actions/action/_index';
+import { HtmlEditorActionCategory } from '../../actions/action.enum';
 
 export class HtmlEditorLinkController extends HtmlEditorElementController<HTMLImageElement> {
 
@@ -12,7 +13,7 @@ export class HtmlEditorLinkController extends HtmlEditorElementController<HTMLIm
 
   protected onAddToEditor(): void {
     this.contextMenuItems = [
-      { text: '連結設定', icon: 'edit', action: new CreateLink(this.context) },
+      { category: HtmlEditorActionCategory.LINK, text: '連結設定', icon: 'edit', action: new CreateLink(this.context) },
     ];
 
     this.subscribeEvents();

@@ -2,9 +2,10 @@ import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { HtmlEditorContext } from '../../../../html-editor.interface';
 import { HtmlEditorTableControllerInterface } from '../table-controller.interface';
+import { HtmlEditorActionCategory } from '../../../../actions/action.enum';
 
 export class AddRow extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.TABLE;
   private position: 'before' | 'after';
 
   constructor(

@@ -3,7 +3,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ModalService } from '../modal';
-import { HtmlEditorContext, HtmlEditorContextMenuItem } from './html-editor.interface';
+import { HtmlEditorContext, HtmlEditorContextMenuItem, HtmlEditorConfig } from './html-editor.interface';
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
@@ -12,6 +12,8 @@ import { YoutubeUtil } from './service/youtube-util';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
 import { CmsErrorHandler } from '../../../global/error-handling';
+import { HTML_EDITOR_CONFIG_TOKEN } from './html-editor.injection-token';
+import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default';
 
 @Component({
   selector: 'cms-html-editor',
@@ -23,11 +25,14 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   private readonly defaultContent = '<p>請輸入內容</p>';
 
   @Input() content = '';
+  @Input() configName = 'default';
 
   @ViewChild('EditorContainer') private editorContainerElRef: ElementRef<HTMLDivElement>;
   @ViewChild('MenuTrigger') private editorMenu: MatMenuTrigger;
 
   selectedTarget: Node;
+
+  config: HtmlEditorConfig;
 
   get editorContainer() { return this.editorContainerElRef?.nativeElement; }
   get isSelectionInsideEditorContainer() {
@@ -47,10 +52,11 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     public modalService: ModalService,
     private changeDetectorRef: ChangeDetectorRef,
     @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
+    @Inject(HTML_EDITOR_CONFIG_TOKEN) private configs: HtmlEditorConfig[],
   ) { }
 
   ngOnInit() {
-
+    this.config = [...(this.configs || [])].reverse().find(c => c.name === this.configName) || HTML_EDITOR_CONFIG_DEFAULT;
   }
 
   ngAfterViewInit(): void {
@@ -315,7 +321,14 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
   doAction(action: HtmlEditorAction) {
     if (!action) { return; }
+
+    if (!this.config.actionEnable[action.category]) {
+      this.modalService.openMessage({ message: '沒有執行此操作的權限' }).subscribe();
+      return;
+    }
+
     if (!this.isSelectionInsideEditorContainer) { return; }
+
     try {
       action.do().subscribe();
     } catch (error) {

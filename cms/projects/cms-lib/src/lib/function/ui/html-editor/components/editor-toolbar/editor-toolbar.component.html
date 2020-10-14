@@ -7,13 +7,14 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
-      (click)="doAction(htmlEditorActions.bold)">
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.bold)" (click)="doAction(htmlEditorActions.bold)">
       <mat-icon aria-hidden="false">format_bold</mat-icon>
       <div class="editor-toolbar__btn__hint">
         粗體
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.italic)"
       (click)="doAction(htmlEditorActions.italic)">
       <mat-icon aria-hidden="false">format_italic</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -21,6 +22,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.underline)"
       (click)="doAction(htmlEditorActions.underline)">
       <mat-icon aria-hidden="false">format_underline</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -28,6 +30,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.justifyCenter)"
       (click)="doAction(htmlEditorActions.justifyCenter)">
       <mat-icon aria-hidden="false">format_align_center</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -35,6 +38,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.justifyFull)"
       (click)="doAction(htmlEditorActions.justifyFull)">
       <mat-icon aria-hidden="false">format_align_justify</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -42,6 +46,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.justifyLeft)"
       (click)="doAction(htmlEditorActions.justifyLeft)">
       <mat-icon aria-hidden="false">format_align_left</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -49,6 +54,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.justifyRight)"
       (click)="doAction(htmlEditorActions.justifyRight)">
       <mat-icon aria-hidden="false">format_align_right</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -56,6 +62,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.insertOrderedList)"
       (click)="doAction(htmlEditorActions.insertOrderedList)">
       <mat-icon aria-hidden="false">format_list_numbered
       </mat-icon>
@@ -64,6 +71,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.insertUnorderedList)"
       (click)="doAction(htmlEditorActions.insertUnorderedList)">
       <mat-icon aria-hidden="false">format_list_bulleted</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -71,6 +79,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.indent)"
       (click)="doAction(htmlEditorActions.indent)">
       <mat-icon aria-hidden="false">format_indent_decrease</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -78,6 +87,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.outdent)"
       (click)="doAction(htmlEditorActions.outdent)">
       <mat-icon aria-hidden="false">format_indent_increase</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -86,29 +96,38 @@
     </button>
 
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button #highlight #menuTrigger="matMenuTrigger"
-      [matMenuTriggerFor]="highlightMenu">
+      [matMenuTriggerFor]="highlightMenu" [disabled]="!config.actionEnable.HIGHLIGHT">
       <mat-icon aria-hidden="false">font_download</mat-icon>
       <div class="editor-toolbar__btn__hint">
         標記文字
       </div>
     </button>
     <mat-menu #highlightMenu="matMenu">
-      <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.highlight1)">
+      <button type="button" tabindex="-1" mat-menu-item
+        [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.highlight1)"
+        (click)="doAction(htmlEditorActions.highlight1)">
         標註樣式1
       </button>
-      <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.highlight2)">
+      <button type="button" tabindex="-1" mat-menu-item
+        [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.highlight2)"
+        (click)="doAction(htmlEditorActions.highlight2)">
         標註樣式2
       </button>
-      <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.highlight3)">
+      <button type="button" tabindex="-1" mat-menu-item
+        [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.highlight3)"
+        (click)="doAction(htmlEditorActions.highlight3)">
         標註樣式3
       </button>
-      <button type="button" tabindex="-1" mat-menu-item (click)="doAction(htmlEditorActions.unhighlight)">
+      <button type="button" tabindex="-1" mat-menu-item
+        [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.unhighlight)"
+        (click)="doAction(htmlEditorActions.unhighlight)">
         取消標記文字
       </button>
     </mat-menu>
   </div>
   <div class="editor-toolbar__row">
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.createLink)"
       (click)="doAction(htmlEditorActions.createLink)">
       <mat-icon aria-hidden="false">link</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -116,6 +135,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.insertFile)"
       (click)="doAction(htmlEditorActions.insertFile)">
       <mat-icon aria-hidden="false">attach_file</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -123,6 +143,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.insertImage)"
       (click)="doAction(htmlEditorActions.insertImage)">
       <mat-icon aria-hidden="false">insert_photo</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -130,6 +151,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.insertTable)"
       (click)="doAction(htmlEditorActions.insertTable)">
       <mat-icon aria-hidden="false">view_module</mat-icon>
       <div class="editor-toolbar__btn__hint">
@@ -137,6 +159,7 @@
       </div>
     </button>
     <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button
+      [disabled]="!(config|htmlEditorActionEnable:htmlEditorActions.insertVideo)"
       (click)="doAction(htmlEditorActions.insertVideo)">
       <mat-icon aria-hidden="false">movie</mat-icon>
       <div class="editor-toolbar__btn__hint">

@@ -3,9 +3,10 @@ import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertFileModalComponent } from '../../modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
 import { CLASS_NAME_GALLERY_FILE, ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME, ATTRIBUTE_FILE_SOURCE } from '../../const/html-editor-container.const';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 export class InsertFile extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.FILE;
   do() {
     const range = this.context.simpleWysiwygService.getRange();
     if (!range) { return of(undefined); }

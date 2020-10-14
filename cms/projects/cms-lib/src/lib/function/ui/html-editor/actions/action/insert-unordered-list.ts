@@ -1,8 +1,9 @@
 import { DomCmdAction } from '../action.base';
 import { of } from 'rxjs';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 export class InsertUnorderedList extends DomCmdAction {
-
+  category = HtmlEditorActionCategory.LIST;
   commandId = 'insertUnorderedList';
 
   do() {

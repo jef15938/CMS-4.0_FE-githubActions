@@ -4,9 +4,10 @@ import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertTableModalComponent } from '../../modal/html-editor-insert-table-modal/html-editor-insert-table-modal.component';
 import { TableControllerService } from '../../service/html-element-controller/table/table-controller-service';
 import { HtmlEditorContext } from '../../html-editor.interface';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 export class InsertTable extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.TABLE;
   private tableControllerService: TableControllerService;
 
   constructor(

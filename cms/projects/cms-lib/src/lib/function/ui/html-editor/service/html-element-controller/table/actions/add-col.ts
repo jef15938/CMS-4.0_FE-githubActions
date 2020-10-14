@@ -2,9 +2,10 @@ import { HtmlEditorActionBase } from '../../../../actions/action.base';
 import { Observable, of } from 'rxjs';
 import { HtmlEditorContext } from '../../../../html-editor.interface';
 import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from '../table-controller.interface';
+import { HtmlEditorActionCategory } from '../../../../actions/action.enum';
 
 export class AddCol extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.TABLE;
   private position: 'left' | 'right';
 
   constructor(

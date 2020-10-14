@@ -2,6 +2,7 @@ import { HtmlEditorActionBase } from '../action.base';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 import { ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME } from '../../const/html-editor-container.const';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 export interface InsertImageConfig {
   src: string;
@@ -13,7 +14,7 @@ export interface InsertImageConfig {
 }
 
 export class InsertImage extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.IMAGE;
   do() {
     const range = this.context.simpleWysiwygService.getRange();
     return this.context.modalService.openComponent({

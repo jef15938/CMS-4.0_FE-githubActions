@@ -3,8 +3,10 @@ import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorCreateLinkModalComponent } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
 import { ATTRIBUTE_FRAME_ID, CLASS_NAME_EDITOR_LINK, CLASS_NAME_GALLERY_FILE } from '../../const/html-editor-container.const';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 export class CreateLink extends DomCmdAction {
+  category = HtmlEditorActionCategory.LINK;
   commandId = 'createLink';
 
   do() {

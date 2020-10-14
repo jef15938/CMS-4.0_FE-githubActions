@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
 import { ATTRIBUTE_GALLERY_ID, ATTRIBUTE_FRAME_ID, ATTRIBUTE_GALLERY_NAME } from '../../const/html-editor-container.const';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 export interface ModifyImageConfig {
   src: string;
@@ -14,7 +15,7 @@ export interface ModifyImageConfig {
 }
 
 export class ModifyImage extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.IMAGE;
   do() {
     const selectedTarget = this.context.selectedTarget as HTMLElement;
     const image = selectedTarget?.tagName?.toLowerCase() === 'img' && !selectedTarget.getAttribute(ATTRIBUTE_FRAME_ID)

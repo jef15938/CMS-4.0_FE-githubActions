@@ -20,6 +20,9 @@ import { HtmlEditorInsertTableModalComponent } from './modal/html-editor-insert-
 import { HtmlEditorInsertVideoModalComponent } from './modal/html-editor-insert-video-modal/html-editor-insert-video-modal.component';
 import { HtmlEditorInsertFileModalComponent } from './modal/html-editor-insert-file-modal/html-editor-insert-file-modal.component';
 import { HtmlEditorDescriptionComponent } from './modal/html-editor-description/html-editor-description.component';
+import { HTML_EDITOR_CONFIG_TOKEN } from './html-editor.injection-token';
+import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default';
+import { HtmlEditorActionEnablePipe } from './pipe/html-editor-action-enable.pipe';
 
 @NgModule({
   imports: [
@@ -47,8 +50,12 @@ import { HtmlEditorDescriptionComponent } from './modal/html-editor-description/
     HtmlEditorInsertVideoModalComponent,
     HtmlEditorInsertFileModalComponent,
     HtmlEditorDescriptionComponent,
+    HtmlEditorActionEnablePipe,
   ],
-  exports: []
+  exports: [],
+  providers: [
+    { provide: HTML_EDITOR_CONFIG_TOKEN, useValue: HTML_EDITOR_CONFIG_DEFAULT, multi: true },
+  ],
 })
 export class HtmlEditorModule {
 }

@@ -1,8 +1,9 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { of } from 'rxjs';
+import { HtmlEditorActionCategory } from '../action.enum';
 
 export class Outdent extends HtmlEditorActionBase {
-
+  category = HtmlEditorActionCategory.INDENT;
   private readonly margin = 40;
 
   do() {
