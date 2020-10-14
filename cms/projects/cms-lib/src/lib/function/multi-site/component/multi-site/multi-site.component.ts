@@ -183,8 +183,8 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.getNodeFromSitemapsByNodeID(nodeID, children);
   }
 
-  testHtmlEditor() {
-    this.htmlEditorService.openEditor({ content: '' }).subscribe(content => {
+  testHtmlEditor(configName = '') {
+    this.htmlEditorService.openEditor({ content: '', configName }).subscribe(content => {
       if (content || content === '') {
         console.warn('content = ', content);
       }

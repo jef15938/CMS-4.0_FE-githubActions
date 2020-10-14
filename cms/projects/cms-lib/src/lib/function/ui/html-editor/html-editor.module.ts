@@ -23,6 +23,8 @@ import { HtmlEditorDescriptionComponent } from './modal/html-editor-description/
 import { HTML_EDITOR_CONFIG_TOKEN } from './html-editor.injection-token';
 import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default';
 import { HtmlEditorActionEnablePipe } from './pipe/html-editor-action-enable.pipe';
+import { HTML_EDITOR_CONFIG_NO_HIGHLIGHT } from './config/html-editor-config-no-highlight';
+import { HTML_EDITOR_CONFIG_ONLY_HIGHLIGHT } from './config/html-editor-config-only-highlight';
 
 @NgModule({
   imports: [
@@ -55,6 +57,8 @@ import { HtmlEditorActionEnablePipe } from './pipe/html-editor-action-enable.pip
   exports: [],
   providers: [
     { provide: HTML_EDITOR_CONFIG_TOKEN, useValue: HTML_EDITOR_CONFIG_DEFAULT, multi: true },
+    { provide: HTML_EDITOR_CONFIG_TOKEN, useValue: HTML_EDITOR_CONFIG_NO_HIGHLIGHT, multi: true },
+    { provide: HTML_EDITOR_CONFIG_TOKEN, useValue: HTML_EDITOR_CONFIG_ONLY_HIGHLIGHT, multi: true },
   ],
 })
 export class HtmlEditorModule {

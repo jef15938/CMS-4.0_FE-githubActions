@@ -14,6 +14,7 @@ export class HtmlEditorContainerModalComponent extends CustomModalBase<HtmlEdito
   @Input() title: string | (() => string) = '';
   actions: CustomModalActionButton[];
   @Input() content: string;
+  @Input() configName: string;
 
   constructor() { super(); }
 

@@ -13,11 +13,12 @@ export class HtmlEditorService {
   ) { }
 
   openEditor(
-    config?: { title?: string, content?: string, }
+    config?: { title?: string, content?: string, configName?: string }
   ): Observable<any> {
 
     const title = config?.title;
     const content = config?.content;
+    const configName = config?.configName;
 
     const modalSetting: ModalSetting = {
       id: `html-editor`,
@@ -30,7 +31,7 @@ export class HtmlEditorService {
 
     return this.modalService.openComponent({
       component: HtmlEditorContainerModalComponent,
-      componentInitData: { content, title },
+      componentInitData: { content, title, configName },
       modalSetting
     }, true);
   }
