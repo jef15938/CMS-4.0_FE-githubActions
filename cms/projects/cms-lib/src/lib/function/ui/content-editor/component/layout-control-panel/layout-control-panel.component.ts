@@ -45,8 +45,8 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.mainTemplates = [
       {
-        templateId: 'FixedWrapper',
-        templateName: '固定式外框',
+        templateId: 'social-media',
+        templateName: '社交媒體分享',
         templateThumbnail: ''
       },
       {
@@ -57,6 +57,11 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       {
         templateId: 'list',
         templateName: '清單',
+        templateThumbnail: ''
+      },
+      {
+        templateId: 'FixedWrapper',
+        templateName: '固定式外框',
         templateThumbnail: ''
       },
       // {

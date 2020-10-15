@@ -1,7 +1,7 @@
 import { RenderComponentMapping } from '../interface';
 import {
   TabScrollableTemplateComponent, TabCarouselTemplateComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent,
-  NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent, FixedWrapperComponent, TestCustomize1Component
+  NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent, FixedWrapperComponent, TestCustomize1Component, SocialMediaComponent
 } from '../component';
 import { HtmlComponent } from '../component/html/html.component';
 import { BannerComponent } from '../component/banner/banner.component';
@@ -107,5 +107,9 @@ export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = 
   {
     component_id: 'test_customize1',
     component: TestCustomize1Component,
+  },
+  {
+    component_id: 'social-media',
+    component: SocialMediaComponent,
   },
 ];
