@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 import { RENDER_ENVIRONMENT_BASE } from './base';
 
-const BASE_URL = 'http://runtime.decoder.com.tw';
-const RESOUCE_BASE_URL = 'https://cms.decoder.com.tw';
+// const BASE_URL = 'http://runtime.decoder.com.tw';
+const BASE_URL = 'https://dev.walkflow.biz/api';
+const RESOUCE_BASE_URL = 'https://dev.walkflow.biz/cms-api';
 
 export const environment = {
   ...RENDER_ENVIRONMENT_BASE,
