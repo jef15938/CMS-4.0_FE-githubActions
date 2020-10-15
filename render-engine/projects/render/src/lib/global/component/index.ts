@@ -19,3 +19,4 @@ export * from './banner/banner.component';
 export * from './list/list.component';
 export * from './test-customize1/test-customize1.component';
 export * from './public-component/index';
+export * from './social-media/index';
