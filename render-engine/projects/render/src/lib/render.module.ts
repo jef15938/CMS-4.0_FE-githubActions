@@ -52,6 +52,7 @@ import { TabCarouselTemplateComponent } from './global/component/tab-carousel-te
 import { TabScrollableTemplateComponent } from './global/component/tab-scrollable-template/tab-scrollable-template.component';
 import { ShownByDeviceDirective } from './global/directive/show-by-device.directive';
 import { SharingBtnFbComponent } from './global/component/social-media/sharing-btn-fb/sharing-btn-fb.component';
+import { SharingBtnLineComponent } from './global/component/social-media/sharing-btn-line/sharing-btn-line.component';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
@@ -78,6 +79,8 @@ const COMPONENTS = [
   MegaMenuOldComponent,
   TabCarouselTemplateComponent,
   TabScrollableTemplateComponent,
+  SharingBtnFbComponent,
+  SharingBtnLineComponent,
 ];
 
 const PUBLIC_COMPONENTS_TEMPLATES = [
@@ -115,7 +118,6 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
     ...COMPONENTS,
     ...PUBLIC_COMPONENTS_TEMPLATES,
     ...DIRECTIVES,
-    SharingBtnFbComponent,
   ],
   exports: [
     RenderComponent,

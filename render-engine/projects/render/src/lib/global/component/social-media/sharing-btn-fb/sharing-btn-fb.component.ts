@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
-const FB_CDK_CONTAINER_ID = 'neux-render-cdk-container-fb';
-const FB_CDK_SRC = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v8.0';
+const SDK_CONTAINER_ID = 'neux-render-sdk-container-fb';
+const SDK_SRC = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v8.0';
 
 @Component({
   selector: 'rdr-sharing-btn-fb',
@@ -15,6 +15,7 @@ export class SharingBtnFbComponent implements OnInit {
   @Input() dataSize: 'small' | 'large' = 'small';
   @Input() dataLayout: 'box_count' | 'button_count' | 'button' = 'button_count';
   @Input() btnText = '分享';
+
   @Input() useCurrentUrlAsSharedUrl = true;
 
   private document: Document;
@@ -27,7 +28,7 @@ export class SharingBtnFbComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.includeFbCdk();
+    this.includeSdk();
     this.checkSharedUrl();
   }
 
@@ -37,16 +38,13 @@ export class SharingBtnFbComponent implements OnInit {
     this.sharedUrl = window.location.href;
   }
 
-  private includeFbCdk() {
+  private includeSdk() {
     if (!this.document) { return; }
-    const existCdkContainer = this.document.getElementById(FB_CDK_CONTAINER_ID);
-    if (existCdkContainer) { return; }
-    this.createCdkContainer();
-  }
 
-  private createCdkContainer() {
-    const cdkContainer = this.document.createElement('div');
-    cdkContainer.id = FB_CDK_CONTAINER_ID;
+    const existContainer = this.document.getElementById(SDK_CONTAINER_ID);
+    if (existContainer) { return; }
+    const container = this.document.createElement('div');
+    container.id = SDK_CONTAINER_ID;
 
     const fbRoot = this.document.createElement('div');
     fbRoot.id = 'fb-root';
@@ -54,12 +52,12 @@ export class SharingBtnFbComponent implements OnInit {
     script.async = true;
     script.defer = true;
     script.crossOrigin = 'anonymous';
-    script.src = FB_CDK_SRC;
+    script.src = SDK_SRC;
 
-    cdkContainer.appendChild(fbRoot);
-    cdkContainer.appendChild(script);
+    container.appendChild(fbRoot);
+    container.appendChild(script);
 
-    this.document.body.insertBefore(cdkContainer, this.document.body.firstElementChild);
+    this.document.body.insertBefore(container, this.document.body.firstElementChild);
   }
 
 }
