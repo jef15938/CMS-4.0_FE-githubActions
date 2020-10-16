@@ -1,5 +1,7 @@
-import { Component, OnInit, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, Input, PLATFORM_ID, Optional } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../../../injection-token/injection-token';
+import { RenderedPageEnvironment } from '../../../interface/page-environment.interface';
 
 const SDK_CONTAINER_ID = 'neux-render-sdk-container-fb';
 const SDK_SRC = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v8.0';
@@ -23,6 +25,7 @@ export class SharingBtnFbComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) document: any,
     @Inject(PLATFORM_ID) private platformId: any,
+    @Inject(RENDERED_PAGE_ENVIRONMENT_ROKEN) @Optional() private pageEnv: RenderedPageEnvironment,
   ) {
     this.document = document;
   }
@@ -39,6 +42,7 @@ export class SharingBtnFbComponent implements OnInit {
   }
 
   private includeSdk() {
+    if (!isPlatformBrowser(this.platformId)) { return; }
     if (!this.document) { return; }
 
     const existContainer = this.document.getElementById(SDK_CONTAINER_ID);

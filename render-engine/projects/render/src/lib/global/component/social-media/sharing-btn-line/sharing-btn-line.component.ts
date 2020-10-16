@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input, PLATFORM_ID, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { of, Subject } from 'rxjs';
+import { of, Subject, NEVER } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 const SDK_CONTAINER_ID = 'neux-render-cdk-container-line';
@@ -46,6 +46,7 @@ export class SharingBtnLineComponent implements OnInit, AfterViewInit {
   }
 
   private includeSdk() {
+    if (!isPlatformBrowser(this.platformId)) { return NEVER; }
     const existContainer = this.document.getElementById(SDK_CONTAINER_ID);
     if (existContainer) { return of(undefined); }
     const container = this.document.createElement('div');
