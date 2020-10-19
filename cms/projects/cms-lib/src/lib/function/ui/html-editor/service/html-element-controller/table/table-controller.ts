@@ -123,7 +123,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         ],
         selectionChange: (ev) => {
           this.tableControllerService.setTableStyle(this.el, ev.value);
-          this.tableControllerService.checkTableColsWidth(this.el);
           this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
         }
       },
@@ -328,8 +327,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     if (scanTable) {
       this.scanTable(this.el);
     }
-
-    this.tableControllerService.checkTableColsWidth(this.el);
   }
 
   private scanTable(table) {
