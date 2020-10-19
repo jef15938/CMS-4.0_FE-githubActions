@@ -1,0 +1,39 @@
+<div class="template-control-tab" *ngIf="templateInfo">
+  <div class="template-control-tab__info info">
+    <span class="info__text">
+      <span class="info__text__title">頁籤個數限制 : </span>
+      <span
+        class="info__text__content">{{templateInfo.tabList?.length||0}}/{{templateInfo.attributes.maxItemCounts}}</span>
+    </span>
+    <br>
+    <span class="info__text">
+      <span class="info__text__title">頁籤標題總字數限制 : </span>
+      <span
+        class="info__text__content">{{countTotalTitlesLength()}}/{{templateInfo.attributes.maxTotalTitlesLength}}</span>
+    </span>
+  </div>
+  <div>
+    <mat-list class="template-control-tab__list list" cdkDropList (cdkDropListDropped)="onListDropped($event)">
+      <mat-list-item class="list__item" *ngFor="let tabInfo of templateInfo.tabList" cdkDrag>
+        <div class="item-container">
+          <div class="tab-item">
+            <div class="tab-item__info">
+              <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
+              <input #Input [ngModel]="tabInfo.fieldVal" [maxLength]="tabInfo.extension.titleMaxLength"
+                (ngModelChange)="onInputModelChange($event, tabInfo, Input)">
+              <button type="button" tabindex="0" mat-icon-button
+                [disabled]="templateInfo.tabList.length>=parseInt(''+templateInfo.attributes.maxItemCounts)"
+                (click)="copyTab(tabInfo)">
+                <mat-icon class="pointer">file_copy</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button (click)="removeTab(tabInfo)">
+                <mat-icon class="pointer">remove_circle</mat-icon>
+              </button>
+            </div>
+            <div class="tab-item__hint">已輸入：{{tabInfo.fieldVal?.length||0}}/{{tabInfo.extension.titleMaxLength}}</div>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>

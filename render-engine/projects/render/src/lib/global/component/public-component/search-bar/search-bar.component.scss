@@ -1,0 +1,30 @@
+@import "public-style.scss";
+
+@include rdr-input-theme();
+
+rdr-search-bar {
+  @include nx-input-config($mode: 'customize',
+    $form-height: 36px,
+    $form-radius: 8px,
+    $form-padding: 7px 7px 7px 41px);
+
+
+  display: block;
+  position: relative;
+
+  [nx-input].nx-cp {
+    @include fz-callout-17-left;
+    line-height: normal;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  &:before {
+    @include rdr-icon(1, 1, 19px);
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+  }
+}

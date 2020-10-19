@@ -1,0 +1,53 @@
+{
+  "datas": [{
+      "layout_id": "layout-01",
+      "layout_name": "layout-01",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-02",
+      "layout_name": "layout-02",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-03",
+      "layout_name": "layout-03",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-04",
+      "layout_name": "layout-04",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-05",
+      "layout_name": "layout-05",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-06",
+      "layout_name": "layout-06",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-07",
+      "layout_name": "layout-07",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-08",
+      "layout_name": "layout-08",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-09",
+      "layout_name": "layout-09",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    },
+    {
+      "layout_id": "layout-10",
+      "layout_name": "layout-10",
+      "layout_thumbnail": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230"
+    }
+  ]
+}

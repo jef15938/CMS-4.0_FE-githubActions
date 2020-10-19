@@ -1,0 +1,27 @@
+<div class="modal-form-layout">
+  <form class="modal-form-layout__form" #form="ngForm">
+    <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>列數(橫列)</mat-label>
+            <input matInput type="number" min="1" step="1" [(ngModel)]="cols" name="cols" required #modelcolC="ngModel">
+            <mat-error *ngIf="modelcolC?.errors?.required">必填欄位</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>行數(直行)</mat-label>
+            <input matInput type="number" min="1" step="1" [(ngModel)]="rows" name="rows" required #modelRows="ngModel">
+            <mat-error *ngIf="modelRows?.errors?.required">必填欄位</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+</div>

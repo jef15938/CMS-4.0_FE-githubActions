@@ -1,0 +1,70 @@
+<div>
+  <mat-menu #stateMenu="matMenu">
+    <button type="button" tabindex="-1" mat-menu-item [class.current-state]="manager?.stateManager?.currentIndex === 0"
+      (click)="resetSelected(); manager?.stateManager?.back(manager?.stateManager?.currentIndex);">初始</button>
+    <button type="button" tabindex="-1" mat-menu-item
+      *ngFor="let state of manager?.stateManager?.states; let i = index;"
+      [class.current-state]="manager?.stateManager?.currentIndex === i+1"
+      (click)="resetSelected(); manager?.stateManager?.back(manager?.stateManager?.currentIndex - (i+1));">
+      {{state.action}}</button>
+  </mat-menu>
+</div>
+<div class="cms-content-editor">
+  <!-- 按鈕們 -->
+  <div #clickCapturelistenerBlockToolBar class="btn-panel dark-style" *ngIf="editorMode===EditorMode.EDIT">
+    <span>
+      <button type="button" tabindex="-1" mat-icon-button alt="save" matTooltip="存檔" (click)="save()"
+        *ngIf="!!contentID" [disabled]="saved">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="undo" matTooltip="復原"
+        [disabled]="!manager?.stateManager?.hasPreviousState" (click)="resetSelected(); manager?.stateManager?.back();">
+        <mat-icon>undo</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="redo" matTooltip="重做"
+        [disabled]="!manager?.stateManager?.hasNextState" (click)="resetSelected(); manager?.stateManager?.forward();">
+        <mat-icon>redo</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="state list" matTooltip="步驟" #menuTrigger="matMenuTrigger"
+        [matMenuTriggerFor]="stateMenu">
+        <mat-icon>list</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="clear" matTooltip="清除全部" (click)="clear()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button type="button" tabindex="-1" mat-icon-button alt="close" matTooltip="關閉" (click)="close()"
+        *ngIf="btnClose">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </span>
+    <span style="text-align: right;" *ngIf="contentID">
+      <button type="button" tabindex="-1" mat-button alt="recover version" (click)="openVersionRecoverModal()">
+        歷史版本
+      </button>
+    </span>
+  </div>
+  <div tabindex="0" class="main-block" *ngIf="manager?.stateManager?.currentState?.snapShot"
+    [class.layout-control]="layoutControlPanel?.show" [class.content-control]="contentControlPanel?.show">
+    <!-- 頁面內容 -->
+    <div #clickCapturelistenerBlock class="content-panel" [class.scale]="isScaleContent">
+      <cms-content-view-renderer [contentInfo]="manager?.stateManager?.currentState?.snapShot" [editorMode]="editorMode"
+        (select)="onViewSelected($event)"
+        (addTemplateBtnClick)="resetSelected();manager.selectedTemplateAddBtn=$event;">
+      </cms-content-view-renderer>
+    </div>
+    <!-- 版面控制 -->
+    <div class="layout-control-panel" [class.active]="layoutControlPanel?.show">
+      <cms-layout-control-panel [context]="this" [selectedBtn]="manager.selectedTemplateAddBtn"
+        [contentInfo]="manager?.stateManager?.currentState?.snapShot" [selectableTemplates]="selectableTemplates"
+        (templateAdd)="resetSelected(); manager.stateManager.preserveState('加入版型:'+$event);">
+      </cms-layout-control-panel>
+    </div>
+    <!-- 內容編輯 -->
+    <div class="content-edit-panel" [class.active]="contentControlPanel?.show">
+      <cms-content-control-panel [context]="this" [manager]="manager" [selected]="manager.selectedViewElementEvent"
+        (templateMove)="isScaleContent=$event;" (contentChange)="setEditorUnsaved();"
+        (needCheckView)="contentViewRenderer?.checkView($event);">
+      </cms-content-control-panel>
+    </div>
+  </div>
+</div>

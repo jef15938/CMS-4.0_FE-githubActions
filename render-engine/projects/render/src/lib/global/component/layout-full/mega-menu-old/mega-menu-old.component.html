@@ -1,0 +1,19 @@
+<!-- <div class="menu" [ngClass]="classObj">
+  <div *ngFor="let item of menu" class="menu__item" [ngClass]="classObj">
+    <a class="menu__item-link" href="#">
+      <span>{{item.nodeName}}</span>
+    </a>
+
+    <ng-container *ngIf="level === 1; else children">
+      <div class="menu__item-dropdown">
+        <ng-container *ngTemplateOutlet="children"></ng-container>
+      </div>
+    </ng-container>
+
+    <ng-template #children>
+      <ng-container *ngIf="item.children.length > 0 && level <= maxLavel">
+        <rdr-mega-menu [menu]="item.children" [level]="level + 1" [maxLavel]="maxLavel"></rdr-mega-menu>
+      </ng-container>
+    </ng-template>
+  </div>
+</div> -->

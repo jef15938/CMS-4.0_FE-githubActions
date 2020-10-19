@@ -1,0 +1,80 @@
+<div class="gallery-shared" *ngIf="colDefs">
+  <div class="gallery-shared__block list-block" cmsResizer>
+    <div class="page-title-container">
+      <h1>
+        媒體庫分類
+      </h1>
+    </div>
+    <div class="page-content-container">
+      <div style="text-align: right; width: 100%; margin-bottom: 10px;">
+        <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" (click)="maintainCategory('Create')">
+          新增分類
+        </button>
+      </div>
+      <cms-tree class="cms-tree" [context]="this" [nodeDatas]="categories" [customNodeRenderer]="customNodeRenderer"
+        (customEvent)="onTreeCustomEvent($event)" [selectedNode]="selectedCategory" [defaultExpandLevel]="-1"
+        (nodeSelect)="onNodeSelected($event)" [onCustomNodeRendererInit]="onCustomNodeRendererInit">
+      </cms-tree>
+    </div>
+  </div>
+  <div class="gallery-shared__block set-block">
+    <div class="page-title-container">
+      <h1>媒體庫：{{selectedCategory?.categoryName}}</h1>
+    </div>
+    <div class="page-content-container">
+
+      <div class="filter">
+        <div class="filter__fields">
+          <mat-form-field appearance="outline" class="filter__field">
+            <mat-label>檔案名稱</mat-label>
+            <input matInput [(ngModel)]="filter.fileName" name="fileName">
+            <button mat-icon-button matSuffix (click)="clearFilterName($event)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="filter__field">
+            <mat-label>檔案類型</mat-label>
+            <mat-select #select [(ngModel)]="filter.fileTypes" name="fileType" [multiple]="true"
+              [cmsMatSelectMultipleCloseBtn]="select">
+              <mat-option *ngFor="let option of filterFileTypeOptions" [value]="option.value">
+                {{option.display}}
+              </mat-option>
+            </mat-select>
+            <button mat-icon-button matSuffix (click)="toggleFilterTypeSelectAll($event)">
+              <mat-icon>
+                {{(this.filterFileTypeOptions?.length && filter.fileTypes.length===filterFileTypeOptions?.length)?'close':'check'}}
+              </mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <button class="filter__search-btn" type="button" mat-icon-button matTooltip="搜尋媒體"
+          (click)="getGallery(true).subscribe()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+
+      <ng-container *ngIf="galleryPageInfo?.page">
+        <div class="tool-top">
+          <div>目前頁數:{{galleryPageInfo.page}}</div>
+          <div style="text-align: right;">
+            <button type="button" tabindex="0" mat-raised-button [disabled]="!selectedCategory?.canUpload"
+              class="btn btn-edit" (click)="uploadFileToCategory(selectedCategory)">
+              上傳媒體
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="galleryDatas">
+        <cms-table [colDefs]="colDefs" [dataSource]="galleryDatas" [selectRow]="mode==='modal'"
+          (customEvent)="onTableCustomEvent($event)" (rowClick)="onRowClick($event)"></cms-table>
+      </ng-container>
+      <ng-container *ngIf="galleryPageInfo?.totalPageSize && galleryPageInfo?.totalRecSize">
+        <mat-paginator [length]="galleryPageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)"
+          [pageIndex]="galleryPageInfo.page-1">
+        </mat-paginator>
+      </ng-container>
+    </div>
+    <input type="hidden" [id]="clipBoardInputId">
+  </div>
+</div>

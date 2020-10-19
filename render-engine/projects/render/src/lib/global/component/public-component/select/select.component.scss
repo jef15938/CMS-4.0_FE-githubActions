@@ -1,0 +1,97 @@
+@import "public-style.scss";
+
+@include rdr-select-theme();
+
+rdr-select {
+  @include nx-select-config($mode: 'customize',
+    $form-height: 46px,
+    $form-radius: 4px,
+    $form-border-width: 0.5px,
+    $triange-width: 6px,
+    $triange-right-gap: 12px,
+    $option-max-height: 205px,
+    $option-text-padding: 12px 12px);
+
+  display: block;
+
+  nx-select.nx-cp {
+    &[class*="style-border--"] {
+      border: 0;
+
+      .select-container {
+        border-width: 1px;
+        border-style: solid;
+      }
+    }
+
+    .select-options {
+      top: 52px;
+    }
+
+    .select-container {
+      &:after {
+        @include rdr-icon(4, 2, 18px);
+
+        display: inline-block;
+        border-width: 0;
+        transform: translateY(-50%) rotate(90deg);
+        transition: all 0.3s;
+      }
+
+      &.style--option-show {
+        &:after {
+          transform: translateY(-50%) rotate(-90deg);
+        }
+      }
+    }
+
+    .select-ele {
+      &--customize {
+        @include fz-callout-16-left;
+
+        +.select-options {
+          .select-options__list {
+            &::-webkit-scrollbar {
+              width: 11px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border: 4px solid transparent;
+              border-radius: 11px;
+            }
+
+            &::-webkit-scrollbar-track {
+              box-shadow: inset 0 0 11px 11px transparent;
+              border: 4px solid transparent;
+            }
+          }
+
+          .select-options__item {
+            @include fz-callout-16-left;
+          }
+        }
+      }
+    }
+
+    .searchbar {
+      position: relative;
+
+      &:before {
+        @include rdr-icon(2, 1, 22px);
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 21.5px;
+        transform: translateY(-50%);
+      }
+
+      [nx-input] {
+        @include fz-callout-16-left;
+        line-height: normal;
+        height: 36px;
+        padding: 8px 8px 8px 34px;
+        border-radius: 6px;
+      }
+    }
+  }
+}

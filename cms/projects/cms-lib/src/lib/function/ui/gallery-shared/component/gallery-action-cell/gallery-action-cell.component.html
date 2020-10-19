@@ -1,0 +1,16 @@
+<div class="cms-gallery-action-cell" *ngIf="config">
+  <mat-icon class="cms-gallery-action-cell__icon pointer" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
+    list</mat-icon>
+  <div class="cms-gallery-action-cell__menu">
+    <mat-menu #appMenu="matMenu">
+      <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.EDIT)">
+        <mat-icon>edit</mat-icon>
+        修改媒體
+      </button>
+      <button type="button" tabindex="0" mat-menu-item (click)="onAction(ActionType.COPY_URL)">
+        <mat-icon>link</mat-icon>
+        複製連結
+      </button>
+    </mat-menu>
+  </div>
+</div>

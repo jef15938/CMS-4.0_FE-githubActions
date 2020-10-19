@@ -1,0 +1,24 @@
+<button #closeBtn type="button" mat-mini-fab *ngIf="!config?.modalSetting?.hideCloseBtn" class="modal-custom__close" color="warn"
+  matTooltip="關閉" (click)="modalRef.close()">
+  <mat-icon>close</mat-icon>
+</button>
+<!-- header -->
+<div class="modal-custom">
+  <div class="modal-custom__head" *ngIf="instanceTitle">
+    <span class="modal-custom__head__title" matModalTitle>{{instanceTitle}}</span>
+  </div>
+  <!-- content -->
+  <div class="modal-custom__content" mat-modal-content>
+    <!-- <span cmsModalCustomWrapper></span> -->
+    <span neuxDynamicWrapper [componentClass]="config?.component" [onComponentLoad]="onComponentLoad">
+    </span>
+  </div>
+  <!-- footer -->
+  <div class="modal-custom__tail" mat-modal-actions *ngIf="instance&&instance.actions&&instance.actions.length">
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button *ngFor="let action of instance.actions" [class]="action.class||''"
+        (click)="action.onClick($event)">{{action.text}}</button>
+    </div>
+
+  </div>
+</div>

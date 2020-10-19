@@ -1,0 +1,33 @@
+<ng-container *ngIf="templateInfo">
+  <div class="header">
+    <div class="header__content">
+      <a *ngIf="isMobile" (click)="toggleMenu()" class="hamburger" [class]="isShowMenu ? 'hamburger--active' : ''">
+        <div class="hamburger__content">
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+        </div>
+      </a>
+      <div class="header__logo">
+        <div class="logo">台灣人壽logo</div>
+      </div>
+      <div class="header__menu-block" [class]="isShowMenu && isMobile? 'active' : ''">
+        <ng-container *ngIf="isMobile; else pcMenu">
+          <rdr-mobile-mega-menu [menu]="templateInfo.attributes?.sitemap?.sites || []" [maxLavel]="3">
+          </rdr-mobile-mega-menu>
+        </ng-container>
+
+        <ng-template #pcMenu>
+          <!-- <rdr-mega-menu [menu]="templateInfo.attributes?.sitemap?.sites || []" [maxLavel]="3"></rdr-mega-menu> -->
+        </ng-template>
+
+        <ul class="header__menu header__menu--tool">
+          <li class="header__menu-item"><a herf="#" class="header__menu-link rounded"><span>我要理賠</span></a></li>
+          <li class="header__menu-item"><a herf="#" class="header__menu-link"><span>會員中心</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <rdr-templates-container [templates]="templateInfo.children">
+  </rdr-templates-container>
+</ng-container>

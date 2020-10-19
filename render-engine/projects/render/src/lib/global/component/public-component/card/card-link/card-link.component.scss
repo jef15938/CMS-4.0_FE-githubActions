@@ -1,0 +1,40 @@
+@import "public-style.scss";
+
+@include rdr-card-link-theme();
+
+rdr-card-link {
+  display: block;
+
+  +rdr-card-link {
+    margin-top: 16px;
+
+    @include rwd($nx-screen-normal-phone-portrait) {
+      margin-top: 8px;
+    }
+  }
+
+  .card-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px 16px 24px;
+
+    @include rwd($nx-screen-normal-phone-portrait) {
+      padding: 8px 12px 8px 16px;
+    }
+
+    &__title {
+      @include fz-body-18-left-bold;
+      margin-right: 16px;
+
+      @include rwd($nx-screen-normal-phone-portrait) {
+        @include fz-footnote-15-left-bold;
+        margin-right: 12px;
+      }
+    }
+
+    &__icon {
+      flex-shrink: 0;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<div class="add-template-btn" [class.disabled]="disabled" [class.is-selected]="isSelected" (click)="onClick($event)">
+  {{disabled?'':isSelected?'請選擇版型加入此區塊':isHover?'點擊將版型加入此區塊':''}}
+  <ng-container>
+    <mat-icon class="pointer" *ngIf="disabled || !(isSelected || isHover)">add_circle</mat-icon>
+  </ng-container>
+</div>

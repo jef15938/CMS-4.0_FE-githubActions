@@ -1,0 +1,22 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-breadcrumb-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-breadcrumb' !default;
+  $tl-font-color: map-get($theme, brownish_grey) !default;
+  $tl-arrow-color: map-get($theme, brown_grey_1) !default;
+  $tl-active-color: map-get($theme, brownish_grey) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-breadcrumb.rdr-cp';
+  }
+
+  #{$selector} {
+    $breadcrumb-theme: nx-ui-theme-config-gen($color-plain: $tl-font-color,
+      $color-distinct: $tl-active-color);
+
+    @include nx-breadcrumb-theme($breadcrumb-theme);
+
+    nx-breadcrumb.nx-cp {}
+  }  
+}

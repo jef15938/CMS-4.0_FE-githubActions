@@ -1,0 +1,113 @@
+<ng-container *ngIf="tableInfo">
+  <div class="tool-top">
+    <div>目前頁數:<ng-container *ngIf="tableInfo.pageInfo; let pageInfo">{{pageInfo.page}}</ng-container>
+    </div>
+    <div style="text-align: right;">
+      <button type="button" tabindex="0" mat-raised-button color="primary" *ngIf="tableInfo.canCreate"
+        (click)="onActionClick(FarmTableDataInfoAction.CREATE)">
+        新增
+      </button>
+    </div>
+  </div>
+  <!-- <table mat-table matSort [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;"
+    (matSortChange)="sortData($event)"> -->
+  <table mat-table [dataSource]="sortedData" class="mat-elevation-z8" style="width: 100%;">
+
+    <ng-container *ngFor="let col of (tableInfo|getFarmTableDisplayCols)" [matColumnDef]="col">
+      <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN;">
+        <!-- <th mat-header-cell *matHeaderCellDef cmsTableResizer mat-sort-header> -->
+        <th mat-header-cell *matHeaderCellDef cmsTableResizer>
+          {{col}}
+        </th>
+      </ng-container>
+      <ng-container *ngIf="col===ACTION_COLUMN||col===CHECKBOX_COLUMN;">
+        <th mat-header-cell *matHeaderCellDef cmsTableResizer>
+          <ng-container *ngIf="col===CHECKBOX_COLUMN">
+            <mat-checkbox [(ngModel)]="totalChecked" (change)="onTotalCheckChange()"
+              [ngModelOptions]="{standalone: true}">
+            </mat-checkbox>
+          </ng-container>
+          <ng-container *ngIf="col===ACTION_COLUMN">
+            <div style="text-align: center;">操作</div>
+          </ng-container>
+        </th>
+      </ng-container>
+      <td mat-cell *matCellDef="let element" [class.action-col]="col===ACTION_COLUMN">
+        <ng-container *ngIf="col!==ACTION_COLUMN&&col!==CHECKBOX_COLUMN">
+          <ng-container *ngIf="element|getFarmTableColData:col; let colData;">
+            <ng-container *ngIf="colData.displayType===FarmTableDataInfoColumnDisplayType.LABEL">
+              {{colData?.value | dateStringFormat:'DATETIME':passDateStringFormat}}
+            </ng-container>
+            <ng-container *ngIf="colData.displayType!==FarmTableDataInfoColumnDisplayType.LABEL">
+              <a [href]="colData?.value" target="_blank" rel="noreferrer noopener">{{colData?.value}}</a>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="col===CHECKBOX_COLUMN">
+          <mat-checkbox [(ngModel)]="element.is_checked" (change)="onRowCheckChange()"
+            [ngModelOptions]="{standalone: true}">
+          </mat-checkbox>
+        </ng-container>
+        <ng-container *ngIf="col===ACTION_COLUMN">
+          <ng-container *ngFor="let action of (element|getFarmTableDataActions)">
+            <ng-container [ngSwitch]="action">
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.MODIFY"
+                matTooltip="編輯" (click)="onActionClick(action, element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.DELETE"
+                matTooltip="刪除" (click)="onActionClick(action, element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.PUBLISH"
+                matTooltip="送審" (click)="onActionClick(action, element)">
+                <mat-icon>redo</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.OFF"
+                matTooltip="下架" (click)="onActionClick(action, element)">
+                <mat-icon>arrow_downward</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.PREVIEW"
+                matTooltip="預覽" (click)="onActionClick(action, element)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button *ngSwitchCase="FarmTableDataInfoAction.MORE"
+                matTooltip="看更多" (click)="onActionClick(action, element)">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="farmCustomHandler">
+            <ng-container *ngFor="let btn of (farmCustomHandler.tableActions||[])">
+              <button type="button" tabindex="0" mat-icon-button [matTooltip]="btn.tooltip" (click)="btn.click(element, tableInfo, injector)">
+                <mat-icon [fontSet]="btn.fontSet" [fontIcon]="btn.fontIcon" [class]="btn.class||''">
+                  <ng-container *ngIf="btn.icon">{{btn.icon}}</ng-container>
+                </mat-icon>
+              </button>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="tableInfo|getFarmTableDisplayCols"></tr>
+    <tr mat-row *matRowDef="let row; columns:(tableInfo|getFarmTableDisplayCols);"></tr>
+
+    <ng-container matColumnDef="noData">
+      <td mat-footer-cell *matFooterCellDef [attr.colspan]="(tableInfo|getFarmTableDisplayCols).length">
+        <ng-container *ngIf="error; else noDataBlock">
+          查詢錯誤
+        </ng-container>
+        <ng-template #noDataBlock>
+          查無資料
+        </ng-template>
+      </td>
+    </ng-container>
+    <tr mat-footer-row *matFooterRowDef="['noData']" [hidden]="tableInfo?.datas?.length"></tr>
+  </table>
+  <ng-container *ngIf="tableInfo.pageInfo; let pageInfo">
+    <mat-paginator [length]="pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)"
+      [pageIndex]="pageInfo.page-1">
+    </mat-paginator>
+  </ng-container>
+</ng-container>

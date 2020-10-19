@@ -1,0 +1,17 @@
+<div class="field-control-bgImg">
+  <div>
+    建議尺寸 : {{adviceWidth}} x {{adviceHeight}}
+    <br>
+    建議格式 : {{adviceFormat}}
+  </div>
+  <div class="field-control-bgImg__btn-container btn-container btn-container">
+    <button class="field-control-bgImg__btn float-right btn btn-dark" type="button" tabindex="-1" mat-raised-button
+      (click)="selectImage()">{{fieldInfo.extension[ATTRIBUTE_GALLERY_ID] ? '修改圖片' : '加入本地圖片'}}</button>
+  </div>
+  <div class="field-control-bgImg__input">
+    <mat-form-field appearance="outline">
+      <mat-label>圖片連結</mat-label>
+      <input matInput [(ngModel)]="fieldInfo.fieldVal" (keydown)="change.emit()" readonly>
+    </mat-form-field>
+  </div>
+</div>

@@ -1,0 +1,212 @@
+{
+  "split_size": 1,
+  "columns": [{
+      "display_text": "Custom元件(人)",
+      "display_type": "CUSTOM",
+      "options": [],
+      "component_id": "farm-custom-form-control",
+      "value": {
+        "name": "MyName",
+        "sex": 1
+      },
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "custom-column",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "媒體庫測試",
+      "display_type": "GALLERY",
+      "options": [],
+      "value": "http://www.neux.com.tw/neuximg/neuxLOGO.png",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "gallery-column",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "Editor測試",
+      "display_type": "EDITOR",
+      "options": [],
+      "value": "{\"templates\":[{\"id\":\"fd01\",\"templateId\":\"FieldsDemo\",\"fields\":[{\"fieldId\":\"title\",\"fieldType\":\"TEXT\",\"fieldVal\":\"頁面標題\",\"extension\":{}},{\"fieldId\":\"article\",\"fieldType\":\"TEXTEREA\",\"fieldVal\":\"臣亮言：先帝創業未半，而中道崩殂。今天下三分，益州疲弊，此誠危急存亡之秋也。然侍衛之臣，不懈於內；忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。誠宜開張聖聽，以光先帝遺德，恢弘志士之氣；不宜妄自菲薄，引喻失義，以塞忠諫之路也。宮中府中，俱為一體，陟罰臧否，不宜異同。若有作姦犯科，及為忠善者，宜付有司，論其刑賞，以昭陛下平明之治，不宜篇私，使內外異法也。  侍中、侍郎郭攸之、費褘、董允等，此皆良實，志慮忠純，是以先帝簡拔以遺陛下。愚以為宮中之事，事無大小，悉以咨之，然後施行，必能裨補闕漏，有所廣益。將軍向寵，性行淑均，曉暢軍事，試用於昔日，先帝稱之曰「能」，是以眾議舉寵為督。愚以為營中之事，悉以咨之，必能使行陣和睦，優劣得所。親賢臣，遠小人，此先漢所以興隆也；親小人，遠賢臣，此後漢所以傾頹也。先帝在時，每與臣論此事，未嘗不歎息痛恨於桓、靈也。侍中、尚書、長史；參軍，此悉貞良死節之臣也，願陛下親之信之，則漢室之隆，可計日而待也。    臣本布衣，躬耕於南陽，苟全性命於亂世，不求聞達於諸侯。先帝不以臣卑鄙，猥自枉屈，三顧臣於草廬之中，諮臣以當世之事，由是感激，遂許先帝以驅馳。後值傾覆，受任於敗軍之際，奉命於危難之間，爾來二十有一年矣！先帝知臣謹慎，故臨崩寄臣以大事也。受命以來，夙夜憂勤，恐託付不效，以傷先帝之明。故五月渡瀘，深入不毛。今南方已定，兵甲已足，當獎率三軍，北定中原，庶竭駑鈍，攘除奸凶，興復漢室，還於舊都；此臣所以報先帝而忠陛下之職分也。至於斟酌損益，進盡忠言，則攸之、褘、允之任也。    願陛下託臣以討賊興復之效；不效，則治臣之罪，以告先帝之靈。若無興德之言，則戮允等，以彰其慢。陛下亦宜自課，以諮諏善道，察納雅言，深追先帝遺詔，臣不勝受恩感激。今當遠離，臨表涕泣，不知所云。\",\"extension\":{}},{\"fieldId\":\"clap\",\"fieldType\":\"LINK\",\"fieldVal\":\"https://www.google.com.tw\",\"extension\":{\"isTargetBlank\":\"true\"}},{\"fieldId\":\"bg\",\"fieldType\":\"BGIMG\",\"fieldVal\":\"https://garden.decoder.com.tw/demo_cms/assets/img/CMS-login-bg.png\",\"extension\":{}},{\"fieldId\":\"img\",\"fieldType\":\"IMG\",\"fieldVal\":\"http://www.neux.com.tw/neuximg/neuxLOGO.png\",\"extension\":{}},{\"fieldId\":\"html\",\"fieldType\":\"HTMLEDITOR\",\"fieldVal\":\"<div style='color:red;border:1px solid black; background-color: white; padding:10px'><span>我的自訂</span><span style='color:black;'>01</span><div>\",\"extension\":{}}],\"attributes\":{}},{\"id\":\"dataSourceTemplateInfo01\",\"templateId\":\"News\",\"fields\":[],\"attributes\":{},\"source\":\"mock_source\"},{\"id\":\"groupTemplateInfo01\",\"templateId\":\"GroupDemo\",\"fields\":[],\"attributes\":{},\"itemList\":[[{\"fieldId\":\"name\",\"fieldType\":\"TEXT\",\"fieldVal\":\"群組1\",\"extension\":{}},{\"fieldId\":\"url\",\"fieldType\":\"LINK\",\"fieldVal\":\"https://www.google1.com.tw\",\"extension\":{}},{\"fieldId\":\"pic\",\"fieldType\":\"IMG\",\"fieldVal\":\"http://www.neux1.com.tw/neuximg/neuxLOGO.png\",\"extension\":{}}],[{\"fieldId\":\"name\",\"fieldType\":\"TEXT\",\"fieldVal\":\"群組2\",\"extension\":{}},{\"fieldId\":\"url\",\"fieldType\":\"LINK\",\"fieldVal\":\"https://www.google2.com.tw\",\"extension\":{}},{\"fieldId\":\"pic\",\"fieldType\":\"IMG\",\"fieldVal\":\"http://www.neux2.com.tw/neuximg/neuxLOGO.png\",\"extension\":{}}]]},{\"id\":\"tp1\",\"templateId\":\"Tab\",\"fields\":[],\"attributes\":{},\"tabList\":[{\"fieldId\":\"f1\",\"fieldType\":\"GROUP\",\"fieldVal\":\"\",\"extension\":{},\"tabId\":\"t1\",\"children\":[{\"id\":\"c1\",\"templateId\":\"IconPage\",\"fields\":[],\"attributes\":{}},{\"id\":\"c2\",\"templateId\":\"Slide\",\"fields\":[],\"attributes\":{\"height\":\"300px\"}}]},{\"fieldId\":\"f2\",\"fieldType\":\"GROUP\",\"fieldVal\":\"\",\"extension\":{},\"tabId\":\"t2\",\"children\":[]}]}]}",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "answer",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "HtmlEditor測試",
+      "display_type": "HTMLEDITOR",
+      "options": [],
+      "value": "<p>請輸入<a href=\"https://www.google.com.tw\" target=\"_blank\" rel=\"noreferrer noopener\"><span><strong>google</strong></span>谷歌</a>  123  <img src=\"https://www.apple.com/ac/structured-data/images/open_graph_logo.png?201810272230\" alt=\"\" width=\"400\" height=\"210\"  456  </p>",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "answer",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "作為預設",
+      "display_type": "CHECKBOX",
+      "options": [],
+      "value": true,
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "my_checkbox",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "喜歡",
+      "display_type": "RADIO",
+      "options": [{
+          "value": "dog",
+          "text": "狗"
+        },
+        {
+          "value": "cat",
+          "text": "貓"
+        }
+      ],
+      "value": "dog",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "my_radio",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "必填欄位",
+      "display_type": "TEXT",
+      "options": [],
+      "value": "這是個必填欄位",
+      "max_length": 10,
+      "placeholder": "請輸入",
+      "column_id": "col_required",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "數字欄位",
+      "display_type": "TEXT",
+      "options": [],
+      "value": "3345678",
+      "max_length": 10,
+      "placeholder": "請輸入",
+      "column_id": "col_number",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "Email",
+      "display_type": "TEXT",
+      "options": [],
+      "value": "aaa@bb.cc",
+      "max_length": 30,
+      "placeholder": "請輸入",
+      "column_id": "col_email",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "TEXTAREA欄位",
+      "display_type": "TEXTAREA",
+      "options": [],
+      "value": "1234567890",
+      "max_length": 100,
+      "placeholder": "請輸入",
+      "column_id": "col_textarea",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "開始日期",
+      "display_type": "DATE",
+      "options": [],
+      "value": "1588608000",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "col_start",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "結束日期",
+      "display_type": "DATE",
+      "options": [],
+      "value": "1589040000",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "col_end",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "資料狀態",
+      "display_type": "SELECT",
+      "options": [{
+          "value": "waiting",
+          "text": "待上架"
+        },
+        {
+          "value": "reject",
+          "text": "退回"
+        },
+        {
+          "value": "draft",
+          "text": "草稿"
+        },
+        {
+          "value": "verify",
+          "text": "審核中"
+        },
+        {
+          "value": "off",
+          "text": "已下架"
+        },
+        {
+          "value": "on",
+          "text": "已上架"
+        }
+      ],
+      "value": "verify",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "ga_data_status",
+      "is_readonly": false,
+      "triggers": []
+    },
+    {
+      "display_text": "樹測試",
+      "display_type": "TREE",
+      "options": [],
+      "value": "nodeIdA,nodeIdB",
+      "max_length": 0,
+      "placeholder": "",
+      "column_id": "gallery-column",
+      "is_readonly": false,
+      "triggers": []
+    }
+  ],
+  "validation": {
+    "required": [{
+      "id": "col_required",
+      "setting": {}
+    }],
+    "email": [{
+      "id": "col_email",
+      "setting": {}
+    }],
+    "number": [{
+      "id": "col_number",
+      "setting": {}
+    }],
+    "range": [{
+      "start_column": "col_start",
+      "end_column": "col_end"
+    }]
+  }
+}

@@ -1,0 +1,21 @@
+<ng-container *ngIf="options">
+  <button type="button" tabindex="0" mat-button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="Menu">編輯</button>
+  <mat-menu #Menu="matMenu">
+    <!-- <button type="button" tabindex="0" mat-menu-item (click)="crop()">裁切</button> -->
+    <button type="button" tabindex="0" mat-menu-item [matMenuTriggerFor]="Scale">翻轉</button>
+    <button type="button" tabindex="0" mat-menu-item [matMenuTriggerFor]="Rotate">旋轉</button>
+    <button type="button" tabindex="0" mat-menu-item (click)="clear()">清除選取</button>
+    <button type="button" tabindex="0" mat-menu-item (click)="reset()">重設選取</button>
+  </mat-menu>
+
+  <mat-menu #Scale="matMenu">
+    <button type="button" tabindex="0" mat-menu-item (click)="stopEvent($event);scale('h')">水平翻轉</button>
+    <button type="button" tabindex="0" mat-menu-item (click)="stopEvent($event);scale('v')">垂直翻轉</button>
+  </mat-menu>
+
+  <mat-menu #Rotate="matMenu">
+    <button type="button" tabindex="0" mat-menu-item (click)="stopEvent($event);rotate('l')">左轉45度</button>
+    <button type="button" tabindex="0" mat-menu-item (click)="stopEvent($event);rotate('r')">右轉45度</button>
+  </mat-menu>
+
+</ng-container>

@@ -1,0 +1,11 @@
+@charset 'UTF-8';
+
+// 1. Neux-ui
+@import "~@neux/ui/component-customizing-mixins/config-all";
+@import "~@neux/ui/tool-mixins/style-import-app-global";
+
+// 2. Tools
+@import 'tools/tools-all.scss';
+
+// 3. Components theme
+@import 'theme/theme-all.scss';

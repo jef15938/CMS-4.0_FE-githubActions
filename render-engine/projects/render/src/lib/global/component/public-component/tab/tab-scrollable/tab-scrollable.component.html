@@ -1,0 +1,9 @@
+<div class="layout-block">
+  <rdr-tab-scroll-frame>
+    <rdr-tab-item *ngFor="let item of tabList" [tabTitle]="item.title">
+      <ng-container *ngIf="contentTemplateRef" [ngTemplateOutlet]="contentTemplateRef"
+        [ngTemplateOutletContext]="{$implicit:item}">
+      </ng-container>
+    </rdr-tab-item>
+  </rdr-tab-scroll-frame>
+</div>

@@ -1,0 +1,33 @@
+<div class="modal-form-layout">
+  <form #form="ngForm" class="modal-form-layout__form">
+    <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__source-container">
+        <iframe class="modal-form-layout__source-container__iframe"
+          *ngIf="frameIdControl?.value && frameIdControl?.valid"
+          [src]="YoutubeUtil.convertVideoUrlToEmbedUrl(frameIdControl.value)  | safeResource"></iframe>
+      </div>
+      <br>
+      <div>
+        <p>寬度限定 100%</p>
+        <p>框架高度由 css 控制</p>
+      </div>
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>連結網址</mat-label>
+            <input matInput [formControl]="frameIdControl" required>
+            <mat-error>
+              {{frameIdControl?.errors?.required?'必填欄位':'非正確 Youtube 網址'}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="frameIdControl?.invalid">儲存</button>
+    </div>
+
+  </form>
+</div>

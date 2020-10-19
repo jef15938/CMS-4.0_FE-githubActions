@@ -1,0 +1,22 @@
+<div class="page-title-container">
+  <h1>審核/放行管理</h1>
+</div>
+<div class="page-content-container" *ngIf="auditings$|async;let auditings">
+  <ng-container *ngIf="auditings.pageInfo">
+    <div>目前頁數:{{auditings.pageInfo.page}}</div>
+    <br>
+  </ng-container>
+  <cms-table [colDefs]="colDefs" [dataSource]="auditings.datas" (customEvent)="onCustomEvent($event, auditings)" [checkbox]="true"
+    [checkedData]="auditings.checkedData"></cms-table>
+  <ng-container *ngIf="auditings.pageInfo">
+    <mat-paginator [length]="auditings.pageInfo.totalRecSize" [pageSize]="10" (page)="onPageChanged($event)"
+      [pageIndex]="auditings.pageInfo.page-1">
+    </mat-paginator>
+  </ng-container>
+  <div class="btn-group">
+    <button type="button" tabindex="0" mat-raised-button [disabled]="!auditings.checkedData.length"
+      class="btn btn-danger" (click)="batchReject(auditings)">批次退回</button>
+    <button type="button" tabindex="0" mat-raised-button [disabled]="!auditings.checkedData.length"
+      class="btn btn-confirm" (click)="batchApprove(auditings)">批次同意</button>
+  </div>
+</div>

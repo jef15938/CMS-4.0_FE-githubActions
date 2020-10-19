@@ -1,0 +1,111 @@
+@import "../../../../global/style/main";
+
+.layout-select {
+
+  &__collapse {
+    &--has-error {
+      border: 1px solid $color-red;
+    }
+
+    &__header {
+      padding: 0.75em;
+    }
+  }
+
+
+  .option {
+    height: 150px;
+
+    .list {
+      width: 40%;
+      overflow: auto;
+    }
+
+    .thumbnail {
+      width: 60%;
+      text-align: center;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    .list,
+    .thumbnail {
+      display: inline-block;
+      height: 150px;
+    }
+
+    .actived {
+      background-color: $color-yellow;
+    }
+  }
+}
+
+.gallery-btn-container {
+  position: relative;
+
+  .gallery-btn {
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
+}
+
+::ng-deep .layout-id-select-panel {
+  height: 300px;
+  min-width: 100% !important;
+  max-width: 100% !important;
+
+  ::ng-deep mat-option.layout-id-select-panel-option {
+    height: 100%;
+    padding: 10px;
+
+    ::ng-deep .mat-option-text {
+      height: 100%;
+
+      .layout-select__collapse__option {
+        height: 100%;
+        display: flex;
+
+        .layout-select__list__item--actived {
+          background-color: $color-yellow;
+        }
+
+        .layout-select__collapse__list {
+          width: 40%;
+          height: 100%;
+          overflow: auto;
+        }
+
+        .layout-select__collapse__thumbnail {
+          width: 60%;
+          height: 100%;
+          text-align: center;
+
+          img {
+            max-width: 100%;
+            max-height: 100%;
+          }
+        }
+
+        .mat-checkbox-layout,
+        .mat-checkbox-label {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.devices {
+  display: flex;
+  flex-direction: row;
+  margin: .25em 0;
+  padding-bottom: 1.34375em;
+
+  mat-checkbox {
+    flex: 1;
+  }
+}

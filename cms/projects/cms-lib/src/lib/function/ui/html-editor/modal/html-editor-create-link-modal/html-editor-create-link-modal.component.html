@@ -1,0 +1,77 @@
+<div class="modal-form-layout" *ngIf="aTagConfig">
+  <form #form="ngForm" class="modal-form-layout__form">
+    <div class="modal-form-layout__content ">
+      <mat-radio-group [(ngModel)]="aTagConfig.target" name="isTargetBlank">
+        <mat-radio-button value="_blank">
+          另開分頁
+        </mat-radio-button>
+        <mat-radio-button value="">
+          原頁開啟
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <ng-container *ngIf="!isGallery">
+        <mat-radio-group [(ngModel)]="aTagConfig.urlType" name="urlType" (change)="onUrlTypeChange(aTagConfig)">
+          <mat-radio-button [value]="'INSIDE'">
+            站內
+          </mat-radio-button>
+          <mat-radio-button [value]="'OUTSITE'">
+            站外
+          </mat-radio-button>
+        </mat-radio-group>
+        <ng-container *ngIf="aTagConfig.urlType === LinkFieldInfoUrlType.OUTSITE; then input; else select">
+        </ng-container>
+        <ng-template #input>
+          <mat-form-field appearance="outline">
+            <mat-label>站外連結</mat-label>
+            <input matInput [(ngModel)]="aTagConfig.href" type="url" name="url" pattern="https?://.+" required #modelUrl="ngModel"
+              [disabled]="isGallery">
+            <mat-error *ngIf="modelUrl?.errors?.required">必填欄位</mat-error>
+            <mat-error *ngIf="modelUrl?.errors?.pattern">請輸入 http(s)://</mat-error>
+          </mat-form-field>
+        </ng-template>
+        <ng-template #select>
+          <mat-form-field appearance="outline">
+            <mat-label>網站:{{aTagConfig.siteId}}</mat-label>
+            <mat-select #select [(ngModel)]="aTagConfig.siteId" name="site" required #modelSite="ngModel"
+              (selectionChange)="onSiteChange(aTagConfig)">
+              <ng-container *ngIf="sites$|async; let sites;">
+                <mat-option *ngFor="let site of sites" [value]="site.siteId">
+                  {{site.siteName}}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="modelSite?.errors?.required">必填欄位</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>節點:{{aTagConfig.href}}</mat-label>
+            <mat-select #select [(ngModel)]="aTagConfig.href" name="node" required #modelNode="ngModel">
+              <ng-container *ngIf="nodes$|async; let nodes;">
+                <mat-option *ngFor="let node of nodes" [value]="node.nodeId">
+                  <pre>{{node.nodeName}}</pre>
+                </mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="modelNode?.errors?.required">必填欄位</mat-error>
+          </mat-form-field>
+        </ng-template>
+      </ng-container>
+
+      <div class="modal-form-layout__row" *ngIf="canModifyText">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>連結文字</mat-label>
+            <input matInput [(ngModel)]="aTagConfig.text" name="text" required #modelText="ngModel">
+            <mat-error *ngIf="modelText?.errors?.required">必填欄位</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+</div>

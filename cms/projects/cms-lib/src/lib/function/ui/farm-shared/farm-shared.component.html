@@ -1,0 +1,38 @@
+<div [hidden]="!!subComponentRef">
+  <ng-container *ngIf="farm">
+    <div class="tool-btns" *ngIf="isSub">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="destroySelf()">回上層</button>
+    </div>
+    <div>
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab *ngFor="let category of farm.category"
+          [label]="(categoryName ? categoryName + ' > ' : '') + category.categoryName">
+          <ng-template matTabContent>
+            <div class="detail-info-container" *ngIf="farm.detailInfo?.columns?.length">
+              <cms-farm-form-info [funcID]="funcID" [farmFormInfo]="farm.detailInfo"></cms-farm-form-info>
+              <hr>
+            </div>
+            <div class="search-info-container" *ngIf="category.searchInfo?.columns?.length">
+              <cms-farm-form-info #FarmSearchComp [funcID]="category.categoryId" [farmFormInfo]="category.searchInfo"
+                [useValidation]="true">
+              </cms-farm-form-info>
+              <div class="btn-group">
+                <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel"
+                  (click)="clearSearchInfoAndQueryData(category)">清除</button>
+                <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm"
+                  (click)="queryData(category)" [disabled]="!(FarmSearchComp?.formGroup?.valid)">查詢</button>
+              </div>
+              <hr>
+            </div>
+            <div class="table-info-container page-content-container" *ngIf="category.tableInfo">
+              <cms-farm-table-info [funcID]="category.categoryId" [tableInfo]="category.tableInfo"
+                (actionClick)="onTableActionClick(category, $event)" (pageChange)="onTablePageChange(category, $event)">
+              </cms-farm-table-info>
+            </div>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </ng-container>
+</div>
+<div #subContainer></div>

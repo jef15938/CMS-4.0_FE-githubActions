@@ -1,0 +1,45 @@
+<ng-container *ngIf="contentModel">
+  <form #form="ngForm">
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button (click)="preview()" style="float: right;">預覽</button>
+    </div>
+    <div class="page-content-container">
+      <mat-form-field appearance="outline">
+        <mat-label>按鈕文字</mat-label>
+        <input matInput [(ngModel)]="contentModel.text" name="text" required>
+      </mat-form-field>
+
+      <mat-checkbox [(ngModel)]="isLink" (change)="checkButtonType('link')" [ngModelOptions]="{standalone: true}">外部連結
+      </mat-checkbox>
+      <ng-container *ngIf="isLink">
+        <mat-form-field appearance="outline">
+          <mat-label>外部連結</mat-label>
+          <input matInput [(ngModel)]="contentModel.link" name="link" required>
+        </mat-form-field>
+      </ng-container>
+
+      <mat-checkbox [(ngModel)]="isEvent" (change)="checkButtonType('event')" [ngModelOptions]="{standalone: true}">執行功能
+      </mat-checkbox>
+      <ng-container *ngIf="isEvent&&selectedFunc">
+        <mat-form-field appearance="outline">
+          <mat-label>功能</mat-label>
+          <mat-select [(ngModel)]="selectedFunc.funcId" name="funcId" (selectionChange)="onFuncSelectionChange()">
+            <mat-option *ngFor="let function of functions" [value]="function.funcId">
+              {{function.funcName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <ng-container *ngFor="let key of (selectedFunc.funcParams|objectKeys)">
+          <mat-form-field appearance="outline">
+            <mat-label>{{key}}</mat-label>
+            <input matInput [(ngModel)]="selectedFunc.funcParams[key]" [name]="'key-'+key" required>
+          </mat-form-field>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+</ng-container>

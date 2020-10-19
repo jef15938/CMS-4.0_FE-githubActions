@@ -1,0 +1,9 @@
+<div class="page-title-container">
+  <h1>{{title}}</h1>
+</div>
+<div class="page-content-container">
+  <div style="margin-bottom: 10px;">
+    <button type="button" tabindex="0" mat-raised-button class="btn btn-edit" (click)="createReply()">新增</button>
+  </div>
+  <cms-table [colDefs]="colDefs" [dataSource]="replies" (customEvent)="onCustomEvent($event)"></cms-table>
+</div>

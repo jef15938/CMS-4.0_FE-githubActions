@@ -1,0 +1,10 @@
+<div class="layout-block">
+  <ng-container *ngIf="templateInfo">
+    <rdr-tab-scrollable [tabList]="templateInfo?.tabList | transformData:tabData">
+      <ng-template #content let-item>
+        <rdr-templates-container [templates]="item.content">
+        </rdr-templates-container>
+      </ng-template>
+    </rdr-tab-scrollable>
+  </ng-container>
+</div>

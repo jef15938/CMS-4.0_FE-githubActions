@@ -1,0 +1,6 @@
+<ng-container *ngIf="templateInfo">
+  <p>Sitemap:</p>
+  <p>{{siteMap |json}}</p>
+  <rdr-templates-container [templates]="templateInfo.children">
+  </rdr-templates-container>
+</ng-container>

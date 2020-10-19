@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  height: 100%;
+
+  .cms-dept {
+    height: 100%;
+
+    &__title {}
+
+    &__content {
+      height: calc(100% - 53px);
+    }
+  }
+}

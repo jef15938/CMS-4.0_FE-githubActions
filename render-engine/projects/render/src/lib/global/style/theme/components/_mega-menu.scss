@@ -1,0 +1,32 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-mega-menu-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-mega-menu' !default;
+  $tl-primary-color: map-get($theme, color_primary) !default;
+  $tl-plain-color: map-get($theme, black_1) !default;
+
+  $mega-menu-theme: nx-ui-theme-config-gen($color-primary: $tl-primary-color,
+      $color-plain: $tl-plain-color);
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-mega-menu.rdr-cp';
+  }
+
+  @include nx-mega-menu-theme($mega-menu-theme);
+
+  #{$selector} {
+    .nav-tools {
+      &__link {
+  
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+          color: $tl-primary-color;
+        }
+  
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div class="modal-form-layout page-content-container">
+  <form class="modal-form-layout__form" #form="ngForm">
+    <div class="btn-group text-right">
+      <button type="button" tabindex="-1" mat-raised-button class="btn btn-dark"
+        (click)="selectImage()">{{galleryID ? '修改圖片' : '加入本地圖片'}}</button>
+    </div>
+    <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__source-container">
+        <img class="modal-form-layout__source-container__img" [src]="src+'?v='+timestamp" *ngIf="src">
+      </div>
+
+      <div class="modal-form-layout__row">
+        <mat-form-field appearance="outline" class="modal-form-layout__col">
+          <mat-label>圖片描述</mat-label>
+          <input matInput [(ngModel)]="alt" name="alt">
+        </mat-form-field>
+      </div>
+
+      <div class="modal-form-layout__row">
+        <mat-form-field appearance="outline" class="modal-form-layout__col">
+          <mat-label>寬</mat-label>
+          <input type="number" matInput [(ngModel)]="width" name="width">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="modal-form-layout__col">
+          <mat-label>高</mat-label>
+          <input type="number" matInput [(ngModel)]="height" name="height">
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="form.invalid">確定</button>
+    </div>
+  </form>
+</div>
+<!-- 用來算寬高用的隱藏圖片 -->
+<img #Img [src]="src" style="display: none;">
+<!-- 用來算寬高用的隱藏圖片:end -->

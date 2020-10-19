@@ -1,0 +1,46 @@
+.admin-group-sitemap-setting-node {
+  margin-left: 15px;
+
+  &__child {
+    margin-left: 20px;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: top;
+    display: inline-block;
+
+    &__input {
+      width: 13px;
+      text-align: center;
+      height: 13px;
+      outline: 2px solid;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    &__input.active {
+      background: blue;
+      outline-color: blue;
+    }
+
+    mat-icon {
+      vertical-align: middle;
+      margin-left: -14px;
+      width: 14px;
+      margin-top: 10px;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    &__label {
+      display: inline-block;
+      margin-left: 5px;
+      height: 40px;
+      line-height: 40px;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+  }
+
+}

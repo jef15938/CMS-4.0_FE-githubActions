@@ -1,0 +1,11 @@
+.gallery-category-maintain-modal {
+  &__divider {
+    margin: 13px 0;
+  }
+
+  &__btn-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+}

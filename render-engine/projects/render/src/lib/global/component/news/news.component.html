@@ -1,0 +1,20 @@
+<div style="width: 100%; border: 1px solid purple; text-align: center;">
+  <div style="height: 300px; line-height: 300px; vertical-align: middle; background-color: lightblue;"
+    *ngIf="mode==='edit'">
+    最新消息資料呈現區域
+  </div>
+  <div class="layout-block news" *ngIf="mode==='preview'">
+    <div class="layout-title news__title">
+      最新消息
+    </div>
+    <div class="news__content">
+      <ng-container *ngFor="let data of sourceData?.datas | transformData:cardNewsData">
+        <rdr-card-news [cardNewsData]="data"></rdr-card-news>
+      </ng-container>
+    </div>
+    <div class="news__pagination">
+      <rdr-pagination [totalPage]="sourceData?.pageInfo.totalPageSize" [currentPage]="sourceData?.pageInfo.page">
+      </rdr-pagination>
+    </div>
+  </div>
+</div>

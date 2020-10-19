@@ -1,0 +1,19 @@
+<div class="gallery-info-cell" *ngIf="config?.data">
+  <div class="gallery-info-cell__pic">
+    <ng-container *ngIf="config.data.url">
+      <img class="gallery-info-cell__img"
+        [src]="(config.data.fileType.indexOf('image') > -1 ? config.data.url : (config.data | gelleryImgSrc:true))|safeResource">
+    </ng-container>
+  </div>
+  <ul class="gallery-info-cell__info-list">
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.fileName}}
+    </li>
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.fileSize | gellerySize}}
+    </li>
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.fileType}}
+    </li>
+  </ul>
+</div>

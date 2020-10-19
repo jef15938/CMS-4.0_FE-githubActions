@@ -1,0 +1,55 @@
+::ng-deep {
+  .cms-content-editor-container-modal.mode-0 {
+    mat-dialog-container {
+      padding: 0;
+    }
+  }
+
+  .cms-content-editor-container-modal {
+    mat-dialog-container {
+      overflow-y: hidden;
+
+      cms-modal-custom-wrapper {
+        .modal-custom {
+          &__head {
+            margin-left: 20px;
+          }
+
+          &__content {
+            margin-top: 0;
+
+
+            cms-content-editor-container-modal {
+              background-color: red;
+
+              cms-content-editor {
+                &.editor-mode {
+                  .cms-content-editor {
+                    .main-block {
+                      .content-panel {
+
+                        // padding: 0 !important;
+                        cms-content-view-renderer {
+                          .view-container {
+                            padding-top: 0;
+
+                            mat-tab-group {
+                              mat-tab-header {
+                                display: none;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

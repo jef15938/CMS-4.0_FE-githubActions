@@ -1,0 +1,11 @@
+.layout-block {
+  max-width: 994px;
+  margin: 0 auto;
+  padding: 40px 0 72px;
+}
+
+.layout-title {
+  @include fz-title-28-left;
+  margin-bottom: 24px;
+  color: $black-two;
+}

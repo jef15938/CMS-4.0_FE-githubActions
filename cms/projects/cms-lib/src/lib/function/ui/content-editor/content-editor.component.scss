@@ -1,0 +1,100 @@
+@import '../../../global/style/main';
+
+.current-state {
+  background-color: gold;
+}
+
+.cms-content-editor {
+  width: 100%;
+  height: 100%;
+
+  .btn-panel {
+    box-shadow: 0 2px 4px 0 transparentize($color-black, 0.88);
+
+    button:not(:first-child) {
+      margin-left: 5px;
+    }
+
+    .action-mode.active {
+      color: $color-yellow;
+    }
+
+    span {
+      display: inline-block;
+      width: 50%;
+      height: 100%;
+    }
+  }
+
+  .main-block {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 50px);
+
+    .content-panel {
+      overflow: auto;
+      padding: 10px;
+      height: 100%;
+
+      &.scale {
+        zoom: 0.5;
+        -moz-transform: scale(0.5);
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+        transform-origin: top;
+        height: 200%;
+      }
+    }
+
+    .layout-control-panel {
+      width: 0;
+      height: 100%;
+      position: absolute;
+      overflow: auto;
+      left: 0;
+      top: 0;
+
+      &.active {
+        width: 300px;
+      }
+    }
+
+    .content-edit-panel {
+      width: 0;
+      height: 100%;
+      position: absolute;
+      overflow: auto;
+      right: 0;
+      top: 0;
+
+      &.active {
+        width: 300px;
+      }
+    }
+
+    .action-list-panel {
+      width: 100%;
+      height: 100px;
+      bottom: 0;
+      position: absolute;
+      overflow: auto;
+      border: 3px solid $color-purple;
+      background-color: $color-white;
+    }
+
+  }
+
+  .main-block.layout-control,
+  .main-block.content-control {
+    & .content-panel {
+      position: absolute;
+      width: calc(100% - 300px);
+    }
+  }
+
+  .main-block.layout-control .content-panel {
+    left: 300px;
+    margin: 20px;
+  }
+
+}

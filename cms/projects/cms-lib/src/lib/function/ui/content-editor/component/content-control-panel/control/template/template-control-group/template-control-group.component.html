@@ -1,0 +1,22 @@
+<ng-container *ngIf="templateInfo">
+  <div>
+    群組個數限制 : {{templateInfo.itemList.length||0}}/{{templateInfo.attributes.maxItemCounts}}
+  </div>
+  <div>
+    <mat-list cdkDropList (cdkDropListDropped)="onListDropped($event)">
+      <mat-list-item *ngFor="let group of templateInfo.itemList; let i = index;" cdkDrag>
+        <div class="item-container">
+          <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
+          <span>{{!templateInfo.attributes.itemDisplayFieldId?i:findFieldByFieldId(group, templateInfo.attributes.itemDisplayFieldId)?.fieldVal}}</span>
+          <button type="button" tabindex="0" mat-icon-button
+            [disabled]="templateInfo.itemList.length>=parseInt(''+templateInfo.attributes.maxItemCounts)" (click)="copyGroup(group)">
+            <mat-icon class="pointer">file_copy</mat-icon>
+          </button>
+          <button type="button" tabindex="0" mat-icon-button (click)="removeGroup(group)">
+            <mat-icon class="pointer">remove_circle</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</ng-container>

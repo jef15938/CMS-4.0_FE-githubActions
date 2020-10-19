@@ -1,0 +1,65 @@
+<ng-container *ngIf="replyModel">
+  <form #form="ngForm">
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button (click)="preview()" style="float: right;">預覽</button>
+    </div>
+    <div class="page-content-container">
+      <mat-form-field appearance="outline">
+        <mat-label>回覆名稱</mat-label>
+        <input matInput [(ngModel)]="replyModel.name" name="name" required #modelName="ngModel">
+        <!-- <mat-error *ngIf="modelName.invalid">{{getErrorMessage(modelName)}}</mat-error> -->
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>文字訊息</mat-label>
+        <input matInput [(ngModel)]="replyModel.textContent" name="textContent">
+      </mat-form-field>
+      <div>
+        <mat-label>
+          特殊回覆
+        </mat-label>
+        <div class="reply-btn-group">
+          <mat-menu #createContentMenu="matMenu">
+            <button type="button" tabindex="0" mat-menu-item (click)="addRichContent(RichContentType.INFO)">資訊</button>
+            <button type="button" tabindex="0" mat-menu-item
+              (click)="addRichContent(RichContentType.DESCRIPTION)">描述</button>
+            <button type="button" tabindex="0" mat-menu-item (click)="addRichContent(RichContentType.IMAGE)">圖片</button>
+            <button type="button" tabindex="0" mat-menu-item
+              (click)="addRichContent(RichContentType.BUTTON)">按鈕</button>
+            <button type="button" tabindex="0" mat-menu-item (click)="addRichContent(RichContentType.LIST)">清單</button>
+            <button type="button" tabindex="0" mat-menu-item
+              (click)="addRichContent(RichContentType.ACCORDION)">折疊</button>
+            <button type="button" tabindex="0" mat-menu-item (click)="addRichContent(RichContentType.CHIPS)">建議</button>
+          </mat-menu>
+          <button type="button" tabindex="0" mat-raised-button color="primary" #menuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="createContentMenu">新增</button>
+        </div>
+        <mat-list class="content-list" cdkDropList (cdkDropListDropped)="onListDropped($event)">
+          <ng-container *ngFor="let richContent of replyModel.richContents">
+            <mat-list-item cdkDrag>
+              <mat-icon class="pointer" cdkDragHandle>open_with</mat-icon>
+              <span [ngSwitch]="richContent.type">
+                <ng-container *ngSwitchCase="RichContentType.INFO">資訊</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.DESCRIPTION">描述</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.IMAGE">圖片</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.BUTTON">按鈕</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.LIST">清單</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.ACCORDION">折疊</ng-container>
+                <ng-container *ngSwitchCase="RichContentType.CHIPS">建議</ng-container>
+              </span>
+              <button type="button" tabindex="0" mat-icon-button color="primary" (click)="editRichContent(richContent)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button type="button" tabindex="0" mat-icon-button color="warn" (click)="removeRichContent(richContent)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()" [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+</ng-container>

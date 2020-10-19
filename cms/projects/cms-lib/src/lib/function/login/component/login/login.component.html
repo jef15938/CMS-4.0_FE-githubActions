@@ -1,0 +1,50 @@
+<div class="CMS-login-shell" style="background-image: url('assets/img/CMS-login-bg.png');">
+  <div class="CMS-login-wrapper">
+    <div class="CMS-login-welcome">
+      <p class="CMS-login-welcome__text">Welcome !</p>
+    </div>
+    <div class="CMS-login">
+      <div class="CMS-login__former">
+        <div class="CMS-login__CI">
+          <img class="CMS-login__CI__img" src="assets/img/CMS-logo-vertical.png">
+        </div>
+      </div>
+      <div class="CMS-login__later">
+        <form class="CMS-login__form" #form="ngForm" (submit)="login()">
+          <div class="CMS-login__form__title">
+            <p class="CMS-main-color">Login</p>
+          </div>
+          <div class="CMS-login__form__content">
+            <div class="CMS-login__form__item">
+              <input type="text" name="username" class="CMS-login__form__item__input" placeholder="使用者帳號" required=""
+                autofocus="" maxlength="50" [(ngModel)]="username" #modelUsername="ngModel"
+                [class.has-error]="modelUsername.touched && modelUsername.invalid">
+            </div>
+            <div class="CMS-login__form__item">
+              <input type="password" name="password" class="CMS-login__form__item__input" placeholder="使用者密碼"
+                required="" autocomplete="off" maxlength="50" [(ngModel)]="password" #modelPassword="ngModel"
+                [class.has-error]="modelPassword.touched && modelPassword.invalid">
+            </div>
+            <div class="CMS-login__form__item">
+              <input type="number" autocomplete="off" name="validNumber"
+                class="CMS-login__form__item__input CMS-login__form__item__input--short" placeholder="驗證碼" required=""
+                autofocus="" [(ngModel)]="validationCode" #modelValidationCode="ngModel"
+                [class.has-error]="modelValidationCode.touched &&  modelValidationCode.invalid">
+              <img #validImage [src]="environment.apiBaseUrl + '/validImage?version=' + validImageVersion"
+                id="validNumberImg" class="CMS-login__form__item__verification">
+              <a id="validNumberRefresh" class="CMS-login__form__item__refresh">
+                <img class="CMS-login__form__item__refresh__img" src="assets/img/CMS-reload.png"
+                  (click)="refreshValidImageVersion()">
+              </a>
+            </div>
+            <div class="CMS-login__form__item">
+              <input class="CMS-login__form__item__btn CMS-main-bgcolor" type="submit" value="Login"
+                [disabled]="form.invalid">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

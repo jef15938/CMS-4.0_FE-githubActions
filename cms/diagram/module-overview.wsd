@@ -1,0 +1,55 @@
+@startuml
+skinparam ranksep 300
+
+rectangle "Neux Core Library"{
+  package "@neux/core" as core{
+    [API Dispatcher service]
+    [Dynamic service]
+  }
+
+  package "@neux/ui" as coreUI{
+    [Basic ui component]
+  }
+}
+
+rectangle "CMS Core Library" {
+  package "@neux/cms"  as coreCMS {
+    [Function1]
+    [Function2]
+  }
+
+  package "@neux/render"  as  coreRender{
+    [Layout base component]
+  }
+}
+
+rectangle "Library By project"{
+  package "custom-ui" as customUI{
+    [custom layout & ui component]
+  }
+}
+
+
+
+rectangle "Application By project"{
+  package "cms Application" as cmsAPP{
+    [custom cms function]
+  }
+
+  package "render-engine Application" as cmsRender{
+    [custom render function]
+  }
+}
+
+coreUI ..>customUI
+coreRender ..>customUI
+
+customUI ..>cmsRender
+coreRender ..>cmsRender
+coreCMS ..> cmsAPP
+customUI ..>cmsAPP
+
+
+
+
+@enduml

@@ -1,0 +1,6 @@
+<ng-container *ngIf="content">
+  <cms-content-editor [class.editor-mode]="editorMode" [editorMode]="editorMode" [contentID]="contentID"
+    [contentInfo]="content" [selectableTemplates]="templates" (editorClose)="closeModal($event)"
+    (editorSave)="save($event)" (editorSaveAndClose)="save($event, true)">
+  </cms-content-editor>
+</ng-container>

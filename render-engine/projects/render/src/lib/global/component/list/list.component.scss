@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.group {
+  width: 100%;
+
+  .title,
+  .text {
+    width: 50%;
+    display: inline-block;
+    height: 48px;
+    line-height: 48px;
+    vertical-align: middle;
+    padding: 0 14px;
+    box-sizing: border-box;
+  }
+
+  .title {
+    text-align: right;
+  }
+
+  .text {
+    text-align: left;
+  }
+}

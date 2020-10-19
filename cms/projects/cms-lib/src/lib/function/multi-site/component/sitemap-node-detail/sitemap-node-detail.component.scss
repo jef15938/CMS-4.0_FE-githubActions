@@ -1,0 +1,106 @@
+@import '../../../../global/style/main';
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sitemap-node-detail {
+  height: 100%;
+
+  &__btn-group {
+    button+button {
+      margin-left: 20px;
+    }
+  }
+
+  &__title {
+    height: 52px;
+    display: flex;
+
+    &::ng-deep {
+      .mat-raised-button {
+        height: 31px;
+        line-height: normal;
+        background-color: $color-CIS;
+        color: $color-CIS-white;
+
+        &[disabled="true"] {
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+
+  &__content {
+    height: calc(100% - 52px);
+    overflow: auto;
+  }
+}
+
+.info {
+  &__item {
+    padding: 10px 0;
+
+    &--small-texted {
+      font-size: 12px;
+    }
+
+    &--align-right {
+      text-align: right;
+    }
+
+    &--alpha {
+      opacity: 0.5;
+    }
+  }
+}
+
+.tab-content {
+  &__btn-row {
+    display: flex;
+    padding: 10px 0;
+
+    &--align-right {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.form {
+  margin: 0 10px;
+
+  &__col {
+    display: inline-block;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    min-height: 50px;
+    text-align: center;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  &__label,
+  &__content {
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 0 15px;
+  }
+
+  &__label {
+    text-align: right;
+    max-width: 40%;
+    min-width: 40%;
+  }
+
+  &__content {
+    text-align: left;
+    max-width: 60%;
+    min-width: 60%;
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "datas": [
+    {
+      "category_id": "c01",
+      "category_name": "群組1",
+      "can_upload": true,
+      "children": [
+        {
+          "category_id": "c01-1",
+          "category_name": "群組1-1",
+          "can_upload": true,
+          "children": [
+            {
+              "category_id": "c01-1-1",
+              "category_name": "群組1-1-1",
+              "can_upload": true,
+              "children": []
+            }
+          ]
+        },
+        {
+          "category_id": "c01-2",
+          "category_name": "群組1-2",
+          "can_upload": false,
+          "children": []
+        }
+      ]
+    },
+    {
+      "category_id": "c02",
+      "category_name": "群組2",
+      "can_upload": false,
+      "children": []
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+<div class="html-editor-container">
+  <div class="html-editor-container__head">
+    <button type="button" class="editor-toolbar__btn" tabindex="-1" mat-button (click)="confirm()">
+      <mat-icon aria-hidden="false">clear</mat-icon>
+    </button>
+  </div>
+  <div class="html-editor-container__editor">
+    <cms-html-editor [content]="content" [configName]="configName"></cms-html-editor>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+// icon lists
+@mixin rdr-icon($positionX:1, $positionY:1, $size: 22px) {
+  $image-size: $size * 3; //圖片icon列數
+  $image-position-x: -$size * ($positionX - 1);
+  $image-position-y: -$size * ($positionY - 1);
+
+  display: inline-block;
+  vertical-align: middle;
+  background-size: auto $image-size;
+  background-repeat: no-repeat;
+  background-image: url('../../../images/icon-all.svg');
+
+  @include sprite($image-position-x, $image-position-y, $size, $size);
+}
+
+// 產icon
+@mixin genIcon($selector: 'icon', $image: null, $total: 0, $size: 0) {
+  $lastNumber: $total - 1;
+
+  @if $image {
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url('../../../images/'+ #{$image});
+    background-repeat: no-repeat;
+
+    @for $i from 0 through $lastNumber {
+      &.#{$selector}--#{$i} {
+        @include sprite(-$size * $i, 0, $size, $size);
+      }
+    }
+  }
+}
+
+//共用 icon
+.arrow-icon {
+  @include rdr-icon(4, 2, 20px);
+
+  @include rwd($nx-screen-normal-phone-portrait) {
+    width: 14px;
+    height: 14px;
+    background-position: -42px -14px;
+    background-size: auto 42px;
+  }
+}

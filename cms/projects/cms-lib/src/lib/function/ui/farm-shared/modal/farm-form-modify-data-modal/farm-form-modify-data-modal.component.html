@@ -1,0 +1,9 @@
+<div class="page-content-container">
+  <cms-farm-form-info [funcID]="funcID" [farmFormInfo]="farmFormInfo" [useValidation]="true" [mode]="'edit'">
+  </cms-farm-form-info>
+</div>
+<div class="btn-group">
+  <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+  <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+    [disabled]="!(farmFormInfoComponent?.formGroup?.valid)">儲存</button>
+</div>

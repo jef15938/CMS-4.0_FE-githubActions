@@ -1,0 +1,28 @@
+<div class="admin-group-sitemap-setting-node" (click)="cancelEvent($event)">
+  <ng-container *ngIf="node.data.isChecked">
+    <div class="admin-group-sitemap-setting-node__child" (click)="changeCanAdd()">
+      <div class="admin-group-sitemap-setting-node__child__input" [class.active]="node.data.groupSitemapInfo.canAdd">
+      </div>
+      <mat-icon>
+        <ng-container *ngIf="node.data.groupSitemapInfo.canAdd">done</ng-container>
+      </mat-icon>
+      <span class="admin-group-sitemap-setting-node__child__label">可新增</span>
+    </div>
+    <div class="admin-group-sitemap-setting-node__child" (click)="changeCanModify()">
+      <div class="admin-group-sitemap-setting-node__child__input" [class.active]="node.data.groupSitemapInfo.canModify">
+      </div>
+      <mat-icon>
+        <ng-container *ngIf="node.data.groupSitemapInfo.canModify">done</ng-container>
+      </mat-icon>
+      <span class="admin-group-sitemap-setting-node__child__label">可修改</span>
+    </div>
+    <div class="admin-group-sitemap-setting-node__child" (click)="changeCanDelete()">
+      <div class="admin-group-sitemap-setting-node__child__input" [class.active]="node.data.groupSitemapInfo.canDelete">
+      </div>
+      <mat-icon>
+        <ng-container *ngIf="node.data.groupSitemapInfo.canDelete">done</ng-container>
+      </mat-icon>
+      <span class="admin-group-sitemap-setting-node__child__label">可刪除</span>
+    </div>
+  </ng-container>
+</div>

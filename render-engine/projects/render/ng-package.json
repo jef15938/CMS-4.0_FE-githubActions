@@ -1,0 +1,21 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/render",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "ngx-swiper-wrapper": "ngx-swiper-wrapper",
+      "@neux/core": "@neux/core",
+      "@neux/ui": "@neux/ui",
+      "class-transformer": "class-transformer",
+      "class-validator": "class-validator",
+      "@ngrx/store": "@ngrx/store",
+      "@ngrx/effects": "@ngrx/effects"
+    },
+    "styleIncludePaths": ["./src/lib/global/style/"]
+  },
+  "assets": [
+    "./src/lib/global/style/**/*",
+    "./src/lib/global/images/*"
+  ]
+}

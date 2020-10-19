@@ -1,0 +1,26 @@
+<div class="menu" *ngIf="menu">
+  <div class="menu__item item" *ngIf="!menu.children?.length">
+    <a matRipple class="item__link" [routerLink]="[(isAppMenu?'extension/':'')+(category?category+'/':'')+menu.funcId]"
+      routerLinkActive="router-active" [class.disabled]="menu.children?.length">
+      {{menu.funcName}}
+    </a>
+  </div>
+  <mat-expansion-panel *ngIf="menu.children?.length" class="menu__item item">
+    <mat-expansion-panel-header>
+      <a matRipple class="item__link"
+        [routerLink]="[(isAppMenu?'extension/':'')+(category?category+'/':'')+menu.funcId]"
+        routerLinkActive="router-active" [class.disabled]="menu.children?.length">
+        {{menu.funcName}}
+      </a>
+
+    </mat-expansion-panel-header>
+    <div class=" item" *ngIf="menu.children?.length">
+      <ul class="item__submenu">
+        <li class="item__submenu__item" *ngFor="let child of menu.children">
+          <cms-menu-node [menu]="child" [category]="(category?category+'/':'')+menu.funcId" [isAppMenu]="isAppMenu">
+          </cms-menu-node>
+        </li>
+      </ul>
+    </div>
+  </mat-expansion-panel>
+</div>

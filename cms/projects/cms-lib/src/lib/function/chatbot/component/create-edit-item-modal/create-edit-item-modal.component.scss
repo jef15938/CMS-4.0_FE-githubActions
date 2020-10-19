@@ -1,0 +1,26 @@
+.input-btn-group {
+  input {
+    line-height: 36px;
+    height: 36px;
+    width: 80%;
+  }
+  button {
+    line-height: 36px;
+    height: 36px;
+    width: 20%;
+  }
+}
+
+.synonym-list {
+  padding: 0;
+  margin: 0;
+  height: 180px;
+  max-height: 180px;
+  overflow: auto;
+
+  mat-list-item {
+    height: 36px;
+    line-height: 36px;
+    font-size: 16px;
+  }
+}

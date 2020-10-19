@@ -7,6 +7,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
@@ -16,14 +17,24 @@
       "dom"
     ],
     "paths": {
-      "cms-lib": [
-        "dist/cms-lib/cms-lib",
-        "dist/cms-lib"
-      ]
-    }
+      "@cms-app/*": [
+        "src/app/*"
+      ],
+      "@neux/cms-core": [
+        // "projects/cms-lib/src/public-api",
+        "dist/cms-lib",
+        "dist/cms-lib/lib",
+      ],
+    },
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "strictTemplates": true
   }
 }

@@ -1,0 +1,19 @@
+<div class="gallery-info-cell" *ngIf="config?.data">
+  <div class="gallery-info-cell__pic">
+    <a class="gallery-info-cell__link" [href]="environment.apiBaseUrl + config.data.url" target="_blank"
+      rel="noreferrer noopener">
+      <img class="gallery-info-cell__img" [src]="config.data | gelleryImgSrc | safeResource">
+    </a>
+  </div>
+  <ul class="gallery-info-cell__info-list">
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.fileName}}
+    </li>
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.size | gellerySize}}
+    </li>
+    <li class="gallery-info-cell__info-list__item">
+      {{config.data.createTime | dateStringFormat:'DATETIME'}}
+    </li>
+  </ul>
+</div>

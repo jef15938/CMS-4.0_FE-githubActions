@@ -1,0 +1,253 @@
+@import '../../../global/style/main';
+
+:host {
+  display: block;
+  background-color: $color-CIS-white;
+  overflow: hidden;
+}
+
+.cms-tree {
+  margin-left: -1em;
+  width: calc(100% + 1em);
+  margin-top: 0.5em;
+
+  &__body {
+    margin-top: -10px;
+    background-color: $color-CIS-white;
+  }
+
+  &__node {
+    display: block;
+    min-height: 40px;
+    position: relative;
+
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0px;
+      left: 0;
+      display: block;
+      height: calc(100% + 10px);
+      border-left: 1px dashed $color-gray;
+    }
+
+    &:last-child {
+      &:after {
+        height: calc(100% - 20px);
+      }
+    }
+
+    &.mat-nested-tree-node {
+
+
+      &:last-child {
+        &:before {
+          content: '';
+          display: block;
+          background-color: $color-CIS-white;
+          width: 1em;
+          position: absolute;
+          height: calc(100% - 20px);
+          left: -1px;
+          bottom: 0;
+          pointer-events: none;
+          z-index: 99;
+        }
+
+      }
+
+
+
+    }
+
+    &:only-child {
+      &:before {
+        content: '';
+        display: block;
+        background-color: $color-CIS-white;
+        width: 1em;
+        position: absolute;
+        height: calc(100% - 40px);
+        left: -1px;
+        bottom: 0;
+        pointer-events: none;
+
+      }
+    }
+
+
+    &__head {
+      min-height: 40px;
+      position: relative;
+      z-index: 99;
+      margin-top: 10px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        border-bottom: 1px dashed $color-gray;
+        top: calc(50%);
+        transform: translateY(-50%) translateY(1.5px);
+        width: 2em;
+        pointer-events: none;
+      }
+
+      &__anchor {
+        width: 100%;
+        height: 10px;
+        position: absolute;
+        z-index: 99;
+        transform: translateX(15px);
+        transition: 500ms;
+        // background-color: transparent;
+        background-color: grey;
+
+        &--prev {}
+
+        &--next {
+          bottom: 0;
+        }
+
+        &--drag-overed {
+          // background-color: grey;
+          background-color: yellow;
+        }
+      }
+
+      &--selected {
+        .cms-tree__node__head__checkbox {
+          background-color: $color-CIS-light;
+        }
+
+      }
+
+      &:not(.cms-tree__node__head--selected):hover {
+        .cms-tree__node__head__checkbox {
+          background-color: $color-CIS-extra-light;
+        }
+      }
+
+      &__checkbox {
+        position: relative;
+        width: calc(100% - 1em);
+        margin-left: 1em;
+        height: 100%;
+        display: block;
+        height: 40px;
+        padding-left: 2.5em;
+        background-color: $color-CIS-white;
+
+        &--unactive {
+          padding-left: 1em;
+        }
+
+        &::ng-deep {
+          .mat-checkbox-label {
+            display: flex;
+            align-items: center;
+          }
+
+          .mat-checkbox-inner-container {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-150%, -50%);
+
+          }
+        }
+      }
+
+      &::ng-deep {
+
+
+        mat-checkbox.cms-tree__node__head__checkbox--unactive {
+          .mat-checkbox-inner-container {
+            display: none;
+          }
+
+
+        }
+
+      }
+
+    }
+
+    >.cms-tree__node__body {}
+
+    &__body {
+      position: relative;
+      margin-left: 2em;
+      transform: translateY(1px);
+
+      &--invisible {
+        display: none;
+      }
+
+
+      &::ng-deep {
+        mat-tree-node.cms-tree__node {
+          .cms-tree__node__head {}
+
+        }
+
+      }
+    }
+
+
+
+
+  }
+
+  &::ng-deep {
+
+    mat-nested-tree-node,
+    mat-tree-node {
+      .cms-tree__node__head__checkbox {
+        .mat-checkbox-layout {
+          position: absolute;
+          width: calc(100% - 1em);
+          height: 100%;
+        }
+
+        .mat-checkbox-label {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+
+.node-expand-btn {
+  margin-left: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  &::ng-deep {
+    .mat-raised-button-wrapper {}
+
+
+  }
+
+}
+
+.drag-over {
+  background-color: $color-CIS-light !important;
+}
+
+.can-drag {
+
+  &,
+  ::ng-deep * {
+    cursor: move;
+  }
+}
+
+.cannot-drop {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

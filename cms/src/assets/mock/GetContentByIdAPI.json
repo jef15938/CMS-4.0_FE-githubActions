@@ -1,0 +1,95 @@
+{
+  "languages": [{
+    "blocks": [{
+        "templates": [{
+          "attributes": {
+            "templates": [{
+              "attributes": {},
+              "id": "1597657533760",
+              "templateId": "IconPage",
+              "fields": []
+            }]
+          },
+          "id": "1597656432996",
+          "templateId": "FixedWrapper",
+          "fields": []
+        }],
+        "block_id": "A"
+      },
+      {
+        "templates": [{
+          "attributes": {
+            "templates": [{
+              "tabList": [{
+                  "tabId": "t1",
+                  "extension": {},
+                  "children": [{
+                      "attributes": {},
+                      "id": "c1",
+                      "templateId": "HTML",
+                      "fields": [{
+                        "fieldId": "html",
+                        "fieldType": "HTMLEDITOR",
+                        "fieldVal": "",
+                        "extension": {}
+                      }]
+                    },
+                    {
+                      "attributes": {},
+                      "id": "c2",
+                      "templateId": "IconPage",
+                      "fields": []
+                    }
+                  ],
+                  "fieldVal": "",
+                  "fieldType": "GROUP",
+                  "fieldId": "f1"
+                },
+                {
+                  "tabId": "t2",
+                  "extension": {},
+                  "children": [],
+                  "fieldVal": "",
+                  "fieldType": "GROUP",
+                  "fieldId": "f2"
+                }
+              ],
+              "attributes": {},
+              "id": "1597657533761",
+              "templateId": "Tab",
+              "fields": []
+            }]
+          },
+          "id": "1597656432997",
+          "templateId": "FixedWrapper",
+          "fields": []
+        }],
+        "block_id": "B"
+      },
+      {
+        "templates": [{
+          "attributes": {
+            "templates": [{
+              "attributes": {},
+              "id": "1597657533762",
+              "templateId": "HTML",
+              "fields": [{
+                "fieldId": "html",
+                "fieldType": "HTMLEDITOR",
+                "fieldVal": "",
+                "extension": {}
+              }]
+            }]
+          },
+          "id": "1597656432998",
+          "templateId": "FixedWrapper",
+          "fields": []
+        }],
+        "block_id": "C"
+      }
+    ],
+    "language_id": "zh_TW",
+    "language_name": "中文"
+  }],
+  "galleries": []
+}

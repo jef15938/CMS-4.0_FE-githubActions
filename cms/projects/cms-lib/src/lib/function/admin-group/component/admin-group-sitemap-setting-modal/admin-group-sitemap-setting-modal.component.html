@@ -1,0 +1,32 @@
+<div class="admin-group-sitemap-setting-modal modal-form-layout">
+  <div class="modal-form-layout__row">
+    <div class="modal-form-layout__col">
+      <mat-form-field appearance="outline">
+        <mat-label>站台</mat-label>
+        <mat-select #select [(ngModel)]="siteID" name="siteID">
+          <mat-option [value]="'none'">請選擇</mat-option>
+          <ng-container *ngIf="site$|async; let sites;">
+            <mat-option *ngFor="let site of sites" [value]="site.siteId">
+              {{site.siteName}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <ng-container *ngIf="treeData$|async; let treeData;">
+    <div class="modal-form-layout__row">
+      <div class="modal-form-layout__col">
+        <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="treeData.nodes" [checkbox]="true"
+          [checkedNodes]="treeData.checkedNodes" [customNodeRenderer]="customNodeRenderer" [defaultExpandLevel]="-1"
+          [nodeDisplayField]="'nodeName'" (nodeCheckedChange)="onNodeCheckedChange($event, treeData)">
+        </cms-tree>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="!treeData">儲存</button>
+    </div>
+  </ng-container>
+</div>

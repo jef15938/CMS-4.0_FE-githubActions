@@ -1,0 +1,48 @@
+<div style="width: 100%; border: 1px solid purple; text-align: center;">
+  <div style="height: 300px; line-height: 300px; vertical-align: middle; background-color: lightblue;"
+    *ngIf="mode==='edit'">
+    表單下載資料呈現區域
+  </div>
+  <div class="transglobe-source-news-002" *ngIf="mode==='preview'">
+    <div style="height: 50px; line-height: 50px; vertical-align: middle; background-color: lightblue;">
+      表單下載
+    </div>
+    <div class="api-template garden-news-type2">
+      <!-- <div class="page-block">
+        <div class="ga-page-control" displaytype="DEFAULT"><a href="#" class="prev" style="display: none;"></a>
+          <ul class="pageNumber pager">
+            <li class="numberOfPage active" id="number1" style="display: inline-block;"><a href="#">1</a></li>
+            <li class="numberOfPage" id="number2" style="display: inline-block;"><a href="#">2</a></li>
+            <li class="numberOfPage" id="number3" style="display: inline-block;"><a href="#">3</a></li>
+            <li class="numberOfPage" id="number4" style="display: inline-block;"><a href="#">4</a></li>
+            <li class="numberOfPage" id="number5" style="display: inline-block;"><a href="#">5</a></li>
+          </ul><a href="#" class="next"></a>
+        </div>
+      </div> -->
+      <div class="ul-items">
+        <div class="ul-li-items" *ngFor="let data of sourceData?.datas;">
+          <a [href]="data.url" class="" target="_blank">
+            <div class="question-txt">
+              <div class="txt">
+                <p ga-edit-maxlength="80" ga-edit-maxlength-pad="36" ga-edit-maxlength-mobile="17">
+                  {{data.title}}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <!-- <div class="page-block">
+        <div class="ga-page-control" displaytype="DEFAULT"><a href="#" class="prev" style="display: none;"></a>
+          <ul class="pageNumber pager">
+            <li class="numberOfPage active" id="number1" style="display: inline-block;"><a href="#">1</a></li>
+            <li class="numberOfPage" id="number2" style="display: inline-block;"><a href="#">2</a></li>
+            <li class="numberOfPage" id="number3" style="display: inline-block;"><a href="#">3</a></li>
+            <li class="numberOfPage" id="number4" style="display: inline-block;"><a href="#">4</a></li>
+            <li class="numberOfPage" id="number5" style="display: inline-block;"><a href="#">5</a></li>
+          </ul><a href="#" class="next"></a>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

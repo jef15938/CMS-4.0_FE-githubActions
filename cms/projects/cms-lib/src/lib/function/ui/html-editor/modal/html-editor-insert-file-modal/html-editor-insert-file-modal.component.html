@@ -1,0 +1,33 @@
+<div class="modal-form-layout" *ngIf="aTagConfig">
+  <form class="modal-form-layout__form" #form="ngForm">
+    <div class="btn-group text-right">
+      <button type="button" tabindex="-1" mat-raised-button class="btn btn-dark"
+        (click)="selectFileFromLocal()">{{!galleryID?'加入':aTagConfig.fileSource===FileSource.FORM?'改選':'修改'}}本地檔案</button>
+      <button type="button" tabindex="-1" mat-raised-button class="btn btn-dark"
+        (click)="selectFileFromForm()">選擇表單下載</button>
+    </div>
+    <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline">
+            <mat-label>{{aTagConfig.text ? '檔案' : '請選擇檔案'}}</mat-label>
+            <input matInput [(ngModel)]="aTagConfig.galleryName" name="galleryName" readonly placeholder="請選擇檔案">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-form-layout__row">
+        <div class="modal-form-layout__col">
+          <mat-form-field appearance="outline" style="display: none;">
+            <mat-label>Url</mat-label>
+            <input matInput [(ngModel)]="aTagConfig.href" name="url" required #modelUrl="ngModel" readonly>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="form.invalid">確認</button>
+    </div>
+  </form>
+</div>

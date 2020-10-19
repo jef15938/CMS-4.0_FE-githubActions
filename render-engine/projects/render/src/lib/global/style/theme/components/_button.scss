@@ -1,0 +1,111 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-button-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-button' !default;
+  $tl-primary-color: map-get($theme, color_primary) !default;
+  $tl-secondary-color: map-get($theme, color_secondary) !default;
+  $tl-distinct-color: map-get($theme, white_1) !default;
+  $tl-back-color: map-get($theme, very_light_pink_2) !default;
+  $tl-back-border-color: map-get($theme, brown_grey_1) !default;
+  $tl-back-hover-color: map-get($theme, very_light_pink_1) !default;
+  $tl-back-active-color: map-get($theme, very_light_pink_0) !default;
+
+  $btn-theme: nx-ui-theme-config-gen($color-primary: $tl-primary-color,
+      $color-distinct: $tl-distinct-color,
+      $color-back: $tl-back-color);
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-button.rdr-cp';
+  }
+
+  @include nx-btn-theme($btn-theme);
+
+  #{$selector} {
+    [nx-btn].nx-cp {
+      &.nx-color--primary {
+        >.btn--full {
+          box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
+          background-image: linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
+
+          &:hover {
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
+          }
+
+          &:active {
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
+          }
+        }
+      }
+
+      &.nx-color--distinct {
+        >.btn--full {
+          border-color: $tl-primary-color;
+          color: $tl-primary-color;
+
+          &:hover,
+          &:active {
+            color: $tl-distinct-color;
+          }
+
+          &:hover {
+            border-color: transparent;
+            background-image: linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
+          }
+
+          &:active {
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
+          }
+        }
+
+        >.btn--border {
+
+          &:hover,
+          &:active {
+            color: $tl-primary-color;
+          }
+
+          &:active {
+            background-color: $tl-back-color;
+          }
+        }
+      }
+
+      &.nx-color--back {
+        >.btn--full {
+          border-color: $tl-back-border-color;
+          color: $tl-primary-color;
+
+          &:hover {
+            background-color: $tl-back-hover-color;
+          }
+
+          &:active {
+            background-color: $tl-back-active-color;
+          }
+        }
+      }
+
+      &.nx-color--distinct,
+      &.nx-color--back {
+        &.style--disable {
+          >.btn--full {
+            color: $tl-primary-color;
+          }
+        }
+      }
+    }
+
+    .button__link {
+      color: $tl-primary-color;
+
+      &:hover {
+        color: #00918a;
+      }
+
+      &:active {
+        color: #00635b;
+      }
+    }
+  }
+}

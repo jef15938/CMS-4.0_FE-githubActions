@@ -1,0 +1,109 @@
+@import '../style/main';
+
+:host {
+  display: block;
+}
+
+.menu {
+  background-color: $sidenav-item-bg;
+  width: 100%;
+  user-select: none;
+  font-size: 15px;
+
+  &::ng-deep {
+    mat-expansion-panel {
+      background-color: transparent;
+      border-radius: 0;
+
+      .mat-expansion-panel-header {
+        padding: 0;
+        height: auto;
+        border-radius: none;
+      }
+
+      .mat-expansion-panel-body {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+      }
+
+      .mat-expansion-indicator {
+        position: absolute;
+        right: 1.5em;
+
+        &:after {
+          color: transparentize($color: $color-CIS-white, $amount: 0.5);
+        }
+      }
+    }
+  }
+}
+
+.item {
+
+  color: $color-CIS-white;
+
+  &__link {
+    text-decoration: none;
+    padding: 1em 1em;
+    width: 100%;
+    cursor: pointer;
+    color: white;
+  }
+
+  &__link.disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  &__submenu {
+    position: relative;
+
+    &__item {
+
+      .item__link {
+        padding-left: 1.9em;
+
+      }
+
+      // 最大菜單層數: 3層
+      cms-menu-node {
+        &::ng-deep {
+          cms-menu-node {
+            .item__link {
+              padding-left: 2.9em;
+              color: white;
+              &.router-active {
+                &:before {
+                  content: '';
+                  left: 2em;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .router-active {
+        background-color: transparent;
+        position: relative;
+
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background-color: $color-CIS-white;
+          top: 50%;
+          margin-right: .5em;
+          position: absolute;
+          left: 1em;
+          transform: translate(0%, -50%);
+        }
+      }
+    }
+  }
+
+
+}

@@ -1,0 +1,58 @@
+<mat-sidenav-container class="menu-container-shell">
+  <mat-sidenav mode="side" opened #SideNav>
+    <div class="menu-container" #MenuContainer>
+      <div class="menu-container__CI">
+        <img class="menu-container__CI__img" src="assets/img/CMS-logo-vertical.png">
+      </div>
+      <ul class="menu-container__menu">
+        <li class="menu-container__item" *ngFor="let menu of menus">
+          <cms-menu-node [menu]="menu"></cms-menu-node>
+        </li>
+      </ul>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="header">
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <button type="button" tabindex="0" mat-icon-button (click)="SideNav.toggle()">
+            <mat-icon>list</mat-icon>
+          </button>
+          <div class="account" *ngIf="loginInfo">
+            <div class="pic">
+              <img src="assets/img/CMS-person.png">
+            </div>
+            <div class="username">{{loginInfo.userName}}</div>
+            <mat-icon class="setting-btn" aria-hidden="false" aria-label="Settings" #menuTrigger="matMenuTrigger"
+              [matMenuTriggerFor]="appMenu">
+              settings
+            </mat-icon>
+            <mat-menu #appMenu="matMenu">
+              <button type="button" tabindex="0" mat-menu-item (click)="logout('')">
+                <mat-icon>power_settings_new</mat-icon>
+                登出
+              </button>
+            </mat-menu>
+          </div>
+
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-container *ngIf="cmsLoadingToggle.isOpen|async">
+  <div class="loading bar">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</ng-container>

@@ -1,0 +1,19 @@
+<ng-container *ngIf="node">
+  <span class="pointer">{{node.data.deptName}}</span>
+  <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
+    <mat-menu #appMenu="matMenu">
+      <button type="button" tabindex="0" mat-menu-item (click)="onActionClicked(ActionType.CREATE)">
+        <mat-icon>add</mat-icon>
+        新增
+      </button>
+      <button type="button" tabindex="0" mat-menu-item (click)="onActionClicked(ActionType.EDIT)">
+        <mat-icon>edit</mat-icon>
+        修改
+      </button>
+      <button type="button" tabindex="0" mat-menu-item (click)="onActionClicked(ActionType.DELETE)">
+        <mat-icon>delete</mat-icon>
+        刪除
+      </button>
+    </mat-menu>
+  </span>
+</ng-container>

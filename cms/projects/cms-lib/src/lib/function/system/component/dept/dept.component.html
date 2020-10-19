@@ -1,0 +1,10 @@
+<div class="cms-dept">
+  <div class="page-title-container cms-dept__title">
+    <h1>部門管理</h1>
+  </div>
+  <div class="page-content-container cms-dept__content" *ngIf="depts$|async;let depts">
+    <cms-tree class="cms-tree" [defaultExpandLevel]="-1" [context]="this" [nodeDatas]="depts"
+      [customNodeRenderer]="customNodeRenderer" (customEvent)="onCustomEvent($event, depts)"
+      (afterRender)="afterTreeRender($event, depts)"></cms-tree>
+  </div>
+</div>

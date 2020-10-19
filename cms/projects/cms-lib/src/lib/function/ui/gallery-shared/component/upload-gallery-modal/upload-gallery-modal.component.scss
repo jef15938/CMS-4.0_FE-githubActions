@@ -1,0 +1,31 @@
+.cms-upload-gallery-modal {
+  &__btn-group {}
+
+  &__upload {
+    display: table;
+    width: 100%;
+    margin-top: 10px;
+
+    &__progress {
+      margin-top: 10px;
+    }
+
+    &__item {
+      display: table-row;
+    }
+
+    &__suffix {
+      display: flex;
+      margin-top: 10px;
+      line-height: 36px;
+      align-items: center;
+
+      &__ele {
+        mat-icon {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+}

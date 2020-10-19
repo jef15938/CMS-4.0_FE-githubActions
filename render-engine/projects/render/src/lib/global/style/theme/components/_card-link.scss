@@ -1,0 +1,185 @@
+@mixin rdr-card-link-frame-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-card-link-frame' !default;
+  $bg-color: map-get($theme, white_1) !default;
+  $hover-color: #a0c7c0;
+  $pressed-color: map-get($theme, duck_egg_blue) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-card-link-frame.rdr-cp';
+  }
+
+  #{$selector} {
+    .card-link-frame {
+      background-color: $bg-color;
+
+      &:hover {
+        border-color: $hover-color;
+      }
+
+      &:active,
+      &:focus {
+        border-color: transparent;
+        background-color: $pressed-color;
+      }
+    }
+  }
+}
+
+//base card link
+@mixin rdr-card-link-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-card-link' !default;
+  $font-color: map-get($theme, black_1) !default;
+  $arrow-color: map-get($theme, color_primary) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-card-link.rdr-cp';
+  }
+
+  #{$selector} {
+    .card-link {
+
+      &__title {
+        color: $font-color;
+      }
+    }
+  }
+}
+
+
+//card news link
+@mixin rdr-card-news-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-card-news' !default;
+  $date-font-color: map-get($theme, brown_grey_1) !default;
+  $title-font-color: map-get($theme, black_0) !default;
+  $desc-font-color: map-get($theme, brownish_grey) !default;
+  $arrow-color: map-get($theme, color_primary) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-card-news.rdr-cp';
+  }
+
+  #{$selector} {
+    .card-news {
+
+      &__date {
+        color: $date-font-color;
+      }
+
+      &__title {
+        color: $title-font-color;
+      }
+
+      &__desc {
+        color: $desc-font-color;
+      }
+    }
+  }
+}
+
+//card activity link
+@mixin rdr-card-activity-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-card-activity' !default;
+  $date-font-color: map-get($theme, brown_grey_1) !default;
+  $subtitle-font-color: map-get($theme, color_primary) !default;
+  $title-font-color: map-get($theme, black_0) !default;
+  $desc-font-color: map-get($theme, brownish_grey) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-card-activity.rdr-cp';
+  }
+
+  #{$selector} {
+    .card-activity {
+
+      &__date {
+        color: $date-font-color;
+      }
+
+      &__subtitle {
+        color: $subtitle-font-color;
+      }
+
+      &__title {
+        color: $title-font-color;
+      }
+
+      &__desc {
+        color: $desc-font-color;
+      }
+    }
+  }
+}
+
+//card journal link
+@mixin rdr-card-journal-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-card-journal' !default;
+  $title-font-color: map-get($theme, color_primary) !default;
+  $subtitle-font-color: map-get($theme, black_1) !default;
+  $desc-font-color: map-get($theme, brownish_grey) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-card-journal.rdr-cp';
+  }
+
+  #{$selector} {
+    .card-journal {
+
+      &__title {
+        color: $title-font-color;
+      }
+
+      &__subtitle {
+        color: $subtitle-font-color;
+      }
+
+      &__desc {
+        color: $desc-font-color;
+      }
+    }
+  }
+}
+
+//card news list
+@mixin rdr-card-news-list-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-card-news-list' !default;
+  $bg-color: map-get($theme, white_1) !default;
+  $title-font-color: map-get($theme, color_primary) !default;
+  $line-color: map-get($theme, very_light_pink_1) !default;
+  $item-font-color: map-get($theme, black_0) !default;
+  $item-date-font-color: map-get($theme, brown_grey_0) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-card-news-list.rdr-cp';
+  }
+
+  #{$selector} {
+    background-color: $bg-color;
+
+    .card-news-list {
+
+      &__title {
+        color: $title-font-color;
+      }
+
+      &__item {
+        +.card-news-list__item {
+          border-color: $line-color;
+        }
+
+        &-title {
+          color: $item-font-color;
+        }
+
+        &-date {
+          color: $item-date-font-color;
+        }
+      }
+    }
+  }
+}

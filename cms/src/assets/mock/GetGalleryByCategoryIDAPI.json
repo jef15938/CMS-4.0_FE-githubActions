@@ -1,0 +1,37 @@
+{
+  "pageInfo": {
+    "totalPageSize": 6,
+    "totalRecSize": 51,
+    "page": 1
+  },
+  "datas": [
+    {
+      "gallery_id": 1,
+      "file_name": "img01.jpg",
+      "size": "128kb",
+      "file_type": "img",
+      "create_time": ""
+    },
+    {
+      "gallery_id": 2,
+      "file_name": "doc01.docx",
+      "size": "1mb",
+      "file_type": "doc",
+      "create_time": ""
+    },
+    {
+      "gallery_id": 3,
+      "file_name": "xls01.xls",
+      "size": "512kb",
+      "file_type": "xls",
+      "create_time": ""
+    },
+    {
+      "gallery_id": 4,
+      "file_name": "pdf01.pdf",
+      "size": "2mb",
+      "file_type": "pdf",
+      "create_time": ""
+    }
+  ]
+}

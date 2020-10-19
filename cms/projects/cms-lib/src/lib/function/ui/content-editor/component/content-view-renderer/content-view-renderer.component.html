@@ -1,0 +1,13 @@
+<div class="view-container">
+  <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)" animationDuration="0ms">
+    <mat-tab *ngFor="let language of contentInfo.languages;let i=index;" [label]="language.languageName">
+      <ng-container *ngFor="let block of language.blocks">
+        <div [attr.blockId]="block.blockId">
+          <rdr-templates-container [templates]="$any(block.templates)" mode="edit" [sites]="null"
+            (select)="onSelect($event)" (enter)="onEnter($event)" (leave)="onLeave($event)">
+          </rdr-templates-container>
+        </div>
+      </ng-container>
+    </mat-tab>
+  </mat-tab-group>
+</div>

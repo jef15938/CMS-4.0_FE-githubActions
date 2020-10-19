@@ -1,0 +1,7 @@
+.readonly {
+  cursor: not-allowed;
+
+  mat-form-field {
+    pointer-events: none;
+  }
+}

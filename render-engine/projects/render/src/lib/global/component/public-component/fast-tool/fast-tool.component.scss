@@ -1,0 +1,28 @@
+@import "public-style.scss";
+
+@include rdr-fast-tool-theme;
+
+rdr-fast-tool {
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  width: 54px;
+  padding: 16px 16px 20px;
+  border-width: 0.5px;
+  border-style: solid;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+
+  .fast-tool {
+    &__text {
+      @include fz-callout-18-center;
+      margin-bottom: 8px;
+    }
+  }
+
+  &:after {
+    @include rdr-icon(5, 2, 19px);
+    content: '';
+    transform: rotate(180deg);
+  }
+}

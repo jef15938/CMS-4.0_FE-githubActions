@@ -1,0 +1,30 @@
+$top: 36px;
+$padding: 16px;
+
+:host{
+  display: block;
+  height: 100%;
+}
+
+::ng-deep .cms-cropper-modal mat-dialog-container {
+  padding: 0;
+}
+
+.cropper__tools {
+  height: $top;
+}
+
+.cropper__ele {
+  overflow: auto;
+  width: 100%;
+  padding: $padding;
+  height: calc(100% - #{$top});
+}
+
+::ng-deep {
+  .cms-cropper-modal {
+    .modal-custom__content {
+      height: 100%;
+    }
+  }
+}

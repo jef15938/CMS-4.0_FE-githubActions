@@ -1,0 +1,26 @@
+<div class="gallery-category-maintain-modal">
+  <form #form="ngForm" class="gallery-category-maintain-modal__form">
+    <div class="gallery-category-maintain-modal__block">
+      <mat-form-field appearance="outline">
+        <mat-label>目錄名稱</mat-label>
+        <input matInput [(ngModel)]="categoryName" name="categoryName" required maxlength="50" #modelName="ngModel">
+        <div matSuffix class="input-suffix">({{categoryName?.length||0}}/50)</div>
+        <mat-error *ngIf="modelName?.errors?.required">必填欄位</mat-error>
+      </mat-form-field>
+    </div>
+    <hr class="gallery-category-maintain-modal__divider">
+    <div class="gallery-category-maintain-modal__block">
+      <h3>選擇部門</h3>
+      <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="depts" [checkedNodes]="checkedDepts"
+        [checkboxDisabled]="deptDisabled" nodeDisplayField="deptName" [checkbox]="true" [defaultExpandLevel]="-1"
+        (nodesCheckedChange)="onNodesCheckedChange($event)">
+      </cms-tree>
+    </div>
+    <div class="gallery-category-maintain-modal__btn-group btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">取消</button>
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm" (click)="confirm()"
+        [disabled]="form.invalid">儲存</button>
+    </div>
+  </form>
+
+</div>

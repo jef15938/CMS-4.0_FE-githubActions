@@ -1,0 +1,14 @@
+@import 'public-style.scss';
+
+:host {
+  display: block;
+  background-color: $very-light-pink-three;
+}
+
+.news {
+  &__title {}
+
+  &__content {
+    margin-bottom: 32px;
+  }
+}

@@ -1,0 +1,8 @@
+<div>
+  目前輸入：{{selected?.fieldInfo?.fieldVal?.length||0}}/{{maxLength||'無限制'}}，還剩：{{maxLength?maxLength-(selected?.fieldInfo?.fieldVal?.length||0):'無限制'}}字元
+</div>
+<br>
+<mat-form-field appearance="outline">
+  <mat-label>內文</mat-label>
+  <input matInput [maxlength]="maxLength" [(ngModel)]="selected.fieldInfo.fieldVal" (keydown)="change.emit()">
+</mat-form-field>
