@@ -3,4 +3,8 @@ import { ContentTemplateInfoModel } from '../api/data-model/models/content-templ
 
 export interface TabTemplateInfo extends ContentTemplateInfoModel {
   tabList: TabInfo[];
+  attributes: {
+    maxItemCounts: number;
+    maxTotalTitlesLength: number,
+  };
 }

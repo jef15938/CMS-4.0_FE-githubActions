@@ -3,4 +3,8 @@ import { ContentFieldInfoModel } from '../api/data-model/models/content-field-in
 
 export interface GroupTemplateInfo extends ContentTemplateInfoModel {
   itemList: ContentFieldInfoModel[][];
+  attributes: {
+    maxItemCounts: number;
+    itemDisplayFieldId: string;
+  };
 }

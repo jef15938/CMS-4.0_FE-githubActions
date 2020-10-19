@@ -3,5 +3,8 @@ import { ContentFieldInfoModel } from '../api/data-model/models/content-field-in
 
 export interface TabInfo extends ContentFieldInfoModel {
   tabId: string;
+  extension: {
+    titleMaxLength: number;
+  };
   children: ContentTemplateInfoModel[];
 }

@@ -16,7 +16,10 @@ export class ListComponent extends GroupTemplateBaseComponent {
     id: '',
     templateId: TEMPLATE_ID,
     fields: [],
-    attributes: {},
+    attributes: {
+      maxItemCounts: 4,
+      itemDisplayFieldId: 'title',
+    },
     itemList: [
       [
         {
@@ -34,9 +37,6 @@ export class ListComponent extends GroupTemplateBaseComponent {
       ]
     ],
   };
-
-  maxItemCount = 4;
-  groupItemDisplayFieldId = 'title';
 
   constructor(injector: Injector) { super(injector, TEMPLATE_ID); }
 

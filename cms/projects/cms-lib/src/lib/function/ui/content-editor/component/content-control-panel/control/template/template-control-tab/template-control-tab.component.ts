@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo, TabTemplateBaseComponent } from '@neux/render';
+import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo } from '@neux/render';
 import { ContentControlBase } from '../../_base';
 import { ModalService } from '../../../../../../../../function/ui/modal';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
@@ -13,7 +13,6 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
 
   parseInt = parseInt;
 
-  maxItemCount: number;
   templateInfo: TabTemplateInfo;
 
   constructor(
@@ -24,8 +23,6 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     if (changes.selected) {
       const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as TabTemplateInfo;
-      const componentInstance = event.componentRef.instance as TabTemplateBaseComponent;
-      this.maxItemCount = componentInstance.maxItemCount;
     }
   }
 
@@ -53,7 +50,9 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
 
   copyTab(tab: TabInfo) {
     try {
-      this.templateInfo.tabList.push(JSON.parse(JSON.stringify(tab)));
+      const newTab: TabInfo = JSON.parse(JSON.stringify(tab));
+      newTab.tabId = `${new Date().getTime()}`;
+      this.templateInfo.tabList.push(newTab);
       this.change.emit();
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'TemplateControlTabComponent.copyTab()', 'JSON 資料解析錯誤');
@@ -67,6 +66,27 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     }
     this.templateInfo.tabList.splice(this.templateInfo.tabList.indexOf(tab), 1);
     this.change.emit();
+  }
+
+  onInputModelChange(inputValue: string, tab: TabInfo, input: HTMLInputElement) {
+    const currentTotalLength = this.countTotalTitlesLength();
+    const oldValue = tab.fieldVal;
+    const currentTabTitleLength = oldValue?.length || 0;
+    const newTabTitleLength = inputValue?.length || 0;
+    const maxTotalTitlesLength = this.templateInfo?.attributes?.maxTotalTitlesLength || 0;
+    const calculatedLength = currentTotalLength - currentTabTitleLength + newTabTitleLength;
+    tab.fieldVal = inputValue;
+    if (maxTotalTitlesLength > 0 && calculatedLength > maxTotalTitlesLength) {
+      input.blur();
+      input.value = oldValue;
+      tab.fieldVal = oldValue;
+      this.modalService.openMessage({ message: '頁籤標題總字數超過限制' }).subscribe();
+    }
+  }
+
+  countTotalTitlesLength() {
+    const tabs = this.templateInfo?.tabList || [];
+    return tabs.map(t => t.fieldVal || '').reduce((a, b) => a + b.length, 0);
   }
 
 

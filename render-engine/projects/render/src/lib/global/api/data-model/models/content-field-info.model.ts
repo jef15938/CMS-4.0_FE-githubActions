@@ -31,6 +31,6 @@ export class ContentFieldInfoModel {
   @IsNotEmpty()
   public fieldVal: string;
   @IsNotEmpty()
-  public extension: { [key: string]: string };
+  public extension: { [key: string]: any };
 
 }

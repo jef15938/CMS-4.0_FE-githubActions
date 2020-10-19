@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, GroupTemplateInfo, GroupTemplateBaseComponent } from '@neux/render';
+import { LayoutWrapperSelectEvent, GroupTemplateInfo } from '@neux/render';
 import { ContentControlBase } from '../../_base';
 import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-model/models/content-field-info.model';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
@@ -16,9 +16,6 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
 
   templateInfo: GroupTemplateInfo;
 
-  maxItemCount: number;
-  groupItemDisplayFieldId: string;
-
   constructor(
     private modalService: ModalService
   ) { super(); }
@@ -27,9 +24,6 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
     if (changes.selected) {
       const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as GroupTemplateInfo;
-      const componentInstance = event.componentRef.instance as GroupTemplateBaseComponent;
-      this.groupItemDisplayFieldId = componentInstance.groupItemDisplayFieldId;
-      this.maxItemCount = componentInstance.maxItemCount;
     }
   }
 

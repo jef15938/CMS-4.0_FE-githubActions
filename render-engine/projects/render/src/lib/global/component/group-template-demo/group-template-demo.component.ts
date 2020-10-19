@@ -15,12 +15,12 @@ export class GroupTemplateDemoComponent extends GroupTemplateBaseComponent {
     id: '',
     templateId: TEMPLATE_ID,
     fields: [],
-    attributes: {},
+    attributes: {
+      maxItemCounts: 4,
+      itemDisplayFieldId: 'name',
+    },
     itemList: [],
   };
-
-  maxItemCount = 4;
-  groupItemDisplayFieldId = 'name';
 
   constructor(injector: Injector) { super(injector, TEMPLATE_ID); }
 

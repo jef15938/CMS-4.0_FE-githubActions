@@ -12,33 +12,35 @@ const TEMPLATE_ID = 'Tab';
   styleUrls: ['./tab-carousel-template.component.scss']
 })
 export class TabCarouselTemplateComponent extends TabTemplateBaseComponent implements OnInit {
-  maxItemCount = 20;
   defaultTemplateInfo: TabTemplateInfo = {
     id: 'tp1',
     templateId: TEMPLATE_ID,
     fields: [],
-    attributes: {},
-    tabList: [{
-      fieldId: 'f1',
-      fieldType: ContentFieldInfoFieldType.GROUP,
-      fieldVal: '',
-      extension: {},
-      tabId: '標籤最多十五個字標籤最多十五個',
-      children: [{
-        id: 'c1',
-        templateId: 'IconPage',
-        fields: [],
-        attributes: {}
-      }]
+    attributes: {
+      maxItemCounts: 20,
+      maxTotalTitlesLength: 1000,
     },
-    {
-      fieldId: 'f2',
-      fieldType: ContentFieldInfoFieldType.GROUP,
-      fieldVal: '',
-      extension: {},
-      tabId: '標籤最多十五個字',
-      children: []
-    }
+    tabList: [
+      {
+        fieldId: 'f1',
+        fieldType: ContentFieldInfoFieldType.GROUP,
+        fieldVal: '標籤一',
+        extension: {
+          titleMaxLength: 15,
+        },
+        tabId: 't1',
+        children: []
+      },
+      {
+        fieldId: 'f2',
+        fieldType: ContentFieldInfoFieldType.GROUP,
+        fieldVal: '標籤二',
+        extension: {
+          titleMaxLength: 15,
+        },
+        tabId: 't2',
+        children: []
+      }
     ]
   };
 
@@ -51,6 +53,6 @@ export class TabCarouselTemplateComponent extends TabTemplateBaseComponent imple
 
 
   tabData(item): TabData {
-    return { title: item.tabId, content: item.children };
+    return { title: item.fieldVal, content: item.children };
   }
 }

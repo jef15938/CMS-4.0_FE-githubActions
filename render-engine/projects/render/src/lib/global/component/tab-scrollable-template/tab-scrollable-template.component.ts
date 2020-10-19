@@ -12,31 +12,33 @@ const TEMPLATE_ID = 'Tab';
   styleUrls: ['./tab-scrollable-template.component.scss']
 })
 export class TabScrollableTemplateComponent extends TabTemplateBaseComponent implements OnInit {
-  maxItemCount = 8;
+
   defaultTemplateInfo: TabTemplateInfo = {
     id: 'tp1',
     templateId: TEMPLATE_ID,
     fields: [],
-    attributes: {},
+    attributes: {
+      maxItemCounts: 8,
+      maxTotalTitlesLength: 1000,
+    },
     tabList: [{
       fieldId: 'f1',
       fieldType: ContentFieldInfoFieldType.GROUP,
-      fieldVal: '',
-      extension: {},
-      tabId: '標籤最多六字',
-      children: [{
-        id: 'c1',
-        templateId: 'IconPage',
-        fields: [],
-        attributes: {}
-      }]
+      fieldVal: '標籤最多六字',
+      extension: {
+        titleMaxLength: 6,
+      },
+      tabId: 't1',
+      children: []
     },
     {
       fieldId: 'f2',
       fieldType: ContentFieldInfoFieldType.GROUP,
-      fieldVal: '',
-      extension: {},
-      tabId: '標籤最多六字',
+      fieldVal: '標籤最多六字',
+      extension: {
+        titleMaxLength: 6,
+      },
+      tabId: 't2',
       children: []
     }
     ]
@@ -50,6 +52,6 @@ export class TabScrollableTemplateComponent extends TabTemplateBaseComponent imp
   }
 
   tabData(item): TabData {
-    return { title: item.tabId, content: item.children };
+    return { title: item.fieldVal, content: item.children };
   }
 }
