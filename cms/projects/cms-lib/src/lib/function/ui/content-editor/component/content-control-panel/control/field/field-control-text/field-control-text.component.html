@@ -1,5 +1,5 @@
 <div>
-  字數限制 : {{maxLength}}
+  目前輸入：{{selected?.fieldInfo?.fieldVal?.length||0}}/{{maxLength||'無限制'}}，還剩：{{maxLength?maxLength-(selected?.fieldInfo?.fieldVal?.length||0):'無限制'}}字元
 </div>
 <br>
 <mat-form-field appearance="outline">
