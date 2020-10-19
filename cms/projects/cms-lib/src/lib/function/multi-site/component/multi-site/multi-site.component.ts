@@ -204,7 +204,7 @@ export class MultiSiteComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private reOrderSiteNode(targetNodeId: string, parentNodeId: string, order: number) {
-    return this.sitemapService.reOrderSiteNode(targetNodeId, parentNodeId, 0).pipe(
+    return this.sitemapService.reOrderSiteNode(targetNodeId, parentNodeId, order).pipe(
       CmsErrorHandler.rxHandleError(),
     );
   }
