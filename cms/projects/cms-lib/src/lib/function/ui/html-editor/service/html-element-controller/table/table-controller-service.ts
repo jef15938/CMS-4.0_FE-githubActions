@@ -30,7 +30,7 @@ export class TableControllerService {
     const table = document.createElement('table');
 
     table.classList.add('neux-table');
-    table.setAttribute(TABLE_STYLE_ATTR, TableStyle.PERCENT);
+    this.setTableStyle(table, TableStyle.PERCENT);
     table.setAttribute('style', 'width: 99% !important;');
 
     const tHead = document.createElement('thead');
@@ -65,22 +65,21 @@ export class TableControllerService {
     td.style.setProperty('overflow', 'hidden');
   }
 
-  getTableSetting(table: HTMLTableElement): TableSetting {
-    const cols = table.querySelectorAll('thead > tr > td').length;
+  setTableStyle(table: HTMLTableElement, style: TableStyle) {
+    table.setAttribute(TABLE_STYLE_ATTR, style);
+  }
 
-    const styleAttr = table.getAttribute(TABLE_STYLE_ATTR);
-    let style = TableStyle.PERCENT;
-    switch (styleAttr) {
+  getTableStyle(table: HTMLTableElement): TableStyle {
+    const style = table.getAttribute(TABLE_STYLE_ATTR) as TableStyle;
+    switch (style) {
+      case TableStyle.PERCENT:
+        break;
       case TableStyle.SCROLL:
-        style = TableStyle.SCROLL;
         break;
       case TableStyle.SINGLE:
-        style = TableStyle.SINGLE;
         break;
     }
-
-    const tableSetting = { cols, style };
-    return tableSetting;
+    return style;
   }
 
   getWidthFromStyle(col: HTMLElement) {
@@ -106,7 +105,7 @@ export class TableControllerService {
       }
     }
 
-    const styleAttr = table.getAttribute(TABLE_STYLE_ATTR);
+    const styleAttr = this.getTableStyle(table);
 
     if (styleAttr !== TableStyle.SCROLL) {
       table.setAttribute('style', 'width:99% !important;');
@@ -279,7 +278,7 @@ export class TableControllerService {
             // console.warn('baseTdWidth = ', baseTdWidth);
             // console.warn('nextTdWidth = ', nextTdWidth);
 
-            const styleAttr = table.getAttribute(TABLE_STYLE_ATTR);
+            const styleAttr = this.getTableStyle(table);
             // console.warn('styleAttr = ', styleAttr);
             // console.warn('styleAttr === TableStyle.SCROLL = ', styleAttr === TableStyle.SCROLL);
 

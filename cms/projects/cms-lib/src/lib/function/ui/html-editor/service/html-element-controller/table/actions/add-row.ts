@@ -31,8 +31,8 @@ export class AddRow extends HtmlEditorActionBase {
     const baseRow = rowParentChildren[baseRowIndex];
 
     const newRow = document.createElement('tr');
-    const cols = this.controller.tableControllerService.getTableSetting(table).cols;
-    for (let col = 0; col < cols; ++col) {
+    const colCounts = this.getTableColCounts(table);
+    for (let col = 0; col < colCounts; ++col) {
       const td = this.controller.tableControllerService.createCell();
       newRow.appendChild(td);
     }
@@ -50,5 +50,9 @@ export class AddRow extends HtmlEditorActionBase {
 
     this.controller.checkTableState();
     return of(undefined);
+  }
+
+  getTableColCounts(table: HTMLTableElement): number {
+    return table?.querySelectorAll('thead > tr > td')?.length || 0;
   }
 }

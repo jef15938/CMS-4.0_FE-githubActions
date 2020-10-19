@@ -3,7 +3,7 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { HtmlEditorElementController } from '../_base';
 import { HtmlEditorContextMenuItem, HtmlEditorContext } from '../../../html-editor.interface';
 import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from './table-controller.interface';
-import { TableControllerService, TABLE_STYLE_ATTR, TableStyle } from './table-controller-service';
+import { TableControllerService, TableStyle } from './table-controller-service';
 import { DeleteRow } from './actions/delete-row';
 import { AddRow } from './actions/add-row';
 import { DeleteCol } from './actions/delete-col';
@@ -44,7 +44,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       }
 
       const styleItem = menuItems[4];
-      const style = this.getTableStyle();
+      const style = this.tableControllerService.getTableStyle(this.el);
       styleItem.defaultValue = style;
       const styleItemSingleOption = menuItems[4].selectionOptions[2];
       styleItemSingleOption.disabled = false;
@@ -115,14 +115,14 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       {
         text: '表格樣式', type: 'select',
         category: HtmlEditorActionCategory.TABLE,
-        defaultValue: this.getTableStyle(),
+        defaultValue: this.tableControllerService.getTableStyle(this.el),
         selectionOptions: [
           { text: '滿版縮放', value: TableStyle.PERCENT },
           { text: 'Scroll', value: TableStyle.SCROLL },
           { text: '單筆顯示', value: TableStyle.SINGLE },
         ],
         selectionChange: (ev) => {
-          this.el.setAttribute(TABLE_STYLE_ATTR, ev.value);
+          this.tableControllerService.setTableStyle(this.el, ev.value);
           this.tableControllerService.checkTableColsWidth(this.el);
           this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
         }
@@ -145,19 +145,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.contextMenuItemsTemp = undefined;
     this.unsubscribeCellSelection();
     this.tableControllerService.unregisterColResizer(this.tableIndex, this.context.editorContainer);
-  }
-
-  private getTableStyle(): TableStyle {
-    const style = this.el.getAttribute(TABLE_STYLE_ATTR) as TableStyle;
-    switch (style) {
-      case TableStyle.PERCENT:
-        break;
-      case TableStyle.SCROLL:
-        break;
-      case TableStyle.SINGLE:
-        break;
-    }
-    return style;
   }
 
   private subscribeEvents() {
