@@ -8,9 +8,13 @@ import { TransformDataPipe } from './transform-data.pipe';
 import { GetLanguageInfoPipe } from './get-language-info.pipe';
 import { StringToContentInfoModelPipe } from './string-to-content-info-model.pipe';
 import { EllipsisPipe } from './string-filter-format.pipe';
+import { SafeUrlPipe } from './safe-url.pipe';
+import { SafeResourcePipe } from './safe-resource.pipe';
 
 const PIPES = [
   SafeHtmlPipe,
+  SafeUrlPipe,
+  SafeResourcePipe,
   NewLineReplacePipe,
   GetFieldFromFieldsByIdPipe,
   AddResourceBaseUrlPipe,
