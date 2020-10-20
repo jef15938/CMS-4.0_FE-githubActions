@@ -34,7 +34,9 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
     const beforeIndex = ev.previousIndex;
     const afterIndex = ev.currentIndex;
     if (beforeIndex === afterIndex) { return; }
-    this.arrayMove(this.templateInfo.itemList, beforeIndex, afterIndex);
+    const itemList = [...(this.templateInfo.itemList || [])];
+    this.arrayMove(itemList, beforeIndex, afterIndex);
+    this.templateInfo.itemList = itemList;
     this.change.emit();
   }
 
@@ -51,7 +53,9 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
 
   copyGroup(group: ContentFieldInfoModel[]) {
     try {
-      this.templateInfo.itemList.push(JSON.parse(JSON.stringify(group)));
+      const itemList = [...(this.templateInfo.itemList || [])];
+      itemList.push(JSON.parse(JSON.stringify(group)));
+      this.templateInfo.itemList = itemList;
       this.change.emit();
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'TemplateControlGroupComponent.copyGroup()', 'JSON 資料解析錯誤');
@@ -63,7 +67,9 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
       this.modalService.openMessage({ message: '最後一個項目不可刪除' });
       return;
     }
-    this.templateInfo.itemList.splice(this.templateInfo.itemList.indexOf(group), 1);
+    const itemList = [...(this.templateInfo.itemList || [])];
+    itemList.splice(this.templateInfo.itemList.indexOf(group), 1);
+    this.templateInfo.itemList = itemList;
     this.change.emit();
   }
 
