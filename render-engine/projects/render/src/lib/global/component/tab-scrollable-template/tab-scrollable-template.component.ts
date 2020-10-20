@@ -52,6 +52,13 @@ export class TabScrollableTemplateComponent extends TabTemplateBaseComponent imp
   }
 
   tabData(item): TabData {
-    return { title: item.fieldVal, content: item.children };
+    return {
+      get title() {
+        return item.fieldVal;
+      },
+      get content() {
+        return item.children;
+      }
+    };
   }
 }
