@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver,
-  OnChanges, SimpleChanges, Inject, Optional, Injector
+  OnChanges, SimpleChanges, Inject, Optional, Injector, Type, AfterViewInit
 } from '@angular/core';
 import { Subject, of, Observable } from 'rxjs';
 import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { FarmTableDataInfoAction, FarmTableDataInfoModel } from '../../../global
 import { CmsErrorHandler } from '../../../global/error-handling';
 import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
 import { FarmFormInfoModel } from '../../../global/api/data-model/models/farm-form-info.model';
-import { FarmPlugin } from './farm-shared.interface';
+import { FarmPlugin, FarmPlugingCustomComponent, FarmPlugingCustomComponentParameter } from './farm-shared.interface';
 import { FARM_PLUGIN_TOKEN } from './farm-shared-injection-token';
 
 @Component({
@@ -25,10 +25,11 @@ import { FARM_PLUGIN_TOKEN } from './farm-shared-injection-token';
   templateUrl: './farm-shared.component.html',
   styleUrls: ['./farm-shared.component.scss']
 })
-export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
+export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 
   @ViewChild('FarmSearchComp') searchInfoComponent: FarmFormInfoComponent;
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
+  @ViewChild('CustomFooter', { read: ViewContainerRef }) customFooterViewContainerRef: ViewContainerRef;
 
   // @Input() title: string;
   @Input() categoryName: string;
@@ -40,10 +41,17 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   subComponentRef: ComponentRef<FarmSharedComponent>;
 
+  private viewInited = false;
   private currentTablePage = 1;
 
   destroyMe = new Subject();
   private destroy$ = new Subject();
+
+  customComponents: {
+    footer: ComponentRef<FarmPlugingCustomComponent>
+  } = {
+      footer: null,
+    };
 
   constructor(
     private farmSharedService: FarmSharedService,
@@ -59,6 +67,9 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
       this.destroySub();
       this.resetTablePage();
       this.farmPlugin = (this.farmPlugins || []).reverse().find(h => h.funcId === this.funcID);
+      if (this.viewInited) {
+        this.generateCustomComponents();
+      }
     }
   }
 
@@ -66,10 +77,36 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
+  ngAfterViewInit(): void {
+    this.generateCustomComponents();
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
     this.destroy$.unsubscribe();
+  }
+
+  private generateCustomComponents() {
+    this.customComponents.footer
+      = this.generateCustomComponent(this.farmPlugin?.customComponents?.main?.footer, this.customFooterViewContainerRef);
+  }
+
+  private generateCustomComponent(component: Type<any>, viewContainerRef: ViewContainerRef) {
+    if (!component || !viewContainerRef) { return null; }
+    const categoryId = (viewContainerRef.element.nativeElement as HTMLElement).getAttribute('categoryId');
+    viewContainerRef.clear();
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    const componentRef = viewContainerRef.createComponent<FarmPlugingCustomComponent>(componentFactory);
+
+    const params: FarmPlugingCustomComponentParameter = {
+      refresh: () => {
+        const category = this.farm.category.find(c => c.categoryId === categoryId);
+        return this.getCategoryTableInfo(category);
+      }
+    };
+    componentRef.instance?.onCompInit(params);
+    return componentRef;
   }
 
   private resetTablePage() {

@@ -1,4 +1,4 @@
-import { FarmPlugin, FarmPluginTableActionBtn, FarmPluginTableBottomBtn } from '../../../function/ui/farm-shared/farm-shared.interface';
+import { FarmPlugin, FarmPluginTableActionBtn } from '../../../function/ui/farm-shared/farm-shared.interface';
 import { ModalService } from '../../../function/ui/modal/modal.service';
 import { AdminGroupMenuSettingModalComponent } from '../../../function/admin-group/component/admin-group-menu-setting-modal/admin-group-menu-setting-modal.component';
 import { AdminGroupSitemapSettingModalComponent } from '../../../function/admin-group/component/admin-group-sitemap-setting-modal/admin-group-sitemap-setting-modal.component';
@@ -36,27 +36,6 @@ export class FarmPluginAdminGroup implements FarmPlugin {
             groupID
           }
         }, true).subscribe();
-      },
-    }
-  ];
-
-  tableBottomBtns: FarmPluginTableBottomBtn[] = [
-    {
-      text: '匯入情境 & 決策樹',
-      class: 'btn btn-confirm',
-      click: (ev) => {
-      },
-    },
-    {
-      text: '匯入方案',
-      class: 'btn btn-confirm',
-      click: (ev) => {
-      },
-    },
-    {
-      text: '送審',
-      class: 'btn btn-confirm',
-      click: (ev) => {
       },
     }
   ];
