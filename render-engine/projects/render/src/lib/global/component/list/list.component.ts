@@ -23,13 +23,17 @@ export class ListComponent extends GroupTemplateBaseComponent {
     itemList: [
       [
         {
-          extension: {},
+          extension: {
+            hideden: false,
+          },
           fieldId: 'title',
           fieldType: ContentFieldInfoFieldType.TEXT,
           fieldVal: '標題',
         },
         {
-          extension: {},
+          extension: {
+            hideden: false,
+          },
           fieldId: 'text',
           fieldType: ContentFieldInfoFieldType.TEXT,
           fieldVal: '內文',
