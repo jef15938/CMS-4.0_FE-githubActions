@@ -4,7 +4,7 @@
 import { RENDER_ENVIRONMENT_BASE } from './base';
 
 // const BASE_URL = 'http://runtime.decoder.com.tw';
-const BASE_URL = 'https://dev.walkflow.biz/api';
+const BASE_URL = 'https://dev.walkflow.biz/portal-api';
 const RESOUCE_BASE_URL = 'https://dev.walkflow.biz/cms-api';
 
 export const environment = {
