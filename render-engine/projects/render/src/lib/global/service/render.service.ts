@@ -58,7 +58,7 @@ export class RenderService {
    */
   getContentInfo(context: ApiContext, contentID: string): Observable<ContentInfoModel> {
     return (
-      context === 'runtime'
+      context === 'runtime' || context === 'batchSSR'
         ? this.apiService.GetContentByContentId({ content_id: contentID })
         : this.apiService.GetPreviewContentByContentId({ content_id: contentID })
     ).pipe(

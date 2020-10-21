@@ -10,7 +10,7 @@
   </div>
 </ng-template>
 
-<ng-container *ngIf="!pageEnv.isRuntime && mode==='preview'; else RuntimeBlock">
+<ng-container *ngIf="pageEnv.isBrowser && !pageEnv.isRuntime && mode==='preview'; else RuntimeBlock">
   <div class="btn-container" *ngIf="!isIframe">
     <div>
       <button type="button" (click)="toggleCompare()"
