@@ -13,8 +13,8 @@ export class FarmPluginAdminGroup implements FarmPlugin {
       fontSet: 'fontawasome',
       fontIcon: 'fa-tree',
       tooltip: '設定前台節點',
-      click: (row) => {
-        const groupID = row.columns[0]?.value;
+      click: (ev) => {
+        const groupID = ev.row.columns[0]?.value;
         this.modalService.openComponent({
           component: AdminGroupSitemapSettingModalComponent,
           componentInitData: {
@@ -28,8 +28,8 @@ export class FarmPluginAdminGroup implements FarmPlugin {
       fontSet: 'fontawasome',
       fontIcon: 'fa-sitemap',
       tooltip: '設定後台功能',
-      click: (row) => {
-        const groupID = row.columns[0]?.value;
+      click: (ev) => {
+        const groupID = ev.row.columns[0]?.value;
         this.modalService.openComponent({
           component: AdminGroupMenuSettingModalComponent,
           componentInitData: {
@@ -40,26 +40,26 @@ export class FarmPluginAdminGroup implements FarmPlugin {
     }
   ];
 
-  // tableBottomBtns: FarmPluginTableBottomBtn[] = [
-  //   {
-  //     text: '匯入情境 & 決策樹',
-  //     class: 'btn btn-confirm',
-  //     click: (funcId, farm, injector) => {
-  //     },
-  //   },
-  //   {
-  //     text: '匯入方案',
-  //     class: 'btn btn-confirm',
-  //     click: (funcId, farm, injector) => {
-  //     },
-  //   },
-  //   {
-  //     text: '送審',
-  //     class: 'btn btn-confirm',
-  //     click: (funcId, farm, injector) => {
-  //     },
-  //   }
-  // ];
+  tableBottomBtns: FarmPluginTableBottomBtn[] = [
+    {
+      text: '匯入情境 & 決策樹',
+      class: 'btn btn-confirm',
+      click: (ev) => {
+      },
+    },
+    {
+      text: '匯入方案',
+      class: 'btn btn-confirm',
+      click: (ev) => {
+      },
+    },
+    {
+      text: '送審',
+      class: 'btn btn-confirm',
+      click: (ev) => {
+      },
+    }
+  ];
 
   constructor(
     private modalService: ModalService,

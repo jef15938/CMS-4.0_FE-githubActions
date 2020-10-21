@@ -80,7 +80,7 @@
           <!-- FarmPlugin.tableActionBtns -->
           <ng-container *ngFor="let btn of (farmPlugin?.tableActionBtns||[])">
             <button type="button" tabindex="0" mat-icon-button [matTooltip]="btn.tooltip" [class]="btn.class||''"
-              (click)="btn.click(element, tableInfo, injector)">
+              (click)="btn.click({row:element, table:tableInfo, injector:injector})">
               <mat-icon [fontSet]="btn.fontSet" [fontIcon]="btn.fontIcon" [class]="btn.class||''">
                 <ng-container *ngIf="btn.icon">{{btn.icon}}</ng-container>
               </mat-icon>

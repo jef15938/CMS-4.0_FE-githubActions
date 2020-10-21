@@ -5,6 +5,7 @@ import { FarmFormInfoModel, FarmFormInfoModelColumn } from '../../../global/api/
 import { FarmTableDataInfoModel } from '../../../global/api/data-model/models/farm-table-data-info.model';
 import { FarmTableInfoModel } from '../../../global/api/data-model/models/farm-table-info.model';
 import { FarmInfoGetResponseModel } from '../../../global/api/data-model/models/farm-info-get-response.model';
+import { FarmCategoryInfoModel } from '../../../global/api/data-model/models/farm-category-info.model';
 
 export interface FarmPlugin {
   funcId: string;
@@ -25,11 +26,20 @@ export interface FarmPluginTableActionBtn {
   fontIcon?: string;
   tooltip?: string;
   class?: string;
-  click: (row: FarmTableDataInfoModel, table: FarmTableInfoModel, injector: Injector) => void;
+  click: (event: {
+    row: FarmTableDataInfoModel,
+    table: FarmTableInfoModel,
+    injector: Injector
+  }) => void;
 }
 
 export interface FarmPluginTableBottomBtn {
   text: string;
   class?: string;
-  click: (funcID: string, farm: FarmInfoGetResponseModel, injector: Injector) => void;
+  click: (event: {
+    funcID: string,
+    farm: FarmInfoGetResponseModel,
+    category: FarmCategoryInfoModel,
+    injector: Injector
+  }) => void;
 }

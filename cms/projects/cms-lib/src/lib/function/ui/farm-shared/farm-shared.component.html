@@ -33,7 +33,7 @@
             <div class="table-bottom-btns-container page-content-container"
               *ngIf="farmPlugin?.tableBottomBtns; let btns">
               <button *ngFor="let btn of btns" type="button" tabindex="0" mat-raised-button [class]="btn.class||''"
-                (click)="btn.click(funcID, farm, injector)">
+                (click)="btn.click({funcID:funcID, farm:farm, category:category, injector:injector})">
                 {{btn.text}}
               </button>
             </div>
