@@ -8,7 +8,7 @@ import { RenderService } from '../../service/render.service';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
 import { RenderedPageEnvironment } from '../../interface/page-environment.interface';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
 enum PreviewSize {
