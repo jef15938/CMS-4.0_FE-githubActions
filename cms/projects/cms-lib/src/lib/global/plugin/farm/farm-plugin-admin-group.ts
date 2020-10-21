@@ -1,8 +1,5 @@
-import { FarmPlugin, FarmTableActionBtn } from '../../../function/ui/farm-shared/farm-shared.interface';
+import { FarmPlugin, FarmPluginTableActionBtn, FarmPluginTableBottomBtn } from '../../../function/ui/farm-shared/farm-shared.interface';
 import { ModalService } from '../../../function/ui/modal/modal.service';
-import { FarmTableDataInfoModel } from '../../api/data-model/models/farm-table-data-info.model';
-import { FarmTableInfoModel } from '../../api/data-model/models/farm-table-info.model';
-import { Injector } from '@angular/core';
 import { AdminGroupMenuSettingModalComponent } from '../../../function/admin-group/component/admin-group-menu-setting-modal/admin-group-menu-setting-modal.component';
 import { AdminGroupSitemapSettingModalComponent } from '../../../function/admin-group/component/admin-group-sitemap-setting-modal/admin-group-sitemap-setting-modal.component';
 
@@ -10,13 +7,13 @@ export class FarmPluginAdminGroup implements FarmPlugin {
 
   readonly funcId = 'admin_group';
 
-  tableActions: FarmTableActionBtn[] = [
+  tableActionBtns: FarmPluginTableActionBtn[] = [
     {
       icon: '',
       fontSet: 'fontawasome',
       fontIcon: 'fa-tree',
       tooltip: '設定前台節點',
-      click: (row: FarmTableDataInfoModel, table: FarmTableInfoModel, injector: Injector) => {
+      click: (row) => {
         const groupID = row.columns[0]?.value;
         this.modalService.openComponent({
           component: AdminGroupSitemapSettingModalComponent,
@@ -31,7 +28,7 @@ export class FarmPluginAdminGroup implements FarmPlugin {
       fontSet: 'fontawasome',
       fontIcon: 'fa-sitemap',
       tooltip: '設定後台功能',
-      click: (row: FarmTableDataInfoModel) => {
+      click: (row) => {
         const groupID = row.columns[0]?.value;
         this.modalService.openComponent({
           component: AdminGroupMenuSettingModalComponent,
@@ -42,6 +39,27 @@ export class FarmPluginAdminGroup implements FarmPlugin {
       },
     }
   ];
+
+  // tableBottomBtns: FarmPluginTableBottomBtn[] = [
+  //   {
+  //     text: '匯入情境 & 決策樹',
+  //     class: 'btn btn-confirm',
+  //     click: (funcId, farm, injector) => {
+  //     },
+  //   },
+  //   {
+  //     text: '匯入方案',
+  //     class: 'btn btn-confirm',
+  //     click: (funcId, farm, injector) => {
+  //     },
+  //   },
+  //   {
+  //     text: '送審',
+  //     class: 'btn btn-confirm',
+  //     click: (funcId, farm, injector) => {
+  //     },
+  //   }
+  // ];
 
   constructor(
     private modalService: ModalService,

@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver,
-  OnChanges, SimpleChanges
+  OnChanges, SimpleChanges, Inject, Optional, Injector
 } from '@angular/core';
 import { Subject, of, Observable } from 'rxjs';
 import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
@@ -17,6 +17,8 @@ import { FarmTableDataInfoAction, FarmTableDataInfoModel } from '../../../global
 import { CmsErrorHandler } from '../../../global/error-handling';
 import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
 import { FarmFormInfoModel } from '../../../global/api/data-model/models/farm-form-info.model';
+import { FarmPlugin } from './farm-shared.interface';
+import { FARM_PLUGIN_TOKEN } from './farm-shared-injection-token';
 
 @Component({
   selector: 'cms-farm-shared',
@@ -34,6 +36,8 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   @Input() funcID = '';
   @Input() farm: FarmInfoGetResponseModel;
 
+  farmPlugin: FarmPlugin;
+
   subComponentRef: ComponentRef<FarmSharedComponent>;
 
   private currentTablePage = 1;
@@ -46,12 +50,15 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     private farmService: FarmService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private modalService: ModalService,
+    public injector: Injector,
+    @Inject(FARM_PLUGIN_TOKEN) @Optional() private farmPlugins: FarmPlugin[],
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.farm) {
       this.destroySub();
       this.resetTablePage();
+      this.farmPlugin = (this.farmPlugins || []).reverse().find(h => h.funcId === this.funcID);
     }
   }
 

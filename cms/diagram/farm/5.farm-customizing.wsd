@@ -14,6 +14,6 @@ note right: onFormGalleryColumnBeforeSelectImage?(...args): Observable<any>
 
 customHandler -> tableInfo: inject
 tableInfo -> tableInfo
-note right: tableActions?: FarmTableActionBtn[]
+note right: tableActionBtns?: FarmPluginTableActionBtn[]
 
 @enduml

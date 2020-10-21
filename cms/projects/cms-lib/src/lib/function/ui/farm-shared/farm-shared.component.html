@@ -29,6 +29,14 @@
                 (actionClick)="onTableActionClick(category, $event)" (pageChange)="onTablePageChange(category, $event)">
               </cms-farm-table-info>
             </div>
+            <!-- FarmPlugin.tableBottomBtns -->
+            <div class="table-bottom-btns-container page-content-container"
+              *ngIf="farmPlugin?.tableBottomBtns; let btns">
+              <button *ngFor="let btn of btns" type="button" tabindex="0" mat-raised-button [class]="btn.class||''"
+                (click)="btn.click(funcID, farm, injector)">
+                {{btn.text}}
+              </button>
+            </div>
           </ng-template>
         </mat-tab>
       </mat-tab-group>
