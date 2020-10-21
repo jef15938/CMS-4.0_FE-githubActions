@@ -33,12 +33,12 @@ export class RenderService {
 
     const dispatch = !!lang
       ? (
-        context === 'runtime'
+        context === 'runtime' || context === 'batchSSR'
           ? this.apiService.GetPageByPageIdAndLang({ page_id: pageID, lang })
           : this.apiService.GetPreviewPageByPageIdAndLang({ page_id: pageID, lang })
       )
       : (
-        context === 'runtime'
+        context === 'runtime' || context === 'batchSSR'
           ? this.apiService.GetPageByPageId({ page_id: pageID })
           : this.apiService.GetPreviewPageByPageId({ page_id: pageID })
       )
@@ -58,7 +58,7 @@ export class RenderService {
    */
   getContentInfo(context: ApiContext, contentID: string): Observable<ContentInfoModel> {
     return (
-      context === 'runtime'
+      context === 'runtime' || context === 'batchSSR'
         ? this.apiService.GetContentByContentId({ content_id: contentID })
         : this.apiService.GetPreviewContentByContentId({ content_id: contentID })
     ).pipe(
