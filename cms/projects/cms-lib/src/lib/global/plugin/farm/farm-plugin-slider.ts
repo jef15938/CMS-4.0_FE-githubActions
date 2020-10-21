@@ -1,4 +1,4 @@
-import { FarmCustomHandler } from '../../../function/ui/farm-shared/farm-shared.interface';
+import { FarmPlugin } from '../../../function/ui/farm-shared/farm-shared.interface';
 import { NEVER, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SliderService } from '../../api/service/slider/slider.service';
@@ -7,7 +7,7 @@ import { CmsErrorHandler } from '../../error-handling/cms-error-handler';
 import { ModalService } from '../../../function/ui/modal/modal.service';
 import { FormGroup } from '@angular/forms';
 
-export class FarmCustomHandlerSlider implements FarmCustomHandler {
+export class FarmPluginSlider implements FarmPlugin {
 
   readonly funcId = 'slider';
 

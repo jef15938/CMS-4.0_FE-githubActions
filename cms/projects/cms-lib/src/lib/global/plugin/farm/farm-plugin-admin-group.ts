@@ -1,4 +1,4 @@
-import { FarmCustomHandler, FarmTableActionBtn } from '../../../function/ui/farm-shared/farm-shared.interface';
+import { FarmPlugin, FarmTableActionBtn } from '../../../function/ui/farm-shared/farm-shared.interface';
 import { ModalService } from '../../../function/ui/modal/modal.service';
 import { FarmTableDataInfoModel } from '../../api/data-model/models/farm-table-data-info.model';
 import { FarmTableInfoModel } from '../../api/data-model/models/farm-table-info.model';
@@ -6,7 +6,7 @@ import { Injector } from '@angular/core';
 import { AdminGroupMenuSettingModalComponent } from '../../../function/admin-group/component/admin-group-menu-setting-modal/admin-group-menu-setting-modal.component';
 import { AdminGroupSitemapSettingModalComponent } from '../../../function/admin-group/component/admin-group-sitemap-setting-modal/admin-group-sitemap-setting-modal.component';
 
-export class FarmCustomHandlerAdminGroup implements FarmCustomHandler {
+export class FarmPluginAdminGroup implements FarmPlugin {
 
   readonly funcId = 'admin_group';
 

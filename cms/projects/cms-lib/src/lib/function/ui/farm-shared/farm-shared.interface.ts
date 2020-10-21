@@ -5,7 +5,7 @@ import { FarmTableDataInfoModel } from '../../../global/api/data-model/models/fa
 import { FarmTableInfoModel } from '../../../global/api/data-model/models/farm-table-info.model';
 import { FormGroup } from '@angular/forms';
 
-export interface FarmCustomHandler {
+export interface FarmPlugin {
   funcId: string;
 
   tableActions?: FarmTableActionBtn[];
