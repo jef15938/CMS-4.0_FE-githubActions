@@ -67,7 +67,7 @@ export class RenderService {
   }
 
   getSitemapJson(): Observable<SiteMapGetResponse> {
-    return this.httpClient.get<SiteMapGetResponse>('./sitemap.json').pipe(
+    return this.httpClient.get<SiteMapGetResponse>('/sitemap.json').pipe(
       map(res => plainToClass(SiteMapGetResponse, res)),
     );
   }
