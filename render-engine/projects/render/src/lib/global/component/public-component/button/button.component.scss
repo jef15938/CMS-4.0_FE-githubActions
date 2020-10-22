@@ -14,6 +14,10 @@ rdr-button {
   [nx-btn].nx-cp {
     @include fz-callout-18-left;
 
+    @include rwd($nx-screen-pad-portrait - 1) {
+      @include fz-callout-16-left;
+    }
+
     &.nx-color--distinct {
       >.btn--full {
         border-style: solid;
