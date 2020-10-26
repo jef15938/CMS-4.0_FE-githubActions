@@ -57,7 +57,7 @@ rdr-tab-carousel-frame {
       @include rdr-icon(4, 2, 20px);
       cursor: pointer;
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         width: 14px;
         height: 14px;
         background-position: -42px -14px;

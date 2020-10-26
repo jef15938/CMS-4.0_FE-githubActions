@@ -8,7 +8,7 @@ rdr-card-news-list {
   border-radius: 10px;
   box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
 
-  @include rwd($nx-screen-pad-portrait - 1) {
+  @include rwd($bp-sm-max) {
     padding: 24px 24px 40px;
   }
 
@@ -20,7 +20,7 @@ rdr-card-news-list {
     &__content {
       margin-bottom: 8px;
 
-      @include rwd($nx-screen-pad-portrait - 1) {
+      @include rwd($bp-sm-max) {
         margin-bottom: 20px;
       }
     }
@@ -39,7 +39,7 @@ rdr-card-news-list {
           white-space: normal;
         }
 
-        @include rwd($nx-screen-pad-portrait - 1) {
+        @include rwd($bp-sm-max) {
           @include fz-callout-15-left;
           margin-bottom: 3px;
         }
@@ -48,7 +48,7 @@ rdr-card-news-list {
       &-date {
         @include fz-body-17-left-bold;
 
-        @include rwd($nx-screen-pad-portrait - 1) {
+        @include rwd($bp-sm-max) {
           @include fz-footnote-14-left;
         }
       }
@@ -59,7 +59,7 @@ rdr-card-news-list {
       display: block;
       padding: 16px 42px 16px 0;
 
-      @include rwd($nx-screen-pad-portrait - 1) {
+      @include rwd($bp-sm-max) {
         padding: 12px 30px 12px 0;
       }
 

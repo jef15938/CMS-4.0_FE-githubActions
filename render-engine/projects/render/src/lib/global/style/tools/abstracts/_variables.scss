@@ -13,3 +13,12 @@ $white: #f8f8f8;
 $white-two: #ffffff;
 $white-two-90: rgba(255, 255, 255, 0.9);
 $color-click: #ffeeb3;
+
+
+// breakpoint
+$bp-xl: 1136px;
+$bp-lg: 944px;
+$bp-md: 768px;
+$bp-sm-max: $bp-md - 1;
+$bp-sm: 480px;
+$bp-xs: 320px;

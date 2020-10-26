@@ -42,7 +42,7 @@ rdr-pagination {
       min-width: 34px;
       margin: 0 8px;
 
-      @include rwd($nx-screen-pad-portrait - 1) {
+      @include rwd($bp-sm-max) {
         margin: 0 4px;
       }
     }

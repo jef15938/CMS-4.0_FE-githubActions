@@ -44,14 +44,14 @@ rdr-card-news {
     align-items: center;
     padding: 24px 20px 32px 24px;
 
-    @include rwd($nx-screen-normal-phone-portrait) {
+    @include rwd($bp-sm-max) {
       padding: 16px 12px 16px 24px;
     }
 
     &__content {
       margin-right: 16px;
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         margin-right: 12px;
       }
     }
@@ -60,7 +60,7 @@ rdr-card-news {
       @include fz-body-16-left-bold;
       margin-bottom: 4px;
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         @include fz-footnote-14-left-bold;
       }
     }
@@ -68,7 +68,7 @@ rdr-card-news {
     &__title {
       @include fz-title-20-left;
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         @include fz-title-18-left;
         margin-bottom: 8px;
       }
@@ -77,7 +77,7 @@ rdr-card-news {
     &__desc {
       @include fz-body-16-left-bold;
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         @include fz-footnote-15-left-bold;
       }
     }
@@ -87,7 +87,7 @@ rdr-card-news {
       flex-shrink: 0;
       background-image: url('../../../../images/icon-all.svg');
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         width: 18px;
         height: 18px;
         background-position: -54px -18px;

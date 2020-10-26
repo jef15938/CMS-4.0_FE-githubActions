@@ -10,7 +10,7 @@ rdr-card-link-frame {
     border-radius: 10px;
     text-decoration: none;
 
-    @include rwd($nx-screen-normal-phone-portrait) {
+    @include rwd($bp-sm-max) {
       border-radius: 8px;
     }
   }

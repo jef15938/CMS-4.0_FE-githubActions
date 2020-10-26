@@ -27,7 +27,7 @@ rdr-collapse {
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
 
-          @include rwd($nx-screen-normal-phone-portrait) {
+          @include rwd($bp-sm-max) {
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
           }
@@ -45,7 +45,7 @@ rdr-collapse {
           border-bottom-left-radius: 10px;
           border-bottom-right-radius: 10px;
 
-          @include rwd($nx-screen-normal-phone-portrait) {
+          @include rwd($bp-sm-max) {
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
           }
@@ -57,14 +57,14 @@ rdr-collapse {
       top: 16px;
       transform: none;
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         top: 8px;
         left: 12px;
       }
     }
 
     .collapse-container__suffix {
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         right: 12px;
       }
     }
@@ -80,7 +80,7 @@ rdr-collapse {
             border-width: 0;
           }
 
-          @include rwd($nx-screen-normal-phone-portrait) {
+          @include rwd($bp-sm-max) {
             width: 14px;
             height: 14px;
 
@@ -105,7 +105,7 @@ rdr-collapse {
     .collapse-container__trigger {
       @include fz-body-18-left-bold;
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         @include fz-footnote-15-left-bold;
         padding: 8px 38px 8px 51px;
       }
@@ -114,7 +114,7 @@ rdr-collapse {
     .collapse-container__content {
       @include fz-body-16-left-bold;
 
-      @include rwd($nx-screen-normal-phone-portrait) {
+      @include rwd($bp-sm-max) {
         @include fz-footnote-14-left-bold;
         padding: 16px 16px 24px 16px;
       }

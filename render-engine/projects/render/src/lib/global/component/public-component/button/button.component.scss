@@ -14,7 +14,7 @@ rdr-button {
   [nx-btn].nx-cp {
     @include fz-callout-18-left;
 
-    @include rwd($nx-screen-pad-portrait - 1) {
+    @include rwd($bp-sm-max) {
       @include fz-callout-16-left;
     }
 

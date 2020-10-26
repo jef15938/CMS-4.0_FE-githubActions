@@ -13,7 +13,7 @@ rdr-fast-tool {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 
-  @include rwd($nx-screen-pad-portrait) {
+  @include rwd($bp-sm-max) {
     width: 47px;
     padding: 14px 14px 15px;
   }
@@ -23,7 +23,7 @@ rdr-fast-tool {
       @include fz-callout-18-center;
       margin-bottom: 8px;
 
-      @include rwd($nx-screen-pad-portrait) {
+      @include rwd($bp-sm-max) {
         margin-bottom: 4px;
         @include fz-callout-16-center;
       }
@@ -35,7 +35,7 @@ rdr-fast-tool {
     content: '';
     transform: rotate(180deg);
 
-    @include rwd($nx-screen-pad-portrait) {
+    @include rwd($bp-sm-max) {
       @include rdr-icon(5, 2, 17px);
     }
   }
