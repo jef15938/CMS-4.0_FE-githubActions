@@ -34,7 +34,16 @@ rdr-card-link {
     }
 
     &__icon {
+      @include rdr-icon(4, 2, 20px);
       flex-shrink: 0;
+      background-image: url('../../../../images/icon-all.svg');
+
+      @include rwd($nx-screen-normal-phone-portrait) {
+        width: 14px;
+        height: 14px;
+        background-position: -42px -14px;
+        background-size: auto 42px;
+      }
     }
   }
 }

@@ -30,15 +30,3 @@
     }
   }
 }
-
-//共用 icon
-.arrow-icon {
-  @include rdr-icon(4, 2, 20px);
-
-  @include rwd($nx-screen-normal-phone-portrait) {
-    width: 14px;
-    height: 14px;
-    background-position: -42px -14px;
-    background-size: auto 42px;
-  }
-}
