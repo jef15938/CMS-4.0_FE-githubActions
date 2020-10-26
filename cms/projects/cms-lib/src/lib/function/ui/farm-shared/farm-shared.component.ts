@@ -41,7 +41,6 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
 
   subComponentRef: ComponentRef<FarmSharedComponent>;
 
-  private viewInited = false;
   private currentTablePage = 1;
 
   destroyMe = new Subject();
@@ -71,9 +70,7 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
       this.destroySub();
       this.resetTablePage();
       this.farmPlugin = (this.farmPlugins || []).reverse().find(h => h.funcId === this.funcID);
-      if (this.viewInited) {
-        this.generateCustomComponents();
-      }
+      this.generateCustomComponents();
     }
   }
 
