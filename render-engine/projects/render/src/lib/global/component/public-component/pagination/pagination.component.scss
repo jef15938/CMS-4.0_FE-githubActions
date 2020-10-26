@@ -35,12 +35,16 @@ rdr-pagination {
     }
 
     &__item {
-      @include fz-callout-18-center;
+      @include fz-callout-16-center;
       display: inline-block;
       vertical-align: middle;
       user-select: none;
       min-width: 34px;
       margin: 0 8px;
+
+      @include rwd($nx-screen-pad-portrait - 1) {
+        margin: 0 4px;
+      }
     }
 
     &__link {

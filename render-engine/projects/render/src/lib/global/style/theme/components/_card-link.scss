@@ -1,8 +1,8 @@
 @mixin rdr-card-link-frame-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-card-link-frame' !default;
   $bg-color: map-get($theme, white_1) !default;
-  $hover-color: #a0c7c0;
-  $pressed-color: map-get($theme, duck_egg_blue) !default;
+  $hover-color: map-get($theme, color_hover) !default;
+  $pressed-color: map-get($theme, color_click) !default;
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
@@ -14,12 +14,11 @@
       background-color: $bg-color;
 
       &:hover {
-        border-color: $hover-color;
+        background-color: $hover-color;
       }
 
       &:active,
       &:focus {
-        border-color: transparent;
         background-color: $pressed-color;
       }
     }
@@ -54,7 +53,7 @@
   $date-font-color: map-get($theme, brown_grey_1) !default;
   $title-font-color: map-get($theme, black_0) !default;
   $desc-font-color: map-get($theme, brownish_grey) !default;
-  $arrow-color: map-get($theme, color_primary) !default;
+  $line-color: map-get($theme, very_light_pink_1) !default;
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
@@ -62,6 +61,14 @@
   }
 
   #{$selector} {
+    +#{$selector} {
+      rdr-card-link-frame {
+        .card-link-frame {
+          border-top-color: $line-color;
+        }
+      }
+    }
+
     .card-news {
 
       &__date {

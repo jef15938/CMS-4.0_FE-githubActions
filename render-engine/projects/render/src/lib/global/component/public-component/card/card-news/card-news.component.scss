@@ -3,14 +3,38 @@
 @include rdr-card-news-theme();
 
 rdr-card-news {
-
   display: block;
 
   +rdr-card-news {
-    margin-top: 16px;
+    rdr-card-link-frame {
+      .card-link-frame {
+        border-top-style: solid;
+        border-top-width: 1px;
+      }
+    }
+  }
 
-    @include rwd($nx-screen-normal-phone-portrait) {
-      margin-top: 8px;
+  rdr-card-link-frame {
+    .card-link-frame {
+      border-radius: 0;
+    }
+  }
+
+  &:first-child {
+    rdr-card-link-frame {
+      .card-link-frame {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+    }
+  }
+
+  &:last-child {
+    rdr-card-link-frame {
+      .card-link-frame {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+      }
     }
   }
 
@@ -33,11 +57,11 @@ rdr-card-news {
     }
 
     &__date {
-      @include fz-footnote-14-left-bold;
+      @include fz-body-16-left-bold;
       margin-bottom: 4px;
 
       @include rwd($nx-screen-normal-phone-portrait) {
-        @include fz-caption-13-left-bold;
+        @include fz-footnote-14-left-bold;
       }
     }
 
@@ -54,12 +78,21 @@ rdr-card-news {
       @include fz-body-16-left-bold;
 
       @include rwd($nx-screen-normal-phone-portrait) {
-        @include fz-footnote-14-left-bold;
+        @include fz-footnote-15-left-bold;
       }
     }
 
     &__icon {
+      @include rdr-icon(4, 2, 20px);
       flex-shrink: 0;
+      background-image: url('../../../../images/icon-all.svg');
+
+      @include rwd($nx-screen-normal-phone-portrait) {
+        width: 18px;
+        height: 18px;
+        background-position: -54px -18px;
+        background-size: auto 54px;
+      }
     }
   }
 }
