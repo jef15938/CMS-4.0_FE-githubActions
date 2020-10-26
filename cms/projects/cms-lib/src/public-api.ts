@@ -6,6 +6,7 @@ export * from './lib/function/ui';
 export * from './lib/global/api';
 export * from './lib/global/directive';
 export * from './lib/global/enum';
+export * from './lib/global/error-handling';
 export * from './lib/global/interface';
 export * from './lib/global/injection-token';
 export * from './lib/global/pipe';

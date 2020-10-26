@@ -4,8 +4,14 @@ import { FormGroup } from '@angular/forms';
 import { FarmFormInfoModel, FarmFormInfoModelColumn } from '../../../global/api/data-model/models/farm-form-info.model';
 import { FarmTableDataInfoModel } from '../../../global/api/data-model/models/farm-table-data-info.model';
 import { FarmTableInfoModel } from '../../../global/api/data-model/models/farm-table-info.model';
+import { FarmCategoryInfoModel } from '../../../global/api/data-model/models/farm-category-info.model';
+
+export interface FarmPlugingCustomComponentParameterEvent {
+  dataCreateEdit: Observable<{ category: FarmCategoryInfoModel, row: FarmTableDataInfoModel }>;
+}
 
 export interface FarmPlugingCustomComponentParameter {
+  events: FarmPlugingCustomComponentParameterEvent;
   refresh(): Observable<any>;
 }
 

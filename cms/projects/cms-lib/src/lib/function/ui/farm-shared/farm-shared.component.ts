@@ -47,6 +47,10 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
   destroyMe = new Subject();
   private destroy$ = new Subject();
 
+  events = {
+    dataCreateEdit: new Subject<{ category: FarmCategoryInfoModel, row: FarmTableDataInfoModel }>()
+  };
+
   customComponents: {
     footer: ComponentRef<FarmPlugingCustomComponent>
   } = {
@@ -82,6 +86,13 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   ngOnDestroy(): void {
+
+    for (const event in this.events) {
+      const subject = this.events[event];
+      subject.complete();
+      subject.unsubscribe();
+    }
+
     this.destroy$.next();
     this.destroy$.complete();
     this.destroy$.unsubscribe();
@@ -100,6 +111,9 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
     const componentRef = viewContainerRef.createComponent<FarmPlugingCustomComponent>(componentFactory);
 
     const params: FarmPlugingCustomComponentParameter = {
+      events: {
+        dataCreateEdit: this.events.dataCreateEdit.asObservable(),
+      },
       refresh: () => {
         const category = this.farm.category.find(c => c.categoryId === categoryId);
         return this.getCategoryTableInfo(category);
@@ -199,10 +213,16 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
     let action: Observable<{ refresh: boolean }> = of({ refresh: false });
     switch (event.action) {
       case FarmTableDataInfoAction.CREATE:
-        action = this.openModifyDataModal('create', category).pipe(map(confirm => ({ refresh: !!confirm })));
+        action = this.openModifyDataModal('create', category).pipe(
+          tap(confirm => !!confirm ? setTimeout(() => this.events.dataCreateEdit.next({ category, row: event.rowData })) : null),
+          map(confirm => ({ refresh: !!confirm })),
+        );
         break;
       case FarmTableDataInfoAction.MODIFY:
-        action = this.openModifyDataModal('edit', category, event.rowData).pipe(map(confirm => ({ refresh: !!confirm })));
+        action = this.openModifyDataModal('edit', category, event.rowData).pipe(
+          tap(confirm => !!confirm ? setTimeout(() => this.events.dataCreateEdit.next({ category, row: event.rowData })) : null),
+          map(confirm => ({ refresh: !!confirm })),
+        );
         break;
       case FarmTableDataInfoAction.PUBLISH:
         action = this.auditingData(category, event.rowData).pipe(map(confirm => ({ refresh: !!confirm })));
