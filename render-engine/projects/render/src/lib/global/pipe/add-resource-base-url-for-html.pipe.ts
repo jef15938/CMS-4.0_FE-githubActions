@@ -4,9 +4,9 @@ import { RenderEnvironment } from '../interface/render-environment.interface';
 import { isPlatformBrowser } from '@angular/common';
 
 @Pipe({
-  name: 'addResourceBaseUrl'
+  name: 'addResourceBaseUrlForHtml'
 })
-export class AddResourceBaseUrlPipe implements PipeTransform {
+export class AddResourceBaseUrlForHtmlPipe implements PipeTransform {
 
   constructor(
     @Inject(RENDER_ENVIROMENT_TOKEN) private enviroment: RenderEnvironment,
