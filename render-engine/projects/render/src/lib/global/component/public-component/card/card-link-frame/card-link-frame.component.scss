@@ -3,19 +3,14 @@
 @include rdr-card-link-frame-theme();
 
 rdr-card-link-frame {
-
   display: block;
 
   .card-link-frame {
     display: block;
     border-radius: 10px;
-    box-sizing: border-box;
-    border-width: 2px;
-    border-style: solid;
-    border-color: transparent;
     text-decoration: none;
 
-    @include rwd($nx-screen-normal-phone-portrait) {
+    @include rwd($bp-sm-max) {
       border-radius: 8px;
     }
   }

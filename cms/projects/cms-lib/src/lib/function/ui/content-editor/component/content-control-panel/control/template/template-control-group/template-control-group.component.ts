@@ -1,9 +1,9 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, GroupTemplateInfo } from '@neux/render';
+import { LayoutWrapperSelectEvent, GroupTemplateInfo, GroupItem } from '@neux/render';
 import { ContentControlBase } from '../../_base';
-import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-model/models/content-field-info.model';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
 import { ModalService } from '../../../../../../../../function/ui/modal';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'cms-template-control-group',
@@ -34,7 +34,9 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
     const beforeIndex = ev.previousIndex;
     const afterIndex = ev.currentIndex;
     if (beforeIndex === afterIndex) { return; }
-    this.arrayMove(this.templateInfo.itemList, beforeIndex, afterIndex);
+    const itemList = [...(this.templateInfo.itemList || [])];
+    this.arrayMove(itemList, beforeIndex, afterIndex);
+    this.templateInfo.itemList = itemList;
     this.change.emit();
   }
 
@@ -49,27 +51,43 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
     return arr; // for testing
   }
 
-  copyGroup(group: ContentFieldInfoModel[]) {
+  copyGroup(groupItems: GroupItem[]) {
     try {
-      this.templateInfo.itemList.push(JSON.parse(JSON.stringify(group)));
+      const itemList = [...(this.templateInfo.itemList || [])];
+      itemList.push(JSON.parse(JSON.stringify(groupItems)));
+      this.templateInfo.itemList = itemList;
       this.change.emit();
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'TemplateControlGroupComponent.copyGroup()', 'JSON 資料解析錯誤');
     }
   }
 
-  removeGroup(group: ContentFieldInfoModel[]) {
+  removeGroup(groupItems: GroupItem[]) {
     if (this.templateInfo.itemList.length <= 1) {
       this.modalService.openMessage({ message: '最後一個項目不可刪除' });
       return;
     }
-    this.templateInfo.itemList.splice(this.templateInfo.itemList.indexOf(group), 1);
+    const itemList = [...(this.templateInfo.itemList || [])];
+    itemList.splice(this.templateInfo.itemList.indexOf(groupItems), 1);
+    this.templateInfo.itemList = itemList;
     this.change.emit();
   }
 
-  findFieldByFieldId(fields: ContentFieldInfoModel[], field: string) {
-    return fields.find(f => f.fieldId === field);
+  findFieldByFieldId(groupItems: GroupItem[], field: string) {
+    return groupItems.find(item => item.fieldId === field);
   }
 
+  checkHidden(groupItems: GroupItem[]) {
+    return groupItems.some(item => !!item.extension?.hideden);
+  }
+
+  toggleHidden(ev: MatCheckboxChange, groupItems: GroupItem[]) {
+    console.warn({ ev, groupItems });
+    groupItems.forEach(item => {
+      item.extension = item.extension || ({} as any);
+      item.extension.hideden = ev.checked;
+    });
+    this.change.emit();
+  }
 
 }

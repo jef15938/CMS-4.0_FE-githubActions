@@ -1,14 +1,17 @@
 <div style="width: 100%; text-align: center; background-color: aqua;" *ngIf="templateInfo">
   <div style="padding: 16px; font-size: 48px; font-weight: bold;">清單</div>
   <div style="margin: 10px; padding: 10px; border: 1px solid pink; box-sizing: border-box;">
-    <div class="group" *ngFor="let group of templateInfo.itemList; let i = index;">
-      <div class="title" [libLayoutFieldText]="group | getFieldFromFieldsById:'title'" #fieldText="field" [maxLength]="6">
-        {{fieldText.fieldInfo.fieldVal}}
+    <ng-container *ngFor="let group of templateInfo.itemList; let i = index;">
+      <div class="group" *ngIf="!shouldHidden(group)">
+        <div class="title" [libLayoutFieldText]="group | getFieldFromFieldsById:'title'" #fieldText="field"
+          [maxLength]="6">
+          {{fieldText.fieldInfo.fieldVal}}
+        </div>
+        <div class="text" [libLayoutFieldLink]="group | getFieldFromFieldsById:'text'" #fieldLink="field">
+          {{fieldLink.fieldInfo.fieldVal}}
+        </div>
+        <hr *ngIf="i!==templateInfo.itemList.length-1">
       </div>
-      <div class="text" [libLayoutFieldLink]="group | getFieldFromFieldsById:'text'" #fieldLink="field">
-        {{fieldLink.fieldInfo.fieldVal}}
-      </div>
-      <hr *ngIf="i!==templateInfo.itemList.length-1">
-    </div>
+    </ng-container>
   </div>
 </div>

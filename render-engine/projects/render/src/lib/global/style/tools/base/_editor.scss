@@ -1,0 +1,228 @@
+@mixin neux-editor {
+  .neux-editor {
+    @include fz-body-18-left-bold;
+    color: $black-two;
+    outline: none;
+
+    @include rwd($bp-sm-max) {
+      @include fz-body-16-left-bold;
+    }
+
+    ol {
+      display: block;
+      list-style-type: decimal;
+      counter-reset: num;
+
+      >li {
+        &:before {
+          content: counter(num)'.';
+          counter-increment: num;
+          display: inline-block;
+          vertical-align: bottom;
+          min-width: 27px;
+          margin-right: 12px;
+          text-align: right;
+
+          @include rwd($bp-sm-max) {
+            min-width: 24px;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+
+    ul {
+      display: block;
+
+      >li {
+
+        &:before {
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          width: 6px;
+          height: 6px;
+          margin-right: 12px;
+          border-radius: 50%;
+          background-color: $color-primary;
+          transform: translateY(-50%);
+
+          @include rwd($bp-sm-max) {
+            width: 4px;
+            height: 4px;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+
+    img::-moz-selection {
+      /* Code for Firefox */
+      color: transparent !important;
+      background: transparent !important;
+    }
+
+    img::selection {
+      color: transparent !important;
+      background: transparent !important;
+    }
+
+    .highlight-1 {
+      @include fz-title-24-left;
+      color: $color-primary;
+
+      @include rwd($bp-sm-max) {
+        @include fz-title-18-left;
+      }
+    }
+
+    .highlight-2 {
+      @include fz-title-20-left;
+      color: $black;
+
+      @include rwd($bp-sm-max) {
+        @include fz-body-17-left-bold;
+      }
+    }
+
+    .highlight-3 {
+      @include fz-body-18-left-bold;
+      color: $color-primary;
+
+      @include rwd($bp-sm-max) {
+        @include fz-body-16-left-bold;
+      }
+    }
+
+    a {
+      @include fz-callout-18-left;
+      color: $color-primary;
+      text-decoration: underline;
+    }
+
+    .neux-table {
+      border-collapse: separate;
+
+      &.selected {
+        outline: 3px solid #b4d7ff;
+      }
+
+      tbody {
+        tr {
+          &:last-child {
+            td {
+              &:first-child {
+                border-bottom-left-radius: 6px;
+              }
+
+              &:last-child {
+                border-bottom-right-radius: 6px;
+              }
+            }
+          }
+        }
+      }
+
+      tr {
+
+        th,
+        td {
+          padding: 12px;
+          border-right: 1px solid $very-light-pink;
+          border-bottom: 1px solid $very-light-pink;
+          word-break: normal;
+          vertical-align: middle;
+
+          @include rwd($bp-sm-max) {
+            padding: 8px;
+          }
+
+          &:first-child {
+            border-left: 1px solid $very-light-pink;
+          }
+
+          &.hideTD {
+            height: 0px;
+            margin: 0px;
+            padding: 0px;
+            font-size: 0px;
+            line-height: 0;
+            border: none;
+            overflow: hidden;
+          }
+
+          &.headerTD {
+            @include fz-title-18-center;
+            background-color: $color-click;
+            color: $brownish-grey;
+
+            @include rwd($bp-sm-max) {
+              @include fz-body-16-center-bold;
+            }
+
+            &:first-child {
+              border-top: 1px solid $very-light-pink;
+              border-top-left-radius: 6px;
+            }
+
+            &:last-child {
+              border-top: 1px solid $very-light-pink;
+              border-top-right-radius: 6px;
+            }
+          }
+        }
+
+        td {
+          @include fz-body-16-center;
+          color: $black;
+
+          @include rwd($bp-sm-max) {
+            @include fz-footnote-15-center;
+          }
+
+          &.highlightTD {
+            background-color: rgba(212, 75, 22, 0.5);
+          }
+
+          &.selected {
+            background-color: lightblue;
+          }
+        }
+
+        &:nth-child(even) {
+          td {
+            background-color: $white;
+          }
+        }
+      }
+
+      .seleted {
+        background-color: silver;
+      }
+    }
+
+    // .figure-color {
+    //   display: block;
+    //   border-color: salmon;
+    //   border-width: 3px;
+    //   float: left;
+    //   margin-right: 0.5%;
+    //   margin-left: 0;
+    //   margin-top: 0;
+    // }
+
+    // .image-style-side {
+    //   max-width: 100%;
+    //   position: relative;
+    //   // float:left;
+    // }
+
+    // .item-hover:hover {
+    //   border: 2px green dashed;
+    // }
+
+    // .item-seleted {
+    //   border: 10px green dashed;
+    // }
+  }
+}

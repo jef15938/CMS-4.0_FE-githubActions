@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver,
-  OnChanges, SimpleChanges
+  OnChanges, SimpleChanges, Inject, Optional, Injector, Type, AfterViewInit
 } from '@angular/core';
 import { Subject, of, Observable } from 'rxjs';
 import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
@@ -17,22 +17,27 @@ import { FarmTableDataInfoAction, FarmTableDataInfoModel } from '../../../global
 import { CmsErrorHandler } from '../../../global/error-handling';
 import { FarmFormInfoComponent } from './component/farm-form-info/farm-form-info.component';
 import { FarmFormInfoModel } from '../../../global/api/data-model/models/farm-form-info.model';
+import { FarmPlugin, FarmPlugingCustomComponent, FarmPlugingCustomComponentParameter } from './farm-shared.interface';
+import { FARM_PLUGIN_TOKEN } from './farm-shared-injection-token';
 
 @Component({
   selector: 'cms-farm-shared',
   templateUrl: './farm-shared.component.html',
   styleUrls: ['./farm-shared.component.scss']
 })
-export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
+export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 
   @ViewChild('FarmSearchComp') searchInfoComponent: FarmFormInfoComponent;
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
+  @ViewChild('CustomFooter', { read: ViewContainerRef }) customFooterViewContainerRef: ViewContainerRef;
 
   // @Input() title: string;
   @Input() categoryName: string;
   @Input() isSub = false;
   @Input() funcID = '';
   @Input() farm: FarmInfoGetResponseModel;
+
+  farmPlugin: FarmPlugin;
 
   subComponentRef: ComponentRef<FarmSharedComponent>;
 
@@ -41,17 +46,31 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
   destroyMe = new Subject();
   private destroy$ = new Subject();
 
+  events = {
+    dataCreateEdit: new Subject<{ category: FarmCategoryInfoModel, row: FarmTableDataInfoModel }>()
+  };
+
+  customComponents: {
+    footer: ComponentRef<FarmPlugingCustomComponent>
+  } = {
+      footer: null,
+    };
+
   constructor(
     private farmSharedService: FarmSharedService,
     private farmService: FarmService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private modalService: ModalService,
+    public injector: Injector,
+    @Inject(FARM_PLUGIN_TOKEN) @Optional() private farmPlugins: FarmPlugin[],
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.farm) {
       this.destroySub();
       this.resetTablePage();
+      this.farmPlugin = (this.farmPlugins || []).reverse().find(h => h.funcId === this.funcID);
+      this.generateCustomComponents();
     }
   }
 
@@ -59,10 +78,46 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
+  ngAfterViewInit(): void {
+    this.generateCustomComponents();
+  }
+
   ngOnDestroy(): void {
+
+    for (const event in this.events) {
+      const subject = this.events[event];
+      subject.complete();
+      subject.unsubscribe();
+    }
+
     this.destroy$.next();
     this.destroy$.complete();
     this.destroy$.unsubscribe();
+  }
+
+  private generateCustomComponents() {
+    this.customComponents.footer
+      = this.generateCustomComponent(this.farmPlugin?.customComponents?.main?.footer, this.customFooterViewContainerRef);
+  }
+
+  private generateCustomComponent(component: Type<any>, viewContainerRef: ViewContainerRef) {
+    if (!component || !viewContainerRef) { return null; }
+    const categoryId = (viewContainerRef.element.nativeElement as HTMLElement).getAttribute('categoryId');
+    viewContainerRef.clear();
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    const componentRef = viewContainerRef.createComponent<FarmPlugingCustomComponent>(componentFactory);
+
+    const params: FarmPlugingCustomComponentParameter = {
+      events: {
+        dataCreateEdit: this.events.dataCreateEdit.asObservable(),
+      },
+      refresh: () => {
+        const category = this.farm.category.find(c => c.categoryId === categoryId);
+        return this.getCategoryTableInfo(category);
+      }
+    };
+    componentRef.instance?.onCompInit(params);
+    return componentRef;
   }
 
   private resetTablePage() {
@@ -155,10 +210,16 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges {
     let action: Observable<{ refresh: boolean }> = of({ refresh: false });
     switch (event.action) {
       case FarmTableDataInfoAction.CREATE:
-        action = this.openModifyDataModal('create', category).pipe(map(confirm => ({ refresh: !!confirm })));
+        action = this.openModifyDataModal('create', category).pipe(
+          tap(confirm => !!confirm ? setTimeout(() => this.events.dataCreateEdit.next({ category, row: event.rowData })) : null),
+          map(confirm => ({ refresh: !!confirm })),
+        );
         break;
       case FarmTableDataInfoAction.MODIFY:
-        action = this.openModifyDataModal('edit', category, event.rowData).pipe(map(confirm => ({ refresh: !!confirm })));
+        action = this.openModifyDataModal('edit', category, event.rowData).pipe(
+          tap(confirm => !!confirm ? setTimeout(() => this.events.dataCreateEdit.next({ category, row: event.rowData })) : null),
+          map(confirm => ({ refresh: !!confirm })),
+        );
         break;
       case FarmTableDataInfoAction.PUBLISH:
         action = this.auditingData(category, event.rowData).pipe(map(confirm => ({ refresh: !!confirm })));

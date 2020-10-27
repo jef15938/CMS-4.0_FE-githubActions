@@ -1,4 +1,4 @@
 import { InjectionToken } from '@angular/core';
-import { FarmCustomHandler } from './farm-shared.interface';
+import { FarmPlugin } from './farm-shared.interface';
 
-export const FARM_CUSTOM_HANDLER_TOKEN = new InjectionToken<FarmCustomHandler>('FARM_CUSTOM_HANDLER_TOKEN');
+export const FARM_PLUGIN_TOKEN = new InjectionToken<FarmPlugin>('FARM_PLUGIN_TOKEN');

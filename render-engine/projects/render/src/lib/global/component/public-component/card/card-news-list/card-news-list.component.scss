@@ -8,6 +8,10 @@ rdr-card-news-list {
   border-radius: 10px;
   box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
 
+  @include rwd($bp-sm-max) {
+    padding: 24px 24px 40px;
+  }
+
   .card-news-list {
     &__title {
       @include fz-title-24-left;
@@ -15,6 +19,10 @@ rdr-card-news-list {
 
     &__content {
       margin-bottom: 8px;
+
+      @include rwd($bp-sm-max) {
+        margin-bottom: 20px;
+      }
     }
 
     &__item {
@@ -26,10 +34,23 @@ rdr-card-news-list {
       &-title {
         @include fz-title-20-left;
         @include text-ellipsis;
+
+        @include rwd(984px) {
+          white-space: normal;
+        }
+
+        @include rwd($bp-sm-max) {
+          @include fz-callout-15-left;
+          margin-bottom: 3px;
+        }
       }
 
       &-date {
         @include fz-body-17-left-bold;
+
+        @include rwd($bp-sm-max) {
+          @include fz-footnote-14-left;
+        }
       }
     }
 
@@ -37,6 +58,10 @@ rdr-card-news-list {
       position: relative;
       display: block;
       padding: 16px 42px 16px 0;
+
+      @include rwd($bp-sm-max) {
+        padding: 12px 30px 12px 0;
+      }
 
       &:after {
         @include rdr-icon(4, 2, 18px);

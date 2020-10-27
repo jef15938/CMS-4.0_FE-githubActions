@@ -8,7 +8,7 @@ rdr-card-journal {
   +rdr-card-journal {
     margin-top: 16px;
 
-    @include rwd($nx-screen-normal-phone-portrait) {
+    @include rwd($bp-sm-max) {
       margin-top: 8px;
     }
   }
@@ -18,7 +18,7 @@ rdr-card-journal {
     align-items: flex-start;
     padding: 16px 20px 16px 16px;
 
-    @include rwd($nx-screen-bs-phone-landscape) {
+    @include rwd($bp-sm-max) {
       display: block;
       padding: 16px 16px 24px;
     }
@@ -30,7 +30,7 @@ rdr-card-journal {
       border-radius: 6px;
       box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.05);
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         margin-right: 0;
         margin-bottom: 16px;
       }
@@ -50,7 +50,7 @@ rdr-card-journal {
       margin-top: 24px;
       margin-bottom: 8px;
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         @include fz-title-18-left;
         margin-top: 0;
         margin-bottom: 4px;
@@ -61,7 +61,7 @@ rdr-card-journal {
       @include fz-title-18-left;
       margin-bottom: 24px;
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         @include fz-body-16-left-bold;
         margin-bottom: 16px;
       }
@@ -71,7 +71,7 @@ rdr-card-journal {
       @include fz-body-16-left-bold;
       margin-bottom: 16px;
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         @include fz-footnote-14-left-bold;
         margin-bottom: 0;
       }

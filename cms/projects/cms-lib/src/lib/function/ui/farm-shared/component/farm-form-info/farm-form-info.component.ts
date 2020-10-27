@@ -3,7 +3,7 @@ import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators } from
 import { Observable, throwError, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { CmsValidator, CmsFormValidator } from './../../../../../global/util';
-import { FarmCustomHandler } from '../../farm-shared.interface';
+import { FarmPlugin } from '../../farm-shared.interface';
 import { ContentEditorService } from './../../../content-editor';
 import { FarmService } from '../../../../../global/api/service';
 import { HtmlEditorService } from '../../../html-editor';
@@ -20,7 +20,7 @@ import {
 import { GalleryFileType } from '../../../gallery-shared/type/gallery-shared.type';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 import { FormSharedService } from '../../../form-shared/form-shared.service';
-import { FARM_CUSTOM_HANDLER_TOKEN } from '../../farm-shared-injection-token';
+import { FARM_PLUGIN_TOKEN } from '../../farm-shared-injection-token';
 import { UploadResponse } from '../../../gallery-shared/component/gallery-add-update-modal/gallery-add-update-modal.component';
 
 interface FormColumnSetting {
@@ -50,7 +50,7 @@ export class FarmFormInfoComponent implements OnInit {
   treeMap: Map<string, GetFarmTreeResponseModel> = new Map();
   treeNodeSelectedMap: Map<string, FarmTreeInfoModel[]> = new Map();
 
-  private farmCustomHandler: FarmCustomHandler;
+  private farmPlugin: FarmPlugin;
 
   constructor(
     private contentEditorService: ContentEditorService,
@@ -59,11 +59,11 @@ export class FarmFormInfoComponent implements OnInit {
     private farmService: FarmService,
     private formSharedService: FormSharedService,
     private cmsDateAdapter: CmsDateAdapter,
-    @Inject(FARM_CUSTOM_HANDLER_TOKEN) @Optional() private farmCustomHandlers: FarmCustomHandler[],
+    @Inject(FARM_PLUGIN_TOKEN) @Optional() private farmPlugins: FarmPlugin[],
   ) { }
 
   ngOnInit(): void {
-    this.farmCustomHandler = (this.farmCustomHandlers || []).reverse().find(h => h.funcId === this.funcID);
+    this.farmPlugin = (this.farmPlugins || []).reverse().find(h => h.funcId === this.funcID);
 
     this.formGroup = this.createFormGroup(this.farmFormInfo);
     this.formColumnSettingMap = this.createFormColumnSettingMap(this.farmFormInfo);
@@ -300,8 +300,8 @@ export class FarmFormInfoComponent implements OnInit {
   }
 
   selectImage(col: FarmFormInfoModelColumn) {
-    const beforeSelecImage$ = this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage
-      ? this.farmCustomHandler?.onFormGalleryColumnBeforeSelectImage(col, this.farmFormInfo, this.formGroup)
+    const beforeSelecImage$ = this.farmPlugin?.onFormGalleryColumnBeforeSelectImage
+      ? this.farmPlugin?.onFormGalleryColumnBeforeSelectImage(col, this.farmFormInfo, this.formGroup)
       : of(undefined);
 
     const selectImage$ = new Observable<UploadResponse>(subscriber => {

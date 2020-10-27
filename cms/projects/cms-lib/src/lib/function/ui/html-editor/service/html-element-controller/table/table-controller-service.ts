@@ -31,7 +31,6 @@ export class TableControllerService {
 
     table.classList.add('neux-table');
     this.setTableStyle(table, TableStyle.PERCENT);
-    table.setAttribute('style', 'width: 99% !important;');
 
     const tHead = document.createElement('thead');
     table.appendChild(tHead);
@@ -67,6 +66,14 @@ export class TableControllerService {
 
   setTableStyle(table: HTMLTableElement, style: TableStyle) {
     table.setAttribute(TABLE_STYLE_ATTR, style);
+
+    if (style !== TableStyle.SCROLL) {
+      table.setAttribute('style', 'width:100% !important;');
+    } else {
+      table.setAttribute('style', `min-width: ${table.offsetWidth}px; width: ${table.offsetWidth}px;`);
+    }
+
+    this.checkTableColsWidth(table);
   }
 
   getTableStyle(table: HTMLTableElement): TableStyle {
@@ -83,62 +90,31 @@ export class TableControllerService {
   }
 
   getWidthFromStyle(col: HTMLElement) {
-    return +(col.style.getPropertyValue('width').replace('px', ''));
+    return +(col.style.getPropertyValue('width').replace('px', '').replace('%', ''));
   }
 
-  checkTableColsWidth(table: HTMLTableElement, isAdjustingColWidth = false) {
-    this.checkTHeadTdsWidth(table, isAdjustingColWidth);
-    this.checkTBodyTdsWidth(table, isAdjustingColWidth);
+  checkTableColsWidth(table: HTMLTableElement) {
+    this.checkTHeadTdsWidth(table);
   }
 
-  checkTHeadTdsWidth(table: HTMLTableElement, isAdjustingColWidth = false) {
+  checkTHeadTdsWidth(table: HTMLTableElement) {
     const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as HtmlEditorTableCell[];
-    if (baseTds.every(td => !this.getWidthFromStyle(td))) { // init
+    const tableStyle = this.getTableStyle(table);
+    if (baseTds.every(td => !this.getWidthFromStyle(td))) { // 初始時
+      const width = tableStyle === TableStyle.PERCENT
+        ? `${Number.parseFloat('' + (100 / baseTds.length)).toFixed(2)}%`
+        : `${table.clientWidth / baseTds.length}px`;
       baseTds.forEach(td => {
-        td.style.setProperty('width', `${table.clientWidth / baseTds.length}px`);
+        td.style.setProperty('width', width);
       });
     } else {
-      if (!isAdjustingColWidth) {
-        baseTds.forEach(td => {
-          td.style.setProperty('width', `${td.offsetWidth}px`);
-        });
-      }
+      baseTds.map(td => ({
+        td,
+        width: tableStyle === TableStyle.PERCENT
+          ? `${Number.parseFloat('' + (td.clientWidth / table.clientWidth * 100)).toFixed(2)}%`
+          : `${table.clientWidth / baseTds.length}px`
+      })).forEach(({ td, width }) => td.style.setProperty('width', width));
     }
-
-    const styleAttr = this.getTableStyle(table);
-
-    if (styleAttr !== TableStyle.SCROLL) {
-      table.setAttribute('style', 'width:99% !important;');
-    } else {
-      const currentWidth = this.getWidthFromStyle(table);
-      const style = table.getAttribute('style');
-      if (!style || style === 'width:99% !important;') {
-        table.setAttribute('style', `min-width: ${table.offsetWidth}px; width: ${table.offsetWidth}px;`);
-      }
-    }
-  }
-
-  checkTBodyTdsWidth(table: HTMLTableElement, isAdjustingColWidth = false) {
-    const tds = Array.from(table.querySelectorAll('tbody > tr > td')) as HtmlEditorTableCell[];
-    tds.forEach(td => {
-      if (isAdjustingColWidth) {
-        const startEnd = this.getCellStartEnd(td);
-        td.style.width = `${this.getColWidthByColStartEnd(table, startEnd.colStart, startEnd.colEnd)}px`;
-      } else {
-        td.style.width = `width: ${td.offsetWidth}px`;
-      }
-    });
-  }
-
-  private getColWidthByColStartEnd(table: HTMLTableElement, colStart: number, colEnd: number) {
-    const baseTds = (Array.from(table.querySelectorAll('thead > tr > td')) as HtmlEditorTableCell[])
-      .filter(baseTd => {
-        const baseStartEnd = this.getCellStartEnd(baseTd);
-        return baseStartEnd.colStart === colStart || baseStartEnd.colEnd === colEnd;
-      });
-    const width = baseTds.map(baseTd => this.getWidthFromStyle(baseTd))
-      .reduce((a, b) => a + b, 0);
-    return width;
   }
 
   getAffectedByRowSpanCellCount(cell: HTMLTableDataCellElement): number {
@@ -222,7 +198,6 @@ export class TableControllerService {
     this.unregisterColResizer(tableIndex, editorContainer);
 
     const baseTds = Array.from(table.querySelectorAll('thead > tr > td')) as HtmlEditorTableCell[];
-    // console.warn('baseTds = ', baseTds);
     const container = document.createElement('div');
     container.classList.add(`table-${tableIndex}`);
     container.classList.add('col-resizer-container');
@@ -244,7 +219,7 @@ export class TableControllerService {
       // console.warn('baseTd.offsetHeight = ', baseTd.offsetHeight);
       // console.warn('baseTd.offsetLeft = ', baseTd.offsetLeft);
       // console.warn('baseTd.offsetTop = ', baseTd.offsetTop);
-      // console.warn('baseTd.offsetWidth = ', baseTd.offsetWidth);
+      // console.warn('baseTd.clientWidth = ', baseTd.clientWidth);
       // console.warn('baseTd.width = ', baseTd.width);
       // console.warn('baseTd.height = ', baseTd.height);
 
@@ -254,7 +229,7 @@ export class TableControllerService {
       div.style.setProperty('cursor', 'ew-resize');
       div.style.setProperty('position', 'absolute');
       div.style.setProperty('top', '0');
-      div.style.setProperty('left', `${baseTd.offsetLeft + baseTd.offsetWidth}px`);
+      div.style.setProperty('left', `${baseTd.offsetLeft + baseTd.clientWidth}px`);
       div.style.setProperty('width', '10px');
       div.style.setProperty('height', `${table.clientHeight}px`);
       // div.style.setProperty('background', 'pink');
@@ -270,9 +245,12 @@ export class TableControllerService {
             div.style.borderLeft = 'dashed lightgray 1px';
             const resizerOffsetLeft = div.offsetLeft;
 
-            const tableWidth = this.getWidthFromStyle(table);
-            const baseTdWidth = this.getWidthFromStyle(baseTd);
-            const nextTdWidth = this.getWidthFromStyle(nextTd);
+            // const tableWidth = this.getWidthFromStyle(table);
+            // const baseTdWidth = this.getWidthFromStyle(baseTd);
+            // const nextTdWidth = this.getWidthFromStyle(nextTd);
+            const tableWidth = table.clientWidth;
+            const baseTdWidth = baseTd.clientWidth;
+            const nextTdWidth = nextTd.clientWidth;
 
             // console.warn('tableWidth = ', tableWidth);
             // console.warn('baseTdWidth = ', baseTdWidth);
@@ -298,30 +276,25 @@ export class TableControllerService {
                 // console.warn('    bWidth = ', bWidth);
                 // console.warn('    nWidth = ', nWidth);
 
-                if (styleAttr !== TableStyle.SCROLL) {
-                  if (diffX < 0 && bWidth <= 100) { return; }
-                  if (diffX > 0 && nWidth <= 100) { return; }
-                }
+                if (bWidth <= 100) { return; }
 
                 div.style.setProperty('left', `${resizerOffsetLeft + diffX}px`);
 
-                baseTd.style.setProperty('width', `${bWidth}px`);
+                const newBWidth = styleAttr === TableStyle.PERCENT
+                  ? `${Number.parseFloat('' + (bWidth / tableWidth * 100)).toFixed(2)}%`
+                  : `${bWidth}px`;
 
-                if (styleAttr === TableStyle.SCROLL) {
-                  const tWidth = tableWidth + diffX;
-                  table.removeAttribute('style');
-                  table.setAttribute('style', `min-width: ${tWidth}px; width: ${tWidth}px;`);
-                } else {
-                  nextTd.style.setProperty('width', `${nWidth}px`);
-                  this.checkTableColsWidth(table, true);
-                }
+                const newNWidth = styleAttr === TableStyle.PERCENT
+                  ? `${Number.parseFloat('' + (nWidth / tableWidth * 100)).toFixed(2)}%`
+                  : `${nWidth}px`;
 
+                baseTd.style.setProperty('width', newBWidth);
+                nextTd.style.setProperty('width', newNWidth);
               }),
               takeUntil(end$.pipe(
                 tap((end: MouseEvent) => {
                   this.evPreventDefaultAndStopPropagation(end);
                   div.style.removeProperty('border-left');
-                  this.checkTBodyTdsWidth(table);
                   this.registerColResizer(tableIndex, editorContainer, table);
                 })
               ))

@@ -5,5 +5,7 @@ export * from './get-field-from-fields-by-id.pipe';
 export * from './get-language-info.pipe';
 export * from './new-line-replace.pipe';
 export * from './safe-html.pipe';
+export * from './safe-url.pipe';
+export * from './safe-resource.pipe';
 export * from './string-to-content-info-model.pipe';
 export * from './transform-data.pipe';

@@ -24,15 +24,15 @@
       <mat-icon>info</mat-icon>
     </button>
     <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="上移"
-      (click)="moveTemplate('up')" [disabled]="!canTemplateMoveUp">
+      (click)="moveTemplate('up')" [disabled]="selected.wrapper?.fixed || !canTemplateMoveUp">
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
     <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="下移"
-      (click)="moveTemplate('down')" [disabled]="!canTemplateMoveDown">
+      (click)="moveTemplate('down')" [disabled]="selected.wrapper?.fixed || !canTemplateMoveDown">
       <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
     <button type="button" class="cms-content-control-panel__btn" tabindex="0" mat-icon-button matTooltip="刪除版型"
-      (click)="deleteTemplate()">
+      [disabled]="selected.wrapper?.fixed" (click)="deleteTemplate()">
       <mat-icon>delete</mat-icon>
     </button>
   </div>

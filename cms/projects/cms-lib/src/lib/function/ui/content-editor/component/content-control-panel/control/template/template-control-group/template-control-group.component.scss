@@ -28,9 +28,16 @@
   }
 
   mat-list-item {
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     ::ng-deep .mat-list-item-content {
       padding: 0;
     }
+  }
+
+}
+
+.group-item {
+  &__tools {
+    margin-left: 24px;
   }
 }

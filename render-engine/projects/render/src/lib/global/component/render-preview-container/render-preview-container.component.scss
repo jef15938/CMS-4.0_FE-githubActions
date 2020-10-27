@@ -1,7 +1,38 @@
+.preview-size-1024-768 {
+  width: 1024px;
+  height: 768px;
+}
+
+.preview-size-768-1024 {
+  width: 768px;
+  height: 1024px;
+}
+
+.preview-size-375-667 {
+  width: 375px;
+  height: 667px;
+}
+
+.preview-size-pc {
+  width: 100%;
+  height: 100%;
+}
+
+.iframe-container {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
 .btn-container {
   height: 36px;
   background: #393939;
   color: #fff;
+  display: flex;
+
+  >div {
+    flex: 1;
+  }
 
   button {
     color: inherit;
@@ -30,79 +61,78 @@
   }
 }
 
-.preview {
-  .view-container.compare {
+.preview.view-container.compare {
 
-    display: flex;
+  display: flex;
+  text-align: center;
 
-    & .previous,
-    & .current {
-      flex: 1;
-      min-width: 50%;
-      max-width: 50%;
+  & .previous,
+  & .current {
+    flex: 1;
+    min-width: 50%;
+    max-width: 50%;
+    box-sizing: border-box;
+  }
+
+  & .previous {
+    border-right: 1px solid black;
+  }
+
+  & ::ng-deep .field-modified {
+    box-sizing: content-box;
+    border: 2px solid orange;
+  }
+
+  & ::ng-deep .modified {
+    &>neux-dynamic-wrapper>* {
+      display: block;
       box-sizing: border-box;
     }
 
-    & .previous {
-      border-right: 1px solid black;
+    &.added>neux-dynamic-wrapper>* {
+      // background-color: rgba(0, 255, 255, 0.25);
+      border: 5px solid green;
     }
 
-    & ::ng-deep .field-modified {
-      box-sizing: content-box;
-      border: 2px solid orange;
+    &.deleted>neux-dynamic-wrapper>* {
+      // background-color: rgba(255, 0, 0, 0.25);
+      border: 5px solid red;
     }
 
-    & ::ng-deep .modified {
-      &>neux-dynamic-wrapper>* {
-        display: block;
-        box-sizing: border-box;
-      }
-
-      &.added>neux-dynamic-wrapper>* {
-        // background-color: rgba(0, 255, 255, 0.25);
-        border: 5px solid green;
-      }
-
-      &.deleted>neux-dynamic-wrapper>* {
-        // background-color: rgba(255, 0, 0, 0.25);
-        border: 5px solid red;
-      }
-
-      &.changed>neux-dynamic-wrapper>* {
-        // background-color: rgba(255, 130, 0, 0.25);
-        border: 5px solid orange;
-      }
-
-      // &>neux-dynamic-wrapper {
-      //   display: block;
-      //   position: relative;
-
-      //   &::before {
-      //     content: '';
-      //     position: absolute;
-      //     top: 0;
-      //     left: 0;
-      //     height: 100%;
-      //     width: 100%;
-      //     z-index: 9998;
-      //     box-sizing: border-box;
-      //   }
-      // }
-
-      // &.added>neux-dynamic-wrapper::before {
-      //   // background-color: rgba(0, 255, 255, 0.25);
-      //   border: 5px solid green;
-      // }
-
-      // &.deleted>neux-dynamic-wrapper::before {
-      //   // background-color: rgba(255, 0, 0, 0.25);
-      //   border: 5px solid red;
-      // }
-
-      // &.changed>neux-dynamic-wrapper::before {
-      //   // background-color: rgba(255, 130, 0, 0.25);
-      //   border: 5px solid orange;
-      // }
+    &.changed>neux-dynamic-wrapper>* {
+      // background-color: rgba(255, 130, 0, 0.25);
+      border: 5px solid orange;
     }
+
+    // &>neux-dynamic-wrapper {
+    //   display: block;
+    //   position: relative;
+
+    //   &::before {
+    //     content: '';
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     height: 100%;
+    //     width: 100%;
+    //     z-index: 9998;
+    //     box-sizing: border-box;
+    //   }
+    // }
+
+    // &.added>neux-dynamic-wrapper::before {
+    //   // background-color: rgba(0, 255, 255, 0.25);
+    //   border: 5px solid green;
+    // }
+
+    // &.deleted>neux-dynamic-wrapper::before {
+    //   // background-color: rgba(255, 0, 0, 0.25);
+    //   border: 5px solid red;
+    // }
+
+    // &.changed>neux-dynamic-wrapper::before {
+    //   // background-color: rgba(255, 130, 0, 0.25);
+    //   border: 5px solid orange;
+    // }
   }
 }

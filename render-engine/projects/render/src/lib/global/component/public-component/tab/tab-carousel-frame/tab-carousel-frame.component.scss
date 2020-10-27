@@ -54,7 +54,15 @@ rdr-tab-carousel-frame {
     }
 
     &__nav {
+      @include rdr-icon(4, 2, 20px);
       cursor: pointer;
+
+      @include rwd($bp-sm-max) {
+        width: 14px;
+        height: 14px;
+        background-position: -42px -14px;
+        background-size: auto 42px;
+      }
 
       &:focus {
         outline: 0;

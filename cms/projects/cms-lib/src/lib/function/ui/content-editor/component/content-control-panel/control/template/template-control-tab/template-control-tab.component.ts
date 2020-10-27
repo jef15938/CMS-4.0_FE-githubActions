@@ -33,7 +33,9 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     const beforeIndex = ev.previousIndex;
     const afterIndex = ev.currentIndex;
     if (beforeIndex === afterIndex) { return; }
-    this.arrayMove(this.templateInfo.tabList, beforeIndex, afterIndex);
+    const tabList = [...(this.templateInfo.tabList || [])];
+    this.arrayMove(tabList, beforeIndex, afterIndex);
+    this.templateInfo.tabList = tabList;
     this.change.emit();
   }
 
@@ -52,7 +54,9 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
     try {
       const newTab: TabInfo = JSON.parse(JSON.stringify(tab));
       newTab.tabId = `${new Date().getTime()}`;
-      this.templateInfo.tabList.push(newTab);
+      const tabList = [...(this.templateInfo.tabList || [])];
+      tabList.push(newTab);
+      this.templateInfo.tabList = tabList;
       this.change.emit();
     } catch (error) {
       CmsErrorHandler.throwAndShow(error, 'TemplateControlTabComponent.copyTab()', 'JSON 資料解析錯誤');
@@ -64,7 +68,9 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
       this.modalService.openMessage({ message: '最後一個項目不可刪除' });
       return;
     }
-    this.templateInfo.tabList.splice(this.templateInfo.tabList.indexOf(tab), 1);
+    const tabList = [...(this.templateInfo.tabList || [])];
+    tabList.splice(this.templateInfo.tabList.indexOf(tab), 1);
+    this.templateInfo.tabList = tabList;
     this.change.emit();
   }
 

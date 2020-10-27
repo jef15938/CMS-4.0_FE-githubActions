@@ -9,7 +9,7 @@ rdr-card-activity {
   +rdr-card-activity {
     margin-top: 16px;
 
-    @include rwd($nx-screen-normal-phone-portrait) {
+    @include rwd($bp-sm-max) {
       margin-top: 8px;
     }
   }
@@ -19,7 +19,7 @@ rdr-card-activity {
     align-items: flex-start;
     padding: 16px 20px 16px 16px;
 
-    @include rwd($nx-screen-bs-phone-landscape) {
+    @include rwd($bp-sm-max) {
       display: block;
       padding: 16px 16px 24px;
     }
@@ -31,7 +31,7 @@ rdr-card-activity {
       border-radius: 6px;
       box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.05);
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         margin-right: 0;
         margin-bottom: 12px;
       }
@@ -50,7 +50,7 @@ rdr-card-activity {
       @include fz-body-16-left-bold;
       margin-bottom: 12px;
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         @include fz-caption-13-left-bold;
         margin-bottom: 16px;
       }
@@ -60,7 +60,7 @@ rdr-card-activity {
       @include fz-footnote-15-left-bold;
       margin-bottom: 5px;
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         @include fz-footnote-14-left-bold;
         margin-bottom: 4px;
       }
@@ -70,7 +70,7 @@ rdr-card-activity {
       @include fz-title-20-left;
       margin-bottom: 16px;
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         @include fz-title-18-left;
         margin-bottom: 12px;
       }
@@ -79,7 +79,7 @@ rdr-card-activity {
     &__desc {
       @include fz-body-16-left-bold;
 
-      @include rwd($nx-screen-bs-phone-landscape) {
+      @include rwd($bp-sm-max) {
         @include fz-footnote-14-left-bold;
       }
     }

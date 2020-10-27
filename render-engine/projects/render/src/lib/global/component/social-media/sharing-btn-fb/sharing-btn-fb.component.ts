@@ -45,10 +45,13 @@ export class SharingBtnFbComponent implements OnInit {
     if (!isPlatformBrowser(this.platformId)) { return; }
     if (!this.document) { return; }
 
-    const existContainer = this.document.getElementById(SDK_CONTAINER_ID);
-    if (existContainer) { return; }
-    const container = this.document.createElement('div');
-    container.id = SDK_CONTAINER_ID;
+    let container = this.document.getElementById(SDK_CONTAINER_ID);
+    if (!container) {
+      container = this.document.createElement('div');
+      container.id = SDK_CONTAINER_ID;
+      this.document.body.insertBefore(container, this.document.body.firstElementChild);
+    }
+    container.innerHTML = '';
 
     const fbRoot = this.document.createElement('div');
     fbRoot.id = 'fb-root';
@@ -60,8 +63,6 @@ export class SharingBtnFbComponent implements OnInit {
 
     container.appendChild(fbRoot);
     container.appendChild(script);
-
-    this.document.body.insertBefore(container, this.document.body.firstElementChild);
   }
 
 }

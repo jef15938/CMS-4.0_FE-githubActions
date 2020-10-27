@@ -2,7 +2,7 @@
 
 Title Farm : Customizing
 participant "CmsModule/AppModule" as module << module >>
-participant "(FARM_CUSTOM_HANDLER_TOKEN)\nFarmCustomHandler" as customHandler << interface >>
+participant "(FARM_PLUGIN_TOKEN)\nFarmCustomHandler" as customHandler << interface >>
 participant "FarmFormInfoComponent" as formInfo << component >>
 participant "FarmTableInfoComponent" as tableInfo << component >>
 
@@ -14,6 +14,6 @@ note right: onFormGalleryColumnBeforeSelectImage?(...args): Observable<any>
 
 customHandler -> tableInfo: inject
 tableInfo -> tableInfo
-note right: tableActions?: FarmTableActionBtn[]
+note right: tableActionBtns?: FarmPluginTableActionBtn[]
 
 @enduml

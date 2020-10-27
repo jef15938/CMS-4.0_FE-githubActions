@@ -2,7 +2,7 @@ import { Component, Injector } from '@angular/core';
 import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 
-const TEMPLATE_ID = 'FieldsDemo';
+const TEMPLATE_ID = 'FixedWrapper';
 
 @Component({
   selector: 'rdr-fixed-wrapper',

@@ -84,6 +84,7 @@ export class AddCol extends HtmlEditorActionBase {
     // console.log('checkArr = ', checkArr);
 
     this.controller.checkTableState();
+    this.controller.tableControllerService.checkTableColsWidth(table);
 
     trArr.forEach((tr) => {
       const tds = Array.from(tr.childNodes) as HtmlEditorTableCell[];

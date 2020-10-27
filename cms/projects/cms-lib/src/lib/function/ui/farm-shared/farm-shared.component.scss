@@ -10,4 +10,12 @@
     z-index: 2000;
     line-height: 48px;
   }
+
+  .table-bottom-btns-container {
+    button.mat-raised-button {
+      &:not(:first-child) {
+        margin-left: 16px;
+      }
+    }
+  }
 }

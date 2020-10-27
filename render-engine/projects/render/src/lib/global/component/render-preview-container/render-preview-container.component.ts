@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject, PLATFORM_ID, ElementRef } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
@@ -8,6 +8,15 @@ import { RenderService } from '../../service/render.service';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
 import { RenderedPageEnvironment } from '../../interface/page-environment.interface';
+import { ActivatedRoute } from '@angular/router';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+
+enum PreviewSize {
+  PC = 'preview-size-pc',
+  PAD_H = 'preview-size-1024-768',
+  PAD_V = 'preview-size-768-1024',
+  MOBILE = 'preview-size-375-667',
+}
 
 @Component({
   selector: 'rdr-render-preview-container',
@@ -18,6 +27,7 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
 
   @ViewChild('previous') previousTemplatesContainerComponent: TemplatesContainerComponent;
   @ViewChild('current') currentTemplatesContainerComponent: TemplatesContainerComponent;
+  @ViewChild('IFrame') iframe: ElementRef<HTMLIFrameElement>;
 
   @Input() templates: ContentTemplateInfoModel[];
   @Input() mode: 'preview' | 'edit';
@@ -32,34 +42,91 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
     inited: false,
   };
 
+  PreviewSize = PreviewSize;
+  previewSize: PreviewSize = PreviewSize.PC;
+
+  isIframe = false;
+  url = '';
+
+  get isPreview() {
+    return !this.pageEnv.isRuntime && this.mode === 'preview';
+  }
+
   constructor(
     private renderService: RenderService,
     @Inject('RENDER_ENGINE_RENDERED_PAGE_ENVIRONMENT') public pageEnv: RenderedPageEnvironment,
-  ) { }
+    activatedRoute: ActivatedRoute,
+    @Inject(PLATFORM_ID) platformId: any,
+    @Inject(DOCUMENT) private document: any,
+  ) {
+    activatedRoute.queryParams.subscribe(params => {
+      this.isIframe = !!params.is_iframe;
+    });
+
+    if (isPlatformBrowser(platformId)) {
+      this.url = window.location.href;
+
+      if (this.isIframe) {
+        window.onmessage = (e) => {
+          const funcName = e.data;
+          if (this[funcName] && typeof (this[funcName]) === 'function') {
+            this[funcName]();
+          }
+        };
+      } else {
+        window.onmessage = (e) => {
+          const funcName = e.data;
+          switch (funcName) {
+            case 'setCompareOnTrue':
+              this.funcCompare.on = true;
+              break;
+            case 'setCompareOnFalse':
+              this.funcCompare.on = false;
+              break;
+          }
+        };
+      }
+    }
+
+  }
 
   ngOnInit(): void {
-    if (this.mode === 'preview' && !this.pageEnv.isRuntime) {
-      this.renderService.getContentInfo('runtime', this.pageInfo.contentId).pipe(
-        map(contentTemplateInfo => {
-          if (contentTemplateInfo) {
-            const templateList = ContentInfoModel.getTemplateInfoByLanguageId(contentTemplateInfo, this.pageInfo.lang);
-            return [{
-              id: '',
-              templateId: this.pageInfo.layoutId,
-              fields: [],
-              children: templateList,
-              attributes: {
-                sitemap: null // TODO: 修正
-              }
-            }];
-          }
-          return null;
-        })
-      ).subscribe(previousTemplates => this.previousTemplates = previousTemplates);
+
+    if (!this.isPreview) { return; }
+
+    if (!this.isIframe) {
+      (this.document as Document).body.style.overflow = 'hidden';
+      return;
+    } else {
+      (this.document as Document).body.style.overflowX = 'hidden';
     }
+
+    this.renderService.getContentInfo('runtime', this.pageInfo.contentId).pipe(
+      map(contentTemplateInfo => {
+        if (contentTemplateInfo) {
+          const templateList = ContentInfoModel.getTemplateInfoByLanguageId(contentTemplateInfo, this.pageInfo.lang);
+          return [{
+            id: '',
+            templateId: this.pageInfo.layoutId,
+            fields: [],
+            children: templateList,
+            attributes: {
+              sitemap: null // TODO: 修正
+            }
+          }];
+        }
+        return null;
+      })
+    ).subscribe(previousTemplates => this.previousTemplates = previousTemplates);
   }
 
   toggleCompare() {
+    if (!this.isIframe && this.iframe?.nativeElement) {
+      this.previewSize = PreviewSize.PC;
+      this.iframe.nativeElement.contentWindow.postMessage('toggleCompare', '*');
+      return;
+    }
+
     if (!this.funcCompare.inited && (!this.previousTemplatesContainerComponent || !this.currentTemplatesContainerComponent)) {
       if (!this.previousTemplatesContainerComponent) {
         alert('沒有之前的版本');
@@ -70,6 +137,7 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
     }
 
     this.funcCompare.on = !this.funcCompare.on;
+    window.parent.postMessage(`setCompareOn${this.funcCompare.on ? 'True' : 'False'}`, '*');
 
     if (!this.funcCompare.inited) {
       const previous = this.previousTemplatesContainerComponent;
@@ -95,8 +163,8 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
       currentLayoutWrappers.forEach(lw => {
         const templateInfoId = lw.templateInfo.id;
         const el = (lw.elementRef.nativeElement as HTMLElement);
-        // console.log({ templateInfoId, lw });
         const previousLayoutWrapperTemplateInfoIdIndex = previousLayoutWrapperTemplateInfoIds.indexOf(templateInfoId);
+        // console.log({ templateInfoId, lw, el: lw.elementRef.nativeElement, previousLayoutWrapperTemplateInfoIdIndex });
         if (previousLayoutWrapperTemplateInfoIdIndex < 0) { // 新加入的版面(不在舊的)
           el.classList.add('modified', 'added');
         } else {
@@ -139,6 +207,18 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
       (lw.componentRef?.instance?.templatesContainerComponents || []).forEach(tc => this.getFlattenLayoutWrapper(tc, result));
     });
     return result;
+  }
+
+  setPreviewSize(previewSize: PreviewSize) {
+    this.closeCompare();
+    this.previewSize = previewSize;
+  }
+
+  closeCompare() {
+    this.funcCompare.on = false;
+    if (!this.isIframe && this.iframe?.nativeElement) {
+      this.iframe.nativeElement.contentWindow.postMessage('closeCompare', '*');
+    }
   }
 
 }

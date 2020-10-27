@@ -347,7 +347,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
       const arr = [];
       results.push(arr);
       all.forEach((container, index) => {
-        if (index >= i * containerCountsPerLanguage && index <= i * containerCountsPerLanguage + containerCountsPerLanguage) {
+        if (index >= i * containerCountsPerLanguage && index < i * containerCountsPerLanguage + containerCountsPerLanguage) {
           arr.push(container);
         }
       });

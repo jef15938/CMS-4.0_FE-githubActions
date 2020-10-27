@@ -53,6 +53,13 @@ export class TabCarouselTemplateComponent extends TabTemplateBaseComponent imple
 
 
   tabData(item): TabData {
-    return { title: item.fieldVal, content: item.children };
+    return {
+      get title() {
+        return item.fieldVal;
+      },
+      get content() {
+        return item.children;
+      }
+    };
   }
 }
