@@ -10,6 +10,7 @@ export interface SelectData {
   isError: boolean;
   disabled: boolean;
   optionList: SelectOption[];
+  defaultValue?: string | number;
 }
 
 @Component({
@@ -32,6 +33,7 @@ export class SelectComponent extends CustomizeBaseDirective implements OnInit, C
     defaultOptionText: '請選擇',
     isError: false,
     disabled: false,
+    defaultValue: '',
     optionList: [
       { value: '1', name: '要當爸爸媽媽了' },
       { value: '2', name: '喜歡一個人生活' },

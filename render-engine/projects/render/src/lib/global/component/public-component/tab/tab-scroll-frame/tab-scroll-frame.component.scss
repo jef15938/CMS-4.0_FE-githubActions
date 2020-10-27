@@ -34,6 +34,11 @@ rdr-tab-scroll-frame {
         border-bottom-width: 1px;
         border-bottom-style: solid;
 
+        @include rwd($bp-sm-max) {
+          @include fz-callout-15-center;
+          padding: 6px 4px;
+        }
+
         &:after {
           content: "";
           position: absolute;

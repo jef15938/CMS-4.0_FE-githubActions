@@ -28,9 +28,13 @@ rdr-tab-carousel-frame {
 
     &__item {
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       box-sizing: border-box;
-      width: 224px;
-      padding: 8px 5px;
+      width: 164px;
+      height: 56px;
+      padding: 8px 13px;
       margin: 10px 0;
       border-width: 1px;
       border-style: solid;
@@ -38,7 +42,7 @@ rdr-tab-carousel-frame {
     }
 
     &__title {
-      @include fz-footnote-14-center-bold;
+      @include fz-callout-16-center;
       display: inline-block;
       width: 100%;
     }
