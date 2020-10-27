@@ -81,10 +81,10 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
   private convertToEditorContent(htmlString: string) {
     htmlString = htmlString || '';
-    const div = document.createElement('div');
-    div.innerHTML = htmlString;
+    const tempContainer = document.createElement('div');
+    tempContainer.innerHTML = htmlString;
 
-    const imgs = Array.from(div.querySelectorAll(`img[${ATTRIBUTE_GALLERY_ID}]`));
+    const imgs = Array.from(tempContainer.querySelectorAll(`img[${ATTRIBUTE_GALLERY_ID}]`));
     imgs.forEach(img => {
       const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
       if (galleryID) {
@@ -95,7 +95,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }
     });
 
-    const iframes = Array.from(div.querySelectorAll('iframe'));
+    const iframes = Array.from(tempContainer.querySelectorAll('iframe'));
     iframes.forEach(iframe => {
       const parent = iframe.parentElement;
       const videoUrl = iframe.src;
@@ -107,7 +107,31 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       parent.insertBefore(img, iframe);
       parent.removeChild(iframe);
     });
-    return div.innerHTML;
+
+    const tables = Array.from(tempContainer.querySelectorAll('table'));
+    tables.forEach(table => {
+      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains('cms-table-resizer'))[0];
+      if (!headerTr) { return; }
+      // <th> to <td>
+      const ths = Array.from(headerTr.querySelectorAll('th'));
+      ths.forEach(th => {
+        const td = document.createElement('td');
+        th.classList.forEach(c => {
+          td.classList.add(c);
+        });
+        td.colSpan = th.colSpan;
+        td.rowSpan = th.rowSpan;
+        td.innerHTML = th.innerHTML;
+        headerTr.insertBefore(td, th);
+        headerTr.removeChild(th);
+      });
+      // insert <tr> to <tbody>
+      const tbody = table.querySelector('tbody');
+      const firstTr = tbody.firstElementChild;
+      !!firstTr ? tbody.insertBefore(headerTr, firstTr) : tbody.appendChild(headerTr);
+    });
+
+    return tempContainer.innerHTML;
   }
 
   checkInnerHtml(): void {
@@ -337,16 +361,16 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   getContent() {
-    const container = this.editorContainer.cloneNode(true) as HTMLElement;
+    const tempContainer = this.editorContainer.cloneNode(true) as HTMLElement;
 
-    let htmlString = container.innerHTML || '';
+    let htmlString = tempContainer.innerHTML || '';
 
     const regDivStart = new RegExp(/<div/, 'g');
     const regDivEnd = new RegExp(/<\/div>/, 'g');
     htmlString = htmlString.replace(regDivStart, '<p').replace(regDivEnd, '</p>');
-    container.innerHTML = htmlString;
+    tempContainer.innerHTML = htmlString;
 
-    let nodes = [container];
+    let nodes = [tempContainer];
     while (nodes && nodes.length) {
       nodes.forEach(node => {
         if (node.nodeType === Node.ELEMENT_NODE) {
@@ -367,7 +391,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }, []);
     }
 
-    const imgs = Array.from(container.querySelectorAll(`img[${ATTRIBUTE_GALLERY_ID}]`));
+    const imgs = Array.from(tempContainer.querySelectorAll(`img[${ATTRIBUTE_GALLERY_ID}]`));
     imgs.forEach(img => {
       const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
       if (galleryID) {
@@ -378,7 +402,30 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }
     });
 
-    return container.innerHTML || '';
+    const tables = Array.from(tempContainer.querySelectorAll('table'));
+    tables.forEach(table => {
+      const firstBodyTr = Array.from(table.querySelectorAll('tbody>tr'))[0];
+      if (!firstBodyTr) { return; }
+      // <td> to <th>
+      const tds = Array.from(firstBodyTr.querySelectorAll('td'));
+      tds.forEach(td => {
+        const th = document.createElement('th');
+        td.classList.forEach(c => {
+          th.classList.add(c);
+        });
+        th.colSpan = td.colSpan;
+        th.rowSpan = td.rowSpan;
+        th.innerHTML = td.innerHTML;
+        firstBodyTr.insertBefore(th, td);
+        firstBodyTr.removeChild(td);
+      });
+      // insert <tr> to <tbody>
+      const thead = table.querySelector('thead');
+      thead.appendChild(firstBodyTr);
+    });
+
+
+    return tempContainer.innerHTML || '';
   }
 
   onFocus(ev) {

@@ -20,7 +20,8 @@ export class TableControllerService {
     const td = document.createElement('td');
     // td.innerHTML = '<div>文字</div>';
     td.innerHTML = (innerHTML === null || innerHTML === undefined) ? '文字' : innerHTML;
-    td.setAttribute('class', 'tg-0pky');
+    // td.setAttribute('class', 'tg-0pky');
+    td.classList.add('headerTD');
     td.setAttribute('colspan', '1');
     td.setAttribute('rowspan', '1');
     return td;
@@ -36,6 +37,7 @@ export class TableControllerService {
     table.appendChild(tHead);
 
     const trInTHead = document.createElement('tr');
+    trInTHead.classList.add('cms-table-resizer');
     for (let col = 0; col < config.cols; ++col) {
       const td = this.createCell('');
       this.setTHeadTd(td);
@@ -55,13 +57,15 @@ export class TableControllerService {
   }
 
   setTHeadTd(td: HTMLElement) {
-    td.style.setProperty('height', '0');
-    td.style.setProperty('padding', '0');
-    td.style.setProperty('margin', '0');
-    td.style.setProperty('font-size', '0');
-    td.style.setProperty('line-height', '0');
-    // td.style.setProperty('border', 'none');
-    td.style.setProperty('overflow', 'hidden');
+    td.classList.add('headerTD');
+    td.classList.add('hideTD');
+    // td.style.setProperty('height', '0');
+    // td.style.setProperty('padding', '0');
+    // td.style.setProperty('margin', '0');
+    // td.style.setProperty('font-size', '0');
+    // td.style.setProperty('line-height', '0');
+    // // td.style.setProperty('border', 'none');
+    // td.style.setProperty('overflow', 'hidden');
   }
 
   setTableStyle(table: HTMLTableElement, style: TableStyle) {

@@ -46,23 +46,4 @@ export class InsertTable extends HtmlEditorActionBase {
     );
   }
 
-  private findExistingTable(): HTMLTableElement {
-    const range = this.context.simpleWysiwygService.getRange();
-    const selectedTarget = range.commonAncestorContainer as HTMLElement;
-    const selectedTargetTagName = selectedTarget?.tagName?.toLowerCase();
-    const tableTagNames = ['td', 'th', 'tr', 'table', 'tbody', 'thead', 'tfoot'];
-    if (selectedTarget && tableTagNames.indexOf(selectedTargetTagName) > -1) {
-      let el = selectedTarget;
-      while (el) {
-        const tagName = el.tagName?.toLowerCase();
-        if (tagName === 'table') {
-          break;
-        } else {
-          el = el.parentElement;
-        }
-      }
-      return el as HTMLTableElement;
-    }
-    return null;
-  }
 }
