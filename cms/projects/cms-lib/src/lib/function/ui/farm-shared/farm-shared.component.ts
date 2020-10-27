@@ -1,6 +1,6 @@
 import {
-  Component, OnInit, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver,
-  OnChanges, SimpleChanges, Inject, Optional, Injector, Type, AfterViewInit
+  Component, Input, OnDestroy, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver,
+  OnChanges, SimpleChanges, Inject, Optional, Injector, Type, AfterViewChecked
 } from '@angular/core';
 import { Subject, of, Observable } from 'rxjs';
 import { tap, takeUntil, concatMap, map } from 'rxjs/operators';
@@ -25,7 +25,7 @@ import { FARM_PLUGIN_TOKEN } from './farm-shared-injection-token';
   templateUrl: './farm-shared.component.html',
   styleUrls: ['./farm-shared.component.scss']
 })
-export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class FarmSharedComponent implements OnDestroy, OnChanges, AfterViewChecked {
 
   @ViewChild('FarmSearchComp') searchInfoComponent: FarmFormInfoComponent;
   @ViewChild('subContainer', { read: ViewContainerRef }) subContainerViewContainerRef: ViewContainerRef;
@@ -56,6 +56,8 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
       footer: null,
     };
 
+  private farmChange = false;
+
   constructor(
     private farmSharedService: FarmSharedService,
     private farmService: FarmService,
@@ -65,21 +67,23 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
     @Inject(FARM_PLUGIN_TOKEN) @Optional() private farmPlugins: FarmPlugin[],
   ) { }
 
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.farm) {
       this.destroySub();
       this.resetTablePage();
       this.farmPlugin = (this.farmPlugins || []).reverse().find(h => h.funcId === this.funcID);
-      this.generateCustomComponents();
+      this.farmChange = true;
+    } else {
+      this.farmChange = false;
     }
   }
 
-  ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit(): void {
-    this.generateCustomComponents();
+  ngAfterViewChecked(): void {
+    if (this.farmChange) {
+      this.generateCustomComponents(); // 切換不同網站管理功能時，onChanges 觸發時的 ViewChild 還是舊的，因此動態元件會被塞到舊內容中，所以在這邊呼叫
+      this.farmChange = false;
+    }
   }
 
   ngOnDestroy(): void {
@@ -102,11 +106,10 @@ export class FarmSharedComponent implements OnInit, OnDestroy, OnChanges, AfterV
 
   private generateCustomComponent(component: Type<any>, viewContainerRef: ViewContainerRef) {
     if (!component || !viewContainerRef) { return null; }
-    const categoryId = (viewContainerRef.element.nativeElement as HTMLElement).getAttribute('categoryId');
     viewContainerRef.clear();
+    const categoryId = (viewContainerRef.element.nativeElement as HTMLElement).getAttribute('categoryId');
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
     const componentRef = viewContainerRef.createComponent<FarmPlugingCustomComponent>(componentFactory);
-
     const params: FarmPlugingCustomComponentParameter = {
       events: {
         dataCreateEdit: this.events.dataCreateEdit.asObservable(),
