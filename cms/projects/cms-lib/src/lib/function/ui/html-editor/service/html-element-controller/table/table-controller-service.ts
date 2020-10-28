@@ -42,6 +42,7 @@ export class TableControllerService {
 
     const baseRow = document.createElement('tr');
     baseRow.classList.add(TABLE_BASE_ROW_CLASS);
+
     for (let col = 0; col < config.cols; ++col) {
       const td = this.createCell();
       baseRow.appendChild(td);

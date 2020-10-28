@@ -18,6 +18,7 @@
     ],
     "paths": {
       "@neux/render": [
+        // "projects/render/src/public-api",
         "dist/render/render",
         "dist/render"
       ]

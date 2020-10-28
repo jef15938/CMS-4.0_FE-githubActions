@@ -43,10 +43,10 @@ export class CreateLink extends DomCmdAction {
         if (canModifyText) {
           aTagToModify.text = atagConfig.text;
         }
-
         if (!isGallery) {
           aTagToModify.setAttribute('urlType', atagConfig.urlType);
           aTagToModify.setAttribute('siteId', atagConfig.siteId);
+          aTagToModify.setAttribute('actionID', atagConfig.actionID)
         }
 
         if (isCreate) { // 新增
