@@ -37,7 +37,7 @@
     <div class="view-container preview" [class.compare]="funcCompare.on">
       <div class="previous" [style.display]="funcCompare.on ? 'block' : 'none'" *ngIf="previousTemplates">
         <div [class]="previewSize">
-          <rdr-templates-container #previous [mode]="mode" [templates]="previousTemplates" [sites]="sites"
+          <rdr-templates-container *ngIf="funcCompare.on && previousTemplates" #previous [mode]="mode" [templates]="previousTemplates" [sites]="sites"
             [pageInfo]="pageInfo" [fixed]="false">
           </rdr-templates-container>
         </div>
