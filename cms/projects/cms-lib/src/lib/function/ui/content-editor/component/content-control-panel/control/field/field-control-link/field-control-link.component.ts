@@ -7,7 +7,7 @@ import { SitemapService } from '../../../../../../../../global/api/service';
 import { SiteInfoModel } from '../../../../../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
-import { CustomAction, CustomActionInfo } from 'projects/cms-lib/src/lib/global/interface/cms-custom-action.interface';
+import { CustomAction, CustomActionInfo } from '../../../../../../../../global/interface/cms-custom-action.interface';
 import { CMS_CUSTOM_ACTION_TOKEN } from '../../../../../../../../global/injection-token';
 
 @Component({
@@ -66,8 +66,8 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
       this.fieldInfo.extension.isTargetBlank = this.fieldInfo.extension.isTargetBlank ? 'true' : 'false';
       this.fieldInfo.extension.urlType = this.fieldInfo.extension.urlType || LinkFieldInfoUrlType.INSIDE;
       this.fieldInfo.extension.siteId = this.fieldInfo.extension.siteId || '';
-      this.fieldInfo.extension['actionID'] = this.fieldInfo.extension['actionID'] || '';
-      this.isLink = !!!this.fieldInfo.extension['actionID'];
+      this.fieldInfo.extension.actionID = this.fieldInfo.extension.actionID || '';
+      this.isLink = !!!this.fieldInfo.extension.actionID;
     }
   }
 
@@ -87,8 +87,8 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
    * 切換TAB
    */
   btnChange() {
-    this.fieldInfo.extension['actionID'] = '';
-    this.change.emit()
+    this.fieldInfo.extension.actionID = '';
+    this.change.emit();
   }
 
 

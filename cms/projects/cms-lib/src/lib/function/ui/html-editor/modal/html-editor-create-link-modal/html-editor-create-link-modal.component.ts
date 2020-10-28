@@ -7,7 +7,7 @@ import { SiteInfoModel } from '../../../../../global/api/data-model/models/site-
 import { SiteMapGetResponseModel } from '../../../../../global/api/data-model/models/site-map-get-response.model';
 import { SitemapService } from '../../../../../global/api/service';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
-import { CustomAction, CustomActionInfo } from 'projects/cms-lib/src/lib/global/interface/cms-custom-action.interface';
+import { CustomAction, CustomActionInfo } from '../../../../../global/interface/cms-custom-action.interface';
 import { CMS_CUSTOM_ACTION_TOKEN } from '../../../../../global/injection-token';
 
 
