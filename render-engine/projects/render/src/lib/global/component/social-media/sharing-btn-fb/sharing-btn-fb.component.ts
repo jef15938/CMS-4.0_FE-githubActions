@@ -56,10 +56,10 @@ export class SharingBtnFbComponent extends SharingBtnBase {
   }
 
   loadButton() {
-    this.excuteFbReload().pipe(
+    return this.excuteFbReload().pipe(
       retryWhen(errors => errors.pipe(delay(100), take(10))),
       takeUntil(this.destroy$),
-    ).subscribe();
+    );
   }
 
   private excuteFbReload() {

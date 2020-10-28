@@ -1,4 +1,4 @@
-import { Input, Directive, Inject, PLATFORM_ID, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Input, Directive, Inject, PLATFORM_ID, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Observable, Subject } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
@@ -17,7 +17,7 @@ export abstract class SharingBtnBase implements OnInit, AfterViewInit, OnDestroy
   get destroy$() { return this.destroyInstance$.pipe(shareReplay(1)); }
 
   abstract includeSdk(): Observable<any>;
-  abstract loadButton(): any;
+  abstract loadButton(): Observable<any>;
 
   constructor(
     @Inject(DOCUMENT) document: any,
@@ -32,17 +32,19 @@ export abstract class SharingBtnBase implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnInit(): void {
-    console.warn('SharingBtnBase ngOnInit()');
     if (!isPlatformBrowser(this.platformId)) { return; }
     if (!this.document) { return; }
     this.checkSharedUrl();
   }
 
   ngAfterViewInit(): void {
-    console.warn('SharingBtnBase ngAfterViewInit()');
     if (!isPlatformBrowser(this.platformId)) { return; }
     if (!this.document) { return; }
-    this.includeSdk().subscribe(_ => this.loadButton());
+    this.includeSdk().subscribe(_ => {
+      setTimeout(() => {
+        this.loadButton();
+      }, 50);
+    });
   }
 
   ngOnDestroy(): void {
