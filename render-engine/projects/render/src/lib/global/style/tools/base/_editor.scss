@@ -170,6 +170,7 @@
 
           &.headerTD {
             @include fz-title-18-center;
+            border-top: 1px solid $very-light-pink;
             background-color: $color-click;
             color: $brownish-grey;
 
@@ -178,12 +179,10 @@
             }
 
             &:first-child {
-              border-top: 1px solid $very-light-pink;
               border-top-left-radius: 6px;
             }
 
             &:last-child {
-              border-top: 1px solid $very-light-pink;
               border-top-right-radius: 6px;
             }
           }
