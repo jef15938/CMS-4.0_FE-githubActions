@@ -1,0 +1,19 @@
+<div class="btn-container">
+  <div>
+    <button type="button" (click)="toggleCompare()"
+      [class.active]="func.compare.on">{{func.compare.on?'取消比較':'比較版本'}}</button>
+  </div>
+  <div style="text-align: right;">
+    <button type="button" (click)="setPreviewSize(PreviewSize.PC)"
+      [class.active]="previewSize===PreviewSize.PC">PC</button>
+    <button type="button" (click)="setPreviewSize(PreviewSize.PAD_H)"
+      [class.active]="previewSize===PreviewSize.PAD_H">PAD_H</button>
+    <button type="button" (click)="setPreviewSize(PreviewSize.PAD_V)"
+      [class.active]="previewSize===PreviewSize.PAD_V">PAD_V</button>
+    <button type="button" (click)="setPreviewSize(PreviewSize.MOBILE)"
+      [class.active]="previewSize===PreviewSize.MOBILE">MOBILE</button>
+  </div>
+</div>
+<div class="iframe-container">
+  <iframe #IFrame [src]="iframeUrl|safeResource" [class]="previewSize"></iframe>
+</div>

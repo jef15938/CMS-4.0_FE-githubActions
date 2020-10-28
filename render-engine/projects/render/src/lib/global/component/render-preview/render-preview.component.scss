@@ -1,0 +1,64 @@
+$tool_bar_height: 36px;
+
+.preview-size-1024-768 {
+  width: 1024px;
+  height: 100%;
+}
+
+.preview-size-768-1024 {
+  width: 768px;
+  height: 100%;
+}
+
+.preview-size-375-667 {
+  width: 375px;
+  height: 100%;
+}
+
+.preview-size-pc {
+  width: 100%;
+  height: 100%;
+}
+
+.iframe-container {
+  width: 100%;
+  height: calc(100% - #{$tool_bar_height});
+  text-align: center;
+}
+
+.btn-container {
+  height: $tool_bar_height;
+  background: #393939;
+  color: #fff;
+  display: flex;
+
+  >div {
+    flex: 1;
+  }
+
+  button {
+    color: inherit;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  button.active {
+    color: yellow;
+  }
+}

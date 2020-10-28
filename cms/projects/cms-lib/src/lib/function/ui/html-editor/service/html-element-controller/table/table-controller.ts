@@ -24,6 +24,8 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     if (!menuItems?.length) { return menuItems; }
 
     setTimeout(_ => {
+      const tableStyle = this.tableControllerService.getTableStyle(this.el);
+
       const rowItem = menuItems[0];
       rowItem.disabled = !this.selectedRows.length;
 
@@ -31,7 +33,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       colItem.disabled = !this.selectedCols.length;
 
       const mergeItem = menuItems[2];
-      mergeItem.disabled = this.selectedCols.length < 2;
+      mergeItem.disabled = this.selectedCols.length < 2 || tableStyle === TableStyle.SINGLE;
 
       const splitItem = menuItems[3];
       splitItem.disabled = this.selectedCols.length !== 1 || (this.selectedCols[0].colSpan < 2 && this.selectedCols[0].rowSpan < 2);
@@ -44,17 +46,12 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       }
 
       const styleItem = menuItems[4];
-      const style = this.tableControllerService.getTableStyle(this.el);
-      styleItem.defaultValue = style;
+      styleItem.defaultValue = tableStyle;
       const styleItemSingleOption = menuItems[4].selectionOptions[2];
       styleItemSingleOption.disabled = false;
-      if (style !== TableStyle.SINGLE) {
-        const tds = Array.from(this.el.querySelectorAll('tbody > tr > td')) as HTMLTableDataCellElement[];
-        const hasMergedCol = tds.some(td => td.colSpan > 1 || td.rowSpan > 1);
-        if (hasMergedCol) {
-          styleItemSingleOption.disabled = true;
-        }
-      }
+      const tds = Array.from(this.el.querySelectorAll('tbody > tr > td')) as HTMLTableDataCellElement[];
+      const hasMergedCol = tds.some(td => td.colSpan > 1 || td.rowSpan > 1);
+      styleItemSingleOption.disabled = hasMergedCol;
 
     }, 100);
 
@@ -113,6 +110,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         ]
       },
       {
+
         text: '表格樣式', type: 'select',
         category: HtmlEditorActionCategory.TABLE,
         defaultValue: this.tableControllerService.getTableStyle(this.el),
@@ -319,10 +317,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       this.el.parentNode.removeChild(this.el);
     }
 
-    const tHeadTds = Array.from(this.el.querySelectorAll('thead > tr > td')) as HTMLTableDataCellElement[];
-    tHeadTds.forEach(td => {
-      this.tableControllerService.setTHeadTd(td);
-    });
+    this.tableControllerService.checkTableStyle(this.el);
 
     if (scanTable) {
       this.scanTable(this.el);

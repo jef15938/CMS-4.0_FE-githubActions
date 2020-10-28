@@ -118,8 +118,8 @@
   $tl-border-color-disabled: map-get($theme, very_light_pink_1) !default;
   $tl-border-color-active: #a0c7c0 !default;
   $tl-option-border-color: map-get($theme, very_light_pink_2) !default;
-  $tl-option-border-color-hover: map-get($theme, ice) !default;
-  $tl-option-border-color-active: map-get($theme, duck_egg_blue) !default;
+  $tl-option-border-color-hover: map-get($theme, color_hover) !default;
+  $tl-option-border-color-active: map-get($theme, color_click) !default;
   $tl-placholder-color: map-get($theme, brown_grey_0) !default;
   $tl-icon-color: map-get($theme, color_primary) !default;
   $tl-form-color: map-get($theme, black_1) !default;

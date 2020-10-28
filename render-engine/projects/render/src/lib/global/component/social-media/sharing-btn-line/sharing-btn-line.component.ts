@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject, Input, PLATFORM_ID, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { of, Subject, NEVER } from 'rxjs';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { of, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { SharingBtnBase } from '../sharing-btn-base/sharing-btn-base.component';
 
 const SDK_CONTAINER_ID = 'neux-render-cdk-container-line';
 const SDK_SRC = 'https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js';
@@ -11,42 +11,15 @@ const SDK_SRC = 'https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loade
   templateUrl: './sharing-btn-line.component.html',
   styleUrls: ['./sharing-btn-line.component.scss']
 })
-export class SharingBtnLineComponent implements OnInit, AfterViewInit {
+export class SharingBtnLineComponent extends SharingBtnBase {
   @ViewChild('SDK') sdkContainer: ElementRef<HTMLDivElement>;
 
-  @Input() sharedUrl = '';
   @Input() dataType: 'a' | 'b' | 'c' = 'a';
   @Input() dataColor: 'default' | 'grey' = 'default';
   @Input() dataCount = true;
   @Input() dataSize: 'small' | 'large' = 'small';
 
-  @Input() useCurrentUrlAsSharedUrl = true;
-
-  private document: Document;
-
-  constructor(
-    @Inject(DOCUMENT) document: any,
-    @Inject(PLATFORM_ID) private platformId: any,
-  ) {
-    this.document = document;
-  }
-
-  ngOnInit(): void {
-    this.checkSharedUrl();
-  }
-
-  ngAfterViewInit(): void {
-    this.includeSdk().subscribe(_ => this.loadButton());
-  }
-
-  private checkSharedUrl() {
-    if (!this.useCurrentUrlAsSharedUrl) { return; }
-    if (!isPlatformBrowser(this.platformId)) { return; }
-    this.sharedUrl = window.location.href;
-  }
-
-  private includeSdk() {
-    if (!isPlatformBrowser(this.platformId)) { return NEVER; }
+  includeSdk() {
     const existContainer = this.document.getElementById(SDK_CONTAINER_ID);
     if (existContainer) { return of(undefined); }
     const container = this.document.createElement('div');
@@ -78,8 +51,10 @@ export class SharingBtnLineComponent implements OnInit, AfterViewInit {
     return subject.pipe(take(1));
   }
 
-  private loadButton() {
-    (window as any).LineIt?.loadButton();
+  loadButton() {
+    const lineIt = (window as any).LineIt;
+    lineIt?.loadButton();
+    return of(undefined);
   }
 
 }

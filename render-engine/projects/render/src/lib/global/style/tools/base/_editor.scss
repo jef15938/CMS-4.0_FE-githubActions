@@ -1,4 +1,14 @@
 @mixin neux-editor {
+  .neux-editor.edit {
+    .neux-table {
+      tr {
+        td.selected {
+          background-color: lightblue !important;
+        }
+      }
+    }
+  }
+
   .neux-editor {
     @include fz-body-18-left-bold;
     color: $black-two;
@@ -35,17 +45,34 @@
       display: block;
 
       >li {
+        @include fz-body-16-left;
+        position: relative;
+        padding-left: 18px;
+
+        @include rwd($bp-sm-max) {
+          @include fz-footnote-15-left;
+          padding-left: 12px;
+        }
+
+        +li {
+          margin-top: 16px;
+
+          @include rwd($bp-sm-max) {
+            margin-top: 12px;
+          }
+        }
 
         &:before {
           content: '';
-          display: inline-block;
-          vertical-align: middle;
+          position: absolute;
+          top: 0.5em;
+          left: 0;
+          display: block;
           width: 6px;
           height: 6px;
           margin-right: 12px;
           border-radius: 50%;
           background-color: $color-primary;
-          transform: translateY(-50%);
 
           @include rwd($bp-sm-max) {
             width: 4px;
@@ -153,6 +180,7 @@
 
           &.headerTD {
             @include fz-title-18-center;
+            border-top: 1px solid $very-light-pink;
             background-color: $color-click;
             color: $brownish-grey;
 
@@ -161,12 +189,10 @@
             }
 
             &:first-child {
-              border-top: 1px solid $very-light-pink;
               border-top-left-radius: 6px;
             }
 
             &:last-child {
-              border-top: 1px solid $very-light-pink;
               border-top-right-radius: 6px;
             }
           }

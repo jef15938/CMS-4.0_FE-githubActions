@@ -8,8 +8,8 @@
   $tl-plain-color: map-get($theme, black_1) !default;
   $tl-icon-color: map-get($theme, color_primary) !default;
   $tl-line-color: map-get($theme, brown_grey_1) !default;
-  $tl-hover-color: map-get($theme, ice) !default;
-  $tl-pressed-color: map-get($theme, duck_egg_blue) !default;
+  $tl-hover-color: map-get($theme, color_hover) !default;
+  $tl-pressed-color: map-get($theme, color_click) !default;
 
   $collapse-theme: nx-ui-theme-config-gen($color-primary: $tl-primary-color,
       $color-back-light: $tl-back-light-color,

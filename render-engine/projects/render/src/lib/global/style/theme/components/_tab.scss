@@ -41,11 +41,12 @@
 
 @mixin rdr-tab-carousel-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-tab-carousel-frame' !default;
-  $text-color: map-get($theme, brownish_grey) !default;
+  $carousel-text-color: map-get($theme, brownish_grey) !default;
   $border-color: map-get($theme, very_light_pink_0) !default;
-  $hover-color: map-get($theme, duck_egg_blue) !default;
-  $arrow-color: map-get($theme, color_primary) !default;
-  $active-color: map-get($theme, color_primary) !default;
+  $hover-color: #FFF6D9;
+  $active-color: map-get($theme, color_click) !default;
+  $active-border-color: map-get($theme, brown_grey_1) !default;
+  $active-text-color: map-get($theme, black_1) !default;
   $null-color: map-get($theme, white_1) !default;
 
   @if($theme !=$rdr-theme-config) {
@@ -58,7 +59,7 @@
       &__item {
         border-color: $border-color;
         background-color: $null-color;
-        color: $text-color;
+        color: $carousel-text-color;
 
         &:hover {
           background-color: $hover-color;
@@ -66,8 +67,8 @@
 
         &--active {
           background-color: $active-color;
-          color: $null-color;
-          border-color: $active-color;
+          color: $active-text-color;
+          border-color: $active-border-color;
           box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
 
           &:hover {

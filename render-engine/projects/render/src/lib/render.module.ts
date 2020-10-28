@@ -54,6 +54,7 @@ import { ShownByDeviceDirective } from './global/directive/show-by-device.direct
 import { SharingBtnFbComponent } from './global/component/social-media/sharing-btn-fb/sharing-btn-fb.component';
 import { SharingBtnLineComponent } from './global/component/social-media/sharing-btn-line/sharing-btn-line.component';
 import { SocialMediaComponent } from './global/component/social-media/social-media.component';
+import { RenderPreviewComponent } from './global/component/render-preview/render-preview.component';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
@@ -116,13 +117,13 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
   ],
   declarations: [
     RenderComponent,
+    RenderPreviewComponent,
     RenderPreviewContainerComponent,
     ...COMPONENTS,
     ...PUBLIC_COMPONENTS_TEMPLATES,
     ...DIRECTIVES,
   ],
   exports: [
-    RenderComponent,
     ...COMPONENTS,
     ...PUBLIC_COMPONENTS_TEMPLATES,
     ...DIRECTIVES,
