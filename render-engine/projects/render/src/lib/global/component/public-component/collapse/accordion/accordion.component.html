@@ -1,0 +1,18 @@
+<nx-collapse-accordion [attr.haslist]="hasList ? '' : null">
+  <rdr-collapse *ngFor="let item of collapseList" [collapseData]="item">
+    <ng-template #title let-item>
+      <ng-container trigger>
+        <ng-container *ngIf="titleTemplateRef" [ngTemplateOutlet]="titleTemplateRef"
+          [ngTemplateOutletContext]="{$implicit:item}">
+        </ng-container>
+      </ng-container>
+    </ng-template>
+    <ng-template #content let-item>
+      <ng-container content>
+        <ng-container *ngIf="contentTemplateRef" [ngTemplateOutlet]="contentTemplateRef"
+          [ngTemplateOutletContext]="{$implicit:item}">
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </rdr-collapse>
+</nx-collapse-accordion>

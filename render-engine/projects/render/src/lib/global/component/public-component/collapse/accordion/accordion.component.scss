@@ -1,0 +1,34 @@
+@import "public-style.scss";
+
+@include rdr-accordion-theme();
+
+rdr-accordion {
+
+  nx-collapse-accordion {
+    rdr-collapse {
+      +rdr-collapse {
+        margin-top: 16px;
+
+        @include rwd($bp-sm-max) {
+          margin-top: 8px;
+        }
+      }
+    }
+
+    &.style--hasList {
+      rdr-collapse {
+        nx-collapse.nx-cp {
+          .collapse-container {
+            &__trigger {
+              padding: 16px 56px 16px 75px;
+
+              @include rwd($bp-sm-max) {
+                padding: 8px 38px 8px 51px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

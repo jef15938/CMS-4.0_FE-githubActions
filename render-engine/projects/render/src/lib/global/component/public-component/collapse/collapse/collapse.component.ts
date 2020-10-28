@@ -1,10 +1,7 @@
 import { Component, ContentChild, Injector, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { CustomizeBaseDirective } from '../base-component';
+import { CustomizeBaseDirective } from '../../base-component';
+import { CollapseData } from '../collapse.interface';
 
-export interface CollapseData {
-  title: string;
-  content: string;
-}
 
 @Component({
   selector: 'rdr-collapse',
@@ -14,7 +11,7 @@ export interface CollapseData {
 })
 export class CollapseComponent extends CustomizeBaseDirective implements OnInit {
 
-  @Input() collapseList: Array<CollapseData>;
+  @Input() collapseData: CollapseData;
 
   @ContentChild('title') titleTemplateRef: TemplateRef<any>;
   @ContentChild('content') contentTemplateRef: TemplateRef<any>;

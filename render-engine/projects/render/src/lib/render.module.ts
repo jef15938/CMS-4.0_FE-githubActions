@@ -7,6 +7,7 @@ import { RenderComponent } from './global/component/render/render.component';
 import { WrapperModule } from './function/wrapper/wrapper.module';
 import { PipeModule } from './global/pipe/pipe.module';
 import { TabModule } from './global/component/public-component/tab/tab.module';
+import { CollapseModule } from './global/component/public-component/collapse/collapse.module';
 import { RenderRoutingModule } from './render-routing.module';
 import { CardModule } from './global/component/public-component/card/card.module';
 import { IconPageComponent } from './global/component/icon-page/icon-page.component';
@@ -36,7 +37,6 @@ import { TestCustomize1Component } from './global/component/test-customize1/test
 import { MetaService } from './global/service/meta.service';
 import { BannerComponent } from './global/component/banner/banner.component';
 import { ListComponent } from './global/component/list/list.component';
-import { CollapseComponent } from './global/component/public-component/collapse/collapse.component';
 import { PaginationComponent } from './global/component/public-component/pagination/pagination.component';
 import { BreadcrumbComponent } from './global/component/public-component/breadcrumb/breadcrumb.component';
 import { FormFrameComponent } from './global/component/public-component/form-frame/form-frame.component';
@@ -87,7 +87,6 @@ const COMPONENTS = [
 ];
 
 const PUBLIC_COMPONENTS_TEMPLATES = [
-  CollapseComponent,
   PaginationComponent,
   BreadcrumbComponent,
   InputComponent,
@@ -113,7 +112,8 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
     EffectsModule.forFeature([RenderEffects]),
     NxUiModule,
     FormsModule,
-    CardModule
+    CardModule,
+    CollapseModule
   ],
   declarations: [
     RenderComponent,
