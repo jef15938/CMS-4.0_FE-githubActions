@@ -1,54 +1,12 @@
-<ng-template #RuntimeBlock>
-  <div class="view-container runtime">
-    <div class="current" *ngIf="templates">
-      <div [class]="previewSize">
-        <rdr-templates-container #current [mode]="mode" [templates]="templates" [sites]="sites" [pageInfo]="pageInfo"
-          [fixed]="false">
-        </rdr-templates-container>
-      </div>
-    </div>
+<div class="view-container preview" [class.compare]="isComparing">
+  <div class="previous" [style.display]="isComparing ? 'block' : 'none'" *ngIf="previousTemplates">
+    <rdr-templates-container *ngIf="isComparing && previousTemplates" #previous [mode]="mode"
+      [templates]="previousTemplates" [sites]="sites" [pageInfo]="pageInfo" [fixed]="fixed">
+    </rdr-templates-container>
   </div>
-</ng-template>
-
-<ng-container *ngIf="pageEnv.isBrowser && !pageEnv.isRuntime && mode==='preview'; else RuntimeBlock">
-  <div class="btn-container" *ngIf="!isIframe">
-    <div>
-      <button type="button" (click)="toggleCompare()"
-        [class.active]="funcCompare.on">{{funcCompare.on?'取消比較':'比較版本'}}</button>
-    </div>
-    <div style="text-align: right;">
-      <button type="button" (click)="setPreviewSize(PreviewSize.PC)"
-        [class.active]="previewSize===PreviewSize.PC">PC</button>
-      <button type="button" (click)="setPreviewSize(PreviewSize.PAD_H)"
-        [class.active]="previewSize===PreviewSize.PAD_H">PAD_H</button>
-      <button type="button" (click)="setPreviewSize(PreviewSize.PAD_V)"
-        [class.active]="previewSize===PreviewSize.PAD_V">PAD_V</button>
-      <button type="button" (click)="setPreviewSize(PreviewSize.MOBILE)"
-        [class.active]="previewSize===PreviewSize.MOBILE">MOBILE</button>
-    </div>
+  <div class="current">
+    <rdr-templates-container #current [mode]="mode" [templates]="templates" [sites]="sites" [pageInfo]="pageInfo"
+      [fixed]="fixed">
+    </rdr-templates-container>
   </div>
-  <ng-container *ngIf="!isIframe">
-    <div class="iframe-container">
-      <iframe #IFrame [src]="(url+'?is_iframe=true')|safeResource" [class]="previewSize"></iframe>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="isIframe">
-    <div class="view-container preview" [class.compare]="funcCompare.on">
-      <div class="previous" [style.display]="funcCompare.on ? 'block' : 'none'" *ngIf="previousTemplates">
-        <div [class]="previewSize">
-          <rdr-templates-container *ngIf="funcCompare.on && previousTemplates" #previous [mode]="mode" [templates]="previousTemplates" [sites]="sites"
-            [pageInfo]="pageInfo" [fixed]="false">
-          </rdr-templates-container>
-        </div>
-      </div>
-      <div class="current">
-        <div [class]="previewSize">
-          <rdr-templates-container #current [mode]="mode" [templates]="templates" [sites]="sites" [pageInfo]="pageInfo"
-            [fixed]="false">
-          </rdr-templates-container>
-        </div>
-      </div>
-    </div>
-  </ng-container>
-</ng-container>
+</div>

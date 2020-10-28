@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, ViewChild, Inject, PLATFORM_ID, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
@@ -8,16 +10,7 @@ import { RenderService } from '../../service/render.service';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
 import { RenderedPageEnvironment } from '../../interface/page-environment.interface';
-import { ActivatedRoute } from '@angular/router';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { Observable, of } from 'rxjs';
-
-enum PreviewSize {
-  PC = 'preview-size-pc',
-  PAD_H = 'preview-size-1024-768',
-  PAD_V = 'preview-size-768-1024',
-  MOBILE = 'preview-size-375-667',
-}
+import { PreviewCommand } from '../../enum/preview-command.enum';
 
 @Component({
   selector: 'rdr-render-preview-container',
@@ -28,7 +21,6 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
 
   @ViewChild('previous') previousTemplatesContainerComponent: TemplatesContainerComponent;
   @ViewChild('current') currentTemplatesContainerComponent: TemplatesContainerComponent;
-  @ViewChild('IFrame') iframe: ElementRef<HTMLIFrameElement>;
 
   @Input() templates: ContentTemplateInfoModel[];
   @Input() mode: 'preview' | 'edit';
@@ -38,82 +30,38 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
 
   previousTemplates;
 
-  funcCompare = {
-    on: false,
-    inited: false,
-  };
-
-  PreviewSize = PreviewSize;
-  previewSize: PreviewSize = PreviewSize.PC;
-
-  isIframe = false;
-  url = '';
-
-  get isPreview() {
-    return !this.pageEnv.isRuntime && this.mode === 'preview';
-  }
+  isComparing = false;
 
   constructor(
     private renderService: RenderService,
     @Inject('RENDER_ENGINE_RENDERED_PAGE_ENVIRONMENT') public pageEnv: RenderedPageEnvironment,
-    activatedRoute: ActivatedRoute,
     @Inject(PLATFORM_ID) platformId: any,
     @Inject(DOCUMENT) private document: any,
     private changeDetectorRef: ChangeDetectorRef,
-  ) {
-    activatedRoute.queryParams.subscribe(params => {
-      this.isIframe = !!params.is_iframe;
-    });
-
-    if (isPlatformBrowser(platformId)) {
-      this.url = window.location.href;
-
-      if (this.isIframe) {
-        window.onmessage = (e) => {
-          const funcName = e.data;
-          if (this[funcName] && typeof (this[funcName]) === 'function') {
-            this[funcName]();
-          }
-        };
-      } else {
-        window.onmessage = (e) => {
-          const funcName = e.data;
-          switch (funcName) {
-            case 'setCompareOnTrue':
-              this.funcCompare.on = true;
-              break;
-            case 'setCompareOnFalse':
-              this.funcCompare.on = false;
-              break;
-          }
-        };
-      }
-    }
-
-  }
+  ) { }
 
   ngOnInit(): void {
+    window.onmessage = (e) => {
+      const command = e.data;
+      switch (command) {
+        case PreviewCommand.COMPARE_TOGGLE:
+          this.toggleCompare();
+          break;
+        case PreviewCommand.COMPARE_OFF:
+          this.closeCompare();
+          break;
+      }
+    };
+  }
 
-    if (!this.isPreview) { return; }
-
-    if (!this.isIframe) {
-      (this.document as Document).body.style.overflow = 'hidden';
-      return;
-    } else {
-      (this.document as Document).body.style.overflowX = 'hidden';
-    }
+  private sendCommandToParent(command: PreviewCommand) {
+    window?.parent?.postMessage(command, '*');
   }
 
   toggleCompare() {
-    if (!this.isIframe && this.iframe?.nativeElement) {
-      this.previewSize = PreviewSize.PC;
-      this.iframe.nativeElement.contentWindow.postMessage('toggleCompare', '*');
-      return;
-    }
-
-    if (this.funcCompare.on) { // 取消比較
-      this.funcCompare.on = !this.funcCompare.on;
-      window.parent.postMessage(`setCompareOn${this.funcCompare.on ? 'True' : 'False'}`, '*');
+    if (this.isComparing) { // 取消比較
+      this.isComparing = !this.isComparing;
+      this.sendCommandToParent(PreviewCommand.COMPARE_OFF);
       return;
     }
 
@@ -122,10 +70,10 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
         alert('沒有之前的版本');
         return;
       }
-      this.funcCompare.on = !this.funcCompare.on;
+      this.isComparing = !this.isComparing;
       this.changeDetectorRef.detectChanges();
       this.markVersionDifference();
-      window.parent.postMessage(`setCompareOn${this.funcCompare.on ? 'True' : 'False'}`, '*');
+      this.sendCommandToParent(PreviewCommand.COMPARE_ON);
     });
   }
 
@@ -217,16 +165,8 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
     return result;
   }
 
-  setPreviewSize(previewSize: PreviewSize) {
-    this.closeCompare();
-    this.previewSize = previewSize;
-  }
-
-  closeCompare() {
-    this.funcCompare.on = false;
-    if (!this.isIframe && this.iframe?.nativeElement) {
-      this.iframe.nativeElement.contentWindow.postMessage('closeCompare', '*');
-    }
+  private closeCompare() {
+    this.isComparing = false;
   }
 
 }
