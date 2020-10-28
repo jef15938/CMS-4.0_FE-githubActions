@@ -1,10 +1,11 @@
-import { Directive, Input, Injector, OnChanges, SimpleChanges, Inject } from '@angular/core';
+import { Directive, Input, Injector, OnChanges, SimpleChanges, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TemplateFieldDirective } from './template-field.directive';
 import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
 import { SitemapUtil } from '../../../../global/utils/sitemap-util';
 import { RenderedPageEnvironment } from '../../../../global/interface/page-environment.interface';
 import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../../../../global/injection-token/injection-token';
+import { customAction } from '../../../../global/const/custom-action-subject';
 
 export enum LinkFieldInfoUrlType {
   INSIDE = 'INSIDE',
@@ -16,6 +17,7 @@ export interface LinkFieldInfo extends ContentFieldInfoModel {
     isTargetBlank: 'true' | 'false';
     urlType: LinkFieldInfoUrlType;
     siteId: string;
+    actionID: string;
   };
 }
 
@@ -26,6 +28,7 @@ export interface LinkFieldInfo extends ContentFieldInfoModel {
 export class LayoutFieldLinkDirective extends TemplateFieldDirective implements OnChanges {
   @Input('libLayoutFieldLink') fieldInfo: LinkFieldInfo;
 
+  subject = customAction;
   constructor(
     injector: Injector,
     private router: Router,
@@ -59,11 +62,29 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
     }
   }
 
+  private preventOriginClickEvent(ev) {
+    ev.preventDefault(); // 避免真的開連結，但也會讓 Base 的 TemplateFieldDirective.click() 收不到 event
+    super.click(ev);
+    ev.stopPropagation(); // 會讓 Base 的 TemplateFieldDirective.click() 收不到 event
+  }
+
   click(ev) {
-    if (this.mode === 'edit' || !this.pageEnv.isRuntime) {
-      ev.preventDefault(); // 避免真的開連結，但也會讓 Base 的 TemplateFieldDirective.click() 收不到 event
-      super.click(ev);
-      ev.stopPropagation(); // 會讓 Base 的 TemplateFieldDirective.click() 收不到 event
+    if (this.mode === 'edit') { return; }
+
+    const actionId = this.fieldInfo.extension['actionID'];
+    if (actionId) {
+      this.preventOriginClickEvent(ev);
+      this.subject.next(actionId);
+      return;
+    }
+
+    const isPreview = !this.pageEnv.isRuntime;
+    if (isPreview) {
+      const isInside = this.fieldInfo.extension.urlType === 'INSIDE';
+      if (isInside) {
+        this.preventOriginClickEvent(ev);
+        return;
+      }
     }
   }
 }

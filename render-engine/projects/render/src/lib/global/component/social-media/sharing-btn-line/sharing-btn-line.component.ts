@@ -52,7 +52,9 @@ export class SharingBtnLineComponent extends SharingBtnBase {
   }
 
   loadButton() {
-    (window as any).LineIt?.loadButton();
+    const lineIt = (window as any).LineIt;
+    lineIt?.loadButton();
+    return of(undefined);
   }
 
 }

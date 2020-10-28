@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { LinkFieldInfoUrlType } from '@neux/render';
@@ -7,6 +7,9 @@ import { SiteInfoModel } from '../../../../../global/api/data-model/models/site-
 import { SiteMapGetResponseModel } from '../../../../../global/api/data-model/models/site-map-get-response.model';
 import { SitemapService } from '../../../../../global/api/service';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
+import { CustomAction, CustomActionInfo } from 'projects/cms-lib/src/lib/global/interface/cms-custom-action.interface';
+import { CMS_CUSTOM_ACTION_TOKEN } from '../../../../../global/injection-token';
+
 
 export interface ATagConfig {
   href: string;
@@ -14,6 +17,7 @@ export interface ATagConfig {
   target: string;
   urlType: LinkFieldInfoUrlType;
   siteId: string;
+  actionID?: string;
 }
 
 @Component({
@@ -38,9 +42,15 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase<HtmlEdit
 
   aTagConfig: ATagConfig;
 
+  customActions: CustomAction[];
+  isLink = true;
   constructor(
     private sitemapService: SitemapService,
-  ) { super(); }
+    @Inject(CMS_CUSTOM_ACTION_TOKEN) customActionInfo: CustomActionInfo
+  ) {
+    super();
+    this.customActions = customActionInfo.datas;
+  }
 
   ngOnInit(): void {
     this.aTagConfig = {
@@ -48,14 +58,18 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase<HtmlEdit
       text: this.aTag.text,
       target: this.aTag.target,
       siteId: this.aTag.getAttribute('siteId') || '',
+      actionID: this.aTag.getAttribute('actionID') || '',
       urlType:
         this.aTag.getAttribute('urlType') === LinkFieldInfoUrlType.OUTSITE
           || this.aTag.getAttribute('urlType') === LinkFieldInfoUrlType.INSIDE
           ? this.aTag.getAttribute('urlType') as LinkFieldInfoUrlType
           : LinkFieldInfoUrlType.OUTSITE,
+
     };
+
     this.sites$ = this.sitemapService.getSiteList();
     this.nodes$ = this.getNodes();
+    this.isLink = !!!this.aTag.getAttribute('actionID');
   }
 
   getNodes() {
@@ -92,4 +106,8 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase<HtmlEdit
     }
   }
 
+  btnChange() {
+    this.aTagConfig.actionID = '';
+  }
 }
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Inject } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { TemplateFieldSelectEvent, LinkFieldInfo, LinkFieldInfoUrlType } from '@neux/render';
@@ -7,6 +7,8 @@ import { SitemapService } from '../../../../../../../../global/api/service';
 import { SiteInfoModel } from '../../../../../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
+import { CustomAction, CustomActionInfo } from 'projects/cms-lib/src/lib/global/interface/cms-custom-action.interface';
+import { CMS_CUSTOM_ACTION_TOKEN } from '../../../../../../../../global/injection-token';
 
 @Component({
   selector: 'cms-field-control-link',
@@ -23,10 +25,14 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
   refreshNodes$ = new BehaviorSubject(undefined);
   nodes$: Observable<SiteMapGetResponseModel[]>;
 
+  customActions: CustomAction[];
+  isLink = true;
   constructor(
     private sitemapService: SitemapService,
+    @Inject(CMS_CUSTOM_ACTION_TOKEN) customActionInfo: CustomActionInfo
   ) {
     super();
+    this.customActions = customActionInfo.datas;
   }
 
   ngOnInit(): void {
@@ -60,6 +66,8 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
       this.fieldInfo.extension.isTargetBlank = this.fieldInfo.extension.isTargetBlank ? 'true' : 'false';
       this.fieldInfo.extension.urlType = this.fieldInfo.extension.urlType || LinkFieldInfoUrlType.INSIDE;
       this.fieldInfo.extension.siteId = this.fieldInfo.extension.siteId || '';
+      this.fieldInfo.extension['actionID'] = this.fieldInfo.extension['actionID'] || '';
+      this.isLink = !!!this.fieldInfo.extension['actionID'];
     }
   }
 
@@ -74,5 +82,16 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
       this.refreshNodes$.next(undefined);
     }
   }
+
+  /**
+   * 切換TAB
+   */
+  btnChange() {
+    this.fieldInfo.extension['actionID'] = '';
+    this.change.emit()
+  }
+
+
+
 
 }

@@ -7,6 +7,7 @@ export * from './lib/global/service/index';
 export * from './lib/global/injection-token/injection-token';
 export * from './lib/global/interceptor/index';
 export * from './lib/global/component/index';
+export * from './lib/global/const/index';
 export * from './lib/global/directive/index';
 export * from './lib/global/interface/index';
 export * from './lib/global/pipe/index';
