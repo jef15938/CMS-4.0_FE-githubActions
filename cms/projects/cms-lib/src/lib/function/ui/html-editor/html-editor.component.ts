@@ -7,7 +7,7 @@ import { HtmlEditorContext, HtmlEditorContextMenuItem, HtmlEditorConfig } from '
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
-import { ATTRIBUTE_FRAME_ID, ATTRIBUTE_GALLERY_ID } from './const/html-editor-container.const';
+import { ATTRIBUTE_FRAME_ID, ATTRIBUTE_GALLERY_ID, TABLE_BASE_ROW_CLASS } from './const/html-editor-container.const';
 import { YoutubeUtil } from './service/youtube-util';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
@@ -110,7 +110,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
     const tables = Array.from(tempContainer.querySelectorAll('table'));
     tables.forEach(table => {
-      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains('cms-table-base-row'))[0];
+      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains(TABLE_BASE_ROW_CLASS))[0];
       if (!headerTr) { return; }
       // <th> to <td>
       const ths = Array.from(headerTr.querySelectorAll('th'));

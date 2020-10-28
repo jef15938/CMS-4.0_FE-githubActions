@@ -1,6 +1,7 @@
 import { HtmlEditorTableCell } from './table-controller.interface';
 import { Subscription, fromEvent } from 'rxjs';
 import { switchMap, takeUntil, tap, throttleTime } from 'rxjs/operators';
+import { TABLE_BASE_ROW_CLASS } from '../../../const/html-editor-container.const';
 
 export interface TableSetting {
   cols: number;
@@ -14,7 +15,7 @@ export enum TableStyle {
   SINGLE = 'single',
 }
 
-export const TABLE_BASE_ROW_CLASS = 'editor-table-base-row';
+
 
 export class TableControllerService {
 

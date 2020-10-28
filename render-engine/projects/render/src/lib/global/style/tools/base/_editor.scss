@@ -1,4 +1,14 @@
 @mixin neux-editor {
+  .neux-editor.edit {
+    .neux-table {
+      tr {
+        td.selected {
+          background-color: lightblue !important;
+        }
+      }
+    }
+  }
+
   .neux-editor {
     @include fz-body-18-left-bold;
     color: $black-two;
