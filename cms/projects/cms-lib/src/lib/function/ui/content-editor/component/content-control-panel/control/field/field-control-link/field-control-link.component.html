@@ -1,4 +1,16 @@
-<ng-container *ngIf="fieldInfo">
+<br>
+<mat-radio-group [(ngModel)]="isLink" (change)="btnChange()">
+  <mat-radio-button [value]="true">
+    連結
+  </mat-radio-button>
+  <mat-radio-button [value]="false">
+    動作
+  </mat-radio-button>
+</mat-radio-group>
+<br>
+<br>
+<hr>
+<ng-container *ngIf="fieldInfo&&isLink">
   <br>
   <mat-radio-group [(ngModel)]="fieldInfo.extension['isTargetBlank']" (change)="change.emit()">
     <mat-radio-button [value]="'true'">
@@ -58,3 +70,30 @@
     </mat-form-field>
   </ng-template>
 </ng-container>
+
+
+<ng-container *ngIf="fieldInfo&&!isLink">
+  <div class="modal-form-layout__content ">
+    <mat-form-field appearance="outline">
+      <mat-label>動作:</mat-label>
+      <mat-select #select [(ngModel)]="fieldInfo.extension['actionID']" name="actionID"
+        (selectionChange)="change.emit()">
+        <mat-option [value]="'none'">請選擇</mat-option>
+        <ng-container *ngIf="customActions; let actions;">
+          <mat-option *ngFor="let action of actions" [value]="action.actionID">
+            {{action.actionName}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-container>
+<!-- <div class="modal-form-layout__row" *ngIf="canModifyText">
+      <div class="modal-form-layout__col">
+        <mat-form-field appearance="outline">
+          <mat-label>連結文字</mat-label>
+          <input matInput [(ngModel)]="aTagConfig.text" name="text" required #modelText="ngModel">
+          <mat-error *ngIf="modelText?.errors?.required">必填欄位</mat-error>
+        </mat-form-field>
+      </div>
+    </div> -->

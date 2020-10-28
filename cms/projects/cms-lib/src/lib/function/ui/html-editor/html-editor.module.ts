@@ -25,6 +25,7 @@ import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default'
 import { HtmlEditorActionEnablePipe } from './pipe/html-editor-action-enable.pipe';
 import { HTML_EDITOR_CONFIG_NO_HIGHLIGHT } from './config/html-editor-config-no-highlight';
 import { HTML_EDITOR_CONFIG_ONLY_HIGHLIGHT } from './config/html-editor-config-only-highlight';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { HTML_EDITOR_CONFIG_ONLY_HIGHLIGHT } from './config/html-editor-config-o
     PipeModule,
     DirectiveModule,
     MatFormFieldModule,
+    MatTabsModule,
     MatInputModule,
     MatSelectModule,
     MatRadioModule,

@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { API_CONFIG_TOKEN, API_HEADER_TOKEN } from '@neux/core';
 import { RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN, RenderModule, RENDER_ENVIROMENT_TOKEN } from '@neux/render';
 import {
-  CmsModule, CMS_ENVIROMENT_TOKEN
+  CmsModule, CMS_CUSTOM_ACTION_TOKEN, CMS_ENVIROMENT_TOKEN,
 } from '@neux/cms-core';
 import { environment } from './../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import { GlobalHeader } from './global/common/global-header';
 import { COMPONENT_MAPPINGS } from './global/common/component-mapping';
 import { FarmCustomFormControlComponent } from './function/farm-custom-form-control/farm-custom-form-control.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CUSTOM_ACTIONS } from './global/common/custom-action.mapping';
 
 @NgModule({
   declarations: [
@@ -34,8 +35,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     { provide: RENDER_ENVIROMENT_TOKEN, useValue: environment },
     { provide: RENDER_CUSTOM_COMPONENT_MAPPINGS_TOKEN, useValue: COMPONENT_MAPPINGS },
     { provide: API_CONFIG_TOKEN, useValue: environment },
+
     { provide: API_HEADER_TOKEN, useExisting: GlobalHeader },
+    { provide: CMS_CUSTOM_ACTION_TOKEN, useValue: CUSTOM_ACTIONS }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+
