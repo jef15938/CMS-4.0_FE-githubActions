@@ -1,14 +1,4 @@
 @mixin neux-editor {
-  .neux-editor.edit {
-    .neux-table {
-      tr {
-        td.selected {
-          background-color: lightblue !important;
-        }
-      }
-    }
-  }
-
   .neux-editor {
     @include fz-body-18-left-bold;
     color: $black-two;
@@ -16,6 +6,34 @@
 
     @include rwd($bp-sm-max) {
       @include fz-body-16-left-bold;
+    }
+
+    &.edit {
+      .neux-table {
+        tr {
+          td {
+            &.highlightTD {
+              background-color: rgba(212, 75, 22, 0.5);
+            }
+
+            &.selected {
+              background-color: lightblue;
+            }
+          }
+
+          &:nth-child(even) {
+            td:not(.headerTD):not(.selected):not(.highlightTD) {
+              background-color: $white-two;
+            }
+          }
+
+          &:nth-child(odd) {
+            td:not(.headerTD):not(.selected):not(.highlightTD) {
+              background-color: $white;
+            }
+          }
+        }
+      }
     }
 
     ol {
