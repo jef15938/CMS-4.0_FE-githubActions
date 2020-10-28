@@ -110,7 +110,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
     const tables = Array.from(tempContainer.querySelectorAll('table'));
     tables.forEach(table => {
-      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains('cms-table-resizer'))[0];
+      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains('cms-table-base-row'))[0];
       if (!headerTr) { return; }
       // <th> to <td>
       const ths = Array.from(headerTr.querySelectorAll('th'));

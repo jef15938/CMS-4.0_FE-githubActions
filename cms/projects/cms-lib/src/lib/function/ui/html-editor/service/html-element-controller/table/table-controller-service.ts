@@ -14,6 +14,8 @@ export enum TableStyle {
   SINGLE = 'single',
 }
 
+export const TABLE_BASE_ROW_CLASS = 'editor-table-base-row';
+
 export class TableControllerService {
 
   createCell(innerHTML?: string) {
@@ -21,7 +23,6 @@ export class TableControllerService {
     // td.innerHTML = '<div>文字</div>';
     td.innerHTML = (innerHTML === null || innerHTML === undefined) ? '文字' : innerHTML;
     // td.setAttribute('class', 'tg-0pky');
-    td.classList.add('headerTD');
     td.setAttribute('colspan', '1');
     td.setAttribute('rowspan', '1');
     return td;
@@ -34,16 +35,17 @@ export class TableControllerService {
     this.setTableStyle(table, TableStyle.PERCENT);
 
     const tHead = document.createElement('thead');
+    const tBody = document.createElement('tbody');
     table.appendChild(tHead);
+    table.appendChild(tBody);
 
-    const trInTHead = document.createElement('tr');
-    trInTHead.classList.add('cms-table-resizer');
+    const baseRow = document.createElement('tr');
+    baseRow.classList.add(TABLE_BASE_ROW_CLASS);
     for (let col = 0; col < config.cols; ++col) {
-      const td = this.createCell('');
-      this.setTHeadTd(td);
-      trInTHead.appendChild(td);
+      const td = this.createCell();
+      baseRow.appendChild(td);
     }
-    tHead.appendChild(trInTHead);
+    tHead.appendChild(baseRow);
 
     for (let row = 0; row < config.rows; ++row) {
       const tr = document.createElement('tr');
@@ -51,21 +53,40 @@ export class TableControllerService {
         const td = this.createCell();
         tr.appendChild(td);
       }
-      table.appendChild(tr);
+      tBody.appendChild(tr);
     }
+
+    this.checkTableStyle(table);
     return table;
   }
 
-  setTHeadTd(td: HTMLElement) {
-    td.classList.add('headerTD');
-    td.classList.add('hideTD');
-    // td.style.setProperty('height', '0');
-    // td.style.setProperty('padding', '0');
-    // td.style.setProperty('margin', '0');
-    // td.style.setProperty('font-size', '0');
-    // td.style.setProperty('line-height', '0');
-    // // td.style.setProperty('border', 'none');
-    // td.style.setProperty('overflow', 'hidden');
+  checkTableStyle(table: HTMLTableElement) {
+    this.setBaseRowStyle(table);
+    this.setHeaderRowStyle(table);
+  }
+
+  private setBaseRowStyle(table: HTMLTableElement) {
+    const tr = table.querySelector(`thead > tr.${TABLE_BASE_ROW_CLASS}`) as HTMLTableRowElement;
+    const tds = Array.from(tr.querySelectorAll('td')) as HTMLTableDataCellElement[];
+    tds.forEach(td => {
+      td.classList.add('hideTD');
+    });
+  }
+
+  private setHeaderRowStyle(table: HTMLTableElement) {
+    const firstTr = table.querySelector(`tbody > tr`) as HTMLTableRowElement;
+    const firstTrTds = Array.from(firstTr.querySelectorAll('td')) as HTMLTableDataCellElement[];
+    firstTrTds.forEach(td => {
+      td.classList.add('headerTD');
+    });
+
+    const otherTrs = Array.from(table.querySelectorAll(`tbody > tr`)).filter(tr => tr !== firstTr) as HTMLTableRowElement[];
+    otherTrs.forEach(otherTr => {
+      const otherTrTds = Array.from(otherTr.querySelectorAll('td')) as HTMLTableDataCellElement[];
+      otherTrTds.forEach(td => {
+        td.classList.remove('headerTD');
+      });
+    });
   }
 
   setTableStyle(table: HTMLTableElement, style: TableStyle) {

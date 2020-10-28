@@ -319,10 +319,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       this.el.parentNode.removeChild(this.el);
     }
 
-    const tHeadTds = Array.from(this.el.querySelectorAll('thead > tr > td')) as HTMLTableDataCellElement[];
-    tHeadTds.forEach(td => {
-      this.tableControllerService.setTHeadTd(td);
-    });
+    this.tableControllerService.checkTableStyle(this.el);
 
     if (scanTable) {
       this.scanTable(this.el);
