@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
       if (action) {
         action.fn(this.injector);
       }
-      else { throw new Error('action not found'); }
+      else { alert(`action not found : ${e}`); }
     });
   }
 }

@@ -28,7 +28,7 @@ export interface LinkFieldInfo extends ContentFieldInfoModel {
 export class LayoutFieldLinkDirective extends TemplateFieldDirective implements OnChanges {
   @Input('libLayoutFieldLink') fieldInfo: LinkFieldInfo;
 
-  subject = customAction;
+  customAction$ = customAction;
   constructor(
     injector: Injector,
     private router: Router,
@@ -76,7 +76,7 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
     if (actionId) {
       this.preventOriginClickEvent(ev);
       if (!isEditor) {
-        this.subject.next(actionId);
+        this.customAction$.next(actionId);
       }
       return;
     }
