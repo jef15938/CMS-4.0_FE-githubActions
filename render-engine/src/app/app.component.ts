@@ -11,7 +11,7 @@ import { customActions } from './global/common/custom-action';
 })
 export class AppComponent implements OnInit {
   title = 'render-engine';
-  customAction = customActionEvent
+  customAction = customActionEvent;
   constructor(
     private router: Router,
     private gTagService: GTagService,
@@ -28,9 +28,9 @@ export class AppComponent implements OnInit {
       }))
       .subscribe((x: any) => { this.gTagService.gtag('event', 'page_view', { page_path: x.url }); });
     this.customAction.subscribe(e => {
-      let action = customActions.datas.find(data => data.actionID === e);
+      const action = customActions.datas.find(data => data.actionID === e);
       if (action) { action.fn(); }
-      else { throw new Error("action not found"); }
+      else { throw new Error('action not found'); }
     });
   }
 }
