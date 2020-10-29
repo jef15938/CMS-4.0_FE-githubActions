@@ -1,11 +1,11 @@
 @mixin neux-editor {
   .neux-editor {
-    @include fz-body-18-left-bold;
+    @include fz-body-16-left;
     color: $black-two;
     outline: none;
 
     @include rwd($bp-sm-max) {
-      @include fz-body-16-left-bold;
+      @include fz-footnote-15-left;
     }
 
     &.edit {
@@ -36,17 +36,36 @@
       }
     }
 
+    ol,
+    ul {
+      li {
+        @include fz-body-16-left;
+
+        @include rwd($bp-sm-max) {
+          @include fz-footnote-15-left;
+        }
+      }
+    }
+
     ol {
       display: block;
-      list-style-type: decimal;
       counter-reset: num;
 
       >li {
+        position: relative;
+        padding-left: 39px;
+
+        @include rwd($bp-sm-max) {
+          padding-left: 32px;
+        }
+
         &:before {
           content: counter(num)'.';
           counter-increment: num;
-          display: inline-block;
-          vertical-align: bottom;
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
           min-width: 27px;
           margin-right: 12px;
           text-align: right;
@@ -56,6 +75,14 @@
             margin-right: 8px;
           }
         }
+
+        +li {
+          margin-top: 16px;
+
+          @include rwd($bp-sm-max) {
+            margin-top: 12px;
+          }
+        }
       }
     }
 
@@ -63,12 +90,11 @@
       display: block;
 
       >li {
-        @include fz-body-16-left;
         position: relative;
         padding-left: 18px;
 
         @include rwd($bp-sm-max) {
-          @include fz-footnote-15-left;
+
           padding-left: 12px;
         }
 

@@ -11,6 +11,7 @@ export interface SelectData {
   disabled: boolean;
   optionList: SelectOption[];
   defaultValue?: string | number;
+  hasDefaultOption: boolean;
 }
 
 @Component({
@@ -41,7 +42,8 @@ export class SelectComponent extends CustomizeBaseDirective implements OnInit, C
       { value: '4', name: '想買第一份保單' },
       { value: '5', name: '想擁有美好的退休生活' },
       { value: '6', name: '想買房了' }
-    ]
+    ],
+    hasDefaultOption: true
   };
 
   constructor(injector: Injector) {

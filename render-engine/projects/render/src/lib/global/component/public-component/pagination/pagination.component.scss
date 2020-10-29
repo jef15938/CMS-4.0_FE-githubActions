@@ -11,6 +11,11 @@ rdr-pagination {
     &__control {
       @include rdr-icon(4, 2, 19px);
       cursor: pointer;
+      margin-left: 16px;
+
+      @include rwd($bp-sm-max) {
+        margin-left: 8px;
+      }
 
       &--disabled {
         cursor: not-allowed;
@@ -18,12 +23,7 @@ rdr-pagination {
       }
 
       &--prev {
-        margin-right: 16px;
         transform: rotate(180deg);
-      }
-
-      &--next {
-        margin-left: 16px;
       }
     }
 
@@ -41,6 +41,12 @@ rdr-pagination {
       user-select: none;
       min-width: 34px;
       margin: 0 8px;
+
+      &--dots {
+        @include rwd($bp-sm-max) {
+          min-width: 0;
+        }
+      }
 
       @include rwd($bp-sm-max) {
         margin: 0 4px;

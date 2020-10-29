@@ -159,6 +159,8 @@
   $line-color: map-get($theme, very_light_pink_1) !default;
   $item-font-color: map-get($theme, black_0) !default;
   $item-date-font-color: map-get($theme, brown_grey_0) !default;
+  $hover-color: map-get($theme, color_hover) !default;
+  $click-color: map-get($theme, color_click) !default;
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
@@ -185,6 +187,17 @@
 
         &-date {
           color: $item-date-font-color;
+        }
+      }
+
+      &__link {
+        &:hover {
+          background-color: $hover-color;
+        }
+
+        &:active,
+        &:focus {
+          background-color: $click-color;
         }
       }
     }
