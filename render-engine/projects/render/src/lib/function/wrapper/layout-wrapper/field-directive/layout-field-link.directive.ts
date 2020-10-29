@@ -64,27 +64,30 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
 
   private preventOriginClickEvent(ev) {
     ev.preventDefault(); // 避免真的開連結，但也會讓 Base 的 TemplateFieldDirective.click() 收不到 event
-    super.click(ev);
     ev.stopPropagation(); // 會讓 Base 的 TemplateFieldDirective.click() 收不到 event
   }
 
   click(ev) {
-    if (this.mode === 'edit') { return; }
+    super.click(ev);
+    const isEditor = this.mode === 'edit';
 
-    const actionId = this.fieldInfo.extension['actionID'];
+    const actionId = this.fieldInfo.extension.actionID;
+
     if (actionId) {
       this.preventOriginClickEvent(ev);
-      this.subject.next(actionId);
+      if (!isEditor) {
+        this.subject.next(actionId);
+      }
       return;
     }
 
+    const isInside = this.fieldInfo.extension.urlType === 'INSIDE';
     const isPreview = !this.pageEnv.isRuntime;
-    if (isPreview) {
-      const isInside = this.fieldInfo.extension.urlType === 'INSIDE';
-      if (isInside) {
-        this.preventOriginClickEvent(ev);
-        return;
-      }
+
+    if (isPreview && isInside) {
+      this.preventOriginClickEvent(ev);
+      return;
     }
+
   }
 }
