@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, Optional } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { LinkFieldInfoUrlType } from '@neux/render';
@@ -46,10 +46,10 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase<HtmlEdit
   isLink = true;
   constructor(
     private sitemapService: SitemapService,
-    @Inject(CMS_CUSTOM_ACTION_TOKEN) customActionInfo: CustomActionInfo
+    @Optional() @Inject(CMS_CUSTOM_ACTION_TOKEN) customActionInfo: CustomActionInfo
   ) {
     super();
-    this.customActions = customActionInfo.datas;
+    this.customActions = customActionInfo.datas || [];
   }
 
   ngOnInit(): void {
