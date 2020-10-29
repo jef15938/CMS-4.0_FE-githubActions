@@ -17,11 +17,15 @@ import { RENDER_APP_SHELL_NO_RENDER_COMPONENT_IDS } from './global/const/render-
 import { ErrorPageComponent } from 'src/app/global/component/error-page/error-page.component';
 import { environment } from 'src/environments/environment';
 import { GlobalHeader } from 'src/app/global/common/global-header';
+import { TestModalComponent } from './global/component/test-modal/test-modal.component';
+import { TestModal2Component } from './global/component/test-modal2/test-modal2.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    TestModalComponent,
+    TestModal2Component,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

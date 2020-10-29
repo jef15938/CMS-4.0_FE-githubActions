@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Inject } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { TemplateFieldSelectEvent, LinkFieldInfo, LinkFieldInfoUrlType } from '@neux/render';
@@ -29,10 +29,10 @@ export class FieldControlLinkComponent extends ContentControlBase implements OnI
   isLink = true;
   constructor(
     private sitemapService: SitemapService,
-    @Inject(CMS_CUSTOM_ACTION_TOKEN) customActionInfo: CustomActionInfo
+    @Optional() @Inject(CMS_CUSTOM_ACTION_TOKEN) customActionInfo: CustomActionInfo
   ) {
     super();
-    this.customActions = customActionInfo.datas;
+    this.customActions = customActionInfo.datas || [];
   }
 
   ngOnInit(): void {

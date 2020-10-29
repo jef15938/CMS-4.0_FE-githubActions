@@ -3,7 +3,7 @@
     <mat-radio-button [value]="true" [disabled]="isGallery">
       連結
     </mat-radio-button>
-    <mat-radio-button [value]="false" [disabled]="isGallery">
+    <mat-radio-button [value]="false" *ngIf="customActions.length" [disabled]="isGallery">
       動作
     </mat-radio-button>
   </mat-radio-group>
