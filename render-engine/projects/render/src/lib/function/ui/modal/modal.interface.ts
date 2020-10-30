@@ -1,3 +1,3 @@
 export interface ModalConfig {
-  width?: number;
+  width?: string;
 }
