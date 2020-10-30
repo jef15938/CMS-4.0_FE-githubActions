@@ -8,10 +8,6 @@ rdr-card-activity {
 
   +rdr-card-activity {
     margin-top: 16px;
-
-    @include rwd($bp-sm-max) {
-      margin-top: 8px;
-    }
   }
 
   .card-activity {
@@ -21,7 +17,7 @@ rdr-card-activity {
 
     @include rwd($bp-sm-max) {
       display: block;
-      padding: 16px 16px 24px;
+      padding: 16px 16px 28px;
     }
 
     &__img {
@@ -48,39 +44,41 @@ rdr-card-activity {
 
     &__date {
       @include fz-body-16-left-bold;
-      margin-bottom: 12px;
+      min-height: 28px;
+      margin-bottom: 8px;
 
       @include rwd($bp-sm-max) {
         @include fz-caption-13-left-bold;
-        margin-bottom: 16px;
+        min-height: 22px;
+        margin-bottom: 12px;
       }
     }
 
     &__subtitle {
-      @include fz-footnote-15-left-bold;
-      margin-bottom: 5px;
+      @include fz-body-16-left-bold;
+      margin-bottom: 8px;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-14-left-bold;
-        margin-bottom: 4px;
+        @include fz-footnote-15-left-bold;
+        margin-bottom: 12px;
       }
     }
 
     &__title {
       @include fz-title-20-left;
-      margin-bottom: 16px;
+      margin-bottom: 4px;
 
       @include rwd($bp-sm-max) {
-        @include fz-title-18-left;
-        margin-bottom: 12px;
+        @include fz-body-17-left-bold;
+        margin-bottom: 0;
       }
     }
 
     &__desc {
-      @include fz-body-16-left-bold;
+      @include fz-body-16-left;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-14-left-bold;
+        @include fz-footnote-15-left;
       }
     }
   }
