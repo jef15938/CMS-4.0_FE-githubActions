@@ -2,19 +2,18 @@
 
 @mixin rdr-collapse-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-collapse' !default;
-  $tl-primary-color: map-get($theme, brownish_grey) !default;
-  $tl-back-light-color: map-get($theme, white_1) !default;
-  $tl-null-color: map-get($theme, white_1) !default;
-  $tl-plain-color: map-get($theme, black_1) !default;
-  $tl-icon-color: map-get($theme, color_primary) !default;
-  $tl-line-color: map-get($theme, brown_grey_1) !default;
-  $tl-hover-color: map-get($theme, color_hover) !default;
-  $tl-pressed-color: map-get($theme, color_click) !default;
+  $rdr-back-light-color: map-get($theme, white_1) !default;
+  $rdr-null-color: map-get($theme, color_click) !default;
+  $rdr-plain-color: map-get($theme, brownish_grey) !default;
+  $rdr-icon-color: map-get($theme, color_primary) !default;
+  $rdr-line-color: map-get($theme, very_light_pink_1) !default;
+  $rdr-hover-color: map-get($theme, color_hover) !default;
+  $rdr-pressed-color: map-get($theme, color_click) !default;
+  $rdr-content-text-color: map-get($theme, black_0) !default;
 
-  $collapse-theme: nx-ui-theme-config-gen($color-primary: $tl-primary-color,
-      $color-back-light: $tl-back-light-color,
-      $color-null: $tl-null-color,
-      $color-plain: $tl-plain-color);
+  $collapse-theme: nx-ui-theme-config-gen($color-back-light: $rdr-back-light-color,
+      $color-null: $rdr-null-color,
+      $color-plain: $rdr-plain-color);
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
@@ -24,35 +23,47 @@
   #{$selector} {
 
     @include nx-collapse-theme($collapse-theme);
-    @include nx-collapse-accordion-theme($collapse-theme);
 
     nx-collapse.nx-cp {
-      +nx-collapse.nx-cp {
-        .collapse-container__trigger {
-          border-color: $tl-line-color;
-        }
-      }
 
       .collapse-container__trigger {
         &:hover {
-          background-color: $tl-hover-color;
+          background-color: $rdr-hover-color;
         }
 
         &:active,
         &:focus {
-          background-color: $tl-pressed-color;
+          background-color: $rdr-pressed-color;
         }
       }
 
       .collapse-container__content {
-        background-color: $tl-back-light-color;
+        background-color: $rdr-back-light-color;
+        color: $rdr-content-text-color;
       }
 
       .collapse-container[collapse-status=true] {
         .collapse-container__trigger {
-          border-color: $tl-line-color;
+          border-color: $rdr-line-color;
         }
       }
     }
+  }
+}
+
+
+@mixin rdr-accordion-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-accordion' !default;
+  $rdr-primary-color: map-get($theme, brownish_grey) !default;
+
+  $collapse-theme: nx-ui-theme-config-gen($color-primary: $rdr-primary-color);
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-accordion.rdr-cp';
+  }
+
+  #{$selector} {
+    @include nx-collapse-accordion-theme($collapse-theme);
   }
 }

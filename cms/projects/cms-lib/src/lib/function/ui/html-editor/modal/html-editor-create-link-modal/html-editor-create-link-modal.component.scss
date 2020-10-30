@@ -3,7 +3,7 @@
 mat-radio-group {
   display: block;
   padding-bottom: 1.34375em;
-
+  
   mat-radio-button {
     width: 84px;
 
@@ -12,3 +12,12 @@ mat-radio-group {
     }
   }
 }
+
+.pt-10px{
+  padding-top:10px;
+}
+
+.pb-10px{
+  padding-bottom: 10px;
+}
+

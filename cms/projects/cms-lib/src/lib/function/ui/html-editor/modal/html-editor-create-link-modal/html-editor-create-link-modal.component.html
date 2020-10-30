@@ -1,9 +1,9 @@
 <div class="modal-form-layout" *ngIf="aTagConfig">
-  <mat-radio-group [(ngModel)]="isLink" (change)="btnChange()">
-    <mat-radio-button [value]="true">
+  <mat-radio-group [(ngModel)]="isLink" (change)="btnChange()" class="pb-10px">
+    <mat-radio-button [value]="true" [disabled]="isGallery">
       連結
     </mat-radio-button>
-    <mat-radio-button [value]="false">
+    <mat-radio-button [value]="false" *ngIf="customActions.length" [disabled]="isGallery">
       動作
     </mat-radio-button>
   </mat-radio-group>
@@ -11,11 +11,11 @@
   <ng-container *ngIf="isLink">
     <form #form="ngForm" class="modal-form-layout__form">
       <div class="modal-form-layout__content ">
-        <mat-radio-group [(ngModel)]="aTagConfig.target" name="isTargetBlank">
-          <mat-radio-button value="_blank">
+        <mat-radio-group [(ngModel)]="aTagConfig.target" name="isTargetBlank" class="pt-10px">
+          <mat-radio-button value="_blank" [disabled]="isGallery">
             另開分頁
           </mat-radio-button>
-          <mat-radio-button value="">
+          <mat-radio-button value="" [disabled]="isGallery">
             原頁開啟
           </mat-radio-button>
         </mat-radio-group>
@@ -88,7 +88,7 @@
 
   <ng-container *ngIf="!isLink">
     <form #form="ngForm" class="modal-form-layout__form">
-      <div class="modal-form-layout__content ">
+      <div class="modal-form-layout__content pt-10px">
         <mat-form-field appearance="outline">
           <mat-label>動作:</mat-label>
           <mat-select #select [(ngModel)]="aTagConfig.actionID" name="actionID">
