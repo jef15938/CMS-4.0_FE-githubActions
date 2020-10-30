@@ -89,10 +89,10 @@
 //card activity link
 @mixin rdr-card-activity-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-card-activity' !default;
-  $date-font-color: map-get($theme, brown_grey_1) !default;
-  $subtitle-font-color: map-get($theme, color_primary) !default;
-  $title-font-color: map-get($theme, black_0) !default;
-  $desc-font-color: map-get($theme, brownish_grey) !default;
+  $date-font-color: map-get($theme, brownish_grey) !default;
+  $subtitle-font-color: map-get($theme, black_0) !default;
+  $title-font-color: map-get($theme, color_primary) !default;
+  $desc-font-color: map-get($theme, black_0) !default;
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";

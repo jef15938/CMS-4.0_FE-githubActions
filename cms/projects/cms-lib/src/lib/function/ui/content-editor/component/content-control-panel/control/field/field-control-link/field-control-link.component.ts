@@ -1,13 +1,12 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
-import { TemplateFieldSelectEvent, LinkFieldInfo, LinkFieldInfoUrlType } from '@neux/render';
+import { TemplateFieldSelectEvent, LinkFieldInfo, LinkFieldInfoUrlType, CustomActionInfo, CustomAction } from '@neux/render';
 import { ContentControlBase } from '../../_base';
 import { SitemapService } from '../../../../../../../../global/api/service';
 import { SiteInfoModel } from '../../../../../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
-import { CustomAction, CustomActionInfo } from '../../../../../../../../global/interface/cms-custom-action.interface';
 import { CMS_CUSTOM_ACTION_TOKEN } from '../../../../../../../../global/injection-token';
 
 @Component({

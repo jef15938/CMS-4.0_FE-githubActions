@@ -11,10 +11,10 @@ rdr-pagination {
     &__control {
       @include rdr-icon(4, 2, 19px);
       cursor: pointer;
-      margin-left: 16px;
+      padding-left: 16px;
 
       @include rwd($bp-sm-max) {
-        margin-left: 8px;
+        padding-left: 8px;
       }
 
       &--disabled {

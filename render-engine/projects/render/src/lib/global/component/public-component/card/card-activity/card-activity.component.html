@@ -5,10 +5,12 @@
     </div>
     <div class="card-activity__info">
       <div class="card-activity__date">
-        {{cardActivityData?.startDate | date:'yyyy/MM/dd'}}-{{cardActivityData?.endDate | date:'yyyy/MM/dd'}}
+        <span *ngIf="cardActivityData?.startDate || cardActivityData?.endDate">
+          活動期間 {{cardActivityData?.startDate | date:'yyyy/MM/dd'}}-{{cardActivityData?.endDate | date:'yyyy/MM/dd'}}
+        </span>
       </div>
-      <div class="card-activity__subtitle">{{cardActivityData?.subTitle}}</div>
       <div class="card-activity__title">{{cardActivityData?.title}}</div>
+      <div class="card-activity__subtitle">{{cardActivityData?.subTitle}}</div>
       <div class="card-activity__desc">{{cardActivityData?.content}}</div>
     </div>
   </div>
