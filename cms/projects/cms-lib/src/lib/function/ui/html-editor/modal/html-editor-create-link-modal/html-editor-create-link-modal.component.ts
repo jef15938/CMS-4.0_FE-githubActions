@@ -1,13 +1,12 @@
 import { Component, OnInit, Input, Inject, Optional } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
-import { LinkFieldInfoUrlType } from '@neux/render';
+import { LinkFieldInfoUrlType, CustomActionInfo, CustomAction } from '@neux/render';
 import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 import { SiteInfoModel } from '../../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../../global/api/data-model/models/site-map-get-response.model';
 import { SitemapService } from '../../../../../global/api/service';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
-import { CustomAction, CustomActionInfo } from '../../../../../global/interface/cms-custom-action.interface';
 import { CMS_CUSTOM_ACTION_TOKEN } from '../../../../../global/injection-token';
 
 

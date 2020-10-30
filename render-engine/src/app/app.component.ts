@@ -29,12 +29,12 @@ export class AppComponent implements OnInit {
       }))
       .subscribe((x: any) => { this.gTagService.gtag('event', 'page_view', { page_path: x.url }); });
 
-    this.customAction.subscribe(e => {
-      const action = customActions.datas.find(data => data.actionID === e);
+    this.customAction.subscribe(actionID => {
+      const action = customActions.find(data => data.actionID === actionID);
       if (action) {
         action.fn(this.injector);
       }
-      else { alert(`action not found : ${e}`); }
+      else { alert(`action not found : ${actionID}`); }
     });
   }
 }
