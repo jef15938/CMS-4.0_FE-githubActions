@@ -8,7 +8,7 @@ export const customActions: CustomActionFunc[] = [
     actionName: '動作一',
     fn: (injector: Injector) => {
       const modalService = injector.get<ModalSevice>(ModalSevice);
-      modalService.openComponent(TestModalComponent, { width: 600 }).subscribe(result => {
+      modalService.openComponent(TestModalComponent, { width: '600px' }).subscribe(result => {
         console.warn('result = ', result);
       });
     }

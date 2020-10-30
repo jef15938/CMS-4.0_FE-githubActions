@@ -56,6 +56,7 @@ import { SharingBtnLineComponent } from './global/component/social-media/sharing
 import { SocialMediaComponent } from './global/component/social-media/social-media.component';
 import { RenderPreviewComponent } from './global/component/render-preview/render-preview.component';
 import { SharingBtnTwitterComponent } from './global/component/social-media/sharing-btn-twitter/sharing-btn-twitter.component';
+import { SharingBtnUrlComponent } from './global/component/social-media/sharing-btn-url/sharing-btn-url.component';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
@@ -86,6 +87,7 @@ const COMPONENTS = [
   SharingBtnFbComponent,
   SharingBtnLineComponent,
   SharingBtnTwitterComponent,
+  SharingBtnUrlComponent,
 ];
 
 const PUBLIC_COMPONENTS_TEMPLATES = [
@@ -113,6 +115,7 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
     StoreModule.forFeature(fromRenderStore.renderFeatureKey, fromRenderStore.reducer),
     EffectsModule.forFeature([RenderEffects]),
     NxUiModule,
+    // NxBtnModule,
     FormsModule,
     CardModule,
     CollapseModule

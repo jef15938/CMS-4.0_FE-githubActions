@@ -1,0 +1,6 @@
+button {
+  height: 20px;
+  ::ng-deep > div {
+    border-radius: 3px;
+  }
+}
