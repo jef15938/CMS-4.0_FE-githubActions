@@ -55,6 +55,7 @@ import { SharingBtnFbComponent } from './global/component/social-media/sharing-b
 import { SharingBtnLineComponent } from './global/component/social-media/sharing-btn-line/sharing-btn-line.component';
 import { SocialMediaComponent } from './global/component/social-media/social-media.component';
 import { RenderPreviewComponent } from './global/component/render-preview/render-preview.component';
+import { SharingBtnTwitterComponent } from './global/component/social-media/sharing-btn-twitter/sharing-btn-twitter.component';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
@@ -84,6 +85,7 @@ const COMPONENTS = [
   SocialMediaComponent,
   SharingBtnFbComponent,
   SharingBtnLineComponent,
+  SharingBtnTwitterComponent,
 ];
 
 const PUBLIC_COMPONENTS_TEMPLATES = [

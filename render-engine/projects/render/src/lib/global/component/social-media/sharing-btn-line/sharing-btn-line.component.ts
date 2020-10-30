@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { of, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { SharingBtnBase } from '../sharing-btn-base/sharing-btn-base.component';
@@ -12,7 +12,6 @@ const SDK_SRC = 'https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loade
   styleUrls: ['./sharing-btn-line.component.scss']
 })
 export class SharingBtnLineComponent extends SharingBtnBase {
-  @ViewChild('SDK') sdkContainer: ElementRef<HTMLDivElement>;
 
   @Input() dataType: 'a' | 'b' | 'c' = 'a';
   @Input() dataColor: 'default' | 'grey' = 'default';
