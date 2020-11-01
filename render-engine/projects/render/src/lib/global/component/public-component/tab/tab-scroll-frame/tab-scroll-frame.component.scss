@@ -10,6 +10,7 @@ rdr-tab-scroll-frame {
       -ms-overflow-style: none;
       scrollbar-width: none;
       text-align: center;
+      padding: 0 20px;
 
       &::-webkit-scrollbar {
         display: none;

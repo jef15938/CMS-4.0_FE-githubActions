@@ -1,7 +1,21 @@
-import { ContentChild, TemplateRef } from '@angular/core';
-import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  ContentChild,
+  OnDestroy,
+  QueryList,
+  TemplateRef,
+  ViewChildren,
+  Component,
+  Injector,
+  Input,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CustomizeBaseDirective } from '../../base-component';
 import { CollapseData } from '../collapse.interface';
+import { CollapseComponent } from '../collapse/collapse.component';
 
 @Component({
   selector: 'rdr-accordion',
@@ -9,19 +23,56 @@ import { CollapseData } from '../collapse.interface';
   styleUrls: ['./accordion.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AccordionComponent extends CustomizeBaseDirective implements OnInit {
+export class AccordionComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() collapseList: Array<CollapseData>;
+
+  /** 是否需要項目符號 */
   @Input() hasList = false;
 
   @ContentChild('title') titleTemplateRef: TemplateRef<any>;
   @ContentChild('content') contentTemplateRef: TemplateRef<any>;
+  @ViewChildren(CollapseComponent) collapseComponentList: QueryList<CollapseComponent>;
+
+  unsubscribe$: Subject<null> = new Subject();
 
   constructor(injector: Injector) {
     super(injector);
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    this.collapseComponentList.toArray().forEach((item, index) => {
+      item.beforeCollapsing.subscribe(() => {
+        this.closeOthersAndOpenCollapse(index);
+      });
+    });
+  }
+
+
+  /**
+   * 關掉其他收合，並打開當下點擊的收合
+   *
+   * @param {number} index
+   */
+  closeOthersAndOpenCollapse(index: number) {
+    this.collapseComponentList.toArray().forEach((item, currentIndex) => {
+      if (index !== currentIndex && item.nxCollapse.isCollapse) {
+        item.nxCollapse.statusCollapse = 'collapsing';
+        item.nxCollapse.animateCollapse(false).pipe(
+          takeUntil(this.unsubscribe$)
+        ).subscribe(() => {
+          item.nxCollapse.isCollapse = false;
+        });
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }

@@ -1,4 +1,4 @@
-<nx-collapse-accordion [attr.haslist]="hasList ? '' : null">
+<nx-collapse-accordion [hasList]="hasList">
   <rdr-collapse *ngFor="let item of collapseList" [collapseData]="item">
     <ng-template #title let-item>
       <ng-container trigger>

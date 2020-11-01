@@ -15,6 +15,10 @@ rdr-card-news-list {
   .card-news-list {
     &__title {
       @include fz-title-24-left;
+
+      @include rwd($bp-sm-max) {
+        margin-bottom: 8px;
+      }
     }
 
     &__content {

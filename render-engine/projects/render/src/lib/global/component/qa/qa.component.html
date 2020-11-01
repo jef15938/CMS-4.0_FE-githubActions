@@ -9,7 +9,7 @@
     </div>
     <div class="qa__content">
       <ng-container *ngIf="sourceData?.datas && pageInfo?.lang">
-        <rdr-accordion [collapseList]="sourceData?.datas | transformData:collapseData">
+        <rdr-accordion [hasList]="true" [collapseList]="sourceData?.datas | transformData:collapseData">
           <ng-template #title let-item>
             {{item.title}}
           </ng-template>

@@ -11,11 +11,6 @@ rdr-pagination {
     &__control {
       @include rdr-icon(4, 2, 19px);
       cursor: pointer;
-      padding-left: 16px;
-
-      @include rwd($bp-sm-max) {
-        padding-left: 8px;
-      }
 
       &--disabled {
         cursor: not-allowed;
@@ -32,6 +27,11 @@ rdr-pagination {
       vertical-align: middle;
       font-size: 0;
       padding-left: 0;
+      margin: 0 16px;
+
+      @include rwd($bp-sm-max) {
+        margin: 0 8px;
+      }
     }
 
     &__item {

@@ -10,8 +10,7 @@ rdr-mega-menu {
 
   nx-mega-menu.nx-cp {
     box-shadow: none;
-
-    @include borderHalf($direction: 'bottom');
+    border-bottom: 1px solid $very-light-pink-two;
 
     nx-mega-menu-pc {
       .menu__item.firstLevel {
