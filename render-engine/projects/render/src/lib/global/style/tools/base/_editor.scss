@@ -1,48 +1,73 @@
-@mixin neux-editor {
+@mixin neux-editor($theme: $rdr-theme-config) {
+  $editor-primary-color: map-get($theme, color_primary) !default;
+  $editor-text-color: map-get($theme, black_0) !default;
+  $editor-note-color: map-get($theme, black_1) !default;
+  $editor-table-even-color: map-get($theme, white_1) !default;
+  $editor-table-odd-color: map-get($theme, white_0) !default;
+  $editor-table-border-color: map-get($theme, very_light_pink_0) !default;
+  $editor-table-header-bg-color: map-get($theme, color_click) !default;
+  $editor-table-header-text-color: map-get($theme, brownish_grey) !default;
+  $editor-table-outline-selected-color: #b4d7ff;
+  $editor-table-selected-color: lightblue;
+  $editor-table-hightlight-color: rgba(212, 75, 22, 0.5);
+  $editor-element-pc-gutter: 16px;
+  $editor-element-mobile-gutter: 12px;
+
   .neux-editor {
     @include fz-body-16-left;
-    color: $black-two;
+    color: $editor-text-color;
     outline: none;
 
     @include rwd($bp-sm-max) {
       @include fz-footnote-15-left;
     }
 
+    // 編輯模式
     &.edit {
       .neux-table {
         tr {
           td {
             &.highlightTD {
-              background-color: rgba(212, 75, 22, 0.5);
+              background-color: $editor-table-hightlight-color;
             }
 
             &.selected {
-              background-color: lightblue;
+              background-color: $editor-table-selected-color;
             }
           }
 
           &:nth-child(even) {
             td:not(.headerTD):not(.selected):not(.highlightTD) {
-              background-color: $white-two;
+              background-color: $editor-table-even-color;
             }
           }
 
           &:nth-child(odd) {
             td:not(.headerTD):not(.selected):not(.highlightTD) {
-              background-color: $white;
+              background-color: $editor-table-odd-color;
             }
           }
         }
       }
     }
 
+    ol>li,
+    ul>li,
+    p {
+      margin-bottom: $editor-element-pc-gutter;
+
+      @include rwd($bp-sm-max) {
+        margin-bottom: $editor-element-mobile-gutter;
+      }
+    }
+
     ol,
     ul {
-      li {
-        @include fz-body-16-left;
+      &[level]:not([level="1"]) {
+        margin-top: $editor-element-pc-gutter;
 
         @include rwd($bp-sm-max) {
-          @include fz-footnote-15-left;
+          margin-top: $editor-element-mobile-gutter;
         }
       }
     }
@@ -75,14 +100,6 @@
             margin-right: 8px;
           }
         }
-
-        +li {
-          margin-top: 16px;
-
-          @include rwd($bp-sm-max) {
-            margin-top: 12px;
-          }
-        }
       }
     }
 
@@ -94,22 +111,13 @@
         padding-left: 18px;
 
         @include rwd($bp-sm-max) {
-
           padding-left: 12px;
-        }
-
-        +li {
-          margin-top: 16px;
-
-          @include rwd($bp-sm-max) {
-            margin-top: 12px;
-          }
         }
 
         &:before {
           content: '';
           position: absolute;
-          top: 0.5em;
+          top: #{(26px - 6px) / 2};
           left: 0;
           display: block;
           width: 6px;
@@ -119,6 +127,7 @@
           background-color: $color-primary;
 
           @include rwd($bp-sm-max) {
+            top: #{(24px - 4px) / 2};
             width: 4px;
             height: 4px;
             margin-right: 8px;
@@ -140,25 +149,25 @@
 
     .highlight-1 {
       @include fz-title-24-left;
-      color: $color-primary;
+      color: $editor-primary-color;
+
+      @include rwd($bp-sm-max) {
+        @include fz-title-20-left;
+      }
+    }
+
+    .highlight-2 {
+      @include fz-title-20-left;
+      color: $editor-text-color;
 
       @include rwd($bp-sm-max) {
         @include fz-title-18-left;
       }
     }
 
-    .highlight-2 {
-      @include fz-title-20-left;
-      color: $black;
-
-      @include rwd($bp-sm-max) {
-        @include fz-body-17-left-bold;
-      }
-    }
-
     .highlight-3 {
-      @include fz-body-18-left-bold;
-      color: $color-primary;
+      @include fz-title-18-left;
+      color: $editor-primary-color;
 
       @include rwd($bp-sm-max) {
         @include fz-body-16-left-bold;
@@ -166,16 +175,16 @@
     }
 
     a {
-      @include fz-callout-18-left;
-      color: $color-primary;
+      @include fz-callout-16-left;
       text-decoration: underline;
+      color: $editor-primary-color;
     }
 
     .neux-table {
       border-collapse: separate;
 
       &.selected {
-        outline: 3px solid #b4d7ff;
+        outline: 3px solid $editor-table-outline-selected-color;
       }
 
       tbody {
@@ -199,17 +208,18 @@
         th,
         td {
           padding: 12px;
-          border-right: 1px solid $very-light-pink;
-          border-bottom: 1px solid $very-light-pink;
+          border-right: 1px solid $editor-table-border-color;
+          border-bottom: 1px solid $editor-table-border-color;
           word-break: normal;
           vertical-align: middle;
+          text-align: center;
 
           @include rwd($bp-sm-max) {
             padding: 8px;
           }
 
           &:first-child {
-            border-left: 1px solid $very-light-pink;
+            border-left: 1px solid $editor-table-border-color;
           }
 
           &.hideTD {
@@ -223,10 +233,10 @@
           }
 
           &.headerTD {
-            @include fz-title-18-center;
-            border-top: 1px solid $very-light-pink;
-            background-color: $color-click;
-            color: $brownish-grey;
+            @include fz-body-18-center-bold;
+            border-top: 1px solid $editor-table-border-color;
+            background-color: $editor-table-header-bg-color;
+            color: $editor-table-header-text-color;
 
             @include rwd($bp-sm-max) {
               @include fz-body-16-center-bold;
@@ -242,33 +252,24 @@
           }
 
           &.highlightTD {
-            background-color: rgba(212, 75, 22, 0.5);
+            background-color: $editor-table-hightlight-color;
           }
 
           &.selected {
-            background-color: lightblue;
-          }
-        }
-
-        td {
-          @include fz-body-16-center;
-          color: $black;
-
-          @include rwd($bp-sm-max) {
-            @include fz-footnote-15-center;
+            background-color: $editor-table-selected-color;
           }
         }
 
         &:nth-child(even) {
           td:not(.headerTD):not(.selected):not(.highlightTD) {
-            background-color: $white;
+            background-color: $editor-table-even-color;
           }
         }
       }
 
-      .seleted {
-        background-color: silver;
-      }
+      // .seleted {
+      //   background-color: silver;
+      // }
     }
 
     // .figure-color {

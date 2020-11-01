@@ -11,6 +11,11 @@ rdr-collapse {
     $collapse-suffix-gutter: 20px);
 
   display: block;
+  border-radius: 8px;
+
+  @include rwd($bp-sm-max) {
+    border-radius: 6px;
+  }
 
   nx-collapse.nx-cp {
     .collapse-container {

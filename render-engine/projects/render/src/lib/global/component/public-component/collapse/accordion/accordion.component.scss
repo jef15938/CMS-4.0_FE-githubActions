@@ -6,6 +6,8 @@ rdr-accordion {
 
   nx-collapse-accordion {
     rdr-collapse {
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+
       +rdr-collapse {
         margin-top: 16px;
 
