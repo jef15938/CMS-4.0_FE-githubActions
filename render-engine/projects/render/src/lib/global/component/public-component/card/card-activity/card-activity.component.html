@@ -11,7 +11,7 @@
       </div>
       <div class="card-activity__title">{{cardActivityData?.title}}</div>
       <div class="card-activity__subtitle">{{cardActivityData?.subTitle}}</div>
-      <div class="card-activity__desc">{{cardActivityData?.content}}</div>
+      <div class="card-activity__desc">{{cardActivityData?.content | ellipsis: 153}}</div>
     </div>
   </div>
 </rdr-card-link-frame>

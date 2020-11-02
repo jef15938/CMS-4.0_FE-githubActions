@@ -5,12 +5,18 @@
 rdr-card-journal {
   display: block;
 
+  rdr-card-link-frame.rdr-cp {
+    .card-link-frame {
+      border-radius: 16px;
+
+      @include rwd($bp-sm-max) {
+        border-radius: 12px;
+      }
+    }
+  }
+
   +rdr-card-journal {
     margin-top: 16px;
-
-    @include rwd($bp-sm-max) {
-      margin-top: 8px;
-    }
   }
 
   .card-journal {
@@ -20,14 +26,14 @@ rdr-card-journal {
 
     @include rwd($bp-sm-max) {
       display: block;
-      padding: 16px 16px 24px;
+      padding: 16px 16px 32px;
     }
 
     &__img {
       flex-shrink: 0;
       flex-basis: 218px;
       margin-right: 32px;
-      border-radius: 6px;
+      border-radius: 8px;
       box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.05);
 
       @include rwd($bp-sm-max) {
@@ -37,7 +43,7 @@ rdr-card-journal {
 
       >img {
         width: 100%;
-        border-radius: 6px;
+        border-radius: 8px;
       }
     }
 
@@ -51,9 +57,9 @@ rdr-card-journal {
       margin-bottom: 8px;
 
       @include rwd($bp-sm-max) {
-        @include fz-title-18-left;
+        @include fz-body-17-left-bold;
         margin-top: 0;
-        margin-bottom: 4px;
+        margin-bottom: 0;
       }
     }
 
@@ -68,11 +74,11 @@ rdr-card-journal {
     }
 
     &__desc {
-      @include fz-body-16-left-bold;
+      @include fz-body-16-left;
       margin-bottom: 16px;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-14-left-bold;
+        @include fz-footnote-14-left;
         margin-bottom: 0;
       }
     }

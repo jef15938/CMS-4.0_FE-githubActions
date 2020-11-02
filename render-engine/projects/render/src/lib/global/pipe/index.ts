@@ -1,5 +1,5 @@
 export * from './pipe.module';
-export * from './string-filter-format.pipe';
+export * from './ellipsis.pipe';
 export * from './add-resource-base-url-for-html.pipe';
 export * from './add-resource-base-url-for-field.pipe';
 export * from './get-field-from-fields-by-id.pipe';

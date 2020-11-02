@@ -37,11 +37,6 @@ rdr-card-news-list {
 
       &-title {
         @include fz-title-20-left;
-        @include text-ellipsis;
-
-        @include rwd(984px) {
-          white-space: normal;
-        }
 
         @include rwd($bp-sm-max) {
           @include fz-callout-15-left;

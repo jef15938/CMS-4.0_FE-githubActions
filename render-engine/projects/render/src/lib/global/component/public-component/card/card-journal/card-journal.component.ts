@@ -1,4 +1,9 @@
-import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { WINDOW_RESIZE_TOKEN } from '@neux/ui';
+import { Subject } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { takeUntil, tap } from 'rxjs/operators';
+import { CommonUtils } from '../../../../utils';
 import { CustomizeBaseDirective } from '../../base-component';
 
 export interface CardJournalData {
@@ -15,16 +20,36 @@ export interface CardJournalData {
   styleUrls: ['./card-journal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CardJournalComponent extends CustomizeBaseDirective implements OnInit {
+export class CardJournalComponent extends CustomizeBaseDirective implements OnInit, OnDestroy {
 
   @Input() cardJournalData: CardJournalData;
 
-  constructor(injector: Injector) {
+  unsubscribe$: Subject<null> = new Subject();
+
+  /** 字數限制 */
+  ellipsisDescTextNumber: number;
+  ellipsisSubTitleTextNumber: number;
+
+  constructor(
+    injector: Injector,
+    @Inject(WINDOW_RESIZE_TOKEN) private resize$: Observable<Event>
+  ) {
     super(injector);
   }
 
   ngOnInit(): void {
-
+    /** Binding Resize event */
+    CommonUtils.isMobile$(this.resize$).pipe(
+      tap(result => {
+        this.ellipsisDescTextNumber = result ? 135 : 240;
+        this.ellipsisSubTitleTextNumber = result ? 30 : 37;
+      }),
+      takeUntil(this.unsubscribe$)
+    ).subscribe();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }

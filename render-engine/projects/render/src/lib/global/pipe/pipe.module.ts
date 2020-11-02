@@ -8,7 +8,7 @@ import { TransformDataPipe } from './transform-data.pipe';
 import { GetLanguageInfoPipe } from './get-language-info.pipe';
 import { AddResourceBaseUrlForFieldPipe } from './add-resource-base-url-for-field.pipe';
 import { StringToContentInfoModelPipe } from './string-to-content-info-model.pipe';
-import { EllipsisPipe } from './string-filter-format.pipe';
+import { EllipsisPipe } from './ellipsis.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { SafeResourcePipe } from './safe-resource.pipe';
 

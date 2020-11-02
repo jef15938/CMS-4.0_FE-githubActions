@@ -27,5 +27,4 @@ export class CardActivityComponent extends CustomizeBaseDirective implements OnI
 
   ngOnInit(): void {
   }
-
 }

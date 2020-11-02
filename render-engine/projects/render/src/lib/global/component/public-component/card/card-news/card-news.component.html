@@ -2,8 +2,8 @@
   <div class="card-news">
     <div class="card-news__content">
       <div class="card-news__date">{{cardNewsData?.date | date:'yyyy/MM/dd'}}</div>
-      <div class="card-news__title">{{cardNewsData?.title | ellipsis: '...':22:-1}}</div>
-      <div class="card-news__desc">{{cardNewsData?.content | ellipsis: '...':28:-1}}</div>
+      <div class="card-news__title">{{cardNewsData?.title | ellipsis:ellipsisTitleTextNumber}}</div>
+      <div class="card-news__desc">{{cardNewsData?.content | ellipsis:ellipsisDescTextNumber}}</div>
     </div>
     <div class="card-news__icon"></div>
   </div>

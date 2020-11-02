@@ -126,7 +126,7 @@
   $selector: 'rdr-card-journal' !default;
   $title-font-color: map-get($theme, color_primary) !default;
   $subtitle-font-color: map-get($theme, black_1) !default;
-  $desc-font-color: map-get($theme, brownish_grey) !default;
+  $desc-font-color: map-get($theme, black_0) !default;
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";

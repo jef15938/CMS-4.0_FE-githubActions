@@ -5,8 +5,8 @@
     </div>
     <div class="card-journal__info">
       <div class="card-journal__title">{{cardJournalData?.title}}</div>
-      <div class="card-journal__subtitle">{{cardJournalData?.subTitle}}</div>
-      <div class="card-journal__desc">{{ cardJournalData?.content | ellipsis:'……':86:36}}</div>
+      <div class="card-journal__subtitle">{{cardJournalData?.subTitle | ellipsis:ellipsisSubTitleTextNumber}}</div>
+      <div class="card-journal__desc">{{ cardJournalData?.content | ellipsis:ellipsisDescTextNumber}}</div>
     </div>
   </div>
 </rdr-card-link-frame>
