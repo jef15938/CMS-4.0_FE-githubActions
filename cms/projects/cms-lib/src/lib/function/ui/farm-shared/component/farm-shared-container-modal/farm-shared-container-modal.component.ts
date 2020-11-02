@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase } from '../../../modal';
 import { FarmService } from '../../../../../global/api/service';
 import { FarmInfoGetResponseModel } from '../../../../../global/api/data-model/models/farm-info-get-response.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
@@ -12,7 +12,6 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
 export class FarmSharedContainerModalComponent extends CustomModalBase<FarmSharedContainerModalComponent, any> implements OnInit {
 
   @Input() title: string | (() => string) = '';
-  actions: CustomModalActionButton[];
 
   @Input() funcID: string;
 

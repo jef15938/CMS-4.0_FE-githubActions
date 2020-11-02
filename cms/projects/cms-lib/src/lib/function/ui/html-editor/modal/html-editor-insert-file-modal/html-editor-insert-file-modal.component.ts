@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase } from '../../../modal';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { FormSharedService } from '../../../form-shared/form-shared.service';
 
@@ -28,7 +28,6 @@ export class HtmlEditorInsertFileModalComponent extends CustomModalBase<HtmlEdit
   FileSource = FileSource;
 
   title = '插入檔案';
-  actions: CustomModalActionButton[];
 
   @Input() fileLink: HTMLAnchorElement;
   @Input() galleryID: number = null;

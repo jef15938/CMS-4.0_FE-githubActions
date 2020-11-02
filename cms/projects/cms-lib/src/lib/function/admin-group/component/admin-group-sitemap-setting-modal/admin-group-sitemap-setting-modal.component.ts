@@ -8,7 +8,7 @@ import { GroupSitemapInfoModel } from '../../../../global/api/data-model/models/
 import { SiteInfoModel } from '../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../global/api/data-model/models/site-map-get-response.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
-import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal/base/custom-modal-base';
+import { CustomModalBase } from '../../../ui/modal/base/custom-modal-base';
 import { TreeComponent } from '../../../ui/tree/tree.component';
 
 class Node extends SiteMapGetResponseModel {
@@ -30,7 +30,6 @@ interface TreeData {
 export class AdminGroupSitemapSettingModalComponent extends CustomModalBase<AdminGroupSitemapSettingModalComponent, 'Success'>
   implements OnInit, AfterViewInit {
   title = '設定前台節點';
-  actions: CustomModalActionButton[];
 
   @ViewChild(TreeComponent) tree: TreeComponent<Node>;
   @ViewChild('select') select: MatSelect;

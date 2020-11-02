@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalActionButton, CustomModalBase } from '../../base/custom-modal-base';
+import { CustomModalBase } from '../../base/custom-modal-base';
 
 @Component({
   selector: 'cms-message-modal',
@@ -8,7 +8,6 @@ import { CustomModalActionButton, CustomModalBase } from '../../base/custom-moda
 })
 export class MessageModalComponent extends CustomModalBase<MessageModalComponent, any> implements OnInit {
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[] = [];
 
   message = '';
 

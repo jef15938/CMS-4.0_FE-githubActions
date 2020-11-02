@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Inject } from '@angular/core';
 import { Subject, fromEvent } from 'rxjs';
 import { switchMap, tap, takeUntil } from 'rxjs/operators';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase } from '../../../modal';
 import { GallerySharedService } from '../../../gallery-shared/service/gallery-shared.service';
 import { CMS_ENVIROMENT_TOKEN } from '../../../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../../../global/interface';
@@ -27,7 +27,6 @@ export class HtmlEditorInsertImgModalComponent
   @ViewChild('Img') img: ElementRef<HTMLImageElement>;
 
   title = '圖片設定';
-  actions: CustomModalActionButton[];
 
   @Input() src = '';
   @Input() alt = '';

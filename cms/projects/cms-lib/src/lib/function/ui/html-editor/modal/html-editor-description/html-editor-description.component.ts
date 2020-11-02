@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase } from '../../../modal';
 
 @Component({
   selector: 'cms-html-editor-description',
@@ -9,7 +9,6 @@ import { CustomModalBase, CustomModalActionButton } from '../../../modal';
 export class HtmlEditorDescriptionComponent extends CustomModalBase<HtmlEditorDescriptionComponent, any> implements OnInit {
 
   title = '編輯器說明';
-  actions: CustomModalActionButton[];
 
   constructor() {
     super();

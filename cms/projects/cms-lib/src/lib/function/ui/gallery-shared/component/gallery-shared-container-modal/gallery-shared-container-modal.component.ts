@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
+import { CustomModalBase } from '../../../../ui/modal';
 import { GallerySharedComponent } from '../gallery-shared/gallery-shared.component';
 import { GalleryFileType } from '../../type/gallery-shared.type';
 import { GalleryInfoModel } from '../../../../../global/api/data-model/models/gallery-info.model';
@@ -16,8 +16,6 @@ export class GallerySharedContainerModalComponent extends CustomModalBase<Galler
 
   @Input() title = '';
   @Input() allowedFileTypes: GalleryFileType[] = [];
-
-  actions: CustomModalActionButton[];
 
   constructor() { super(); }
 

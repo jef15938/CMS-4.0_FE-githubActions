@@ -3,7 +3,7 @@ import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect } from '@angular/material/select';
 import { SitemapService, ContentService, GroupService } from '../../../../global/api/service';
-import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
+import { CustomModalBase } from './../../../ui/modal';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapNodeDeviceType, SiteMapNodeDeviceTypeName } from '../../../../global/enum/multi-site.enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
 import { GroupInfoModel } from '../../../../global/api/data-model/models/group-info.model';
@@ -58,7 +58,6 @@ class SiteMapCreateModel extends UserSiteMapPostRequestModel {
 })
 export class SitemapNodeCreateModalComponent extends CustomModalBase<SitemapNodeCreateModalComponent, 'Success'> implements OnInit {
   title = '新增節點';
-  actions: CustomModalActionButton[];
 
   NodeType = SiteMapNodeType;
   UrlType = SiteMapUrlType;

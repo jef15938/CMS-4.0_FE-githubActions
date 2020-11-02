@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Inject, Optional } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { LinkFieldInfoUrlType, CustomActionInfo, CustomAction } from '@neux/render';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase } from '../../../modal';
 import { SiteInfoModel } from '../../../../../global/api/data-model/models/site-info.model';
 import { SiteMapGetResponseModel } from '../../../../../global/api/data-model/models/site-map-get-response.model';
 import { SitemapService } from '../../../../../global/api/service';
@@ -29,7 +29,6 @@ export class HtmlEditorCreateLinkModalComponent extends CustomModalBase<HtmlEdit
   LinkFieldInfoUrlType = LinkFieldInfoUrlType;
 
   title = '';
-  actions: CustomModalActionButton[];
 
   @Input() aTag: HTMLAnchorElement;
   @Input() canModifyText: boolean;

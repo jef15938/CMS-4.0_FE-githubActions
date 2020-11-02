@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
+import { CustomModalBase } from './../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service';
 import { CmsDateAdapter } from '../../../../global/util/mat-date/mat-date';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,7 +15,6 @@ import { CmsLoadingToggle } from '../../../../global/service';
 })
 export class AuditingSitemapModalComponent extends CustomModalBase<AuditingSitemapModalComponent, 'Success'> implements OnInit {
   title = '節點送審';
-  actions: CustomModalActionButton[];
 
   @Input() siteId: string;
   @Input() sitemapNode: SiteMapNodeGetResponseModel;

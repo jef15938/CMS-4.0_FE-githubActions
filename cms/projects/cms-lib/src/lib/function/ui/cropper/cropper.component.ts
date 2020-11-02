@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { CropperComponent as CropperWrapper } from 'angular-cropperjs';
-import { CustomModalBase, CustomModalActionButton } from '../modal';
+import { CustomModalBase } from '../modal';
 import { CropperOption } from './cropper.type';
 import { CropSetting, CropResult } from './cropper.service';
 
@@ -12,7 +12,6 @@ import { CropSetting, CropResult } from './cropper.service';
 export class CropperComponent extends CustomModalBase<CropperComponent, CropResult> implements OnInit, AfterViewInit, AfterViewChecked {
 
   @Input() title: string | (() => string) = '';
-  actions: CustomModalActionButton[];
 
   @ViewChild(CropperWrapper) cropperWrapper: CropperWrapper;
   private get cropper() { return this.cropperWrapper.cropper; }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase } from '../../../modal';
 import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/farm-form-info.model';
 
 @Component({
@@ -10,7 +10,6 @@ import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/f
 export class FarmFormViewDataModalComponent extends CustomModalBase<FarmFormViewDataModalComponent, any> implements OnInit {
 
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[] = [];
 
   @Input() funcID: string;
   @Input() farmFormInfo: FarmFormInfoModel;

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
+import { CustomModalBase, ModalService } from '../../../modal';
 import { YoutubeUtil } from '../../service/youtube-util';
 import { FormControl } from '@angular/forms';
 
@@ -22,7 +22,6 @@ export class HtmlEditorInsertVideoModalComponent
   @ViewChild('Img') img: ElementRef<HTMLImageElement>;
 
   title = '';
-  actions: CustomModalActionButton[];
 
   @Input() src = '';
   @Input() frameId = '';

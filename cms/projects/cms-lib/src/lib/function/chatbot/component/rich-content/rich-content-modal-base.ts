@@ -1,14 +1,13 @@
 import { OnInit, Injector, Directive } from '@angular/core';
 import { DialogFlowMessengerService } from '../../../../global/service';
 import { RichContent } from '../../../../global/interface';
-import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../ui/modal';
+import { CustomModalBase, ModalService } from '../../../ui/modal';
 import { ChatbotService } from '../../service/chatbot.service';
 
 @Directive()
 export abstract class RichContentModalComponent<TContent extends RichContent>
   extends CustomModalBase<RichContentModalComponent<any>, RichContent> implements OnInit {
   abstract title: string;
-  actions: CustomModalActionButton[] = [];
 
   content: RichContent;
   chatbotService: ChatbotService;

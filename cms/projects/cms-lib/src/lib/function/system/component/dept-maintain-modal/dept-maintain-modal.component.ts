@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { DepartmentService } from '../../../../global/api/service';
-import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
+import { CustomModalBase } from '../../../ui/modal';
 import { DepartmentDetailInfoModel } from '../../../../global/api/data-model/models/department-detail-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { CmsLoadingToggle } from '../../../../global/service';
@@ -15,7 +15,6 @@ import { tap } from 'rxjs/operators';
 export class DeptMaintainModalComponent extends CustomModalBase<DeptMaintainModalComponent, 'Success'> implements OnInit {
 
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[] = [];
 
   @Input() action: 'Create' | 'Update' = 'Create';
   @Input() deptId: string;

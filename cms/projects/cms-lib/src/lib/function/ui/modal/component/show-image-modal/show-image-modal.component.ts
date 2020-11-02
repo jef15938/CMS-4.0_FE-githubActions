@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../base/custom-modal-base';
+import { CustomModalBase } from '../../base/custom-modal-base';
 
 @Component({
   selector: 'cms-show-image-modal',
@@ -8,7 +8,6 @@ import { CustomModalBase, CustomModalActionButton } from '../../base/custom-moda
 })
 export class ShowImageModalComponent extends CustomModalBase<ShowImageModalComponent, any> implements OnInit {
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[];
 
   @Input() imageUrl = '';
 

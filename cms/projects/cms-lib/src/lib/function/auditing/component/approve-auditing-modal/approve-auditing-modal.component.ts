@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
+import { CustomModalBase } from '../../../ui/modal';
 import { AuditingSubmitRequestModel } from '../../../../global/api/data-model/models/auditing-submit-request.model';
 
 export enum AuditingApproveStatus {
@@ -16,7 +16,6 @@ export class ApproveAuditingModalComponent extends CustomModalBase<ApproveAuditi
   implements OnInit {
 
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[] = [];
 
   AuditingApproveStatus = AuditingApproveStatus;
 
