@@ -5,7 +5,7 @@ import { MatHorizontalStepper } from '@angular/material/stepper';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
-import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
+import { CustomModalBase, ModalService } from '../../../../ui/modal';
 import { CropperService, CropSetting } from '../../../../ui/cropper';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
@@ -101,7 +101,6 @@ export class GalleryAddUpdateModalComponent
   extends CustomModalBase<GalleryAddUpdateModalComponent, UploadResponse>
   implements UploadComponent, OnInit {
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[];
 
   GalleryType = GalleryType;
   StepState = StepState;

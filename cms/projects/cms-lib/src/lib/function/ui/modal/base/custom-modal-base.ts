@@ -9,7 +9,7 @@ export interface CustomModalActionButton {
 export abstract class CustomModalBase<C, R> {
 
   abstract title: null | string | (() => string);
-  abstract actions: CustomModalActionButton[];
+  actions: CustomModalActionButton[];
 
   modalRef: MatDialogRef<C, R>;
 

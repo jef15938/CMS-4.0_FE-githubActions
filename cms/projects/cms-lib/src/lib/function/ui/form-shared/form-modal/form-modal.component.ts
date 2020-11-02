@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { FormService } from '../../../../global/api/service/form/form.service';
 import { ListFormTypeInfo } from '../../../../global/api/neuxAPI/bean/ListFormTypeInfo';
-import { CustomModalBase, CustomModalActionButton } from '../../modal/base/custom-modal-base';
+import { CustomModalBase } from '../../modal/base/custom-modal-base';
 import { CmsErrorHandler } from '../../../../global/error-handling';
 import { ListFilesInfoModel } from '../../../../global/api/data-model/models/list-files-info.model';
 import { ColDef } from '../../table/table.interface';
@@ -16,7 +16,6 @@ import { ColDef } from '../../table/table.interface';
 })
 export class FormModalComponent extends CustomModalBase<FormModalComponent, ListFilesInfoModel> implements OnInit, AfterViewInit {
   title: string | (() => string) = '選擇表單下載';
-  actions: CustomModalActionButton[];
 
   @ViewChild('select') select: MatSelect;
 

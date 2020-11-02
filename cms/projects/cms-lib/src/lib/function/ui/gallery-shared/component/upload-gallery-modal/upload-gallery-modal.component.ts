@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, ChangeDetectorRef, AfterViewInit, ElementRef } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { GalleryService, FileUploadModel } from '../../../../../global/api/service';
-import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../../ui/modal';
+import { CustomModalBase, ModalService } from '../../../../ui/modal';
 import { ColDef } from '../../../../ui/table';
 import { CropperService } from '../../../../ui/cropper';
 import { GalleryConfigResponseModel } from '../../../../../global/api/data-model/models/gallery-config-response.model';
@@ -18,7 +18,6 @@ import { CmsLoadingToggle } from '../../../../../global/service';
 })
 export class UploadGalleryModalComponent extends CustomModalBase<UploadGalleryModalComponent, 'Success'> implements OnInit, AfterViewInit {
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[];
 
   readonly fileUploadInputIdentifier = 'fileUpload';
 

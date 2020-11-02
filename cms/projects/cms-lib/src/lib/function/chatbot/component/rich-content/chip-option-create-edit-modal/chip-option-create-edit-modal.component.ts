@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
+import { CustomModalBase } from '../../../../ui/modal';
 
 interface ChipOption {
   text: string;
@@ -19,7 +19,6 @@ interface ChipOption {
 export class ChipOptionCreateEditModalComponent extends CustomModalBase<ChipOptionCreateEditModalComponent, any> implements OnInit {
 
   title = '建議項目';
-  actions: CustomModalActionButton[] = [];
 
   option: ChipOption;
   optionModel: ChipOption;

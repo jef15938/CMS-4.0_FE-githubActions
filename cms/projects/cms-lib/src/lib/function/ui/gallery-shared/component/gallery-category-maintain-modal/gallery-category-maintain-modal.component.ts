@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GalleryService, DepartmentService } from '../../../../../global/api/service';
-import { CustomModalBase, CustomModalActionButton } from '../../../../ui/modal';
+import { CustomModalBase } from '../../../../ui/modal';
 import { DepartmentInfoModel } from '../../../../../global/api/data-model/models/department-info.model';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 
@@ -13,7 +13,6 @@ export class GalleryCategoryMaintainModalComponent extends CustomModalBase<Galle
   implements OnInit {
 
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[] = [];
 
   action: 'Create' | 'Update' = 'Create';
 

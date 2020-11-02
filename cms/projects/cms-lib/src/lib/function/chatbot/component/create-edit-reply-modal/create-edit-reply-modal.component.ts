@@ -1,7 +1,7 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
-import { ModalService, CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
+import { ModalService, CustomModalBase } from '../../../ui/modal';
 import { DialogFlowMessengerService } from '../../../../global/service';
 import { RichContentType } from '../../../../global/enum';
 import { RichContent } from '../../../../global/interface';
@@ -88,8 +88,6 @@ class Factory {
   styleUrls: ['./create-edit-reply-modal.component.scss']
 })
 export class CreateEditReplyModalComponent extends CustomModalBase<CreateEditReplyModalComponent, 'Success'> implements OnInit {
-
-  actions: CustomModalActionButton[] = [];
 
   RichContentType = RichContentType;
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
+import { CustomModalBase, ModalService } from '../../../modal';
 
 export interface HtmlEditorInsertTableModalResponse {
   rows: number;
@@ -18,7 +18,6 @@ export class HtmlEditorInsertTableModalComponent
   @ViewChild('Table') table: ElementRef<HTMLTableElement>;
 
   title = '表格設定';
-  actions: CustomModalActionButton[];
 
   @Input() rows: number = null;
   @Input() cols: number = null;

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CustomModalBase, CustomModalActionButton } from './../../../modal';
+import { CustomModalBase } from './../../../modal';
 import { FarmService } from '../../../../../global/api/service';
 import { CmsDateAdapter } from '../../../../../global/util/mat-date/mat-date';
 import { CmsFormValidator } from '../../../../../global/util/form-validator';
@@ -14,7 +14,6 @@ import { CmsLoadingToggle } from '../../../../../global/service/cms-loading-togg
 })
 export class AuditingFarmDataModalComponent extends CustomModalBase<AuditingFarmDataModalComponent, 'Success'> implements OnInit {
   title = '送審';
-  actions: CustomModalActionButton[];
 
   @Input() dataId: string;
   @Input() funcId: string;

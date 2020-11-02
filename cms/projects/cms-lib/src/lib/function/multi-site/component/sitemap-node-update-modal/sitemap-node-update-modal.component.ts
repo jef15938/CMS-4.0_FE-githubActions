@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { plainToClass } from 'class-transformer';
-import { CustomModalBase, CustomModalActionButton } from './../../../ui/modal';
+import { CustomModalBase } from './../../../ui/modal';
 import { SitemapService } from '../../../../global/api/service/sitemap/sitemap.service';
 import { SiteMapNodeType, SiteMapUrlType, SiteMapNodeDeviceType, SiteMapNodeDeviceTypeName } from '../../../../global/enum';
 import { GallerySharedService } from '../../../ui/gallery-shared/service/gallery-shared.service';
@@ -19,7 +19,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 })
 export class SitemapNodeUpdateModalComponent extends CustomModalBase<SitemapNodeUpdateModalComponent, 'Success'> implements OnInit {
   title = '修改節點';
-  actions: CustomModalActionButton[];
 
   SiteMapNodeType = SiteMapNodeType;
   SiteMapUrlType = SiteMapUrlType;

@@ -1,1 +1,7 @@
 <div [innerHTML]="message | safeHtml"></div>
+<div class=" btn-group">
+  <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel"
+    (click)="close()">{{cancelBtnMessage}}</button>
+  <button type="button" tabindex="0" mat-raised-button class="btn btn-confirm"
+    (click)="confirm()">{{confirmBtnMessage}}</button>
+</div>

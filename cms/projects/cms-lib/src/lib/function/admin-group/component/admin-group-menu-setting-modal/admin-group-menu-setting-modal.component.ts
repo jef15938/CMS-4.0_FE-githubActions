@@ -5,7 +5,7 @@ import { GroupService, MenuService } from '../../../../global/api/service';
 import { MenuInfoModel } from '../../../../global/api/data-model/models/menu-info.model';
 import { GroupMenuInfoModel } from '../../../../global/api/data-model/models/group-menu-info.model';
 import { CmsErrorHandler } from '../../../../global/error-handling';
-import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal/base/custom-modal-base';
+import { CustomModalBase } from '../../../ui/modal/base/custom-modal-base';
 import { TreeComponent } from '../../../ui/tree/tree.component';
 
 interface TreeData {
@@ -21,7 +21,6 @@ interface TreeData {
 export class AdminGroupMenuSettingModalComponent extends CustomModalBase<AdminGroupMenuSettingModalComponent, 'Success'>
   implements OnInit {
   title = '設定後台功能';
-  actions: CustomModalActionButton[];
 
   @ViewChild(TreeComponent) tree: TreeComponent<MenuInfoModel>;
 

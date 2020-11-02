@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CustomModalBase, CustomModalActionButton } from '../../../ui/modal';
+import { CustomModalBase } from '../../../ui/modal';
 import { ChatbotService } from '../../service/chatbot.service';
 import { ChatbotItem, ChatbotReply } from '../../../../global/model/chatbot.model';
 
@@ -11,8 +11,6 @@ import { ChatbotItem, ChatbotReply } from '../../../../global/model/chatbot.mode
   styleUrls: ['./create-edit-item-modal.component.scss']
 })
 export class CreateEditItemModalComponent extends CustomModalBase<CreateEditItemModalComponent, 'Success'> implements OnInit {
-
-  actions: CustomModalActionButton[] = [];
 
   action: 'Create' | 'Update' = 'Create';
 

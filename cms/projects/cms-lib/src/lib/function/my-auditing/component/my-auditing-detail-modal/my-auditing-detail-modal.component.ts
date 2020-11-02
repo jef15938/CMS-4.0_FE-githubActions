@@ -13,7 +13,6 @@ import { Observable } from 'rxjs';
 })
 export class MyAuditingDetailModalComponent extends CustomModalBase<MyAuditingDetailModalComponent, any> implements OnInit {
   title = '審核紀錄';
-  actions;
 
   @Input() orderId: number;
   myAuditingDetails$: Observable<MyAuditingDetailInfoModel[]>;

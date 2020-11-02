@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
+import { CustomModalBase, ModalService } from '../../../modal';
 import { ContentEditorSaveEvent, EditorMode } from '../../content-editor.interface';
 import { ContentService } from '../../../../../global/api/service';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
@@ -23,7 +23,6 @@ export interface ContentEditorResponse {
 export class ContentEditorContainerModalComponent extends CustomModalBase<ContentEditorContainerModalComponent, ContentEditorResponse>
   implements OnInit {
   title = '';
-  actions: CustomModalActionButton[];
 
   @Input() siteID?: string;
   @Input() nodeID?: string;

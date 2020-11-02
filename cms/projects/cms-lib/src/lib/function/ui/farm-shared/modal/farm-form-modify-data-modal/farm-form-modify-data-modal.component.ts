@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
-import { CustomModalBase, CustomModalActionButton } from '../../../modal';
+import { CustomModalBase } from '../../../modal';
 import { FarmFormInfoComponent } from '../../component/farm-form-info/farm-form-info.component';
 import { FarmService } from '../../../../../global/api/service';
 import { FarmFormInfoModel } from '../../../../../global/api/data-model/models/farm-form-info.model';
@@ -19,7 +19,6 @@ export class FarmFormModifyDataModalComponent extends CustomModalBase<FarmFormMo
   @ViewChild(FarmFormInfoComponent) farmFormInfoComponent: FarmFormInfoComponent;
 
   title: string | (() => string) = '';
-  actions: CustomModalActionButton[] = [];
 
   @Input() farmFormInfo: FarmFormInfoModel;
   @Input() action: 'create' | 'edit';

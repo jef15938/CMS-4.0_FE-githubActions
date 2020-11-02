@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton, ModalService } from '../../../modal';
+import { CustomModalBase, ModalService } from '../../../modal';
 import { ContentService } from '../../../../../global/api/service';
 import { ColDef } from '../../../table';
 import { ContentVersionInfoModel } from '../../../../../global/api/data-model/models/content-version-info.model';
@@ -13,7 +13,6 @@ import { CmsErrorHandler } from '../../../../../global/error-handling';
 export class ContentVersionRecoverModalComponent extends CustomModalBase<ContentVersionRecoverModalComponent, ContentVersionInfoModel>
   implements OnInit {
   title = '歷史版本';
-  actions: CustomModalActionButton[];
 
   @Input() contentID = '';
 

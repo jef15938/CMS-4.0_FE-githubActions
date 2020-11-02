@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { CustomModalBase, CustomModalActionButton } from '../../modal';
+import { CustomModalBase } from '../../modal';
 import { HtmlEditorComponent } from '../html-editor.component';
 
 @Component({
@@ -12,7 +12,6 @@ export class HtmlEditorContainerModalComponent extends CustomModalBase<HtmlEdito
   @ViewChild(HtmlEditorComponent) htmlEditorComponent: HtmlEditorComponent;
 
   @Input() title: string | (() => string) = '';
-  actions: CustomModalActionButton[];
   @Input() content: string;
   @Input() configName: string;
 
