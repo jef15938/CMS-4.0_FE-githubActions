@@ -24,11 +24,11 @@ rdr-card-link {
     }
 
     &__title {
-      @include fz-body-18-left-bold;
+      @include Body182-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-right: 16px;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-15-left-bold;
+        @include Footnote152-Bold1-Light2-Default-Color1-Left-Aligned;
         margin-right: 12px;
       }
     }

@@ -57,28 +57,28 @@ rdr-card-news {
     }
 
     &__date {
-      @include fz-body-16-left-bold;
+      @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-bottom: 4px;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-14-left-bold;
+        @include Footnote142-Bold1-Light2-Default-Color1-Left-Aligned;
       }
     }
 
     &__title {
-      @include fz-title-20-left;
+      @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
 
       @include rwd($bp-sm-max) {
-        @include fz-title-18-left;
+        @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
         margin-bottom: 8px;
       }
     }
 
     &__desc {
-      @include fz-body-16-left-bold;
+      @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-15-left-bold;
+        @include Footnote152-Bold1-Light2-Default-Color1-Left-Aligned;
       }
     }
 

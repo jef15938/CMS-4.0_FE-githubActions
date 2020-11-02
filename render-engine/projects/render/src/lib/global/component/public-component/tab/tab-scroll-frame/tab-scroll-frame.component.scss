@@ -23,7 +23,7 @@ rdr-tab-scroll-frame {
       align-items: stretch;
 
       &-item {
-        @include fz-callout-17-center;
+        @include Callout172-Bold1-Light2-Default-Color2-Center-Aligned;
         cursor: pointer;
         display: flex;
         justify-content: center;
@@ -36,7 +36,7 @@ rdr-tab-scroll-frame {
         border-bottom-style: solid;
 
         @include rwd($bp-sm-max) {
-          @include fz-callout-15-center;
+          @include Callout152-Bold1-Light2-Default-Color2-Center-Aligned;
           padding: 6px 4px;
         }
 

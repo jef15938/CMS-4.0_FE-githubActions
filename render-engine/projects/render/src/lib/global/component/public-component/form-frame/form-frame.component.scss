@@ -20,7 +20,7 @@ rdr-form-frame {
     }
 
     &__title {
-      @include fz-title-20-left;
+      @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-bottom: 8px;
 
       &[has-note] {
@@ -43,19 +43,19 @@ rdr-form-frame {
     }
 
     &__note {
-      @include fz-footnote-15-left-bold;
+      @include Footnote152-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-bottom: 12px;
     }
 
     &__suffix {
-      @include fz-body-18-left-bold;
+      @include Body182-Bold1-Light2-Default-Color1-Left-Aligned;
       display: flex;
       align-items: center;
       height: 46px;
     }
 
     &__error {
-      @include fz-footnote-15-left-bold;
+      @include Footnote152-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-top: 8px;
     }
   }

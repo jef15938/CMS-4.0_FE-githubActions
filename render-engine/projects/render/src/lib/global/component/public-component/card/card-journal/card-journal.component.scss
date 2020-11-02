@@ -52,33 +52,33 @@ rdr-card-journal {
     }
 
     &__title {
-      @include fz-title-20-left;
+      @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-top: 24px;
       margin-bottom: 8px;
 
       @include rwd($bp-sm-max) {
-        @include fz-body-17-left-bold;
+        @include Body172-Bold1-Light2-Default-Color1-Left-Aligned;
         margin-top: 0;
         margin-bottom: 0;
       }
     }
 
     &__subtitle {
-      @include fz-title-18-left;
+      @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-bottom: 24px;
 
       @include rwd($bp-sm-max) {
-        @include fz-body-16-left-bold;
+        @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
         margin-bottom: 16px;
       }
     }
 
     &__desc {
-      @include fz-body-16-left;
+      @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
       margin-bottom: 16px;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-14-left;
+        @include Footnote141-Regular1-Light2-Default-Color1-Left-Aligned;
         margin-bottom: 0;
       }
     }

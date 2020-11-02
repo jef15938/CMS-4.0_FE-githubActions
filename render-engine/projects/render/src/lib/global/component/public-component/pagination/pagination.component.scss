@@ -35,7 +35,7 @@ rdr-pagination {
     }
 
     &__item {
-      @include fz-callout-16-center;
+      @include Callout162-Bold1-Light2-Default-Color2-Center-Aligned;
       display: inline-block;
       vertical-align: middle;
       user-select: none;

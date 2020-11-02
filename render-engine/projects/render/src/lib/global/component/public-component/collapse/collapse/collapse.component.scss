@@ -31,19 +31,19 @@ rdr-collapse {
       }
 
       &__trigger {
-        @include fz-body-18-left-bold;
+        @include Body182-Bold1-Light2-Default-Color1-Left-Aligned;
 
         @include rwd($bp-sm-max) {
-          @include fz-body-16-left-bold;
+          @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
           padding: 8px 38px 8px 16px;
         }
       }
 
       &__content {
-        @include fz-body-16-left;
+        @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
 
         @include rwd($bp-sm-max) {
-          @include fz-footnote-15-left;
+          @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
           padding: 20px 16px 40px 16px;
         }
       }

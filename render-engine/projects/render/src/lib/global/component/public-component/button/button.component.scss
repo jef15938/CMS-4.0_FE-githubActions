@@ -12,10 +12,10 @@ rdr-button {
   display: block;
 
   [nx-btn].nx-cp {
-    @include fz-callout-18-left;
+    @include Callout182-Bold1-Light2-Default-Color1-Left-Aligned;
 
     @include rwd($bp-sm-max) {
-      @include fz-callout-16-left;
+      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
     }
 
     &.nx-color--distinct {
@@ -25,7 +25,7 @@ rdr-button {
       }
 
       >.btn--border {
-        @include fz-callout-16-left;
+        @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
       }
     }
 
@@ -78,7 +78,7 @@ rdr-button {
     }
 
     &-text {
-      @include fz-callout-16-left;
+      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
     }
 
     &-icon {}

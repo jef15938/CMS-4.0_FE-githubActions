@@ -41,7 +41,7 @@ rdr-mega-menu {
     }
 
     .menu__item {
-      @include fz-callout-16-left;
+      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
       min-width: 128px;
 
       +.menu__item {
@@ -76,7 +76,7 @@ rdr-mega-menu {
     }
 
     &__link {
-      @include fz-callout-16-left;
+      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
 
       @include on-event {
         text-decoration: none;

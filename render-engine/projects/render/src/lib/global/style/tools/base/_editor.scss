@@ -2,8 +2,8 @@
   $editor-primary-color: map-get($theme, color_primary) !default;
   $editor-text-color: map-get($theme, black_0) !default;
   $editor-note-color: map-get($theme, black_1) !default;
-  $editor-table-even-color: map-get($theme, white_1) !default;
-  $editor-table-odd-color: map-get($theme, white_0) !default;
+  $editor-table-even-color: map-get($theme, white_0) !default;
+  $editor-table-odd-color: map-get($theme, white_1) !default;
   $editor-table-border-color: map-get($theme, very_light_pink_0) !default;
   $editor-table-header-bg-color: map-get($theme, color_click) !default;
   $editor-table-header-text-color: map-get($theme, brownish_grey) !default;
@@ -14,12 +14,12 @@
   $editor-element-mobile-gutter: 12px;
 
   .neux-editor {
-    @include fz-body-16-left;
+    @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
     color: $editor-text-color;
     outline: none;
 
     @include rwd($bp-sm-max) {
-      @include fz-footnote-15-left;
+      @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
     }
 
     // 編輯模式
@@ -148,36 +148,40 @@
     }
 
     .highlight-1 {
-      @include fz-title-24-left;
+      @include Tilte242-Bold1-Light2-Default-Color1-Left-Aligned;
       color: $editor-primary-color;
 
       @include rwd($bp-sm-max) {
-        @include fz-title-20-left;
+        @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
       }
     }
 
     .highlight-2 {
-      @include fz-title-20-left;
+      @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
       color: $editor-text-color;
 
       @include rwd($bp-sm-max) {
-        @include fz-title-18-left;
+        @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
       }
     }
 
     .highlight-3 {
-      @include fz-title-18-left;
+      @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
       color: $editor-primary-color;
 
       @include rwd($bp-sm-max) {
-        @include fz-body-16-left-bold;
+        @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
       }
     }
 
     a {
-      @include fz-callout-16-left;
+      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
       text-decoration: underline;
       color: $editor-primary-color;
+
+      @include rwd($bp-sm-max) {
+        @include Callout152-Bold1-Light2-Default-Color1-Left-Aligned;
+      }
     }
 
     .neux-table {
@@ -233,13 +237,13 @@
           }
 
           &.headerTD {
-            @include fz-body-18-center-bold;
+            @include Body182-Bold1-Light2-Default-Color2-Center-Aligned;
             border-top: 1px solid $editor-table-border-color;
             background-color: $editor-table-header-bg-color;
             color: $editor-table-header-text-color;
 
             @include rwd($bp-sm-max) {
-              @include fz-body-16-center-bold;
+              @include Body162-Bold1-Light2-Default-Color2-Center-Aligned;
             }
 
             &:first-child {
@@ -265,11 +269,44 @@
             background-color: $editor-table-even-color;
           }
         }
+
+        &:nth-child(odd) {
+          td:not(.headerTD):not(.selected):not(.highlightTD) {
+            background-color: $editor-table-odd-color;
+          }
+        }
       }
 
       // .seleted {
       //   background-color: silver;
       // }
+    }
+
+    .neux-table-scroll {
+      @include rwd($bp-lg) {
+        display: flex;
+        overflow: auto;
+
+        &:before,
+        &:after {
+          content: '';
+          display: block;
+          flex-shrink: 0;
+          width: 20px;
+        }
+
+        .neux-table {
+          tr {
+
+            th,
+            td {
+              &.headerTD {
+                white-space: nowrap;
+              }
+            }
+          }
+        }
+      }
     }
 
     // .figure-color {

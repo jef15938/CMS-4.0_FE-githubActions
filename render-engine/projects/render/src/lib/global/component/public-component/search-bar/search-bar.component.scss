@@ -13,7 +13,7 @@ rdr-search-bar {
   position: relative;
 
   [nx-input].nx-cp {
-    @include fz-callout-17-left;
+    @include Callout172-Bold1-Light2-Default-Color1-Left-Aligned;
     line-height: normal;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.9);

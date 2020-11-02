@@ -47,7 +47,7 @@ rdr-select {
 
     .select-ele {
       &--customize {
-        @include fz-callout-16-left;
+        @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
 
         +.select-options {
           .select-options__list {
@@ -67,7 +67,7 @@ rdr-select {
           }
 
           .select-options__item {
-            @include fz-callout-16-left;
+            @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
           }
         }
       }
@@ -86,7 +86,7 @@ rdr-select {
       }
 
       [nx-input] {
-        @include fz-callout-16-left;
+        @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
         line-height: normal;
         height: 36px;
         padding: 8px 8px 8px 34px;

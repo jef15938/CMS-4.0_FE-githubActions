@@ -20,12 +20,12 @@ rdr-fast-tool {
 
   .fast-tool {
     &__text {
-      @include fz-callout-18-center;
+      @include Callout182-Bold1-Light2-Default-Color2-Center-Aligned;
       margin-bottom: 8px;
 
       @include rwd($bp-sm-max) {
         margin-bottom: 4px;
-        @include fz-callout-16-center;
+        @include Callout162-Bold1-Light2-Default-Color2-Center-Aligned;
       }
     }
   }

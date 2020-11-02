@@ -43,42 +43,42 @@ rdr-card-activity {
     }
 
     &__date {
-      @include fz-body-16-left-bold;
+      @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
       min-height: 28px;
       margin-bottom: 8px;
 
       @include rwd($bp-sm-max) {
-        @include fz-caption-13-left-bold;
+        @include Caption132-Bold1-Light2-Default-Color1-Left-Aligned;
         min-height: 22px;
         margin-bottom: 12px;
       }
     }
 
     &__subtitle {
-      @include fz-body-16-left-bold;
+      @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-bottom: 8px;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-15-left-bold;
+        @include Footnote152-Bold1-Light2-Default-Color1-Left-Aligned;
         margin-bottom: 12px;
       }
     }
 
     &__title {
-      @include fz-title-20-left;
+      @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-bottom: 4px;
 
       @include rwd($bp-sm-max) {
-        @include fz-body-17-left-bold;
+        @include Body172-Bold1-Light2-Default-Color1-Left-Aligned;
         margin-bottom: 0;
       }
     }
 
     &__desc {
-      @include fz-body-16-left;
+      @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
 
       @include rwd($bp-sm-max) {
-        @include fz-footnote-15-left;
+        @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
       }
     }
   }
