@@ -3,8 +3,11 @@ import {
   Component,
   ContentChildren,
   ElementRef,
+  EventEmitter,
   Injector,
+  Input,
   OnInit,
+  Output,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -27,6 +30,9 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
   @ContentChildren(TabItemComponent) tabs: QueryList<TabItemComponent>;
   @ViewChild('tabShell') tabShell: ElementRef;
   @ViewChildren('tabItem') tabItemList: QueryList<ElementRef>;
+
+  @Output() tabChange: EventEmitter<number> = new EventEmitter<number>();
+  @Input() selectedDefaultIndex = 0;
 
   private scrollToItem: Subject<any> = new Subject<any>();
   private selectedIndex: number;
@@ -52,7 +58,7 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     ).subscribe();
 
     setTimeout(() => {
-      this.onSelect(this.tabs.first, 0);
+      this.onSelect(this.tabs.toArray()[this.selectedDefaultIndex], 0);
       this.listItemWidth = `${this.getTabWidth(this.tabs.length) / this.tabs.length}px`;
     });
   }
@@ -76,6 +82,7 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     this.selectedTab = tab;
     this.selectedIndex = this.tabs.toArray().findIndex((item) => item === tab);
     this.selectedTab.show = true;
+    this.tabChange.emit(this.selectedIndex);
   }
 
   /** 滑動到指定的位置 */

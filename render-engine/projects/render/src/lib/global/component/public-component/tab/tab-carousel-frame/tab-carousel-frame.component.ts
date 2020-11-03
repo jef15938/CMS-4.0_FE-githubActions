@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ContentChildren, Injector, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, EventEmitter, Injector, Input, OnInit, Output, QueryList, ViewEncapsulation } from '@angular/core';
 import { CustomizeBaseDirective } from '../../base-component';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { TabItemComponent } from '../tab-item/tab-item.component';
@@ -10,6 +10,10 @@ import { TabItemComponent } from '../tab-item/tab-item.component';
   encapsulation: ViewEncapsulation.None
 })
 export class TabCarouselFrameComponent extends CustomizeBaseDirective implements OnInit, AfterContentInit {
+
+  @Output() tabChange: EventEmitter<number> = new EventEmitter<number>();
+
+  @Input() selectedDefaultIndex = 0;
 
   perView = 4;
 
@@ -35,7 +39,7 @@ export class TabCarouselFrameComponent extends CustomizeBaseDirective implements
   }
 
   ngAfterContentInit() {
-    this.onSelect(this.tabs.first);
+    this.onSelect(this.tabs.toArray()[this.selectedDefaultIndex]);
   }
 
   /** 當選到的tab */
@@ -45,6 +49,7 @@ export class TabCarouselFrameComponent extends CustomizeBaseDirective implements
 
   /** 打開選到的tab，同時關掉其他tab */
   select(tab) {
+    const selectIndex = this.tabs.toArray().findIndex((item) => item === tab);
     this.tabs.forEach((item) => {
       item.show = false;
     });
@@ -53,5 +58,6 @@ export class TabCarouselFrameComponent extends CustomizeBaseDirective implements
     setTimeout(() => {
       this.selectedTab.show = true;
     });
+    this.tabChange.emit(selectIndex);
   }
 }

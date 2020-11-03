@@ -5,9 +5,7 @@ import { CustomizeBaseDirective } from '../base-component';
 
 export interface CheckboxData {
   id: string;
-  value: string;
   title: string;
-  checked: boolean;
   disabled: boolean;
 }
 
@@ -27,9 +25,7 @@ export class CheckboxComponent extends CustomizeBaseDirective implements OnInit,
 
   @Input() data: CheckboxData = {
     id: '',
-    value: '0',
     title: '我已閱讀並同意',
-    checked: false,
     disabled: false
   };
 

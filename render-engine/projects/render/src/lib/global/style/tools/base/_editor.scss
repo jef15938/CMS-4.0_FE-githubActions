@@ -17,6 +17,7 @@
     @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
     color: $editor-text-color;
     outline: none;
+    word-break: normal;
 
     @include rwd($bp-sm-max) {
       @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
