@@ -143,12 +143,18 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       viewContainerRef.clear();
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
       const componentRef = viewContainerRef.createComponent(componentFactory) as ComponentRef<LayoutBaseComponent<any>>;
-      defaultTemplateInfo = JSON.parse(JSON.stringify(componentRef.instance.defaultTemplateInfo));
+
+      const componentInctanceDefaultTemplateInfo = componentRef.instance.defaultTemplateInfo;
+      if (!componentInctanceDefaultTemplateInfo) {
+        throw new Error(`版型元件 ${componentRef.instance.TEMPLATE_ID} 沒有預設資料`);
+      }
+
+      defaultTemplateInfo = JSON.parse(JSON.stringify(componentInctanceDefaultTemplateInfo));
       defaultTemplateInfo.id = `${new Date().getTime()}`;
       componentRef.destroy();
       viewContainerRef.clear();
     } catch (error) {
-      CmsErrorHandler.throwAndShow(error, 'LayoutControlPanelComponent.selectTemplate()', '處理選擇版面預設資料錯誤錯誤');
+      CmsErrorHandler.throwAndShow(error, 'LayoutControlPanelComponent.selectTemplate()', '處理選擇版面預設資料錯誤');
     }
 
     if (!defaultTemplateInfo) {
