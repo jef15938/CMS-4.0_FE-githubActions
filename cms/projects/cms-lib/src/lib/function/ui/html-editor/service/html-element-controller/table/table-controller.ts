@@ -3,7 +3,7 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { HtmlEditorElementController } from '../_base';
 import { HtmlEditorContextMenuItem, HtmlEditorContext } from '../../../html-editor.interface';
 import { HtmlEditorTableControllerInterface, HtmlEditorTableCell } from './table-controller.interface';
-import { TableControllerService, TableStyle } from './table-controller-service';
+import { TableControllerService, TableStyle, TableFormat } from './table-controller-service';
 import { DeleteRow } from './actions/delete-row';
 import { AddRow } from './actions/add-row';
 import { DeleteCol } from './actions/delete-col';
@@ -80,6 +80,20 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   protected onAddToEditor(): void {
     this.contextMenuItemsTemp = [
       {
+        text: '表格格式', type: 'select',
+        category: HtmlEditorActionCategory.TABLE,
+        defaultValue: this.tableControllerService.getTableFormat(this.el),
+        selectionOptions: [
+          { text: '橫式', value: TableFormat.HORIZONTAL },
+          { text: '直式', value: TableFormat.VERTICLE },
+          { text: '混合', value: TableFormat.MIXED },
+        ],
+        selectionChange: (ev) => {
+          this.tableControllerService.setTableFormat(this.el, ev.value);
+          this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
+        }
+      },
+      {
         text: '列',
         category: HtmlEditorActionCategory.TABLE,
         children: [
@@ -110,7 +124,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         ]
       },
       {
-
         text: '表格樣式', type: 'select',
         category: HtmlEditorActionCategory.TABLE,
         defaultValue: this.tableControllerService.getTableStyle(this.el),

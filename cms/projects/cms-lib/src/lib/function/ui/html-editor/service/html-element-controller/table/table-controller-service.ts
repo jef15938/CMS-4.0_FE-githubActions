@@ -1,7 +1,76 @@
 import { HtmlEditorTableCell } from './table-controller.interface';
 import { Subscription, fromEvent } from 'rxjs';
 import { switchMap, takeUntil, tap, throttleTime } from 'rxjs/operators';
-import { TABLE_CLASS_BASE_ROW, TABLE_ATTR_TABLE_STYLE, TABLE_CLASS_TABLE_TD } from '../../../const/html-editor-container.const';
+import { TABLE_CLASS_BASE_ROW, TABLE_ATTR_TABLE_STYLE, TABLE_CLASS_TABLE_TD, TABLE_ATTR_TABLE_FORMAT } from '../../../const/html-editor-container.const';
+
+export enum TableFormat {
+  HORIZONTAL = 'horizontal',
+  VERTICLE = 'vertical',
+  MIXED = 'mixed',
+}
+
+export class HtmlEditorTableHeaderUtil {
+
+  setTableFormat(table: HTMLTableElement, tableFormat: TableFormat) {
+    table.setAttribute(TABLE_ATTR_TABLE_FORMAT, tableFormat);
+    this.setHeaderClass(table);
+  }
+
+  private checkTableFormat(table: HTMLTableElement) {
+    const formatAttr = table.getAttribute(TABLE_ATTR_TABLE_FORMAT) || '';
+    const enumTableFormatValues = Object.keys(TableFormat).map(key => TableFormat[key]);
+    if (enumTableFormatValues.every(value => formatAttr !== value)) {
+      table.setAttribute(TABLE_ATTR_TABLE_FORMAT, TableFormat.HORIZONTAL);
+    }
+  }
+
+  getTableFormat(table: HTMLTableElement): TableFormat {
+    this.checkTableFormat(table);
+    return table.getAttribute(TABLE_ATTR_TABLE_FORMAT) as TableFormat;
+  }
+
+  private removeHeaderClass(el: HTMLElement) {
+    el.classList.remove(TABLE_CLASS_TABLE_TD);
+  }
+
+  private addHeaderClass(el: HTMLTableDataCellElement) {
+    el.classList.add(TABLE_CLASS_TABLE_TD);
+  }
+
+  private cleanHeaderClass(table: HTMLTableElement) {
+    const tds = Array.from(table.querySelectorAll('td')) as HTMLTableDataCellElement[];
+    const ths = Array.from(table.querySelectorAll('th')) as HTMLTableHeaderCellElement[];
+    [...tds, ...ths].forEach(el => this.removeHeaderClass(el));
+  }
+
+  private addHeaderClassHorizontal(table: HTMLTableElement) {
+    const firstTr = table.querySelector(`tbody > tr`) as HTMLTableRowElement;
+    const firstTrTds = Array.from(firstTr.querySelectorAll('td')) as HTMLTableDataCellElement[];
+    firstTrTds.forEach(td => this.addHeaderClass(td));
+  }
+
+  private addHeaderClassVertical(table: HTMLTableElement) {
+    const firstTds = Array.from(table.querySelectorAll(`tbody td:first-child`)) as HTMLTableDataCellElement[];
+    firstTds.forEach(td => this.addHeaderClass(td));
+  }
+
+  setHeaderClass(table: HTMLTableElement) {
+    this.cleanHeaderClass(table);
+    const tableFormat = this.getTableFormat(table);
+    switch (tableFormat) {
+      case TableFormat.HORIZONTAL:
+        this.addHeaderClassHorizontal(table);
+        break;
+      case TableFormat.VERTICLE:
+        this.addHeaderClassVertical(table);
+        break;
+      case TableFormat.MIXED:
+        this.addHeaderClassHorizontal(table);
+        this.addHeaderClassVertical(table);
+        break;
+    }
+  }
+}
 
 export interface TableSetting {
   cols: number;
@@ -14,9 +83,17 @@ export enum TableStyle {
   SINGLE = 'single',
 }
 
-
-
 export class TableControllerService {
+
+  private readonly htmlEditorTableHeaderUtil = new HtmlEditorTableHeaderUtil();
+
+  getTableFormat(table: HTMLTableElement) {
+    return this.htmlEditorTableHeaderUtil.getTableFormat(table);
+  }
+
+  setTableFormat(table: HTMLTableElement, tableFormat: TableFormat) {
+    return this.htmlEditorTableHeaderUtil.setTableFormat(table, tableFormat);
+  }
 
   createCell(innerHTML?: string) {
     const td = document.createElement('td');
@@ -63,7 +140,7 @@ export class TableControllerService {
 
   checkTableStyle(table: HTMLTableElement) {
     this.setBaseRowStyle(table);
-    this.setHeaderRowStyle(table);
+    this.htmlEditorTableHeaderUtil.setHeaderClass(table);
   }
 
   private setBaseRowStyle(table: HTMLTableElement) {
@@ -71,22 +148,6 @@ export class TableControllerService {
     const tds = Array.from(tr.querySelectorAll('td')) as HTMLTableDataCellElement[];
     tds.forEach(td => {
       td.classList.add('hideTD');
-    });
-  }
-
-  private setHeaderRowStyle(table: HTMLTableElement) {
-    const firstTr = table.querySelector(`tbody > tr`) as HTMLTableRowElement;
-    const firstTrTds = Array.from(firstTr.querySelectorAll('td')) as HTMLTableDataCellElement[];
-    firstTrTds.forEach(td => {
-      td.classList.add(TABLE_CLASS_TABLE_TD);
-    });
-
-    const otherTrs = Array.from(table.querySelectorAll(`tbody > tr`)).filter(tr => tr !== firstTr) as HTMLTableRowElement[];
-    otherTrs.forEach(otherTr => {
-      const otherTrTds = Array.from(otherTr.querySelectorAll('td')) as HTMLTableDataCellElement[];
-      otherTrTds.forEach(td => {
-        td.classList.remove(TABLE_CLASS_TABLE_TD);
-      });
     });
   }
 

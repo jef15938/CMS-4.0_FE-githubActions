@@ -402,6 +402,8 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }
     });
 
+    const needRemoveNodesFromTable = Array.from(tempContainer.querySelectorAll('.col-resizer-container, .col-resizer'));
+    needRemoveNodesFromTable.forEach(n => n.parentElement.removeChild(n));
     const tables = Array.from(tempContainer.querySelectorAll('table'));
     tables.forEach(table => {
       const firstBodyTr = Array.from(table.querySelectorAll('tbody>tr'))[0];
