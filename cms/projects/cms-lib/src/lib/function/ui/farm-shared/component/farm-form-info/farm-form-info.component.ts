@@ -289,12 +289,10 @@ export class FarmFormInfoComponent implements OnInit {
   }
 
   openHtmlEditor(col: FarmFormInfoModelColumn) {
-    this.htmlEditorService.openEditor({
-      // title: `Html編輯`,
-      content: col.value
-    }).subscribe(content => {
-      if (content || content === '') {
-        this.formGroup.get(col.columnId).setValue(content);
+    const content = col.value;
+    this.htmlEditorService.openEditor({ content }).subscribe(newContent => {
+      if (newContent !== content) {
+        this.formGroup.get(col.columnId).setValue(newContent);
       }
     });
   }

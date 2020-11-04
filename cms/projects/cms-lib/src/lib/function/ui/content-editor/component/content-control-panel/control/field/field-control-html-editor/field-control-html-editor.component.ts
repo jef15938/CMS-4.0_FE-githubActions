@@ -19,12 +19,10 @@ export class FieldControlHtmlEditorComponent extends ContentControlBase implemen
   }
 
   openEditor() {
-    this.htmlEditorService.openEditor({
-      // title: `Html編輯 : ${this.selected.fieldInfo.fieldId}`,
-      content: this.selected.fieldInfo.fieldVal
-    }).subscribe(content => {
-      if (content || content === '') {
-        this.selected.fieldInfo.fieldVal = content;
+    const content = this.selected.fieldInfo.fieldVal;
+    this.htmlEditorService.openEditor({ content }).subscribe(newContnet => {
+      if (newContnet !== content) {
+        this.selected.fieldInfo.fieldVal = newContnet;
         this.change.emit();
       }
     });

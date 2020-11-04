@@ -426,6 +426,9 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       thead.appendChild(firstBodyTr);
     });
 
+    const blankPs = Array.from(tempContainer.querySelectorAll('p'))
+      .filter(p => !p.innerHTML && !p.innerText);
+    blankPs.forEach(n => n.parentElement.removeChild(n));
 
     return tempContainer.innerHTML || '';
   }
