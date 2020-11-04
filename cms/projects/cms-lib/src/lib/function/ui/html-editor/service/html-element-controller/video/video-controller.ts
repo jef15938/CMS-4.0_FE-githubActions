@@ -13,7 +13,10 @@ export class HtmlEditorVideoController extends HtmlEditorElementController<HTMLI
 
   protected onAddToEditor(): void {
     this.contextMenuItems = [
-      { category: HtmlEditorActionCategory.YOUTUBE, text: '影片設定', icon: 'edit', action: new InsertVideo(this.context) },
+      {
+        id: 'video',
+        category: HtmlEditorActionCategory.YOUTUBE, text: '影片設定', icon: 'edit', action: new InsertVideo(this.context)
+      },
     ];
 
     this.subscribeEvents();

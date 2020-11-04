@@ -1,3 +1,5 @@
+// editor
+export const EDITOR_DEFAULT_CONTENT = '<p>請輸入內容</p>';
 // link
 export const LINK_CLASS_EDITOR_LINK = 'editor-link';
 // file
