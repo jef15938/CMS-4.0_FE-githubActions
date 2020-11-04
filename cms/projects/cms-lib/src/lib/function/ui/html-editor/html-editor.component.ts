@@ -314,8 +314,8 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     const special =
       this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'img')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'iframe')
-      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
       || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'a')
+      || this.simpleWysiwygService.findTagFromTargetToContainer(this.editorContainer, target, 'table')
       ;
 
     if (special) {
