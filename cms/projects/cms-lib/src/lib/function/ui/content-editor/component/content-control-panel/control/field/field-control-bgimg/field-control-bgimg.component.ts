@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective } from '@neux/render';
 import { GallerySharedService } from '../../../../../../gallery-shared/service/gallery-shared.service';
-import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
+import { GALLERY_ATTR_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
 import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-model/models/content-field-info.model';
 
 @Component({
@@ -12,7 +12,7 @@ import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-m
 })
 export class FieldControlBgimgComponent extends ContentControlBase implements OnInit, OnChanges {
 
-  ATTRIBUTE_GALLERY_ID = ATTRIBUTE_GALLERY_ID;
+  GALLERY_ATTR_GALLERY_ID = GALLERY_ATTR_GALLERY_ID;
 
   fieldInfo: ContentFieldInfoModel;
 
@@ -41,7 +41,7 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
   }
 
   selectImage() {
-    const galleryID = this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID];
+    const galleryID = this.fieldInfo.extension[GALLERY_ATTR_GALLERY_ID];
     const galleryName = this.fieldInfo.extension.galleryName;
     const imageHeightWidth = this.adviceWidth > 0 && this.adviceHeight > 0
       ? { width: this.adviceWidth, height: this.adviceHeight }
@@ -60,7 +60,7 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
       if (res) {
         const saved = res as any;
         this.fieldInfo.fieldVal = saved.path;
-        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${saved.galleryId}`;
+        this.fieldInfo.extension[GALLERY_ATTR_GALLERY_ID] = `${saved.galleryId}`;
         this.fieldInfo.extension.galleryName = saved.galleryName;
         this.change.emit();
       }

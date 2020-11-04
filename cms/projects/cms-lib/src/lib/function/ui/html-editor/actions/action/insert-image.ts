@@ -1,7 +1,7 @@
 import { HtmlEditorActionBase } from '../action.base';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorInsertImgModalComponent } from '../../modal/html-editor-insert-img-modal/html-editor-insert-img-modal.component';
-import { ATTRIBUTE_GALLERY_ID, ATTRIBUTE_GALLERY_NAME } from '../../const/html-editor-container.const';
+import { GALLERY_ATTR_GALLERY_ID, GALLERY_ATTR_GALLERY_NAME } from '../../const/html-editor-container.const';
 import { HtmlEditorActionCategory } from '../action.enum';
 
 export interface InsertImageConfig {
@@ -41,8 +41,8 @@ export class InsertImage extends HtmlEditorActionBase {
       img.setAttribute('height', `${config.height}`);
       img.setAttribute('width', `${config.width}`);
       img.setAttribute('alt', `${config.alt}`);
-      img.setAttribute(ATTRIBUTE_GALLERY_ID, `${config.galleryID || ''}`);
-      img.setAttribute(ATTRIBUTE_GALLERY_NAME, `${config.galleryName || ''}`);
+      img.setAttribute(GALLERY_ATTR_GALLERY_ID, `${config.galleryID || ''}`);
+      img.setAttribute(GALLERY_ATTR_GALLERY_NAME, `${config.galleryName || ''}`);
 
       return img;
     }

@@ -7,7 +7,7 @@ import { HtmlEditorContext, HtmlEditorContextMenuItem, HtmlEditorConfig } from '
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
-import { ATTRIBUTE_FRAME_ID, ATTRIBUTE_GALLERY_ID, TABLE_BASE_ROW_CLASS } from './const/html-editor-container.const';
+import { VIDEO_ATTR_FRAME_ID, GALLERY_ATTR_GALLERY_ID, TABLE_CLASS_BASE_ROW } from './const/html-editor-container.const';
 import { YoutubeUtil } from './service/youtube-util';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
@@ -84,9 +84,9 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     const tempContainer = document.createElement('div');
     tempContainer.innerHTML = htmlString;
 
-    const imgs = Array.from(tempContainer.querySelectorAll(`img[${ATTRIBUTE_GALLERY_ID}]`));
+    const imgs = Array.from(tempContainer.querySelectorAll(`img[${GALLERY_ATTR_GALLERY_ID}]`));
     imgs.forEach(img => {
-      const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+      const galleryID = img.getAttribute(GALLERY_ATTR_GALLERY_ID);
       if (galleryID) {
         const src = img.getAttribute('src');
         if (src.indexOf(this.environment.apiBaseUrl) < 0) {
@@ -100,7 +100,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       const parent = iframe.parentElement;
       const videoUrl = iframe.src;
       const img = document.createElement('img');
-      img.setAttribute(ATTRIBUTE_FRAME_ID, videoUrl);
+      img.setAttribute(VIDEO_ATTR_FRAME_ID, videoUrl);
       img.src = YoutubeUtil.convertVideoUrlToImageUrl(videoUrl);
       img.style.width = '100%';
       img.style.height = 'auto';
@@ -110,7 +110,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
     const tables = Array.from(tempContainer.querySelectorAll('table'));
     tables.forEach(table => {
-      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains(TABLE_BASE_ROW_CLASS))[0];
+      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains(TABLE_CLASS_BASE_ROW))[0];
       if (!headerTr) { return; }
       // <th> to <td>
       const ths = Array.from(headerTr.querySelectorAll('th'));
@@ -376,8 +376,8 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         if (node.nodeType === Node.ELEMENT_NODE) {
           node.classList.remove('selected');
           node.style.removeProperty('outline');
-          if (node.tagName?.toLowerCase() === 'img' && node.getAttribute(ATTRIBUTE_FRAME_ID)) {
-            const frameId = node.getAttribute(ATTRIBUTE_FRAME_ID);
+          if (node.tagName?.toLowerCase() === 'img' && node.getAttribute(VIDEO_ATTR_FRAME_ID)) {
+            const frameId = node.getAttribute(VIDEO_ATTR_FRAME_ID);
             const iframe = document.createElement('iframe');
             iframe.src = frameId;
             iframe.setAttribute('style', 'width: 100%; height: 100%;');
@@ -391,9 +391,9 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }, []);
     }
 
-    const imgs = Array.from(tempContainer.querySelectorAll(`img[${ATTRIBUTE_GALLERY_ID}]`));
+    const imgs = Array.from(tempContainer.querySelectorAll(`img[${GALLERY_ATTR_GALLERY_ID}]`));
     imgs.forEach(img => {
-      const galleryID = img.getAttribute(ATTRIBUTE_GALLERY_ID);
+      const galleryID = img.getAttribute(GALLERY_ATTR_GALLERY_ID);
       if (galleryID) {
         const src = img.getAttribute('src');
         if (src.indexOf(this.environment.apiBaseUrl) > -1) {

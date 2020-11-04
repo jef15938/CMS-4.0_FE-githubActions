@@ -5,7 +5,7 @@ import { HtmlEditorTableController } from './table/table-controller';
 import { HtmlEditorVideoController } from './video/video-controller';
 import { HtmlEditorLinkController } from './link-controller';
 import { HtmlEditorGalleryFileController } from './gallery-file-controller';
-import { ATTRIBUTE_FRAME_ID, CLASS_NAME_EDITOR_LINK, CLASS_NAME_GALLERY_FILE } from '../../const/html-editor-container.const';
+import { VIDEO_ATTR_FRAME_ID, LINK_CLASS_EDITOR_LINK, FILE_CLASS_GALLERY_FILE } from '../../const/html-editor-container.const';
 
 export class HtmlEditorElementControllerFactory {
   static addController(el: HTMLElement, context: HtmlEditorContext): HtmlEditorElementController<HTMLElement> {
@@ -16,18 +16,18 @@ export class HtmlEditorElementControllerFactory {
 
       switch (tagName) {
         case 'a':
-          if (el.classList?.contains(CLASS_NAME_GALLERY_FILE)) {
+          if (el.classList?.contains(FILE_CLASS_GALLERY_FILE)) {
             controller =
               HtmlEditorElementControllerFactory.getController(el)
               || new HtmlEditorGalleryFileController(el as HTMLImageElement, context);
-          } else if (el.classList?.contains(CLASS_NAME_EDITOR_LINK)) {
+          } else if (el.classList?.contains(LINK_CLASS_EDITOR_LINK)) {
             controller =
               HtmlEditorElementControllerFactory.getController(el)
               || new HtmlEditorLinkController(el as HTMLImageElement, context);
           }
           break;
         case 'img':
-          if (el.getAttribute(ATTRIBUTE_FRAME_ID)) {
+          if (el.getAttribute(VIDEO_ATTR_FRAME_ID)) {
             controller =
               HtmlEditorElementControllerFactory.getController(el)
               || new HtmlEditorVideoController(el as HTMLImageElement, context);

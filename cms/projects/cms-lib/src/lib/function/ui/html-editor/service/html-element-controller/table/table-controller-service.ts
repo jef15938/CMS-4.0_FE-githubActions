@@ -1,14 +1,13 @@
 import { HtmlEditorTableCell } from './table-controller.interface';
 import { Subscription, fromEvent } from 'rxjs';
 import { switchMap, takeUntil, tap, throttleTime } from 'rxjs/operators';
-import { TABLE_BASE_ROW_CLASS } from '../../../const/html-editor-container.const';
+import { TABLE_CLASS_BASE_ROW, TABLE_ATTR_TABLE_STYLE, TABLE_CLASS_TABLE_TD } from '../../../const/html-editor-container.const';
 
 export interface TableSetting {
   cols: number;
   style: TableStyle;
 }
 
-export const TABLE_STYLE_ATTR = 'ga-table-style';
 export enum TableStyle {
   PERCENT = 'percent',
   SCROLL = 'scroll',
@@ -41,7 +40,7 @@ export class TableControllerService {
     table.appendChild(tBody);
 
     const baseRow = document.createElement('tr');
-    baseRow.classList.add(TABLE_BASE_ROW_CLASS);
+    baseRow.classList.add(TABLE_CLASS_BASE_ROW);
 
     for (let col = 0; col < config.cols; ++col) {
       const td = this.createCell();
@@ -68,7 +67,7 @@ export class TableControllerService {
   }
 
   private setBaseRowStyle(table: HTMLTableElement) {
-    const tr = table.querySelector(`thead > tr.${TABLE_BASE_ROW_CLASS}`) as HTMLTableRowElement;
+    const tr = table.querySelector(`thead > tr.${TABLE_CLASS_BASE_ROW}`) as HTMLTableRowElement;
     const tds = Array.from(tr.querySelectorAll('td')) as HTMLTableDataCellElement[];
     tds.forEach(td => {
       td.classList.add('hideTD');
@@ -79,20 +78,20 @@ export class TableControllerService {
     const firstTr = table.querySelector(`tbody > tr`) as HTMLTableRowElement;
     const firstTrTds = Array.from(firstTr.querySelectorAll('td')) as HTMLTableDataCellElement[];
     firstTrTds.forEach(td => {
-      td.classList.add('headerTD');
+      td.classList.add(TABLE_CLASS_TABLE_TD);
     });
 
     const otherTrs = Array.from(table.querySelectorAll(`tbody > tr`)).filter(tr => tr !== firstTr) as HTMLTableRowElement[];
     otherTrs.forEach(otherTr => {
       const otherTrTds = Array.from(otherTr.querySelectorAll('td')) as HTMLTableDataCellElement[];
       otherTrTds.forEach(td => {
-        td.classList.remove('headerTD');
+        td.classList.remove(TABLE_CLASS_TABLE_TD);
       });
     });
   }
 
   setTableStyle(table: HTMLTableElement, style: TableStyle) {
-    table.setAttribute(TABLE_STYLE_ATTR, style);
+    table.setAttribute(TABLE_ATTR_TABLE_STYLE, style);
 
     if (style !== TableStyle.SCROLL) {
       table.setAttribute('style', 'width:100% !important;');
@@ -104,7 +103,7 @@ export class TableControllerService {
   }
 
   getTableStyle(table: HTMLTableElement): TableStyle {
-    const style = table.getAttribute(TABLE_STYLE_ATTR) as TableStyle;
+    const style = table.getAttribute(TABLE_ATTR_TABLE_STYLE) as TableStyle;
     switch (style) {
       case TableStyle.PERCENT:
         break;

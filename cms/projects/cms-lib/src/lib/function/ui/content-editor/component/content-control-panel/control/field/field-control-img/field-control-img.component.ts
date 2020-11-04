@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
 import { TemplateFieldSelectEvent, LayoutFieldImgDirective, ImgFieldInfo } from '@neux/render';
 import { GallerySharedService } from './../../../../../../../../function/ui/gallery-shared/service/gallery-shared.service';
-import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
+import { GALLERY_ATTR_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
 
 @Component({
   selector: 'cms-field-control-img',
@@ -11,7 +11,7 @@ import { ATTRIBUTE_GALLERY_ID } from '../../../../../../html-editor/const/html-e
 })
 export class FieldControlImgComponent extends ContentControlBase implements OnInit, OnChanges {
 
-  ATTRIBUTE_GALLERY_ID = ATTRIBUTE_GALLERY_ID;
+  GALLERY_ATTR_GALLERY_ID = GALLERY_ATTR_GALLERY_ID;
   fieldInfo: ImgFieldInfo;
 
   adviceFormat = '';
@@ -43,7 +43,7 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
   }
 
   selectImage() {
-    const galleryID = this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID];
+    const galleryID = this.fieldInfo.extension[GALLERY_ATTR_GALLERY_ID];
     const galleryName = this.fieldInfo.extension.galleryName;
     const imageHeightWidth = this.adviceWidth > 0 && this.adviceHeight > 0
       ? { width: this.adviceWidth, height: this.adviceHeight }
@@ -62,7 +62,7 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
       if (res) {
         const saved = res as any;
         this.fieldInfo.fieldVal = saved.path;
-        this.fieldInfo.extension[ATTRIBUTE_GALLERY_ID] = `${saved.galleryId}`;
+        this.fieldInfo.extension[GALLERY_ATTR_GALLERY_ID] = `${saved.galleryId}`;
         this.fieldInfo.extension.galleryName = saved.galleryName;
         this.change.emit();
       }

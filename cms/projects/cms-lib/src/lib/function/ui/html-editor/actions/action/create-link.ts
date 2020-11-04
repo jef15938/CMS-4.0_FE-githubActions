@@ -2,7 +2,7 @@ import { DomCmdAction } from '../action.base';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HtmlEditorCreateLinkModalComponent } from '../../modal/html-editor-create-link-modal/html-editor-create-link-modal.component';
-import { ATTRIBUTE_FRAME_ID, CLASS_NAME_EDITOR_LINK, CLASS_NAME_GALLERY_FILE } from '../../const/html-editor-container.const';
+import { VIDEO_ATTR_FRAME_ID, LINK_CLASS_EDITOR_LINK, FILE_CLASS_GALLERY_FILE } from '../../const/html-editor-container.const';
 import { HtmlEditorActionCategory } from '../action.enum';
 
 export class CreateLink extends DomCmdAction {
@@ -22,7 +22,7 @@ export class CreateLink extends DomCmdAction {
       aTagToModify.text = range.toString();
     }
 
-    const isGallery = existingATag?.classList?.contains(CLASS_NAME_GALLERY_FILE);
+    const isGallery = existingATag?.classList?.contains(FILE_CLASS_GALLERY_FILE);
 
     return this.context.modalService.openComponent({
       component: HtmlEditorCreateLinkModalComponent,
@@ -52,7 +52,7 @@ export class CreateLink extends DomCmdAction {
         if (isCreate) { // 新增
           const editorContainerSelectedTarget = this.context.selectedTarget as HTMLElement;
           const isCreateOnImg = editorContainerSelectedTarget.tagName?.toLowerCase() === 'img'
-            && !editorContainerSelectedTarget.getAttribute(ATTRIBUTE_FRAME_ID);
+            && !editorContainerSelectedTarget.getAttribute(VIDEO_ATTR_FRAME_ID);
 
           if (isCreateOnImg) {
             aTagToModify.appendChild(editorContainerSelectedTarget);
@@ -64,7 +64,7 @@ export class CreateLink extends DomCmdAction {
               aTagToModify.appendChild(contents);
             }
           }
-          aTagToModify.classList.add(CLASS_NAME_EDITOR_LINK);
+          aTagToModify.classList.add(LINK_CLASS_EDITOR_LINK);
           const modified = this.context.simpleWysiwygService.insertHtml(aTagToModify.outerHTML, this.context.editorContainer);
 
           this.context.simpleWysiwygService.setSelectionOnNode(
@@ -80,7 +80,7 @@ export class CreateLink extends DomCmdAction {
     const selectedTarget = this.context.selectedTarget as HTMLElement;
     const selectedTargetTagName = selectedTarget?.tagName?.toLocaleLowerCase();
 
-    if (selectedTargetTagName === 'img' && !selectedTarget.getAttribute(ATTRIBUTE_FRAME_ID)) { return false; }
+    if (selectedTargetTagName === 'img' && !selectedTarget.getAttribute(VIDEO_ATTR_FRAME_ID)) { return false; }
     if (range.collapsed) { return true; }
     return true;
   }
