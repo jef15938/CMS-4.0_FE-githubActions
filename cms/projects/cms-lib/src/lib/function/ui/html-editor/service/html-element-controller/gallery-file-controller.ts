@@ -8,8 +8,14 @@ export class HtmlEditorGalleryFileController extends HtmlEditorLinkController {
   protected onAddToEditor(): void {
     super.onAddToEditor();
     this.contextMenuItems = [
-      { category: HtmlEditorActionCategory.FILE, text: '變更檔案', icon: 'edit', action: new ModifyFile(this.context) },
-      { category: HtmlEditorActionCategory.FILE, text: '連結', icon: 'link', action: new CreateLink(this.context) },
+      {
+        id: 'change-file',
+        category: HtmlEditorActionCategory.FILE, text: '變更檔案', icon: 'edit', action: new ModifyFile(this.context)
+      },
+      {
+        id: 'link',
+        category: HtmlEditorActionCategory.FILE, text: '連結', icon: 'link', action: new CreateLink(this.context)
+      },
     ];
   }
 

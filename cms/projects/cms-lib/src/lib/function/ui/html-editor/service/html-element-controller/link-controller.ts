@@ -13,7 +13,7 @@ export class HtmlEditorLinkController extends HtmlEditorElementController<HTMLIm
 
   protected onAddToEditor(): void {
     this.contextMenuItems = [
-      { category: HtmlEditorActionCategory.LINK, text: '連結設定', icon: 'edit', action: new CreateLink(this.context) },
+      { id: 'link', category: HtmlEditorActionCategory.LINK, text: '連結設定', icon: 'edit', action: new CreateLink(this.context) },
     ];
 
     this.subscribeEvents();

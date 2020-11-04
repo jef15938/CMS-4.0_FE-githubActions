@@ -20,6 +20,7 @@ export interface HtmlEditorContext {
 }
 
 export interface HtmlEditorContextMenuItem {
+  id: string;
   category: HtmlEditorActionCategory;
   text: string;
   icon?: string;

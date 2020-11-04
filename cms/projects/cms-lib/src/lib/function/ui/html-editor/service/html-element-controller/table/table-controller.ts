@@ -26,28 +26,28 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     setTimeout(_ => {
       const tableStyle = this.tableControllerService.getTableStyle(this.el);
 
-      const rowItem = menuItems[0];
+      const rowItem = this.findContextMenuItemById(menuItems, 'row');
       rowItem.disabled = !this.selectedRows.length;
 
-      const colItem = menuItems[1];
+      const colItem = this.findContextMenuItemById(menuItems, 'col');
       colItem.disabled = !this.selectedCols.length;
 
-      const mergeItem = menuItems[2];
+      const mergeItem = this.findContextMenuItemById(menuItems, 'merge');
       mergeItem.disabled = this.selectedCols.length < 2 || tableStyle === TableStyle.SINGLE;
 
-      const splitItem = menuItems[3];
+      const splitItem = this.findContextMenuItemById(menuItems, 'split');
       splitItem.disabled = this.selectedCols.length !== 1 || (this.selectedCols[0].colSpan < 2 && this.selectedCols[0].rowSpan < 2);
       if (!splitItem.disabled) {
         const col = this.selectedCols[0];
-        const horizontal = splitItem.children[0];
+        const horizontal = this.findContextMenuItemById(splitItem.children, 'split-horizontal');
         horizontal.disabled = col.rowSpan <= 1;
-        const verticle = splitItem.children[1];
+        const verticle = this.findContextMenuItemById(splitItem.children, 'split-vertical');
         verticle.disabled = col.colSpan <= 1;
       }
 
-      const styleItem = menuItems[4];
+      const styleItem = this.findContextMenuItemById(menuItems, 'style');
       styleItem.defaultValue = tableStyle;
-      const styleItemSingleOption = menuItems[4].selectionOptions[2];
+      const styleItemSingleOption = styleItem.selectionOptions.find(option => option.value === TableStyle.SINGLE);
       styleItemSingleOption.disabled = false;
       const tds = Array.from(this.el.querySelectorAll('tbody > tr > td')) as HTMLTableDataCellElement[];
       const hasMergedCol = tds.some(td => td.colSpan > 1 || td.rowSpan > 1);
@@ -77,9 +77,14 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     this.tableControllerService = new TableControllerService();
   }
 
+  private findContextMenuItemById(items: HtmlEditorContextMenuItem[], id: string) {
+    return items.find(item => item.id === id);
+  }
+
   protected onAddToEditor(): void {
     this.contextMenuItemsTemp = [
       {
+        id: 'format',
         text: '表格格式', type: 'select',
         category: HtmlEditorActionCategory.TABLE,
         defaultValue: this.tableControllerService.getTableFormat(this.el),
@@ -94,36 +99,68 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         }
       },
       {
+        id: 'row',
         text: '列',
         category: HtmlEditorActionCategory.TABLE,
         children: [
-          { category: HtmlEditorActionCategory.TABLE, text: '上方列', icon: 'add', action: new AddRow(this.context, this, 'before') },
-          { category: HtmlEditorActionCategory.TABLE, text: '下方列', icon: 'add', action: new AddRow(this.context, this, 'after') },
-          { category: HtmlEditorActionCategory.TABLE, text: '刪除列', icon: 'delete', action: new DeleteRow(this.context, this) },
+          {
+            id: 'row-add-top',
+            category: HtmlEditorActionCategory.TABLE, text: '上方列', icon: 'add', action: new AddRow(this.context, this, 'before')
+          },
+          {
+            id: 'row-add-bottom',
+            category: HtmlEditorActionCategory.TABLE, text: '下方列', icon: 'add', action: new AddRow(this.context, this, 'after')
+          },
+          {
+            id: 'row-delete',
+            category: HtmlEditorActionCategory.TABLE, text: '刪除列', icon: 'delete', action: new DeleteRow(this.context, this)
+          },
         ]
       },
       {
+        id: 'col',
         text: '欄',
         category: HtmlEditorActionCategory.TABLE,
         children: [
-          { category: HtmlEditorActionCategory.TABLE, text: '標記/取消', action: new MarkCol(this.context, this) },
-          { category: HtmlEditorActionCategory.TABLE, text: '左側欄', icon: 'add', action: new AddCol(this.context, this, 'left') },
-          { category: HtmlEditorActionCategory.TABLE, text: '右側欄', icon: 'add', action: new AddCol(this.context, this, 'right') },
-          { category: HtmlEditorActionCategory.TABLE, text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this) },
+          {
+            id: 'col-mark',
+            category: HtmlEditorActionCategory.TABLE, text: '標記/取消', action: new MarkCol(this.context, this)
+          },
+          {
+            id: 'col-left',
+            category: HtmlEditorActionCategory.TABLE, text: '左側欄', icon: 'add', action: new AddCol(this.context, this, 'left')
+          },
+          {
+            id: 'col-right',
+            category: HtmlEditorActionCategory.TABLE, text: '右側欄', icon: 'add', action: new AddCol(this.context, this, 'right')
+          },
+          {
+            id: 'col-delete',
+            category: HtmlEditorActionCategory.TABLE, text: '刪除欄', icon: 'delete', action: new DeleteCol(this.context, this)
+          },
         ]
       },
       {
+        id: 'merge',
         category: HtmlEditorActionCategory.TABLE, text: '合併', action: new Merge(this.context, this),
       },
       {
+        id: 'split',
         text: '分割',
         category: HtmlEditorActionCategory.TABLE,
         children: [
-          { category: HtmlEditorActionCategory.TABLE, text: '水平分割', icon: 'delete', action: new Split(this.context, this, 'horizontal') },
-          { category: HtmlEditorActionCategory.TABLE, text: '垂直分割', icon: 'delete', action: new Split(this.context, this, 'verticle') },
+          {
+            id: 'split-horizontal',
+            category: HtmlEditorActionCategory.TABLE, text: '水平分割', icon: 'delete', action: new Split(this.context, this, 'horizontal')
+          },
+          {
+            id: 'split-vertical',
+            category: HtmlEditorActionCategory.TABLE, text: '垂直分割', icon: 'delete', action: new Split(this.context, this, 'verticle')
+          },
         ]
       },
       {
+        id: 'style',
         text: '表格樣式', type: 'select',
         category: HtmlEditorActionCategory.TABLE,
         defaultValue: this.tableControllerService.getTableStyle(this.el),
@@ -138,6 +175,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         }
       },
       {
+        id: 'delete',
         category: HtmlEditorActionCategory.TABLE, text: '刪除表格', action: new DeleteTable(this.context, this),
       },
     ];
