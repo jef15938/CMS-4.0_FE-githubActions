@@ -11,6 +11,12 @@ import { ListDataSourceDataResponseModel } from '../../../global/api/data-model/
 export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseComponent<DataSourceTemplateInfo>
   implements OnInit, OnChanges {
 
+  /**
+   * FOR 編輯器加入版型時的預設資料
+   * @abstract
+   * @type {DataSourceTemplateInfo}
+   * @memberof DataSourceTemplateBaseComponent
+   */
   abstract defaultTemplateInfo: DataSourceTemplateInfo;
 
   get TYPE_ID() { return this.TEMPLATE_ID; }
