@@ -7,7 +7,7 @@ import { HtmlEditorContext, HtmlEditorContextMenuItem, HtmlEditorConfig } from '
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
-import { VIDEO_ATTR_FRAME_ID, GALLERY_ATTR_GALLERY_ID, TABLE_CLASS_BASE_ROW } from './const/html-editor-container.const';
+import { VIDEO_ATTR_FRAME_ID, GALLERY_ATTR_GALLERY_ID, TABLE_CLASS_BASE_ROW, EDITOR_DEFAULT_CONTENT } from './const/html-editor-container.const';
 import { YoutubeUtil } from './service/youtube-util';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
@@ -21,8 +21,6 @@ import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default'
   styleUrls: ['./html-editor.component.scss'],
 })
 export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterViewInit, OnDestroy {
-
-  private readonly defaultContent = '<p>請輸入內容</p>';
 
   @Input() content = '';
   @Input() configName = 'default';
@@ -74,7 +72,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   private initContentAndContainer(content: string, container: HTMLDivElement) {
-    content = this.convertToEditorContent(content) || this.defaultContent;
+    content = this.convertToEditorContent(content) || EDITOR_DEFAULT_CONTENT;
     this.editorContainer.innerHTML = content;
     this.checkInnerHtml();
   }
@@ -235,9 +233,10 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
         if (addedNodeType === Node.ELEMENT_NODE) {
           const addedEl = addedNode as HTMLElement;
+
           if (
             (addedEl.tagName.toLowerCase() === 'ol' || addedEl.tagName.toLowerCase() === 'ul')
-            && parentElement !== editorContainer && parentElement.tagName.toLowerCase() === 'p'
+            && parentElement !== editorContainer && parentElement?.tagName.toLowerCase() === 'p'
           ) {
             editorContainer.insertBefore(addedEl, parentElement);
             editorContainer.removeChild(parentElement);
@@ -268,7 +267,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }
 
       if (!editorContainer.innerHTML) {
-        editorContainer.innerHTML = this.defaultContent;
+        editorContainer.innerHTML = EDITOR_DEFAULT_CONTENT;
         this.setFocusOnDefaultContent();
       }
     });
@@ -441,7 +440,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
   private setFocusOnDefaultContent() {
     const editorContainer = this.editorContainer;
-    if (editorContainer.innerHTML === this.defaultContent || editorContainer.innerHTML === '<p><br></p>') {
+    if (editorContainer.innerHTML === EDITOR_DEFAULT_CONTENT || editorContainer.innerHTML === '<p><br></p>') {
       const firstChild = this.editorContainer.firstChild;
       this.simpleWysiwygService.setSelectionOnNode(this.editorContainer.firstChild, 1);
       this.selectedTarget = this.editorContainer.firstChild;
