@@ -37,7 +37,7 @@ export class CardNewsListComponent extends CustomizeBaseDirective implements OnI
   ngOnInit(): void {
     /** Binding Resize event */
     CommonUtils.isMobile$(this.resize$).pipe(
-      tap(result => this.ellipsisTitleTextNumber = result ? 25 : 18),
+      tap(result => this.ellipsisTitleTextNumber = result ? 26 : 18),
       takeUntil(this.unsubscribe$)
     ).subscribe();
   }

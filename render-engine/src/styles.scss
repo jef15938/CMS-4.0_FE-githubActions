@@ -1,9 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../projects/render/src/lib/global/style/public-style.scss";
 @include nx-reset;
-@include neux-editor;
 
 html,
 body {
   height: 100%;
+}
+
+.neux-editor {
+  @include neux-editor;
 }

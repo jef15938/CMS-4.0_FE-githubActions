@@ -13,67 +13,27 @@
   $editor-element-pc-gutter: 16px;
   $editor-element-mobile-gutter: 12px;
 
-  .neux-editor {
-    @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
-    color: $editor-text-color;
-    outline: none;
+  @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
+  color: $editor-text-color;
+  outline: none;
+  word-break: normal;
+
+  @include rwd($bp-sm-max) {
+    @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
+  }
+
+  ul>li,
+  p {
     word-break: normal;
+    margin-bottom: $editor-element-pc-gutter;
 
     @include rwd($bp-sm-max) {
-      @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
+      margin-bottom: $editor-element-mobile-gutter;
     }
+  }
 
-    // 編輯模式
-    &.edit {
-      .neux-table {
-        tr {
-          td {
-            &.highlightTD {
-              background-color: $editor-table-hightlight-color;
-            }
-
-            &.selected {
-              background-color: $editor-table-selected-color;
-            }
-          }
-
-          &:nth-child(even) {
-            td:not(.headerTD):not(.selected):not(.highlightTD) {
-              background-color: $editor-table-even-color;
-            }
-          }
-
-          &:nth-child(odd) {
-            td:not(.headerTD):not(.selected):not(.highlightTD) {
-              background-color: $editor-table-odd-color;
-            }
-          }
-        }
-      }
-    }
-
-    ol>li,
-    ul>li,
-    p {
-      margin-bottom: $editor-element-pc-gutter;
-
-      @include rwd($bp-sm-max) {
-        margin-bottom: $editor-element-mobile-gutter;
-      }
-    }
-
-    ol,
-    ul {
-      &[level]:not([level="1"]) {
-        margin-top: $editor-element-pc-gutter;
-
-        @include rwd($bp-sm-max) {
-          margin-top: $editor-element-mobile-gutter;
-        }
-      }
-    }
-
-    ol {
+  ul {
+    &[level="1"] {
       display: block;
       counter-reset: num;
 
@@ -104,8 +64,13 @@
       }
     }
 
-    ul {
+    &[level]:not([level="1"]) {
       display: block;
+      margin-top: $editor-element-pc-gutter;
+
+      @include rwd($bp-sm-max) {
+        margin-top: $editor-element-mobile-gutter;
+      }
 
       >li {
         position: relative;
@@ -136,116 +101,228 @@
         }
       }
     }
+  }
 
-    img::-moz-selection {
-      /* Code for Firefox */
+  img {
+    width: auto;
+
+    &::-moz-selection,
+    &::selection {
       color: transparent !important;
       background: transparent !important;
     }
+  }
 
-    img::selection {
-      color: transparent !important;
-      background: transparent !important;
-    }
+  .highlight-1 {
+    @include Tilte242-Bold1-Light2-Default-Color1-Left-Aligned;
+    color: $editor-primary-color;
 
-    .highlight-1 {
-      @include Tilte242-Bold1-Light2-Default-Color1-Left-Aligned;
-      color: $editor-primary-color;
-
-      @include rwd($bp-sm-max) {
-        @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
-      }
-    }
-
-    .highlight-2 {
+    @include rwd($bp-sm-max) {
       @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
-      color: $editor-text-color;
-
-      @include rwd($bp-sm-max) {
-        @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
-      }
     }
+  }
 
-    .highlight-3 {
+  .highlight-2 {
+    @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
+    color: $editor-text-color;
+
+    @include rwd($bp-sm-max) {
       @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
-      color: $editor-primary-color;
+    }
+  }
 
-      @include rwd($bp-sm-max) {
-        @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
+  .highlight-3 {
+    @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
+    color: $editor-primary-color;
+
+    @include rwd($bp-sm-max) {
+      @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
+    }
+  }
+
+  a {
+    @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
+    text-decoration: underline;
+    color: $editor-primary-color;
+
+    @include rwd($bp-sm-max) {
+      @include Callout152-Bold1-Light2-Default-Color1-Left-Aligned;
+    }
+  }
+
+  .neux-table-wrap[ga-table-style="scroll"] {
+    @include rwd($bp-lg) {
+      display: flex;
+      overflow: auto;
+
+      &:before,
+      &:after {
+        content: '';
+        display: block;
+        flex-shrink: 0;
+        width: 20px;
+      }
+
+      .neux-table {
+        tr {
+
+          th,
+          td {
+            &.headerTD {
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .neux-table {
+    border-collapse: separate;
+    margin-bottom: $editor-element-pc-gutter;
+
+    @include rwd($bp-sm-max) {
+      margin-bottom: $editor-element-mobile-gutter;
+    }
+
+    &.selected {
+      outline: 3px solid $editor-table-outline-selected-color;
+    }
+
+    thead {
+      tr:last-child {
+
+        td,
+        th {
+          border-top: 1px solid $editor-table-border-color;
+
+          &:first-child {
+            border-top-left-radius: 6px;
+          }
+
+          &:last-child {
+            border-top-right-radius: 6px;
+          }
+        }
       }
     }
 
-    a {
-      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
-      text-decoration: underline;
-      color: $editor-primary-color;
+    tbody {
+      tr {
+        &:last-child {
+          td {
+            &:first-child {
+              border-bottom-left-radius: 6px;
+            }
 
-      @include rwd($bp-sm-max) {
-        @include Callout152-Bold1-Light2-Default-Color1-Left-Aligned;
+            &:last-child {
+              border-bottom-right-radius: 6px;
+            }
+          }
+        }
       }
     }
 
-    .neux-table {
-      border-collapse: separate;
+    tr {
 
-      &.selected {
-        outline: 3px solid $editor-table-outline-selected-color;
+      th,
+      td {
+        padding: 10px 12px;
+        border-right: 1px solid $editor-table-border-color;
+        border-bottom: 1px solid $editor-table-border-color;
+        word-break: normal;
+        vertical-align: middle;
+        text-align: center;
+
+        @include rwd($bp-sm-max) {
+          padding: 12px 8px;
+        }
+
+        &:first-child {
+          border-left: 1px solid $editor-table-border-color;
+        }
+
+        &.hideTD {
+          height: 0px;
+          margin: 0px;
+          padding: 0px;
+          font-size: 0px;
+          line-height: 0;
+          border: none;
+          overflow: hidden;
+        }
+
+        &.headerTD {
+          @include Body182-Bold1-Light2-Default-Color2-Center-Aligned;
+          background-color: $editor-table-header-bg-color;
+          color: $editor-table-header-text-color;
+
+          @include rwd($bp-sm-max) {
+            @include Body162-Bold1-Light2-Default-Color2-Center-Aligned;
+          }
+        }
+
+        &.highlightTD {
+          background-color: $editor-table-hightlight-color;
+        }
+
+        &.selected {
+          background-color: $editor-table-selected-color;
+        }
       }
+    }
+
+    &[editor-table-format="horizontal"] {
 
       tbody {
         tr {
-          &:last-child {
-            td {
-              &:first-child {
-                border-bottom-left-radius: 6px;
-              }
+          &:nth-child(even) {
 
-              &:last-child {
-                border-bottom-right-radius: 6px;
-              }
+            th,
+            td:not(.headerTD):not(.selected):not(.highlightTD) {
+              background-color: $editor-table-even-color;
+            }
+          }
+
+          &:nth-child(odd) {
+
+            th,
+            td:not(.headerTD):not(.selected):not(.highlightTD) {
+              background-color: $editor-table-odd-color;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 編輯模式
+  &.edit {
+    .neux-table {
+      thead {
+        tr:last-child {
+
+          td,
+          th {
+            border-top: none;
+
+            &:first-child {
+              border-top-left-radius: 0;
+            }
+
+            &:last-child {
+              border-top-right-radius: 0;
             }
           }
         }
       }
 
-      tr {
+      tbody {
+        tr:first-child {
 
-        th,
-        td {
-          padding: 12px;
-          border-right: 1px solid $editor-table-border-color;
-          border-bottom: 1px solid $editor-table-border-color;
-          word-break: normal;
-          vertical-align: middle;
-          text-align: center;
-
-          @include rwd($bp-sm-max) {
-            padding: 8px;
-          }
-
-          &:first-child {
-            border-left: 1px solid $editor-table-border-color;
-          }
-
-          &.hideTD {
-            height: 0px;
-            margin: 0px;
-            padding: 0px;
-            font-size: 0px;
-            line-height: 0;
-            border: none;
-            overflow: hidden;
-          }
-
-          &.headerTD {
-            @include Body182-Bold1-Light2-Default-Color2-Center-Aligned;
+          td,
+          th {
             border-top: 1px solid $editor-table-border-color;
-            background-color: $editor-table-header-bg-color;
-            color: $editor-table-header-text-color;
-
-            @include rwd($bp-sm-max) {
-              @include Body162-Bold1-Light2-Default-Color2-Center-Aligned;
-            }
 
             &:first-child {
               border-top-left-radius: 6px;
@@ -255,7 +332,11 @@
               border-top-right-radius: 6px;
             }
           }
+        }
+      }
 
+      tr {
+        td {
           &.highlightTD {
             background-color: $editor-table-hightlight-color;
           }
@@ -264,74 +345,55 @@
             background-color: $editor-table-selected-color;
           }
         }
-
-        &:nth-child(even) {
-          td:not(.headerTD):not(.selected):not(.highlightTD) {
-            background-color: $editor-table-even-color;
-          }
-        }
-
-        &:nth-child(odd) {
-          td:not(.headerTD):not(.selected):not(.highlightTD) {
-            background-color: $editor-table-odd-color;
-          }
-        }
       }
 
-      // .seleted {
-      //   background-color: silver;
-      // }
-    }
+      &[editor-table-format="horizontal"] {
 
-    .neux-table-scroll {
-      @include rwd($bp-lg) {
-        display: flex;
-        overflow: auto;
-
-        &:before,
-        &:after {
-          content: '';
-          display: block;
-          flex-shrink: 0;
-          width: 20px;
-        }
-
-        .neux-table {
+        tbody {
           tr {
+            &:nth-child(even) {
 
-            th,
-            td {
-              &.headerTD {
-                white-space: nowrap;
+              th,
+              td:not(.headerTD):not(.selected):not(.highlightTD) {
+                background-color: $editor-table-odd-color;
+              }
+            }
+
+            &:nth-child(odd) {
+
+              th,
+              td:not(.headerTD):not(.selected):not(.highlightTD) {
+                background-color: $editor-table-even-color;
               }
             }
           }
         }
       }
     }
-
-    // .figure-color {
-    //   display: block;
-    //   border-color: salmon;
-    //   border-width: 3px;
-    //   float: left;
-    //   margin-right: 0.5%;
-    //   margin-left: 0;
-    //   margin-top: 0;
-    // }
-
-    // .image-style-side {
-    //   max-width: 100%;
-    //   position: relative;
-    //   // float:left;
-    // }
-
-    // .item-hover:hover {
-    //   border: 2px green dashed;
-    // }
-
-    // .item-seleted {
-    //   border: 10px green dashed;
-    // }
   }
+
+
+  // .figure-color {
+  //   display: block;
+  //   border-color: salmon;
+  //   border-width: 3px;
+  //   float: left;
+  //   margin-right: 0.5%;
+  //   margin-left: 0;
+  //   margin-top: 0;
+  // }
+
+  // .image-style-side {
+  //   max-width: 100%;
+  //   position: relative;
+  //   // float:left;
+  // }
+
+  // .item-hover:hover {
+  //   border: 2px green dashed;
+  // }
+
+  // .item-seleted {
+  //   border: 10px green dashed;
+  // }
 }

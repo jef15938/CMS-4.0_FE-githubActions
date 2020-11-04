@@ -10,7 +10,10 @@ rdr-tab-scroll-frame {
       -ms-overflow-style: none;
       scrollbar-width: none;
       text-align: center;
-      padding: 0 20px;
+
+      @include rwd($bp-lg) {
+        padding: 0 20px;
+      }
 
       &::-webkit-scrollbar {
         display: none;
@@ -35,11 +38,6 @@ rdr-tab-scroll-frame {
         border-bottom-width: 1px;
         border-bottom-style: solid;
 
-        @include rwd($bp-sm-max) {
-          @include Callout152-Bold1-Light2-Default-Color2-Center-Aligned;
-          padding: 6px 4px;
-        }
-
         &:after {
           content: "";
           position: absolute;
@@ -51,6 +49,15 @@ rdr-tab-scroll-frame {
           transition: transform 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
 
+        @include rwd($bp-sm-max) {
+          @include Callout152-Bold1-Light2-Default-Color2-Center-Aligned;
+          padding: 6px 4px;
+
+          &:after {
+            height: 1px;
+          }
+        }
+
         &--active {
           &:after {
             transform: translateX(-50%) scaleX(1);
@@ -60,10 +67,10 @@ rdr-tab-scroll-frame {
     }
 
     &__title {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       max-width: 106px;
-      min-height: 22px;
-      max-height: 40px;
+      min-height: 40px;
     }
 
     &__content {

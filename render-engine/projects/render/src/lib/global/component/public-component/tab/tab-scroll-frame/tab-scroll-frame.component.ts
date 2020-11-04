@@ -4,8 +4,10 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
+  Inject,
   Injector,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   QueryList,
@@ -13,9 +15,11 @@ import {
   ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
-import { fromEvent, interval, Observable, Subject } from 'rxjs';
+import { WINDOW_RESIZE_TOKEN } from '@neux/ui';
+import { interval, Observable, Subject } from 'rxjs';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
-import { debounceTime, scan, switchMap, takeWhile, tap } from 'rxjs/operators';
+import { scan, switchMap, takeUntil, takeWhile, tap } from 'rxjs/operators';
+import { CommonUtils } from '../../../../utils';
 import { CustomizeBaseDirective } from '../../base-component';
 import { TabItemComponent } from '../tab-item/tab-item.component';
 
@@ -25,7 +29,7 @@ import { TabItemComponent } from '../tab-item/tab-item.component';
   styleUrls: ['./tab-scroll-frame.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TabScrollFrameComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit {
+export class TabScrollFrameComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, OnDestroy {
 
   @ContentChildren(TabItemComponent) tabs: QueryList<TabItemComponent>;
   @ViewChild('tabShell') tabShell: ElementRef;
@@ -34,13 +38,16 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
   @Output() tabChange: EventEmitter<number> = new EventEmitter<number>();
   @Input() selectedDefaultIndex = 0;
 
+  unsubscribe$: Subject<null> = new Subject();
   private scrollToItem: Subject<any> = new Subject<any>();
   private selectedIndex: number;
   private increment: number;
   listItemWidth: string;
   selectedTab: TabItemComponent;
 
-  constructor(injector: Injector) {
+  constructor(
+    injector: Injector,
+    @Inject(WINDOW_RESIZE_TOKEN) private resize$: Observable<Event>) {
     super(injector);
   }
 
@@ -48,22 +55,32 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
   }
 
   ngAfterViewInit() {
-    fromEvent(window, 'resize').pipe(
-      debounceTime(200),
-      tap(() => { this.scrollToPosition(this.selectedIndex); })
+    /** Binding Resize event */
+    CommonUtils.isMobile$(this.resize$).pipe(
+      tap(result => {
+        if (result) {
+          this.listItemWidth = `${this.getTabMobileWidth(this.tabs.length)}px`;
+        } else {
+          this.listItemWidth = `${this.getTabPCWidth(this.tabs.length) / this.tabs.length}px`;
+        }
+        this.onSelect(this.tabs.toArray()[this.selectedDefaultIndex], 0);
+      }),
+      tap(() => this.scrollToPosition(this.selectedIndex)),
+      takeUntil(this.unsubscribe$)
     ).subscribe();
 
     this.scrollToItem.pipe(
       switchMap((targetX) => this.animateScroll(targetX, this.increment, 1)),
     ).subscribe();
-
-    setTimeout(() => {
-      this.onSelect(this.tabs.toArray()[this.selectedDefaultIndex], 0);
-      this.listItemWidth = `${this.getTabWidth(this.tabs.length) / this.tabs.length}px`;
-    });
   }
 
-  /** 當選取到tab */
+  /**
+   * 當選取到tab
+   *
+   * @param {TabItemComponent} tab tabItem component
+   * @param {number} index 指定打開的tab
+   * @returns
+   */
   onSelect(tab: TabItemComponent, index: number) {
     if (this.selectedIndex === index) {
       return;
@@ -73,7 +90,11 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     this.scrollToPosition(index);
   }
 
-  /** 打開選取到的tab，關掉其他tab */
+  /**
+   * 打開選取到的tab，關掉其他tab
+   *
+   * @param {TabItemComponent} tab
+   */
   select(tab: TabItemComponent) {
     this.tabs.forEach((item) => {
       item.show = false;
@@ -85,7 +106,11 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     this.tabChange.emit(this.selectedIndex);
   }
 
-  /** 滑動到指定的位置 */
+  /**
+   * 滑動到指定的位置
+   *
+   * @param {number} index 指定到的位置
+   */
   scrollToPosition(index: number) {
     const parentElement = this.tabShell.nativeElement;
     const childElement = this.tabItemList.toArray()[index].nativeElement;
@@ -98,8 +123,8 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
 
   /**
    * smooth scroll animation
-   * @param {number} targetXPosition
-   * @param {number} navagation
+   * @param {number} targetXPosition 目標移動位置
+   * @param {number} navagation 移動方向
    * @param {number} duration 單位:秒 seconds
    * @returns {Observable<any>}
    */
@@ -117,18 +142,28 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     );
   }
 
-  /** 判斷元素是否有滾動條 */
+  /**
+   * 判斷元素是否有滾動條
+   * @param {number} ele 元素
+   */
   isScrollable(ele): boolean {
     return ele.scrollWidth > ele.clientWidth;
   }
 
-  /** 取得累加方向 */
+  /**
+   * 取得累加方向
+   * @param {number} start 起始位置
+   * @param {number} end 結束位置
+   */
   getIncrement(start, end): number {
     return end >= start ? 1 : -1;
   }
 
-  /** 依據tab數量給容器寬度 */
-  getTabWidth(tabLength: number): number {
+  /**
+   * 取得tab pc 數量寬度
+   * @param {number} tabLength tab項目總數量
+   */
+  getTabPCWidth(tabLength: number): number {
     const tabWidth = [366, 560, 750, 944];
 
     switch (tabLength) {
@@ -142,5 +177,20 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
       default:
         return tabWidth[3];
     }
+  }
+
+  /**
+   * 取得tab mobile 數量寬度
+   * @param {number} tabLength tab項目總數量
+   */
+  getTabMobileWidth(tabLength: number): number {
+    const tabItemWidth = [140, 114];
+
+    return tabLength > 2 ? tabItemWidth[1] : tabItemWidth[0];
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

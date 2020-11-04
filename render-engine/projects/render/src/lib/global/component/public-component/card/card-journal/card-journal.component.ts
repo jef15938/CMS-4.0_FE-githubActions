@@ -41,8 +41,8 @@ export class CardJournalComponent extends CustomizeBaseDirective implements OnIn
     /** Binding Resize event */
     CommonUtils.isMobile$(this.resize$).pipe(
       tap(result => {
-        this.ellipsisDescTextNumber = result ? 135 : 240;
-        this.ellipsisSubTitleTextNumber = result ? 30 : 37;
+        this.ellipsisDescTextNumber = result ? 137 : 244;
+        this.ellipsisSubTitleTextNumber = result ? 33 : 37;
       }),
       takeUntil(this.unsubscribe$)
     ).subscribe();

@@ -5,7 +5,7 @@
     <desc>Created with Sketch.</desc>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="sprite-icon">
-            <g id="Group-5">
+            <g id="Group-3">
                 <g id="Group-2">
                     <g id="icon_search" transform="translate(22.000000, 0.000000)">
                         <rect id="矩形" x="0" y="0" width="22" height="22"></rect>
@@ -22,14 +22,15 @@
                         </g>
                     </g>
                 </g>
-                <g id="Group-3" transform="translate(0.000000, 44.000000)">
-                    <g id="Group">
-                        <rect id="Desktop/Common/Check-Box/Default" x="0" y="0" width="22" height="22"></rect>
-                        <line x1="5.5" y1="10.5" x2="9.5" y2="14.5" id="直线" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></line>
-                        <line x1="9.5" y1="14.5" x2="17.5" y2="6.5" id="直线-2" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></line>
-                    </g>
-                    <g id="star" transform="translate(22.000000, 0.000000)" fill="#00726A" fill-rule="nonzero">
-                        <polygon id="Path" points="10.9600293 17.8619048 4.1858022 20.8474579 4.93219048 13.4828571 0 7.96206593 7.23517949 6.39660073 10.9600293 0 14.6848791 6.39660073 21.9200586 7.96206593 16.9878681 13.4828571 17.7342564 20.8474579"></polygon>
+                <g id="Group" transform="translate(0.000000, 44.000000)">
+                    <rect id="Desktop/Common/Check-Box/Default" x="0" y="0" width="22" height="22"></rect>
+                    <polygon id="Path" fill="#00726A" fill-rule="nonzero" points="32.9600293 17.8619048 26.1858022 20.8474579 26.9321905 13.4828571 22 7.96206593 29.2351795 6.39660073 32.9600293 -5.32907052e-15 36.6848791 6.39660073 43.9200586 7.96206593 38.9878681 13.4828571 39.7342564 20.8474579"></polygon>
+                    <path d="M55.8144858,1.78885438 L65.1964518,20.5527864 C65.4434411,21.0467649 65.2432167,21.6474379 64.7492382,21.8944272 C64.6103828,21.9638549 64.4572697,22 64.3020246,22 L45.5380926,22 C44.9858078,22 44.5380926,21.5522847 44.5380926,21 C44.5380926,20.8447549 44.5742377,20.6916418 44.6436654,20.5527864 L54.0256314,1.78885438 C54.2726207,1.29487588 54.8732937,1.09465154 55.3672722,1.34164079 C55.5607996,1.43840449 55.7177221,1.59532698 55.8144858,1.78885438 Z" id="Triangle" fill="#FFFFFF" opacity="0.898739769" transform="translate(54.920059, 11.000000) rotate(-270.000000) translate(-54.920059, -11.000000) "></path>
+                    <g id="21_Default" transform="translate(65.920059, 0.000000)">
+                        <rect id="Mask" x="0" y="0" width="22" height="22"></rect>
+                        <circle id="Oval" stroke="#00726A" cx="11" cy="11" r="10.4761905"></circle>
+                        <rect id="Rectangle" fill="#00726A" fill-rule="nonzero" x="7.33333333" y="2.61904762" width="7.33333333" height="8.9047619" rx="3.5"></rect>
+                        <path d="M11,13.0952381 C14.6207862,13.0952381 17.8515509,14.765119 19.9641689,17.3767556 C17.969381,20.1754232 14.6977669,22 11,22 C7.3022331,22 4.03061895,20.1754232 2.03634008,17.377452 C4.1484491,14.765119 7.37921377,13.0952381 11,13.0952381 Z" id="Combined-Shape" fill="#00726A" fill-rule="nonzero"></path>
                     </g>
                 </g>
                 <g id="Group-4" transform="translate(0.000000, 22.000000)">
@@ -66,6 +67,8 @@
                     </g>
                 </g>
             </g>
+            <line x1="5.5" y1="54.5" x2="9.5" y2="58.5" id="直线" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="9.5" y1="58.5" x2="17.5" y2="50.5" id="直线-2" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></line>
             <rect id="矩形" x="84" y="9" width="14" height="14"></rect>
         </g>
     </g>

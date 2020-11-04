@@ -46,6 +46,14 @@ rdr-select {
     }
 
     .select-ele {
+
+      &__selected {
+        @include rwd($bp-sm-max) {
+          height: 42px;
+          line-height: 42px;
+        }
+      }
+
       &--customize {
         @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
 
