@@ -5,6 +5,7 @@ import { HtmlEditorInsertTableModalComponent } from '../../modal/html-editor-ins
 import { TableControllerService } from '../../service/html-element-controller/table/table-controller-service';
 import { HtmlEditorContext } from '../../html-editor.interface';
 import { HtmlEditorActionCategory } from '../action.enum';
+import { TABLE_CLASS_NEUX_TABLE_WRAP } from '../../const/html-editor-container.const';
 
 export class InsertTable extends HtmlEditorActionBase {
   category = HtmlEditorActionCategory.TABLE;
@@ -14,7 +15,7 @@ export class InsertTable extends HtmlEditorActionBase {
     context: HtmlEditorContext,
   ) {
     super(context);
-    this.tableControllerService = new TableControllerService();
+    this.tableControllerService = new TableControllerService(this.context.simpleWysiwygService);
   }
 
   do() {
@@ -39,8 +40,7 @@ export class InsertTable extends HtmlEditorActionBase {
       tap(config => {
         this.context.simpleWysiwygService.restoreSelection(range);
         if (!config) { return; }
-        const table = this.tableControllerService.createTable(config);
-        const addedTable = this.context.simpleWysiwygService.insertHtml(table.outerHTML, this.context.editorContainer) as HTMLTableElement;
+        const addedTable = this.tableControllerService.createEditorTable(this.context.editorContainer, config);
         this.context.simpleWysiwygService.setSelectionOnNode(addedTable);
       })
     );

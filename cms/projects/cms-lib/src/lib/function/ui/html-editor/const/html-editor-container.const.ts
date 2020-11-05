@@ -11,6 +11,8 @@ export const GALLERY_ATTR_GALLERY_NAME = 'gallery-name';
 // video
 export const VIDEO_ATTR_FRAME_ID = 'frame-id';
 // table
+export const TABLE_CLASS_NEUX_TABLE = 'neux-table';
+export const TABLE_CLASS_NEUX_TABLE_WRAP = 'neux-table-wrap';
 export const TABLE_CLASS_BASE_ROW = 'editor-table-base-row';
 export const TABLE_ATTR_TABLE_STYLE = 'ga-table-style';
 export const TABLE_ATTR_TABLE_FORMAT = 'editor-table-format';

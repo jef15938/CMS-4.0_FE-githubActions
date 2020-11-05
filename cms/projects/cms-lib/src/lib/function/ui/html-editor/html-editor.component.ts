@@ -7,7 +7,10 @@ import { HtmlEditorContext, HtmlEditorContextMenuItem, HtmlEditorConfig } from '
 import { HtmlEditorElementControllerFactory } from './service/html-element-controller/_factory';
 import { SimpleWysiwygService } from './service/simple-wysiwyg.service';
 import { HtmlEditorAction } from './actions/action.interface';
-import { VIDEO_ATTR_FRAME_ID, GALLERY_ATTR_GALLERY_ID, TABLE_CLASS_BASE_ROW, EDITOR_DEFAULT_CONTENT } from './const/html-editor-container.const';
+import {
+  VIDEO_ATTR_FRAME_ID, GALLERY_ATTR_GALLERY_ID, TABLE_CLASS_BASE_ROW, EDITOR_DEFAULT_CONTENT,
+  TABLE_CLASS_NEUX_TABLE_WRAP, TABLE_CLASS_NEUX_TABLE
+} from './const/html-editor-container.const';
 import { YoutubeUtil } from './service/youtube-util';
 import { CMS_ENVIROMENT_TOKEN } from '../../../global/injection-token/cms-injection-token';
 import { CmsEnviroment } from '../../../global/interface';
@@ -58,7 +61,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   ngAfterViewInit(): void {
-    this.initContentAndContainer(this.content, this.editorContainer);
+    this.initContentAndContainer(this.content);
     this.observeContainer(this.editorContainer);
     this.subscribeDocumentSelectionChange();
     this.changeDetectorRef.detectChanges();
@@ -71,10 +74,10 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     this.mutationObserver?.disconnect();
   }
 
-  private initContentAndContainer(content: string, container: HTMLDivElement) {
+  private initContentAndContainer(content: string) {
     content = this.convertToEditorContent(content) || EDITOR_DEFAULT_CONTENT;
     this.editorContainer.innerHTML = content;
-    this.checkInnerHtml();
+    this.checkInnerHtml({ checkTableWrap: true });
   }
 
   private convertToEditorContent(htmlString: string) {
@@ -108,6 +111,20 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
     const tables = Array.from(tempContainer.querySelectorAll('table'));
     tables.forEach(table => {
+      // change wrap tag from <div> to <p>
+      const wrap = table.parentElement;
+      if (wrap?.tagName?.toLowerCase() === 'div' && wrap.classList.contains(TABLE_CLASS_NEUX_TABLE_WRAP)) {
+        const pWrap = document.createElement('p');
+        for (let i = 0, l = wrap.attributes.length; i < l; ++i) {
+          const attr = wrap.attributes[i];
+          pWrap.setAttribute(attr.name, attr.value);
+        }
+        wrap.parentElement.insertBefore(pWrap, wrap);
+        pWrap.appendChild(table);
+        wrap.parentElement.removeChild(wrap);
+        console.warn('pWrap = ', pWrap);
+      }
+
       const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains(TABLE_CLASS_BASE_ROW))[0];
       if (!headerTr) { return; }
       // <th> to <td>
@@ -129,11 +146,21 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       !!firstTr ? tbody.insertBefore(headerTr, firstTr) : tbody.appendChild(headerTr);
     });
 
-    return tempContainer.innerHTML;
+    const innerHTML = tempContainer.innerHTML;
+    return innerHTML;
   }
 
-  checkInnerHtml(): void {
+  checkInnerHtml({ checkTableWrap = false } = {}): void {
     const container = this.editorContainer;
+
+    if (checkTableWrap) {
+      const tableWraps = Array.from(container.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE_WRAP}`));
+      const tables = Array.from(container.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
+      tables.forEach((table, index) => {
+        tableWraps[index].appendChild(table);
+      });
+    }
+
     let childNodes = Array.from(container.childNodes) || [];
     while (childNodes && childNodes.length) {
 
@@ -389,7 +416,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         return a.concat(Array.from(b.childNodes || []));
       }, []);
     }
-
+    // image
     const imgs = Array.from(tempContainer.querySelectorAll(`img[${GALLERY_ATTR_GALLERY_ID}]`));
     imgs.forEach(img => {
       const galleryID = img.getAttribute(GALLERY_ATTR_GALLERY_ID);
@@ -400,14 +427,28 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         }
       }
     });
-
+    // table
     const needRemoveNodesFromTable = Array.from(tempContainer.querySelectorAll('.col-resizer-container, .col-resizer'));
     needRemoveNodesFromTable.forEach(n => n.parentElement.removeChild(n));
-    const tables = Array.from(tempContainer.querySelectorAll('table'));
-    tables.forEach(table => {
+    const tableWraps = Array.from(tempContainer.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE_WRAP}`));
+    const tables = Array.from(tempContainer.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
+    tables.forEach((table, index) => {
+
+      // change wrap tag from <p> to <div>
+      const wrap = tableWraps[index];
+      const divWrap = document.createElement('div');
+      for (let i = 0, l = wrap.attributes.length; i < l; ++i) {
+        const attr = wrap.attributes[i];
+        divWrap.setAttribute(attr.name, attr.value);
+      }
+      wrap.parentElement.insertBefore(divWrap, wrap);
+      divWrap.appendChild(table);
+      wrap.parentElement.removeChild(wrap);
+
+      // <td> to <th>
       const firstBodyTr = Array.from(table.querySelectorAll('tbody>tr'))[0];
       if (!firstBodyTr) { return; }
-      // <td> to <th>
+
       const tds = Array.from(firstBodyTr.querySelectorAll('td'));
       tds.forEach(td => {
         const th = document.createElement('th');
@@ -425,6 +466,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       thead.appendChild(firstBodyTr);
     });
 
+    // remove blank <p>
     const blankPs = Array.from(tempContainer.querySelectorAll('p'))
       .filter(p => !p.innerHTML && !p.innerText);
     blankPs.forEach(n => n.parentElement.removeChild(n));
