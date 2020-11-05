@@ -64,6 +64,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     this.initContentAndContainer(this.content);
     this.observeContainer(this.editorContainer);
     this.subscribeDocumentSelectionChange();
+    // this.handlePasteEvent();
     this.changeDetectorRef.detectChanges();
   }
 
@@ -122,7 +123,6 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
         wrap.parentElement.insertBefore(pWrap, wrap);
         pWrap.appendChild(table);
         wrap.parentElement.removeChild(wrap);
-        console.warn('pWrap = ', pWrap);
       }
 
       const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains(TABLE_CLASS_BASE_ROW))[0];
@@ -487,5 +487,62 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       this.simpleWysiwygService.setSelectionOnNode(this.editorContainer.firstChild, 1);
       this.selectedTarget = this.editorContainer.firstChild;
     }
+  }
+
+  private handlePasteEvent() {
+    fromEvent(this.editorContainer, 'paste').pipe(
+      takeUntil(this.destroy$),
+    ).subscribe((e: any) => {
+      // Browsers that support the 'text/html' type in the Clipboard API (Chrome, Firefox 22+)
+      if (e && e.clipboardData && e.clipboardData.types && e.clipboardData.getData) {
+        // Check for 'text/html' in types list. See abligh's answer below for deatils on
+        // why the DOMStringList bit is needed. We cannot fall back to 'text/plain' as
+        // Safari/Edge don't advertise HTML data even if it is available
+        const types = e.clipboardData.types;
+        if (((types instanceof DOMStringList) && types.contains('text/html')) || (types.indexOf && types.indexOf('text/html') !== -1)) {
+          // Extract data and pass it to callback
+          const pastedData = e.clipboardData.getData('text/html');
+          this.processPaste(this.editorContainer, pastedData);
+          // Stop the data from actually being pasted
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
+      }
+      // Everything else: Move existing element contents to a DocumentFragment for safekeeping
+      const savedContent = document.createDocumentFragment();
+      while (this.editorContainer.childNodes.length > 0) {
+        savedContent.appendChild(this.editorContainer.childNodes[0]);
+      }
+      // Then wait for browser to paste content into it and cleanup
+      this.waitForPastedData(this.editorContainer, savedContent);
+      return true;
+    });
+  }
+
+  private waitForPastedData(elem, savedContent) {
+    // If data has been processes by browser, process it
+    if (elem.childNodes && elem.childNodes.length > 0) {
+      // Retrieve pasted content via innerHTML
+      // (Alternatively loop through elem.childNodes or elem.getElementsByTagName here)
+      const pastedData = elem.innerHTML;
+      // Restore saved content
+      elem.innerHTML = '';
+      elem.appendChild(savedContent);
+      // Call callback
+      this.processPaste(elem, pastedData);
+    }
+    // Else wait 20ms and try again
+    else {
+      setTimeout(() => {
+        this.waitForPastedData(elem, savedContent);
+      }, 20);
+    }
+  }
+
+  private processPaste(elem, pastedData) {
+    // Do whatever with gathered data;
+    alert(pastedData);
+    elem.focus();
   }
 }
