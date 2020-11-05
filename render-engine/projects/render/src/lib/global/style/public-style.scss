@@ -9,3 +9,9 @@
 
 // 3. Components theme
 @import 'theme/theme-all.scss';
+
+// 4. Editor
+@include nx-reset;
+.neux-editor{
+  @include neux-editor;
+}
