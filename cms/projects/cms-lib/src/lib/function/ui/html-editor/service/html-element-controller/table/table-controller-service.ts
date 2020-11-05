@@ -1,7 +1,8 @@
 import { HtmlEditorTableCell } from './table-controller.interface';
 import { Subscription, fromEvent } from 'rxjs';
 import { switchMap, takeUntil, tap, throttleTime } from 'rxjs/operators';
-import { TABLE_CLASS_BASE_ROW, TABLE_ATTR_TABLE_STYLE, TABLE_CLASS_TABLE_TD, TABLE_ATTR_TABLE_FORMAT } from '../../../const/html-editor-container.const';
+import { TABLE_CLASS_BASE_ROW, TABLE_ATTR_TABLE_STYLE, TABLE_CLASS_TABLE_TD, TABLE_ATTR_TABLE_FORMAT, TABLE_CLASS_NEUX_TABLE, TABLE_CLASS_NEUX_TABLE_WRAP } from '../../../const/html-editor-container.const';
+import { SimpleWysiwygService } from '../../simple-wysiwyg.service';
 
 export enum TableFormat {
   HORIZONTAL = 'horizontal',
@@ -87,6 +88,12 @@ export class TableControllerService {
 
   private readonly htmlEditorTableHeaderUtil = new HtmlEditorTableHeaderUtil();
 
+  constructor(
+    private simpleWysiwygService: SimpleWysiwygService,
+  ) {
+
+  }
+
   getTableFormat(table: HTMLTableElement) {
     return this.htmlEditorTableHeaderUtil.getTableFormat(table);
   }
@@ -105,11 +112,9 @@ export class TableControllerService {
     return td;
   }
 
-  createTable(config: { rows: number, cols: number }) {
+  private createTable(config: { rows: number, cols: number }) {
     const table = document.createElement('table');
-
-    table.classList.add('neux-table');
-    this.setTableStyle(table, TableStyle.PERCENT);
+    table.classList.add(TABLE_CLASS_NEUX_TABLE);
 
     const tHead = document.createElement('thead');
     const tBody = document.createElement('tbody');
@@ -133,9 +138,40 @@ export class TableControllerService {
       }
       tBody.appendChild(tr);
     }
-
-    this.checkTableStyle(table);
     return table;
+  }
+
+  createEditorTable(container: HTMLDivElement, config: { rows: number, cols: number }) {
+    const table = this.createTable(config);
+
+    const outerHTML = table.outerHTML;
+    const addedTable = this.simpleWysiwygService.insertHtml(outerHTML, container) as HTMLTableElement;
+
+    const tableWrap = document.createElement('p');
+    tableWrap.classList.add(TABLE_CLASS_NEUX_TABLE_WRAP);
+
+    const nextOfAddedTable = addedTable.nextElementSibling;
+    if (nextOfAddedTable) {
+      addedTable.parentElement.insertBefore(tableWrap, nextOfAddedTable);
+    } else {
+      addedTable.parentElement.appendChild(tableWrap);
+    }
+
+    tableWrap.appendChild(addedTable);
+
+    const blankRowBefore = this.simpleWysiwygService.createBlankRow();
+    tableWrap.parentElement.insertBefore(blankRowBefore, tableWrap);
+    const nextOfTableWrap = tableWrap.nextElementSibling;
+    const blankRowAfter = this.simpleWysiwygService.createBlankRow();
+    if (nextOfTableWrap) {
+      tableWrap.parentElement.insertBefore(blankRowAfter, nextOfTableWrap);
+    } else {
+      tableWrap.parentElement.appendChild(blankRowAfter);
+    }
+
+    this.setTableStyle(tableWrap, addedTable, TableStyle.PERCENT);
+    this.checkTableStyle(addedTable);
+    return addedTable;
   }
 
   checkTableStyle(table: HTMLTableElement) {
@@ -151,15 +187,15 @@ export class TableControllerService {
     });
   }
 
-  setTableStyle(table: HTMLTableElement, style: TableStyle) {
+  setTableStyle(wrapper: HTMLDivElement, table: HTMLTableElement, style: TableStyle) {
     table.setAttribute(TABLE_ATTR_TABLE_STYLE, style);
-
+    wrapper.setAttribute(TABLE_ATTR_TABLE_STYLE, style);
     if (style !== TableStyle.SCROLL) {
       table.setAttribute('style', 'width:100% !important;');
     } else {
-      table.setAttribute('style', `min-width: ${table.offsetWidth}px; width: ${table.offsetWidth}px;`);
+      table.removeAttribute('style');
+      // table.setAttribute('style', `min-width: ${table.offsetWidth}px; width: ${table.offsetWidth}px;`);
     }
-
     this.checkTableColsWidth(table);
   }
 
@@ -292,12 +328,16 @@ export class TableControllerService {
     container.style.setProperty('position', 'relative');
     container.style.setProperty('height', '0');
 
+    const tableStype = this.getTableStyle(table);
+    const isScroll = tableStype === TableStyle.SCROLL;
+    const isPercent = tableStype === TableStyle.PERCENT;
+
     baseTds.forEach((baseTd, i) => {
-      const nextTd = baseTd.nextElementSibling as HTMLTableDataCellElement;
-      if (i === baseTds.length - 1) { return; }
+
+      // if (i === baseTds.length - 1) { return; }
+      const isLatestCol = i === baseTds.length - 1;
       // console.log('--------------------------------------');
       // console.warn('baseTd = ', baseTd);
-      // console.warn('nextTd = ', nextTd);
 
       // console.warn('baseTd.clientHeight = ', baseTd.clientHeight);
       // console.warn('baseTd.clientLeft = ', baseTd.clientLeft);
@@ -310,18 +350,18 @@ export class TableControllerService {
       // console.warn('baseTd.width = ', baseTd.width);
       // console.warn('baseTd.height = ', baseTd.height);
 
-      const div = document.createElement('div');
-      div.classList.add('col-resizer');
-      div.setAttribute('contenteditable', 'false');
-      div.style.setProperty('cursor', 'ew-resize');
-      div.style.setProperty('position', 'absolute');
-      div.style.setProperty('top', '0');
-      div.style.setProperty('left', `${baseTd.offsetLeft + baseTd.clientWidth}px`);
-      div.style.setProperty('width', '10px');
-      div.style.setProperty('height', `${table.clientHeight}px`);
-      // div.style.setProperty('background', 'pink');
+      const dragger = document.createElement('div');
+      dragger.classList.add('col-resizer');
+      dragger.setAttribute('contenteditable', 'false');
+      dragger.style.setProperty('cursor', 'ew-resize');
+      dragger.style.setProperty('position', 'absolute');
+      dragger.style.setProperty('top', '0');
+      dragger.style.setProperty('width', '10px');
+      dragger.style.setProperty('left', `${baseTd.offsetLeft + baseTd.clientWidth - 5}px`);
+      dragger.style.setProperty('height', `${table.clientHeight}px`);
+      // dragger.style.setProperty('background', 'pink');
 
-      const start$ = fromEvent(div, 'mousedown');
+      const start$ = fromEvent(dragger, 'mousedown');
       const move$ = fromEvent(document, 'mousemove');
       const end$ = fromEvent(document, 'mouseup');
 
@@ -329,59 +369,87 @@ export class TableControllerService {
         switchMap(
           (start: MouseEvent) => {
             this.evPreventDefaultAndStopPropagation(start);
-            div.style.borderLeft = 'dashed lightgray 1px';
-            const resizerOffsetLeft = div.offsetLeft;
+            dragger.style.borderLeft = 'dashed lightgray 1px';
+            const resizerOffsetLeft = dragger.offsetLeft;
 
-            // const tableWidth = this.getWidthFromStyle(table);
-            // const baseTdWidth = this.getWidthFromStyle(baseTd);
-            // const nextTdWidth = this.getWidthFromStyle(nextTd);
             const tableWidth = table.clientWidth;
             const baseTdWidth = baseTd.clientWidth;
-            const nextTdWidth = nextTd.clientWidth;
 
             // console.warn('tableWidth = ', tableWidth);
             // console.warn('baseTdWidth = ', baseTdWidth);
             // console.warn('nextTdWidth = ', nextTdWidth);
 
-            const styleAttr = this.getTableStyle(table);
-            // console.warn('styleAttr = ', styleAttr);
-            // console.warn('styleAttr === TableStyle.SCROLL = ', styleAttr === TableStyle.SCROLL);
-
             return move$.pipe(
               throttleTime(12),
               tap((move: MouseEvent) => {
                 this.evPreventDefaultAndStopPropagation(move);
-                const nowPoint = move;
 
-                const diffX = nowPoint.clientX - start.clientX;
-
-                const bWidth = baseTdWidth + diffX;
-                const nWidth = nextTdWidth - diffX;
+                const tableStyle = this.getTableStyle(table);
+                if (!isScroll && isLatestCol) { return; }
 
                 // console.log('-----------------');
+                const nowPoint = move;
+                const diffX = nowPoint.clientX - start.clientX;
                 // console.warn('    diffX = ', diffX);
-                // console.warn('    bWidth = ', bWidth);
-                // console.warn('    nWidth = ', nWidth);
 
+                dragger.style.setProperty('left', `${resizerOffsetLeft + diffX}px`);
+
+                const bWidth = baseTdWidth + diffX;
+                // console.warn('    bWidth = ', bWidth);
                 if (bWidth <= 100) { return; }
 
-                div.style.setProperty('left', `${resizerOffsetLeft + diffX}px`);
+                const newBWidthNumber = isPercent
+                  ? Number.parseFloat('' + (bWidth / tableWidth * 100))
+                  : bWidth;
 
-                const newBWidth = styleAttr === TableStyle.PERCENT
-                  ? `${Number.parseFloat('' + (bWidth / tableWidth * 100)).toFixed(2)}%`
-                  : `${bWidth}px`;
-
-                const newNWidth = styleAttr === TableStyle.PERCENT
-                  ? `${Number.parseFloat('' + (nWidth / tableWidth * 100)).toFixed(2)}%`
-                  : `${nWidth}px`;
+                const newBWidth = isPercent
+                  ? `${newBWidthNumber.toFixed(2)}%`
+                  : `${newBWidthNumber}px`;
 
                 baseTd.style.setProperty('width', newBWidth);
+
+                if (isScroll) { return; } // Scroll 時拉動只影響自己的寬度，不影響其他 col
+
+                // 處理下一個 col
+                const nextTd = baseTd.nextElementSibling as HTMLTableDataCellElement;
+                // console.warn('nextTd = ', nextTd);
+                const nextTdWidth = nextTd.clientWidth;
+                // console.warn('    nextTdWidth = ', nextTdWidth);
+                const nWidth = nextTdWidth - diffX;
+                // console.warn('    nWidth = ', nWidth);
+
+                let newNWidthNumber = 0;
+                if (isPercent) {
+                  const otherColTotalWidthPercent = baseTds
+                    .filter(td => td !== baseTd && td !== nextTd)
+                    .map(td => +td.style.width.replace('%', ''))
+                    .reduce((currentTotal, width) => currentTotal + width, 0);
+                  // console.warn({ newBWidthNumber, otherColTotalWidthPercent });
+                  newNWidthNumber = (100 - newBWidthNumber - otherColTotalWidthPercent);
+                  // console.warn('newNWidthNumber = ', newNWidthNumber);
+                } else {
+                  newNWidthNumber = nWidth;
+                }
+
+                const newNWidth = isPercent
+                  ? `${newNWidthNumber.toFixed(2)}%`
+                  : `${newNWidthNumber}px`;
+                // console.warn('    newNWidth = ', newNWidth);
+
                 nextTd.style.setProperty('width', newNWidth);
               }),
               takeUntil(end$.pipe(
                 tap((end: MouseEvent) => {
                   this.evPreventDefaultAndStopPropagation(end);
-                  div.style.removeProperty('border-left');
+                  dragger.style.removeProperty('border-left');
+
+                  if (isScroll) { // Scroll 時計算 table 總寬度
+                    const tableWidthPx = baseTds
+                      .map(td => +td.style.width.replace('px', ''))
+                      .reduce((currentTotal, width) => currentTotal + width, 0) + 'px';
+                    table.setAttribute('style', `width:${tableWidthPx}`);
+                  }
+
                   this.registerColResizer(tableIndex, editorContainer, table);
                 })
               ))
@@ -391,8 +459,8 @@ export class TableControllerService {
       ).subscribe();
 
       // tslint:disable-next-line: no-string-literal
-      div['drag$'] = drag$;
-      container.appendChild(div);
+      dragger['drag$'] = drag$;
+      container.appendChild(dragger);
     });
 
     table.parentNode.insertBefore(container, table);

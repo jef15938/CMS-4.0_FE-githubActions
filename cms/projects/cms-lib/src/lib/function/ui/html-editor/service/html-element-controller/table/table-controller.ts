@@ -13,6 +13,7 @@ import { DeleteTable } from './actions/delete-table';
 import { MarkCol } from './actions/mark-col';
 import { AddCol } from './actions/add-col';
 import { HtmlEditorActionCategory } from '../../../actions/action.enum';
+import { TABLE_CLASS_NEUX_TABLE_WRAP, TABLE_CLASS_NEUX_TABLE } from '../../../const/html-editor-container.const';
 
 let tableIndex = 0;
 
@@ -74,7 +75,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
     context: HtmlEditorContext,
   ) {
     super(el, context);
-    this.tableControllerService = new TableControllerService();
+    this.tableControllerService = new TableControllerService(this.context.simpleWysiwygService);
   }
 
   private findContextMenuItemById(items: HtmlEditorContextMenuItem[], id: string) {
@@ -95,6 +96,25 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
         ],
         selectionChange: (ev) => {
           this.tableControllerService.setTableFormat(this.el, ev.value);
+          this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
+        }
+      },
+      {
+        id: 'style',
+        text: '表格樣式', type: 'select',
+        category: HtmlEditorActionCategory.TABLE,
+        defaultValue: this.tableControllerService.getTableStyle(this.el),
+        selectionOptions: [
+          { text: '滿版縮放', value: TableStyle.PERCENT },
+          { text: 'Scroll', value: TableStyle.SCROLL },
+          { text: '單筆顯示', value: TableStyle.SINGLE },
+        ],
+        selectionChange: (ev) => {
+          const tableWraps =
+            Array.from(this.context.editorContainer.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE_WRAP}`)) as HTMLDivElement[];
+          const tables = Array.from(this.context.editorContainer.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
+          const wrap = tableWraps[tables.indexOf(this.el)];
+          this.tableControllerService.setTableStyle(wrap, this.el, ev.value);
           this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
         }
       },
@@ -158,21 +178,6 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
             category: HtmlEditorActionCategory.TABLE, text: '垂直分割', icon: 'delete', action: new Split(this.context, this, 'verticle')
           },
         ]
-      },
-      {
-        id: 'style',
-        text: '表格樣式', type: 'select',
-        category: HtmlEditorActionCategory.TABLE,
-        defaultValue: this.tableControllerService.getTableStyle(this.el),
-        selectionOptions: [
-          { text: '滿版縮放', value: TableStyle.PERCENT },
-          { text: 'Scroll', value: TableStyle.SCROLL },
-          { text: '單筆顯示', value: TableStyle.SINGLE },
-        ],
-        selectionChange: (ev) => {
-          this.tableControllerService.setTableStyle(this.el, ev.value);
-          this.tableControllerService.registerColResizer(this.tableIndex, this.context.editorContainer, this.el);
-        }
       },
       {
         id: 'delete',
