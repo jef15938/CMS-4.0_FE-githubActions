@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ViewChild, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject, PLATFORM_ID, ChangeDetectorRef, ElementRef, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { fromEvent, Observable, of, Subject } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
 import { TemplatesContainerComponent, LayoutWrapperComponent } from '../../../function/wrapper';
@@ -10,14 +10,15 @@ import { RenderService } from '../../service/render.service';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
 import { RenderedPageEnvironment } from '../../interface/page-environment.interface';
-import { PreviewCommand } from '../../enum/preview-command.enum';
+import { PreviewCommandType } from '../../enum/preview-command.enum';
+import { PreviewCommand, PreviewCommandData } from '../../interface/preview-command.interface';
 
 @Component({
   selector: 'rdr-render-preview-container',
   templateUrl: './render-preview-container.component.html',
   styleUrls: ['./render-preview-container.component.scss']
 })
-export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
+export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, OnDestroy {
 
   @ViewChild('previous') previousTemplatesContainerComponent: TemplatesContainerComponent;
   @ViewChild('current') currentTemplatesContainerComponent: TemplatesContainerComponent;
@@ -26,6 +27,7 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
   @Input() mode: 'preview' | 'edit';
   @Input() sites: SiteInfoModel[] = [];
   @Input() pageInfo: PageInfoGetResponseModel;
+  private destroy$ = new Subject();
   fixed = false;
 
   previousTemplates;
@@ -38,30 +40,80 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
     @Inject(PLATFORM_ID) platformId: any,
     @Inject(DOCUMENT) private document: any,
     private changeDetectorRef: ChangeDetectorRef,
+    private elementRef: ElementRef,
   ) { }
 
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
+  }
+
+  /**
+   * 往上找取得a標籤
+   * @private
+   * @param {EventTarget} target
+   * @return {*}  {HTMLAnchorElement}
+   * @memberof RenderPreviewContainerComponent
+   */
+  private getEventTargetPathATag(target: EventTarget): HTMLAnchorElement {
+    if (!target) { return null; }
+    const t = target as HTMLElement;
+    if (t?.tagName?.toLowerCase() === 'a') {
+      return t as HTMLAnchorElement;
+    }
+    return this.getEventTargetPathATag(t.parentElement);
+  }
+
   ngOnInit(): void {
+    this.listenToClick();
+
     window.onmessage = (e) => {
-      const command = e.data;
-      switch (command) {
-        case PreviewCommand.COMPARE_TOGGLE:
+      const command: PreviewCommand<PreviewCommandData> = e.data;
+      switch (command.type) {
+        case PreviewCommandType.COMPARE_TOGGLE:
           this.toggleCompare();
           break;
-        case PreviewCommand.COMPARE_OFF:
+        case PreviewCommandType.COMPARE_OFF:
           this.closeCompare();
           break;
       }
     };
   }
 
-  private sendCommandToParent(command: PreviewCommand) {
+  /**
+   *
+   * 監聽點擊事件處理連結a標籤
+   * @private
+   * @memberof RenderPreviewContainerComponent
+   */
+  private listenToClick() {
+    fromEvent(this.elementRef.nativeElement, 'click', { capture: true }).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((e: Event) => {
+      const aTagPassedBy = this.getEventTargetPathATag(e.target);
+      if (!aTagPassedBy) { return; }
+      const reg = new RegExp('^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)');
+      const isInclude = reg.test(aTagPassedBy.getAttribute('href'));
+      const passData = { href: aTagPassedBy.href, target: aTagPassedBy.getAttribute('target') };
+      if (aTagPassedBy && isInclude) {
+        e.stopPropagation();
+        e.preventDefault();
+        const previewCommand: PreviewCommand<PreviewCommandData> = { type: PreviewCommandType.LINK, data: passData };
+        this.sendCommandToParent(previewCommand);
+      }
+    });
+  }
+
+  private sendCommandToParent(command: PreviewCommand<PreviewCommandData>) {
     window?.parent?.postMessage(command, '*');
   }
 
   toggleCompare() {
     if (this.isComparing) { // 取消比較
       this.isComparing = !this.isComparing;
-      this.sendCommandToParent(PreviewCommand.COMPARE_OFF);
+      const compareOff: PreviewCommand<PreviewCommandData> = { type: PreviewCommandType.COMPARE_OFF };
+      this.sendCommandToParent(compareOff);
       return;
     }
 
@@ -73,7 +125,8 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
       this.isComparing = !this.isComparing;
       this.changeDetectorRef.detectChanges();
       this.markVersionDifference();
-      this.sendCommandToParent(PreviewCommand.COMPARE_ON);
+      const compareOn: PreviewCommand<PreviewCommandData> = { type: PreviewCommandType.COMPARE_ON };
+      this.sendCommandToParent(compareOn);
     });
   }
 
@@ -170,3 +223,5 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit {
   }
 
 }
+
+
