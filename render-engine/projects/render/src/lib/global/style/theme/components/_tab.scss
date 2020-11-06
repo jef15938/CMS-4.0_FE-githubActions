@@ -1,9 +1,9 @@
 @mixin rdr-tab-scroll-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-tab-scroll-frame' !default;
-  $text-color: map-get($theme, black_1) !default;
-  $line-color: map-get($theme, brown_grey_1) !default;
-  $hover-color: map-get($theme, color_secondary) !default;
-  $active-color: map-get($theme, color_primary) !default;
+  $tab-scroll-text-color: map-get($theme, black_1) !default;
+  $tab-scroll-line-color: map-get($theme, very_light_pink_1) !default;
+  $tab-scroll-hover-color: map-get($theme, color_secondary) !default;
+  $tab-scroll-active-color: map-get($theme, color_primary) !default;
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
@@ -15,22 +15,22 @@
       &__list {
 
         &-item {
-          color: $text-color;
-          border-bottom-color: $line-color;
+          color: $tab-scroll-text-color;
+          border-bottom-color: $tab-scroll-line-color;
 
           &:hover {
-            color: $hover-color;
+            color: $tab-scroll-hover-color;
           }
 
           &:after {
-            background-color: $active-color;
+            background-color: $tab-scroll-active-color;
           }
 
           &--active {
 
             &,
             &:hover {
-              color: $active-color;
+              color: $tab-scroll-active-color;
             }
           }
         }

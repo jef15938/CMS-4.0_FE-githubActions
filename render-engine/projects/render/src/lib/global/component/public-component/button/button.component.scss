@@ -15,6 +15,7 @@ rdr-button {
     @include Callout162-Bold1-Light2-Default-Color2-Center-Aligned;
 
     @include rwd($bp-sm-max) {
+      @include Callout152-Bold1-Light2-Default-Color2-Center-Aligned;
       height: 42px;
     }
 
@@ -22,10 +23,6 @@ rdr-button {
       >.btn--full {
         border-style: solid;
         border-width: 1.5px;
-      }
-
-      >.btn--border {
-        // @include Callout162-Bold1-Light2-Default-Color2-Center-Aligned;
       }
     }
 

@@ -36,11 +36,20 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
   @ViewChildren('tabItem') tabItemList: QueryList<ElementRef>;
 
   @Output() tabChange: EventEmitter<number> = new EventEmitter<number>();
-  @Input() selectedDefaultIndex = 0;
+
+  private _selectedDefaultIndex = 0;
+  @Input()
+  public get selectedDefaultIndex() {
+    return this._selectedDefaultIndex;
+  }
+  public set selectedDefaultIndex(value) {
+    this._selectedDefaultIndex = value;
+    this.selectedIndex = value;
+  }
 
   unsubscribe$: Subject<null> = new Subject();
   private scrollToItem: Subject<any> = new Subject<any>();
-  private selectedIndex: number;
+  private selectedIndex = 0;
   private increment: number;
   listItemWidth: string;
   selectedTab: TabItemComponent;
@@ -63,7 +72,7 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
         } else {
           this.listItemWidth = `${this.getTabPCWidth(this.tabs.length) / this.tabs.length}px`;
         }
-        this.onSelect(this.tabs.toArray()[this.selectedDefaultIndex], 0);
+        this.onSelect(this.tabs.toArray()[this.selectedIndex], this.selectedIndex);
       }),
       tap(() => this.scrollToPosition(this.selectedIndex)),
       takeUntil(this.unsubscribe$)
@@ -82,9 +91,6 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
    * @returns
    */
   onSelect(tab: TabItemComponent, index: number) {
-    if (this.selectedIndex === index) {
-      return;
-    }
     this.increment = this.getIncrement(this.selectedIndex, index);
     this.select(tab);
     this.scrollToPosition(index);

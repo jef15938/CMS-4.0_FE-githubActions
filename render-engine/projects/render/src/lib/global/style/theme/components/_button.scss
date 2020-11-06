@@ -27,12 +27,16 @@
         >.btn--full {
           box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
           background-image: linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
+        }
 
-          &:hover {
+        &:hover {
+          >.btn--full {
             background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
           }
+        }
 
-          &:active {
+        &:active {
+          >.btn--full {
             background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
           }
         }
@@ -42,30 +46,36 @@
         >.btn--full {
           border-color: $tl-primary-color;
           color: $tl-primary-color;
+        }
 
-          &:hover,
-          &:active {
+        &:hover,
+        &:active {
+          >.btn--full {
             color: $tl-distinct-color;
           }
 
-          &:hover {
+          >.btn--border {
+            color: $tl-primary-color;
+          }
+        }
+
+        &:hover {
+          >.btn--full {
             border-color: transparent;
             background-image: linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
           }
 
-          &:active {
-            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
+          >.btn--border {
+            background-color: $tl-distinct-color;
           }
         }
 
-        >.btn--border {
-
-          &:hover,
-          &:active {
-            color: $tl-primary-color;
+        &:active {
+          >.btn--full {
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(105deg, $tl-secondary-color, $tl-primary-color);
           }
 
-          &:active {
+          >.btn--border {
             background-color: $tl-back-color;
           }
         }
@@ -75,12 +85,16 @@
         >.btn--full {
           border-color: $tl-back-border-color;
           color: $tl-primary-color;
+        }
 
-          &:hover {
+        &:hover {
+          >.btn--full {
             background-color: $tl-back-hover-color;
           }
+        }
 
-          &:active {
+        &:active {
+          >.btn--full {
             background-color: $tl-back-active-color;
           }
         }

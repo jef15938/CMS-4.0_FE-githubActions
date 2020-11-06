@@ -20,7 +20,7 @@ rdr-form-frame {
     }
 
     &__title {
-      @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
+      @include Body172-Bold1-Light2-Default-Color1-Left-Aligned;
       margin-bottom: 8px;
 
       &[has-note] {
@@ -52,6 +52,10 @@ rdr-form-frame {
       display: flex;
       align-items: center;
       height: 46px;
+
+      @include rwd($bp-sm-max) {
+        @include Body162-Bold1-Light2-Default-Color2-Center-Aligned;
+      }
     }
 
     &__error {

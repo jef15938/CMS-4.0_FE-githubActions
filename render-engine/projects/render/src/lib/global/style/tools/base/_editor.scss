@@ -127,7 +127,7 @@
     color: $editor-text-color;
 
     @include rwd($bp-sm-max) {
-      @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
+      @include Body172-Bold1-Light2-Default-Color1-Left-Aligned;
     }
   }
 
@@ -144,6 +144,7 @@
     @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
     text-decoration: underline;
     color: $editor-primary-color;
+    cursor: pointer;
 
     @include rwd($bp-sm-max) {
       @include Callout152-Bold1-Light2-Default-Color1-Left-Aligned;
@@ -159,29 +160,11 @@
 
     &[ga-table-style="scroll"] {
       overflow: auto;
+    }
 
-      @include rwd($bp-lg) {
-        display: flex;
-
-        &:before,
-        &:after {
-          content: '';
-          display: block;
-          flex-shrink: 0;
-          width: 20px;
-        }
-
-        .neux-table {
-          tr {
-
-            th,
-            td {
-              &.headerTD {
-                white-space: nowrap;
-              }
-            }
-          }
-        }
+    &[ga-table-style="percent"] {
+      .neux-table {
+        width: 100%;
       }
     }
   }

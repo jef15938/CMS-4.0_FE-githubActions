@@ -10,6 +10,7 @@
   $rdr-hover-color: map-get($theme, color_hover) !default;
   $rdr-pressed-color: map-get($theme, color_click) !default;
   $rdr-content-text-color: map-get($theme, black_0) !default;
+  $rdr-trigger-active-text-color: map-get($theme, black_0) !default;
 
   $collapse-theme: nx-ui-theme-config-gen($color-back-light: $rdr-back-light-color,
       $color-null: $rdr-null-color,
@@ -45,6 +46,7 @@
       .collapse-container[collapse-status=true] {
         .collapse-container__trigger {
           border-color: $rdr-line-color;
+          color: $rdr-trigger-active-text-color;
         }
       }
     }
@@ -55,6 +57,7 @@
 @mixin rdr-accordion-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-accordion' !default;
   $rdr-primary-color: map-get($theme, brownish_grey) !default;
+  $rdr-trigger-active-text-color: map-get($theme, black_0) !default;
 
   $collapse-theme: nx-ui-theme-config-gen($color-primary: $rdr-primary-color);
 
@@ -65,5 +68,15 @@
 
   #{$selector} {
     @include nx-collapse-accordion-theme($collapse-theme);
+
+    nx-collapse-accordion.nx-cp {
+      &.style--hasList {
+        .collapse-container[collapse-status=true] {
+          .collapse-container__prefix:before {
+            color: $rdr-trigger-active-text-color;
+          }
+        }
+      }
+    }
   }
 }
