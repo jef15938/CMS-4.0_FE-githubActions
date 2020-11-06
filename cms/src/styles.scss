@@ -1,8 +1,2 @@
 @import '../projects/cms-lib/src/lib/global/style/styles';
 @import "~@neux/render/src/lib/global/style/public-style.scss";
-
-@include nx-reset;
-
-.neux-editor {
-  @include neux-editor;
-}
