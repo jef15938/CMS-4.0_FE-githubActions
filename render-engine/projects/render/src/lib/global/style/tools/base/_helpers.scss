@@ -1,10 +1,10 @@
-.layout-block {
+.rdr-layout-block {
   max-width: 994px;
   margin: 0 auto;
   padding: 40px 0 72px;
 }
 
-.layout-title {
+.rdr-layout-title {
   @include Tilte282-Bold1-Light2-Default-Color1-Left-Aligned;
   margin-bottom: 24px;
   color: $black-two;

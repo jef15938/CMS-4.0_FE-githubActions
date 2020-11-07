@@ -4,14 +4,16 @@
 @import "~@neux/ui/component-customizing-mixins/config-all";
 @import "~@neux/ui/tool-mixins/style-import-app-global";
 
-// 2. Tools
+// 2. Tools & global
 @import 'tools/tools-all.scss';
+@import 'tools/global-all.scss';
 
 // 3. Components theme
 @import 'theme/theme-all.scss';
 
 // 4. Editor
 @include nx-reset;
-.neux-editor{
+
+.neux-editor {
   @include neux-editor;
 }
