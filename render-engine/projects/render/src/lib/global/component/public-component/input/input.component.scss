@@ -13,9 +13,14 @@ rdr-input {
 
   [nx-input].nx-cp {
     @include Callout182-Bold1-Light2-Default-Color1-Left-Aligned;
-    height: 42px;
     line-height: normal;
     box-sizing: border-box;
+
+    @include rwd($bp-sm-max) {
+      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
+      height: 42px;
+      padding: 10px 12px;
+    }
 
     &.style-border--all {
       &:focus {

@@ -33,6 +33,10 @@ rdr-mega-menu {
       max-width: 1136px;
       margin: 0 auto;
       padding: 0 4px 0 0;
+
+      @include rwd($bp-sm-max) {
+        padding: 0;
+      }
     }
 
     .mega-menu__block {
@@ -73,6 +77,10 @@ rdr-mega-menu {
       align-items: center;
       min-width: 64px;
       margin-left: 8px;
+
+      @include rwd($bp-sm-max) {
+        margin-left: 0;
+      }
     }
 
     &__link {
@@ -85,6 +93,12 @@ rdr-mega-menu {
       display: inline-block;
       vertical-align: middle;
       padding: 0 12px;
+      cursor: pointer;
+    }
+
+    &__login {
+      position: absolute;
+      right: 0;
     }
   }
 
