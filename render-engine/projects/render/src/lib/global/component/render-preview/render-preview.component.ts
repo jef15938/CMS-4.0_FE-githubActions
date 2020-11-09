@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PreviewCommand } from '../../enum/preview-command.enum';
+import { PreviewCommandType } from '../../enum/preview-command.enum';
+import { PreviewCommand, PreviewCommandData } from '../../interface';
 
 enum PreviewSize {
   PC = 'preview-size-pc',
@@ -42,25 +43,32 @@ export class RenderPreviewComponent implements OnInit {
     });
 
     window.onmessage = (e) => {
-      const command = e.data;
-      switch (command) {
-        case PreviewCommand.COMPARE_ON:
+      const command: PreviewCommand<PreviewCommandData> = e.data;
+      switch (command.type) {
+        case PreviewCommandType.COMPARE_ON:
           this.func.compare.on = true;
           break;
-        case PreviewCommand.COMPARE_OFF:
+        case PreviewCommandType.COMPARE_OFF:
           this.func.compare.on = false;
           break;
+        case PreviewCommandType.LINK:
+          {
+            if (!command.data.target) {
+              window.location.href = command.data.href;
+            }
+          }
       }
+
     };
   }
 
-  private sendCommandToIFrame(command: PreviewCommand) {
+  private sendCommandToIFrame(command: PreviewCommandType) {
     this.iframe?.nativeElement?.contentWindow?.postMessage(command, '*');
   }
 
   toggleCompare() {
     this.previewSize = PreviewSize.PC;
-    this.sendCommandToIFrame(PreviewCommand.COMPARE_TOGGLE);
+    this.sendCommandToIFrame(PreviewCommandType.COMPARE_TOGGLE);
   }
 
   setPreviewSize(previewSize: PreviewSize) {
@@ -70,7 +78,7 @@ export class RenderPreviewComponent implements OnInit {
 
   closeCompare() {
     this.func.compare.on = false;
-    this.sendCommandToIFrame(PreviewCommand.COMPARE_OFF);
+    this.sendCommandToIFrame(PreviewCommandType.COMPARE_OFF);
   }
 
 }
