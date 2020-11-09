@@ -565,6 +565,29 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       }
     });
 
+    const tables = Array.from(body.querySelectorAll('table'));
+    tables.forEach(table => {
+      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains(TABLE_CLASS_BASE_ROW))[0];
+      if (!headerTr) { return; }
+      // <th> to <td>
+      const ths = Array.from(headerTr.querySelectorAll('th')).concat(Array.from(headerTr.querySelectorAll('td')));
+      ths.forEach(th => {
+        const td = document.createElement('td');
+        th.classList.forEach(c => {
+          td.classList.add(c);
+        });
+        td.colSpan = th.colSpan;
+        td.rowSpan = th.rowSpan;
+        td.innerHTML = th.innerHTML;
+        headerTr.insertBefore(td, th);
+        headerTr.removeChild(th);
+      });
+      // insert <tr> to <tbody>
+      const tbody = table.querySelector('tbody');
+      const firstTr = tbody.firstElementChild;
+      !!firstTr ? tbody.insertBefore(headerTr, firstTr) : tbody.appendChild(headerTr);
+    });
+
     const innerHTML = body.innerHTML;
     this.simpleWysiwygService.insertHtmlString(innerHTML, this.editorContainer);
     this.checkInnerHtml({ checkTableWrap: true });
