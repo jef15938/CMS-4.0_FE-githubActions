@@ -171,7 +171,7 @@
                 </ng-container>
                 <!-- LABEL -->
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.LABEL">
-                  <div [innerHTML]="col.value | dateStringFormat:'DATETIME' | safeHtml"></div>
+                  <div [innerHTML]="col.value | dateStringFormat:'DATETIME' | splitText:20 | safeHtml"></div>
                 </ng-container>
                 <!-- LINK -->
                 <ng-container *ngSwitchCase="FarmFormInfoColumnDisplayType.LINK">

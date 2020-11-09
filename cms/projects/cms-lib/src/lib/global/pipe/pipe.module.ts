@@ -7,6 +7,7 @@ import { ObjectKeysPipe } from './object-keys.pipe';
 import { DateStringFormatPipe } from './date-string-format.pipe';
 import { FormValidationErrorPipe } from './form-validation-error.pipe';
 import { ReadableFileSizePipe } from './readable-file-size.pipe';
+import { SplitTextPipe } from './split-text.pipe';
 
 const PIPES = [
   DateStringFormatPipe,
@@ -16,6 +17,7 @@ const PIPES = [
   SafeUrlPipe,
   ObjectKeysPipe,
   ReadableFileSizePipe,
+  SplitTextPipe,
 ];
 
 @NgModule({
