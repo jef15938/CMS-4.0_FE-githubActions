@@ -55,6 +55,8 @@ export class RenderPreviewComponent implements OnInit {
           {
             if (!command.data.target) {
               window.location.href = command.data.href;
+            } else {
+              window.open(command.data.href, '_blank');
             }
           }
       }
