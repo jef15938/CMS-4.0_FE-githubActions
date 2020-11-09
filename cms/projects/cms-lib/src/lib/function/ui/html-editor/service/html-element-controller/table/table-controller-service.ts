@@ -141,23 +141,18 @@ export class TableControllerService {
     return table;
   }
 
-  createEditorTable(container: HTMLDivElement, config: { rows: number, cols: number }) {
-    const table = this.createTable(config);
-
-    const outerHTML = table.outerHTML;
-    const addedTable = this.simpleWysiwygService.insertHtml(outerHTML, container) as HTMLTableElement;
-
+  createTableWrap(table: HTMLTableElement) {
+    table.id = table.id || `${new Date().getTime()}`;
     const tableWrap = document.createElement('p');
+    tableWrap.setAttribute('tableid', `t${table.id}`);
     tableWrap.classList.add(TABLE_CLASS_NEUX_TABLE_WRAP);
-
-    const nextOfAddedTable = addedTable.nextElementSibling;
+    const nextOfAddedTable = table.nextElementSibling;
     if (nextOfAddedTable) {
-      addedTable.parentElement.insertBefore(tableWrap, nextOfAddedTable);
+      table.parentElement.insertBefore(tableWrap, nextOfAddedTable);
     } else {
-      addedTable.parentElement.appendChild(tableWrap);
+      table.parentElement.appendChild(tableWrap);
     }
-
-    tableWrap.appendChild(addedTable);
+    tableWrap.appendChild(table);
 
     const blankRowBefore = this.simpleWysiwygService.createBlankRow();
     tableWrap.parentElement.insertBefore(blankRowBefore, tableWrap);
@@ -168,8 +163,14 @@ export class TableControllerService {
     } else {
       tableWrap.parentElement.appendChild(blankRowAfter);
     }
+    return tableWrap;
+  }
 
-    this.setTableStyle(tableWrap, addedTable, TableStyle.PERCENT);
+  createEditorTable(container: HTMLDivElement, config: { rows: number, cols: number }) {
+    const table = this.createTable(config);
+    const addedTable = this.simpleWysiwygService.insertHtmlElement(table, container);
+    const tableWrap = this.createTableWrap(addedTable);
+    this.setTableStyle(tableWrap, addedTable);
     this.checkTableStyle(addedTable);
     return addedTable;
   }
@@ -180,14 +181,46 @@ export class TableControllerService {
   }
 
   private setBaseRowStyle(table: HTMLTableElement) {
-    const tr = table.querySelector(`thead > tr.${TABLE_CLASS_BASE_ROW}`) as HTMLTableRowElement;
-    const tds = Array.from(tr.querySelectorAll('td')) as HTMLTableDataCellElement[];
+    let tHead = table.querySelector('thead');
+    if (!tHead) {
+      tHead = document.createElement('tHead') as HTMLTableSectionElement;
+      if (table.firstElementChild) {
+        table.insertBefore(tHead, table.firstElementChild);
+      } else {
+        table.appendChild(tHead);
+      }
+    }
+
+    let baseRow = tHead.querySelector(`tr.${TABLE_CLASS_BASE_ROW}`);
+    if (!baseRow) {
+      baseRow = document.createElement('tr') as HTMLTableRowElement;
+      baseRow.classList.add(TABLE_CLASS_BASE_ROW);
+
+      const firstTr = table.querySelector('tr');
+      const firstTrTds = Array.from(firstTr.querySelectorAll('td'));
+      const colSpans = firstTrTds
+        .map(td => td.colSpan)
+        .reduce((result, colSpan) => result += colSpan, 0);
+
+      for (let i = 0, l = colSpans; i < l; ++i) {
+        const td = this.createCell();
+        baseRow.appendChild(td);
+      }
+
+      if (tHead.firstElementChild) {
+        tHead.insertBefore(baseRow, tHead.firstElementChild);
+      } else {
+        tHead.appendChild(baseRow);
+      }
+    }
+
+    const tds = Array.from(baseRow.querySelectorAll('td') || []) as HTMLTableDataCellElement[];
     tds.forEach(td => {
       td.classList.add('hideTD');
     });
   }
 
-  setTableStyle(wrapper: HTMLDivElement, table: HTMLTableElement, style: TableStyle) {
+  setTableStyle(wrapper: HTMLDivElement, table: HTMLTableElement, style = TableStyle.PERCENT) {
     table.setAttribute(TABLE_ATTR_TABLE_STYLE, style);
     wrapper.setAttribute(TABLE_ATTR_TABLE_STYLE, style);
     if (style !== TableStyle.SCROLL) {

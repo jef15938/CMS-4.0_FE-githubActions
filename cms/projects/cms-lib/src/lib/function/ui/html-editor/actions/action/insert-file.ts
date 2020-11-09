@@ -27,7 +27,7 @@ export class InsertFile extends HtmlEditorActionBase {
           aTag.setAttribute(GALLERY_ATTR_GALLERY_NAME, `${configATag.galleryName || ''}`);
           aTag.setAttribute(FILE_ATTR_FILE_SOURCE, `${configATag.fileSource || ''}`);
         }
-        const inserted = this.context.simpleWysiwygService.insertHtml(aTag.outerHTML, this.context.editorContainer);
+        const inserted = this.context.simpleWysiwygService.insertHtmlElement(aTag, this.context.editorContainer);
       }),
     );
 

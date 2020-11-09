@@ -64,7 +64,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     this.initContentAndContainer(this.content);
     this.observeContainer(this.editorContainer);
     this.subscribeDocumentSelectionChange();
-    // this.handlePasteEvent();
+    this.handlePasteEvent();
     this.changeDetectorRef.detectChanges();
   }
 
@@ -113,7 +113,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     const tables = Array.from(tempContainer.querySelectorAll('table'));
     tables.forEach(table => {
       // change wrap tag from <div> to <p>
-      const wrap = table.parentElement;
+      const wrap: HTMLDivElement = this.editorContainer.querySelector(`[tableid=t${table.id}]`);
       if (wrap?.tagName?.toLowerCase() === 'div' && wrap.classList.contains(TABLE_CLASS_NEUX_TABLE_WRAP)) {
         const pWrap = document.createElement('p');
         for (let i = 0, l = wrap.attributes.length; i < l; ++i) {
@@ -430,12 +430,11 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     // table
     const needRemoveNodesFromTable = Array.from(tempContainer.querySelectorAll('.col-resizer-container, .col-resizer'));
     needRemoveNodesFromTable.forEach(n => n.parentElement.removeChild(n));
-    const tableWraps = Array.from(tempContainer.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE_WRAP}`));
     const tables = Array.from(tempContainer.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
-    tables.forEach((table, index) => {
+    tables.forEach(table => {
 
       // change wrap tag from <p> to <div>
-      const wrap = tableWraps[index];
+      const wrap: HTMLDivElement = this.editorContainer.querySelector(`[tableid=t${table.id}]`);
       const divWrap = document.createElement('div');
       for (let i = 0, l = wrap.attributes.length; i < l; ++i) {
         const attr = wrap.attributes[i];
@@ -540,9 +539,35 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     }
   }
 
-  private processPaste(elem, pastedData) {
-    // Do whatever with gathered data;
-    alert(pastedData);
+  private processPaste(elem, pastedData = '') {
+    if (!elem) { return; }
+
+    const content = pastedData
+      .replace(/<\!--[\s\S]*?-->/g, '')
+      .replace(/<\!\[.*?\]>/g, '')
+      .replace(/<a/g, '<span').replace(/<\/a>/g, '</span>')
+      .replace(/<h[1,2,3,4,5,6]/g, '<p').replace(/<\/h[1,2,3,4,5,6]>/g, '</p>')
+      ;
+
+    const html = document.createElement('html');
+    html.innerHTML = content;
+    const body = html.querySelector('body');
+
+    const allElements = Array.from(body.getElementsByTagName('*'));
+    allElements.forEach(el => {
+      el.removeAttribute('lang');
+      el.setAttribute('style', '');
+      el.setAttribute('class', '');
+      for (let i = 0, l = el.attributes.length; i < l; ++i) {
+        const attr = el.attributes[i];
+        if (!attr) { return; }
+        el.removeAttribute(attr.name);
+      }
+    });
+
+    const innerHTML = body.innerHTML;
+    this.simpleWysiwygService.insertHtmlString(innerHTML, this.editorContainer);
+    this.checkInnerHtml({ checkTableWrap: true });
     elem.focus();
   }
 }

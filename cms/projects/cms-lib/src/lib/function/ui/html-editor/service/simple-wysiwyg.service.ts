@@ -262,33 +262,39 @@ export class SimpleWysiwygService {
     return false;
   }
 
-  insertHtml(htmlString: string, editorContainer: HTMLElement) {
+  insertHtmlElement<TElement extends HTMLElement>(elToAdd: TElement, editorContainer: HTMLElement): TElement {
     const range = this.getRange();
-
     if (!range) { return null; }
 
     const modifiedId = 'to-modify';
-    const div = document.createElement('div');
-    const innerHTML = htmlString.trim();
-    div.innerHTML = innerHTML;
-    const elToAdd = div.firstChild as HTMLElement;
     elToAdd.id = modifiedId;
-    htmlString = elToAdd.outerHTML;
+    const htmlString = elToAdd.outerHTML;
     document.execCommand('ms-beginUndoUnit');
 
     const success = document.execCommand('InsertHTML', false, htmlString);
-
     if (!success) {
       range.insertNode(elToAdd);
       document.execCommand('ms-endUndoUnit');
     }
 
-    const added = editorContainer.querySelector(`#${modifiedId}`);
-
+    const added = editorContainer.querySelector(`#${modifiedId}`) as TElement;
     if (added) {
       added.removeAttribute('id');
     }
     return added;
+  }
+
+  insertHtmlString(htmlString: string, editorContainer: HTMLElement) {
+    const range = this.getRange();
+    if (!range) { return null; }
+
+    document.execCommand('ms-beginUndoUnit');
+
+    const success = document.execCommand('InsertHTML', false, htmlString);
+    if (!success) {
+      // range.insertNode(elToAdd);
+      document.execCommand('ms-endUndoUnit');
+    }
   }
 
   createBlankRow() {

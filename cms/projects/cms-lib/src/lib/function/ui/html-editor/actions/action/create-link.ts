@@ -46,7 +46,7 @@ export class CreateLink extends DomCmdAction {
         if (!isGallery) {
           aTagToModify.setAttribute('urlType', atagConfig.urlType);
           aTagToModify.setAttribute('siteId', atagConfig.siteId);
-          aTagToModify.setAttribute('actionID', atagConfig.actionID)
+          aTagToModify.setAttribute('actionID', atagConfig.actionID);
         }
 
         if (isCreate) { // 新增
@@ -65,7 +65,7 @@ export class CreateLink extends DomCmdAction {
             }
           }
           aTagToModify.classList.add(LINK_CLASS_EDITOR_LINK);
-          const modified = this.context.simpleWysiwygService.insertHtml(aTagToModify.outerHTML, this.context.editorContainer);
+          const modified = this.context.simpleWysiwygService.insertHtmlElement(aTagToModify, this.context.editorContainer);
 
           this.context.simpleWysiwygService.setSelectionOnNode(
             isCreateOnImg ? modified.getElementsByTagName('img')[0] : modified,
