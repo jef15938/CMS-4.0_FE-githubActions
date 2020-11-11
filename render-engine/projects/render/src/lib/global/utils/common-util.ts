@@ -10,7 +10,7 @@ export class CommonUtils {
       startWith({ target: { innerWidth: window.innerWidth } }),
     )
     .pipe(
-      tap(_ => console.warn('resize')),
+      // tap(_ => console.warn('resize')),
       debounceTime(200),
       map(e => (e.target as Window).innerWidth),
       // startWith(window.innerWidth),
