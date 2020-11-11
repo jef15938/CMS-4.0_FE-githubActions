@@ -17,6 +17,8 @@ import { CmsEnviroment } from '../../../global/interface';
 import { CmsErrorHandler } from '../../../global/error-handling';
 import { HTML_EDITOR_CONFIG_TOKEN } from './html-editor.injection-token';
 import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default';
+import { Indent } from './actions/action/indent';
+import { Outdent } from './actions/action/outdent';
 
 @Component({
   selector: 'cms-html-editor',
@@ -434,7 +436,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     tables.forEach(table => {
 
       // change wrap tag from <p> to <div>
-      const wrap: HTMLDivElement = this.editorContainer.querySelector(`[tableid=t${table.id}]`);
+      const wrap: HTMLDivElement = tempContainer.querySelector(`[tableid=t${table.id}]`);
       const divWrap = document.createElement('div');
       for (let i = 0, l = wrap.attributes.length; i < l; ++i) {
         const attr = wrap.attributes[i];
@@ -592,5 +594,12 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     this.simpleWysiwygService.insertHtmlString(innerHTML, this.editorContainer);
     this.checkInnerHtml({ checkTableWrap: true });
     elem.focus();
+  }
+
+  onKeydown(ev) {
+    if (ev.keyCode === 9) { // Tab
+      const action = ev.shiftKey ? new Outdent(this) : new Indent(this);
+      this.doAction(action);
+    }
   }
 }
