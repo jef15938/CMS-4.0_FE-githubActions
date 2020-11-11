@@ -42,7 +42,18 @@ export class RenderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // 路由切換時，重新設定渲染畫面
+    this.activatedRoute.params.subscribe(_ => this.setPages());
+  }
 
+
+  /**
+   * 設定該節點渲染畫面
+   * @private
+   * @return {*}
+   * @memberof RenderComponent
+   */
+  private setPages() {
     const url = this.router.url;
     this.runtime = url.indexOf('/preview/') < 0;
 
