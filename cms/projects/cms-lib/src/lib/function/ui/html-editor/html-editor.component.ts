@@ -19,6 +19,7 @@ import { HTML_EDITOR_CONFIG_TOKEN } from './html-editor.injection-token';
 import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default';
 import { Indent } from './actions/action/indent';
 import { Outdent } from './actions/action/outdent';
+import { HtmlTransformer } from './service/html-transformer';
 
 @Component({
   selector: 'cms-html-editor',
@@ -43,6 +44,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   private mutationObserver: MutationObserver;
+  private htmlTransformer = new HtmlTransformer();
 
   contextMenuPosition = { x: '0px', y: '0px' };
   contextMenuItems: HtmlEditorContextMenuItem[] = [];
@@ -80,7 +82,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   private initContentAndContainer(content: string) {
     content = this.convertToEditorContent(content) || EDITOR_DEFAULT_CONTENT;
     this.editorContainer.innerHTML = content;
-    this.checkInnerHtml({ checkTableWrap: true });
+    this.checkInnerHtml();
   }
 
   private convertToEditorContent(htmlString: string) {
@@ -152,16 +154,18 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     return innerHTML;
   }
 
-  checkInnerHtml({ checkTableWrap = false } = {}): void {
+  checkInnerHtml(): void {
     const container = this.editorContainer;
 
-    if (checkTableWrap) {
-      const tableWraps = Array.from(container.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE_WRAP}`));
-      const tables = Array.from(container.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
-      tables.forEach((table, index) => {
-        tableWraps[index].appendChild(table);
-      });
-    }
+    const tables = Array.from(container.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
+    tables.forEach(table => {
+      const tableWrap = container.querySelector(`[tableid=t${table.id}]`);
+      try {
+        tableWrap.appendChild(table);
+      } catch (err) {
+        console.error('append table to wrap error', err);
+      }
+    });
 
     let childNodes = Array.from(container.childNodes) || [];
     while (childNodes && childNodes.length) {
@@ -371,7 +375,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     this.editorMenu.openMenu();
   }
 
-  doAction(action: HtmlEditorAction) {
+  doAction = (action: HtmlEditorAction) => {
     if (!action) { return; }
 
     if (!this.config.actionEnable[action.category]) {
@@ -544,55 +548,9 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   private processPaste(elem, pastedData = '') {
     if (!elem) { return; }
 
-    const content = pastedData
-      .replace(/<\!--[\s\S]*?-->/g, '')
-      .replace(/<\!\[.*?\]>/g, '')
-      .replace(/<a/g, '<span').replace(/<\/a>/g, '</span>')
-      .replace(/<h[1,2,3,4,5,6]/g, '<p').replace(/<\/h[1,2,3,4,5,6]>/g, '</p>')
-      ;
-
-    const html = document.createElement('html');
-    html.innerHTML = content;
-    const body = html.querySelector('body');
-
-    const allElements = Array.from(body.getElementsByTagName('*'));
-    allElements.forEach(el => {
-      el.removeAttribute('lang');
-      el.setAttribute('style', '');
-      el.setAttribute('class', '');
-      for (let i = 0, l = el.attributes.length; i < l; ++i) {
-        const attr = el.attributes[i];
-        if (!attr) { return; }
-        el.removeAttribute(attr.name);
-      }
-    });
-
-    const tables = Array.from(body.querySelectorAll('table'));
-    tables.forEach(table => {
-      const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains(TABLE_CLASS_BASE_ROW))[0];
-      if (!headerTr) { return; }
-      // <th> to <td>
-      const ths = Array.from(headerTr.querySelectorAll('th')).concat(Array.from(headerTr.querySelectorAll('td')));
-      ths.forEach(th => {
-        const td = document.createElement('td');
-        th.classList.forEach(c => {
-          td.classList.add(c);
-        });
-        td.colSpan = th.colSpan;
-        td.rowSpan = th.rowSpan;
-        td.innerHTML = th.innerHTML;
-        headerTr.insertBefore(td, th);
-        headerTr.removeChild(th);
-      });
-      // insert <tr> to <tbody>
-      const tbody = table.querySelector('tbody');
-      const firstTr = tbody.firstElementChild;
-      !!firstTr ? tbody.insertBefore(headerTr, firstTr) : tbody.appendChild(headerTr);
-    });
-
-    const innerHTML = body.innerHTML;
-    this.simpleWysiwygService.insertHtmlString(innerHTML, this.editorContainer);
-    this.checkInnerHtml({ checkTableWrap: true });
+    const transFormedContent = this.htmlTransformer.transform(pastedData);
+    this.simpleWysiwygService.insertHtmlString(transFormedContent, this.editorContainer);
+    this.checkInnerHtml();
     elem.focus();
   }
 

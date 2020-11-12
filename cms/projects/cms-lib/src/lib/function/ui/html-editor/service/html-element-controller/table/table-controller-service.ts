@@ -217,6 +217,7 @@ export class TableControllerService {
     const tds = Array.from(baseRow.querySelectorAll('td') || []) as HTMLTableDataCellElement[];
     tds.forEach(td => {
       td.classList.add('hideTD');
+      td.innerHTML = '';
     });
   }
 
