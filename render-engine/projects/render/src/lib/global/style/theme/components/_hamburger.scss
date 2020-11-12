@@ -1,0 +1,17 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-hamburger-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-hamburger' !default;
+  $rdr-hamburger-line-color: map-get($theme, color_primary) !default;
+
+  $hamburger-theme: nx-ui-theme-config-gen($color-primary: $rdr-hamburger-line-color);
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-hamburger.rdr-cp';
+  }
+
+  #{$selector} {
+    @include nx-hamburger-theme($hamburger-theme);
+  }
+}

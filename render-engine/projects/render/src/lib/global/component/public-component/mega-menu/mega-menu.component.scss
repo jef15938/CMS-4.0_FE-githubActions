@@ -5,104 +5,311 @@
 rdr-mega-menu {
   @include nx-mega-menu-config($mode: 'customize',
     $mega-menu-height: 54px,
-    $mega-menu-dropdown-box-shadow: false);
+    $mega-menu-dropdown-box-shadow: false,
+    $mega-menu-dropdown-min-height: 0);
 
 
   nx-mega-menu.nx-cp {
     box-shadow: none;
-    border-bottom: 1px solid $very-light-pink-two;
+    border-bottom: 1px solid $very-light-pink;
 
+    @include rwd($bp-lg-max) {
+      padding-left: 40px;
+      padding-right: 56px;
+    }
+
+    @include rwd(991px) {
+      height: 37px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .mega-menu {
+      &__content {
+        width: 100%;
+        max-width: 1136px;
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      &__block {
+        flex-grow: 1;
+        margin-left: 46px;
+      }
+
+      &__mobile-wrap {
+        top: 37px;
+        height: calc(100% - 37px);
+        padding: 0;
+      }
+    }
+
+    // pc 版
     nx-mega-menu-pc {
-      .menu__item.firstLevel {
-        >.menu__link {
-          height: 54px;
+      .menu {
+        &[level="2"] {
+          display: flex;
+          flex-wrap: wrap;
 
-          >.menu__title {
-            margin-right: 0;
+          >.menu__item {
+            @include rwd($bp-lg-max) {
+              margin-right: 24px;
+
+              &:last-child {
+                margin-right: 0;
+              }
+            }
+
+            >.menu__link {
+              @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
+              margin-bottom: 16px;
+            }
+          }
+        }
+
+        &__item {
+          min-width: 0;
+          font-size: 0;
+
+          &-wrap {
+            display: inline-block;
+            vertical-align: top;
+
+            +.menu__item-wrap {
+              margin-left: 24px;
+            }
           }
 
-          &:after {
-            display: none;
+          &.firstLevel {
+
+            >.menu__link {
+              @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
+              padding: 12px 18px;
+              border-radius: 6px;
+              min-width: 108px;
+
+              >.menu__title {
+                margin-right: 0;
+              }
+
+              &:after {
+                display: none;
+              }
+            }
+          }
+
+          &:not(.firstLevel) {
+            +.menu__item {
+              margin-left: 0;
+            }
+
+            >.menu__link {
+              width: 124px;
+              margin-right: 24px;
+
+              @include rwd($bp-lg-max) {
+                margin-right: 0;
+              }
+            }
+          }
+
+          &.lastLevel {
+            margin-bottom: 12px;
+
+            >.menu__link {
+              @include Footnote152-Bold1-Light2-Default-Color1-Left-Aligned;
+            }
+          }
+        }
+
+        &__link {
+          height: auto;
+        }
+
+        &__dropdown {
+          display: flex;
+          flex-wrap: wrap;
+          width: auto;
+          max-width: 100%;
+          top: calc(100% + 1px);
+          padding: 24px 32px 20px;
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
+          box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.15);
+
+          @include rwd($bp-lg-max) {
+            display: block;
+            padding-bottom: 32px;
+          }
+
+          >nx-mega-menu-pc {
+            flex-grow: 1;
           }
         }
       }
     }
 
-    .mega-menu__content {
-      width: 100%;
-      max-width: 1136px;
-      margin: 0 auto;
-      padding: 0 4px 0 0;
+    // mobile 版
+    nx-mega-menu-mobile {
+      &.firstLevel {
+        padding: 0 7.29%;
+      }
 
-      @include rwd($bp-sm-max) {
+      &:not(.firstLevel) {
+        .menu {
+          display: flex;
+          flex-wrap: wrap;
+
+          @include rwd($bp-sm) {
+            display: block;
+          }
+        }
+      }
+
+      .menu {
         padding: 0;
+
+        &[level="1"] {}
+
+        &[level="2"] {
+          @include rwd($bp-sm) {
+            padding: 0 20px;
+          }
+
+          >.menu__item {
+            display: inline-block;
+            vertical-align: top;
+            flex-grow: 1;
+            width: calc((100% - 32px)/2);
+            margin-bottom: 24px;
+            margin-right: 16px;
+
+            @include rwd($bp-sm) {
+              display: block;
+              width: 100%;
+              margin-right: 0;
+            }
+
+            &:last-child {
+              margin-bottom: 32px;
+            }
+
+            >.menu__link {
+              margin-bottom: 16px;
+
+              &:after {
+                display: none;
+              }
+            }
+          }
+
+          >.menu__content {}
+        }
+
+        &__item {
+          @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
+
+          &-wrap {
+            display: inline-block;
+            vertical-align: top;
+            flex: 1;
+
+            @include rwd($bp-sm) {
+              display: block;
+              flex: none;
+
+              +.menu__item-wrap {
+                margin-left: 0;
+              }
+            }
+
+            +.menu__item-wrap {
+              margin-left: 16px;
+
+              @include rwd($bp-sm) {
+                margin-left: 0;
+              }
+            }
+          }
+
+          &.firstLevel {
+            &:last-child {
+              border: 0;
+            }
+
+            >.menu__link {
+              height: auto;
+              padding: 20px 0;
+
+              @include rwd($bp-sm) {
+                padding: 16px 0;
+              }
+
+              &:after {
+                @include rdr-icon(4, 2, 18px);
+                position: absolute;
+                right: 47px;
+                top: 50%;
+                border-left: 0;
+                border-top: 0;
+                background-image: url('../../../images/icon-all.svg');
+                transform: translate(-50%, -50%) rotate(90deg);
+
+                @include rwd($bp-sm) {
+                  right: 11px;
+                }
+              }
+
+              &--active {
+                &:after {
+                  transform: translate(-50%, -50%) rotate(270deg);
+                }
+              }
+            }
+
+            >.menu__content {
+              padding: 0 6.09%;
+
+              @include rwd($bp-sm) {
+                padding: 0;
+              }
+            }
+          }
+
+          &.lastLevel {
+            @include Footnote141-Regular1-Light2-Default-Color1-Left-Aligned;
+            font-weight: normal;
+            margin-bottom: 16px;
+
+            &:before {
+              @include rdr-icon(1, 2, 14px);
+              content: '';
+              display: inline-block;
+              vertical-align: middle;
+              margin-right: 4px;
+            }
+
+            >.menu__link {
+              display: inline-block;
+              vertical-align: middle;
+            }
+
+            &:last-child {
+              margin-bottom: 0;
+
+              @include rwd($bp-sm) {
+                margin-bottom: 16px;
+              }
+            }
+          }
+        }
+
+        &__link {
+          height: auto;
+          border-bottom: 0;
+          padding: 0;
+        }
       }
     }
-
-    .mega-menu__block {
-      flex-grow: 1;
-      margin-left: 28px;
-    }
-
-    .menu__item {
-      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
-      min-width: 128px;
-
-      +.menu__item {
-        margin-left: 0;
-      }
-    }
-  }
-
-  .logo {
-    flex-shrink: 0;
-    width: 132px;
-
-    >img {
-      width: 100%;
-    }
-  }
-
-  .nav-tools {
-    @include borderHalf($direction: 'left');
-    display: flex;
-    justify-content: flex-end;
-    flex-shrink: 0;
-    padding-left: 16px;
-    height: 20px;
-
-    &__item {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      min-width: 64px;
-      margin-left: 8px;
-
-      @include rwd($bp-sm-max) {
-        margin-left: 0;
-      }
-    }
-
-    &__link {
-      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
-
-      @include on-event {
-        text-decoration: none;
-      }
-
-      display: inline-block;
-      vertical-align: middle;
-      padding: 0 12px;
-      cursor: pointer;
-    }
-
-    &__login {
-      position: absolute;
-      right: 0;
-    }
-  }
-
-  .icon-search {
-    @include rdr-icon(1, 1, 21px);
   }
 }

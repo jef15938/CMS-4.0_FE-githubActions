@@ -1,0 +1,14 @@
+@import "public-style.scss";
+
+@include rdr-hamburger-theme();
+
+rdr-hamburger {
+  @include nx-hamburger-config($mode: 'customize',
+    $icon-width: 14px,
+    $line-gap: 5px,
+    $line-height: 1px,
+    $line-radius: 14px);
+
+
+  nx-hamburger.nx-cp {}
+}

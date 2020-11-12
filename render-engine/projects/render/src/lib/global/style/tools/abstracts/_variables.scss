@@ -16,9 +16,13 @@ $color-click: #ffeeb3;
 
 
 // breakpoint
+$bp-xxl: 1920px;
 $bp-xl: 1136px;
+$bp-lg-max: $bp-xl - 1;
 $bp-lg: 984px;
+$bp-md-max: $bp-lg - 1;
 $bp-md: 768px;
 $bp-sm-max: $bp-md - 1;
 $bp-sm: 480px;
+$bp-xs-max: $bp-sm - 1;
 $bp-xs: 320px;

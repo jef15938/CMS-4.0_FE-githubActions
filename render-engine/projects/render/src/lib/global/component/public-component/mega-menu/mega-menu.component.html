@@ -1,15 +1,14 @@
-<nx-mega-menu [menu]="menu">
-  <div class="logo" nx-logo>
-    <img src="assets/images/logo.svg" alt="台灣人壽">
-  </div>
-  <ul class="nav-tools" #container nx-tool>
-    <li class="nav-tools__item">
-      <a class="nav-tools__link" (click)="toggleLogin()">登入/加入</a>
-      <div class="nav-tools__login"
-        [ngStyle]="{'display':disabled?'none':showLogin?'block':'none', 'top':(container.offsetTop + container.offsetHeight)+'px'}">
-        <ng-content select="[login]"></ng-content>
-      </div>
-    </li>
-    <li class="nav-tools__item"><a class="nav-tools__link" href="#"><i class="icon-search"></i></a></li>
-  </ul>
+<nx-mega-menu [menu]="menu" [customDropdownTemplate]="customDropdownTemplate">
+  <ng-container nx-logo>
+    <ng-content select="[logo]"></ng-content>
+  </ng-container>
+  <ng-container nx-tool>
+    <ng-content select="[tool]"></ng-content>
+  </ng-container>
+  <ng-container nx-sidebar-before>
+    <ng-content select="[sidebar-before]"></ng-content>
+  </ng-container>
+  <ng-container nx-sidebar-after>
+    <ng-content select="[sidebar-after]"></ng-content>
+  </ng-container>
 </nx-mega-menu>

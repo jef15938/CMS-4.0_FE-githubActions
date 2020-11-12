@@ -2,30 +2,84 @@
 
 @mixin rdr-mega-menu-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-mega-menu' !default;
-  $tl-primary-color: map-get($theme, color_primary) !default;
-  $tl-plain-color: map-get($theme, black_1) !default;
+  $rdr-mega-menu-primary-color: map-get($theme, color_primary) !default;
+  $rdr-mega-menu-plain-color: map-get($theme, black_1) !default;
+  $rdr-mega-menu-bg-color: map-get($theme, black_1) !default;
+  $rdr-mega-menu-mobile-bg: map-get($theme, white_1) !default;
+  $rdr-mega-menu-item-line-color: map-get($theme, very_light_pink_1) !default;
+  $rdr-mega-menu-item-click-color: map-get($theme, color_click) !default;
 
-  $mega-menu-theme: nx-ui-theme-config-gen($color-primary: $tl-primary-color,
-      $color-plain: $tl-plain-color);
+  $mega-menu-theme: nx-ui-theme-config-gen($color-primary: $rdr-mega-menu-primary-color,
+      $color-plain: $rdr-mega-menu-plain-color, $color-back-light:$rdr-mega-menu-mobile-bg, $color-null:$rdr-mega-menu-item-line-color);
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
     $selector: 'rdr-mega-menu.rdr-cp';
   }
 
-  @include nx-mega-menu-theme($mega-menu-theme);
-
   #{$selector} {
-    .nav-tools {
-      &__link {
-  
-        &,
-        &:hover,
-        &:focus,
-        &:active {
-          color: $tl-primary-color;
+    @include nx-mega-menu-theme($mega-menu-theme);
+
+    nx-mega-menu.nx-cp {
+
+      nx-mega-menu-pc {
+        .menu {
+
+          &[level="2"] {
+            >.menu__item {
+              >.menu__link {
+                color: $rdr-mega-menu-primary-color;
+              }
+            }
+          }
+
+          &__item {
+            &.firstLevel {
+
+              >.menu__link {
+                &--active {
+                  color: $rdr-mega-menu-primary-color;
+                  background-color: $rdr-mega-menu-item-click-color;
+                }
+              }
+            }
+          }
         }
-  
+      }
+
+      // mobile
+      nx-mega-menu-mobile {
+        .menu {
+
+          &[level="2"] {
+            >.menu__item {
+              >.menu__link {
+
+                &,
+                &.active {
+                  color: $rdr-mega-menu-primary-color;
+                }
+              }
+            }
+          }
+
+          &__item {
+            &.firstLevel {
+              border-color: $rdr-mega-menu-item-line-color;
+
+              >.menu__link {
+                &--active {
+                  background-color: $rdr-mega-menu-mobile-bg;
+                  color: $rdr-mega-menu-plain-color;
+                }
+              }
+            }
+          }
+
+          &__link {
+            border-color: $rdr-mega-menu-item-line-color;
+          }
+        }
       }
     }
   }

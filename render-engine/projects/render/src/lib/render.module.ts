@@ -57,6 +57,7 @@ import { SocialMediaComponent } from './global/component/social-media/social-med
 import { RenderPreviewComponent } from './global/component/render-preview/render-preview.component';
 import { SharingBtnTwitterComponent } from './global/component/social-media/sharing-btn-twitter/sharing-btn-twitter.component';
 import { SharingBtnUrlComponent } from './global/component/social-media/sharing-btn-url/sharing-btn-url.component';
+import { HamburgerComponent } from './global/component/public-component/hamburger/hamburger.component';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
@@ -102,6 +103,7 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
   FastToolComponent,
   ButtonComponent,
   MegaMenuComponent,
+  HamburgerComponent,
 ];
 
 @NgModule({

@@ -9,6 +9,7 @@
 @import './components/button';
 @import './components/mega-menu';
 @import './components/tab';
+@import './components/hamburger';
 
 
 @mixin rdr-theme-core($core-theme) {
@@ -31,5 +32,6 @@
   @include rdr-button-theme($theme: $core-theme);
   @include rdr-mega-menu-theme($theme: $core-theme);
   @include rdr-tab-scroll-theme($theme: $core-theme);
-  @include rdr-tab-carousel-theme($theme: $core-theme)
+  @include rdr-tab-carousel-theme($theme: $core-theme);
+  @include rdr-hamburger-theme($theme: $core-theme);
 }

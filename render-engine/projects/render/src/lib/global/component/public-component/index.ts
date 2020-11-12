@@ -12,3 +12,4 @@ export * from './pagination/pagination.component';
 export * from './tab/index';
 export * from './card/index';
 export * from './collapse/index';
+export * from './hamburger/hamburger.component';

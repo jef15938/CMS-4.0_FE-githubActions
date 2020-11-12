@@ -6,7 +6,7 @@ rdr-search-bar {
   @include nx-input-config($mode: 'customize',
     $form-height: 36px,
     $form-radius: 8px,
-    $form-padding: 7px 7px 7px 41px);
+    $form-padding: 7px 12px);
 
 
   display: block;
@@ -17,14 +17,30 @@ rdr-search-bar {
     line-height: normal;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.9);
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    @include rwd($bp-sm-max) {
+      @include Footnote152-Bold1-Light2-Default-Color1-Left-Aligned;
+      padding: 6px 12px;
+    }
   }
 
-  &:before {
-    @include rdr-icon(1, 1, 19px);
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 12px;
-    transform: translateY(-50%);
+  .search-bar {
+    display: flex;
+
+    &__input {}
+
+    &__btn {
+      padding: 7px 12px;
+      border: 0;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+
+      .icon-search {
+        @include rdr-icon(1, 1, 21px);
+      }
+    }
   }
 }
