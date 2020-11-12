@@ -20,6 +20,7 @@ import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default'
 import { Indent } from './actions/action/indent';
 import { Outdent } from './actions/action/outdent';
 import { HtmlTransformer } from './service/html-transformer';
+import { CmsLoadingToggle } from '../../../global/service';
 
 @Component({
   selector: 'cms-html-editor',
@@ -58,6 +59,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     private changeDetectorRef: ChangeDetectorRef,
     @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
     @Inject(HTML_EDITOR_CONFIG_TOKEN) private configs: HtmlEditorConfig[],
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { }
 
   ngOnInit() {
@@ -547,11 +549,21 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
 
   private processPaste(elem, pastedData = '') {
     if (!elem) { return; }
+    this.cmsLoadingToggle.open();
+    setTimeout(() => {
+      try {
+        const transFormedContent = this.htmlTransformer.transform(pastedData);
+        this.simpleWysiwygService.insertHtmlString(transFormedContent, this.editorContainer);
+        this.checkInnerHtml();
+        elem.focus();
+      } catch (error) {
+        console.error('processPaste error', error);
+        this.modalService.openMessage({ message: '貼上內容錯誤' }).subscribe();
+      } finally {
+        this.cmsLoadingToggle.close();
+      }
+    }, 100);
 
-    const transFormedContent = this.htmlTransformer.transform(pastedData);
-    this.simpleWysiwygService.insertHtmlString(transFormedContent, this.editorContainer);
-    this.checkInnerHtml();
-    elem.focus();
   }
 
   onKeydown(ev) {
