@@ -42,7 +42,18 @@ export class RenderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // 路由切換時，重新設定渲染畫面
+    this.activatedRoute.params.subscribe(_ => this.setPages());
+  }
 
+
+  /**
+   * 設定該節點渲染畫面
+   * @private
+   * @return {*}
+   * @memberof RenderComponent
+   */
+  private setPages() {
     const url = this.router.url;
     this.runtime = url.indexOf('/preview/') < 0;
 
@@ -88,7 +99,7 @@ export class RenderComponent implements OnInit {
       const flattenedNodes = SitemapUtil.flattenNodes(site.siteMap);
       if (flattenedNodes.indexOf(node) < 0) { return; }
 
-      const flattenedParents = this.getFlattenedParentsFromNode(flattenedNodes, node);
+      const flattenedParents = this.getFlattenedParentsByNode(flattenedNodes, node);
       return [node, ...flattenedParents]
         .map(n => n.languages?.find(l => l.languageId === lang)?.nodeName || '')
         .filter(v => !!v)
@@ -96,21 +107,21 @@ export class RenderComponent implements OnInit {
     }).find(v => !!v);
   }
 
-  private getFlattenedParentsFromNode(
+  private getFlattenedParentsByNode(
     sources: SiteMapInfoModel[],
     node: SiteMapInfoModel,
     result: SiteMapInfoModel[] = []
   ): SiteMapInfoModel[] {
     if (!sources.length || !node) { return result; }
 
-    const parent = sources.find(n => n.children.indexOf(node) > 0);
+    const parent = sources.find(n => n.children.some(c => c.nodeId === node.nodeId));
     if (!parent) { return result; }
 
     const parentIndexInSources = sources.indexOf(parent);
     const newSources = [...sources];
     newSources.splice(parentIndexInSources, 1);
 
-    return this.getFlattenedParentsFromNode(newSources, parent, [...result, parent]);
+    return this.getFlattenedParentsByNode(newSources, parent, [...result, parent]);
   }
 
 }

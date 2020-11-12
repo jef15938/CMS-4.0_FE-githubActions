@@ -13,7 +13,8 @@ import {
   QueryList,
   ViewChild,
   ViewChildren,
-  ViewEncapsulation
+  ViewEncapsulation,
+  AfterContentInit,
 } from '@angular/core';
 import { WINDOW_RESIZE_TOKEN } from '@neux/ui';
 import { interval, Observable, Subject } from 'rxjs';
@@ -29,7 +30,7 @@ import { TabItemComponent } from '../tab-item/tab-item.component';
   styleUrls: ['./tab-scroll-frame.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TabScrollFrameComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, OnDestroy {
+export class TabScrollFrameComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
 
   @ContentChildren(TabItemComponent) tabs: QueryList<TabItemComponent>;
   @ViewChild('tabShell') tabShell: ElementRef;
@@ -56,25 +57,27 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
 
   constructor(
     injector: Injector,
-    @Inject(WINDOW_RESIZE_TOKEN) private resize$: Observable<Event>) {
+    @Inject(WINDOW_RESIZE_TOKEN) private resize$: Observable<Event>
+  ) {
     super(injector);
   }
 
   ngOnInit(): void {
   }
 
+  ngAfterContentInit(): void {
+    this.listItemWidth = this.calListItemWidth(window.innerWidth < 768);
+    this.select(this.tabs.toArray()[this.selectedDefaultIndex]);
+  }
+
   ngAfterViewInit() {
     /** Binding Resize event */
     CommonUtils.isMobile$(this.resize$).pipe(
       tap(result => {
-        if (result) {
-          this.listItemWidth = `${this.getTabMobileWidth(this.tabs.length)}px`;
-        } else {
-          this.listItemWidth = `${this.getTabPCWidth(this.tabs.length) / this.tabs.length}px`;
-        }
-        this.onSelect(this.tabs.toArray()[this.selectedIndex], this.selectedIndex);
+        this.listItemWidth = this.calListItemWidth(result);
+        this.increment = this.getIncrement(this.selectedIndex, this.selectedIndex);
+        this.scrollToPosition(this.selectedIndex);
       }),
-      tap(() => this.scrollToPosition(this.selectedIndex)),
       takeUntil(this.unsubscribe$)
     ).subscribe();
 
@@ -198,5 +201,11 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  private calListItemWidth(isMobile: boolean) {
+    return isMobile
+      ? `${this.getTabMobileWidth(this.tabs.length)}px`
+      : `${this.getTabPCWidth(this.tabs.length) / this.tabs.length}px`;
   }
 }

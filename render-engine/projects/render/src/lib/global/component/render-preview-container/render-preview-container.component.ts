@@ -97,11 +97,13 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
       const actionID = (aTagPassedBy.getAttribute('actionid') || '').trim();
       if (actionID) { return; }
 
+      const attributeHref = aTagPassedBy.getAttribute('href');
+      if (!attributeHref) { return; }
       e.stopPropagation();
       e.preventDefault();
 
       const reg = new RegExp('^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)');
-      const isInclude = reg.test(aTagPassedBy.getAttribute('href'));
+      const isInclude = reg.test(attributeHref);
       const passData = { href: aTagPassedBy.href, target: aTagPassedBy.getAttribute('target') };
       if (aTagPassedBy && isInclude) {
         const previewCommand: PreviewCommand<PreviewCommandData> = { type: PreviewCommandType.LINK, data: passData };

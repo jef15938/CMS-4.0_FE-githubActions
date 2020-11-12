@@ -7,6 +7,37 @@ export class InsertUnorderedList extends DomCmdAction {
   category = HtmlEditorActionCategory.LIST;
   commandId = 'insertUnorderedList';
 
+  static createLevedUL(level: number) {
+    const ul = document.createElement('ul');
+    ul.setAttribute('level', `${level}`);
+
+    const li = document.createElement('li');
+    ul.appendChild(li);
+
+    const textNode = document.createTextNode(`階層 (${level})`);
+    li.appendChild(textNode);
+
+    return { ul, li, textNode };
+  }
+
+  static findClosestUl(selected: HTMLElement, editorContainer: HTMLDivElement) {
+    let closest = selected;
+    while (closest) {
+      if (selected === editorContainer || !editorContainer.contains(selected)) {
+        return undefined;
+      }
+      if (closest.nodeType === Node.ELEMENT_NODE && (closest.tagName.toLowerCase() === 'ul')) {
+        return closest;
+      }
+      closest = closest.parentElement;
+    }
+    return closest;
+  }
+
+  static getLevelOfUl(ul) {
+    return ul ? +ul.getAttribute('level') : 0;
+  }
+
   do() {
     const selected = this.context.selectedTarget as HTMLElement;
     // console.warn('selected = ', selected);
@@ -18,19 +49,12 @@ export class InsertUnorderedList extends DomCmdAction {
       });
     }
 
-    const closestUl = this.findClosestUl(selected, this.context.editorContainer);
+    const closestUl = InsertUnorderedList.findClosestUl(selected, this.context.editorContainer);
     // console.warn('closestUl = ', closestUl);
-    const level = (closestUl ? (+closestUl.getAttribute('level')) : 0) + 1;
+    const level = InsertUnorderedList.getLevelOfUl(closestUl);
     // console.warn('level = ', level);
-    const newUl = document.createElement('ul');
-    newUl.setAttribute('level', `${level}`);
-
-    const li = document.createElement('li');
-    newUl.appendChild(li);
-
-    const textNode = document.createTextNode(`階層 (${level})`);
-    li.appendChild(textNode);
-
+    const createUlResult = InsertUnorderedList.createLevedUL(level + 1);
+    const newUl = createUlResult.ul;
     let parent = selected.parentElement;
     // console.warn('parent = ', parent);
     let insertBefore = selected;
@@ -60,22 +84,10 @@ export class InsertUnorderedList extends DomCmdAction {
       parent.appendChild(targetToAdd);
     }
 
+    const textNode = createUlResult.textNode;
     this.context.simpleWysiwygService.setSelectionOnNode(textNode, 1, 1);
 
-    return of(undefined);
+    return of(newUl);
   }
 
-  private findClosestUl(selected: HTMLElement, editorContainer: HTMLDivElement) {
-    let closest = selected;
-    while (closest) {
-      if (selected === editorContainer || !editorContainer.contains(selected)) {
-        return undefined;
-      }
-      if (closest.nodeType === Node.ELEMENT_NODE && (closest.tagName.toLowerCase() === 'ul')) {
-        return closest;
-      }
-      closest = closest.parentElement;
-    }
-    return closest;
-  }
 }

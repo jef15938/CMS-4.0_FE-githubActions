@@ -240,8 +240,7 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < trs.length; ++i) {
         const row = trs[i];
-        const cells = Array.from(row.childNodes) as HTMLTableDataCellElement[];
-
+        const cells = (Array.from(row.childNodes) as HTMLTableDataCellElement[]).filter(c => c.tagName?.toLowerCase() === 'td');
         cells.forEach((cell: HtmlEditorTableCell) => {
           const startEnd = this.tableControllerService.getCellStartEnd(cell);
           if (
@@ -357,6 +356,17 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
   }
 
   checkTableState(scanTable = true) {
+    this.el.id = this.el.id || `${new Date().getTime()}`;
+    if (!this.el.classList.contains(TABLE_CLASS_NEUX_TABLE)) {
+      this.el.classList.add(TABLE_CLASS_NEUX_TABLE);
+    }
+
+    let tableWrap: HTMLDivElement = this.context.editorContainer.querySelector(`[tableid=t${this.el.id}]`);
+    if (!tableWrap) {
+      tableWrap = this.tableControllerService.createTableWrap(this.el);
+      this.tableControllerService.setTableStyle(tableWrap, this.el);
+    }
+
     this.selectedCols = Array.from(this.el.querySelectorAll('td.selected'));
     this.selectedRows = this.selectedCols
       .map(col => col.parentElement)

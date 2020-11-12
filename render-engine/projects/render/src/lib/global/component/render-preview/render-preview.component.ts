@@ -64,13 +64,14 @@ export class RenderPreviewComponent implements OnInit {
     };
   }
 
-  private sendCommandToIFrame(command: PreviewCommandType) {
+  private sendCommandToIFrame(command: PreviewCommand<PreviewCommandData>) {
     this.iframe?.nativeElement?.contentWindow?.postMessage(command, '*');
   }
 
   toggleCompare() {
     this.previewSize = PreviewSize.PC;
-    this.sendCommandToIFrame(PreviewCommandType.COMPARE_TOGGLE);
+    const command: PreviewCommand<null> = { type: PreviewCommandType.COMPARE_TOGGLE, data: null };
+    this.sendCommandToIFrame(command);
   }
 
   setPreviewSize(previewSize: PreviewSize) {
@@ -80,7 +81,8 @@ export class RenderPreviewComponent implements OnInit {
 
   closeCompare() {
     this.func.compare.on = false;
-    this.sendCommandToIFrame(PreviewCommandType.COMPARE_OFF);
+    const command: PreviewCommand<null> = { type: PreviewCommandType.COMPARE_OFF, data: null };
+    this.sendCommandToIFrame(command);
   }
 
 }

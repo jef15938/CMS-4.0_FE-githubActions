@@ -17,6 +17,10 @@ import { CmsEnviroment } from '../../../global/interface';
 import { CmsErrorHandler } from '../../../global/error-handling';
 import { HTML_EDITOR_CONFIG_TOKEN } from './html-editor.injection-token';
 import { HTML_EDITOR_CONFIG_DEFAULT } from './config/html-editor-config-default';
+import { Indent } from './actions/action/indent';
+import { Outdent } from './actions/action/outdent';
+import { HtmlTransformer } from './service/html-transformer';
+import { CmsLoadingToggle } from '../../../global/service';
 
 @Component({
   selector: 'cms-html-editor',
@@ -41,6 +45,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   }
 
   private mutationObserver: MutationObserver;
+  private htmlTransformer = new HtmlTransformer();
 
   contextMenuPosition = { x: '0px', y: '0px' };
   contextMenuItems: HtmlEditorContextMenuItem[] = [];
@@ -54,6 +59,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     private changeDetectorRef: ChangeDetectorRef,
     @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
     @Inject(HTML_EDITOR_CONFIG_TOKEN) private configs: HtmlEditorConfig[],
+    private cmsLoadingToggle: CmsLoadingToggle,
   ) { }
 
   ngOnInit() {
@@ -64,7 +70,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     this.initContentAndContainer(this.content);
     this.observeContainer(this.editorContainer);
     this.subscribeDocumentSelectionChange();
-    // this.handlePasteEvent();
+    this.handlePasteEvent();
     this.changeDetectorRef.detectChanges();
   }
 
@@ -78,7 +84,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
   private initContentAndContainer(content: string) {
     content = this.convertToEditorContent(content) || EDITOR_DEFAULT_CONTENT;
     this.editorContainer.innerHTML = content;
-    this.checkInnerHtml({ checkTableWrap: true });
+    this.checkInnerHtml();
   }
 
   private convertToEditorContent(htmlString: string) {
@@ -113,7 +119,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     const tables = Array.from(tempContainer.querySelectorAll('table'));
     tables.forEach(table => {
       // change wrap tag from <div> to <p>
-      const wrap = table.parentElement;
+      const wrap: HTMLDivElement = this.editorContainer.querySelector(`[tableid=t${table.id}]`);
       if (wrap?.tagName?.toLowerCase() === 'div' && wrap.classList.contains(TABLE_CLASS_NEUX_TABLE_WRAP)) {
         const pWrap = document.createElement('p');
         for (let i = 0, l = wrap.attributes.length; i < l; ++i) {
@@ -150,16 +156,18 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     return innerHTML;
   }
 
-  checkInnerHtml({ checkTableWrap = false } = {}): void {
+  checkInnerHtml(): void {
     const container = this.editorContainer;
 
-    if (checkTableWrap) {
-      const tableWraps = Array.from(container.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE_WRAP}`));
-      const tables = Array.from(container.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
-      tables.forEach((table, index) => {
-        tableWraps[index].appendChild(table);
-      });
-    }
+    const tables = Array.from(container.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
+    tables.forEach(table => {
+      const tableWrap = container.querySelector(`[tableid=t${table.id}]`);
+      try {
+        tableWrap.appendChild(table);
+      } catch (err) {
+        console.error('append table to wrap error', err);
+      }
+    });
 
     let childNodes = Array.from(container.childNodes) || [];
     while (childNodes && childNodes.length) {
@@ -369,7 +377,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     this.editorMenu.openMenu();
   }
 
-  doAction(action: HtmlEditorAction) {
+  doAction = (action: HtmlEditorAction) => {
     if (!action) { return; }
 
     if (!this.config.actionEnable[action.category]) {
@@ -430,12 +438,11 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     // table
     const needRemoveNodesFromTable = Array.from(tempContainer.querySelectorAll('.col-resizer-container, .col-resizer'));
     needRemoveNodesFromTable.forEach(n => n.parentElement.removeChild(n));
-    const tableWraps = Array.from(tempContainer.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE_WRAP}`));
     const tables = Array.from(tempContainer.querySelectorAll(`.${TABLE_CLASS_NEUX_TABLE}`));
-    tables.forEach((table, index) => {
+    tables.forEach(table => {
 
       // change wrap tag from <p> to <div>
-      const wrap = tableWraps[index];
+      const wrap: HTMLDivElement = tempContainer.querySelector(`[tableid=t${table.id}]`);
       const divWrap = document.createElement('div');
       for (let i = 0, l = wrap.attributes.length; i < l; ++i) {
         const attr = wrap.attributes[i];
@@ -540,9 +547,29 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
     }
   }
 
-  private processPaste(elem, pastedData) {
-    // Do whatever with gathered data;
-    alert(pastedData);
-    elem.focus();
+  private processPaste(elem, pastedData = '') {
+    if (!elem) { return; }
+    this.cmsLoadingToggle.open();
+    setTimeout(() => {
+      try {
+        const transFormedContent = this.htmlTransformer.transform(pastedData);
+        this.simpleWysiwygService.insertHtmlString(transFormedContent, this.editorContainer);
+        this.checkInnerHtml();
+        elem.focus();
+      } catch (error) {
+        console.error('processPaste error', error);
+        this.modalService.openMessage({ message: '貼上內容錯誤' }).subscribe();
+      } finally {
+        this.cmsLoadingToggle.close();
+      }
+    }, 100);
+
+  }
+
+  onKeydown(ev) {
+    if (ev.keyCode === 9) { // Tab
+      const action = ev.shiftKey ? new Outdent(this) : new Indent(this);
+      this.doAction(action);
+    }
   }
 }

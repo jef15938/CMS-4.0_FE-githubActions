@@ -31,7 +31,7 @@ export class FarmPluginSlider implements FarmPlugin {
 
     const typeId = typeColumnControl.value;
     if (!typeId) {
-      this.modalService.openMessage({ message: '請先選擇分類' }).subscribe();
+      this.modalService.openMessage({ message: '請先選擇發佈位置' }).subscribe();
       return NEVER;
     }
 

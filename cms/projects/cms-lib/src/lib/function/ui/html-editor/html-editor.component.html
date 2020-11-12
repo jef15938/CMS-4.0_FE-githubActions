@@ -62,7 +62,7 @@
 
   <div class="html-editor__main">
     <div class="html-editor__key-in neux-editor edit" #EditorContainer contenteditable id='editor' cmsRightClickHandler
-      placeholder="請輸入內容" (mousedown)="onClick($event)" (rightClick)="onRightClick($event)" (focus)="onFocus($event)">
+      placeholder="請輸入內容" (mousedown)="onClick($event)" (rightClick)="onRightClick($event)" (focus)="onFocus($event)" (keydown)="onKeydown($event)">
     </div>
   </div>
 </div>
