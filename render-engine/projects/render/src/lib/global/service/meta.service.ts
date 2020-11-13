@@ -41,6 +41,7 @@ export class MetaService {
       { key: 'url', value: domain },
     ];
 
+    const fragment = document.createDocumentFragment();
     metas.map(meta => {
       const el = document.createElement('meta');
       el.setAttribute('name', meta.key);
@@ -49,7 +50,8 @@ export class MetaService {
       el.setAttribute('content', meta.value);
       return el;
     }).forEach(metaEl => {
-      document.head.appendChild(metaEl);
+      fragment.appendChild(metaEl);
     });
+    document.head.appendChild(fragment);
   }
 }

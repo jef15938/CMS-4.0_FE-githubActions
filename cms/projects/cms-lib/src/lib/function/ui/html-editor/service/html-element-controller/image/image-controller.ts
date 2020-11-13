@@ -95,11 +95,14 @@ export class HtmlEditorImageController extends HtmlEditorElementController<HTMLI
     topLeft.style.left = bottomLeft.style.left = `${img.offsetLeft - 5}px`;
     topRight.style.left = bottomRight.style.left = `${img.offsetLeft + img.width - 5}px`;
     bottomLeft.style.top = bottomRight.style.top = `${img.offsetTop + img.height - 5}px`;
+
+    const fragment = document.createDocumentFragment();
     this.controllers?.forEach(c => {
       if (!this.context.simpleWysiwygService.isChildOf(c, editorContainer)) {
-        editorContainer.appendChild(c);
+        fragment.appendChild(c);
       }
     });
+    editorContainer.appendChild(fragment);
   }
 
   private onUnselected(): void {
