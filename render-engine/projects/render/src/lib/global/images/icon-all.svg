@@ -32,6 +32,19 @@
                         <rect id="Rectangle" fill="#00726A" fill-rule="nonzero" x="7.33333333" y="2.61904762" width="7.33333333" height="8.9047619" rx="3.5"></rect>
                         <path d="M11,13.0952381 C14.6207862,13.0952381 17.8515509,14.765119 19.9641689,17.3767556 C17.969381,20.1754232 14.6977669,22 11,22 C7.3022331,22 4.03061895,20.1754232 2.03634008,17.377452 C4.1484491,14.765119 7.37921377,13.0952381 11,13.0952381 Z" id="Combined-Shape" fill="#00726A" fill-rule="nonzero"></path>
                     </g>
+                    <g id="Symbol/Icon/Product-Category/Investment" transform="translate(87.920059, 0.000000)">
+                        <g id="Icon_Investment">
+                            <g id="Group">
+                                <circle id="椭圆形" fill="#74BA42" cx="11" cy="11" r="11"></circle>
+                                <rect id="矩形" x="5.11627907" y="5.62790698" width="11.255814" height="11.255814"></rect>
+                                <line x1="5.95681063" y1="14.5174419" x2="9.90365449" y2="10.0406977" id="直线-4" stroke="#FFFFFF" stroke-width="1.53488372" stroke-linecap="round" stroke-linejoin="round"></line>
+                                <line x1="10.027907" y1="10.027907" x2="12.4837209" y2="12.4837209" id="直线" stroke="#FFFFFF" stroke-width="1.53488372" stroke-linecap="round" stroke-linejoin="round"></line>
+                                <line x1="12.5775194" y1="12.4780362" x2="15.5620155" y2="7.4754522" id="直线-3" stroke="#FFFFFF" stroke-width="1.53488372" stroke-linecap="round" stroke-linejoin="round"></line>
+                                <line x1="13.0976744" y1="7.93023256" x2="15.5534884" y2="7.41860465" id="直线-5" stroke="#FFFFFF" stroke-width="1.53488372" stroke-linecap="round" stroke-linejoin="round"></line>
+                                <line x1="15.6046512" y1="7.6744186" x2="16.1162791" y2="10.2325581" id="直线-6" stroke="#FFFFFF" stroke-width="1.53488372" stroke-linecap="round" stroke-linejoin="round"></line>
+                            </g>
+                        </g>
+                    </g>
                 </g>
                 <g id="Group-4" transform="translate(0.000000, 22.000000)">
                     <g id="Icon/Chevron-Right/18" transform="translate(11.000000, 11.000000) rotate(-90.000000) translate(-11.000000, -11.000000) ">

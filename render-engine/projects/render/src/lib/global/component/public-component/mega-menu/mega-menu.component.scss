@@ -76,7 +76,9 @@ rdr-mega-menu {
             vertical-align: top;
 
             +.menu__item-wrap {
-              margin-left: 24px;
+              @include rwd($bp-lg-max) {
+                margin-left: 24px;
+              }
             }
           }
 

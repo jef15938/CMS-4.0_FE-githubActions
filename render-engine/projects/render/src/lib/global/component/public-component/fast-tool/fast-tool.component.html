@@ -1,1 +1,13 @@
-<div class="fast-tool__text">快捷功能</div>
+<div [@animateSlide]="showFastTool" class="fast-tool">
+  <div class="fast-tool__toggle" [class.fast-tool__toggle--active]="showFastTool" (click)="toggleFastTool()">
+    <div class="fast-tool__title">快捷功能</div>
+  </div>
+  <div class="fast-tool__content">
+    <div *ngFor="let item of fastToolList;index as i" class="fast-tool__item">
+      <a class="fast-tool__link" [href]="item?.url" [title]="item?.name">
+        <i class="fast-tool__icon"></i>
+        <div class="fast-tool__text">{{item?.name}}</div>
+      </a>
+    </div>
+  </div>
+</div>

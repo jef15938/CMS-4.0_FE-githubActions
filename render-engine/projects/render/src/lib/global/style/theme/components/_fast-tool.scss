@@ -1,8 +1,11 @@
 @mixin rdr-fast-tool-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-fast-tool' !default;
-  $border-color: map-get($theme, brown_grey_1) !default;
-  $fast-tool-bg-color: map-get($theme, color_primary) !default;
+  $fast-tool-border-color: map-get($theme, brown_grey_1) !default;
+  $fast-tool-primary-color: map-get($theme, color_primary) !default;
   $fast-tool-color: map-get($theme, white_0) !default;
+  $fast-tool-content-bg-color: map-get($theme, white_1) !default;
+  $fast-tool-content-text-color: map-get($theme, black_1) !default;
+  $fast-tool-content-active-text-color: #00635b !default;
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
@@ -10,8 +13,34 @@
   }
 
   #{$selector} {
-    border-color: $border-color;
-    background-color: transparentize($fast-tool-bg-color, 0.5);
-    color: $fast-tool-color;
+    .fast-tool {
+      &__toggle {
+        border-color: $fast-tool-border-color;
+        background-color: transparentize($fast-tool-primary-color, 0.5);
+        color: $fast-tool-color;
+
+        &--active {
+          background-color: $fast-tool-primary-color;
+        }
+      }
+
+      &__content {
+        background-color: transparentize($fast-tool-content-bg-color, 0.05);
+      }
+
+      &__item {}
+
+      &__link {
+        color: $fast-tool-content-text-color;
+
+        &:hover {
+          color: $fast-tool-primary-color;
+        }
+
+        &:active {
+          color: $fast-tool-content-active-text-color;
+        }
+      }
+    }
   }
 }

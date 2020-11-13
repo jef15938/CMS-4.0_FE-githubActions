@@ -3,23 +3,52 @@
 @include rdr-fast-tool-theme;
 
 rdr-fast-tool {
-  cursor: pointer;
-  user-select: none;
+  position: fixed;
+  top: 24.44%;
+  right: 0;
   display: inline-block;
-  width: 54px;
-  padding: 16px 16px 20px;
-  border-width: 0.5px;
-  border-style: solid;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+  z-index: 100;
 
-  @include rwd($bp-sm-max) {
-    width: 47px;
-    padding: 14px 14px 15px;
+  @include rwd($bp-md) {
+    top: 18.48%
   }
 
   .fast-tool {
-    &__text {
+    &__toggle {
+      cursor: pointer;
+      user-select: none;
+      display: inline-block;
+      box-sizing: border-box;
+      width: 54px;
+      padding: 16px 16px 20px;
+      border-width: 0.5px;
+      border-style: solid;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+
+      &:after {
+        @include rdr-icon(5, 2, 19px);
+        content: '';
+        transform: rotate(180deg);
+
+        @include rwd($bp-sm-max) {
+          @include rdr-icon(5, 2, 17px);
+        }
+      }
+
+      &--active {
+        &:after {
+          transform: rotate(0deg);
+        }
+      }
+
+      @include rwd($bp-sm-max) {
+        width: 47px;
+        padding: 14px 14px 15px;
+      }
+    }
+
+    &__title {
       @include Callout182-Bold1-Light2-Default-Color2-Center-Aligned;
       margin-bottom: 8px;
 
@@ -28,15 +57,36 @@ rdr-fast-tool {
         @include Callout162-Bold1-Light2-Default-Color2-Center-Aligned;
       }
     }
-  }
 
-  &:after {
-    @include rdr-icon(5, 2, 19px);
-    content: '';
-    transform: rotate(180deg);
+    &__content {
+      display: inline-block;
+      vertical-align: top;
+      width: 192px;
+      padding: 0 24px 32px;
+      border-bottom-left-radius: 12px;
+      box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.15);
+    }
 
-    @include rwd($bp-sm-max) {
-      @include rdr-icon(5, 2, 17px);
+    &__item {
+      @include Callout152-Bold1-Light2-Default-Color2-Center-Aligned;
+      display: inline-block;
+      margin-top: 24px;
+      text-align: center;
+      width: calc((100% - 20px) / 2);
+
+      &:nth-child(2n) {
+        margin-left: 20px;
+      }
+    }
+
+    &__link {
+      display: block;
+      text-decoration: none;
+    }
+
+    &__icon {
+      @include rdr-icon(5, 3, 36px);
+      margin-bottom: 8px;
     }
   }
 }
