@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewEncapsulation, Injector, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Injector, Input, HostBinding } from '@angular/core';
 import { CustomizeBaseDirective } from '../base-component';
 
 export interface FastToolData {
@@ -25,7 +25,7 @@ export interface FastToolData {
   ]
 })
 export class FastToolComponent extends CustomizeBaseDirective implements OnInit {
-
+  @HostBinding('@animateSlide') get slideIn() { return this.showFastTool; }
   @Input() fastToolList: FastToolData[];
 
   showFastTool = false;

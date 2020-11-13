@@ -4,10 +4,10 @@
 
 rdr-fast-tool {
   position: fixed;
-  top: 24.44%;
+  top: 20%;
   right: 0;
   display: inline-block;
-  z-index: 100;
+  z-index: 50;
 
   @include rwd($bp-md) {
     top: 18.48%
@@ -70,6 +70,7 @@ rdr-fast-tool {
     &__item {
       @include Callout152-Bold1-Light2-Default-Color2-Center-Aligned;
       display: inline-block;
+      vertical-align: middle;
       margin-top: 24px;
       text-align: center;
       width: calc((100% - 20px) / 2);
