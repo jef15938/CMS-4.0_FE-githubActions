@@ -21,4 +21,8 @@ export class ConfirmModalComponent extends CustomModalBase<ConfirmModalComponent
     this.close(true);
   }
 
+  cancel() {
+    this.close(false);
+  }
+
 }

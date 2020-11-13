@@ -179,6 +179,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         confirmBtnMessage: '儲存後離開',
         cancelBtnMessage: '不儲存直接離開'
       }).subscribe(confirm => {
+        if (confirm === undefined) { return; }
         this.editorSaveAndClose.emit({
           save: confirm,
           contentInfo,
@@ -246,6 +247,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         confirmBtnMessage: '套用變更',
         cancelBtnMessage: '復原變更'
       }).subscribe(confirm => {
+        if (confirm === undefined) { return; }
         if (confirm) {
           this.contentControlPanel.preserveChanges();
         } else {
@@ -271,6 +273,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         confirmBtnMessage: '套用變更',
         cancelBtnMessage: '復原變更'
       }).subscribe(confirm => {
+        if (confirm === undefined) { return; }
         if (confirm) {
           this.contentControlPanel.preserveChanges();
           ev.target.dispatchEvent(ev);
