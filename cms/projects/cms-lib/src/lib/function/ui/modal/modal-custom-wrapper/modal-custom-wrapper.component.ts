@@ -31,13 +31,17 @@ export class ModalCustomWrapperComponent implements AfterViewInit, OnDestroy {
     public modalRef: MatDialogRef<ModalCustomWrapperComponent>,
     private viewContainerRef: ViewContainerRef,
   ) {
-    modalRef.addPanelClass('cms-modal');
+    modalRef.addPanelClass(['cms-modal', 'overflow-hidden']);
   }
 
   ngAfterViewInit(): void {
     if (this.closeBtn) {
       this.observeCloseBtn();
     }
+    this.modalRef.removePanelClass(['overflow-hidden']);
+    this.modalRef.beforeClosed().subscribe(_ => {
+      this.modalRef.addPanelClass(['overflow-hidden']);
+    });
   }
 
   ngOnDestroy(): void {
