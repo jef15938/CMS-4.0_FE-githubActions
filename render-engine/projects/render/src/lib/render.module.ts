@@ -58,6 +58,7 @@ import { RenderPreviewComponent } from './global/component/render-preview/render
 import { SharingBtnTwitterComponent } from './global/component/social-media/sharing-btn-twitter/sharing-btn-twitter.component';
 import { SharingBtnUrlComponent } from './global/component/social-media/sharing-btn-url/sharing-btn-url.component';
 import { HamburgerComponent } from './global/component/public-component/hamburger/hamburger.component';
+import { HtmlTableContentComponent } from './function/ui/html-table-content/html-table-content.component';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
@@ -89,6 +90,7 @@ const COMPONENTS = [
   SharingBtnLineComponent,
   SharingBtnTwitterComponent,
   SharingBtnUrlComponent,
+  HtmlTableContentComponent,
 ];
 
 const PUBLIC_COMPONENTS_TEMPLATES = [

@@ -3,7 +3,7 @@ import { TABLE_CLASS_BASE_ROW } from '../const/html-editor-container.const';
 export class HtmlTransformer {
 
   private readonly attributesToClean = [
-    'href', 'lang', 'style', 'class'
+    'href', 'lang', 'style', 'class', 'height', 'width', 'cellspacing', 'cellpadding'
   ];
 
   transform(contentToTransform: string): string {
@@ -26,15 +26,15 @@ export class HtmlTransformer {
       this.attributesToClean.forEach(attr => {
         el.setAttribute(attr, '');
       });
-      for (let i = 0, l = el.attributes.length; i < l; ++i) {
-        const attr = el.attributes[i];
-        if (!attr) { return; }
-        el.removeAttribute(attr.name);
-      }
     });
 
     const tables = Array.from(body.querySelectorAll('table'));
     tables.forEach(table => {
+      const colgroups = table.querySelectorAll('colgroup');
+      colgroups.forEach(cg => {
+        cg.parentElement.removeChild(cg);
+      });
+
       const headerTr = Array.from(table.querySelectorAll('thead>tr')).filter(tr => !tr.classList.contains(TABLE_CLASS_BASE_ROW))[0];
       if (!headerTr) { return; }
       // <th> to <td>

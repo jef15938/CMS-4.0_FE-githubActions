@@ -43,11 +43,15 @@ mat-form-field {
   justify-content: center !important;
 }
 
+.cms-modal.overflow-hidden {
+  overflow: hidden !important;
+}
 .cms-modal {
   position: relative !important;
 
   .mat-dialog-container {
-    overflow: auto;
+    overflow-x: hidden !important;
+    overflow-y: auto;
     min-height: 100%;
     max-height: 100%;
   }

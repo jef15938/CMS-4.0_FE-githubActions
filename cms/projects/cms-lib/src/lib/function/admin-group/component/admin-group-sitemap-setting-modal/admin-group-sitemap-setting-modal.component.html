@@ -14,7 +14,7 @@
       </mat-form-field>
     </div>
   </div>
-  <ng-container *ngIf="treeData$|async; let treeData;">
+  <ng-container *ngIf="treeData$|async; else NoTreeData; let treeData;">
     <div class="modal-form-layout__row">
       <div class="modal-form-layout__col">
         <cms-tree #sitemapTree class="cms-tree" [context]="this" [nodeDatas]="treeData.nodes" [checkbox]="true"
@@ -29,4 +29,9 @@
         [disabled]="!treeData">儲存</button>
     </div>
   </ng-container>
+  <ng-template #NoTreeData>
+    <div class="btn-group">
+      <button type="button" tabindex="0" mat-raised-button class="btn btn-cancel" (click)="close()">返回</button>
+    </div>
+  </ng-template>
 </div>

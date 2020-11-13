@@ -1,47 +1,100 @@
-import { Component, Input, OnChanges, SimpleChanges, Inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Inject, ViewChild, AfterViewInit, ViewContainerRef, ApplicationRef, ComponentFactoryResolver, Injector, OnDestroy, ComponentRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { SitemapUtil } from '../../../global/utils/sitemap-util';
 import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
 import { RenderedPageEnvironment } from '../../../global/interface/page-environment.interface';
 import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../../../global/injection-token/injection-token';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { customAction } from '../../../global/const/custom-action-subject';
-
+import { takeUntil, debounceTime } from 'rxjs/operators';
+import { HtmlTableContentComponent } from '../html-table-content/html-table-content.component';
 
 @Component({
   selector: 'rdr-html-editor-content',
   templateUrl: './html-editor-content.component.html',
   styleUrls: ['./html-editor-content.component.scss']
 })
-export class HtmlEditorContentComponent implements OnChanges, AfterViewInit {
+export class HtmlEditorContentComponent implements OnChanges, AfterViewInit, OnDestroy {
 
-  @ViewChild('Container') container: ElementRef<HTMLDivElement>;
+  @ViewChild('Container', { read: ViewContainerRef }) container: ViewContainerRef;
 
   @Input() mode: 'preview' | 'edit';
   @Input() htmlString;
   @Input() sites: SiteInfoModel[] = [];
 
-  html: string;
-  customAction$ = customAction;
+  private componentRefs: ComponentRef<any>[] = [];
+
+  private customAction$ = customAction;
+  private render$ = new Subject();
+  private destroy$ = new Subject();
 
   constructor(
     private router: Router,
     @Inject(RENDERED_PAGE_ENVIRONMENT_ROKEN) private pageEnv: RenderedPageEnvironment,
+    private injector: Injector,
+    private applicationRef: ApplicationRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const div = document.createElement('div');
-    div.innerHTML = this.htmlString;
+    this.render$.next();
+  }
 
-    const actions = Array.from(div.querySelectorAll('a[actionid]')).filter(node => !!node.getAttribute('actionid'));
+  ngAfterViewInit(): void {
+    this.render$.pipe(
+      debounceTime(100),
+      takeUntil(this.destroy$),
+    ).subscribe(_ => this.renderView(this.htmlString));
+
+    fromEvent(this.container.element.nativeElement, 'click', { capture: true }).pipe(
+      takeUntil(this.destroy$),
+    ).subscribe((ev: MouseEvent) => this.emitCustomAction(ev));
+
+    this.render$.next();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
+  }
+
+  private emitCustomAction(ev: MouseEvent) {
+    const target = ev.target as HTMLElement;
+    if (target.tagName?.toLowerCase() === 'a') {
+      const actionId = target.getAttribute('actionid');
+      if (actionId && this.mode === 'preview') {
+        this.preventOriginClickEvent(ev);
+        this.customAction$.next(actionId);
+      }
+    }
+  }
+
+  private preventOriginClickEvent(ev) {
+    ev.preventDefault(); // 避免真的開連結，但也會讓 Base 的 TemplateFieldDirective.click() 收不到 event
+    ev.stopPropagation(); // 會讓 Base 的 TemplateFieldDirective.click() 收不到 event
+  }
+
+  private renderView(htmlString: string) {
+    this.componentRefs.forEach(cRef => {
+      this.applicationRef.detachView(cRef.hostView);
+    });
+    this.componentRefs.length = 0;
+    this.container.clear();
+    this.container.element.nativeElement.innerHTML = '';
+
+    const tempContainer = document.createElement('div');
+    tempContainer.innerHTML = htmlString;
+
+    const actions = Array.from(tempContainer.querySelectorAll('a[actionid]')).filter(node => !!node.getAttribute('actionid'));
     actions.forEach(node => {
       node.removeAttribute('target');
       node.removeAttribute('href');
       node.setAttribute('href', 'javascript: void(0)');
     });
 
-    const insides = div.querySelectorAll('a[urltype="INSIDE"]');
+    const insides = tempContainer.querySelectorAll('a[urltype="INSIDE"]');
     insides.forEach(node => {
+      // 根據 nodeId 找到 contentPath
       if (this.pageEnv.isRuntime) {
         const isHrefSet = !!node.getAttribute('nodeId');
         if (!isHrefSet) {
@@ -63,25 +116,27 @@ export class HtmlEditorContentComponent implements OnChanges, AfterViewInit {
       }
     });
 
-    this.html = div.innerHTML;
-  }
-
-  ngAfterViewInit(): void {
-    fromEvent(this.container.nativeElement, 'click', { capture: true }).subscribe(ev => {
-      const target = ev.target as HTMLElement;
-      if (target.tagName?.toLowerCase() === 'a') {
-        const actionId = target.getAttribute('actionid');
-        if (actionId && this.mode === 'preview') {
-          this.preventOriginClickEvent(ev);
-          this.customAction$.next(actionId);
-        }
-      }
+    const tableWraps = Array.from(tempContainer.querySelectorAll('div.neux-table-wrap')) as HTMLDivElement[];
+    tableWraps.forEach(wrap => {
+      const table = wrap.querySelector('table');
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(HtmlTableContentComponent);
+      const componentRef = componentFactory.create(this.injector, [], wrap);
+      this.componentRefs.push(componentRef);
+      const instance = componentRef.instance;
+      instance.table = table;
     });
-  }
 
-  private preventOriginClickEvent(ev) {
-    ev.preventDefault(); // 避免真的開連結，但也會讓 Base 的 TemplateFieldDirective.click() 收不到 event
-    ev.stopPropagation(); // 會讓 Base 的 TemplateFieldDirective.click() 收不到 event
+    const childNodes = Array.from(tempContainer.childNodes);
+    const fragment = document.createDocumentFragment();
+    childNodes.forEach(childNode => {
+      fragment.appendChild(childNode);
+    });
+
+    this.container.element.nativeElement.appendChild(fragment);
+
+    this.componentRefs.forEach(cRef => {
+      this.applicationRef.attachView(cRef.hostView);
+    });
   }
 
 }
