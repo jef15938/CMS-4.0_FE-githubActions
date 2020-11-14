@@ -37,7 +37,7 @@ export class CardNewsComponent extends CustomizeBaseDirective implements OnInit,
 
   ngOnInit(): void {
     /** Binding Resize event */
-    CommonUtils.isMobile$(this.resize$).pipe(
+    CommonUtils.isMobile$(this.resize$, 768).pipe(
       tap(result => {
         this.ellipsisTitleTextNumber = result ? 22 : 43;
         this.ellipsisDescTextNumber = result ? 28 : 53;

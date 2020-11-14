@@ -39,7 +39,7 @@ export class CardJournalComponent extends CustomizeBaseDirective implements OnIn
 
   ngOnInit(): void {
     /** Binding Resize event */
-    CommonUtils.isMobile$(this.resize$).pipe(
+    CommonUtils.isMobile$(this.resize$, 768).pipe(
       tap(result => {
         this.ellipsisDescTextNumber = result ? 137 : 244;
         this.ellipsisSubTitleTextNumber = result ? 33 : 37;

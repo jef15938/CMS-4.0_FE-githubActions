@@ -72,7 +72,7 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
 
   ngAfterViewInit() {
     /** Binding Resize event */
-    CommonUtils.isMobile$(this.resize$).pipe(
+    CommonUtils.isMobile$(this.resize$, 768).pipe(
       tap(result => {
         this.listItemWidth = this.calListItemWidth(result);
         this.increment = this.getIncrement(this.selectedIndex, this.selectedIndex);

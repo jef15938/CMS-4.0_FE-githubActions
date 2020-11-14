@@ -4,18 +4,18 @@ import { debounceTime, map, startWith, tap } from 'rxjs/operators';
 export class CommonUtils {
 
   // @dynamic
-  static isMobile$(resize$: Observable<Event>): Observable<boolean> {
+  static isMobile$(resize$: Observable<Event>, breakpoint: number): Observable<boolean> {
     const result = resize$
-    .pipe(
-      startWith({ target: { innerWidth: window.innerWidth } }),
-    )
-    .pipe(
-      // tap(_ => console.warn('resize')),
-      debounceTime(200),
-      map(e => (e.target as Window).innerWidth),
-      // startWith(window.innerWidth),
-      map((width) => width < 768)
-    );
+      .pipe(
+        startWith({ target: { innerWidth: window.innerWidth } }),
+      )
+      .pipe(
+        // tap(_ => console.warn('resize')),
+        debounceTime(200),
+        map(e => (e.target as Window).innerWidth),
+        // startWith(window.innerWidth),
+        map((width) => width < breakpoint)
+      );
     return result;
   }
 }
