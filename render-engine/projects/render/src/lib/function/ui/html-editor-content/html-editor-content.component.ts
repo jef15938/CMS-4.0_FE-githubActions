@@ -75,6 +75,7 @@ export class HtmlEditorContentComponent implements OnChanges, AfterViewInit, OnD
   }
 
   private renderView(htmlString: string) {
+    htmlString = htmlString || '<p>無內容</p>';
     this.componentRefs.forEach(cRef => {
       this.applicationRef.detachView(cRef.hostView);
     });
