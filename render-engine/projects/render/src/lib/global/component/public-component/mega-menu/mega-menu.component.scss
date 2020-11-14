@@ -60,6 +60,10 @@ rdr-mega-menu {
               }
             }
 
+            @include rwd(1023px) {
+              margin-right: 16px;
+            }
+
             >.menu__link {
               @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
               margin-bottom: 16px;
@@ -78,6 +82,10 @@ rdr-mega-menu {
             +.menu__item-wrap {
               @include rwd($bp-lg-max) {
                 margin-left: 24px;
+              }
+
+              @include rwd(1023px) {
+                margin-right: 16px;
               }
             }
           }
@@ -161,6 +169,7 @@ rdr-mega-menu {
         .menu {
           display: flex;
           flex-wrap: wrap;
+          justify-content: space-between;
 
           @include rwd($bp-sm) {
             display: block;
@@ -182,9 +191,10 @@ rdr-mega-menu {
             display: inline-block;
             vertical-align: top;
             flex-grow: 1;
-            width: calc((100% - 32px)/2);
+            flex-shrink: 0;
+            flex-basis: auto;
             margin-bottom: 24px;
-            margin-right: 16px;
+            min-width: calc((100% - 16px) /2);
 
             @include rwd($bp-sm) {
               display: block;

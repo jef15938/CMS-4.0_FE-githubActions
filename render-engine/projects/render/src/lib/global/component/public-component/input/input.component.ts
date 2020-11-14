@@ -17,7 +17,7 @@ export const RDR_INPUT_CONTROL_VALUE_ACCESSOR = {
 })
 export class InputComponent extends CustomizeBaseDirective implements OnInit, ControlValueAccessor {
 
-  @Input() placeholder = '請選擇';
+  @Input() placeholder = '請輸入';
   @Input() disabled = false;
   @Input() isError = false;
 
