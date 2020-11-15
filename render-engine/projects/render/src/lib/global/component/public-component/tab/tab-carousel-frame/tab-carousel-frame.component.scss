@@ -3,6 +3,15 @@
 @include rdr-tab-carousel-theme();
 
 rdr-tab-carousel-frame {
+  swiper>.swiper.s-wrapper .swiper-wrapper .swiper-slide {
+    height: 56px;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
+
   .tab-carousel {
 
     &__list {
@@ -59,6 +68,7 @@ rdr-tab-carousel-frame {
 
     &__nav {
       @include rdr-icon(4, 2, 20px);
+      background-image: url('../../../../images/icon-all.svg');
       cursor: pointer;
 
       @include rwd($bp-sm-max) {
@@ -82,10 +92,5 @@ rdr-tab-carousel-frame {
         opacity: 0.4;
       }
     }
-  }
-
-  .swiper-button-next,
-  .swiper-button-prev {
-    display: none;
   }
 }
