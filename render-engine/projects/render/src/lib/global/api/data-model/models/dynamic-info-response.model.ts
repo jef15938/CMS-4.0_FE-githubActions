@@ -11,7 +11,9 @@ import { ContentInfoModel } from './content-info.model';
   (bean, model) => {
     model.pageInfo = ModelMapper.mapModelTo(PageInfoGetResponseModel, bean.page_info);
     model.contentJson = bean.content_json;
-    model.content = ModelMapper.mapModelTo(ContentInfoModel, plainToClass(ContentInfo, model.contentJson));
+    model.content = model.contentJson
+      ? ModelMapper.mapModelTo(ContentInfoModel, plainToClass(ContentInfo, JSON.parse(model.contentJson)))
+      : null;
   }
 )
 export class DynamicInfoResponseModel {
