@@ -59,6 +59,13 @@ const routes: Routes = [
     }
   },
   {
+    path: ':funcID/:category/:dataID', component: RenderComponent, // runtime
+    data: { context: 'runtime' },
+    resolve: {
+      data: DynamicPageInfoResolverService
+    }
+  },
+  {
     path: '**',
     redirectTo: 'error'
   }
