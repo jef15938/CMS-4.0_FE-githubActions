@@ -10,6 +10,7 @@ import { ContentInfoModel } from '../api/data-model/models/content-info.model';
 import { ApiContext } from '../api/context-api-name-factory';
 import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
 import { SiteMapGetResponse } from '../api/neuxAPI/bean/SiteMapGetResponse';
+import { DynamicInfoResponseModel } from '../api/data-model/models/dynamic-info-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,19 @@ export class RenderService {
         : this.apiService.GetPreviewContentByContentId({ content_id: contentID })
     ).pipe(
       ModelMapper.rxMapModelTo(ContentInfoModel),
+    );
+  }
+
+  /**
+   * 依據 func_id, category, data_id 取得 DynamicInfoResponse
+   *
+   * @param {string} contentID
+   * @returns {Observable<DynamicInfoResponse>}
+   * @memberof RenderService
+   */
+  getDynamicInfo(funcID: string, category: string, dataID: string): Observable<DynamicInfoResponseModel> {
+    return this.apiService.GetDynamicByFuncIdAndCategoryAndDataId({ func_id: funcID, category, data_id: dataID }).pipe(
+      ModelMapper.rxMapModelTo(DynamicInfoResponseModel),
     );
   }
 

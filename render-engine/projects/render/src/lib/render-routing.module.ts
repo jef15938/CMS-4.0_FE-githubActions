@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RenderComponent } from './global/component/render/render.component';
 import { PageInfoResolverService } from './global/service/page-info-resolver.service';
 import { RenderPreviewComponent } from './global/component/render-preview/render-preview.component';
+import { DynamicPageInfoResolverService } from './global/service/dynamic-page-info-resolver.service';
 
 const routes: Routes = [
   {
@@ -23,6 +24,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'iframe/:funcID/:category/:dataID', component: RenderComponent, // preview
+        data: { context: 'preview' },
+        resolve: {
+          data: DynamicPageInfoResolverService
+        }
+      },
+      {
         path: ':pageID', component: RenderPreviewComponent, // preview，放前面才不會被當作是 :pageID/:languageID
         data: { context: 'preview' },
       },
@@ -30,22 +38,12 @@ const routes: Routes = [
         path: ':languageID/:pageID', component: RenderPreviewComponent, // preview
         data: { context: 'preview' },
       },
+      {
+        path: ':funcID/:category/:dataID', component: RenderPreviewComponent, // preview
+        data: { context: 'preview' },
+      },
     ]
   },
-  // {
-  //   path: 'preview/:pageID', component: RenderComponent, // preview，放前面才不會被當作是 :pageID/:languageID
-  //   data: { context: 'preview' },
-  //   resolve: {
-  //     data: PageInfoResolverService
-  //   }
-  // },
-  // {
-  //   path: 'preview/:languageID/:pageID', component: RenderComponent, // preview
-  //   data: { context: 'preview' },
-  //   resolve: {
-  //     data: PageInfoResolverService
-  //   }
-  // },
   {
     path: ':pageID', component: RenderComponent, // runtime
     data: { context: 'runtime' },

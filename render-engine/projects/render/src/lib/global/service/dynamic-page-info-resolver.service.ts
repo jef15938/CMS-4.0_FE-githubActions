@@ -15,12 +15,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ApiContext } from '../api/context-api-name-factory';
 import { isPlatformBrowser } from '@angular/common';
 import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
+import { DynamicInfoResponseModel } from '../api/data-model/models/dynamic-info-response.model';
 import { SitemapUtil } from '../utils/sitemap-util';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PageInfoResolverService implements Resolve<PageData> {
+export class DynamicPageInfoResolverService implements Resolve<PageData> {
 
   constructor(
     private renderService: RenderService,
@@ -38,9 +39,15 @@ export class PageInfoResolverService implements Resolve<PageData> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<PageData> {
     const context: ApiContext = isPlatformBrowser(this.platformId) ? route.data.context : 'batchSSR';
-    const pageID = route.params.pageID as string;
-    const lang = route.params.languageID as string;
-    const pageInfo$: Observable<PageInfoGetResponseModel> = this.renderService.getPageInfo(context, pageID, lang).pipe(shareReplay(1));
+
+    const funcID = route.params.funcID as string;
+    const category = route.params.category as string;
+    const dataID = route.params.dataID as string;
+
+    const dynamicInfo$: Observable<DynamicInfoResponseModel>
+      = this.renderService.getDynamicInfo(funcID, category, dataID).pipe(shareReplay(1));
+
+    const pageInfo$: Observable<PageInfoGetResponseModel> = dynamicInfo$.pipe(map(r => r.pageInfo));
     const sitemap$: Observable<SiteMapGetResponseModel> = this.store.pipe(
       select(selectFetchSitemapStatus),
       filter(x => !x.pending && x.result !== null),
@@ -56,8 +63,8 @@ export class PageInfoResolverService implements Resolve<PageData> {
         // TODO: handle sitemap not found error
         throwError('Sitemap Not Found')))
     );
-    const contentInfo$: Observable<ContentInfoModel> = pageInfo$.pipe(
-      switchMap((x) => this.renderService.getContentInfo(context, x.contentId))
+    const contentInfo$: Observable<ContentInfoModel> = dynamicInfo$.pipe(
+      map(r => r.content)
     );
 
     // fetch Sitemap first
@@ -71,11 +78,11 @@ export class PageInfoResolverService implements Resolve<PageData> {
       contentInfo: contentInfo$
     }).pipe(
       map(res => {
-        const pageNode = SitemapUtil.findNodeByContentPathFromSites(res.sitemap.sites, pageID);
+        const pageNode = SitemapUtil.findNodeByNodeIdFromSites(res.sitemap.sites, res.pageInfo.nodeParent);
         return { pageNode, ...res };
       }),
       catchError((error: HttpErrorResponse) => {
-        console.error('PageInfoResolverService.resolve() error = ', error);
+        console.error('DynamicPageInfoResolverService.resolve() error = ', error);
         this.router.navigate(['error-page'], {
           state: {
             error: {
