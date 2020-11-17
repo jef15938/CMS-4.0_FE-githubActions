@@ -361,11 +361,11 @@ export class HtmlEditorTableController extends HtmlEditorElementController<HTMLT
       this.el.classList.add(TABLE_CLASS_NEUX_TABLE);
     }
 
-    let tableWrap: HTMLDivElement = this.context.editorContainer.querySelector(`[tableid=t${this.el.id}]`);
-    if (!tableWrap) {
-      tableWrap = this.tableControllerService.createTableWrap(this.el);
-      this.tableControllerService.setTableStyle(tableWrap, this.el);
-    }
+    const tableWrap: HTMLDivElement =
+      this.context.editorContainer.querySelector(`[tableid=t${this.el.id}]`)
+      || this.tableControllerService.createTableWrap(this.el);
+
+    this.tableControllerService.setTableStyle(tableWrap, this.el);
 
     this.selectedCols = Array.from(this.el.querySelectorAll('td.selected'));
     this.selectedRows = this.selectedCols
