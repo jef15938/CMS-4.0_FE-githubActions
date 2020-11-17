@@ -33,7 +33,7 @@
     "@angular/platform-server": "~10.1.0",
     "@angular/router": "~10.1.0",
     "@neux/core": "^0.1.16",
-    "@neux/ui": "0.0.29-next.11",
+    "@neux/ui": "0.0.29-next.12",
     "@ngrx/effects": "^10.0.0",
     "@ngrx/schematics": "^10.0.0",
     "@ngrx/store": "^10.0.0",
