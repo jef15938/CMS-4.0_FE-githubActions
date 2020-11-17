@@ -10,3 +10,5 @@ export * from './models/site-info.model';
 export * from './models/site-map-get-response.model';
 export * from './models/site-map-info.model';
 export * from './models/site-map-language-info.model';
+export * from './models/news-detail-response-model';
+export * from './models/detail-object-model';

@@ -31,15 +31,12 @@ export class RenderPreviewComponent implements OnInit {
   iframeUrl = '';
 
   constructor(
-    private router: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.router.params.subscribe(params => {
-      const languageID = params.languageID;
-      const pageID = params.pageID;
-      const origin = window.location.origin;
-      this.iframeUrl = `${origin}/preview/iframe/${languageID}/${pageID}`;
+    this.activatedRoute.params.subscribe(params => {
+      this.iframeUrl = window.location.href.replace('/preview/', '/preview/iframe/');
     });
 
     window.onmessage = (e) => {

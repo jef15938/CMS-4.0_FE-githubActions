@@ -5,7 +5,7 @@ export class SitemapUtil {
   static findContentPathBySiteIdAndNodeId(sites: SiteInfoModel[], siteId: string, nodeId: string) {
     const site = (sites || []).find(s => s.siteId === siteId);
     if (site) {
-      const node = SitemapUtil.findNodeByNodeId(site.siteMap, nodeId);
+      const node = SitemapUtil.findNodeByNodeIdFromSitemaps(site.siteMap, nodeId);
       if (node) {
         return node.contentPath;
       }
@@ -13,15 +13,7 @@ export class SitemapUtil {
     return '';
   }
 
-  static findNodeByNodeId(sources: SiteMapInfoModel[], nodeId: string): SiteMapInfoModel {
-    if (!sources?.length) { return null; }
-    const node = sources.find(n => n.nodeId === nodeId);
-    if (node) { return node; }
-    const children = sources.reduce((a, b) => a.concat(b.children || []), [] as SiteMapInfoModel[]);
-    return SitemapUtil.findNodeByNodeId(children, nodeId);
-  }
-
-  private static findNodeByContentPathFromSitemaps(sources: SiteMapInfoModel[], contentPath: string): SiteMapInfoModel {
+  static findNodeByContentPathFromSitemaps(sources: SiteMapInfoModel[], contentPath: string): SiteMapInfoModel {
     if (!sources?.length) { return null; }
     const node = sources.find(n => n.contentPath === contentPath);
     if (node) { return node; }
@@ -36,7 +28,7 @@ export class SitemapUtil {
     }).filter(v => !!v).find(n => n.contentPath === contentPath);
   }
 
-  private static findNodeByNodeIdFromSitemaps(sources: SiteMapInfoModel[], nodeId: string): SiteMapInfoModel {
+  static findNodeByNodeIdFromSitemaps(sources: SiteMapInfoModel[], nodeId: string): SiteMapInfoModel {
     if (!sources?.length) { return null; }
     const node = sources.find(n => n.nodeId === nodeId);
     if (node) { return node; }

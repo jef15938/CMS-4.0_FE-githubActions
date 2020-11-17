@@ -35,10 +35,6 @@ mat-form-field {
   padding: 0 !important;
 }
 
-.cdk-overlay-pane {
-  overflow: auto;
-}
-
 .mat-paginator-container {
   justify-content: center !important;
 }
@@ -46,7 +42,13 @@ mat-form-field {
 .cms-modal.overflow-hidden {
   overflow: hidden !important;
 }
+
 .cms-modal {
+  &.cdk-overlay-pane {
+    overflow: auto;
+    z-index: unset;
+  }
+
   position: relative !important;
 
   .mat-dialog-container {
