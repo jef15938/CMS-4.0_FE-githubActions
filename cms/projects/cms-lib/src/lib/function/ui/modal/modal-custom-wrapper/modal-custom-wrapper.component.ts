@@ -55,9 +55,9 @@ export class ModalCustomWrapperComponent implements AfterViewInit, OnDestroy {
     const parentEl = selfEl.parentElement;
     const overlayPanelEl = parentEl.parentElement;
     const btnEl = this.closeBtn.element.nativeElement as HTMLElement;
-    this.calculateCloseBtnPosition(btnEl, overlayPanelEl);
     setTimeout(() => {
       // btnEl.style.transition = '0.5s';
+      this.calculateCloseBtnPosition(btnEl, overlayPanelEl);
       btnEl.style.opacity = '1';
       // setTimeout(() => {
       //   btnEl.style.transition = '';

@@ -5,6 +5,30 @@ import { Injectable } from '@angular/core';
 })
 export class SimpleWysiwygService {
 
+  hasHighlight(editorContainer: HTMLDivElement) {
+    const range = this.getRange();
+    if (!range) { return false; }
+    const highlightClass = 'highlight';
+
+    if (range.startContainer === range.endContainer) {
+      let el = range.startContainer as HTMLElement;
+      let hasHighlight = false;
+      while (el && el !== editorContainer) {
+        if (el.classList?.contains(highlightClass)) {
+          hasHighlight = true;
+          el = undefined;
+        } else {
+          el = el.parentElement;
+        }
+      }
+      return hasHighlight;
+    } else {
+      const fragment = range.cloneContents();
+      const elementsInRange = Array.from(fragment.querySelectorAll('*'));
+      return elementsInRange.some(el => el.classList.contains(highlightClass));
+    }
+  }
+
   // tslint:disable-next-line: only-arrow-functions
   getSelectionCollapsed = function(containerNode) {
     if (window.getSelection) {
