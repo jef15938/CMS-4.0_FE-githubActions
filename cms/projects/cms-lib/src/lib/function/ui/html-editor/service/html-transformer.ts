@@ -2,6 +2,10 @@ import { TABLE_CLASS_BASE_ROW } from '../const/html-editor-container.const';
 
 export class HtmlTransformer {
 
+  private readonly tagsToReplace = [
+    'o:p', 'em', 'b(?!ody)', 's(?!pan)(?!tyle)', 'u(?!l)', 'i', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+  ];
+
   private readonly attributesToClean = [
     'href', 'lang', 'style', 'class', 'height', 'width', 'cellspacing', 'cellpadding'
   ];
@@ -11,10 +15,8 @@ export class HtmlTransformer {
       .replace(/<\!--[\s\S]*?-->/g, '')
       .replace(/<\!\[.*?\]>/g, '')
       .replace(/<a/g, '<span').replace(/<\/a>/g, '</span>')
-      .replace(/<o:p/g, '<p').replace(/<\/o:p>/g, '</p>')
-      .replace(/<em/g, '<p').replace(/<\/em>/g, '</p>')
-      .replace(/<b/g, '<p').replace(/<\/b>/g, '</p>')
-      .replace(/<h[1,2,3,4,5,6]/g, '<p').replace(/<\/h[1,2,3,4,5,6]>/g, '</p>')
+      .replace(new RegExp(`<(${this.tagsToReplace.map(tag => `(${tag})`).join('|')})`, 'g'), '<span')
+      .replace(new RegExp(`</(${this.tagsToReplace.map(tag => `(${tag})`).join('|')})>`, 'g'), '</span>')
       ;
 
     const html = document.createElement('html');
