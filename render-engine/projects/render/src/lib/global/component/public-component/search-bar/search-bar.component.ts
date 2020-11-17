@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Injector } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Injector, Input, Output, EventEmitter } from '@angular/core';
 import { CustomizeBaseDirective } from '../base-component';
 
 @Component({
@@ -9,11 +9,20 @@ import { CustomizeBaseDirective } from '../base-component';
 })
 export class SearchBarComponent extends CustomizeBaseDirective implements OnInit {
 
+  @Input() placeholder = '搜尋所有商品';
+
+  @Output() keywordsChange: EventEmitter<string> = new EventEmitter();
+  keywords = '';
+
   constructor(injector: Injector) {
     super(injector);
   }
 
   ngOnInit(): void {
+  }
+
+  send(formValue) {
+    this.keywordsChange.emit(formValue);
   }
 
 }

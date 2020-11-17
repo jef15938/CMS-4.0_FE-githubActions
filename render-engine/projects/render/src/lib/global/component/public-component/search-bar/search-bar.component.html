@@ -1,4 +1,5 @@
-<form class="search-bar">
-  <input class="search-bar__input" type="text" placeholder="搜尋所有商品" nx-input />
+<form (ngSubmit)="send(searchForm)" #searchForm="ngForm" class="search-bar">
+  <input [(ngModel)]="keywords" name="keywords" class="search-bar__input" type="text" [placeholder]="placeholder"
+    nx-input />
   <button type="submit" class="search-bar__btn"><i class="icon-search"></i></button>
 </form>
