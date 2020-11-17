@@ -4,16 +4,11 @@ import {IsNotEmpty} from 'class-validator';
 
 import { TypeFactory } from '../type-factory';
 
-export class FullSearchInfo {
+export class ResponseHeader {
 
 @IsNotEmpty()
-public id: string;
-@IsNotEmpty()
-public title: string;
-public description: string;
-@IsNotEmpty()
-public url: string;
-public type_id: string;
+public code: string;
+public message: string;
 
 
 }

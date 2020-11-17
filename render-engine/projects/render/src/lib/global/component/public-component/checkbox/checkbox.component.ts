@@ -23,11 +23,8 @@ export interface CheckboxData {
 export class CheckboxComponent extends CustomizeBaseDirective implements OnInit, ControlValueAccessor {
   @ViewChild(NxCheckboxComponent, { static: true }) checkboxRef: NxCheckboxComponent;
 
-  @Input() data: CheckboxData = {
-    id: '',
-    title: '我已閱讀並同意',
-    disabled: false
-  };
+  @Input() id = '';
+  @Input() disabled = false;
 
   constructor(injector: Injector) {
     super(injector);

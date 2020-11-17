@@ -13,6 +13,9 @@ GetContentByContentId: `${BASE_URL}\/Content/{content_id}`,
 GetPreviewContentByContentId: `${BASE_URL}\/Preview/Content/{content_id}`,
 GetDataSourceByTypeIdAndId: `${BASE_URL}\/DataSource/{type_id}/{id}`,
 GetFullSearch: `${BASE_URL}\/FullSearch`,
+GetShortCut: `${BASE_URL}\/ShortCut`,
+GetNewsDetailByNewsId: `${BASE_URL}\/NewsDetail/{news_id}`,
+GetDynamicByFuncIdAndCategoryAndDataId: `${BASE_URL}\/Dynamic/{func_id}/{category}/{data_id}`,
 
 };
 export const API_TYPE = {
@@ -28,5 +31,8 @@ GetContentByContentId: 'Restful',
 GetPreviewContentByContentId: 'Restful',
 GetDataSourceByTypeIdAndId: 'Restful',
 GetFullSearch: 'Restful',
+GetShortCut: 'Restful',
+GetNewsDetailByNewsId: 'Restful',
+GetDynamicByFuncIdAndCategoryAndDataId: 'Restful',
 
 };

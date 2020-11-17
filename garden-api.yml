@@ -376,6 +376,75 @@ paths:
           name: page
           description: 查詢頁數
       description: 取得全文檢索資料
+  /ShortCut:
+    get:
+      summary: ShortCut
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortCutResponse'
+      operationId: get-ShortCut
+      description: 快捷
+  '/NewsDetail/{news_id}':
+    parameters:
+      - schema:
+          type: string
+        name: news_id
+        in: path
+        required: true
+    get:
+      summary: News Detail
+      tags:
+        - News
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsDetailResponse'
+      operationId: get-NewsDetail-news_id
+      description: 最新消息內頁
+  '/Dynamic/{func_id}/{category}/{data_id}':
+    parameters:
+      - schema:
+          type: string
+          example: news
+        name: func_id
+        in: path
+        required: true
+        description: farm功能
+      - schema:
+          type: string
+          example: '3'
+        name: category
+        in: path
+        required: true
+        description: 功能的分類
+      - schema:
+          type: string
+          example: '5'
+        name: data_id
+        in: path
+        required: true
+        description: 資料ID
+    get:
+      summary: DynamicInfo
+      tags:
+        - Garden
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DynamicInfoResponse'
+      operationId: get-Dynamic-Info
+      description: 用於內頁資料，取得內頁的meta資訊、node_parent及content json
 components:
   schemas:
     PageInfoGetResponse:
@@ -718,7 +787,7 @@ components:
         device:
           type: string
           description: 哪些裝置可讀取，多裝置由逗號分開
-          example: 'pc,mobile'
+          example: 'pc,mobile,pad'
     SiteMapLanguageInfo:
       title: SiteMapLanguageInfo
       type: object
@@ -784,9 +853,9 @@ components:
         title:
           type: string
           description: 資料標題
-        search_text:
+        description:
           type: string
-          description: 檢索內容
+          description: 檢索資料描述
         url:
           type: string
           description: 連結頁面
@@ -797,5 +866,101 @@ components:
         - id
         - title
         - url
+    ResponseHeader:
+      title: ResponseHeader
+      type: object
+      properties:
+        code:
+          type: string
+          description: 回應碼(0：代表正常)
+          example: '0'
+        message:
+          type: string
+          description: 回應訊息(當code不為0會放入錯誤訊息)
+          example: 傳入參數錯誤
+      required:
+        - code
+      x-tags:
+        - Model
+    ShortCutResponse:
+      title: ShortCutResponse
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        datas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShortCutObject'
+      required:
+        - header
+        - datas
+      x-tags:
+        - Model
+    ShortCutObject:
+      title: ShortCutObject
+      type: object
+      properties:
+        title:
+          type: string
+          description: 標題
+          example: 表單下載
+        icon_url:
+          type: string
+          description: icon連結
+          example: resource/xxx.png
+        url:
+          type: string
+          description: 連結
+          example: 'http://google.com.tw'
+        url_blank:
+          type: boolean
+          description: 連結是否另開分頁
+      required:
+        - title
+        - icon_url
+        - url
+        - url_blank
+      description: ''
+      x-tags:
+        - Model
+    DetailObject:
+      title: DetailObject
+      type: object
+      properties:
+        content_id:
+          type: string
+          description: 內容代碼
+          example: '1'
+        content_json:
+          type: string
+          description: 內容（json格式）
+          example: '{}'
+      required:
+        - content_id
+        - content_json
+      x-tags:
+        - Model
+    NewsDetailResponse:
+      title: NewsDetailResponse
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        data:
+          $ref: '#/components/schemas/DetailObject'
+      x-tags:
+        - Model
+    DynamicInfoResponse:
+      title: DynamicInfoResponse
+      type: object
+      properties:
+        page_info:
+          $ref: '#/components/schemas/PageInfoGetResponse'
+        content_json:
+          type: string
+          description: content內文json
 tags:
   - name: FullSearch
+  - name: News
+  - name: Garden

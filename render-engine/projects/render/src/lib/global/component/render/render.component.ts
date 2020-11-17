@@ -57,11 +57,10 @@ export class RenderComponent implements OnInit {
     const url = this.router.url;
     this.runtime = url.indexOf('/preview/') < 0;
 
-    const { pageInfo, sitemap, contentInfo, pageID } = this.activatedRoute.snapshot.data.data as PageData;
+    const { pageInfo, sitemap, contentInfo, pageNode } = this.activatedRoute.snapshot.data.data as PageData;
     this.sites = sitemap.sites || [];
     console.warn('this.sites = ', this.sites);
     this.pageInfo = pageInfo;
-    const pageNode = SitemapUtil.findNodeByContentPathFromSites(this.sites, pageID);
     this.pageNode = pageNode;
     const isBrowser = isPlatformBrowser(this.platformId);
 

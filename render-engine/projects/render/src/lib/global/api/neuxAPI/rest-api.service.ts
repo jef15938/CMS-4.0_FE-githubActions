@@ -11,6 +11,9 @@ import { SiteMapGetResponse } from './bean/SiteMapGetResponse';
 import { ContentInfo } from './bean/ContentInfo';
 import { ListDataSourceDataResponse } from './bean/ListDataSourceDataResponse';
 import { FullSearchGetResponse } from './bean/FullSearchGetResponse';
+import { ShortCutResponse } from './bean/ShortCutResponse';
+import { NewsDetailResponse } from './bean/NewsDetailResponse';
+import { DynamicInfoResponse } from './bean/DynamicInfoResponse';
 
 
 
@@ -199,6 +202,45 @@ export class RestApiService {
     params: { keyword: string, type?: string, pageSize?: string, page?: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<FullSearchGetResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetShortCut',
+    method: 'get',
+    path: '/ShortCut',
+    mock: './assets/mock/GetShortCut.json',
+    responseType: ShortCutResponse
+  })
+  GetShortCut(
+    params: {},
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<ShortCutResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetNewsDetailByNewsId',
+    method: 'get',
+    path: '/NewsDetail/{news_id}',
+    mock: './assets/mock/GetNewsDetailByNewsId.json',
+    responseType: NewsDetailResponse
+  })
+  GetNewsDetailByNewsId(
+    params: { news_id: string, },
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<NewsDetailResponse> { return null; }
+
+  // @dynamic
+  @RestApi({
+    apiName: 'GetDynamicByFuncIdAndCategoryAndDataId',
+    method: 'get',
+    path: '/Dynamic/{func_id}/{category}/{data_id}',
+    mock: './assets/mock/GetDynamicByFuncIdAndCategoryAndDataId.json',
+    responseType: DynamicInfoResponse
+  })
+  GetDynamicByFuncIdAndCategoryAndDataId(
+    params: { func_id: string, category: string, data_id: string, },
+    apiDispatchOptions?: ApiDispatchOptions,
+  ): Observable<DynamicInfoResponse> { return null; }
 
   private getUrlByPathAndParams(path: string, params: { [key: string]: any }) {
     let url = path;

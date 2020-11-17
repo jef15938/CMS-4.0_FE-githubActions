@@ -13,9 +13,13 @@ export enum TemplateType {
 }
 
 export interface WithRenderInfo {
+  /** edit=從CMS, preview=從Render */
   mode: 'preview' | 'edit';
+  /** 整個 Sitemap */
   sites: SiteInfoModel[];
+  /** 版型是否被限制為固定 */
   fixed: boolean;
+  /** 頁面有關的資料 */
   pageInfo: PageInfoGetResponseModel;
 }
 
