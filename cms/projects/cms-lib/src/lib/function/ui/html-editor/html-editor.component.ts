@@ -97,7 +97,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       const galleryID = img.getAttribute(GALLERY_ATTR_GALLERY_ID);
       if (galleryID) {
         const src = img.getAttribute('src');
-        if (src.indexOf(this.environment.apiBaseUrl) < 0) {
+        if (src?.indexOf(this.environment.apiBaseUrl) < 0) {
           img.setAttribute('src', `${this.environment.apiBaseUrl}${src}`);
         }
       }
@@ -430,7 +430,7 @@ export class HtmlEditorComponent implements HtmlEditorContext, OnInit, AfterView
       const galleryID = img.getAttribute(GALLERY_ATTR_GALLERY_ID);
       if (galleryID) {
         const src = img.getAttribute('src');
-        if (src.indexOf(this.environment.apiBaseUrl) > -1) {
+        if (src?.indexOf(this.environment.apiBaseUrl) > -1) {
           img.setAttribute('src', img.getAttribute('src').replace(this.environment.apiBaseUrl, ''));
         }
       }

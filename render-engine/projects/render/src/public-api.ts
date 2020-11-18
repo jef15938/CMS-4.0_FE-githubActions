@@ -11,6 +11,7 @@ export * from './lib/global/const/index';
 export * from './lib/global/directive/index';
 export * from './lib/global/interface/index';
 export * from './lib/global/pipe/index';
+export * from './lib/global/types/index';
 export * from './lib/global/utils/index';
 export * from './lib/function/wrapper/index';
 export * from './lib/function/ui/index';

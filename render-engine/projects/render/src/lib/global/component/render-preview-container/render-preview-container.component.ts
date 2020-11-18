@@ -98,7 +98,7 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
       if (actionID) { return; }
 
       const attributeHref = aTagPassedBy.getAttribute('href');
-      if (!attributeHref) { return; }
+      if (!attributeHref || attributeHref === '#') { return; }
       e.stopPropagation();
       e.preventDefault();
 
