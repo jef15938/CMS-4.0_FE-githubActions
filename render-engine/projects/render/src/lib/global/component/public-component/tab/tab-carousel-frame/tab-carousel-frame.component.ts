@@ -15,7 +15,7 @@ export class TabCarouselFrameComponent extends CustomizeBaseDirective implements
 
   @Input() selectedDefaultIndex = 0;
 
-  perView = 4;
+  perView = 5;
 
   config: SwiperConfigInterface = {
     updateOnWindowResize: true,
