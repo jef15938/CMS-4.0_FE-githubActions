@@ -1,11 +1,12 @@
 import { LayoutBaseComponent } from './layout-base.component';
 import { DataSourceTemplateInfo } from '../../../global/interface/data-source.interface';
 import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
-import { OnChanges, SimpleChanges, OnInit, Injector, Directive } from '@angular/core';
+import { OnChanges, SimpleChanges, OnInit, Injector, Directive, InjectFlags } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { takeUntil, tap, catchError } from 'rxjs/operators';
 import { DataSourceService } from '../../../global/service/data-source.service';
 import { ListDataSourceDataResponseModel } from '../../../global/api/data-model/models/list-data-source-data-response.model';
+import { DATA_SOURCE_FACTORY_TOKEN } from './layout-base.injection-token';
 
 @Directive()
 export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseComponent<DataSourceTemplateInfo>
@@ -51,7 +52,14 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
   getSourceData({ page = 1, pageSize = 0 } = {}): Observable<ListDataSourceDataResponseModel<TData>> {
     const type = this.TYPE_ID;
     const source = this.templateInfo?.source;
-    return this.dataSourceService.getDataSourceByTypeIDAndId<TData>(type, source, { page, pageSize }).pipe(
+
+    const dataSourceFactory = this.injector.get(DATA_SOURCE_FACTORY_TOKEN, null, InjectFlags.Optional);
+
+    return (
+      dataSourceFactory
+        ? dataSourceFactory(this.injector, { page, pageSize })
+        : this.dataSourceService.getDataSourceByTypeIDAndId<TData>(type, source, { page, pageSize })
+    ).pipe(
       takeUntil(this.destroy$),
       tap(sourceData => {
         this.sourceData = sourceData;
