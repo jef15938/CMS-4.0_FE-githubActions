@@ -5,6 +5,8 @@ import { CustomizeBaseDirective } from '../base-component';
 export interface FastToolData {
   name: string;
   url: string;
+  isBlank: boolean;
+  iconUrl: string;
 }
 
 @Component({
