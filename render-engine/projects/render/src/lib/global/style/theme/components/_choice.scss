@@ -2,16 +2,16 @@
 
 @mixin rdr-radio-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-radio' !default;
-  $tl-border-color: map-get($theme, brown_grey_0) !default;
-  $tl-border-color-disabled: map-get($theme, very_light_pink_0) !default;
-  $tl-icon-color-active: map-get($theme, color_primary) !default;
-  $tl-form-color: map-get($theme, brownish_grey) !default;
-  $tl-form-color-disabled: map-get($theme, brown_grey_1) !default;
-  $tl-form-color-active: map-get($theme, black_0) !default;
+  $rdr-border-color: map-get($theme, brown_grey_0) !default;
+  $rdr-border-color-disabled: map-get($theme, very_light_pink_0) !default;
+  $rdr-icon-color-active: map-get($theme, color_primary) !default;
+  $rdr-form-color: map-get($theme, brownish_grey) !default;
+  $rdr-form-color-disabled: map-get($theme, brown_grey_1) !default;
+  $rdr-form-color-active: map-get($theme, black_0) !default;
 
-  $radio-theme: nx-ui-theme-config-gen($color-plain: $tl-form-color,
-      $color-null: $tl-border-color,
-      $color_primary: $tl-icon-color-active);
+  $radio-theme: nx-ui-theme-config-gen($color-plain: $rdr-form-color,
+      $color-null: $rdr-border-color,
+      $color_primary: $rdr-icon-color-active);
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
@@ -26,11 +26,11 @@
       &.style--disable {
         .choice-type {
           .choice-type__icon-box {
-            border-color: $tl-border-color-disabled;
+            border-color: $rdr-border-color-disabled;
           }
 
           .choice-type__text {
-            color: $tl-form-color-disabled
+            color: $rdr-form-color-disabled
           }
         }
       }
@@ -41,11 +41,11 @@
           &:checked,
           &:focus {
             +.choice-type__icon-box {
-              border-color: $tl-icon-color-active;
+              border-color: $rdr-icon-color-active;
             }
 
             ~.choice-type__text {
-              color: $tl-form-color-active;
+              color: $rdr-form-color-active;
             }
           }
         }
@@ -56,16 +56,16 @@
 
 @mixin rdr-checkbox-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-checkbox' !default;
-  $tl-border-color: map-get($theme, color_primary) !default;
-  $tl-icon-color: map-get($theme, white_1) !default;
-  $tl-icon-color-active: map-get($theme, color_primary) !default;
-  $tl-form-color: map-get($theme, brownish_grey) !default;
-  $tl-form-color-disabled: map-get($theme, brown_grey_1) !default;
-  $tl-form-color-active: map-get($theme, black_1) !default;
+  $rdr-border-color: map-get($theme, color_primary) !default;
+  $rdr-icon-color: map-get($theme, white_1) !default;
+  $rdr-icon-color-active: map-get($theme, color_primary) !default;
+  $rdr-form-color: map-get($theme, brownish_grey) !default;
+  $rdr-form-color-disabled: map-get($theme, brown_grey_1) !default;
+  $rdr-form-color-active: map-get($theme, black_1) !default;
 
-  $checkbox-theme: nx-ui-theme-config-gen($color-plain: $tl-form-color,
-      $color-null: $tl-border-color,
-      $color_primary: $tl-icon-color-active);
+  $checkbox-theme: nx-ui-theme-config-gen($color-plain: $rdr-form-color,
+      $color-null: $rdr-border-color,
+      $color_primary: $rdr-icon-color-active);
 
   @if($theme !=$rdr-theme-config) {
     @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
@@ -83,7 +83,7 @@
           }
 
           .choice-type__text {
-            color: $tl-form-color-disabled
+            color: $rdr-form-color-disabled
           }
         }
       }
@@ -95,10 +95,50 @@
           &:focus {
 
             ~.choice-type__text {
-              color: $tl-form-color-active;
+              color: $rdr-form-color-active;
             }
           }
         }
+      }
+    }
+  }
+}
+
+@mixin rdr-card-radio-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-card-radio' !default;
+  $rdr-card-radio-icon-color-active: map-get($theme, color_primary) !default;
+  $rdr-card-radio-border-color: map-get($theme, very_light_pink_0) !default;
+  $rdr-card-radio-form-color: map-get($theme, black_1) !default;
+  $rdr-card-radio-form-color-active: map-get($theme, color_primary) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-card-radio.rdr-cp';
+  }
+
+  #{$selector} {
+    .card-radio {
+
+      &__input {
+        &:checked {
+          ~.card-radio__content {
+            .card-radio__icon {
+              background-color: $rdr-card-radio-icon-color-active;
+            }
+
+            .card-radio__text {
+              color: $rdr-card-radio-form-color-active;
+            }
+          }
+        }
+      }
+
+      &__text {
+        color: $rdr-card-radio-form-color;
+      }
+
+      &__img {
+        border-color: $rdr-card-radio-border-color;
       }
     }
   }

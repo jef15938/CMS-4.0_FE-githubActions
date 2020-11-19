@@ -1,0 +1,126 @@
+@import "public-style.scss";
+
+@include rdr-card-radio-theme();
+
+rdr-card-radio {
+  display: block;
+
+  .card-radio {
+    &--secondary {
+      .card-radio__content-inner {
+        padding-top: 20px;
+        padding-left: 20px;
+      }
+
+      .card-radio__icon {
+        margin-bottom: 4px;
+      }
+
+      .card-radio__text {
+        @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
+      }
+
+      .card-radio__img {
+        border-width: 0;
+
+        &,
+        >img {
+          border-radius: 8px;
+        }
+
+      }
+    }
+
+    &__label {
+      cursor: pointer;
+      position: relative;
+      display: block;
+      width: 100%;
+      background-color: transparent;
+    }
+
+    &__input {
+      display: none;
+
+      &:checked {
+        ~.card-radio__content {
+          .card-radio__icon {
+            visibility: visible;
+          }
+        }
+
+        ~.card-radio__img {
+          opacity: 1;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+
+    &__content {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+
+      &-inner {
+        padding-top: 11.4%;
+        padding-left: 9.1%;
+      }
+
+      @include rwd($bp-sm-max) {
+        .card-radio__content-inner {
+          padding-top: 20px;
+          padding-left: 20px;
+        }
+      }
+    }
+
+    &__icon {
+      visibility: hidden;
+      position: relative;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 8px;
+      width: 24px;
+      height: 24px;
+
+      &::before {
+        @include rdr-icon(1, 3, 20px);
+        background-image: url('../../../../images/icon-all.svg');
+        content: '';
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &__text {
+      @include Tilte282-Bold1-Light2-Default-Color1-Left-Aligned;
+      max-width: 136px;
+
+      @include rwd($bp-sm-max) {
+        @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
+        max-width: 89px;
+      }
+    }
+
+    &__img {
+      position: relative;
+      width: 100%;
+      opacity: 0.8;
+      overflow: hidden;
+      border-radius: 12px;
+      border-width: 1px;
+      border-style: solid;
+
+      >img {
+        width: 100%;
+        border-radius: 12px;
+        vertical-align: bottom;
+      }
+    }
+  }
+}

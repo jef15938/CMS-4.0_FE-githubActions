@@ -42,7 +42,6 @@ import { BreadcrumbComponent } from './global/component/public-component/breadcr
 import { FormFrameComponent } from './global/component/public-component/form-frame/form-frame.component';
 import { InputComponent } from './global/component/public-component/input/input.component';
 import { SelectComponent } from './global/component/public-component/select/select.component';
-import { RadioComponent } from './global/component/public-component/radio/radio.component';
 import { CheckboxComponent } from './global/component/public-component/checkbox/checkbox.component';
 import { SearchBarComponent } from './global/component/public-component/search-bar/search-bar.component';
 import { FastToolComponent } from './global/component/public-component/fast-tool/fast-tool.component';
@@ -59,6 +58,7 @@ import { SharingBtnTwitterComponent } from './global/component/social-media/shar
 import { SharingBtnUrlComponent } from './global/component/social-media/sharing-btn-url/sharing-btn-url.component';
 import { HamburgerComponent } from './global/component/public-component/hamburger/hamburger.component';
 import { HtmlTableContentComponent } from './function/ui/html-table-content/html-table-content.component';
+import { RadioModule } from './global/component/public-component/radio/radio.module';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
@@ -99,7 +99,6 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
   InputComponent,
   FormFrameComponent,
   SelectComponent,
-  RadioComponent,
   CheckboxComponent,
   SearchBarComponent,
   FastToolComponent,
@@ -122,7 +121,8 @@ const PUBLIC_COMPONENTS_TEMPLATES = [
     // NxBtnModule,
     FormsModule,
     CardModule,
-    CollapseModule
+    CollapseModule,
+    RadioModule
   ],
   declarations: [
     RenderComponent,

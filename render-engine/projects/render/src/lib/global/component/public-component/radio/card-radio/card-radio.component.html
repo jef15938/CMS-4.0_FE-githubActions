@@ -1,0 +1,17 @@
+<div class="card-radio" [class.card-radio--secondary]="styleType === 'secondary'">
+  <label class="card-radio__label" [attr.for]="inputId">
+    <input class="card-radio__input" type="radio" [id]="inputId" [name]="name" [checked]="checked" [value]="value"
+      [disabled]="disabled" (change)="onInputChange($event)">
+    <div class="card-radio__content">
+      <div class="card-radio__content-inner">
+        <div class="card-radio__icon"></div>
+        <div class="card-radio__text">
+          <ng-content></ng-content>
+        </div>
+      </div>
+    </div>
+    <div class="card-radio__img">
+      <img [src]="imageUrl" alt="">
+    </div>
+  </label>
+</div>
