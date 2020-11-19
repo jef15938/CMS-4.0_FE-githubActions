@@ -33,7 +33,7 @@
     "@angular/platform-browser-dynamic": "^10.1.2",
     "@angular/router": "^10.1.2",
     "@neux/core": "^0.1.16",
-    "@neux/render": "^0.9.60",
+    "@neux/render": "^0.9.61",
     "@neux/ui": "0.0.29-next.14",
     "@ngrx/effects": "^10.0.0",
     "@ngrx/store": "^10.0.0",
