@@ -153,16 +153,7 @@ export class TableControllerService {
       table.parentElement.appendChild(tableWrap);
     }
     tableWrap.appendChild(table);
-
-    const blankRowBefore = this.simpleWysiwygService.createBlankRow();
-    tableWrap.parentElement.insertBefore(blankRowBefore, tableWrap);
-    const nextOfTableWrap = tableWrap.nextElementSibling;
-    const blankRowAfter = this.simpleWysiwygService.createBlankRow();
-    if (nextOfTableWrap) {
-      tableWrap.parentElement.insertBefore(blankRowAfter, nextOfTableWrap);
-    } else {
-      tableWrap.parentElement.appendChild(blankRowAfter);
-    }
+    this.simpleWysiwygService.insertBlankRowToElement(tableWrap);
     return tableWrap;
   }
 
