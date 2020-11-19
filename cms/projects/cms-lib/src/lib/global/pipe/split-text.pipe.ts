@@ -7,17 +7,17 @@ export class SplitTextPipe implements PipeTransform {
 
   constructor() { }
 
-  transform(value: string, charactersPerLine: number): string {
-    value = value || '';
-    if (value.length <= charactersPerLine) { return value; }
+  transform(text: string, charactersPerLine: number): string {
+    text = text || '';
+    return this.getSplittedText(text, charactersPerLine);
+  }
 
-    const sections: string[] = [];
-    while (value.length > charactersPerLine) {
-      const section = value.substr(0, charactersPerLine);
-      sections.push(section);
-      value = value.replace(section, '');
+  private getSplittedText(text: string, charactersPerLine: number) {
+    if (text.length <= charactersPerLine) {
+      return text;
     }
-    return sections.join('\n');
+    const section = text.substr(0, charactersPerLine);
+    return [section, this.getSplittedText(text.replace(section, ''), charactersPerLine)].join('\n');
   }
 
 }
