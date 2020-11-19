@@ -4,14 +4,14 @@ import {IsNotEmpty} from 'class-validator';
 
 import { TypeFactory } from '../type-factory';
 
-export class DetailObject {
+export class DownloadObject {
 
+public id: string;
+@IsNotEmpty()
 public title: string;
-public start_date: string;
 @IsNotEmpty()
-public content_id: string;
-@IsNotEmpty()
-public content_json: string;
+public url: string;
+public url_extension: string;
 
 
 }

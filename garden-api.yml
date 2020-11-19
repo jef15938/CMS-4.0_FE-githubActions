@@ -336,6 +336,19 @@ paths:
             type: number
           in: query
           name: page
+          description: 指定頁數
+        - schema:
+            type: number
+            example: 10
+          in: query
+          name: pageSize
+          description: 每頁筆數
+        - schema:
+            type: string
+            example: 限時活動
+          in: query
+          name: keyword
+          description: 關鍵字，最新消息搜尋欄使用
   /FullSearch:
     get:
       summary: ListFullSearch
@@ -674,6 +687,10 @@ components:
         url_blank:
           type: boolean
           description: 是否另開分頁
+        description:
+          type: string
+          description: 描述內容
+          example: 投保傷害險/壽險商品早鳥送抽商禮券，還能再抽Apple Watch SE。老客戶活動期間回購任一商品還能再抽A5和牛禮盒!
       required:
         - id
         - title
@@ -728,16 +745,17 @@ components:
       x-tags:
         - Model
       properties:
-        id:
+        type_id:
           type: string
-        title:
+          example: '3'
+        type_name:
           type: string
-        url:
-          type: string
+          example: 契約內容變更
+        downloads:
+          $ref: '#/components/schemas/DownloadObject'
       required:
-        - id
-        - title
-        - url
+        - type_id
+        - type_name
     SiteInfo:
       title: SiteInfo
       type: object
@@ -927,7 +945,17 @@ components:
     DetailObject:
       title: DetailObject
       type: object
+      x-tags:
+        - Model
       properties:
+        title:
+          type: string
+          description: 標題
+          example: 台灣人壽最新消息
+        start_date:
+          type: string
+          description: 日期
+          example: 2020/11/1
         content_id:
           type: string
           description: 內容代碼
@@ -939,8 +967,6 @@ components:
       required:
         - content_id
         - content_json
-      x-tags:
-        - Model
     NewsDetailResponse:
       title: NewsDetailResponse
       type: object
@@ -960,6 +986,27 @@ components:
         content_json:
           type: string
           description: content內文json
+    DownloadObject:
+      title: DownloadObject
+      type: object
+      properties:
+        id:
+          type: string
+          example: '2'
+        title:
+          type: string
+          example: 理賠給付申請書
+        url:
+          type: string
+          description: 下載連結
+          example: /resource/xxxx.pdf
+        url_extension:
+          type: string
+          description: 附加下載連結，例如"範例"檔案
+          example: /resource/AAAA.pdf
+      required:
+        - title
+        - url
 tags:
   - name: FullSearch
   - name: News

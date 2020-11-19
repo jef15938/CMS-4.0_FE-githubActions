@@ -46,7 +46,7 @@ export class RestApiService {
   ) {
     this.apiConfig = this.configGetter.getApiConfig();
   }
-  
+
   // @dynamic
   @RestApi({
     apiName: 'GetPageByPageIdAndLang',
@@ -186,7 +186,7 @@ export class RestApiService {
     responseType: ListDataSourceDataResponse
   })
   GetDataSourceByTypeIdAndId(
-    params: { type_id: string, id: string, pageSize?: number, page?: number, },
+    params: { type_id: string, id: string, page?: number, pageSize?: number, keyword?: string, },
     apiDispatchOptions?: ApiDispatchOptions,
   ): Observable<ListDataSourceDataResponse> { return null; }
 
@@ -289,7 +289,7 @@ export class RestApiService {
       getRequestData() { return apiRequest; }
     };
     console.log(`RestApiService.dispatch()`, { restAPI });
-    
+
     return this.dispatcher.dispatch(restAPI, apiDispatchOptions).pipe(
       map((x: any) => {
         x._body = responseType ? plainToClass(responseType, x.body) : responseType;
@@ -316,14 +316,14 @@ export class RestApiService {
   }
 
   private setAPIParams(api: any, params: any) {
-    for (let key in params) {
+    for (const key in params) {
         api[key] = params[key];
     }
   }
 
   private setUrl(api: any, params: any) {
     let _url = this.apiConfig.API_URL[api.getApiName()];
-    for (let key in params) {
+    for (const key in params) {
         _url = _url.replace(new RegExp(`{${key}}`, 'g'), params[key]);
     }
     api.url = _url;
@@ -331,7 +331,7 @@ export class RestApiService {
 
   private async validateBodyClass(obj) {
     try {
-        console.log(obj)
+        console.log(obj);
         await validateOrReject(obj.body);
         return obj;
     } catch (error) {
