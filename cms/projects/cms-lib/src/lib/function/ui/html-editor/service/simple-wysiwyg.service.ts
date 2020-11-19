@@ -363,4 +363,21 @@ export class SimpleWysiwygService {
     }
     return result;
   }
+
+  insertBlankRowToElement(el: HTMLElement, { insertBefore = true, insertAfter = true } = {}) {
+    if (!el) { return; }
+    if (insertBefore) {
+      const blankRowBefore = this.createBlankRow();
+      el.parentElement.insertBefore(blankRowBefore, el);
+    }
+    if (insertAfter) {
+      const nextOfEl = el.nextElementSibling;
+      const blankRowAfter = this.createBlankRow();
+      if (nextOfEl) {
+        el.parentElement.insertBefore(blankRowAfter, nextOfEl);
+      } else {
+        el.parentElement.appendChild(blankRowAfter);
+      }
+    }
+  }
 }

@@ -40,6 +40,7 @@ export class InsertVideo extends HtmlEditorActionBase {
             img.src = config.src;
             img.style.width = '100%';
             img.style.height = 'auto';
+            this.context.simpleWysiwygService.insertBlankRowToElement(img.parentElement);
           }
         } else {
           image.setAttribute(VIDEO_ATTR_FRAME_ID, config.frameId);
