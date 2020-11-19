@@ -22,7 +22,8 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
 
   get TYPE_ID() { return this.TEMPLATE_ID; }
 
-  protected hasSendInitGetDataRequest = false;
+  protected keyword = '';
+  private hasSendInitGetDataRequest = false;
 
   templateType = TemplateType.DATA_SOURCE;
   sourceData: ListDataSourceDataResponseModel<TData>;
@@ -52,13 +53,14 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
   getSourceData({ page = 1, pageSize = 0 } = {}): Observable<ListDataSourceDataResponseModel<TData>> {
     const type = this.TYPE_ID;
     const source = this.templateInfo?.source;
+    const keyword = this.keyword || '';
 
     const dataSourceFactory = this.injector.get(DATA_SOURCE_FACTORY_TOKEN, null, InjectFlags.Optional);
 
     return (
       dataSourceFactory
-        ? dataSourceFactory(this.injector, { page, pageSize })
-        : this.dataSourceService.getDataSourceByTypeIDAndId<TData>(type, source, { page, pageSize })
+        ? dataSourceFactory(this.injector, { page, pageSize, keyword })
+        : this.dataSourceService.getDataSourceByTypeIDAndId<TData>(type, source, { page, pageSize, keyword })
     ).pipe(
       takeUntil(this.destroy$),
       tap(sourceData => {
