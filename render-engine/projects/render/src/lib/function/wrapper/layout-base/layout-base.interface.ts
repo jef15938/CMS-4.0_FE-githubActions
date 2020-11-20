@@ -16,4 +16,4 @@ export interface LayoutBase<TInfo extends ContentTemplateInfoModel> extends With
 }
 
 export type DataSourceFactory<TData>
-  = (injector: Injector, config: { page: number, pageSize: number }) => Observable<ListDataSourceDataResponseModel<TData>>;
+  = (injector: Injector, config: { page: number, pageSize: number, keyword: string }) => Observable<ListDataSourceDataResponseModel<TData>>;

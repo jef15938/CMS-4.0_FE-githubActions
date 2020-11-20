@@ -8,6 +8,8 @@ import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
 @ModelMapping(
   DetailObject, DetailObjectModel,
   (bean, model) => {
+    model.title = bean.title;
+    model.startDate = bean.start_date;
     model.contentId = bean.content_id;
     model.contentJson = bean.content_json;
     model.content = model.contentJson
@@ -16,6 +18,8 @@ import { ContentInfo } from '../../neuxAPI/bean/ContentInfo';
   }
 )
 export class DetailObjectModel {
+  public title: string;
+  public startDate: string;
   public contentId: string;
   public contentJson: string;
   public content: ContentInfoModel;

@@ -15,6 +15,7 @@ public start_date: string;
 @IsNotEmpty()
 public url: string;
 public url_blank: boolean;
+public description: string;
 
 
 }

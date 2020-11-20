@@ -23,9 +23,9 @@ export class DataSourceService {
    */
   getDataSourceByTypeIDAndId<TData>(
     typeId: string, id: string,
-    { page = 1, pageSize = 0 } = {}
+    { page = 1, pageSize = 0, keyword = '', } = {}
   ): Observable<ListDataSourceDataResponseModel<TData>> {
-    return this.restAPIService.GetDataSourceByTypeIdAndId({ type_id: typeId, id, page, pageSize }).pipe(
+    return this.restAPIService.GetDataSourceByTypeIdAndId({ type_id: typeId, id, page, pageSize, keyword }).pipe(
       ModelMapper.rxMapModelTo(ListDataSourceDataResponseModel),
     );
   }
