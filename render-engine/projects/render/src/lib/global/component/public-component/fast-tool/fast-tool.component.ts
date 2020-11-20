@@ -1,5 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewEncapsulation, Injector, Input, HostBinding } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Injector, Input, HostBinding, ElementRef, OnDestroy } from '@angular/core';
+import { convertEventToElement, notInElement } from '@neux/ui';
+import { fromEvent, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 import { CustomizeBaseDirective } from '../base-component';
 
 export interface FastToolData {
@@ -24,27 +27,48 @@ export interface FastToolData {
     ])
   ]
 })
-export class FastToolComponent extends CustomizeBaseDirective implements OnInit {
+export class FastToolComponent extends CustomizeBaseDirective implements OnInit, OnDestroy {
   @HostBinding('@animateSlide') get slideIn() { return this.showFastTool; }
   @Input() fastToolList: FastToolData[];
 
+  private unsubscribe$: Subject<null> = new Subject();
   showFastTool = false;
 
-  constructor(injector: Injector) {
+  constructor(
+    injector: Injector,
+    protected elementRef: ElementRef,
+  ) {
     super(injector);
   }
 
   ngOnInit(): void {
+    /** Binding Click event */
+    fromEvent(document, 'click').pipe(
+      convertEventToElement(),
+      notInElement(this.elementRef.nativeElement),
+      tap(() => this.closeFastTool()),
+      takeUntil(this.unsubscribe$)
+    ).subscribe();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
-  /**
-   * 開關快捷選單
-   *
-   * @memberof FastToolComponent
-   */
+  /** 開關快捷選單 */
   toggleFastTool() {
     this.showFastTool = !this.showFastTool;
+  }
+
+  /** 打開快捷選單 */
+  openFastTool() {
+    this.showFastTool = true;
+  }
+
+  /** 關閉快捷選單 */
+  closeFastTool() {
+    this.showFastTool = false;
   }
 
 }
