@@ -86,10 +86,12 @@ rdr-fast-tool {
     }
 
     &__icon {
-      @include rdr-icon(5, 3, 36px);
-      margin-bottom: 8px;
-      background-position: center;
-      background-size: contain;
+      max-width: 36px;
+      margin: 0 auto 8px;
+
+      >img {
+        width: 100%;
+      }
     }
   }
 }

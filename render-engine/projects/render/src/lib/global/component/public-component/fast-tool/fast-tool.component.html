@@ -5,7 +5,9 @@
   <div class="fast-tool__content">
     <div *ngFor="let item of fastToolList;index as i" class="fast-tool__item">
       <a class="fast-tool__link" [href]="item.url" [title]="item.name" [target]="item.isBlank?'_blank':''">
-        <i class="fast-tool__icon" [style.backgroundImage]="'url(' + (item.iconUrl|addResourceBaseUrlForField) + ')'"></i>
+        <div class="fast-tool__icon">
+          <img [src]="item.iconUrl | addResourceBaseUrlForField" alt="">
+        </div>
         <div class="fast-tool__text">{{item.name}}</div>
       </a>
     </div>
