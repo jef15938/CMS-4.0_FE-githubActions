@@ -105,6 +105,10 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
    * @param {TabItemComponent} tab
    */
   select(tab: TabItemComponent) {
+    if (!this.tabs || this.tabs.length === 0) {
+      return;
+    }
+
     this.tabs.forEach((item) => {
       item.show = false;
     });

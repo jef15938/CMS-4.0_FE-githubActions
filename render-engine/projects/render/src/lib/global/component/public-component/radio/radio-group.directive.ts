@@ -1,4 +1,4 @@
-import { AfterContentInit, ContentChildren, Directive, forwardRef, Input, QueryList } from '@angular/core';
+import { AfterContentInit, ContentChildren, Directive, forwardRef, QueryList } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NxRadioGroup } from '@neux/ui';
 import { CardRadioComponent } from './card-radio/card-radio.component';
@@ -27,13 +27,17 @@ export class RadioGroupDirective extends NxRadioGroup implements AfterContentIni
   rdrRadios: QueryList<RadioComponent>;
 
 
+  get childrenList() {
+    return [...this.cardRadios, ...this.rdrRadios];
+  }
+
   constructor() {
     super();
   }
 
 
   ngAfterContentInit() {
-    this.radios = [...this.cardRadios, ...this.rdrRadios] as any;
+    this.radios = this.childrenList as any;
     this.updateRadioButtonNames();
   }
 }

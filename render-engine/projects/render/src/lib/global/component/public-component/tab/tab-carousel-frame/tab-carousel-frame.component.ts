@@ -47,17 +47,23 @@ export class TabCarouselFrameComponent extends CustomizeBaseDirective implements
     this.select(tab);
   }
 
-  /** 打開選到的tab，同時關掉其他tab */
-  select(tab) {
+  /**
+   * 打開選取到的tab，關掉其他tab
+   *
+   * @param {TabItemComponent} tab
+   */
+  select(tab: TabItemComponent) {
+    if (!this.tabs || this.tabs.length === 0) {
+      return;
+    }
+
     const selectIndex = this.tabs.toArray().findIndex((item) => item === tab);
     this.tabs.forEach((item) => {
       item.show = false;
     });
 
     this.selectedTab = tab;
-    setTimeout(() => {
-      this.selectedTab.show = true;
-    });
+    this.selectedTab.show = true;
     this.tabChange.emit(selectIndex);
   }
 }
