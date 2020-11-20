@@ -3,6 +3,7 @@
 @mixin rdr-hamburger-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-hamburger' !default;
   $rdr-hamburger-line-color: map-get($theme, color_primary) !default;
+  $rdr-hamburger-active-color: map-get($theme, brown_grey_0) !default;
 
   $hamburger-theme: nx-ui-theme-config-gen($color-primary: $rdr-hamburger-line-color);
 
@@ -13,5 +14,15 @@
 
   #{$selector} {
     @include nx-hamburger-theme($hamburger-theme);
+
+    nx-hamburger.nx-cp {
+      &.style--active {
+        .burger {
+          >span {
+            background-color: $rdr-hamburger-active-color;
+          }
+        }
+      }
+    }
   }
 }

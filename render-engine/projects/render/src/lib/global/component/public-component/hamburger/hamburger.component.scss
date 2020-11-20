@@ -10,5 +10,14 @@ rdr-hamburger {
     $line-radius: 14px);
 
 
-  nx-hamburger.nx-cp {}
+  nx-hamburger.nx-cp {
+    &.style--active {
+      .burger {
+
+        >span {
+          height: 2px;
+        }
+      }
+    }
+  }
 }

@@ -3,7 +3,7 @@ import { NxRadioButtonComponent } from '@neux/ui';
 import { CustomizeBase, CustomizeBaseCtor, mixinCustomizeBase } from '../../base-component';
 import { RadioGroupDirective } from '../radio-group.directive';
 
-const CardRadioMixinBase:
+const radioMixinBase:
   CustomizeBaseCtor &
   typeof NxRadioButtonComponent
   = mixinCustomizeBase(NxRadioButtonComponent);
@@ -15,7 +15,7 @@ const CardRadioMixinBase:
   encapsulation: ViewEncapsulation.None,
   inputs: ['value', 'disabled', 'name', 'checked', 'required'],
 })
-export class RadioComponent extends CardRadioMixinBase implements OnInit, AfterViewInit, CustomizeBase {
+export class RadioComponent extends radioMixinBase implements OnInit, AfterViewInit, CustomizeBase {
 
   constructor(@Optional() radioGroup: RadioGroupDirective, elementRef: ElementRef) {
     super(radioGroup, elementRef);
