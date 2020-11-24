@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewEncapsulation, Injector, Input, HostBinding, ElementRef, OnDestroy } from '@angular/core';
 import { convertEventToElement, notInElement } from '@neux/ui';
-import { fromEvent, Subject } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { CustomizeBaseDirective } from '../base-component';
 
@@ -29,11 +29,10 @@ export interface FastToolData {
     ])
   ]
 })
-export class FastToolComponent extends CustomizeBaseDirective implements OnInit, OnDestroy {
+export class FastToolComponent extends CustomizeBaseDirective implements OnInit {
   @HostBinding('@animateSlide') get slideIn() { return this.showFastTool; }
   @Input() fastToolList: FastToolData[];
 
-  private unsubscribe$: Subject<null> = new Subject();
   showFastTool = false;
 
   constructor(
@@ -49,13 +48,8 @@ export class FastToolComponent extends CustomizeBaseDirective implements OnInit,
       convertEventToElement(),
       notInElement(this.elementRef.nativeElement),
       tap(() => this.closeFastTool()),
-      takeUntil(this.unsubscribe$)
+      takeUntil(this.destroy$)
     ).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   /** 開關快捷選單 */

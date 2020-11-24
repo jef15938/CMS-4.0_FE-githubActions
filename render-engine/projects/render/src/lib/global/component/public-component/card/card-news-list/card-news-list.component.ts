@@ -1,6 +1,6 @@
-import { Component, OnInit, Injector, ViewEncapsulation, Input, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, Injector, ViewEncapsulation, Input, Inject } from '@angular/core';
 import { WINDOW_RESIZE_TOKEN } from '@neux/ui';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { CommonUtils } from '../../../../utils';
 import { CustomizeBaseDirective } from '../../base-component';
@@ -17,12 +17,10 @@ export interface CardNewsListData {
   styleUrls: ['./card-news-list.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CardNewsListComponent extends CustomizeBaseDirective implements OnInit, OnDestroy {
+export class CardNewsListComponent extends CustomizeBaseDirective implements OnInit {
 
   @Input() title: string;
   @Input() newsList: CardNewsListData[];
-
-  unsubscribe$: Subject<null> = new Subject();
 
   /** 字數限制 */
   ellipsisTitleTextNumber: number;
@@ -38,13 +36,8 @@ export class CardNewsListComponent extends CustomizeBaseDirective implements OnI
     /** Binding Resize event */
     CommonUtils.isMobile$(this.resize$, 768).pipe(
       tap(result => this.ellipsisTitleTextNumber = result ? 26 : 18),
-      takeUntil(this.unsubscribe$)
+      takeUntil(this.destroy$)
     ).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
 }

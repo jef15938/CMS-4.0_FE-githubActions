@@ -7,7 +7,6 @@ import {
   Inject,
   Injector,
   Input,
-  OnDestroy,
   OnInit,
   Output,
   QueryList,
@@ -30,7 +29,7 @@ import { TabItemComponent } from '../tab-item/tab-item.component';
   styleUrls: ['./tab-scroll-frame.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TabScrollFrameComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
+export class TabScrollFrameComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, AfterContentInit {
 
   @ContentChildren(TabItemComponent) tabs: QueryList<TabItemComponent>;
   @ViewChild('tabShell') tabShell: ElementRef;
@@ -48,7 +47,6 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     this.selectedIndex = value;
   }
 
-  unsubscribe$: Subject<null> = new Subject();
   private scrollToItem: Subject<any> = new Subject<any>();
   private selectedIndex = 0;
   private increment: number;
@@ -68,6 +66,9 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
   ngAfterContentInit(): void {
     this.listItemWidth = this.calListItemWidth(window.innerWidth < 768);
     this.select(this.tabs.toArray()[this.selectedDefaultIndex]);
+    this.tabs.changes.pipe(takeUntil(this.destroy$)).subscribe(tabs => {
+      this.select(tabs.toArray()[this.selectedDefaultIndex]);
+    });
   }
 
   ngAfterViewInit() {
@@ -78,7 +79,7 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
         this.increment = this.getIncrement(this.selectedIndex, this.selectedIndex);
         this.scrollToPosition(this.selectedIndex);
       }),
-      takeUntil(this.unsubscribe$)
+      takeUntil(this.destroy$)
     ).subscribe();
 
     this.scrollToItem.pipe(
@@ -200,11 +201,6 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     const tabItemWidth = [140, 114];
 
     return tabLength > 2 ? tabItemWidth[1] : tabItemWidth[0];
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   private calListItemWidth(isMobile: boolean) {

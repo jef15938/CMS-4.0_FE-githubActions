@@ -15,7 +15,6 @@ import {
 import { CustomizeBaseDirective } from '../../base-component';
 import { CollapseData } from '../collapse.interface';
 import { NxCollapseComponent } from '@neux/ui';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 
@@ -25,7 +24,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./collapse.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CollapseComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, OnDestroy {
+export class CollapseComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit {
 
   @Input() collapseData: CollapseData;
 
@@ -36,8 +35,6 @@ export class CollapseComponent extends CustomizeBaseDirective implements OnInit,
   @ContentChild('content') contentTemplateRef: TemplateRef<any>;
   @ViewChild(NxCollapseComponent) nxCollapse: NxCollapseComponent;
 
-  unsubscribe$: Subject<null> = new Subject();
-
   constructor(injector: Injector) {
     super(injector);
   }
@@ -47,15 +44,10 @@ export class CollapseComponent extends CustomizeBaseDirective implements OnInit,
 
   ngAfterViewInit(): void {
     this.nxCollapse.beforeClick.pipe(
-      takeUntil(this.unsubscribe$)
+      takeUntil(this.destroy$)
     ).subscribe(() => {
       this.beforeCollapsing.emit();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
 }

@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   ContentChild,
-  OnDestroy,
   QueryList,
   TemplateRef,
   ViewChildren,
@@ -11,7 +10,6 @@ import {
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CustomizeBaseDirective } from '../../base-component';
 import { CollapseData } from '../collapse.interface';
@@ -23,7 +21,7 @@ import { CollapseComponent } from '../collapse/collapse.component';
   styleUrls: ['./accordion.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AccordionComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, OnDestroy {
+export class AccordionComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit {
 
   @Input() collapseList: Array<CollapseData>;
 
@@ -33,8 +31,6 @@ export class AccordionComponent extends CustomizeBaseDirective implements OnInit
   @ContentChild('title') titleTemplateRef: TemplateRef<any>;
   @ContentChild('content') contentTemplateRef: TemplateRef<any>;
   @ViewChildren(CollapseComponent) collapseComponentList: QueryList<CollapseComponent>;
-
-  unsubscribe$: Subject<null> = new Subject();
 
   constructor(injector: Injector) {
     super(injector);
@@ -62,17 +58,12 @@ export class AccordionComponent extends CustomizeBaseDirective implements OnInit
       if (index !== currentIndex && item.nxCollapse.isCollapse) {
         item.nxCollapse.statusCollapse = 'collapsing';
         item.nxCollapse.animateCollapse(false).pipe(
-          takeUntil(this.unsubscribe$)
+          takeUntil(this.destroy$)
         ).subscribe(() => {
           item.nxCollapse.isCollapse = false;
         });
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
 }
