@@ -68,6 +68,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
       this.checkEventBinding();
     } catch (error) {
       console.error('LayoutWrapperComponent loadWithComponent error: templateId = ', templateId);
+      throw error;
     }
   }
 
