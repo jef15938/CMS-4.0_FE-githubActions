@@ -143,6 +143,7 @@ export class RenderModule {
     return {
       ngModule: RenderModule,
       providers: [
+        ...providers,
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptor, multi: true },
         { provide: RENDER_DEFAULT_COMPONENT_MAPPINGS_TOKEN, useValue: RENDER_DEFAULT_COMPONENT_MAPPINGS },
         MetaService,
