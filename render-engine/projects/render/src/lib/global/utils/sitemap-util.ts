@@ -53,4 +53,32 @@ export class SitemapUtil {
     });
     return result;
   }
+
+
+  /**
+   *
+   * 取得父層節點
+   * @static
+   * @param {SiteMapInfoModel[]} sources
+   * @param {SiteMapInfoModel} node
+   * @param {SiteMapInfoModel[]} [result=[]]
+   * @returns {SiteMapInfoModel[]}
+   * @memberof SitemapUtil
+   */
+  static getFlattenedParentsByNode(
+    sources: SiteMapInfoModel[],
+    node: SiteMapInfoModel,
+    result: SiteMapInfoModel[] = []
+  ): SiteMapInfoModel[] {
+    if (!sources.length || !node) { return result; }
+
+    const parent = sources.find(n => n.children.some(c => c.nodeId === node.nodeId));
+    if (!parent) { return result; }
+
+    const parentIndexInSources = sources.indexOf(parent);
+    const newSources = [...sources];
+    newSources.splice(parentIndexInSources, 1);
+
+    return this.getFlattenedParentsByNode(newSources, parent, [...result, parent]);
+  }
 }
