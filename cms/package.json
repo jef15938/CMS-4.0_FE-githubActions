@@ -34,7 +34,7 @@
     "@angular/router": "^10.1.2",
     "@neux/core": "^0.1.16",
     "@neux/render": "^0.9.64",
-    "@neux/ui": "0.0.29-next.15",
+    "@neux/ui": "0.0.29-next.18",
     "@ngrx/effects": "^10.0.0",
     "@ngrx/store": "^10.0.0",
     "angular-cropperjs": "^1.0.2",

@@ -34,7 +34,7 @@ export class RenderedPageEnvironmentInstance implements RenderedPageEnvironment 
   ]
 })
 export class TemplatesContainerComponent extends LayoutWrapperBase implements OnInit, AfterViewInit, AfterViewChecked {
-
+  @Input() whiteList: string[] = [];
   @Input() templates: ContentTemplateInfoModel[];
 
   // tslint:disable-next-line: no-output-native

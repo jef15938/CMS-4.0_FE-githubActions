@@ -194,9 +194,6 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       // console.warn('this.templatesContainer = ', this.templatesContainer);
       Array.from(this.templatesContainers).forEach(templatesContainer => {
-
-        console.log('this.tempaltescontianer = ', this.templatesContainers);
-
         this.renderAddTemplateButton(templatesContainer, templatesContainer);
         this.renderViewInfo(templatesContainer);
       });

@@ -10,12 +10,14 @@
       </mat-expansion-panel-header>
       <div *ngFor="let template of selectableTemplates.static" class="template-container"
         (click)="selectTemplate(template)">
-        <div>
-          {{template.templateName}}
-        </div>
-        <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
-        </div>
+        <ng-container *ngIf="template.show">
+          <div>
+            {{template.templateName}}
+          </div>
+          <div class="img-container">
+            <img [src]="'./assets/img/template/'+template.templateId+'.png'">
+          </div>
+        </ng-container>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel>
@@ -26,12 +28,14 @@
       </mat-expansion-panel-header>
       <div *ngFor="let template of selectableTemplates.tab" class="template-container"
         (click)="selectTemplate(template)">
-        <div>
-          {{template.templateName}}
-        </div>
-        <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
-        </div>
+        <ng-container *ngIf="template.show">
+          <div>
+            {{template.templateName}}
+          </div>
+          <div class="img-container">
+            <img [src]="'./assets/img/template/'+template.templateId+'.png'">
+          </div>
+        </ng-container>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel>
@@ -42,12 +46,14 @@
       </mat-expansion-panel-header>
       <div *ngFor="let template of selectableTemplates.dynamic" class="template-container"
         (click)="selectTemplate(template)">
-        <div>
-          {{template.templateName}}
-        </div>
-        <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
-        </div>
+        <ng-container *ngIf="template.show">
+          <div>
+            {{template.templateName}}
+          </div>
+          <div class="img-container">
+            <img [src]="'./assets/img/template/'+template.templateId+'.png'">
+          </div>
+        </ng-container>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel>
@@ -58,12 +64,14 @@
       </mat-expansion-panel-header>
       <div *ngFor="let template of selectableTemplates.customize" class="template-container"
         (click)="selectTemplate(template)">
-        <div>
-          {{template.templateName}}
-        </div>
-        <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
-        </div>
+        <ng-container *ngIf="template.show">
+          <div>
+            {{template.templateName}}
+          </div>
+          <div class="img-container">
+            <img [src]="'./assets/img/template/'+template.templateId+'.png'">
+          </div>
+        </ng-container>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel *ngIf="mainTemplates.length">
@@ -73,12 +81,14 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div *ngFor="let template of mainTemplates" class="template-container" (click)="selectTemplate(template)">
-        <div>
-          {{template.templateName}}
-        </div>
-        <div class="img-container">
-          <img [src]="'./assets/img/template/'+template.templateId+'.png'">
-        </div>
+        <ng-container *ngIf="template.show">
+          <div>
+            {{template.templateName}}
+          </div>
+          <div class="img-container">
+            <img [src]="'./assets/img/template/'+template.templateId+'.png'">
+          </div>
+        </ng-container>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

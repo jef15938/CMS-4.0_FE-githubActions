@@ -116,9 +116,26 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       }
       if (current) {
         current.isSelected = true;
+        this.getWhiteList();
       }
       this.show = !!current;
     }
+  }
+
+
+  /**
+   * 從templatesContainer取得白名單,並過濾掉可選版型
+   *
+   * @return {*}
+   * @memberof LayoutControlPanelComponent
+   */
+  getWhiteList() {
+    const flatternArr = [...this.selectableTemplates.static, ...this.selectableTemplates.tab
+      , ...this.selectableTemplates.dynamic, ...this.selectableTemplates.customize, ...this.mainTemplates];
+    if (this.selectedBtn.templatesContainer.whiteList.length) {
+      flatternArr.forEach(e => e.show = !!this.selectedBtn.templatesContainer.whiteList.find(q => q === e.templateId));
+    }
+    else { flatternArr.forEach(e => e.show = true); }
   }
 
   selectTemplate(selectedTemplateInfo: TemplateInfoModel) {
