@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 import { RENDER_ENVIRONMENT_BASE } from './base';
 
-const BASE_URL = 'https://dev.walkflow.biz/portal-api';
+const BASE_URL = '/portal-api';
 const RESOUCE_BASE_URL = '';
 
 export const environment = {
