@@ -55,6 +55,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     this.checkView();
   }
 
+  /** 插入 加入版塊按紐 */
   private createBtnContainer() {
     const newNode = document.createElement('div');
     newNode.classList.add('cms-content-editor-add-template-btn-container');
@@ -193,6 +194,9 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       // console.warn('this.templatesContainer = ', this.templatesContainer);
       Array.from(this.templatesContainers).forEach(templatesContainer => {
+
+        console.log('this.tempaltescontianer = ', this.templatesContainers);
+
         this.renderAddTemplateButton(templatesContainer, templatesContainer);
         this.renderViewInfo(templatesContainer);
       });
