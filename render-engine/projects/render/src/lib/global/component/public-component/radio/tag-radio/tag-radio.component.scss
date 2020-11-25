@@ -1,0 +1,28 @@
+@import "public-style.scss";
+
+@include rdr-tag-radio-theme();
+
+rdr-tag-radio {
+  display: block;
+
+  .tag-radio {
+    &__label {}
+
+    &__input {
+      display: none;
+    }
+
+    &__content {
+      @include Callout162-Bold1-Light2-Default-Color2-Center-Aligned;
+      padding: 12px 32px;
+      border-radius: 4px;
+      border-style: solid;
+      border-width: 1px;
+
+      @include rwd($bp-sm-max) {
+        @include Callout152-Bold1-Light2-Default-Color2-Center-Aligned;
+      }
+    }
+  }
+
+}

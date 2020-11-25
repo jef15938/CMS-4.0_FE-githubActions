@@ -13,3 +13,4 @@ export * from './card/index';
 export * from './collapse/index';
 export * from './hamburger/hamburger.component';
 export * from './radio/index';
+export * from './textarea/textarea.component';

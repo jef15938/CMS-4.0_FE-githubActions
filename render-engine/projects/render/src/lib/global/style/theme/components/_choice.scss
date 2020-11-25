@@ -104,6 +104,38 @@
   }
 }
 
+@mixin rdr-tag-radio-theme($theme: $rdr-theme-config) {
+  $selector: 'rdr-tag-radio' !default;
+  $rdr-tag-radio-border-color: map-get($theme, very_light_pink_0) !default;
+  $rdr-tag-radio-form-color: map-get($theme, brownish_grey) !default;
+  $rdr-tag-radio-form-bg-color: map-get($theme, white_1) !default;
+  $rdr-tag-radio-form-color-active: map-get($theme, color_primary) !default;
+
+  @if($theme !=$rdr-theme-config) {
+    @debug "render 偵測到自定義的主題，將引入客製化主題的顏色";
+    $selector: 'rdr-tag-radio.rdr-cp';
+  }
+
+  #{$selector} {
+    .tag-radio {
+      &__content {
+        background-color: $rdr-tag-radio-form-bg-color;
+        border-color: $rdr-tag-radio-border-color;
+        color: $rdr-tag-radio-form-color;
+      }
+
+      &__input {
+        &:checked {
+          ~.tag-radio__content {
+            border-color: $rdr-tag-radio-form-color-active;
+            color: $rdr-tag-radio-form-color-active;
+          }
+        }
+      }
+    }
+  }
+}
+
 @mixin rdr-card-radio-theme($theme: $rdr-theme-config) {
   $selector: 'rdr-card-radio' !default;
   $rdr-card-radio-icon-color-active: map-get($theme, color_primary) !default;
