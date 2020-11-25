@@ -1,7 +1,12 @@
 <ng-container *ngIf="!inline;else inlineLayout">
   <div class="form-frame">
-    <div class="form-frame__title" [attr.has-note]="note">{{title}}</div>
-    <div *ngIf="note" class="form-frame__note">{{note}}</div>
+    <div class="form-frame__header">
+      <div class="form-frame__title" [class.form-frame__title--required]="required">{{title}}</div>
+      <!-- <div *ngIf="note" class="form-frame__note">{{note}}</div> -->
+      <div *ngIf="note" class="form-frame__note">
+        <i class="form-frame__icon"></i>
+      </div>
+    </div>
     <div class="form-frame__content">
       <div class="form-frame__wrap">
         <ng-container *ngTemplateOutlet="formFields"></ng-container>

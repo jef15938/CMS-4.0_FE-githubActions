@@ -19,7 +19,10 @@ rdr-checkbox {
 
       .choice-type__text {
         @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
-        min-width: 142px;
+
+        @include rwd($bp-sm-max) {
+          @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
+        }
       }
     }
 

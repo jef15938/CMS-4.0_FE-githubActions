@@ -15,6 +15,7 @@ export class FormFrameComponent extends CustomizeBaseDirective implements AfterV
   @Input() title = '標題';
   @Input() suffix: string;
   @Input() note: string;
+  @Input() required = false;
 
   errorHide = true;
 

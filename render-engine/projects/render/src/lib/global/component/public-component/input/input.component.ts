@@ -20,6 +20,8 @@ export class InputComponent extends CustomizeBaseDirective implements OnInit, Co
   @Input() placeholder = '請輸入';
   @Input() disabled = false;
   @Input() isError = false;
+  @Input() type = 'text';
+  @Input() required = false;
 
   value: string;
 

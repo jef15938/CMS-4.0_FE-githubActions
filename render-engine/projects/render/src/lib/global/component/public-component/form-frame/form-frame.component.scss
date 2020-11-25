@@ -19,12 +19,33 @@ rdr-form-frame {
       }
     }
 
+    &__header {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
     &__title {
       @include Body172-Bold1-Light2-Default-Color1-Left-Aligned;
-      margin-bottom: 8px;
 
-      &[has-note] {
-        margin-bottom: 0;
+      @include rwd($bp-sm-max) {
+        @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
+      }
+
+      &--required {
+
+        &,
+        &:after {
+          display: inline-block;
+          vertical-align: top;
+        }
+
+        &:after {
+          content: '';
+          margin-left: 4px;
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+        }
       }
     }
 
@@ -43,8 +64,18 @@ rdr-form-frame {
     }
 
     &__note {
-      @include Footnote152-Bold1-Light2-Default-Color1-Left-Aligned;
-      margin-bottom: 12px;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+
+    &__icon {
+      @include rdr-icon(5, 3, 24px);
+
+      @include rwd($bp-sm-max) {
+        @include rdr-icon(5, 3, 20px);
+      }
     }
 
     &__suffix {
