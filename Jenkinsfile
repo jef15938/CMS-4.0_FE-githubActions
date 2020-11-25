@@ -8,7 +8,7 @@ pipeline {
     folder_render = 'render-engine'
     destination_cms = '/opt/Tomcat9/webapps/cms'
     destination_static_files = '/var/www'
-    destination_ssr = '/dist/render'
+    destination_ssr = '/dist/render-engine'
     multi_sites = 'oiu,en,freeway'
     ip_web_server = '192.168.0.33'
     ip_ssr_server = '192.168.0.32'
