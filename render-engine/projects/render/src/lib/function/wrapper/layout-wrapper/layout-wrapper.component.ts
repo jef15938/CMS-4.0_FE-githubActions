@@ -61,9 +61,15 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     if (!this.canRender(this.templateInfo.templateId)) { return; }
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
-    const component = this.dynamicComponentFactoryService.getComponent(this.templateInfo.templateId);
-    this.dynamicWrapperComponent.loadWithComponent(component);
-    this.checkEventBinding();
+    const templateId = this.templateInfo.templateId;
+    try {
+      const component = this.dynamicComponentFactoryService.getComponent(templateId);
+      this.dynamicWrapperComponent.loadWithComponent(component);
+      this.checkEventBinding();
+    } catch (error) {
+      console.error('LayoutWrapperComponent loadWithComponent error: templateId = ', templateId);
+      throw error;
+    }
   }
 
   setInstanceProperties = (componentRef: ComponentRef<LayoutBase<ContentTemplateInfoModel>>): void => {

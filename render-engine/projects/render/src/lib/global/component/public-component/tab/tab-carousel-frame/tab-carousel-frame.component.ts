@@ -2,6 +2,7 @@ import { AfterContentInit, Component, ContentChildren, EventEmitter, Injector, I
 import { CustomizeBaseDirective } from '../../base-component';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { TabItemComponent } from '../tab-item/tab-item.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'rdr-tab-carousel-frame',
@@ -13,7 +14,15 @@ export class TabCarouselFrameComponent extends CustomizeBaseDirective implements
 
   @Output() tabChange: EventEmitter<number> = new EventEmitter<number>();
 
-  @Input() selectedDefaultIndex = 0;
+  selectedIndex = 0;
+  @Input()
+  public get selectedDefaultIndex() {
+    return this.selectedIndex;
+  }
+  public set selectedDefaultIndex(value) {
+    this.selectedIndex = value;
+  }
+
 
   perView = 5;
 
@@ -36,10 +45,14 @@ export class TabCarouselFrameComponent extends CustomizeBaseDirective implements
   }
 
   ngOnInit(): void {
+
   }
 
   ngAfterContentInit() {
     this.onSelect(this.tabs.toArray()[this.selectedDefaultIndex]);
+    this.tabs.changes.pipe(takeUntil(this.destroy$)).subscribe(tabs => {
+      this.onSelect(tabs.toArray()[this.selectedDefaultIndex]);
+    });
   }
 
   /** 當選到的tab */
@@ -53,15 +66,14 @@ export class TabCarouselFrameComponent extends CustomizeBaseDirective implements
    * @param {TabItemComponent} tab
    */
   select(tab: TabItemComponent) {
-    if (!this.tabs || this.tabs.length === 0) {
+    if (!this.tabs || this.tabs.length === 0 || !tab) {
       return;
     }
-
     const selectIndex = this.tabs.toArray().findIndex((item) => item === tab);
+    this.selectedIndex = selectIndex;
     this.tabs.forEach((item) => {
       item.show = false;
     });
-
     this.selectedTab = tab;
     this.selectedTab.show = true;
     this.tabChange.emit(selectIndex);

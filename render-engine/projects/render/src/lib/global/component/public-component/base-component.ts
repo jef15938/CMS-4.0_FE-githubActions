@@ -1,10 +1,16 @@
-import { Directive, HostBinding, Injector } from '@angular/core';
+import { Directive, HostBinding, Injector, OnDestroy } from '@angular/core';
 import { Constructor } from '@neux/ui/lib/util/common-behaviors/constructor';
+import { Subject } from 'rxjs';
 
 @Directive()
-export abstract class CustomizeBaseDirective implements CustomizeBase {
+export abstract class CustomizeBaseDirective implements CustomizeBase, OnDestroy {
   @HostBinding('class') class = 'rdr-cp';
+  protected destroy$ = new Subject<any>();
   constructor(protected injector: Injector) { }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
 
 export interface CustomizeBase {

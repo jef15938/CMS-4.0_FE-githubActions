@@ -24,7 +24,7 @@
 
 <ng-template #itemList>
   <div *ngFor="let tab of tabs;index as i" class="tab-carousel__item"
-    [class.tab-carousel__item--active]="selectedTab===tab" (click)="onSelect(tab)">
+    [class.tab-carousel__item--active]="selectedIndex===i" (click)="onSelect(tab)">
     <span class="tab-carousel__title">{{tab.tabTitle}}</span>
   </div>
 </ng-template>
