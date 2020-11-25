@@ -22,13 +22,17 @@ rdr-form-frame {
     &__header {
       position: relative;
       margin-bottom: 8px;
+
+      @include rwd($bp-sm-max) {
+        margin-bottom: 4px;
+      }
     }
 
     &__title {
       @include Body172-Bold1-Light2-Default-Color1-Left-Aligned;
 
       @include rwd($bp-sm-max) {
-        @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
+        @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
       }
 
       &--required {
