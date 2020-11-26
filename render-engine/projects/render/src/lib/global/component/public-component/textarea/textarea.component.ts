@@ -1,26 +1,26 @@
-import { Component, forwardRef, Input, OnInit, ViewEncapsulation, Injector } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef, Injector, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CustomizeBaseDirective } from '../base-component';
 
-export const RDR_INPUT_CONTROL_VALUE_ACCESSOR = {
+export const RDR_TEXTAREA_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => InputComponent),
+  useExisting: forwardRef(() => TextareaComponent),
   multi: true
 };
 
 @Component({
-  selector: 'rdr-input',
-  providers: [RDR_INPUT_CONTROL_VALUE_ACCESSOR],
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  selector: 'rdr-textarea',
+  providers: [RDR_TEXTAREA_CONTROL_VALUE_ACCESSOR],
+  templateUrl: './textarea.component.html',
+  styleUrls: ['./textarea.component.scss'],
   encapsulation: ViewEncapsulation.None
+
 })
-export class InputComponent extends CustomizeBaseDirective implements OnInit, ControlValueAccessor {
+export class TextareaComponent extends CustomizeBaseDirective implements OnInit, ControlValueAccessor {
 
   @Input() placeholder = '請輸入';
   @Input() disabled = false;
   @Input() isError = false;
-  @Input() type = 'text';
   @Input() required = false;
 
   value: string;
@@ -35,7 +35,7 @@ export class InputComponent extends CustomizeBaseDirective implements OnInit, Co
   ngOnInit(): void {
   }
 
-  writeValue(value: any) {
+  writeValue(value: any): void {
     this.value = value;
   }
 
@@ -47,7 +47,7 @@ export class InputComponent extends CustomizeBaseDirective implements OnInit, Co
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean) {
+  setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 

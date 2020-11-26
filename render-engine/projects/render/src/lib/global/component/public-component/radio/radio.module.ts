@@ -4,13 +4,15 @@ import { NxUiModule } from '@neux/ui';
 import { CardRadioComponent } from './card-radio/card-radio.component';
 import { RadioComponent } from './radio/radio.component';
 import { RadioGroupDirective } from './radio-group.directive';
+import { TagRadioComponent } from './tag-radio/tag-radio.component';
 
 
 @NgModule({
   declarations: [
     CardRadioComponent,
     RadioComponent,
-    RadioGroupDirective
+    RadioGroupDirective,
+    TagRadioComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { RadioGroupDirective } from './radio-group.directive';
   exports: [
     CardRadioComponent,
     RadioComponent,
-    RadioGroupDirective
+    RadioGroupDirective,
+    TagRadioComponent
   ]
 })
 export class RadioModule { }

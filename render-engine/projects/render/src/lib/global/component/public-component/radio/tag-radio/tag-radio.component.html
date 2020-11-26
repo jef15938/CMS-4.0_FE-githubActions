@@ -1,0 +1,9 @@
+<div class="tag-radio">
+  <label class="tag-radio__label" [attr.for]="inputId">
+    <input class="tag-radio__input" type="radio" [id]="inputId" [name]="name" [checked]="checked" [value]="value"
+      [disabled]="disabled" (change)="onInputChange($event)">
+    <div class="tag-radio__content">
+      <ng-content></ng-content>
+    </div>
+  </label>
+</div>

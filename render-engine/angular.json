@@ -26,7 +26,17 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": ".htaccess",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "getIndexHtmlBySiteId.js",
+                "input": "node",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.scss"

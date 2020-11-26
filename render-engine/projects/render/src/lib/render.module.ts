@@ -59,6 +59,7 @@ import { SharingBtnUrlComponent } from './global/component/social-media/sharing-
 import { HamburgerComponent } from './global/component/public-component/hamburger/hamburger.component';
 import { HtmlTableContentComponent } from './function/ui/html-table-content/html-table-content.component';
 import { RadioModule } from './global/component/public-component/radio/radio.module';
+import { TextareaComponent } from './global/component/public-component/textarea/textarea.component';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
@@ -91,6 +92,7 @@ const COMPONENTS = [
   SharingBtnTwitterComponent,
   SharingBtnUrlComponent,
   HtmlTableContentComponent,
+  TextareaComponent,
 ];
 
 const PUBLIC_COMPONENTS_TEMPLATES = [

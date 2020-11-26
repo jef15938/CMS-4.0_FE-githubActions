@@ -3,6 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NxRadioGroup } from '@neux/ui';
 import { CardRadioComponent } from './card-radio/card-radio.component';
 import { RadioComponent } from './radio/radio.component';
+import { TagRadioComponent } from './tag-radio/tag-radio.component';
 
 @Directive({
   selector: 'rdr-radio-group',
@@ -26,9 +27,12 @@ export class RadioGroupDirective extends NxRadioGroup implements AfterContentIni
     forwardRef(() => RadioComponent), { descendants: true })
   rdrRadios: QueryList<RadioComponent>;
 
+  @ContentChildren(
+    forwardRef(() => TagRadioComponent), { descendants: true })
+  tagRadios: QueryList<TagRadioComponent>;
 
   get childrenList() {
-    return [...this.cardRadios, ...this.rdrRadios];
+    return [...this.cardRadios, ...this.rdrRadios, ...this.tagRadios];
   }
 
   constructor() {

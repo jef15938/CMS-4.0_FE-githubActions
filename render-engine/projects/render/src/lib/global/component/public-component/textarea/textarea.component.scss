@@ -1,0 +1,31 @@
+@import "public-style.scss";
+
+@include rdr-textarea-theme();
+
+rdr-textarea {
+  @include nx-textarea-config($mode: 'customize',
+    $form-height: 112px,
+    $form-radius: 4px,
+    $form-border-width: 0.5px,
+    $form-padding: 12px 12px);
+
+  display: block;
+
+  [nx-textarea].nx-cp {
+    @include Callout182-Bold1-Light2-Default-Color1-Left-Aligned;
+    line-height: normal;
+    box-sizing: border-box;
+
+    @include rwd($bp-sm-max) {
+      @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
+      padding: 10px 12px;
+    }
+
+    &.style-border--all {
+      &:focus {
+        outline: 0;
+        border-width: 0.5px;
+      }
+    }
+  }
+}

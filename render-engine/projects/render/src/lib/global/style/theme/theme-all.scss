@@ -25,7 +25,10 @@
   @include rdr-tab-scroll-theme($theme: $core-theme);
   @include rdr-form-frame-theme($theme: $core-theme);
   @include rdr-input-theme($theme: $core-theme);
+  @include rdr-textarea-theme($theme: $core-theme);
   @include rdr-radio-theme($theme: $core-theme);
+  @include rdr-card-radio-theme($theme: $core-theme);
+  @include rdr-tag-radio-theme($theme: $core-theme);
   @include rdr-checkbox-theme($theme: $core-theme);
   @include rdr-select-theme($theme: $core-theme);
   @include rdr-fast-tool-theme($theme: $core-theme);
