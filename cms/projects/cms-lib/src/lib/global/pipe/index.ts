@@ -7,3 +7,5 @@ export * from './safe-resource.pipe';
 export * from './safe-url.pipe';
 export * from './readable-file-size.pipe';
 export * from './split-text.pipe';
+export * from './template-type-show.pipe';
+

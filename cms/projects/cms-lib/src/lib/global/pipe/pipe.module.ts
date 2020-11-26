@@ -8,6 +8,7 @@ import { DateStringFormatPipe } from './date-string-format.pipe';
 import { FormValidationErrorPipe } from './form-validation-error.pipe';
 import { ReadableFileSizePipe } from './readable-file-size.pipe';
 import { SplitTextPipe } from './split-text.pipe';
+import { TemplateTypeShowPipe } from './template-type-show.pipe';
 
 const PIPES = [
   DateStringFormatPipe,
@@ -18,6 +19,7 @@ const PIPES = [
   ObjectKeysPipe,
   ReadableFileSizePipe,
   SplitTextPipe,
+  TemplateTypeShowPipe
 ];
 
 @NgModule({
