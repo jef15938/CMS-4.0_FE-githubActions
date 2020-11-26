@@ -29,6 +29,16 @@
         <a [href]="fieldLink.fieldInfo?.fieldVal"
           [target]="fieldLink.fieldInfo?.extension?.isTargetBlank==='true'?'_blank':''" rel="noreferrer noopener">拍手</a>
       </div>
+      <div rdrStopEvent (click)="go()"> test </div>
+      <a rdrStopEvent href="#">a test #</a>
+      <br>
+      <a rdrStopEvent href="https://www.google.com/"> a test google</a>
+      <br>
+      <a rdrStopEvent actionid="123"> a test actionId</a>
+      <br>
+      <a rdrStopEvent href="/news/portalnews/106"> a test 站內連結</a>
+      <br>
+      <button rdrStopEvent (click)="go()">button to test stop event</button>
     </div>
 
     <hr>
