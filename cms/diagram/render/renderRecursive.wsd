@@ -1,0 +1,67 @@
+@startuml
+Title \nRender : Render Recursive 長出畫面機制\n
+
+header
+PongPong 2020/11/27
+end header
+
+skinparam componentStyle rectangle
+
+rectangle "RenderComponent" as Render {
+  component RenderFunc [
+    行為:
+    1. 拿到 resolver 的資料, 建立 LayoutInfo[] 傳給 TemplateContainer (LayoutInfo extends ContentTemplateInfoModel)
+    
+    給 child 的 Input:
+    1. LayoutInfo[] (讓 TemplateContainer 跑 for 迴圈長出畫面)
+  ]
+  RenderFunc -[hidden]-> TCC
+
+  rectangle "TemplatesContainerComponent" as TCC {
+    component TCCFunc [
+      行為:
+      1. 拿到父層給的 ContentTemplateInfoModel[], *ngFor 長 LayoutWrapperComponent
+      
+      給 child 的 Input:
+      1. ContentTemplateInfoModel
+    ]
+    TCCFunc -[hidden]-> LWC
+
+    rectangle "LayoutWrapperComponent" as LWC {
+       component LWCFunc [
+        1. 根據父層給的 ContentTemplateInfoModel.templateId 去找 mapping 表, 找到 ComponentClass
+        2. Bind 事件, for 編輯器 action 使用
+
+        給 child 的 Input:
+        1. 準備好資料的 onComponentLoad function(本身會呼叫 ngOnChanges), 讓 DynamicWrapperComponent 長好 Component 後, 呼叫此 function
+       
+        2. ComponentClass <color:Red>(程式待修正)</color>
+      ]
+      LWCFunc -[hidden]-> DWC
+
+      rectangle "DynamicWrapperComponent" as DWC {
+        component DWCFunc [
+          1. ngAfterViewInit 拿父層給的 ComponentClass 長出版型Component
+          2. call 父層給的 onComponentLoad funcation, 觸發 ngOnChanges <color:Red>(程式待修正)</color>
+        ]
+        DWCFunc -[hidden]-> 版型C
+
+        rectangle "版型Component" as 版型C {
+          component 版型CFunc [
+            1. 根據版型客製化邏輯, 如果還需要 render 機制長畫面, 就自己引入 RenderComponent html tag
+          ]
+          版型CFunc -[hidden]-> RenderChild
+
+          rectangle "(如果需要的話)\nRenderComponent..." as RenderChild {
+            control "recursive"
+          }
+        }
+      }
+    }
+      
+  }
+}
+
+@enduml
+
+
