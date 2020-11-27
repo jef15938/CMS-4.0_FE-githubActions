@@ -2,7 +2,7 @@
   <h1>新增版面</h1>
   <hr>
   <mat-accordion *ngIf="selectableTemplates">
-    <mat-expansion-panel *ngIf="selectableTemplates.static">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           固定版型
@@ -20,7 +20,7 @@
         </ng-container>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="selectableTemplates.tab">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           頁籤版型
@@ -38,7 +38,7 @@
         </ng-container>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="selectableTemplates.dynamic">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           動態版型
@@ -56,7 +56,7 @@
         </ng-container>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="selectableTemplates.customize">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           客制版型
