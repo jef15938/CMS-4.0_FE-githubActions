@@ -68,6 +68,7 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
   ngOnInit(): void {
     this.listenToClick();
 
+    // 當自己是 iframe, 接到父層的 postMessage 要做什麼
     window.onmessage = (e) => {
       const command: PreviewCommand<PreviewCommandData> = e.data;
       switch (command.type) {
