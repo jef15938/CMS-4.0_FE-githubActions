@@ -34,15 +34,14 @@ rectangle "RenderComponent" as Render {
 
         給 child 的 Input:
         1. 準備好資料的 onComponentLoad function(本身會呼叫 ngOnChanges), 讓 DynamicWrapperComponent 長好 Component 後, 呼叫此 function
-       
-        2. ComponentClass <color:Red>(程式待修正)</color>
+        2. ComponentClass
       ]
       LWCFunc -[hidden]-> DWC
 
       rectangle "DynamicWrapperComponent" as DWC {
         component DWCFunc [
-          1. ngAfterViewInit 拿父層給的 ComponentClass 長出版型Component
-          2. call 父層給的 onComponentLoad funcation, 觸發 ngOnChanges <color:Red>(程式待修正)</color>
+          1. ngAfterViewInit 拿父層給的 ComponentClass 長出版型Component  <color:Red>(程式待修正)</color>
+          2. call 父層給的 onComponentLoad funcation, 觸發 ngOnChanges
         ]
         DWCFunc -[hidden]-> 版型C
 
