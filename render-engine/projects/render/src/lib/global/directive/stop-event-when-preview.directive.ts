@@ -6,9 +6,9 @@ import { fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[rdrStopEvent]'
+  selector: '[rdrStopEventWhenPreview]'
 })
-export class StopEventDirective extends LayoutWrapperBase implements OnInit, AfterViewInit {
+export class StopEventWhenPreviewDirective extends LayoutWrapperBase implements OnInit, AfterViewInit {
 
   constructor(injector: Injector, private hostElement: ElementRef,
     @Optional() @Inject(RENDERED_PAGE_ENVIRONMENT_ROKEN) private pageEnv: RenderedPageEnvironment
