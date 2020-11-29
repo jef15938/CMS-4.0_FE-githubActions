@@ -98,7 +98,7 @@ export class ContentService {
   /**
    *
    *
-   * @param {string} controlID // SiteMapGetResponse.layout_id
+   * @param {string} controlID // 節點管理時給layoutId
    * @returns
    * @memberof ContentService
    */

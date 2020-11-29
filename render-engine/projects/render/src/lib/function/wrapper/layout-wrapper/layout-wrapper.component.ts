@@ -62,6 +62,7 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
     const templateId = this.templateInfo.templateId;
+    // FIXME 不應該在這裏呼叫 this.dynamicWrapperComponent.loadWithComponent(component); ?
     try {
       const component = this.dynamicComponentFactoryService.getComponent(templateId);
       this.dynamicWrapperComponent.loadWithComponent(component);

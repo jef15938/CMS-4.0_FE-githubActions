@@ -35,10 +35,13 @@ export class RenderPreviewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // route 跳轉時, replace 當前的 url 後 assign 給 iframe
     this.activatedRoute.params.subscribe(params => {
       this.iframeUrl = window.location.href.replace('/preview/', '/preview/iframe/');
     });
 
+
+    // 當自己是 iframe, 接到父層的 postMessage 要做什麼
     window.onmessage = (e) => {
       const command: PreviewCommand<PreviewCommandData> = e.data;
       switch (command.type) {
@@ -61,21 +64,47 @@ export class RenderPreviewComponent implements OnInit {
     };
   }
 
+  /**
+   *
+   * 用 postMessage 方式與 iframe 互動
+   * @private
+   * @param {PreviewCommand<PreviewCommandData>} command
+   * @memberof RenderPreviewComponent
+   */
   private sendCommandToIFrame(command: PreviewCommand<PreviewCommandData>) {
     this.iframe?.nativeElement?.contentWindow?.postMessage(command, '*');
   }
 
+
+  /**
+   *
+   * 點擊比較版本／取消比較
+   * @memberof RenderPreviewComponent
+   */
   toggleCompare() {
     this.previewSize = PreviewSize.PC;
     const command: PreviewCommand<null> = { type: PreviewCommandType.COMPARE_TOGGLE, data: null };
     this.sendCommandToIFrame(command);
   }
 
+
+  /**
+   *
+   * 設定 preview size (PC/PAD_H/PAD_V/MOBILE)
+   * @param {PreviewSize} previewSize
+   * @memberof RenderPreviewComponent
+   */
   setPreviewSize(previewSize: PreviewSize) {
     this.closeCompare();
     this.previewSize = previewSize;
   }
 
+
+  /**
+   *
+   * 關閉比較版本的頁面
+   * @memberof RenderPreviewComponent
+   */
   closeCompare() {
     this.func.compare.on = false;
     const command: PreviewCommand<null> = { type: PreviewCommandType.COMPARE_OFF, data: null };

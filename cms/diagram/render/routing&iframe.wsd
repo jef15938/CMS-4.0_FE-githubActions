@@ -1,0 +1,61 @@
+@startuml
+Title \nRender : Routing & Iframe 機制\n
+
+header
+PongPong 2020/11/27
+end header
+
+actor user
+
+skinparam componentStyle rectangle
+user --> [URL]
+URL --> [RenderRoutingModule]
+skinparam componentStyle uml
+note right: 根據路由設定規則，分配跳轉目的地
+node "- Component - \nRenderPreview\n\n符合的 URL 路徑:\n['preview/:pageID', \n'preview/:languageID/:pageID', \n'preview/:funcID/:category/:dataID']\n" {
+  component RPC [
+  self
+  ]
+
+  component IFR [
+  - Iframe - 
+  ]
+
+  RenderRoutingModule --> RPC
+  RPC --> IFR: this.iframeUrl = window.location.href\n.replace('/preview/', '/preview/iframe/'); \n之後用 iframeUrl 當作 Iframe 的 src
+
+  IFR --> URL
+
+}
+
+  skinparam componentStyle rectangle
+  component Resolver [
+    - Service - 
+    Resolver: 
+    PageInfoResolverService | DynamicPageInfoResolverService
+    (根據路由設定規則, 執行對應的 resolver)
+  ]
+
+  skinparam componentStyle uml
+
+  RenderRoutingModule --> Resolver
+
+
+  node "- Component - \nRender\n\n符合的 URL 路徑:\n['preview/iframe/:pageID', \n'preview/iframe/:languageID/:pageID', \n'preview/iframe/:funcID/:category/:dataID', \n':pageID', \n':languageID/:pageID', \n':funcID/:category/:dataID']\n" {
+
+
+
+  component RC [
+  self
+  ]
+
+  Resolver --> RC
+
+
+  
+}
+
+
+@enduml
+
+
