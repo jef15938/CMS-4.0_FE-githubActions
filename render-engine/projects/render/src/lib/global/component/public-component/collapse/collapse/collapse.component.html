@@ -1,12 +1,8 @@
 <nx-collapse arrowLine>
   <ng-container trigger>
-    <ng-container *ngIf="titleTemplateRef" [ngTemplateOutlet]="titleTemplateRef"
-      [ngTemplateOutletContext]="{$implicit:collapseData}">
-    </ng-container>
+    <ng-content select="[title]"></ng-content>
   </ng-container>
   <ng-container content>
-    <ng-container *ngIf="contentTemplateRef" [ngTemplateOutlet]="contentTemplateRef"
-      [ngTemplateOutletContext]="{$implicit:collapseData}">
-    </ng-container>
+    <ng-content select="[content]"></ng-content>
   </ng-container>
 </nx-collapse>

@@ -10,7 +10,7 @@ export class TabCarouselComponent implements OnInit {
 
   @Input() tabList: TabData[];
 
-  @ContentChild('content') contentTemplateRef: TemplateRef<any>;
+  @Input() contentTemplate: TemplateRef<any>;
   constructor() {
   }
 
