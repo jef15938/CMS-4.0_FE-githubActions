@@ -1,19 +1,19 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { RenderService } from './render.service';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Router, Resolve } from '@angular/router';
 import { Observable, forkJoin, throwError, iif } from 'rxjs';
 import { shareReplay, switchMap, catchError, tap, filter, first, map } from 'rxjs/operators';
-import { PageData } from '../types';
 import { Store, select } from '@ngrx/store';
+import { RenderService } from './render.service';
+import { PageData } from '../types/_index';
 import * as RenderStore from '../store/reducers/render.reducer';
 import { selectSitemap, selectFetchSitemapStatus } from '../store/selectors/render.selectors';
-import { RequestStatus } from '../enum';
+import { RequestStatus } from '../enum/_index';
 import { fetchSitemap } from '../store/actions/render.actions';
 import { PageInfoGetResponseModel } from '../api/data-model/models/page-info-get-response.model';
 import { ContentInfoModel } from '../api/data-model/models/content-info.model';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ApiContext } from '../api/context-api-name-factory';
-import { isPlatformBrowser } from '@angular/common';
 import { SiteMapGetResponseModel } from '../api/data-model/models/site-map-get-response.model';
 import { SitemapUtil } from '../utils/sitemap-util';
 

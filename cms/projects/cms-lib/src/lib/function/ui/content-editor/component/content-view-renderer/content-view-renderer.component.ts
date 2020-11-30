@@ -55,6 +55,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     this.checkView();
   }
 
+  /** 插入 加入版塊按紐 */
   private createBtnContainer() {
     const newNode = document.createElement('div');
     newNode.classList.add('cms-content-editor-add-template-btn-container');

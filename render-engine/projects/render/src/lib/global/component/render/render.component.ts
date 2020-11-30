@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageData } from '../../types';
+import { PageData } from '../../types/_index';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-get-response.model';

@@ -27,12 +27,11 @@ import { takeUntil } from 'rxjs/operators';
 export class CollapseComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit {
 
   @Input() collapseData: CollapseData;
+  @Input() titleTemplate: TemplateRef<any>;
+  @Input() contentTemplate: TemplateRef<any>;
 
   /** nxCollapse 收合時，觸發此事件 */
   @Output() beforeCollapsing = new EventEmitter();
-
-  @ContentChild('title') titleTemplateRef: TemplateRef<any>;
-  @ContentChild('content') contentTemplateRef: TemplateRef<any>;
   @ViewChild(NxCollapseComponent) nxCollapse: NxCollapseComponent;
 
   constructor(injector: Injector) {

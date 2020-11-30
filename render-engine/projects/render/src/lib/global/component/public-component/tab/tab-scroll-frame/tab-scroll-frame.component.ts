@@ -19,7 +19,7 @@ import { WINDOW_RESIZE_TOKEN } from '@neux/ui';
 import { interval, Observable, Subject } from 'rxjs';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { scan, switchMap, takeUntil, takeWhile, tap } from 'rxjs/operators';
-import { CommonUtils } from '../../../../utils';
+import { CommonUtils } from '../../../../utils/common-util';
 import { CustomizeBaseDirective } from '../../base-component';
 import { TabItemComponent } from '../tab-item/tab-item.component';
 

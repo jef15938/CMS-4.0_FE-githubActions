@@ -1,9 +1,6 @@
-<div class="rdr-layout-block">
-  <rdr-tab-carousel-frame>
-    <rdr-tab-item *ngFor="let item of tabList" [tabTitle]="item.title">
-      <ng-container *ngIf="contentTemplateRef" [ngTemplateOutlet]="contentTemplateRef"
-        [ngTemplateOutletContext]="{$implicit:item}">
-      </ng-container>
-    </rdr-tab-item>
-  </rdr-tab-carousel-frame>
-</div>
+<rdr-tab-carousel-frame>
+  <rdr-tab-item *ngFor="let item of tabList" [tabTitle]="item.title">
+    <ng-container *ngIf="contentTemplate" [ngTemplateOutlet]="contentTemplate" [ngTemplateOutletContext]="{item:item}">
+    </ng-container>
+  </rdr-tab-item>
+</rdr-tab-carousel-frame>

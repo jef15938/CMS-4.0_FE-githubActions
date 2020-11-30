@@ -1,7 +1,7 @@
 import { Component, Injector } from '@angular/core';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper';
 import { LayoutInfo } from '../../interface/layout-info.interface';
 import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
+import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
 
 const TEMPLATE_ID = 'layout';
 

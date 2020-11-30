@@ -28,8 +28,8 @@ export class AccordionComponent extends CustomizeBaseDirective implements OnInit
   /** 是否需要項目符號 */
   @Input() hasList = false;
 
-  @ContentChild('title') titleTemplateRef: TemplateRef<any>;
-  @ContentChild('content') contentTemplateRef: TemplateRef<any>;
+  @Input() titleTemplate: TemplateRef<any>;
+  @Input() contentTemplate: TemplateRef<any>;
   @ViewChildren(CollapseComponent) collapseComponentList: QueryList<CollapseComponent>;
 
   constructor(injector: Injector) {

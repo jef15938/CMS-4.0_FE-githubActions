@@ -29,6 +29,16 @@ import { CmsErrorHandler } from '../../../global/error-handling/cms-error-handle
 })
 export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked,
   CmsCanDeactiveGuardian, ContentEditorContext {
+
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private cmsCanDeactiveGuard: CmsCanDeactiveGuard,
+    private modalService: ModalService,
+    private contentService: ContentService,
+    @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
+  ) {
+
+  }
   EditorMode = EditorMode;
 
   @ViewChild(ContentViewRendererComponent) contentViewRenderer: ContentViewRendererComponent;
@@ -61,15 +71,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   destroy$ = new Subject();
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    private cmsCanDeactiveGuard: CmsCanDeactiveGuard,
-    private modalService: ModalService,
-    private contentService: ContentService,
-    @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
-  ) {
 
-  }
+
 
   ngOnInit(): void {
     const contentInfo: ContentInfoModel = this.contentInfo;

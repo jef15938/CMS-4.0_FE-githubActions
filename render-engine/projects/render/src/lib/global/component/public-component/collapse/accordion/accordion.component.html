@@ -1,18 +1,13 @@
 <nx-collapse-accordion [hasList]="hasList">
   <rdr-collapse *ngFor="let item of collapseList" [collapseData]="item">
-    <ng-template #title let-item>
-      <ng-container trigger>
-        <ng-container *ngIf="titleTemplateRef" [ngTemplateOutlet]="titleTemplateRef"
-          [ngTemplateOutletContext]="{$implicit:item}">
-        </ng-container>
+    <ng-container title>
+      <ng-container *ngIf="titleTemplate" [ngTemplateOutlet]="titleTemplate" [ngTemplateOutletContext]="{item:item}">
       </ng-container>
-    </ng-template>
-    <ng-template #content let-item>
-      <ng-container content>
-        <ng-container *ngIf="contentTemplateRef" [ngTemplateOutlet]="contentTemplateRef"
-          [ngTemplateOutletContext]="{$implicit:item}">
-        </ng-container>
+    </ng-container>
+    <ng-container content>
+      <ng-container *ngIf="contentTemplate" [ngTemplateOutlet]="contentTemplate"
+        [ngTemplateOutletContext]="{item:item}">
       </ng-container>
-    </ng-template>
+    </ng-container>
   </rdr-collapse>
 </nx-collapse-accordion>

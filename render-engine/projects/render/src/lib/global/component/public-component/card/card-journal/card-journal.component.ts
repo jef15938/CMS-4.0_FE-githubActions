@@ -2,7 +2,7 @@ import { Component, Inject, Injector, Input, OnInit, ViewEncapsulation } from '@
 import { WINDOW_RESIZE_TOKEN } from '@neux/ui';
 import { Observable } from 'rxjs/internal/Observable';
 import { takeUntil, tap } from 'rxjs/operators';
-import { CommonUtils } from '../../../../utils';
+import { CommonUtils } from '../../../../utils/common-util';
 import { CustomizeBaseDirective } from '../../base-component';
 
 export interface CardJournalData {

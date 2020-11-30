@@ -1,0 +1,111 @@
+@startuml
+
+header
+PongPong 2020/11/27
+end header
+
+title \nRender : 進 Component 前準備好所需資料 - DynamicPageInfoResolverService\n( 使用 Angular Route Resolve 完成 )\n\n 符合的 URL 路徑:\n[preview/iframe/:funcID/:category/:dataID, \n:funcID/:category/:dataID]
+
+
+actor user
+activate user
+
+user -> "1. RenderRoutingModule" : 1. 輸入網址
+activate "1. RenderRoutingModule"
+
+
+deactivate user
+
+
+"1. RenderRoutingModule" -> "[Service]\n2. DynamicPageInfoResolver"
+note right: 進 Component 前, \n在此處準備好資料(打API, 組合資料...)
+activate "[Service]\n2. DynamicPageInfoResolver"
+
+"[Service]\n2. DynamicPageInfoResolver" -> "[Service]\n2. DynamicPageInfoResolver"
+note right: context = isPlatformBrowser(this.platformId) ? route.data.context : 'batchSSR';\nfuncID = route.params.funcID;\ncategory = route.params.category;\ndataID = route.params.dataID;
+|||
+
+== dynamicInfo$ ==
+"[Service]\n2. DynamicPageInfoResolver" -> "[Service]\n3. RenderService": dynamicInfo$ = getDynamicInfo(context, pageID, lang)
+activate "[Service]\n3. RenderService"
+
+activate "[Service]\n4. RestApiService"
+"[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetDynamicByFuncIdAndCategoryAndDataId(\n\t{ func_id: funcID, category, data_id: dataID }\n)
+
+== pageInfo$ ==
+"[Service]\n2. DynamicPageInfoResolver" -> "[Service]\n2. DynamicPageInfoResolver": pageInfo$ = dynamicInfo$.pipe(map(r => r.pageInfo))
+|||
+
+== fetchSitemap ==
+"[Service]\n2. DynamicPageInfoResolver" -> "[Service]\n5. Store": dispatch(fetchSitemap({ context }))
+activate "[Service]\n5. Store"
+note right: dispatch action
+
+"[Service]\n5. Store" -> "[Service]\n3. RenderService": getSitemap(context)
+note right: fetchSitemapAction 觸發 effect
+
+alt context === 'runtime'
+  "[Service]\n3. RenderService" -> "[Service]\n3. RenderService": httpClient.get<SiteMapGetResponse>('/sitemap.json')
+  
+
+else else
+
+  alt context ===  'batchSSR'
+    "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetSiteMap({})
+  else else
+    "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetPreviewSiteMap({})
+  end
+
+end
+
+"[Service]\n3. RenderService" -> "[Service]\n5. Store" : effect map
+
+alt 成功
+    "[Service]\n5. Store" -> "[Service]\n5. Store" : return fetchSitemapSuccess({ sitemap })
+    note right: return 成功 Action
+  else 失敗
+     "[Service]\n5. Store" -> "[Service]\n5. Store" : return fetchSitemapFailure(error))
+     note right: return 失敗 Action
+end
+
+"[Service]\n5. Store" -> "[Service]\n5. Store" : reducer 
+note right: 成功/失敗 Action 觸發 reducer
+
+alt 成功
+    "[Service]\n5. Store" -> "[Service]\n5. Store" : return { \n...state, \nsitemapRequestPending: false, \nsitemapRequestResultStatus: RequestStatus.Success, \nsitemapCache: sitemap\n }
+    note right: return { \n...state, \nsitemapRequestPending: false, \nsitemapRequestResultStatus: RequestStatus.Success, \nsitemapCache: sitemap\n }
+  else 失敗
+     "[Service]\n5. Store" -> "[Service]\n5. Store" : return { \n...state, \nsitemapRequestPending: false, \nsitemapRequestResultStatus: RequestStatus.Fail\n }
+     note right: return { \n...state, \nsitemapRequestPending: false, \nsitemapRequestResultStatus: RequestStatus.Fail\n }
+end
+
+"[Service]\n5. Store" -> "[Service]\n5. Store" : 更新 Store 資料
+|||
+
+== sitemap$ ==
+"[Service]\n2. DynamicPageInfoResolver" -> "[Service]\n5. Store": sitemap$ = select(selectSitemap)
+note right: 使用 selector 取得 RenderState.sitemapCache 資料
+|||
+
+== contentInfo$ ==
+"[Service]\n2. DynamicPageInfoResolver" -> "[Service]\n2. DynamicPageInfoResolver": contentInfo$ = dynamicInfo$.pipe(map(r => r.content));
+|||
+
+== forkJoin ==
+"[Service]\n2. DynamicPageInfoResolver" -> "[Service]\n2. DynamicPageInfoResolver": forkJoin({\npageInfo: pageInfo$, \nsitemap: sitemap$, \ncontentInfo: contentInfo$\n}).pipe(\n\tmap(res => ...)\n)
+
+"[Service]\n2. DynamicPageInfoResolver" -> "[Util]\n6. SitemapUtil": const pageNode = \nfindNodeByNodeIdFromSites(\n\tres.sitemap.sites, res.pageInfo.nodeParentID\n)
+note right: 根據 site 及 nodeParentID 找到該節點 SiteMapInfoModel
+activate "[Util]\n6. SitemapUtil"
+
+"[Service]\n2. DynamicPageInfoResolver" -> "[Service]\n2. DynamicPageInfoResolver": return { pageNode, ...res };
+note right: 把準備好的資料存在 Angular activatedRoute.snapshot.data.data 變數, \nComponent 就可以直接取用了
+
+
+
+
+
+
+@enduml
+
+

@@ -1,0 +1,129 @@
+@startuml
+
+header
+PongPong 2020/11/27
+end header
+
+title \nRender : 進 Component 前準備好所需資料 - PageInfoResolver\n( 使用 Angular Route Resolve 完成 )\n\n 符合的 URL 路徑:\n[preview/iframe/:pageID, \npreview/iframe/:languageID/:pageID, \n:pageID, \n:languageID/:pageID]
+
+
+actor user
+activate user
+
+user -> "1. RenderRoutingModule" : 1. 輸入網址
+activate "1. RenderRoutingModule"
+
+deactivate user
+
+
+"1. RenderRoutingModule" -> "[Service]\n2. PageInfoResolver"
+note right: 進 Component 前, \n在此處準備好資料(打API, 組合資料...)
+activate "[Service]\n2. PageInfoResolver"
+
+"[Service]\n2. PageInfoResolver" -> "[Service]\n2. PageInfoResolver"
+note right: context = isPlatformBrowser(this.platformId) ? route.data.context : 'batchSSR';\npageID = route.params.pageID;\nlang = route.params.languageID;
+|||
+
+== pageInfo$ ==
+"[Service]\n2. PageInfoResolver" -> "[Service]\n3. RenderService": pageInfo$ = getPageInfo(context, pageID, lang)
+activate "[Service]\n3. RenderService"
+
+activate "[Service]\n4. RestApiService"
+alt has Lang
+
+  alt context === 'runtime' || 'batchSSR'
+    "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetPageByPageIdAndLang({ page_id: pageID, lang })
+  else else
+    "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetPreviewPageByPageIdAndLang({ page_id: pageID, lang })
+  end
+
+else else
+
+  alt context === 'runtime' || 'batchSSR'
+    "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetPageByPageId({ page_id: pageID })
+  else else
+    "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetPreviewPageByPageId({ page_id: pageID })
+  end
+
+end
+|||
+
+== fetchSitemap ==
+"[Service]\n2. PageInfoResolver" -> "[Service]\n5. Store": dispatch(fetchSitemap({ context }))
+activate "[Service]\n5. Store"
+note right: dispatch action
+
+"[Service]\n5. Store" -> "[Service]\n3. RenderService": getSitemap(context)
+note right: fetchSitemapAction 觸發 effect
+
+alt context === 'runtime'
+  "[Service]\n3. RenderService" -> "[Service]\n3. RenderService": httpClient.get<SiteMapGetResponse>('/sitemap.json')
+  
+
+else else
+
+  alt context ===  'batchSSR'
+    "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetSiteMap({})
+  else else
+    "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetPreviewSiteMap({})
+  end
+
+end
+
+"[Service]\n3. RenderService" -> "[Service]\n5. Store" : effect map
+
+alt 成功
+    "[Service]\n5. Store" -> "[Service]\n5. Store" : return fetchSitemapSuccess({ sitemap })
+    note right: return 成功 Action
+  else 失敗
+     "[Service]\n5. Store" -> "[Service]\n5. Store" : return fetchSitemapFailure(error))
+     note right: return 失敗 Action
+end
+
+"[Service]\n5. Store" -> "[Service]\n5. Store" : reducer 
+note right: 成功/失敗 Action 觸發 reducer
+
+alt 成功
+    "[Service]\n5. Store" -> "[Service]\n5. Store" : return { \n\t...state, \n\tsitemapRequestPending: false, \n\tsitemapRequestResultStatus: RequestStatus.Success, \n\tsitemapCache: sitemap\n }
+    note right: return { \n\t...state, \n\tsitemapRequestPending: false, \n\tsitemapRequestResultStatus: RequestStatus.Success, \n\tsitemapCache: sitemap\n }
+  else 失敗
+     "[Service]\n5. Store" -> "[Service]\n5. Store" : return { \n\t...state, \n\tsitemapRequestPending: false, \n\tsitemapRequestResultStatus: RequestStatus.Fail\n }
+     note right: return { \n\t...state, \n\tsitemapRequestPending: false, \n\tsitemapRequestResultStatus: RequestStatus.Fail\n }
+end
+
+"[Service]\n5. Store" -> "[Service]\n5. Store" : 更新 Store 資料
+|||
+
+== sitemap$ ==
+"[Service]\n2. PageInfoResolver" -> "[Service]\n5. Store": sitemap$ = select(selectSitemap)
+note right: 使用 selector 取得 RenderState.sitemapCache 資料
+|||
+
+== contentInfo$ ==
+"[Service]\n2. PageInfoResolver" -> "[Service]\n3. RenderService": contentInfo$ = pageInfo$.pipe(\n\tswitchMap(\n\t\t(x) => this.renderService.getContentInfo(context, x.contentId)\n\t)\n);
+
+alt context === 'runtime' || 'batchSSR'
+  "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetContentByContentId({ content_id: contentID })
+else else
+  "[Service]\n3. RenderService" -> "[Service]\n4. RestApiService" : GetPreviewContentByContentId({ content_id: contentID })
+end
+|||
+
+== forkJoin ==
+"[Service]\n2. PageInfoResolver" -> "[Service]\n2. PageInfoResolver": forkJoin({\n\tpageInfo: pageInfo$, \n\tsitemap: sitemap$, \n\tcontentInfo: contentInfo$\n}).pipe(\n\tmap(res => ...)\n)
+
+"[Service]\n2. PageInfoResolver" -> "[Util]\n6. SitemapUtil": pageNode = \n\tfindNodeByContentPathFromSites(\n\t\tres.sitemap.sites, pageID\n\t)
+note right: 根據 site 及 pageID 找到該節點 SiteMapInfoModel
+activate "[Util]\n6. SitemapUtil"
+
+"[Service]\n2. PageInfoResolver" -> "[Service]\n2. PageInfoResolver": return { pageNode, ...res };
+note right: 把準備好的資料存在 Angular activatedRoute.snapshot.data.data 變數, \nComponent 就可以直接取用了
+
+
+
+
+
+
+@enduml
+
+

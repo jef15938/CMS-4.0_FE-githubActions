@@ -1,10 +1,10 @@
 <div class="rdr-layout-block">
   <ng-container *ngIf="templateInfo">
-    <rdr-tab-carousel [tabList]="templateInfo?.tabList | transformData:tabData">
-      <ng-template #content let-item>
-        <rdr-templates-container [templates]="item.content">
-        </rdr-templates-container>
-      </ng-template>
+    <rdr-tab-carousel [tabList]="templateInfo?.tabList | transformData:tabData" [contentTemplate]="content">
     </rdr-tab-carousel>
+    <ng-template #content let-item="item">
+      <rdr-templates-container [templates]="item.content">
+      </rdr-templates-container>
+    </ng-template>
   </ng-container>
 </div>

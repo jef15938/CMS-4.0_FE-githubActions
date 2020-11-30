@@ -4,7 +4,7 @@ import { fromEvent, Observable, of, Subject } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
-import { TemplatesContainerComponent, LayoutWrapperComponent } from '../../../function/wrapper';
+import { TemplatesContainerComponent } from '../../../function/wrapper/templates-container/templates-container.component';
 import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-get-response.model';
 import { RenderService } from '../../service/render.service';
 import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
@@ -12,6 +12,7 @@ import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
 import { RenderedPageEnvironment } from '../../interface/page-environment.interface';
 import { PreviewCommandType } from '../../enum/preview-command.enum';
 import { PreviewCommand, PreviewCommandData } from '../../interface/preview-command.interface';
+import { LayoutWrapperComponent } from '../../../function/wrapper/layout-wrapper/layout-wrapper.component';
 
 @Component({
   selector: 'rdr-render-preview-container',
@@ -68,6 +69,7 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
   ngOnInit(): void {
     this.listenToClick();
 
+    // 當自己是 iframe, 接到父層的 postMessage 要做什麼
     window.onmessage = (e) => {
       const command: PreviewCommand<PreviewCommandData> = e.data;
       switch (command.type) {

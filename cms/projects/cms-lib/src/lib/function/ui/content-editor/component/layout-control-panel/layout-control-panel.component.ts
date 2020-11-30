@@ -12,6 +12,69 @@ import { ContentTemplateInfoModel } from '../../../../../global/api/data-model/m
 import { ModalService } from '../../../modal';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 
+
+const DEMO_TEMPLATES = [
+  {
+    templateId: 'social-media',
+    templateName: '社交媒體分享',
+    templateThumbnail: ''
+  },
+  {
+    templateId: 'banner',
+    templateName: 'Banner',
+    templateThumbnail: ''
+  },
+  {
+    templateId: 'list',
+    templateName: '清單',
+    templateThumbnail: ''
+  },
+  {
+    templateId: 'FixedWrapper',
+    templateName: '固定式外框',
+    templateThumbnail: ''
+  },
+  // {
+  //   template_id: 'Download',
+  //   template_name: 'Download',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'News',
+  //   template_name: 'News',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'Slide',
+  //   template_name: 'Slide',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'HTML',
+  //   template_name: 'HTML',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'Tab',
+  //   template_name: 'Tab',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'IconPage',
+  //   template_name: 'IconPage',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'FieldsDemo',
+  //   template_name: 'FieldsDemo',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'GroupDemo',
+  //   template_name: 'GroupDemo',
+  //   template_thumbnail: ''
+  // }
+];
 @Component({
   selector: 'cms-layout-control-panel',
   templateUrl: './layout-control-panel.component.html',
@@ -30,7 +93,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   // 可選版面資料
   @Input() selectableTemplates: TemplateGetResponseModel;
 
-  mainTemplates: TemplateInfoModel[] = [];
+  mainTemplates: TemplateInfoModel[] = [...DEMO_TEMPLATES];
 
   @Output() templateAdd = new EventEmitter<string>(); // template_name
 
@@ -43,68 +106,6 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.mainTemplates = [
-      {
-        templateId: 'social-media',
-        templateName: '社交媒體分享',
-        templateThumbnail: ''
-      },
-      {
-        templateId: 'banner',
-        templateName: 'Banner',
-        templateThumbnail: ''
-      },
-      {
-        templateId: 'list',
-        templateName: '清單',
-        templateThumbnail: ''
-      },
-      {
-        templateId: 'FixedWrapper',
-        templateName: '固定式外框',
-        templateThumbnail: ''
-      },
-      // {
-      //   template_id: 'Download',
-      //   template_name: 'Download',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'News',
-      //   template_name: 'News',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'Slide',
-      //   template_name: 'Slide',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'HTML',
-      //   template_name: 'HTML',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'Tab',
-      //   template_name: 'Tab',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'IconPage',
-      //   template_name: 'IconPage',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'FieldsDemo',
-      //   template_name: 'FieldsDemo',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'GroupDemo',
-      //   template_name: 'GroupDemo',
-      //   template_thumbnail: ''
-      // },
-    ];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -116,9 +117,26 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       }
       if (current) {
         current.isSelected = true;
+        this.getWhiteList();
       }
       this.show = !!current;
     }
+  }
+
+
+  /**
+   * 從templatesContainer取得白名單,並過濾掉可選版型
+   *
+   * @return {*}
+   * @memberof LayoutControlPanelComponent
+   */
+  getWhiteList() {
+    const flatternArr = [...this.selectableTemplates.static, ...this.selectableTemplates.tab
+      , ...this.selectableTemplates.dynamic, ...this.selectableTemplates.customize, ...this.mainTemplates];
+    if (this.selectedBtn.templatesContainer.whiteList.length) {
+      flatternArr.forEach(e => e.show = !!this.selectedBtn.templatesContainer.whiteList.find(q => q === e.templateId));
+    }
+    else { flatternArr.forEach(e => e.show = true); }
   }
 
   selectTemplate(selectedTemplateInfo: TemplateInfoModel) {

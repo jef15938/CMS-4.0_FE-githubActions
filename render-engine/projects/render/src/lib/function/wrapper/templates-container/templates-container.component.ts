@@ -7,7 +7,7 @@ import { LayoutWrapperSelectEvent } from '../layout-wrapper/layout-wrapper.inter
 import { LayoutWrapperBase } from '../layout-wrapper/layout-wrapper-base';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { RenderedPageEnvironment } from '../../../global/interface/page-environment.interface';
-import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../../../global/injection-token/injection-token';
+import { RENDERED_PAGE_ENVIRONMENT_TOKEN } from '../../../global/injection-token/injection-token';
 
 const RENDERED_PAGE_ENVIRONMENT: RenderedPageEnvironment = {
   pageSites: [],
@@ -30,11 +30,11 @@ export class RenderedPageEnvironmentInstance implements RenderedPageEnvironment 
   templateUrl: './templates-container.component.html',
   styleUrls: ['./templates-container.component.scss'],
   providers: [
-    { provide: RENDERED_PAGE_ENVIRONMENT_ROKEN, useClass: RenderedPageEnvironmentInstance }
+    { provide: RENDERED_PAGE_ENVIRONMENT_TOKEN, useClass: RenderedPageEnvironmentInstance }
   ]
 })
 export class TemplatesContainerComponent extends LayoutWrapperBase implements OnInit, AfterViewInit, AfterViewChecked {
-
+  @Input() whiteList: string[] = [];
   @Input() templates: ContentTemplateInfoModel[];
 
   // tslint:disable-next-line: no-output-native

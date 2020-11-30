@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as RenderActions from '../actions/render.actions';
-import { RequestStatus } from '../../enum';
+import { RequestStatus } from '../../enum/_index';
 import { SiteMapGetResponseModel } from '../../api/data-model/models/site-map-get-response.model';
 
 export const renderFeatureKey = 'RenderState';

@@ -9,18 +9,20 @@
     </div>
     <div class="qa__content">
       <ng-container *ngIf="sourceData?.datas && pageInfo?.lang">
-        <rdr-accordion [hasList]="true" [collapseList]="sourceData?.datas | transformData:collapseData">
-          <ng-template #title let-item>
-            {{item.title}}
-          </ng-template>
-          <ng-template #content let-item>
-            <ng-container *ngIf="item.content|stringToContentInfoModel|getLanguageInfo:pageInfo.lang; let languageInfo">
-              <rdr-templates-container *ngFor="let block of (languageInfo?.blocks || []);"
-                [templates]="block.templates">
-              </rdr-templates-container>
-            </ng-container>
-          </ng-template>
+        <rdr-accordion [hasList]="true" [collapseList]="sourceData?.datas | transformData:collapseData"
+          [titleTemplate]="title" [contentTemplate]="content">
         </rdr-accordion>
+
+        <ng-template #title let-item="item">
+          {{item.title}}
+        </ng-template>
+        <ng-template #content let-item="item">
+          <ng-container *ngIf="item.content|stringToContentInfoModel|getLanguageInfo:pageInfo.lang; let languageInfo">
+            <rdr-templates-container *ngFor="let block of (languageInfo?.blocks || []);" [templates]="block.templates">
+            </rdr-templates-container>
+          </ng-container>
+        </ng-template>
+
       </ng-container>
     </div>
   </div>

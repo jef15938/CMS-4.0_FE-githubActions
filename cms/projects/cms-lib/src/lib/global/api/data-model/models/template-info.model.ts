@@ -9,6 +9,7 @@ import { ModelMapping } from '@neux/core';
     model.templateId = bean.template_id;
     model.templateName = bean.template_name;
     model.templateThumbnail = bean.template_thumbnail;
+    model.show = true;
   }
 )
 export class TemplateInfoModel {
@@ -19,5 +20,6 @@ export class TemplateInfoModel {
   public templateName: string;
   @IsNotEmpty()
   public templateThumbnail: string;
+  public show?: boolean;
 
 }
