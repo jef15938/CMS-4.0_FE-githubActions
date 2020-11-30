@@ -1,6 +1,6 @@
 import { Directive, Inject, AfterViewInit, ElementRef, Optional, Injector, OnInit } from '@angular/core';
 import { RenderedPageEnvironment } from '../interface/page-environment.interface';
-import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../injection-token/injection-token';
+import { RENDERED_PAGE_ENVIRONMENT_TOKEN } from '../injection-token/injection-token';
 import { LayoutWrapperBase } from '../../function/wrapper/layout-wrapper/layout-wrapper-base';
 import { fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 export class StopEventWhenPreviewDirective extends LayoutWrapperBase implements OnInit, AfterViewInit {
 
   constructor(injector: Injector, private hostElement: ElementRef,
-    @Optional() @Inject(RENDERED_PAGE_ENVIRONMENT_ROKEN) private pageEnv: RenderedPageEnvironment
+    @Optional() @Inject(RENDERED_PAGE_ENVIRONMENT_TOKEN) private pageEnv: RenderedPageEnvironment
   ) {
     super(injector);
   }
