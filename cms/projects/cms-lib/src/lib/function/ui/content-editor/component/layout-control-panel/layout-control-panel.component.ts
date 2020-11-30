@@ -3,7 +3,7 @@ import {
   ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef
 } from '@angular/core';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
-import { DynamicComponentFactoryService, LayoutBaseComponent, TemplatesContainerComponent } from '@neux/render';
+import { DynamicComponentFactoryService, TemplateBaseComponent, TemplatesContainerComponent } from '@neux/render';
 import { ContentEditorContext } from '../../content-editor.interface';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
 import { TemplateInfoModel } from '../../../../../global/api/data-model/models/template-info.model';
@@ -143,8 +143,8 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
     const btnTemplatesContainer = this.selectedBtn.templatesContainer;
     const btnRootTemplatesContainer = this.selectedBtn.rootTemplatesContainer;
     const isRoot = btnTemplatesContainer === btnRootTemplatesContainer;
-    const btnLayoutWrapper = this.selectedBtn.targetLayoutWrapper;
-    const templateInfo = btnLayoutWrapper?.templateInfo;
+    const btnTemplateWrapper = this.selectedBtn.targetTemplateWrapper;
+    const templateInfo = btnTemplateWrapper?.templateInfo;
 
     const yes = window.confirm(`確定加入${selectedTemplateInfo.templateName}:${selectedTemplateInfo.templateId}？`);
     if (!yes) { return; }
@@ -160,7 +160,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       const viewContainerRef = this.createTemplateContainer;
       viewContainerRef.clear();
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-      const componentRef = viewContainerRef.createComponent(componentFactory) as ComponentRef<LayoutBaseComponent<any>>;
+      const componentRef = viewContainerRef.createComponent(componentFactory) as ComponentRef<TemplateBaseComponent<any>>;
 
       const componentInctanceDefaultTemplateInfo = componentRef.instance.defaultTemplateInfo;
       if (!componentInctanceDefaultTemplateInfo) {
@@ -190,18 +190,18 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
           });
         });
       } else {
-        const btnParentLayoutWrapper =
-          this.context.findParentLayoutWrapperOfTemplatesContainer(btnTemplatesContainer, btnRootTemplatesContainer);
+        const btnParentTemplateWrapper =
+          this.context.findParentTemplateWrapperOfTemplatesContainer(btnTemplatesContainer, btnRootTemplatesContainer);
 
-        if (!btnParentLayoutWrapper) {
-          this.modalService.openMessage({ message: '系統異常 : 無 btnLayoutWrapper' }).subscribe();
+        if (!btnParentTemplateWrapper) {
+          this.modalService.openMessage({ message: '系統異常 : 無 btnTemplateWrapper' }).subscribe();
           return;
         }
 
-        const btnLayoutWrapperTemplatesContainerComponents =
-          Array.from(btnParentLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
+        const btnTemplateWrapperTemplatesContainerComponents =
+          Array.from(btnParentTemplateWrapper.componentRef.instance.templatesContainerComponents || []);
 
-        const templatesContainerIndex = btnLayoutWrapperTemplatesContainerComponents.indexOf(btnTemplatesContainer);
+        const templatesContainerIndex = btnTemplateWrapperTemplatesContainerComponents.indexOf(btnTemplatesContainer);
 
         const allLangTargetTemplatesContainers =
           rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainersOfBlocks => {
@@ -212,11 +212,11 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
               ) {
                 return btnTemplatesContainer;
               } else {
-                const templateInfoId = btnParentLayoutWrapper.templateInfo.id;
-                const layoutWrapper = this.context.findLayoutWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
-                if (!layoutWrapper) { return null; }
+                const templateInfoId = btnParentTemplateWrapper.templateInfo.id;
+                const templateWrapper = this.context.findTemplateWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
+                if (!templateWrapper) { return null; }
                 return Array.from(
-                  layoutWrapper.componentRef.instance.templatesContainerComponents
+                  templateWrapper.componentRef.instance.templatesContainerComponents
                 )[templatesContainerIndex];
               }
             }).filter(v => !!v);

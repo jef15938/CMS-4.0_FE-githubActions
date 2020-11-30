@@ -1,5 +1,5 @@
 import { Component, Injector, Inject } from '@angular/core';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
+import { CommonTemplateBaseComponent } from '../../../function/wrapper/template-base/common-template-base.component';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 import { RENDER_ENVIROMENT_TOKEN } from '../../injection-token/injection-token';
 import { RenderEnvironment } from '../../interface/render-environment.interface';

@@ -1,6 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
-import { CustomizeTemplateBaseComponent } from '../../../function/wrapper/layout-base/customize-template-base.component';
+import { CustomizeTemplateBaseComponent } from '../../../function/wrapper/template-base/customize-template-base.component';
 
 const TEMPLATE_ID = 'test_customize1';
 

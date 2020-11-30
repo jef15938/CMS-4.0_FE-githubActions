@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import {
-  LayoutWrapperSelectEvent, LayoutWrapperSelectedTargetType, CustomizeTemplateBaseComponent,
-  TemplateType, TemplatesContainerComponent, DataSourceTemplateBaseComponent, LayoutBaseComponent
+  TemplateWrapperSelectEvent, TemplateWrapperSelectedTargetType, CustomizeTemplateBaseComponent,
+  TemplateType, TemplatesContainerComponent, DataSourceTemplateBaseComponent, TemplateBaseComponent
 } from '@neux/render';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { switchMap, shareReplay } from 'rxjs/operators';
@@ -57,7 +57,7 @@ class DataSourceManager {
     return isDataSource || isCustomize;
   }
 
-  private getTypeIdByInstance(instance: LayoutBaseComponent<any>): string {
+  private getTypeIdByInstance(instance: TemplateBaseComponent<any>): string {
     if (!instance) { return ''; }
     let typeId = '';
     if (
@@ -69,7 +69,7 @@ class DataSourceManager {
     return typeId;
   }
 
-  refresh(instance: LayoutBaseComponent<any>) {
+  refresh(instance: TemplateBaseComponent<any>) {
     this.instance = instance;
     const isInstanceDataSourceOrCustomize = this.checkInstanceIsDataSourceOrCustomize(instance);
     this.isActionable = isInstanceDataSourceOrCustomize;
@@ -93,13 +93,13 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   };
 
   @Input() manager: ContentEditorManager;
-  @Input() selected: LayoutWrapperSelectEvent;
+  @Input() selected: TemplateWrapperSelectEvent;
   @Input() context: ContentEditorContext;
 
   @Output() needCheckView = new EventEmitter<CheckViewConfig>();
   @Output() templateMove = new EventEmitter<boolean>();
 
-  LayoutWrapperSelectedTargetType = LayoutWrapperSelectedTargetType;
+  TemplateWrapperSelectedTargetType = TemplateWrapperSelectedTargetType;
   FieldType = ContentFieldInfoFieldType;
 
   // 用來判斷資料是否異動過
@@ -125,8 +125,8 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
 
-      const previous = changes.selected.previousValue as LayoutWrapperSelectEvent;
-      const current = changes.selected.currentValue as LayoutWrapperSelectEvent;
+      const previous = changes.selected.previousValue as TemplateWrapperSelectEvent;
+      const current = changes.selected.currentValue as TemplateWrapperSelectEvent;
       if (previous) {
         previous.selectedTarget.classList.remove('now-edit');
       }
@@ -154,12 +154,12 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     const targetType = this.selected.selectedTargetType;
     const target: string[] = [];
     switch (targetType) {
-      case LayoutWrapperSelectedTargetType.TEMPLATE:
-        target.push(`[${LayoutWrapperSelectedTargetType.TEMPLATE}]${this.selected.templateInfo.id}`);
+      case TemplateWrapperSelectedTargetType.TEMPLATE:
+        target.push(`[${TemplateWrapperSelectedTargetType.TEMPLATE}]${this.selected.templateInfo.id}`);
         break;
-      case LayoutWrapperSelectedTargetType.FIELD:
-        target.push(`[${LayoutWrapperSelectedTargetType.TEMPLATE}]${this.selected.templateInfo.id}`);
-        target.push(`[${LayoutWrapperSelectedTargetType.FIELD}]${this.selected.fieldInfo.fieldId}`);
+      case TemplateWrapperSelectedTargetType.FIELD:
+        target.push(`[${TemplateWrapperSelectedTargetType.TEMPLATE}]${this.selected.templateInfo.id}`);
+        target.push(`[${TemplateWrapperSelectedTargetType.FIELD}]${this.selected.fieldInfo.fieldId}`);
         break;
     }
     // const msg = action || `變更:${targetType} : ${target.join(' ')}`;
@@ -203,16 +203,16 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     if (!(up || down)) { return; }
 
     const rootTemplatesContainersOfBlocksByLanguages = this.context.getRootTemplatesContainersOfBlocksByLanguage();
-    const layoutWrappers = rootTemplatesContainersOfBlocksByLanguages
+    const templateWrappers = rootTemplatesContainersOfBlocksByLanguages
       .map(rootTemplatesContainersOfBlocksByLanguage => {
         return rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainer =>
-          this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer)
+          this.context.findTemplateWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer)
         ).find(v => !!v);
       });
 
-    layoutWrappers.forEach(layoutWrapper => {
-      const templateInfo = layoutWrapper.templateInfo;
-      const belongedTemplates = layoutWrapper.parentTemplatesContainer.templates;
+    templateWrappers.forEach(templateWrapper => {
+      const templateInfo = templateWrapper.templateInfo;
+      const belongedTemplates = templateWrapper.parentTemplatesContainer.templates;
 
       if (up) { // 資料與前一個交換位置
         belongedTemplates[index] = belongedTemplates[index - 1];
@@ -241,21 +241,21 @@ export class ContentControlPanelComponent implements OnInit, OnChanges {
     if (index > -1) {
       // 處理畫面
       const templatesContainer = this.selected.wrapper.parentTemplatesContainer as TemplatesContainerComponent;
-      const layoutWrapperComponents = Array.from(templatesContainer.layoutWrapperComponents);
+      const templateWrapperComponents = Array.from(templatesContainer.templateWrapperComponents);
       const nextIndex = (index === currentLanguageTemplateInfos.length - 1) ? 0 : index + 1;
-      const next = layoutWrapperComponents[nextIndex];
+      const next = templateWrapperComponents[nextIndex];
       // 處理資料
       const rootTemplatesContainersOfBlocksByLanguages = this.context.getRootTemplatesContainersOfBlocksByLanguage();
-      const layoutWrappers = rootTemplatesContainersOfBlocksByLanguages
+      const templateWrappers = rootTemplatesContainersOfBlocksByLanguages
         .map(rootTemplatesContainersOfBlocksByLanguage => {
           return rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainer =>
-            this.context.findLayoutWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer)
+            this.context.findTemplateWrapperByTemplateInfoId(selectedTemplateInfoId, rootTemplatesContainer)
           ).find(v => !!v);
         });
 
-      layoutWrappers.forEach(layoutWrapper =>
-        layoutWrapper.parentTemplatesContainer.templates.splice(
-          layoutWrapper.parentTemplatesContainer.templates.indexOf(layoutWrapper.templateInfo), 1)
+      templateWrappers.forEach(templateWrapper =>
+        templateWrapper.parentTemplatesContainer.templates.splice(
+          templateWrapper.parentTemplatesContainer.templates.indexOf(templateWrapper.templateInfo), 1)
       );
 
       this.preserveChanges(`刪除版型:${selectedTemplateInfo.id}`);

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, GroupTemplateInfo, GroupItem } from '@neux/render';
+import { TemplateWrapperSelectEvent, GroupTemplateInfo, GroupItem } from '@neux/render';
 import { ContentControlBase } from '../../_base';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
 import { ModalService } from '../../../../../../../../function/ui/modal';
@@ -22,7 +22,7 @@ export class TemplateControlGroupComponent extends ContentControlBase implements
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
-      const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
+      const event = changes.selected.currentValue as TemplateWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as GroupTemplateInfo;
     }
   }

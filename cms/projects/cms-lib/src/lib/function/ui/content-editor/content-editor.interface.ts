@@ -1,4 +1,4 @@
-import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
+import { TemplatesContainerComponent, TemplateWrapperComponent } from '@neux/render';
 import { ContentInfoModel } from '../../../global/api/data-model/models/content-info.model';
 
 export enum EditorMode {
@@ -14,10 +14,10 @@ export class ContentEditorSaveEvent {
 
 export interface ContentEditorContext {
   getRootTemplatesContainersOfBlocksByLanguage: () => TemplatesContainerComponent[][];
-  findLayoutWrapperByTemplateInfoId: (templateInfoId: string, source: TemplatesContainerComponent) => LayoutWrapperComponent;
-  findParentLayoutWrapperOfTemplatesContainer: (
+  findTemplateWrapperByTemplateInfoId: (templateInfoId: string, source: TemplatesContainerComponent) => TemplateWrapperComponent;
+  findParentTemplateWrapperOfTemplatesContainer: (
     templatesContainer: TemplatesContainerComponent,
     source: TemplatesContainerComponent,
-    parent?: LayoutWrapperComponent,
-  ) => LayoutWrapperComponent;
+    parent?: TemplateWrapperComponent,
+  ) => TemplateWrapperComponent;
 }

@@ -1,7 +1,7 @@
 import { Component, Injector } from '@angular/core';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 import { ContentFieldInfoFieldType } from '../../api/data-model/models/content-field-info.model';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
+import { CommonTemplateBaseComponent } from '../../../function/wrapper/template-base/common-template-base.component';
 
 const TEMPLATE_ID = 'banner';
 

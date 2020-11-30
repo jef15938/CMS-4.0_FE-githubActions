@@ -1,14 +1,14 @@
 import { Directive, Input, Injector } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
-import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
+import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
 
 @Directive({
-  selector: '[libLayoutFieldBgimg][adviceWidth][adviceHeight][adviceFormat]',
+  selector: '[libTemplateFieldBgimg][adviceWidth][adviceHeight][adviceFormat]',
   exportAs: 'field',
 })
-export class LayoutFieldBgimgDirective extends TemplateFieldDirective {
+export class TemplateFieldBgimgDirective extends TemplateFieldDirective {
   // tslint:disable-next-line: no-input-rename
-  @Input('libLayoutFieldBgimg') fieldInfo: ContentFieldInfoModel;
+  @Input('libTemplateFieldBgimg') fieldInfo: ContentFieldInfoModel;
   /**
    * 建議寬度
    */

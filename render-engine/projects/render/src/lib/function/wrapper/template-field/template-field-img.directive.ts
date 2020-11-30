@@ -1,6 +1,6 @@
 import { Directive, Input, Injector } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
-import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
+import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
 
 export interface ImgFieldInfo extends ContentFieldInfoModel {
   extension: {
@@ -10,12 +10,12 @@ export interface ImgFieldInfo extends ContentFieldInfoModel {
 }
 
 @Directive({
-  selector: '[libLayoutFieldImg][adviceWidth][adviceHeight][adviceFormat]',
+  selector: '[libTemplateFieldImg][adviceWidth][adviceHeight][adviceFormat]',
   exportAs: 'field',
 })
-export class LayoutFieldImgDirective extends TemplateFieldDirective {
+export class TemplateFieldImgDirective extends TemplateFieldDirective {
   // tslint:disable-next-line: no-input-rename
-  @Input('libLayoutFieldImg') fieldInfo: ImgFieldInfo;
+  @Input('libTemplateFieldImg') fieldInfo: ImgFieldInfo;
   /**
    * 建議寬度
    */

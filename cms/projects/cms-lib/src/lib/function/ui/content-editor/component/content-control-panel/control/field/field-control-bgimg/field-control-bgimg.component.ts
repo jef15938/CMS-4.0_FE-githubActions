@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldBgimgDirective } from '@neux/render';
+import { TemplateFieldSelectEvent, TemplateFieldBgimgDirective } from '@neux/render';
 import { GallerySharedService } from '../../../../../../gallery-shared/service/gallery-shared.service';
 import { GALLERY_ATTR_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
 import { ContentFieldInfoModel } from '../../../../../../../../global/api/data-model/models/content-field-info.model';
@@ -32,7 +32,7 @@ export class FieldControlBgimgComponent extends ContentControlBase implements On
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
       const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
-      const directive = selected.fieldDirective as LayoutFieldBgimgDirective;
+      const directive = selected.fieldDirective as TemplateFieldBgimgDirective;
       this.fieldInfo = selected.fieldInfo;
       this.adviceFormat = directive.adviceFormat;
       this.adviceWidth = directive.adviceWidth;

@@ -1,15 +1,15 @@
-import { LayoutBaseComponent } from './layout-base.component';
-import { DataSourceTemplateInfo } from '../../../global/interface/data-source.interface';
-import { TemplateType } from '../layout-wrapper/layout-wrapper.interface';
 import { OnChanges, SimpleChanges, OnInit, Injector, Directive, InjectFlags } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { takeUntil, tap, catchError } from 'rxjs/operators';
+import { TemplateBaseComponent } from './template-base.component';
+import { DataSourceTemplateInfo } from '../../../global/interface/data-source.interface';
+import { TemplateType } from '../template-wrapper/template-wrapper.interface';
 import { DataSourceService } from '../../../global/service/data-source.service';
 import { ListDataSourceDataResponseModel } from '../../../global/api/data-model/models/list-data-source-data-response.model';
-import { DATA_SOURCE_FACTORY_TOKEN } from './layout-base.injection-token';
+import { DATA_SOURCE_FACTORY_TOKEN } from './template-base.injection-token';
 
 @Directive()
-export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseComponent<DataSourceTemplateInfo>
+export abstract class DataSourceTemplateBaseComponent<TData> extends TemplateBaseComponent<DataSourceTemplateInfo>
   implements OnInit, OnChanges {
 
   /**
@@ -33,7 +33,7 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
   constructor(
     injector: Injector,
     templateId: string,
-    protected mockData?: TData[]
+    protected mockData?: TData[],
   ) {
     super(injector, templateId);
     this.dataSourceService = this.injector.get(DataSourceService);
@@ -45,7 +45,8 @@ export abstract class DataSourceTemplateBaseComponent<TData> extends LayoutBaseC
 
   ngOnChanges(changes: SimpleChanges): void {
     super.ngOnChanges(changes);
-    if (this.hasSendInitGetDataRequest || !this.mode || this.mode === 'edit' || !this.templateInfo?.source) { return; }
+    if (!this.renderPageState) { return; }
+    if (this.hasSendInitGetDataRequest || this.renderPageState?.isEditor || !this.templateInfo?.source) { return; }
     this.getSourceData().subscribe();
     this.hasSendInitGetDataRequest = true;
   }

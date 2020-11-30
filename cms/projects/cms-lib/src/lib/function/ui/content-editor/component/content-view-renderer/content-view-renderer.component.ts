@@ -3,9 +3,9 @@ import {
   ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, ChangeDetectorRef, ViewChildren, QueryList
 } from '@angular/core';
 import {
-  LayoutWrapperSelectEvent, TemplatesContainerComponent, LayoutWrapperSelectedTargetType,
-  LayoutFieldTextDirective, LayoutFieldTextareaDirective, LayoutFieldLinkDirective, LayoutFieldBgimgDirective,
-  LayoutFieldImgDirective, LayoutFieldHtmlEditorDirective, LayoutWrapperComponent, FixedWrapperComponent
+  TemplateWrapperSelectEvent, TemplatesContainerComponent, TemplateWrapperSelectedTargetType,
+  TemplateFieldTextDirective, TemplateFieldTextareaDirective, TemplateFieldLinkDirective, TemplateFieldBgimgDirective,
+  TemplateFieldImgDirective, TemplateFieldHtmlEditorDirective, TemplateWrapperComponent, FixedWrapperComponent
 } from '@neux/render';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
 import { EditorMode } from '../../content-editor.interface';
@@ -36,7 +36,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   @Input() editorMode: EditorMode = EditorMode.EDIT;
   @Input() contentInfo: ContentInfoModel;
   // tslint:disable-next-line: no-output-native
-  @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
+  @Output() select = new EventEmitter<TemplateWrapperSelectEvent>();
   @Output() addTemplateBtnClick = new EventEmitter<AddTemplateButtonComponent>();
 
   tabIndex = 0;
@@ -66,7 +66,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     btns: AddTemplateBtn[],
     container: HTMLDivElement,
     position: number,
-    targetLayoutWrapper: LayoutWrapperComponent,
+    targetTemplateWrapper: TemplateWrapperComponent,
     templatesContainer: TemplatesContainerComponent,
     rootTemplatesContainer: TemplatesContainerComponent,
   ) {
@@ -75,7 +75,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     const instance = ref.instance;
     instance.position = position;
     instance.componentRef = ref;
-    instance.targetLayoutWrapper = targetLayoutWrapper;
+    instance.targetTemplateWrapper = targetTemplateWrapper;
     instance.templatesContainer = templatesContainer;
     instance.rootTemplatesContainer = rootTemplatesContainer;
     instance.contextEventEmitter = this.addTemplateBtnClick;
@@ -104,11 +104,11 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     btns.length = 0;
 
     if ( // 如果有固定式版面，跳過
-      !Array.from(templatesContainer.layoutWrapperComponents || [])
+      !Array.from(templatesContainer.templateWrapperComponents || [])
         .some(lw => lw.componentRef?.instance instanceof FixedWrapperComponent)
     ) {
       // 產生
-      templatesContainer.layoutWrapperComponents.forEach((lw, i) => {
+      templatesContainer.templateWrapperComponents.forEach((lw, i) => {
         const btnContainer = this.createBtnContainer();
         templatesContainerNativeElement.insertBefore(btnContainer, lw.elementRef.nativeElement);
         this.createBtn(btns, btnContainer, i, lw, templatesContainer, rootTemplatesContainer);
@@ -117,18 +117,18 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
       // 產生最後一個
       const container = this.createBtnContainer();
       templatesContainerNativeElement.appendChild(container);
-      this.createBtn(btns, container, templatesContainer.layoutWrapperComponents.length, null, templatesContainer, rootTemplatesContainer);
+      this.createBtn(btns, container, templatesContainer.templateWrapperComponents.length, null, templatesContainer, rootTemplatesContainer);
     }
 
     // 子節點的templatesContainer繼續產生
-    templatesContainer.layoutWrapperComponents.forEach(lw => {
+    templatesContainer.templateWrapperComponents.forEach(lw => {
       let children: TemplatesContainerComponent[] = Array.from(lw.componentRef?.instance.templatesContainerComponents || []);
 
       if (lw.dynamicWrapperComponent.componentRef?.instance instanceof FixedWrapperComponent) {
         children = children.map(childTemplatesContainer =>
-          Array.from(childTemplatesContainer.layoutWrapperComponents || [])
-            .reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[])
-            .map(childLayoutWrapper => Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || []))
+          Array.from(childTemplatesContainer.templateWrapperComponents || [])
+            .reduce((a, b) => a.concat(b), [] as TemplateWrapperComponent[])
+            .map(childTemplateWrapper => Array.from(childTemplateWrapper.componentRef.instance.templatesContainerComponents || []))
             .reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[])
         ).reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[]);
       }
@@ -141,7 +141,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
   private renderViewInfo(templatesContainer: TemplatesContainerComponent) {
     if (!templatesContainer) { return; }
 
-    templatesContainer.layoutWrapperComponents?.forEach((lw) => {
+    templatesContainer.templateWrapperComponents?.forEach((lw) => {
       if (!lw.componentRef?.instance) { return; }
       if (this.editorMode !== EditorMode.INFO) { // EDIT or READ
         if (!(lw.componentRef.instance instanceof FixedWrapperComponent)) {
@@ -156,25 +156,25 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
         } else {
           element?.classList.add('edit-info');
           const infos: string[] = [];
-          if (field instanceof LayoutFieldTextDirective) {
+          if (field instanceof TemplateFieldTextDirective) {
             infos.push(field.maxLength > 1 ? `字數限制:${field.maxLength}` : '無字數限制');
           }
-          if (field instanceof LayoutFieldTextareaDirective) {
+          if (field instanceof TemplateFieldTextareaDirective) {
             infos.push(field.maxLength > 1 ? `字數限制:${field.maxLength}` : '無字數限制');
             infos.push(field.maxLines > 1 ? `行數限制:${field.maxLines}` : '無行數限制');
           }
-          if (field instanceof LayoutFieldLinkDirective) {
+          if (field instanceof TemplateFieldLinkDirective) {
 
           }
-          if (field instanceof LayoutFieldBgimgDirective) {
+          if (field instanceof TemplateFieldBgimgDirective) {
             infos.push(`建議尺寸:${field.adviceWidth}x${field.adviceHeight}`);
             infos.push(`建議格式:${field.adviceFormat}`);
           }
-          if (field instanceof LayoutFieldImgDirective) {
+          if (field instanceof TemplateFieldImgDirective) {
             infos.push(`建議尺寸:${field.adviceWidth}x${field.adviceHeight}`);
             infos.push(`建議格式:${field.adviceFormat}`);
           }
-          if (field instanceof LayoutFieldHtmlEditorDirective) {
+          if (field instanceof TemplateFieldHtmlEditorDirective) {
 
           }
           const info = infos.length ? infos.join('; ') : '';
@@ -183,7 +183,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
       });
     });
 
-    return templatesContainer?.layoutWrapperComponents?.map(
+    return templatesContainer?.templateWrapperComponents?.map(
       lw => lw.componentRef?.instance?.templatesContainerComponents?.map(t => this.renderViewInfo(t))
     );
   }
@@ -201,9 +201,9 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
       // this.renderViewInfo(this.templatesContainer);
       if (config?.select) {
         const select = config.select;
-        const event: LayoutWrapperSelectEvent = {
+        const event: TemplateWrapperSelectEvent = {
           selectedTarget: select.elementRef.nativeElement,
-          selectedTargetType: LayoutWrapperSelectedTargetType.TEMPLATE,
+          selectedTargetType: TemplateWrapperSelectedTargetType.TEMPLATE,
           wrapper: select,
           componentRef: select.componentRef,
           templateType: select.componentRef.instance.templateType,
@@ -214,7 +214,7 @@ export class ContentViewRendererComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
-  onSelect(ev: LayoutWrapperSelectEvent) {
+  onSelect(ev: TemplateWrapperSelectEvent) {
     if (this.editorMode !== EditorMode.EDIT) { return; }
     this.select.emit(ev);
   }

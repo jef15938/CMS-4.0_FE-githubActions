@@ -1,9 +1,9 @@
 <div style="width: 100%; border: 1px solid purple; text-align: center;">
   <div style="height: 300px; line-height: 300px; vertical-align: middle; background-color: lightblue;"
-    *ngIf="mode==='edit'">
+    *ngIf="(renderPageState$|async)?.isEditor">
     表單下載資料呈現區域
   </div>
-  <div class="transglobe-source-news-002" *ngIf="mode==='preview'">
+  <div class="transglobe-source-news-002" *ngIf="(renderPageState$|async)?.isPreview">
     <div style="height: 50px; line-height: 50px; vertical-align: middle; background-color: lightblue;">
       表單下載
     </div>

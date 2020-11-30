@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ComponentRef, HostListener, EventEmitter } from '@angular/core';
-import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
+import { TemplatesContainerComponent, TemplateWrapperComponent } from '@neux/render';
 
 @Component({
   selector: 'cms-add-template-button',
@@ -14,7 +14,7 @@ export class AddTemplateButtonComponent implements OnInit {
   @Input() position: number;
   @Input() componentRef: ComponentRef<AddTemplateButtonComponent>;
   @Input() contextEventEmitter: EventEmitter<AddTemplateButtonComponent>;
-  @Input() targetLayoutWrapper: LayoutWrapperComponent;
+  @Input() targetTemplateWrapper: TemplateWrapperComponent;
   @Input() templatesContainer: TemplatesContainerComponent;
   @Input() rootTemplatesContainer: TemplatesContainerComponent;
   @Input() disabled = false;

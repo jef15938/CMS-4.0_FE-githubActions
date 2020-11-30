@@ -1,18 +1,15 @@
-import { Component, OnInit, Input, ViewChild, Inject, PLATFORM_ID, ChangeDetectorRef, ElementRef, OnDestroy } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, ElementRef, OnDestroy } from '@angular/core';
 import { fromEvent, Observable, of, Subject } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil, tap, map } from 'rxjs/operators';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
-import { WithRenderInfo } from '../../../function/wrapper/layout-wrapper/layout-wrapper.interface';
+import { WithRenderInfo } from '../../../function/wrapper/template-wrapper/template-wrapper.interface';
 import { TemplatesContainerComponent } from '../../../function/wrapper/templates-container/templates-container.component';
-import { PageInfoGetResponseModel } from '../../api/data-model/models/page-info-get-response.model';
 import { RenderService } from '../../service/render.service';
-import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
-import { SiteInfoModel } from '../../api/data-model/models/site-info.model';
-import { RenderedPageEnvironment } from '../../interface/page-environment.interface';
 import { PreviewCommandType } from '../../enum/preview-command.enum';
 import { PreviewCommand, PreviewCommandData } from '../../interface/preview-command.interface';
-import { LayoutWrapperComponent } from '../../../function/wrapper/layout-wrapper/layout-wrapper.component';
+import { TemplateWrapperComponent } from '../../../function/wrapper/template-wrapper/template-wrapper.component';
+import { RenderPageStore, RenderPageState } from '../../component-store/render-page.store';
+import { ContentInfoModel } from '../../api/data-model/models/content-info.model';
 
 @Component({
   selector: 'rdr-render-preview-container',
@@ -25,25 +22,42 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
   @ViewChild('current') currentTemplatesContainerComponent: TemplatesContainerComponent;
 
   @Input() templates: ContentTemplateInfoModel[];
-  @Input() mode: 'preview' | 'edit';
-  @Input() sites: SiteInfoModel[] = [];
-  @Input() pageInfo: PageInfoGetResponseModel;
   private destroy$ = new Subject();
   fixed = false;
 
   previousTemplates;
 
   isComparing = false;
+  private renderPageState: RenderPageState;
 
   constructor(
     private renderService: RenderService,
-    @Inject('RENDER_ENGINE_RENDERED_PAGE_ENVIRONMENT') public pageEnv: RenderedPageEnvironment,
-    @Inject(PLATFORM_ID) platformId: any,
-    @Inject(DOCUMENT) private document: any,
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
-  ) { }
+    renderPageStore: RenderPageStore,
+  ) {
+    renderPageStore.state$.pipe(
+      takeUntil(this.destroy$),
+      tap(state => this.renderPageState = state),
+    ).subscribe();
+  }
 
+  ngOnInit(): void {
+    this.listenToClick();
+
+    // 當自己是 iframe, 接到父層的 postMessage 要做什麼
+    window.onmessage = (e) => {
+      const command: PreviewCommand<PreviewCommandData> = e.data;
+      switch (command.type) {
+        case PreviewCommandType.COMPARE_TOGGLE:
+          this.toggleCompare();
+          break;
+        case PreviewCommandType.COMPARE_OFF:
+          this.closeCompare();
+          break;
+      }
+    };
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -64,23 +78,6 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
       return t as HTMLAnchorElement;
     }
     return this.getEventTargetPathATag(t.parentElement);
-  }
-
-  ngOnInit(): void {
-    this.listenToClick();
-
-    // 當自己是 iframe, 接到父層的 postMessage 要做什麼
-    window.onmessage = (e) => {
-      const command: PreviewCommand<PreviewCommandData> = e.data;
-      switch (command.type) {
-        case PreviewCommandType.COMPARE_TOGGLE:
-          this.toggleCompare();
-          break;
-        case PreviewCommandType.COMPARE_OFF:
-          this.closeCompare();
-          break;
-      }
-    };
   }
 
   /**
@@ -140,24 +137,26 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
   }
 
   private getPreviousVersion(): Observable<any> {
-    return this.previousTemplates ? of(this.previousTemplates) : this.renderService.getContentInfo('runtime', this.pageInfo.contentId).pipe(
-      map(contentTemplateInfo => {
-        if (contentTemplateInfo) {
-          const templateList = ContentInfoModel.getTemplateInfoByLanguageId(contentTemplateInfo, this.pageInfo.lang);
-          return [{
-            id: '',
-            templateId: this.pageInfo.layoutId,
-            fields: [],
-            children: templateList,
-            attributes: {
-              sitemap: null // TODO: 修正
-            }
-          }];
-        }
-        return null;
-      }),
-      tap(previousTemplates => this.previousTemplates = previousTemplates)
-    );
+    return this.previousTemplates
+      ? of(this.previousTemplates)
+      : this.renderService.getContentInfo('runtime', this.renderPageState.pageInfo.contentId).pipe(
+        map(contentTemplateInfo => {
+          if (contentTemplateInfo) {
+            const templateList = ContentInfoModel.getTemplateInfoByLanguageId(contentTemplateInfo, this.renderPageState.pageInfo.lang);
+            return [{
+              id: '',
+              templateId: this.renderPageState.pageInfo.layoutId,
+              fields: [],
+              children: templateList,
+              attributes: {
+                sitemap: null // TODO: 修正
+              }
+            }];
+          }
+          return null;
+        }),
+        tap(previousTemplates => this.previousTemplates = previousTemplates)
+      );
   }
 
   private markVersionDifference() {
@@ -165,32 +164,32 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
     const current = this.currentTemplatesContainerComponent;
     // console.warn({ previous, current });
 
-    const previousLayoutWrappers = this.getFlattenLayoutWrapper(previous).filter(x => !!x.templateInfo?.id);
-    const currentLayoutWrappers = this.getFlattenLayoutWrapper(current).filter(x => !!x.templateInfo?.id);
-    // console.warn({ previousLayoutWrappers, currentLayoutWrappers });
+    const previousTemplateWrappers = this.getFlattenTemplateWrapper(previous).filter(x => !!x.templateInfo?.id);
+    const currentTemplateWrappers = this.getFlattenTemplateWrapper(current).filter(x => !!x.templateInfo?.id);
+    // console.warn({ previousTemplateWrappers, currentTemplateWrappers });
 
-    const previousLayoutWrapperTemplateInfoIds = previousLayoutWrappers.map(x => x.templateInfo.id);
-    const currentLayoutWrapperTemplateInfoIds = currentLayoutWrappers.map(x => x.templateInfo.id);
-    // console.warn({ previousLayoutWrapperTemplateInfoIds, currentLayoutWrapperTemplateInfoIds });
+    const previousTemplateWrapperTemplateInfoIds = previousTemplateWrappers.map(x => x.templateInfo.id);
+    const currentTemplateWrapperTemplateInfoIds = currentTemplateWrappers.map(x => x.templateInfo.id);
+    // console.warn({ previousTemplateWrapperTemplateInfoIds, currentTemplateWrapperTemplateInfoIds });
 
-    previousLayoutWrappers.forEach(lw => {
+    previousTemplateWrappers.forEach(lw => {
       const templateInfoId = lw.templateInfo.id;
-      if (currentLayoutWrapperTemplateInfoIds.indexOf(templateInfoId) < 0) {
+      if (currentTemplateWrapperTemplateInfoIds.indexOf(templateInfoId) < 0) {
         const el = (lw.elementRef.nativeElement as HTMLElement);
         el.classList.add('modified', 'deleted');
       }
     });
 
-    currentLayoutWrappers.forEach(lw => {
+    currentTemplateWrappers.forEach(lw => {
       const templateInfoId = lw.templateInfo.id;
       const el = (lw.elementRef.nativeElement as HTMLElement);
-      const previousLayoutWrapperTemplateInfoIdIndex = previousLayoutWrapperTemplateInfoIds.indexOf(templateInfoId);
-      // console.log({ templateInfoId, lw, el: lw.elementRef.nativeElement, previousLayoutWrapperTemplateInfoIdIndex });
-      if (previousLayoutWrapperTemplateInfoIdIndex < 0) { // 新加入的版面(不在舊的)
+      const previousTemplateWrapperTemplateInfoIdIndex = previousTemplateWrapperTemplateInfoIds.indexOf(templateInfoId);
+      // console.log({ templateInfoId, lw, el: lw.elementRef.nativeElement, previousTemplateWrapperTemplateInfoIdIndex });
+      if (previousTemplateWrapperTemplateInfoIdIndex < 0) { // 新加入的版面(不在舊的)
         el.classList.add('modified', 'added');
       } else {
         const currentLayoutWraper = lw;
-        const previousLayoutWraper = previousLayoutWrappers[previousLayoutWrapperTemplateInfoIdIndex];
+        const previousLayoutWraper = previousTemplateWrappers[previousTemplateWrapperTemplateInfoIdIndex];
         // console.warn('previousLayoutWraper = ', previousLayoutWraper);
         if (JSON.stringify(previousLayoutWraper.templateInfo) === JSON.stringify(currentLayoutWraper.templateInfo)) { return; } // 版面資料沒變更
         el.classList.add('modified', 'changed');
@@ -219,10 +218,10 @@ export class RenderPreviewContainerComponent implements WithRenderInfo, OnInit, 
     });
   }
 
-  private getFlattenLayoutWrapper(source: TemplatesContainerComponent, result: LayoutWrapperComponent[] = []) {
-    source.layoutWrapperComponents.forEach(lw => {
+  private getFlattenTemplateWrapper(source: TemplatesContainerComponent, result: TemplateWrapperComponent[] = []) {
+    source.templateWrapperComponents.forEach(lw => {
       result.push(lw);
-      (lw.componentRef?.instance?.templatesContainerComponents || []).forEach(tc => this.getFlattenLayoutWrapper(tc, result));
+      (lw.componentRef?.instance?.templatesContainerComponents || []).forEach(tc => this.getFlattenTemplateWrapper(tc, result));
     });
     return result;
   }

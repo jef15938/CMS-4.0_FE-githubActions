@@ -1,11 +1,9 @@
-import { Directive, Input, Injector, OnChanges, SimpleChanges, Inject, OnInit } from '@angular/core';
+import { Directive, Input, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TemplateFieldDirective } from './template-field.directive';
-import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
-import { SitemapUtil } from '../../../../global/utils/sitemap-util';
-import { RenderedPageEnvironment } from '../../../../global/interface/page-environment.interface';
-import { RENDERED_PAGE_ENVIRONMENT_TOKEN } from '../../../../global/injection-token/injection-token';
-import { customAction } from '../../../../global/const/custom-action-subject';
+import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
+import { SitemapUtil } from '../../../global/utils/sitemap-util';
+import { customAction } from '../../../global/const/custom-action-subject';
 
 export enum LinkFieldInfoUrlType {
   INSIDE = 'INSIDE',
@@ -22,23 +20,29 @@ export interface LinkFieldInfo extends ContentFieldInfoModel {
 }
 
 @Directive({
-  selector: '[libLayoutFieldLink]',
+  selector: '[libTemplateFieldLink]',
   exportAs: 'field',
 })
-export class LayoutFieldLinkDirective extends TemplateFieldDirective implements OnChanges {
-  @Input('libLayoutFieldLink') fieldInfo: LinkFieldInfo;
+export class TemplateFieldLinkDirective extends TemplateFieldDirective implements OnInit {
+  @Input('libTemplateFieldLink') fieldInfo: LinkFieldInfo;
 
   customAction$ = customAction;
   constructor(
     injector: Injector,
     private router: Router,
-    @Inject(RENDERED_PAGE_ENVIRONMENT_TOKEN) private pageEnv: RenderedPageEnvironment,
   ) {
     super(injector);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.pageEnv.isRuntime) {
+  ngOnInit(): void {
+    this.renderPageState$.subscribe(state => {
+      console.warn('LinkFieldInfo state = ', state);
+      this.renderView();
+    });
+  }
+
+  private renderView() {
+    if (this.renderPageState.isRuntime) {
       const el = this.elementRef.nativeElement as HTMLElement;
       const aTag = (el?.tagName?.toLowerCase() === 'a' ? el : el.querySelector('a')) as HTMLAnchorElement;
       if (!aTag) { return; }
@@ -50,7 +54,7 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
       if (!isHrefSet) {
         const siteId = this.fieldInfo.extension.siteId;
         const nodeId = aTag.getAttribute('href');
-        const sites = this.sites;
+        const sites = this.renderPageState.sitemap.sites;
         const href = SitemapUtil.findContentPathBySiteIdAndNodeId(sites, siteId, nodeId);
         if (href) {
           aTag.setAttribute('nodeId', nodeId);
@@ -69,7 +73,7 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
 
   click(ev) {
     super.click(ev);
-    const isEditor = this.mode === 'edit';
+    const isEditor = this.renderPageState?.isEditor;
 
     const actionId = this.fieldInfo.extension.actionID;
 
@@ -82,7 +86,7 @@ export class LayoutFieldLinkDirective extends TemplateFieldDirective implements 
     }
 
     const isInside = this.fieldInfo.extension.urlType === 'INSIDE';
-    const isPreview = !this.pageEnv.isRuntime;
+    const isPreview = this.renderPageState.isPreview;
 
     if (isPreview && isInside) {
       this.preventOriginClickEvent(ev);

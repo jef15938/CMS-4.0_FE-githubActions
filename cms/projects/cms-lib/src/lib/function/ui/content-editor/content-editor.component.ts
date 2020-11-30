@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
-import { TemplatesContainerComponent, LayoutWrapperComponent } from '@neux/render';
+import { TemplatesContainerComponent, TemplateWrapperComponent, RenderPageStore } from '@neux/render';
 import { ContentEditorSaveEvent, EditorMode, ContentEditorContext } from './content-editor.interface';
 import { ContentEditorManager } from './service/content-editor-manager';
 import { LayoutControlPanelComponent } from './component/layout-control-panel/layout-control-panel.component';
@@ -25,20 +25,14 @@ import { CmsErrorHandler } from '../../../global/error-handling/cms-error-handle
 @Component({
   selector: 'cms-content-editor',
   templateUrl: './content-editor.component.html',
-  styleUrls: ['./content-editor.component.scss']
+  styleUrls: ['./content-editor.component.scss'],
+  providers: [
+    RenderPageStore
+  ]
 })
 export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked,
   CmsCanDeactiveGuardian, ContentEditorContext {
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    private cmsCanDeactiveGuard: CmsCanDeactiveGuard,
-    private modalService: ModalService,
-    private contentService: ContentService,
-    @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
-  ) {
-
-  }
   EditorMode = EditorMode;
 
   @ViewChild(ContentViewRendererComponent) contentViewRenderer: ContentViewRendererComponent;
@@ -71,8 +65,24 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
 
   destroy$ = new Subject();
 
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private cmsCanDeactiveGuard: CmsCanDeactiveGuard,
+    private modalService: ModalService,
+    private contentService: ContentService,
+    @Inject(CMS_ENVIROMENT_TOKEN) public environment: CmsEnviroment,
+    private readonly renderPageStore: RenderPageStore,
+  ) {
+    const isBrowser = true;
+    const isRuntime = false;
+    const isPreview = false;
+    const isRender = false;
+    const isEditor = true;
 
-
+    this.renderPageStore.setState({
+      isBrowser, isEditor, isRender, isPreview, isRuntime, pageInfo: null, pageNode: null, sitemap: null
+    });
+  }
 
   ngOnInit(): void {
     const contentInfo: ContentInfoModel = this.contentInfo;
@@ -154,7 +164,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
         });
 
         templatesContainers = templatesContainers.map(templatesContainer =>
-          templatesContainer.layoutWrapperComponents.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
+          templatesContainer.templateWrapperComponents.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
             .reduce((a, b) => a.concat(b), [])
         ).reduce((a, b) => a.concat(b), []);
       }
@@ -361,59 +371,59 @@ export class ContentEditorComponent implements OnInit, OnDestroy, AfterViewInit,
     return results;
   }
 
-  findLayoutWrapperByTemplateInfoId(
+  findTemplateWrapperByTemplateInfoId(
     templateInfoId: string,
     source: TemplatesContainerComponent
-  ): LayoutWrapperComponent {
+  ): TemplateWrapperComponent {
     try {
       if (!templateInfoId || !source) { return null; }
-      const layoutWrappers = Array.from(source.layoutWrapperComponents || []);
-      const target = layoutWrappers.find(lw => lw.templateInfo.id === templateInfoId);
+      const templateWrappers = Array.from(source.templateWrapperComponents || []);
+      const target = templateWrappers.find(lw => lw.templateInfo.id === templateInfoId);
       if (target) { return target; }
-      return layoutWrappers.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
+      return templateWrappers.map(lw => Array.from(lw.componentRef.instance.templatesContainerComponents || []))
         .reduce((a, b) => a.concat(b), [] as TemplatesContainerComponent[])
-        .map(templatesContainer => this.findLayoutWrapperByTemplateInfoId(templateInfoId, templatesContainer))
+        .map(templatesContainer => this.findTemplateWrapperByTemplateInfoId(templateInfoId, templatesContainer))
         .find(v => !!v);
     } catch (error) {
-      CmsErrorHandler.throwAndShow(error, 'ContentEditorComponent.findLayoutWrapperByTemplateInfoId()', '執行錯誤');
+      CmsErrorHandler.throwAndShow(error, 'ContentEditorComponent.findTemplateWrapperByTemplateInfoId()', '執行錯誤');
     }
     return null;
   }
 
-  findParentLayoutWrapperOfTemplatesContainer(
+  findParentTemplateWrapperOfTemplatesContainer(
     templatesContainer: TemplatesContainerComponent,
     source: TemplatesContainerComponent,
-    parent?: LayoutWrapperComponent,
-  ): LayoutWrapperComponent {
+    parent?: TemplateWrapperComponent,
+  ): TemplateWrapperComponent {
     if (!templatesContainer || !source) { return null; }
     if (templatesContainer === source) { return parent; }
 
     try {
-      let target: LayoutWrapperComponent;
-      const childLayoutWrappers = Array.from(source.layoutWrapperComponents || []);
-      childLayoutWrappers.forEach(childLayoutWrapper => {
-        const childTemplatesContainerComponents = Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
+      let target: TemplateWrapperComponent;
+      const childTemplateWrappers = Array.from(source.templateWrapperComponents || []);
+      childTemplateWrappers.forEach(childTemplateWrapper => {
+        const childTemplatesContainerComponents = Array.from(childTemplateWrapper.componentRef.instance.templatesContainerComponents || []);
         if (childTemplatesContainerComponents.indexOf(templatesContainer) > -1) {
-          target = childLayoutWrapper;
+          target = childTemplateWrapper;
         }
       });
       if (target) { return target; }
 
-      const grandsonLayoutWrappers = childLayoutWrappers
-        .map(childLayoutWrapper =>
-          Array.from(childLayoutWrapper.componentRef.instance.templatesContainerComponents || [])
-            .map(templatesContainerComponent => Array.from(templatesContainerComponent.layoutWrapperComponents))
-            .reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[])
-        ).reduce((a, b) => a.concat(b), [] as LayoutWrapperComponent[]);
+      const grandsonTemplateWrappers = childTemplateWrappers
+        .map(childTemplateWrapper =>
+          Array.from(childTemplateWrapper.componentRef.instance.templatesContainerComponents || [])
+            .map(templatesContainerComponent => Array.from(templatesContainerComponent.templateWrapperComponents))
+            .reduce((a, b) => a.concat(b), [] as TemplateWrapperComponent[])
+        ).reduce((a, b) => a.concat(b), [] as TemplateWrapperComponent[]);
 
-      return grandsonLayoutWrappers.map(grandsonLayoutWrapper => {
-        return grandsonLayoutWrapper.componentRef.instance.templatesContainerComponents
+      return grandsonTemplateWrappers.map(grandsonTemplateWrapper => {
+        return grandsonTemplateWrapper.componentRef.instance.templatesContainerComponents
           .map(templatesContainerComponent => {
-            return this.findParentLayoutWrapperOfTemplatesContainer(templatesContainer, templatesContainerComponent, grandsonLayoutWrapper);
+            return this.findParentTemplateWrapperOfTemplatesContainer(templatesContainer, templatesContainerComponent, grandsonTemplateWrapper);
           }).find(v => !!v);
       }).find(v => !!v);
     } catch (error) {
-      CmsErrorHandler.throwAndShow(error, 'ContentEditorComponent.findLayoutWrapperByTemplateInfoId()', '執行錯誤');
+      CmsErrorHandler.throwAndShow(error, 'ContentEditorComponent.findTemplateWrapperByTemplateInfoId()', '執行錯誤');
     }
     return null;
   }

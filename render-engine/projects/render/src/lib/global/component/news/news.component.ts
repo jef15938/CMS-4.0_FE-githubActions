@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
+import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/template-base/data-source-template-base.component';
 import { DataSourceTemplateInfo, NewsData } from '../../interface/data-source.interface';
 import { CardNewsData } from '../public-component/card/card-news/card-news.component';
 
