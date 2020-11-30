@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PreviewCommandType } from '../../enum/preview-command.enum';
-import { PreviewCommand, PreviewCommandData } from '../../interface';
+import { PreviewCommand, PreviewCommandData } from '../../interface/preview-command.interface';
 
 enum PreviewSize {
   PC = 'preview-size-pc',

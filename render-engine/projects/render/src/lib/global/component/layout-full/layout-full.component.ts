@@ -1,8 +1,8 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, startWith, tap } from 'rxjs/operators';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper';
 import { LayoutInfo } from '../../interface/layout-info.interface';
+import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
 
 const TEMPLATE_ID = 'layout-full';
 
