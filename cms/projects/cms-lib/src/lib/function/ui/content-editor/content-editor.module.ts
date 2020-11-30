@@ -33,6 +33,7 @@ import { TemplateControlDataSourceComponent } from './component/content-control-
 import { ContentVersionRecoverModalComponent } from './component/content-version-recover-modal/content-version-recover-modal.component';
 import { TableModule } from '../table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PipeModule } from '../../../global/pipe';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     DragDropModule,
     WrapperModule,
     TableModule,
+    PipeModule
   ],
   declarations: [
     ContentEditorContainerModalComponent,

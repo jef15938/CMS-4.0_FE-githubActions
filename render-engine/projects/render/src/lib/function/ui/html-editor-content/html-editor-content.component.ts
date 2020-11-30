@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { SitemapUtil } from '../../../global/utils/sitemap-util';
 import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
 import { RenderedPageEnvironment } from '../../../global/interface/page-environment.interface';
-import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../../../global/injection-token/injection-token';
+import { RENDERED_PAGE_ENVIRONMENT_TOKEN } from '../../../global/injection-token/injection-token';
 import { fromEvent, Subject } from 'rxjs';
 import { customAction } from '../../../global/const/custom-action-subject';
 import { takeUntil, debounceTime } from 'rxjs/operators';
@@ -30,7 +30,7 @@ export class HtmlEditorContentComponent implements OnChanges, AfterViewInit, OnD
 
   constructor(
     private router: Router,
-    @Inject(RENDERED_PAGE_ENVIRONMENT_ROKEN) private pageEnv: RenderedPageEnvironment,
+    @Inject(RENDERED_PAGE_ENVIRONMENT_TOKEN) private pageEnv: RenderedPageEnvironment,
     private injector: Injector,
     private applicationRef: ApplicationRef,
     private componentFactoryResolver: ComponentFactoryResolver,
