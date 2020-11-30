@@ -1,11 +1,20 @@
-import { RenderComponentMapping } from '../interface';
-import {
-  TabScrollableTemplateComponent, TabCarouselTemplateComponent, IconPageComponent, SliderComponent, FieldsDemoComponent, GroupTemplateDemoComponent,
-  NewsComponent, LayoutFullComponent, QaComponent, DownloadComponent, FixedWrapperComponent, TestCustomize1Component, SocialMediaComponent
-} from '../component';
+import { RenderComponentMapping } from '../interface/render-component-mapping.interface';
 import { HtmlComponent } from '../component/html/html.component';
 import { BannerComponent } from '../component/banner/banner.component';
 import { ListComponent } from '../component/list/list.component';
+import { FixedWrapperComponent } from '../component/fixed-wrapper/fixed-wrapper.component';
+import { TabCarouselTemplateComponent } from '../component/tab-carousel-template/tab-carousel-template.component';
+import { TabScrollableTemplateComponent } from '../component/tab-scrollable-template/tab-scrollable-template.component';
+import { LayoutFullComponent } from '../component/layout-full/layout-full.component';
+import { SliderComponent } from '../component/slider/slider.component';
+import { NewsComponent } from '../component/news/news.component';
+import { QaComponent } from '../component/qa/qa.component';
+import { DownloadComponent } from '../component/download/download.component';
+import { IconPageComponent } from '../component/icon-page/icon-page.component';
+import { FieldsDemoComponent } from '../component/fields-demo/fields-demo.component';
+import { GroupTemplateDemoComponent } from '../component/group-template-demo/group-template-demo.component';
+import { TestCustomize1Component } from '../component/test-customize1/test-customize1.component';
+import { SocialMediaComponent } from '../component/social-media/social-media.component';
 
 export const RENDER_DEFAULT_COMPONENT_MAPPINGS: RenderComponentMapping<any>[] = [
   {

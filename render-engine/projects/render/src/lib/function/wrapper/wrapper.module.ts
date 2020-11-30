@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.component';
-import { TemplatesContainerComponent } from './templates-container/templates-container.component';
-import { LayoutFieldTextDirective } from './layout-wrapper/field-directive/layout-field-text.directive';
-import { LayoutFieldTextareaDirective } from './layout-wrapper/field-directive/layout-field-textarea.directive';
-import { LayoutFieldLinkDirective } from './layout-wrapper/field-directive/layout-field-link.directive';
-import { LayoutFieldBgimgDirective } from './layout-wrapper/field-directive/layout-field-bgimg.directive';
-import { LayoutFieldImgDirective } from './layout-wrapper/field-directive/layout-field-img.directive';
-import { LayoutFieldHtmlEditorDirective } from './layout-wrapper/field-directive/layout-field-html-editor.directive';
 import { DynamicWrapperModule } from '@neux/core';
+import { TemplateWrapperComponent } from './template-wrapper/template-wrapper.component';
+import { TemplatesContainerComponent } from './templates-container/templates-container.component';
+// field
+import { TemplateFieldTextDirective } from './template-field/template-field-text.directive';
+import { TemplateFieldTextareaDirective } from './template-field/template-field-textarea.directive';
+import { TemplateFieldLinkDirective } from './template-field/template-field-link.directive';
+import { TemplateFieldBgimgDirective } from './template-field/template-field-bgimg.directive';
+import { TemplateFieldImgDirective } from './template-field/template-field-img.directive';
+import { TemplateFieldHtmlEditorDirective } from './template-field/template-field-html-editor.directive';
 
 const FIELD_DIRECTIVES = [
-  LayoutFieldTextDirective,
-  LayoutFieldTextareaDirective,
-  LayoutFieldLinkDirective,
-  LayoutFieldBgimgDirective,
-  LayoutFieldImgDirective,
-  LayoutFieldHtmlEditorDirective,
+  TemplateFieldTextDirective,
+  TemplateFieldTextareaDirective,
+  TemplateFieldLinkDirective,
+  TemplateFieldBgimgDirective,
+  TemplateFieldImgDirective,
+  TemplateFieldHtmlEditorDirective,
 ];
 
 @NgModule({
@@ -25,7 +26,7 @@ const FIELD_DIRECTIVES = [
     DynamicWrapperModule,
   ],
   declarations: [
-    LayoutWrapperComponent,
+    TemplateWrapperComponent,
     TemplatesContainerComponent,
     ...FIELD_DIRECTIVES,
   ],

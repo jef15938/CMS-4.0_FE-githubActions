@@ -1,33 +1,35 @@
-import { Directive, Input, TemplateRef, ViewContainerRef, Inject, PLATFORM_ID, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, TemplateRef, ViewContainerRef, Inject, OnDestroy } from '@angular/core';
 import { DeviceDetectionService } from '../service/device-detection.service';
-import { SiteMapInfoModel } from '../api/data-model/models/site-map-info.model';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
+import { RenderPageStore, RenderPageState } from '../component-store/render-page.store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Directive({ selector: '[rdrShownByDevice]' })
-export class ShownByDeviceDirective implements OnChanges {
+export class ShownByDeviceDirective implements OnDestroy {
 
-  @Input() set rdrShownByDevice(pageNode: SiteMapInfoModel) {
-    this.pageNode = pageNode;
-  }
-
-  @Input() set rdrShownByDeviceRuntime(runtime: boolean) {
-    this.runtime = runtime;
-  }
-
-  private pageNode: SiteMapInfoModel;
-  private runtime = false;
+  private destroy$ = new Subject<any>();
 
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
     private deviceDetectionService: DeviceDetectionService,
-    @Inject(PLATFORM_ID) private platformId: any,
     @Inject(DOCUMENT) private document: any,
-  ) { }
+    renderPageStore: RenderPageStore,
+  ) {
+    renderPageStore.state$.pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(state => this.renderView(state));
+  }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
+  }
+
+  private renderView(renderPageState: RenderPageState) {
     this.viewContainer.clear();
-    if (this.canRender(this.pageNode)) {
+    if (this.canRender(renderPageState)) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       if (this.document) {
@@ -38,11 +40,11 @@ export class ShownByDeviceDirective implements OnChanges {
     }
   }
 
-  private canRender(pageNode: SiteMapInfoModel) {
-    if (!isPlatformBrowser(this.platformId)) { return true; }
-    if (!this.runtime) { return true; }
-    if (!pageNode?.device) { return true; }
-    const pageDevices = pageNode.device.split(',');
+  private canRender(renderPageState: RenderPageState) {
+    if (!renderPageState.isBrowser) { return true; }
+    if (!renderPageState.isRender) { return true; }
+    if (!renderPageState.pageNode.device) { return true; }
+    const pageDevices = renderPageState.pageNode.device.split(',');
     const deviceType = this.deviceDetectionService.deviceType;
     return pageDevices.indexOf(deviceType) > -1;
   }

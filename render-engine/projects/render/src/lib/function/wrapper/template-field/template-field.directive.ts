@@ -1,10 +1,10 @@
 import { HostListener, Output, EventEmitter, Injector, Directive } from '@angular/core';
-import { TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from '../layout-wrapper.interface';
-import { LayoutWrapperBase } from '../layout-wrapper-base';
-import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
+import { TemplateFieldSelectEvent, TemplateWrapperSelectedTargetType } from './../template-wrapper/template-wrapper.interface';
+import { TemplateWrapperBase } from './../template-wrapper/template-wrapper-base';
+import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
 
 @Directive()
-export abstract class TemplateFieldDirective extends LayoutWrapperBase {
+export abstract class TemplateFieldDirective extends TemplateWrapperBase {
 
   abstract fieldInfo: ContentFieldInfoModel;
   // tslint:disable-next-line: no-output-native
@@ -17,10 +17,10 @@ export abstract class TemplateFieldDirective extends LayoutWrapperBase {
   }
 
   @HostListener('click', ['$event']) click(ev) {
-    if (this.mode === 'edit') {
+    if (this.renderPageState?.isEditor) {
       this.select.emit({
         selectedTarget: this.elementRef?.nativeElement,
-        selectedTargetType: LayoutWrapperSelectedTargetType.FIELD,
+        selectedTargetType: TemplateWrapperSelectedTargetType.FIELD,
         fieldInfo: this.fieldInfo,
         fieldDirective: this,
       });

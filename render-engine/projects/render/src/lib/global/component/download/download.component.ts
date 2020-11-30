@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/layout-base/data-source-template-base.component';
+import { DataSourceTemplateBaseComponent } from '../../../function/wrapper/template-base/data-source-template-base.component';
 import { DataSourceTemplateInfo, DownloadData } from '../../interface/data-source.interface';
 
 const TEMPLATE_ID = 'download';

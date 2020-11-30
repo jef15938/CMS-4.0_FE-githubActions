@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldImgDirective, ImgFieldInfo } from '@neux/render';
+import { TemplateFieldSelectEvent, TemplateFieldImgDirective, ImgFieldInfo } from '@neux/render';
 import { GallerySharedService } from './../../../../../../../../function/ui/gallery-shared/service/gallery-shared.service';
 import { GALLERY_ATTR_GALLERY_ID } from '../../../../../../html-editor/const/html-editor-container.const';
 
@@ -30,7 +30,7 @@ export class FieldControlImgComponent extends ContentControlBase implements OnIn
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
       const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
-      const directive = selected.fieldDirective as LayoutFieldImgDirective;
+      const directive = selected.fieldDirective as TemplateFieldImgDirective;
       this.adviceFormat = directive.adviceFormat;
       this.adviceWidth = directive.adviceWidth || 0;
       this.adviceHeight = directive.adviceHeight || 0;

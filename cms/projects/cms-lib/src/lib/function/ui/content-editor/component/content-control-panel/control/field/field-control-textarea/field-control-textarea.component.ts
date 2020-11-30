@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldTextareaDirective } from '@neux/render';
+import { TemplateFieldSelectEvent, TemplateFieldTextareaDirective } from '@neux/render';
 import { ModalService } from '../../../../../../modal';
 
 @Component({
@@ -28,7 +28,7 @@ export class FieldControlTextareaComponent extends ContentControlBase implements
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
       const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
-      const directive = selected.fieldDirective as LayoutFieldTextareaDirective;
+      const directive = selected.fieldDirective as TemplateFieldTextareaDirective;
       this.maxLength = directive.maxLength || this.defaultMaxLength;
       this.maxLines = directive.maxLines || this.defaultMaxLines;
     }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayoutWrapperSelectEvent, TabInfo, TabTemplateInfo } from '@neux/render';
+import { TemplateWrapperSelectEvent, TabInfo, TabTemplateInfo } from '@neux/render';
 import { ContentControlBase } from '../../_base';
 import { ModalService } from '../../../../../../../../function/ui/modal';
 import { CmsErrorHandler } from '../../../../../../../../global/error-handling';
@@ -21,7 +21,7 @@ export class TemplateControlTabComponent extends ContentControlBase implements O
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
-      const event = changes.selected.currentValue as LayoutWrapperSelectEvent;
+      const event = changes.selected.currentValue as TemplateWrapperSelectEvent;
       this.templateInfo = event?.templateInfo as TabTemplateInfo;
     }
   }

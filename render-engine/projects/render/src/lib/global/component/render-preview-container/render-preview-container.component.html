@@ -1,12 +1,11 @@
 <div class="view-container preview" [class.compare]="isComparing">
   <div class="previous" [style.display]="isComparing ? 'block' : 'none'" *ngIf="previousTemplates">
-    <rdr-templates-container *ngIf="isComparing && previousTemplates" #previous [mode]="mode"
-      [templates]="previousTemplates" [sites]="sites" [pageInfo]="pageInfo" [fixed]="fixed">
+    <rdr-templates-container *ngIf="isComparing && previousTemplates" #previous
+      [templates]="previousTemplates" [fixed]="fixed">
     </rdr-templates-container>
   </div>
   <div class="current">
-    <rdr-templates-container #current [mode]="mode" [templates]="templates" [sites]="sites" [pageInfo]="pageInfo"
-      [fixed]="fixed">
+    <rdr-templates-container #current [templates]="templates" [fixed]="fixed">
     </rdr-templates-container>
   </div>
 </div>

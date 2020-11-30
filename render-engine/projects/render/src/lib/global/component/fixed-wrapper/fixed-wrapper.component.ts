@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper/layout-base/common-template-base.component';
+import { CommonTemplateBaseComponent } from '../../../function/wrapper/template-base/common-template-base.component';
 import { ContentTemplateInfoModel } from '../../api/data-model/models/content-template-info.model';
 
 const TEMPLATE_ID = 'FixedWrapper';

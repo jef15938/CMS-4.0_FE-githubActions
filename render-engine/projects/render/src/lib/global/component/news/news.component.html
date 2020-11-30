@@ -1,9 +1,9 @@
 <div style="width: 100%; border: 1px solid purple; text-align: center; box-sizing: border-box;">
   <div style="height: 300px; line-height: 300px; vertical-align: middle; background-color: lightblue;"
-    *ngIf="mode==='edit'">
+    *ngIf="(renderPageState$|async)?.isEditor">
     最新消息資料呈現區域
   </div>
-  <div class="rdr-layout-block news" *ngIf="mode==='preview'">
+  <div class="rdr-layout-block news" *ngIf="(renderPageState$|async)?.isPreview">
     <div class="rdr-layout-title news__title">
       最新消息
     </div>

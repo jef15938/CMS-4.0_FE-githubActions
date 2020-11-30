@@ -20,14 +20,14 @@ rectangle "RenderComponent" as Render {
   rectangle "TemplatesContainerComponent" as TCC {
     component TCCFunc [
       行為:
-      1. 拿到父層給的 ContentTemplateInfoModel[], *ngFor 長 LayoutWrapperComponent
+      1. 拿到父層給的 ContentTemplateInfoModel[], *ngFor 長 TemplateWrapperComponent
       
       給 child 的 Input:
       1. ContentTemplateInfoModel
     ]
     TCCFunc -[hidden]-> LWC
 
-    rectangle "LayoutWrapperComponent" as LWC {
+    rectangle "TemplateWrapperComponent" as LWC {
        component LWCFunc [
         1. 根據父層給的 ContentTemplateInfoModel.templateId 去找 mapping 表, 找到 ComponentClass
         2. Bind 事件, for 編輯器 action 使用

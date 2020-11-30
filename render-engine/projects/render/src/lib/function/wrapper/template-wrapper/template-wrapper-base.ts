@@ -1,22 +1,23 @@
 import { HostListener, OnDestroy, Output, EventEmitter, ElementRef, ChangeDetectorRef, Injector, Directive, Input } from '@angular/core';
-import { Subject } from 'rxjs';
-import { SiteMapGetResponseModel } from '../../../global/api/data-model/models/site-map-get-response.model';
-import { WithRenderInfo } from './layout-wrapper.interface';
-import { PageInfoGetResponseModel } from '../../../global/api/data-model/models/page-info-get-response.model';
-import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
+import { WithRenderInfo } from './template-wrapper.interface';
+import { RenderPageStore, RenderPageState } from '../../../global/component-store/render-page.store';
+
 
 @Directive()
-export abstract class LayoutWrapperBase implements WithRenderInfo, OnDestroy {
-  @Input() mode: 'preview' | 'edit';
+export abstract class TemplateWrapperBase implements WithRenderInfo, OnDestroy {
   @Input() fixed;
-  @Input() sites: SiteInfoModel[] = [];
-  @Input() pageInfo: PageInfoGetResponseModel;
 
   protected changeDetectorRef: ChangeDetectorRef = null;
   public elementRef: ElementRef = null;
 
   @Output() enter = new EventEmitter<HTMLElement>();
   @Output() leave = new EventEmitter<HTMLElement>();
+
+  private renderPageStore: RenderPageStore;
+  public renderPageState$: Observable<RenderPageState>;
+  public renderPageState: RenderPageState;
 
   destroy$ = new Subject();
 
@@ -25,6 +26,12 @@ export abstract class LayoutWrapperBase implements WithRenderInfo, OnDestroy {
   ) {
     this.changeDetectorRef = injector.get(ChangeDetectorRef);
     this.elementRef = injector.get(ElementRef);
+    this.renderPageStore = injector.get(RenderPageStore);
+    this.renderPageState$ = this.renderPageStore.renderState$.pipe(
+      takeUntil(this.destroy$),
+      tap(state => this.renderPageState = state),
+    );
+    this.renderPageState$.subscribe();
   }
 
   ngOnDestroy(): void {
@@ -34,19 +41,19 @@ export abstract class LayoutWrapperBase implements WithRenderInfo, OnDestroy {
   }
 
   @HostListener('click', ['$event']) clickStopPropagation(ev) {
-    if (this.mode === 'edit') {
+    if (this.renderPageState?.isEditor) {
       ev.stopPropagation();
     }
   }
 
   @HostListener('mouseenter') mouseenter() {
-    if (this.mode === 'edit') {
+    if (this.renderPageState?.isEditor) {
       this.enter.next(this.elementRef?.nativeElement);
     }
   }
 
   @HostListener('mouseleave') mouseleave() {
-    if (this.mode === 'edit') {
+    if (this.renderPageState?.isEditor) {
       this.leave.next(this.elementRef?.nativeElement);
     }
   }

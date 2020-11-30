@@ -1,6 +1,6 @@
 {
   "name": "@neux/render",
-  "version": "0.9.66",
+  "version": "0.9.68",
   "peerDependencies": {
     "@angular/animations": "~10.1.0",
     "@angular/cdk": "^10.2.1",

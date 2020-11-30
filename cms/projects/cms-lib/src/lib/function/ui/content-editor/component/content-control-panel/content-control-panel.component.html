@@ -53,7 +53,7 @@
     <hr>
   </ng-container>
 
-  <ng-container *ngIf="selected.selectedTargetType=== LayoutWrapperSelectedTargetType.TEMPLATE">
+  <ng-container *ngIf="selected.selectedTargetType=== TemplateWrapperSelectedTargetType.TEMPLATE">
     <div [ngSwitch]="selected.templateType">
       <ng-container *ngSwitchCase="TemplateType.TAB">
         <cms-template-control-tab [selected]="selected" (change)="hasChange=true;"></cms-template-control-tab>
@@ -76,7 +76,7 @@
 
   </ng-container>
 
-  <ng-container *ngIf="selected.selectedTargetType === LayoutWrapperSelectedTargetType.FIELD">
+  <ng-container *ngIf="selected.selectedTargetType === TemplateWrapperSelectedTargetType.FIELD">
     <div>
       FieldId : {{selected?.fieldInfo?.fieldId||''}}
       <br>

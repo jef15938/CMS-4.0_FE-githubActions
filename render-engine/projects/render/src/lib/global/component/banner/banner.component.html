@@ -1,9 +1,9 @@
 <div class="content">
-  <div class="title" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'" #fieldTitle="field"
+  <div class="title" [libTemplateFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'" #fieldTitle="field"
     [maxLength]="16">
     {{fieldTitle.fieldInfo?.fieldVal}}
   </div>
-  <div class="subtitle" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'subtitle'"
+  <div class="subtitle" [libTemplateFieldText]="templateInfo?.fields | getFieldFromFieldsById:'subtitle'"
     #fieldSubtitle="field" [maxLength]="100">
     {{fieldSubtitle.fieldInfo?.fieldVal}}
   </div>

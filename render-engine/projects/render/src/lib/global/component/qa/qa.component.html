@@ -1,14 +1,14 @@
 <div style="width: 100%; border: 1px solid purple; text-align: center;">
   <div style="height: 300px; line-height: 300px; vertical-align: middle; background-color: lightblue;"
-    *ngIf="mode==='edit'">
+    *ngIf="(renderPageState$|async)?.isEditor">
     常見消息資料呈現區域
   </div>
-  <div class="rdr-layout-block qa" *ngIf="mode==='preview'">
+  <div class="rdr-layout-block qa" *ngIf="(renderPageState$|async)?.isPreview">
     <div class="rdr-layout-title qa__title">
       常見問題
     </div>
     <div class="qa__content">
-      <ng-container *ngIf="sourceData?.datas && pageInfo?.lang">
+      <ng-container *ngIf="sourceData?.datas && (renderPageState$|async)?.pageInfo?.lang">
         <rdr-accordion [hasList]="true" [collapseList]="sourceData?.datas | transformData:collapseData"
           [titleTemplate]="title" [contentTemplate]="content">
         </rdr-accordion>
@@ -17,7 +17,8 @@
           {{item.title}}
         </ng-template>
         <ng-template #content let-item="item">
-          <ng-container *ngIf="item.content|stringToContentInfoModel|getLanguageInfo:pageInfo.lang; let languageInfo">
+          <ng-container
+            *ngIf="item.content|stringToContentInfoModel|getLanguageInfo:(renderPageState$|async)?.pageInfo?.lang; let languageInfo">
             <rdr-templates-container *ngFor="let block of (languageInfo?.blocks || []);" [templates]="block.templates">
             </rdr-templates-container>
           </ng-container>

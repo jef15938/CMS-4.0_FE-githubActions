@@ -1,22 +1,22 @@
 <ng-container *ngIf="templateInfo">
-  <div style="padding: 10px;" [libLayoutFieldBgimg]="templateInfo?.fields | getFieldFromFieldsById:'bg'"
+  <div style="padding: 10px;" [libTemplateFieldBgimg]="templateInfo?.fields | getFieldFromFieldsById:'bg'"
     #fieldBgimg="field" [style.background]="'url('+(fieldBgimg.fieldInfo?.fieldVal|addResourceBaseUrlForField)+')'"
     [adviceWidth]="500" [adviceHeight]="300" adviceFormat="bmp">
-    <div style="text-align: center;" [libLayoutFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'"
+    <div style="text-align: center;" [libTemplateFieldText]="templateInfo?.fields | getFieldFromFieldsById:'title'"
       #fieldText="field" [maxLength]="16">
       <h1>{{fieldText.fieldInfo?.fieldVal}}</h1>
     </div>
 
     <div style="padding: 10px; height: 350px;">
       <div style="float: left; padding: 10px; height:300px; width: 300px; max-height: 100%;"
-        [libLayoutFieldImg]="templateInfo?.fields | getFieldFromFieldsById:'img'" #fieldImg="field" [adviceWidth]="160"
+        [libTemplateFieldImg]="templateInfo?.fields | getFieldFromFieldsById:'img'" #fieldImg="field" [adviceWidth]="160"
         [adviceHeight]="90" adviceFormat="jpg">
         <img [alt]="fieldImg.fieldInfo?.extension?.altValue"
           [src]="fieldImg.fieldInfo?.fieldVal | addResourceBaseUrlForField"
           style="width: 100%; height: auto; max-height: 100%;">
       </div>
       <div class="neux-editor" style="padding: 10px;"
-        [libLayoutFieldTextarea]="templateInfo?.fields | getFieldFromFieldsById:'article'" #fieldTextarea="field"
+        [libTemplateFieldTextarea]="templateInfo?.fields | getFieldFromFieldsById:'article'" #fieldTextarea="field"
         [maxLength]="-1" [maxLines]="5"
         [innerHTML]="fieldTextarea.fieldInfo?.fieldVal | newLineReplace | addResourceBaseUrlForHtml | safeHtml">
       </div>
@@ -25,17 +25,27 @@
     <div style="padding: 10px;">
       <div
         style="height:40px; line-height:40px; vertical-align: middle; width: 100%; max-width: 240px; background-color: aquamarine; border-radius: 10px; text-align: center; padding: 2px;"
-        [libLayoutFieldLink]="templateInfo?.fields | getFieldFromFieldsById:'clap'" #fieldLink="field">
+        [libTemplateFieldLink]="templateInfo?.fields | getFieldFromFieldsById:'clap'" #fieldLink="field">
         <a [href]="fieldLink.fieldInfo?.fieldVal"
           [target]="fieldLink.fieldInfo?.extension?.isTargetBlank==='true'?'_blank':''" rel="noreferrer noopener">拍手</a>
       </div>
+      <div rdrStopEventWhenPreview (click)="go()"> test </div>
+      <a rdrStopEventWhenPreview href="#">a test #</a>
+      <br>
+      <a rdrStopEventWhenPreview href="https://www.google.com/"> a test google</a>
+      <br>
+      <a rdrStopEventWhenPreview actionid="123"> a test actionId</a>
+      <br>
+      <a rdrStopEventWhenPreview href="/news/portalnews/106"> a test 站內連結</a>
+      <br>
+      <button rdrStopEventWhenPreview (click)="go()">button to test stop event</button>
     </div>
 
     <hr>
 
     <div style="padding: 10px;">
       自訂Html
-      <div [libLayoutFieldHtmlEditor]="templateInfo?.fields | getFieldFromFieldsById:'html'" #fieldHtmlEditor="field">
+      <div [libTemplateFieldHtmlEditor]="templateInfo?.fields | getFieldFromFieldsById:'html'" #fieldHtmlEditor="field">
         <rdr-html-editor-content [htmlString]="fieldHtmlEditor.fieldInfo?.fieldVal">
         </rdr-html-editor-content>
       </div>

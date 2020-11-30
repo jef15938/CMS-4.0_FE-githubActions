@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentControlBase } from '../../_base';
-import { TemplateFieldSelectEvent, LayoutFieldTextDirective } from '@neux/render';
+import { TemplateFieldSelectEvent, TemplateFieldTextDirective } from '@neux/render';
 
 @Component({
   selector: 'cms-field-control-text',
@@ -19,7 +19,7 @@ export class FieldControlTextComponent extends ContentControlBase implements OnI
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selected) {
       const selected = changes.selected.currentValue as TemplateFieldSelectEvent;
-      const directive = selected.fieldDirective as LayoutFieldTextDirective;
+      const directive = selected.fieldDirective as TemplateFieldTextDirective;
       this.maxLength = directive.maxLength || this.defaultMaxLength;
     }
   }

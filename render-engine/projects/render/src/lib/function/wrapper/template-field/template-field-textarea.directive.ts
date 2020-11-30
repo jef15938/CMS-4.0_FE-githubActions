@@ -1,14 +1,14 @@
 import { Directive, Input, Injector } from '@angular/core';
 import { TemplateFieldDirective } from './template-field.directive';
-import { ContentFieldInfoModel } from '../../../../global/api/data-model/models/content-field-info.model';
+import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
 
 @Directive({
-  selector: '[libLayoutFieldTextarea][maxLength][maxLines]',
+  selector: '[libTemplateFieldTextarea][maxLength][maxLines]',
   exportAs: 'field',
 })
-export class LayoutFieldTextareaDirective extends TemplateFieldDirective {
+export class TemplateFieldTextareaDirective extends TemplateFieldDirective {
   // tslint:disable-next-line: no-input-rename
-  @Input('libLayoutFieldTextarea') fieldInfo: ContentFieldInfoModel;
+  @Input('libTemplateFieldTextarea') fieldInfo: ContentFieldInfoModel;
   /**
    * 長度限制，0無限制
    */

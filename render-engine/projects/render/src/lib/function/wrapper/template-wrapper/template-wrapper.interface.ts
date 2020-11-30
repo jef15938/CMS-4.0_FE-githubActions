@@ -1,8 +1,6 @@
 import { ComponentRef } from '@angular/core';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
 import { ContentFieldInfoModel } from '../../../global/api/data-model/models/content-field-info.model';
-import { PageInfoGetResponseModel } from '../../../global/api/data-model/models/page-info-get-response.model';
-import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
 
 export enum TemplateType {
   COMMON = 'Common',
@@ -13,36 +11,30 @@ export enum TemplateType {
 }
 
 export interface WithRenderInfo {
-  /** edit=從CMS, preview=從Render */
-  mode: 'preview' | 'edit';
-  /** 整個 Sitemap */
-  sites: SiteInfoModel[];
   /** 版型是否被限制為固定 */
   fixed: boolean;
-  /** 頁面有關的資料 */
-  pageInfo: PageInfoGetResponseModel;
 }
 
-export interface LayoutWrapper extends WithRenderInfo{
+export interface TemplateWrapper extends WithRenderInfo{
   parentTemplatesContainer: { templates: ContentTemplateInfoModel[]; };
 }
 
-export enum LayoutWrapperSelectedTargetType {
+export enum TemplateWrapperSelectedTargetType {
   TEMPLATE = 'Template',
   FIELD = 'Field',
 }
 
 export interface TemplateFieldSelectEvent {
   selectedTarget: HTMLElement;
-  selectedTargetType: LayoutWrapperSelectedTargetType;
+  selectedTargetType: TemplateWrapperSelectedTargetType;
   fieldInfo: ContentFieldInfoModel;
   fieldDirective: any;
 }
 
-export interface LayoutWrapperSelectEvent {
+export interface TemplateWrapperSelectEvent {
   selectedTarget: HTMLElement;
-  selectedTargetType: LayoutWrapperSelectedTargetType;
-  wrapper: LayoutWrapper;
+  selectedTargetType: TemplateWrapperSelectedTargetType;
+  wrapper: TemplateWrapper;
   componentRef: ComponentRef<any>;
   templateType: TemplateType;
   templateInfo: ContentTemplateInfoModel;

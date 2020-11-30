@@ -1,13 +1,13 @@
 import { QueryList, SimpleChanges, Injector } from '@angular/core';
-import { LayoutWrapper, TemplateType, WithRenderInfo } from '../layout-wrapper/layout-wrapper.interface';
-import { TemplateFieldDirective } from '../layout-wrapper/field-directive/template-field.directive';
+import { Observable } from 'rxjs';
+import { TemplateWrapper, TemplateType, WithRenderInfo } from '../template-wrapper/template-wrapper.interface';
+import { TemplateFieldDirective } from '../template-field/template-field.directive';
 import { TemplatesContainerComponent } from '../templates-container/templates-container.component';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
-import { Observable } from 'rxjs';
 import { ListDataSourceDataResponseModel } from '../../../global/api/data-model/models/list-data-source-data-response.model';
 
-export interface LayoutBase<TInfo extends ContentTemplateInfoModel> extends WithRenderInfo {
-  parentLayoutWrapper: LayoutWrapper;
+export interface TemplateComponent<TInfo extends ContentTemplateInfoModel> extends WithRenderInfo {
+  parentTemplateWrapper: TemplateWrapper;
   templatesContainerComponents: QueryList<TemplatesContainerComponent>;
   templateFieldDirectives: TemplateFieldDirective[];
   templateInfo: TInfo;

@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { GroupTemplateBaseComponent } from '../../../function/wrapper/layout-base/group-template-base.component';
+import { GroupTemplateBaseComponent } from '../../../function/wrapper/template-base/group-template-base.component';
 import { GroupTemplateInfo } from '../../interface/group-template-info.interface';
 import { ContentFieldInfoFieldType } from '../../api/data-model/models/content-field-info.model';
 

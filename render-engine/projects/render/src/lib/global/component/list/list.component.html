@@ -3,11 +3,11 @@
   <div style="margin: 10px; padding: 10px; border: 1px solid pink; box-sizing: border-box;">
     <ng-container *ngFor="let group of templateInfo.itemList; let i = index;">
       <div class="group" *ngIf="!shouldHidden(group)">
-        <div class="title" [libLayoutFieldText]="group | getFieldFromFieldsById:'title'" #fieldText="field"
+        <div class="title" [libTemplateFieldText]="group | getFieldFromFieldsById:'title'" #fieldText="field"
           [maxLength]="6">
           {{fieldText.fieldInfo.fieldVal}}
         </div>
-        <div class="text" [libLayoutFieldLink]="group | getFieldFromFieldsById:'text'" #fieldLink="field">
+        <div class="text" [libTemplateFieldLink]="group | getFieldFromFieldsById:'text'" #fieldLink="field">
           {{fieldLink.fieldInfo.fieldVal}}
         </div>
         <hr *ngIf="i!==templateInfo.itemList.length-1">

@@ -1,56 +1,49 @@
-import { Component, Input, OnChanges, SimpleChanges, Inject, ViewChild, AfterViewInit, ViewContainerRef, ApplicationRef, ComponentFactoryResolver, Injector, OnDestroy, ComponentRef } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, ViewContainerRef, ApplicationRef, ComponentFactoryResolver, Injector, OnDestroy, ComponentRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { SitemapUtil } from '../../../global/utils/sitemap-util';
-import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
-import { RenderedPageEnvironment } from '../../../global/interface/page-environment.interface';
-import { RENDERED_PAGE_ENVIRONMENT_ROKEN } from '../../../global/injection-token/injection-token';
 import { fromEvent, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
+import { SitemapUtil } from '../../../global/utils/sitemap-util';
 import { customAction } from '../../../global/const/custom-action-subject';
-import { takeUntil, debounceTime } from 'rxjs/operators';
 import { HtmlTableContentComponent } from '../html-table-content/html-table-content.component';
+import { RenderPageStore, RenderPageState } from '../../../global/component-store/render-page.store';
 
 @Component({
   selector: 'rdr-html-editor-content',
   templateUrl: './html-editor-content.component.html',
   styleUrls: ['./html-editor-content.component.scss']
 })
-export class HtmlEditorContentComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class HtmlEditorContentComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('Container', { read: ViewContainerRef }) container: ViewContainerRef;
 
-  @Input() mode: 'preview' | 'edit';
   @Input() htmlString;
-  @Input() sites: SiteInfoModel[] = [];
 
   private componentRefs: ComponentRef<any>[] = [];
 
   private customAction$ = customAction;
-  private render$ = new Subject();
   private destroy$ = new Subject();
+
+  private renderPageState: RenderPageState;
 
   constructor(
     private router: Router,
-    @Inject(RENDERED_PAGE_ENVIRONMENT_ROKEN) private pageEnv: RenderedPageEnvironment,
     private injector: Injector,
     private applicationRef: ApplicationRef,
     private componentFactoryResolver: ComponentFactoryResolver,
+    private readonly renderPageStore: RenderPageStore,
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.render$.next();
-  }
-
   ngAfterViewInit(): void {
-    this.render$.pipe(
-      debounceTime(100),
-      takeUntil(this.destroy$),
-    ).subscribe(_ => this.renderView(this.htmlString));
-
     fromEvent(this.container.element.nativeElement, 'click', { capture: true }).pipe(
       takeUntil(this.destroy$),
     ).subscribe((ev: MouseEvent) => this.emitCustomAction(ev));
 
-    this.render$.next();
+    this.renderPageStore.state$.pipe(
+      takeUntil(this.destroy$),
+      tap(state => this.renderPageState = state),
+    ).subscribe(state => {
+      this.renderView(this.htmlString);
+    });
   }
 
   ngOnDestroy(): void {
@@ -62,7 +55,7 @@ export class HtmlEditorContentComponent implements OnChanges, AfterViewInit, OnD
     const target = ev.target as HTMLElement;
     if (target.tagName?.toLowerCase() === 'a') {
       const actionId = target.getAttribute('actionid');
-      if (actionId && this.mode === 'preview') {
+      if (actionId && this.renderPageState.isPreview) {
         this.preventOriginClickEvent(ev);
         this.customAction$.next(actionId);
       }
@@ -96,12 +89,12 @@ export class HtmlEditorContentComponent implements OnChanges, AfterViewInit, OnD
     const insides = tempContainer.querySelectorAll('a[urltype="INSIDE"]');
     insides.forEach(node => {
       // 根據 nodeId 找到 contentPath
-      if (this.pageEnv.isRuntime) {
+      if (this.renderPageState.isRuntime) {
         const isHrefSet = !!node.getAttribute('nodeId');
         if (!isHrefSet) {
           const siteId = node.getAttribute('siteid');
           const nodeId = node.getAttribute('href');
-          const sites = this.sites;
+          const sites = this.renderPageState.sitemap.sites;
           const href = SitemapUtil.findContentPathBySiteIdAndNodeId(sites, siteId, nodeId);
           if (href) {
             node.setAttribute('nodeId', nodeId);

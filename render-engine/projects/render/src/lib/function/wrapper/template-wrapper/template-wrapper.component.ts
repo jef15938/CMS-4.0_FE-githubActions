@@ -3,37 +3,36 @@ import {
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
   HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID, SimpleChange
 } from '@angular/core';
-import { LayoutBase } from '../layout-base/layout-base.interface';
+import { TemplateComponent } from '../template-base/template-base.interface';
 import { takeUntil, map, tap } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
-import { LayoutWrapperSelectEvent, LayoutWrapper, TemplateFieldSelectEvent, LayoutWrapperSelectedTargetType } from './layout-wrapper.interface';
-import { LayoutWrapperBase } from './layout-wrapper-base';
+import { TemplateWrapperSelectEvent, TemplateWrapper, TemplateFieldSelectEvent, TemplateWrapperSelectedTargetType } from './template-wrapper.interface';
+import { TemplateWrapperBase } from './template-wrapper-base';
 import { DynamicWrapperComponent } from '@neux/core';
 import { DynamicComponentFactoryService } from '../../../global/service/dynamic-component-factory.service';
 import { isPlatformServer } from '@angular/common';
 import { ContentTemplateInfoModel } from '../../../global/api/data-model/models/content-template-info.model';
-import { SiteInfoModel } from '../../../global/api/data-model/models/site-info.model';
 
 @Component({
-  selector: 'rdr-layout-wrapper',
-  templateUrl: './layout-wrapper.component.html',
-  styleUrls: ['./layout-wrapper.component.scss']
+  selector: 'rdr-template-wrapper',
+  templateUrl: './template-wrapper.component.html',
+  styleUrls: ['./template-wrapper.component.scss']
 })
-export class LayoutWrapperComponent extends LayoutWrapperBase implements
-  LayoutWrapper, OnInit, AfterViewInit, OnChanges {
+export class TemplateWrapperComponent extends TemplateWrapperBase implements
+  TemplateWrapper, AfterViewInit, OnChanges {
 
   @Input() templateInfo: ContentTemplateInfoModel;
 
-  @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<LayoutBase<ContentTemplateInfoModel>>;
+  @ViewChild('dynamic') dynamicWrapperComponent: DynamicWrapperComponent<TemplateComponent<ContentTemplateInfoModel>>;
 
   @Input() parentTemplatesContainer: {
-    mode: 'preview' | 'edit', templates: ContentTemplateInfoModel[]; sites: SiteInfoModel[]
+    templates: ContentTemplateInfoModel[];
   };
 
   get componentRef() { return this.dynamicWrapperComponent?.componentRef; }
 
   // tslint:disable-next-line: no-output-native
-  @Output() select = new EventEmitter<LayoutWrapperSelectEvent>();
+  @Output() select = new EventEmitter<TemplateWrapperSelectEvent>();
 
   private instanceEventSubscription: Subscription;
 
@@ -53,10 +52,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     this.setInstanceData(this.componentRef?.instance);
   }
 
-  ngOnInit(): void {
-
-  }
-
   ngAfterViewInit() {
     if (!this.canRender(this.templateInfo.templateId)) { return; }
     this.changeDetectorRef.reattach();
@@ -68,12 +63,12 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
       this.dynamicWrapperComponent.loadWithComponent(component);
       this.checkEventBinding();
     } catch (error) {
-      console.error('LayoutWrapperComponent loadWithComponent error: templateId = ', templateId);
+      console.error('TemplateWrapperComponent loadWithComponent error: templateId = ', templateId);
       throw error;
     }
   }
 
-  setInstanceProperties = (componentRef: ComponentRef<LayoutBase<ContentTemplateInfoModel>>): void => {
+  setInstanceProperties = (componentRef: ComponentRef<TemplateComponent<ContentTemplateInfoModel>>): void => {
     this.setInstanceData(componentRef?.instance);
   }
 
@@ -83,16 +78,16 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
       this.registerInstanceEvents(this.componentRef?.instance).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
-  private registerInstanceEvents(instance: LayoutBase<ContentTemplateInfoModel>) {
-    const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<LayoutWrapperComponent>;
+  private registerInstanceEvents(instance: TemplateComponent<ContentTemplateInfoModel>) {
+    const templatesContainerComponents = (instance?.templatesContainerComponents || new QueryList()) as QueryList<TemplateWrapperComponent>;
     const templateFieldDirectives = (instance?.templateFieldDirectives || []);
     return merge(
       // select
       merge(
         merge(...templatesContainerComponents.map(c => c.select).filter(l => !!l)),
         merge(...templateFieldDirectives.map(c => c.select).filter(l => !!l))
-          .pipe(map((e: TemplateFieldSelectEvent) => this.createLayoutWrapperSelectEvent(e)))
-      ).pipe(tap((e: LayoutWrapperSelectEvent) => this.select.next(e))),
+          .pipe(map((e: TemplateFieldSelectEvent) => this.createTemplateWrapperSelectEvent(e)))
+      ).pipe(tap((e: TemplateWrapperSelectEvent) => this.select.next(e))),
       // enter
       merge(
         merge(...templatesContainerComponents.map(c => c.enter).filter(l => !!l)),
@@ -106,10 +101,10 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     );
   }
 
-  createLayoutWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {
-    const event: LayoutWrapperSelectEvent = {
+  createTemplateWrapperSelectEvent(templateFieldSelectEvent?: TemplateFieldSelectEvent) {
+    const event: TemplateWrapperSelectEvent = {
       selectedTarget: this.elementRef?.nativeElement,
-      selectedTargetType: LayoutWrapperSelectedTargetType.TEMPLATE,
+      selectedTargetType: TemplateWrapperSelectedTargetType.TEMPLATE,
       wrapper: this,
       componentRef: this.componentRef,
       templateInfo: this.templateInfo,
@@ -119,22 +114,16 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     return event;
   }
 
-  setInstanceData(instance: LayoutBase<ContentTemplateInfoModel>, force = false) {
+  setInstanceData(instance: TemplateComponent<ContentTemplateInfoModel>, force = false) {
     if (!instance) { return; }
-    instance.parentLayoutWrapper = this;
+    instance.parentTemplateWrapper = this;
 
     const oldData = {
-      mode: instance.mode,
-      sites: instance.sites,
-      pageInfo: instance.pageInfo,
       templateInfo: instance.templateInfo,
       fixed: instance.fixed,
     };
 
     const newData = {
-      mode: this.mode,
-      sites: this.sites,
-      pageInfo: this.pageInfo,
       templateInfo: this.templateInfo,
       fixed: this.templateInfo?.templateId === 'FixedWrapper',
     };
@@ -167,9 +156,6 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
     // console.warn({ templatesContainerComponents, templateFieldDirectives });
 
     [...templatesContainerComponents, ...templateFieldDirectives].forEach(comp => {
-      comp.mode = newData.mode;
-      comp.sites = newData.sites;
-      comp.pageInfo = newData.pageInfo;
       comp.fixed = newData.fixed;
 
       const compAny = comp as any;
@@ -180,8 +166,8 @@ export class LayoutWrapperComponent extends LayoutWrapperBase implements
   }
 
   @HostListener('click') click() {
-    if (this.mode === 'edit') {
-      this.select.emit(this.createLayoutWrapperSelectEvent());
+    if (this.renderPageState.isEditor) {
+      this.select.emit(this.createTemplateWrapperSelectEvent());
     }
   }
 

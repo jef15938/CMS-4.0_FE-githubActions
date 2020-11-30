@@ -17,7 +17,7 @@ const PIPES = [
   SafeUrlPipe,
   ObjectKeysPipe,
   ReadableFileSizePipe,
-  SplitTextPipe,
+  SplitTextPipe
 ];
 
 @NgModule({

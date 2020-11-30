@@ -3,7 +3,7 @@ import {
   ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef
 } from '@angular/core';
 import { AddTemplateButtonComponent } from '../add-template-button/add-template-button.component';
-import { DynamicComponentFactoryService, LayoutBaseComponent, TemplatesContainerComponent } from '@neux/render';
+import { DynamicComponentFactoryService, TemplateBaseComponent, TemplatesContainerComponent } from '@neux/render';
 import { ContentEditorContext } from '../../content-editor.interface';
 import { TemplateGetResponseModel } from '../../../../../global/api/data-model/models/template-get-response.model';
 import { TemplateInfoModel } from '../../../../../global/api/data-model/models/template-info.model';
@@ -12,6 +12,69 @@ import { ContentTemplateInfoModel } from '../../../../../global/api/data-model/m
 import { ModalService } from '../../../modal';
 import { CmsErrorHandler } from '../../../../../global/error-handling';
 
+
+const DEMO_TEMPLATES = [
+  {
+    templateId: 'social-media',
+    templateName: '社交媒體分享',
+    templateThumbnail: ''
+  },
+  {
+    templateId: 'banner',
+    templateName: 'Banner',
+    templateThumbnail: ''
+  },
+  {
+    templateId: 'list',
+    templateName: '清單',
+    templateThumbnail: ''
+  },
+  {
+    templateId: 'FixedWrapper',
+    templateName: '固定式外框',
+    templateThumbnail: ''
+  },
+  // {
+  //   template_id: 'Download',
+  //   template_name: 'Download',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'News',
+  //   template_name: 'News',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'Slide',
+  //   template_name: 'Slide',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'HTML',
+  //   template_name: 'HTML',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'Tab',
+  //   template_name: 'Tab',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'IconPage',
+  //   template_name: 'IconPage',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'FieldsDemo',
+  //   template_name: 'FieldsDemo',
+  //   template_thumbnail: ''
+  // },
+  // {
+  //   template_id: 'GroupDemo',
+  //   template_name: 'GroupDemo',
+  //   template_thumbnail: ''
+  // }
+];
 @Component({
   selector: 'cms-layout-control-panel',
   templateUrl: './layout-control-panel.component.html',
@@ -30,7 +93,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   // 可選版面資料
   @Input() selectableTemplates: TemplateGetResponseModel;
 
-  mainTemplates: TemplateInfoModel[] = [];
+  mainTemplates: TemplateInfoModel[] = [...DEMO_TEMPLATES];
 
   @Output() templateAdd = new EventEmitter<string>(); // template_name
 
@@ -43,68 +106,6 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.mainTemplates = [
-      {
-        templateId: 'social-media',
-        templateName: '社交媒體分享',
-        templateThumbnail: ''
-      },
-      {
-        templateId: 'banner',
-        templateName: 'Banner',
-        templateThumbnail: ''
-      },
-      {
-        templateId: 'list',
-        templateName: '清單',
-        templateThumbnail: ''
-      },
-      {
-        templateId: 'FixedWrapper',
-        templateName: '固定式外框',
-        templateThumbnail: ''
-      },
-      // {
-      //   template_id: 'Download',
-      //   template_name: 'Download',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'News',
-      //   template_name: 'News',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'Slide',
-      //   template_name: 'Slide',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'HTML',
-      //   template_name: 'HTML',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'Tab',
-      //   template_name: 'Tab',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'IconPage',
-      //   template_name: 'IconPage',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'FieldsDemo',
-      //   template_name: 'FieldsDemo',
-      //   template_thumbnail: ''
-      // },
-      // {
-      //   template_id: 'GroupDemo',
-      //   template_name: 'GroupDemo',
-      //   template_thumbnail: ''
-      // },
-    ];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -116,17 +117,34 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       }
       if (current) {
         current.isSelected = true;
+        this.getWhiteList();
       }
       this.show = !!current;
     }
+  }
+
+
+  /**
+   * 從templatesContainer取得白名單,並過濾掉可選版型
+   *
+   * @return {*}
+   * @memberof LayoutControlPanelComponent
+   */
+  getWhiteList() {
+    const flatternArr = [...this.selectableTemplates.static, ...this.selectableTemplates.tab
+      , ...this.selectableTemplates.dynamic, ...this.selectableTemplates.customize, ...this.mainTemplates];
+    if (this.selectedBtn.templatesContainer.whiteList.length) {
+      flatternArr.forEach(e => e.show = !!this.selectedBtn.templatesContainer.whiteList.find(q => q === e.templateId));
+    }
+    else { flatternArr.forEach(e => e.show = true); }
   }
 
   selectTemplate(selectedTemplateInfo: TemplateInfoModel) {
     const btnTemplatesContainer = this.selectedBtn.templatesContainer;
     const btnRootTemplatesContainer = this.selectedBtn.rootTemplatesContainer;
     const isRoot = btnTemplatesContainer === btnRootTemplatesContainer;
-    const btnLayoutWrapper = this.selectedBtn.targetLayoutWrapper;
-    const templateInfo = btnLayoutWrapper?.templateInfo;
+    const btnTemplateWrapper = this.selectedBtn.targetTemplateWrapper;
+    const templateInfo = btnTemplateWrapper?.templateInfo;
 
     const yes = window.confirm(`確定加入${selectedTemplateInfo.templateName}:${selectedTemplateInfo.templateId}？`);
     if (!yes) { return; }
@@ -142,7 +160,7 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
       const viewContainerRef = this.createTemplateContainer;
       viewContainerRef.clear();
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-      const componentRef = viewContainerRef.createComponent(componentFactory) as ComponentRef<LayoutBaseComponent<any>>;
+      const componentRef = viewContainerRef.createComponent(componentFactory) as ComponentRef<TemplateBaseComponent<any>>;
 
       const componentInctanceDefaultTemplateInfo = componentRef.instance.defaultTemplateInfo;
       if (!componentInctanceDefaultTemplateInfo) {
@@ -172,18 +190,18 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
           });
         });
       } else {
-        const btnParentLayoutWrapper =
-          this.context.findParentLayoutWrapperOfTemplatesContainer(btnTemplatesContainer, btnRootTemplatesContainer);
+        const btnParentTemplateWrapper =
+          this.context.findParentTemplateWrapperOfTemplatesContainer(btnTemplatesContainer, btnRootTemplatesContainer);
 
-        if (!btnParentLayoutWrapper) {
-          this.modalService.openMessage({ message: '系統異常 : 無 btnLayoutWrapper' }).subscribe();
+        if (!btnParentTemplateWrapper) {
+          this.modalService.openMessage({ message: '系統異常 : 無 btnTemplateWrapper' }).subscribe();
           return;
         }
 
-        const btnLayoutWrapperTemplatesContainerComponents =
-          Array.from(btnParentLayoutWrapper.componentRef.instance.templatesContainerComponents || []);
+        const btnTemplateWrapperTemplatesContainerComponents =
+          Array.from(btnParentTemplateWrapper.componentRef.instance.templatesContainerComponents || []);
 
-        const templatesContainerIndex = btnLayoutWrapperTemplatesContainerComponents.indexOf(btnTemplatesContainer);
+        const templatesContainerIndex = btnTemplateWrapperTemplatesContainerComponents.indexOf(btnTemplatesContainer);
 
         const allLangTargetTemplatesContainers =
           rootTemplatesContainersOfBlocksByLanguage.map(rootTemplatesContainersOfBlocks => {
@@ -194,11 +212,11 @@ export class LayoutControlPanelComponent implements OnInit, OnChanges {
               ) {
                 return btnTemplatesContainer;
               } else {
-                const templateInfoId = btnParentLayoutWrapper.templateInfo.id;
-                const layoutWrapper = this.context.findLayoutWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
-                if (!layoutWrapper) { return null; }
+                const templateInfoId = btnParentTemplateWrapper.templateInfo.id;
+                const templateWrapper = this.context.findTemplateWrapperByTemplateInfoId(templateInfoId, rootTemplatesContainer);
+                if (!templateWrapper) { return null; }
                 return Array.from(
-                  layoutWrapper.componentRef.instance.templatesContainerComponents
+                  templateWrapper.componentRef.instance.templatesContainerComponents
                 )[templatesContainerIndex];
               }
             }).filter(v => !!v);

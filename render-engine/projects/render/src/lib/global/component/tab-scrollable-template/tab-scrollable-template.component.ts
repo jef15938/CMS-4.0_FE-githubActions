@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { TabTemplateBaseComponent } from '../../../function/wrapper/layout-base/tab-template-base.component';
+import { TabTemplateBaseComponent } from '../../../function/wrapper/template-base/tab-template-base.component';
 import { TabTemplateInfo } from '../../interface/tab-template-info.interface';
 import { ContentFieldInfoFieldType } from '../../api/data-model/models/content-field-info.model';
 import { TabData } from '../public-component/tab/tab.inerface';
