@@ -1,17 +1,16 @@
-import { Directive, Inject, AfterViewInit, ElementRef, Optional, Injector, OnInit } from '@angular/core';
-import { RenderedPageEnvironment } from '../interface/page-environment.interface';
-import { RENDERED_PAGE_ENVIRONMENT_TOKEN } from '../injection-token/injection-token';
-import { LayoutWrapperBase } from '../../function/wrapper/layout-wrapper/layout-wrapper-base';
+import { Directive, AfterViewInit, ElementRef, Injector, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TemplateWrapperBase } from '../../function/wrapper/template-wrapper/template-wrapper-base';
 
 @Directive({
   selector: '[rdrStopEventWhenPreview]'
 })
-export class StopEventWhenPreviewDirective extends LayoutWrapperBase implements OnInit, AfterViewInit {
+export class StopEventWhenPreviewDirective extends TemplateWrapperBase implements OnInit, AfterViewInit {
 
-  constructor(injector: Injector, private hostElement: ElementRef,
-    @Optional() @Inject(RENDERED_PAGE_ENVIRONMENT_TOKEN) private pageEnv: RenderedPageEnvironment
+  constructor(
+    injector: Injector,
+    private hostElement: ElementRef,
   ) {
     super(injector);
   }
@@ -34,7 +33,7 @@ export class StopEventWhenPreviewDirective extends LayoutWrapperBase implements 
       pipe(takeUntil(this.destroy$))
       .subscribe(event => {
         if (event.target === this.hostElement.nativeElement) {
-          const isPreview = !this.pageEnv.isRuntime && this.mode !== 'edit';
+          const isPreview = this.renderPageState.isPreview;
           // 只針對preview
           if (isPreview) {
             this.stopEvent(event);
