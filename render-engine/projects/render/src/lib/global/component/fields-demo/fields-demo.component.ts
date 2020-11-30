@@ -27,4 +27,8 @@ export class FieldsDemoComponent extends CommonTemplateBaseComponent {
     super(injector, TEMPLATE_ID);
   }
 
+
+  go() {
+    location.href = 'https:google.com';
+  }
 }
