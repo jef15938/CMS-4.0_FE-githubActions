@@ -3,6 +3,7 @@ import {
   Component,
   ContentChild,
   EventEmitter,
+  HostBinding,
   Injector,
   Input,
   OnDestroy,
@@ -17,6 +18,7 @@ import { CollapseData } from '../collapse.interface';
 import { NxCollapseComponent } from '@neux/ui';
 import { takeUntil } from 'rxjs/operators';
 
+export type collapseAppearence = 'primary' | 'secondary';
 
 @Component({
   selector: 'rdr-collapse',
@@ -26,6 +28,8 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CollapseComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit {
 
+  @HostBinding('class') get style() { return `style--${this.styleType}`; }
+  @Input() styleType: collapseAppearence = 'primary';
   @Input() collapseData: CollapseData;
   @Input() titleTemplate: TemplateRef<any>;
   @Input() contentTemplate: TemplateRef<any>;

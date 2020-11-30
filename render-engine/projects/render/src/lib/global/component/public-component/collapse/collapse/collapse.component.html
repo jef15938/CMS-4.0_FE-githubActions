@@ -1,8 +1,30 @@
-<nx-collapse arrowLine>
-  <ng-container trigger>
-    <ng-content select="[title]"></ng-content>
+<ng-container [ngSwitch]="styleType">
+  <ng-container *ngSwitchCase="'primary'">
+    <nx-collapse arrowLine>
+      <ng-container trigger>
+        <ng-container [ngTemplateOutlet]="title"></ng-container>
+      </ng-container>
+      <ng-container content>
+        <ng-container [ngTemplateOutlet]="content"></ng-container>
+      </ng-container>
+    </nx-collapse>
   </ng-container>
-  <ng-container content>
-    <ng-content select="[content]"></ng-content>
+
+  <ng-container *ngSwitchCase="'secondary'">
+    <nx-collapse crossLess>
+      <ng-container trigger>
+        <ng-container [ngTemplateOutlet]="title"></ng-container>
+      </ng-container>
+      <ng-container content>
+        <ng-container [ngTemplateOutlet]="content"></ng-container>
+      </ng-container>
+    </nx-collapse>
   </ng-container>
-</nx-collapse>
+</ng-container>
+
+<ng-template #title>
+  <ng-content select="[title]"></ng-content>
+</ng-template>
+<ng-template #content>
+  <ng-content select="[content]"></ng-content>
+</ng-template>

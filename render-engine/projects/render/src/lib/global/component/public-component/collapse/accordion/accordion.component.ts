@@ -13,7 +13,7 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { CustomizeBaseDirective } from '../../base-component';
 import { CollapseData } from '../collapse.interface';
-import { CollapseComponent } from '../collapse/collapse.component';
+import { collapseAppearence, CollapseComponent } from '../collapse/collapse.component';
 
 @Component({
   selector: 'rdr-accordion',
@@ -23,6 +23,7 @@ import { CollapseComponent } from '../collapse/collapse.component';
 })
 export class AccordionComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit {
 
+  @Input() styleType: collapseAppearence = 'primary';
   @Input() collapseList: Array<CollapseData>;
 
   /** 是否需要項目符號 */

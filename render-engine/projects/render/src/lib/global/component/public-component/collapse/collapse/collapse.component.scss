@@ -20,22 +20,11 @@ rdr-collapse {
   nx-collapse.nx-cp {
     .collapse-container {
 
-      &,
-      &__trigger,
-      &__content {
-        border-radius: 8px;
-
-        @include rwd($bp-sm-max) {
-          border-radius: 6px;
-        }
-      }
-
       &__trigger {
         @include Body182-Bold1-Light2-Default-Color1-Left-Aligned;
 
         @include rwd($bp-sm-max) {
           @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
-          padding: 8px 38px 8px 16px;
         }
       }
 
@@ -44,23 +33,6 @@ rdr-collapse {
 
         @include rwd($bp-sm-max) {
           @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
-          padding: 24px 16px 40px;
-        }
-      }
-
-      &__prefix {
-        top: 16px;
-        transform: none;
-
-        @include rwd($bp-sm-max) {
-          top: 8px;
-          left: 12px;
-        }
-      }
-
-      &__suffix {
-        @include rwd($bp-sm-max) {
-          right: 12px;
         }
       }
     }
@@ -92,18 +64,140 @@ rdr-collapse {
       }
     }
 
-    .collapse-container[collapse-status=true] {
+    &.style--icon-crossLess {
       .collapse-container {
-        &__trigger {
-          border-bottom-width: 1px;
-          border-bottom-style: solid;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
+
+        // TODO: 改圖
+        &__suffix {
+          width: 18px;
+          height: 18px;
+
+          &:before,
+          &:after {
+            height: 1px;
+          }
+        }
+      }
+    }
+  }
+
+  &.style--primary {
+    >nx-collapse.nx-cp {
+      >.collapse-container {
+        border-radius: 8px;
+
+        @include rwd($bp-sm-max) {
+          border-radius: 6px;
         }
 
-        &__content {
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
+        >.collapse-container {
+
+          &__trigger,
+          &__content {
+            border-radius: 8px;
+
+            @include rwd($bp-sm-max) {
+              border-radius: 6px;
+            }
+          }
+
+          &__trigger {
+            @include rwd($bp-sm-max) {
+              padding: 8px 38px 8px 16px;
+            }
+          }
+
+          &__content {
+            @include rwd($bp-sm-max) {
+              padding: 24px 16px 40px;
+            }
+          }
+        }
+
+        &[collapse-status=true] {
+          >.collapse-container {
+            &__trigger {
+              border-bottom-width: 1px;
+              border-bottom-style: solid;
+              border-bottom-left-radius: 0;
+              border-bottom-right-radius: 0;
+            }
+
+            &__content {
+              border-top-left-radius: 0;
+              border-top-right-radius: 0;
+            }
+          }
+        }
+      }
+
+      .collapse-container {
+        &__prefix {
+          top: 16px;
+          transform: none;
+
+          @include rwd($bp-sm-max) {
+            top: 8px;
+            left: 12px;
+          }
+        }
+
+        &__suffix {
+          @include rwd($bp-sm-max) {
+            right: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  &.style--secondary {
+    >nx-collapse.nx-cp {
+      >.collapse-container {
+        >.collapse-container {
+          &__trigger {
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            padding: 14px 34px 14px 0;
+
+            @include rwd($bp-sm-max) {
+              padding: 12px 34px 12px 0;
+            }
+
+            >.collapse-container__suffix {
+              right: 0;
+            }
+          }
+
+          &__content {
+            padding: 24px 0 40px;
+
+            @include rwd($bp-sm-max) {
+              padding: 16px 0 20px;
+            }
+          }
+        }
+
+        &[collapse-status=true] {
+          >.collapse-container {
+            &__trigger {
+              position: relative;
+
+              &:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                display: block;
+                width: 80px;
+                height: 2px;
+
+                @include rwd($bp-sm-max) {
+                  width: 64px;
+                }
+              }
+            }
+          }
         }
       }
     }

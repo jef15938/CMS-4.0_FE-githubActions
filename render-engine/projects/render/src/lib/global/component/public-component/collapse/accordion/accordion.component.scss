@@ -6,19 +6,21 @@ rdr-accordion {
 
   nx-collapse-accordion {
     rdr-collapse {
-      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+      &.style--primary {
+        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
 
-      +rdr-collapse {
-        margin-top: 16px;
+        &:not(:last-child) {
+          margin-bottom: 16px;
 
-        @include rwd($bp-sm-max) {
-          margin-top: 8px;
+          @include rwd($bp-sm-max) {
+            margin-bottom: 8px;
+          }
         }
       }
     }
 
     &.style--hasList {
-      rdr-collapse {
+      rdr-collapse.style--primary {
         nx-collapse.nx-cp {
           .collapse-container {
             &__trigger {
