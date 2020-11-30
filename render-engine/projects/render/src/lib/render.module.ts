@@ -60,11 +60,11 @@ import { HamburgerComponent } from './global/component/public-component/hamburge
 import { HtmlTableContentComponent } from './function/ui/html-table-content/html-table-content.component';
 import { RadioModule } from './global/component/public-component/radio/radio.module';
 import { TextareaComponent } from './global/component/public-component/textarea/textarea.component';
-import { StopEventDirective } from './global/directive';
+import { StopEventWhenPreviewDirective } from './global/directive';
 
 const DIRECTIVES = [
   ShownByDeviceDirective,
-  StopEventDirective
+  StopEventWhenPreviewDirective
 ];
 
 const COMPONENTS = [
