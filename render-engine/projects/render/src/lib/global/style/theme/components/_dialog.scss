@@ -1,0 +1,9 @@
+@import "~@neux/ui/component-customizing-mixins/theme-all";
+
+@mixin rdr-dialog-theme($theme: $rdr-theme-config) {
+  $rdr-dialog-backdrop-color: map-get($theme, black_0) !default;
+
+  $dialog-theme: nx-ui-theme-config-gen($color-back: $rdr-dialog-backdrop-color);
+
+  @include nx-dialog-theme($dialog-theme);
+}
