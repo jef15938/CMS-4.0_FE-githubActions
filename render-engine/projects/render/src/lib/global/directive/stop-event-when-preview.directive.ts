@@ -32,7 +32,7 @@ export class StopEventWhenPreviewDirective extends TemplateWrapperBase implement
     fromEvent<MouseEvent>(this.hostElement.nativeElement.parentNode, 'click', { capture: true }).
       pipe(takeUntil(this.destroy$))
       .subscribe(event => {
-        if (event.target === this.hostElement.nativeElement) {
+        if (this.hostElement.nativeElement.contains(event.target)) {
           const isPreview = this.renderPageState.isPreview;
           // 只針對preview
           if (isPreview) {
