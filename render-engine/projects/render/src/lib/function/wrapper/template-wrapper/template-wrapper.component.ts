@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Input, ViewChild,
+  Component, Input, ViewChild,
   ComponentRef, AfterViewInit, EventEmitter, Output, QueryList,
   HostListener, OnChanges, SimpleChanges, Injector, PLATFORM_ID, SimpleChange
 } from '@angular/core';

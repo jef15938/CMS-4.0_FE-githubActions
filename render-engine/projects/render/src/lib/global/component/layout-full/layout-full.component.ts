@@ -1,8 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, startWith, tap } from 'rxjs/operators';
-import { LayoutInfo } from '../../interface/layout-info.interface';
-import { CommonTemplateBaseComponent } from '../../../function/wrapper/template-base/common-template-base.component';
+import { LayoutTemplateBaseComponent } from '../../../function/wrapper/template-base/layout-template-base.component';
 
 const TEMPLATE_ID = 'layout-full';
 
@@ -11,9 +10,7 @@ const TEMPLATE_ID = 'layout-full';
   templateUrl: './layout-full.component.html',
   styleUrls: ['./layout-full.component.scss']
 })
-export class LayoutFullComponent extends CommonTemplateBaseComponent implements OnInit {
-  defaultTemplateInfo: LayoutInfo;
-  templateInfo: LayoutInfo;
+export class LayoutFullComponent extends LayoutTemplateBaseComponent implements OnInit {
   isShowMenu: boolean;
   isMobile = false;
   windowWidth = window.innerWidth;
