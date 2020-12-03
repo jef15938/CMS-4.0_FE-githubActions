@@ -58,13 +58,6 @@ rdr-select {
 
     .select-ele {
 
-      &__selected {
-        @include rwd($bp-sm-max) {
-          height: 42px;
-          line-height: 42px;
-        }
-      }
-
       &--customize {
 
         +.select-options {
@@ -86,6 +79,16 @@ rdr-select {
 
           .select-options__item {
             @include Callout162-Bold1-Light2-Default-Color1-Left-Aligned;
+          }
+        }
+
+        .select-ele__selected {
+          padding: 0 42px 0 12px;
+
+          @include rwd($bp-sm-max) {
+            height: 42px;
+            line-height: 42px;
+            padding: 0 38px 0 12px;
           }
         }
       }
