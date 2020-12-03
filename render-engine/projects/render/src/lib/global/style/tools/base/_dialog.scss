@@ -1,24 +1,24 @@
-@include rdr-dialog-theme;
+@mixin rdr-dialog {
+  @include rdr-dialog-theme;
+  @include nx-dialog-config($mode: 'customize',
+    $dialog-radius: 16px,
+    $dialog-position: top,
+    $dialog-content-padding: 48px 56px 56px);
 
-@include nx-dialog-config($mode: 'customize',
-  $dialog-radius: 16px,
-  $dialog-position: top,
-  $dialog-content-padding: 48px 56px 56px);
+  nx-dialog.nx-cp {
 
-nx-dialog.nx-cp {
-  pointer-events: auto;
+    .dialog {
+      &__content {
+        margin: 64px 20px;
+        min-height: 424px;
+        max-height: calc(100vh - (64px * 2));
 
-  .dialog {
-    &__content {
-      margin: 64px 20px;
-      min-height: 424px;
-      max-height: calc(100vh - (64px * 2));
-
-      @include rwd($bp-sm-max) {
-        margin: 74px 20px;
-        padding: 20px 16px 28px;
-        max-height: none;
-        border-radius: 12px;
+        @include rwd($bp-sm-max) {
+          margin: 74px 20px;
+          padding: 20px 16px 28px;
+          max-height: none;
+          border-radius: 12px;
+        }
       }
     }
   }

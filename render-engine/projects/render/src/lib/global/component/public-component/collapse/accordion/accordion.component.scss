@@ -17,6 +17,12 @@ rdr-accordion {
           }
         }
       }
+
+      &.style--secondary {
+        &:not(:last-child) {
+          margin-bottom: 16px;
+        }
+      }
     }
 
     &.style--hasList {

@@ -34,26 +34,6 @@
           color: $rdr-content-text-color;
         }
       }
-
-      &.style--icon-crossLess {
-        .collapse-container {
-
-          // TODO: 改圖拿掉顏色
-          &__suffix {
-
-            &:before,
-            &:after {
-              background-color: $rdr-secondary-active-color;
-            }
-          }
-
-          &[collapse-status=true] &__suffix {
-            &:before {
-              background-color: $rdr-plain-color;
-            }
-          }
-        }
-      }
     }
 
     &.style--primary {
