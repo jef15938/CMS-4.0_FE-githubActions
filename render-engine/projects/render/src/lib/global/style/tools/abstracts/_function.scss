@@ -11,7 +11,8 @@
   $brown-grey-1: $brown-grey-two,
   $very-light-pink-0: $very-light-pink,
   $very-light-pink-1: $very-light-pink-two,
-  $very-light-pink-2: $very-light-pink-three) {
+  $very-light-pink-2: $very-light-pink-three,
+  $red: $red) {
   $config-gen: (color_primary: $color-primary,
       color_secondary: $color-secondary,
       color_click: $color-click,
@@ -25,7 +26,8 @@
       brown_grey_1: $brown-grey-1,
       very_light_pink_0: $very-light-pink-0,
       very_light_pink_1: $very-light-pink-1,
-      very_light_pink_2: $very-light-pink-2);
+      very_light_pink_2: $very-light-pink-2,
+      red_0: $red);
   @return $config-gen;
 }
 

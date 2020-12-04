@@ -12,6 +12,7 @@
   $editor-table-hightlight-color: rgba(212, 75, 22, 0.5);
   $editor-element-pc-gutter: 16px;
   $editor-element-mobile-gutter: 12px;
+  $editor-red: map-get($theme, red_0) !default;
 
   @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
   color: $editor-text-color;
@@ -118,7 +119,7 @@
     color: $editor-primary-color;
 
     @include rwd($bp-sm-max) {
-      @include Tilte202-Bold1-Light2-Default-Color1-Left-Aligned;
+      @include Tilte182-Bold1-Light2-Default-Color1-Left-Aligned;
     }
   }
 
@@ -137,6 +138,16 @@
 
     @include rwd($bp-sm-max) {
       @include Body162-Bold1-Light2-Default-Color1-Left-Aligned;
+    }
+  }
+
+  .highlight-4 {
+    @include Body161-Regular1-Light2-Default-Color1-Left-Aligned;
+
+    color: $editor-red;
+
+    @include rwd($bp-sm-max) {
+      @include Footnote151-Regular1-Light2-Default-Color1-Left-Aligned;
     }
   }
 

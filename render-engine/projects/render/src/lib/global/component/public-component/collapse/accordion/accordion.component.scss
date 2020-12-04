@@ -20,7 +20,25 @@ rdr-accordion {
 
       &.style--secondary {
         &:not(:last-child) {
-          margin-bottom: 16px;
+          margin-bottom: 14px;
+        }
+
+        &:last-child {
+          >nx-collapse.nx-cp {
+            >.collapse-container {
+              >.collapse-container {
+                &__panel {
+                  .collapse-container__content {
+                    padding-bottom: 0;
+
+                    @include rwd($bp-sm-max) {
+                      padding-bottom: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
