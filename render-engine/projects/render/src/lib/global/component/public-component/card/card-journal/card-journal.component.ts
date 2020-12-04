@@ -11,6 +11,7 @@ export interface CardJournalData {
   title: string;
   subTitle: string;
   content: string;
+  target: string;
 }
 
 @Component({

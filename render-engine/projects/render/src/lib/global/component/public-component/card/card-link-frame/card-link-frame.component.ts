@@ -10,6 +10,7 @@ import { CustomizeBaseDirective } from '../../base-component';
 export class CardLinkFrameComponent extends CustomizeBaseDirective implements OnInit {
 
   @Input() linkUrl: string;
+  @Input() target: string;
   constructor(injector: Injector) {
     super(injector);
   }
