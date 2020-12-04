@@ -5,3 +5,4 @@ export * from './tab-scroll-frame/tab-scroll-frame.component';
 export * from './tab-carousel-frame/tab-carousel-frame.component';
 export * from './tab-scrollable/tab-scrollable.component';
 export * from './tab-carousel/tab-carousel.component';
+export * from './scrollable-frame/scrollable-frame.component';

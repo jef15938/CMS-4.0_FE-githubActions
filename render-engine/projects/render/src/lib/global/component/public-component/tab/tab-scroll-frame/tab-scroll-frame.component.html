@@ -1,11 +1,13 @@
-<div #tabShell class="tab-scroll__shell">
-  <div class="tab-scroll__list">
-    <div #tabItem *ngFor="let tab of tabs;index as i" class="tab-scroll__list-item" [style.width]="listItemWidth"
-      [class.tab-scroll__list-item--active]="selectedTab===tab" (click)="onSelect(tab, i)">
-      <span class="tab-scroll__title">{{tab.tabTitle}}</span>
-    </div>
-  </div>
-</div>
+<rdr-scrollable-frame [itemList]="tabs" [itemWidth]="listItemWidth" [currentIndex]="selectedIndex"
+  [itemTemplate]="tabItem">
+</rdr-scrollable-frame>
+
 <div class="tab-scroll__content">
   <ng-content></ng-content>
 </div>
+
+<ng-template #tabItem let-item="item" let-index="index">
+  <div class="tab-scroll__item" [class.tab-scroll__item--active]="selectedTab===item" (click)="onSelect(item)">
+    <span class="tab-scroll__title">{{item?.tabTitle}}</span>
+  </div>
+</ng-template>

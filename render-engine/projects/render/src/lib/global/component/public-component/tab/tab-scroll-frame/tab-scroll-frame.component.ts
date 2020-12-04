@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   ContentChildren,
-  ElementRef,
   EventEmitter,
   Inject,
   Injector,
@@ -10,15 +9,12 @@ import {
   OnInit,
   Output,
   QueryList,
-  ViewChild,
-  ViewChildren,
   ViewEncapsulation,
   AfterContentInit,
 } from '@angular/core';
 import { WINDOW_RESIZE_TOKEN } from '@neux/ui';
-import { interval, Observable, Subject } from 'rxjs';
-import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
-import { scan, switchMap, takeUntil, takeWhile, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 import { CommonUtils } from '../../../../utils/common-util';
 import { CustomizeBaseDirective } from '../../base-component';
 import { TabItemComponent } from '../tab-item/tab-item.component';
@@ -32,8 +28,6 @@ import { TabItemComponent } from '../tab-item/tab-item.component';
 export class TabScrollFrameComponent extends CustomizeBaseDirective implements OnInit, AfterViewInit, AfterContentInit {
 
   @ContentChildren(TabItemComponent) tabs: QueryList<TabItemComponent>;
-  @ViewChild('tabShell') tabShell: ElementRef;
-  @ViewChildren('tabItem') tabItemList: QueryList<ElementRef>;
 
   @Output() tabChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -47,15 +41,13 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     this.selectedIndex = value;
   }
 
-  private scrollToItem: Subject<any> = new Subject<any>();
-  private selectedIndex = 0;
-  private increment: number;
+  selectedIndex = 0;
   listItemWidth: string;
   selectedTab: TabItemComponent;
 
   constructor(
     injector: Injector,
-    @Inject(WINDOW_RESIZE_TOKEN) private resize$: Observable<Event>
+    @Inject(WINDOW_RESIZE_TOKEN) protected resize$: Observable<Event>
   ) {
     super(injector);
   }
@@ -76,14 +68,8 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     CommonUtils.isMobile$(this.resize$, 768).pipe(
       tap(result => {
         this.listItemWidth = this.calListItemWidth(result);
-        this.increment = this.getIncrement(this.selectedIndex, this.selectedIndex);
-        this.scrollToPosition(this.selectedIndex);
       }),
       takeUntil(this.destroy$)
-    ).subscribe();
-
-    this.scrollToItem.pipe(
-      switchMap((targetX) => this.animateScroll(targetX, this.increment, 1)),
     ).subscribe();
   }
 
@@ -94,10 +80,8 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
    * @param {number} index 指定打開的tab
    * @returns
    */
-  onSelect(tab: TabItemComponent, index: number) {
-    this.increment = this.getIncrement(this.selectedIndex, index);
+  onSelect(tab: TabItemComponent) {
     this.select(tab);
-    this.scrollToPosition(index);
   }
 
   /**
@@ -118,59 +102,6 @@ export class TabScrollFrameComponent extends CustomizeBaseDirective implements O
     this.selectedIndex = this.tabs.toArray().findIndex((item) => item === tab);
     this.selectedTab.show = true;
     this.tabChange.emit(this.selectedIndex);
-  }
-
-  /**
-   * 滑動到指定的位置
-   *
-   * @param {number} index 指定到的位置
-   */
-  scrollToPosition(index: number) {
-    const parentElement = this.tabShell.nativeElement;
-    const childElement = this.tabItemList.toArray()[index].nativeElement;
-    const activeoffsetLeft = childElement.offsetLeft - parentElement.offsetLeft;
-
-    if (this.isScrollable(parentElement)) {
-      this.scrollToItem.next(activeoffsetLeft);
-    }
-  }
-
-  /**
-   * smooth scroll animation
-   * @param {number} targetXPosition 目標移動位置
-   * @param {number} navagation 移動方向
-   * @param {number} duration 單位:秒 seconds
-   * @returns {Observable<any>}
-   */
-  animateScroll(targetXPosition: number, navagation: number, duration: number): Observable<any> {
-    const progress = 60 * duration;
-    const startPosition = this.tabShell.nativeElement.scrollLeft;
-    const step = Math.abs(targetXPosition - startPosition) / progress;
-
-    return interval(0, animationFrame).pipe(
-      scan((acc, curr) => acc + (navagation * step), startPosition),
-      tap(position => {
-        this.tabShell.nativeElement.scrollTo(position, 0);
-      }),
-      takeWhile((val) => navagation === 1 ? val < targetXPosition : val > targetXPosition)
-    );
-  }
-
-  /**
-   * 判斷元素是否有滾動條
-   * @param {number} ele 元素
-   */
-  isScrollable(ele): boolean {
-    return ele.scrollWidth > ele.clientWidth;
-  }
-
-  /**
-   * 取得累加方向
-   * @param {number} start 起始位置
-   * @param {number} end 結束位置
-   */
-  getIncrement(start, end): number {
-    return end >= start ? 1 : -1;
   }
 
   /**

@@ -12,26 +12,23 @@
 
   #{$selector} {
     .tab-scroll {
-      &__list {
+      &__item {
+        color: $tab-scroll-text-color;
+        border-bottom-color: $tab-scroll-line-color;
 
-        &-item {
-          color: $tab-scroll-text-color;
-          border-bottom-color: $tab-scroll-line-color;
+        &:hover {
+          color: $tab-scroll-hover-color;
+        }
 
+        &:after {
+          background-color: $tab-scroll-active-color;
+        }
+
+        &--active {
+
+          &,
           &:hover {
-            color: $tab-scroll-hover-color;
-          }
-
-          &:after {
-            background-color: $tab-scroll-active-color;
-          }
-
-          &--active {
-
-            &,
-            &:hover {
-              color: $tab-scroll-active-color;
-            }
+            color: $tab-scroll-active-color;
           }
         }
       }

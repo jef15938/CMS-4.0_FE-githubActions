@@ -1,0 +1,27 @@
+@import "public-style.scss";
+
+.scrollable-frame {
+  &__shell {
+    width: 100%;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    text-align: center;
+
+    @include rwd($bp-lg) {
+      padding: 0 20px;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__list {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+
+  &__item {}
+}

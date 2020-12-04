@@ -7,7 +7,7 @@ import { TabScrollFrameComponent } from './tab-scroll-frame/tab-scroll-frame.com
 import { TabCarouselFrameComponent } from './tab-carousel-frame/tab-carousel-frame.component';
 import { TabScrollableComponent } from './tab-scrollable/tab-scrollable.component';
 import { TabCarouselComponent } from './tab-carousel/tab-carousel.component';
-
+import { ScrollableFrameComponent } from './scrollable-frame/scrollable-frame.component';
 
 @NgModule({
   declarations: [
@@ -15,19 +15,21 @@ import { TabCarouselComponent } from './tab-carousel/tab-carousel.component';
     TabScrollFrameComponent,
     TabCarouselFrameComponent,
     TabScrollableComponent,
-    TabCarouselComponent
+    TabCarouselComponent,
+    ScrollableFrameComponent
   ],
   imports: [
     CommonModule,
     WrapperModule,
-    SwiperModule
+    SwiperModule,
   ],
   exports: [
     TabItemComponent,
     TabScrollFrameComponent,
     TabCarouselFrameComponent,
     TabScrollableComponent,
-    TabCarouselComponent
+    TabCarouselComponent,
+    ScrollableFrameComponent
   ]
 })
 export class TabModule {

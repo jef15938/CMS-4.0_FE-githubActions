@@ -1,0 +1,11 @@
+<div #shell class="scrollable-frame__shell">
+  <div class="scrollable-frame__list">
+    <ng-container *ngFor="let item of itemList;index as i">
+      <div #item class="scrollable-frame__item" [style.width]="itemWidth">
+        <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate"
+          [ngTemplateOutletContext]="{item:item, index: i}">
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>
