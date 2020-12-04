@@ -3,6 +3,7 @@ import { RestApiService } from '../api/neuxAPI/rest-api.service';
 import { Observable } from 'rxjs';
 import { ListDataSourceDataResponseModel } from '../api/data-model/models/list-data-source-data-response.model';
 import { ModelMapper } from '@neux/core';
+import { NameRulesUtil } from '../utils/name-rules.util';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class DataSourceService {
     typeId: string, id: string,
     { page = 1, pageSize = 0, keyword = '', } = {}
   ): Observable<ListDataSourceDataResponseModel<TData>> {
-    return this.restAPIService.GetDataSourceByTypeIdAndId({ type_id: typeId, id, page, pageSize, keyword }).pipe(
+    const snakeTypeId = NameRulesUtil.camelCaseToSnake(typeId);
+    return this.restAPIService.GetDataSourceByTypeIdAndId({ type_id: snakeTypeId, id, page, pageSize, keyword }).pipe(
       ModelMapper.rxMapModelTo(ListDataSourceDataResponseModel),
     );
   }
