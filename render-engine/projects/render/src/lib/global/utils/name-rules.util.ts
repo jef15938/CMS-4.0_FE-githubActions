@@ -10,9 +10,10 @@ export class NameRulesUtil {
    * @memberof NameRulesUtil
    */
   static snakeToCamelCase(name: string): string {
-    return name.replace(/\_(\w)/g, (all, letter) => {
+    const result = name.replace(/\_(\w)/g, (all, letter) => {
       return letter.toUpperCase();
     });
+    return result;
   }
 
   /**
@@ -24,7 +25,8 @@ export class NameRulesUtil {
    * @memberof NameRulesUtil
    */
   static camelCaseToSnake(name: string): string {
-    return name.replace(/([A-Z])/g, '_$1').toLowerCase();
+    const result = name.replace(/([A-Z])/g, '_$1').toLowerCase();
+    return result;
   }
 }
 
