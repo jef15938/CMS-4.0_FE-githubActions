@@ -1,6 +1,7 @@
 # 系統使用說明文件
 
 ## 產品簡述
+
 ![cms background image](https://i.imgur.com/eiR6mV9.png)
 > 何謂 CMS ?
 > CMS = 內容管理系統(content management system)
@@ -10,6 +11,8 @@
 > 後來從農場轉變成一座花園
 
 ## 權限控管機制
+
+cms 都是以群組
 
 ## 操作流程
 
