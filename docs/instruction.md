@@ -3,16 +3,23 @@
 ## 產品簡述
 
 ![cms background image](https://i.imgur.com/eiR6mV9.png)
-> 何謂 CMS ?
-> CMS = 內容管理系統(content management system)
->
-> 在neux，我們稱為Garden
-> 前身為farm, 產出xml,
-> 後來從農場轉變成一座花園
+
+```何謂 CMS ?
+CMS = 內容管理系統(content management system)
+
+在neux，我們稱為Garden,
+前身為farm, 產出xml,
+後來從農場轉變成一座花園。
+```
 
 ## 權限控管機制
 
 cms 都是以群組
+Markdown[^1]
+
+[^1]: 《Markdown讓文字更加精緻》
+
+原文網址：`https://kknews.cc/code/y383jkg.html`
 
 ## 操作流程
 
