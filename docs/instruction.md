@@ -41,6 +41,10 @@ cms 以 **"群組"** 為權限控管的單位, 後續設定各帳號隸屬於什
 - 帳號: 設定帳號隸屬於哪個/些群組
 
   (官網管理 -> 中央權限管理 -> 群組管理)
+  ![設定帳號隸屬於哪個/些群組](./assets/image/authorityControlAccount.png)
+
+  - 編輯各帳號相關資訊 (打勾代表帳號屬於該群組)
+  ![編輯各帳號相關資訊](./assets/image/authorityControlAccountPopup.png)
 
 ## 操作流程
 
