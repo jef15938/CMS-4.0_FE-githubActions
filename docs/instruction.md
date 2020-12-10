@@ -3,7 +3,8 @@
 ## 產品簡述
 
 ![cms background image](https://i.imgur.com/eiR6mV9.png)
-**Garden CMS**
+
+### Garden CMS
 
 CMS 全名為內容管理系統 ( content management system, 參考 [維基百科](https://zh.wikipedia.org/wiki/%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F) ), 使用者只需簡單的設定步驟, 就能創建多個高度客製化的網站
 
