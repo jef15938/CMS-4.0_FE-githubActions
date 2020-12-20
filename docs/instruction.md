@@ -1,7 +1,7 @@
 # 系統使用說明文件
 
 [產品簡述](#產品簡述)
-  - [Garden CMS](#Garden-CMS)
+  - [Garden CMS](#garden-cms)
 
 [操作流程](#操作流程)
   - [登入](#登入)
