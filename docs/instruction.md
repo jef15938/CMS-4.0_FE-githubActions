@@ -58,7 +58,7 @@
   ![登入](./assets/image/login.png)
 
   ◎ 欄位說明
-  
+
   |輸入欄位|是否必填|類型|說明|
   |--|--|--|--|
   |使用者帳號|是|輸入框|請輸入使用者帳號|
@@ -68,6 +68,7 @@
   <br/>
 
   ◎ 圖示說明
+
   |圖示|功能欄位|說明|
   |--|--|--|
   |<img src="./assets/image/verificationCode.png" style="width: 150px">|驗證碼刷新(右側圓圈符號)|重新產生一組新的驗證碼|
@@ -81,6 +82,7 @@
     ![主畫面](./assets/image/dashboard.png)
 
      ◎ 欄位說明
+
     |欄位|說明|
     |--|--|
     |使用者|登入的使用者資訊|
@@ -122,6 +124,7 @@
             ![取消或確認](./assets/image/nodeMoveConfirm.png)
 
           ◎ 圖示說明
+
           |圖示|功能欄位|說明|
           |--|--|--|
           |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次節點移動並關閉頁面|
@@ -196,6 +199,7 @@
       ![頁面編輯區塊](./assets/image/pageEdit.png)
 
           ◎ 欄位說明
+
           |欄位|說明|
           |--|--|
           |操作功能區塊|頁面編輯各項操作功能|
@@ -205,6 +209,7 @@
       - **操作功能區塊**
 
         ◎ 圖示說明
+
         |圖示|功能欄位|說明|
         |--|--|--|
         |<img src="./assets/image/saveFunction.png" style="width: 50px">|存檔|將目前編輯的內容儲存|
@@ -227,6 +232,7 @@
             ![新增版面](./assets/image/addTemplatePanel.png)
 
             ◎ 版型分類說明
+
             |版型分類|說明|
             |--|--|
             |主題版型|有固定的結構, 僅可以對內容做修改|
@@ -257,6 +263,7 @@
           - B - 版型共通操作:
 
               ◎ 圖示說明
+
               |圖示|功能欄位|說明|
               |--|--|--|
               |<img src="./assets/image/templateRestriction.png" style="width: 50px">|版型限制|點擊版型限制後, 會跳出版型限制描述的頁面 <br/><img src="./assets/image/templateRestrictionPopup.png" style="width: 500px">|
@@ -439,6 +446,7 @@
         ![新增帳號](./assets/image/addAccount.png)
 
           ◎ 欄位說明
+
           |輸入欄位|是否必填|類型|說明|
           |--|--|--|--|
           |帳號|是|輸入框|- -|
@@ -452,6 +460,7 @@
           <br/>
 
           ◎ 圖示說明
+
           |圖示|功能欄位|說明|
           |--|--|--|
           |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
@@ -510,10 +519,11 @@
           頁面最下方, 會有取消、儲存兩顆按鈕
 
          ◎ 圖示說明
-          |圖示|功能欄位|說明|
-          |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
-          |<img src="./assets/image/addAccountPopupSave.png" style="width: 70px">|儲存|儲存此節點設定並關閉頁面|
+         
+         |圖示|功能欄位|說明|
+         |--|--|--|
+         |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
+         |<img src="./assets/image/addAccountPopupSave.png" style="width: 70px">|儲存|儲存此節點設定並關閉頁面|
 
 
 ---
