@@ -56,7 +56,6 @@
 
 - ### **3.1. 系統登入**
   ![登入](./assets/image/login.png)
-
   ◎ 欄位說明
   |輸入欄位|是否必填|類型|說明|
   |--|--|--|--|
@@ -272,7 +271,7 @@
               ![修改內文](./assets/image/editTemplateChange.png)
             
               可以看到編輯頁面已經套用改變後的文字了
-              ![修改內文後編輯頁面](./assets/image/editTemplateAFTERChange.png)
+              ![修改內文後編輯頁面](./assets/image/editTemplateAfterChange.png)
 
           4. 點擊左上角存檔
 
