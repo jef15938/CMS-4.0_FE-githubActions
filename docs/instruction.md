@@ -255,13 +255,13 @@
 
           - B - 版型共通操作:
 
-            ◎ 圖示說明
-            |圖示|功能欄位|說明|
-            |--|--|--|
-            |<img src="./assets/image/templateRestriction.png" style="width: 50px">|版型限制|點擊版型限制後, 會跳出版型限制描述的頁面 <br/><img src="./assets/image/templateRestrictionPopup.png" style="width: 500px">|
-            |<img src="./assets/image/templateUp.png" style="width: 50px">|上移|將此版型往上移動一個版型單位|
-            |<img src="./assets/image/templateDown.png" style="width: 50px">|下移|將此版型往下移動一個版型單位|
-            |<img src="./assets/image/templateDelete.png" style="width: 50px">|刪除|將此版型從內容中刪除|
+              ◎ 圖示說明
+              |圖示|功能欄位|說明|
+              |--|--|--|
+              |<img src="./assets/image/templateRestriction.png" style="width: 50px">|版型限制|點擊版型限制後, 會跳出版型限制描述的頁面 <br/><img src="./assets/image/templateRestrictionPopup.png" style="width: 500px">|
+              |<img src="./assets/image/templateUp.png" style="width: 50px">|上移|將此版型往上移動一個版型單位|
+              |<img src="./assets/image/templateDown.png" style="width: 50px">|下移|將此版型往下移動一個版型單位|
+              |<img src="./assets/image/templateDelete.png" style="width: 50px">|刪除|將此版型從內容中刪除|
 
           - C - 版型操作: 依據不同的版型, 可能會顯示不同的欄位, 主要會設定該版型的行為、內容、排列、是否顯示等等
 
