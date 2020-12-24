@@ -1055,10 +1055,6 @@ html {
   scroll-behavior: smooth;
 }
 
-#project_title {
-  text-align: center;
-}
-
 #forkme_banner {
   background: url("./assets/image/githubLogo.png") no-repeat;
   background-size: contain;
