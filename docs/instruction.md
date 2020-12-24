@@ -1,6 +1,9 @@
 # 系統使用操作手冊
 
-[1. 簡介](#1-簡介)
+* TOC
+{:toc}
+
+<!-- [1. 簡介](#1-簡介)
 
 [2. 手冊查閱說明](#2-手冊查閱說明)
 
@@ -36,7 +39,7 @@
       - [3.8.3.1. 設定前台節點](#3831-設定前台節點)
       - [3.8.3.2. 設定後台功能](#3832-設定後台功能)
 
-[4. 名詞說明](#5-名詞說明)
+[4. 名詞說明](#5-名詞說明) -->
 
 ## **1. 簡介**
 
@@ -1044,8 +1047,63 @@
 
 ---
 
+
+
 <style>
+
 .text-center {
   text-align: center;
+}
+
+.inner {
+  max-width:1000px;
+}
+
+#markdown-toc::before {
+    font-weight: bold;
+}
+
+// Using numbers instead of bullets for listing
+#markdown-toc ul {
+    list-style: decimal;
+}
+
+#markdown-toc {
+    border: 1px solid #aaa;
+    padding: 1.5em;
+    list-style: decimal;
+    display: inline-block;
+    position: absolute;
+    overflow-y: auto;
+}
+
+#markdown-toc ~*{
+  margin-left:300px;
+}
+
+.back-to-top-link {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 2rem;
+  line-height: 3rem;
+  text-align: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #D6E3F0;
+  padding: 0.25rem;
+}
+
+.back-to-top-link:hover{
+  text-decoration: none;
+}
+
+.back-to-top-wrapper {
+  position: fixed;
+  z-index:1001;
+  right: 30px;
+  bottom: 30px;
+  width: 3em;
+  
 }
 </style>
