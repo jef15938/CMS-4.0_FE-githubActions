@@ -458,7 +458,7 @@
 
         <br/>
 
-      3. 後續等待主管同意/退回(請參閱 [3.5. 審核、放行管理](#35-審核、放行管理))
+      3. 後續等待主管同意/退回(請參閱 [3.5. 審核、放行管理](#35-審核放行管理))
 
         <br/>
 
@@ -965,7 +965,7 @@
         <br/>
 
     - #### G - 編輯
-      請參閱 [E - 新增帳號](#E---新增帳號), 僅差別在編輯會在頁面各欄位帶出原本的資料, 而新增就是全部為空
+      請參閱 [E - 新增帳號](#e---新增帳號), 僅差別在編輯會在頁面各欄位帶出原本的資料, 而新增就是全部為空
 
       <br/>
 
@@ -1063,8 +1063,8 @@ html {
   background: url("./assets/image/githubLogo.png") no-repeat;
   background-size: contain;
   padding: 15px;
-  margin-top: 20px;
-  right: 0px;
+  margin-top: 50px;
+  right: -130px;
   box-shadow: none;
   color: transparent;
 }
