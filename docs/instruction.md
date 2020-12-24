@@ -1069,6 +1069,7 @@ html {
 
 .back-to-top-link:hover{
   text-decoration: none;
+  background-color: #c2def0;
 }
 
 .back-to-top-wrapper {
