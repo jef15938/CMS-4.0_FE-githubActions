@@ -1055,6 +1055,18 @@ html {
   scroll-behavior: smooth;
 }
 
+#project_title {
+  text-align: center;
+}
+
+#forkme_banner {
+  background: url("./assets/image/githubLogo.png") no-repeat;
+  background-size: contain;
+  padding: 15px;
+  margin-top: 15px;
+  right: 0px;
+}
+
 .inner {
   max-width: 960px;
 }
