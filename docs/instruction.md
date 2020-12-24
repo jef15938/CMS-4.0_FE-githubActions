@@ -1,9 +1,8 @@
 # 系統使用操作手冊
 
-* TOC
-{:toc}
+<div class="menu">
 
-<!-- [1. 簡介](#1-簡介)
+[1. 簡介](#1-簡介)
 
 [2. 手冊查閱說明](#2-手冊查閱說明)
 
@@ -39,7 +38,8 @@
       - [3.8.3.1. 設定前台節點](#3831-設定前台節點)
       - [3.8.3.2. 設定後台功能](#3832-設定後台功能)
 
-[4. 名詞說明](#5-名詞說明) -->
+[4. 名詞說明](#4-名詞說明)
+</div>
 
 ## **1. 簡介**
 
@@ -261,7 +261,7 @@
             ![編輯節點 popup](./assets/image/editNodePopup.png)
             <div class="text-center" style="width: 634px">【圖片】編輯節點頁面</div>
 
-            欄位說明請參考 [新增節點](#2-點擊新增後-會出現新增節點頁面), 僅差別在
+            欄位說明請參閱 [新增節點](#2-點擊新增後-會出現新增節點頁面), 僅差別在
 
             1. 節點編輯不能改節點類型
 
@@ -399,7 +399,7 @@
 
               <br/>
 
-          6. 預覽頁面(詳細步驟請參考 [3.3.3.2. 預覽頁面](#3332-預覽頁面))
+          6. 預覽頁面(詳細步驟請參閱 [3.3.3.2. 預覽頁面](#3332-預覽頁面))
 
               可以看到預覽頁面也已經套用改變後的文字了
               ![預覽頁面](./assets/image/previewChange.png)
@@ -968,7 +968,7 @@
         <br/>
 
     - #### G - 編輯
-      請參考 [E - 新增帳號](#E---新增帳號), 僅差別在編輯會在頁面各欄位帶出原本的資料, 而新增就是全部為空
+      請參閱 [E - 新增帳號](#E---新增帳號), 僅差別在編輯會在頁面各欄位帶出原本的資料, 而新增就是全部為空
 
       <br/>
 
@@ -1047,38 +1047,18 @@
 
 ---
 
-
-
 <style>
+
+html {
+  scroll-behavior: smooth;
+}
 
 .text-center {
   text-align: center;
 }
 
-.inner {
-  max-width:1000px;
-}
-
-#markdown-toc::before {
-    font-weight: bold;
-}
-
-// Using numbers instead of bullets for listing
-#markdown-toc ul {
-    list-style: decimal;
-}
-
-#markdown-toc {
-    border: 1px solid #aaa;
-    padding: 1.5em;
-    list-style: decimal;
-    display: inline-block;
-    position: absolute;
-    overflow-y: auto;
-}
-
-#markdown-toc ~*{
-  margin-left:300px;
+.menu {
+  font-size: 20px;
 }
 
 .back-to-top-link {
@@ -1106,4 +1086,10 @@
   width: 3em;
   
 }
+
 </style>
+
+<div class="back-to-top-wrapper">
+    <a href="#系統使用操作手冊" class="back-to-top-link" aria-label="Scroll to Top">
+↑</a>
+</div>
