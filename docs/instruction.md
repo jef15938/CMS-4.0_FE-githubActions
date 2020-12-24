@@ -1070,7 +1070,7 @@ html {
 }
 
 .inner {
-  max-width: 960px;
+  /* max-width: 960px; */
 }
 
 .back-to-top-link {
