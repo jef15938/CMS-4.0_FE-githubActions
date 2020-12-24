@@ -1063,8 +1063,10 @@ html {
   background: url("./assets/image/githubLogo.png") no-repeat;
   background-size: contain;
   padding: 15px;
-  margin-top: 15px;
+  margin-top: 20px;
   right: 0px;
+  box-shadow: none;
+  color: transparent;
 }
 
 .inner {
