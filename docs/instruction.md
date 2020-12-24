@@ -940,7 +940,7 @@
           |帳號|是|輸入框|設定帳號|
           |密碼|是|輸入框|設定密碼|
           |使用者名稱|是|輸入框|設定使用者名稱|
-          |email|否|輸入框|-設定email|
+          |email|否|輸入框|設定email|
           |可否登入|是|單選框|設定可否登入|
           |使用者部門代號|是|單選框|設定使用者隸屬於哪個部門|
           |使用者群組|否|複選框|設定使用者隸屬於哪個/哪些群組|
@@ -1004,6 +1004,7 @@
           頁面最下方, 會有取消、儲存兩顆按鈕
 
           ◎ 圖示說明
+
           |圖示|功能欄位|說明|
           |--|--|--|
           |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
@@ -1046,12 +1047,16 @@
 
 <style>
 
+.text-center {
+  text-align: center;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-.text-center {
-  text-align: center;
+.inner {
+  max-width: 960px;
 }
 
 .back-to-top-link {
