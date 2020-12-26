@@ -10,7 +10,6 @@ html {
 #forkme_banner {
   background: url("./../assets/image/instruction/githubLogo.png") no-repeat 100%;
   background-size: contain;
-  padding: 15px;
   margin-top: 10px;
   box-shadow: none;
 }
