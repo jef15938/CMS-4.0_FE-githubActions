@@ -69,6 +69,6 @@
 <link rel="stylesheet" type="text/css" href="./style/style.css" />
 
 <div class="back-to-top-wrapper">
-    <a href="#系統使用操作手冊" class="back-to-top-link" aria-label="Scroll to Top">
+    <a href="#neux-cms-40-documentation" class="back-to-top-link" aria-label="Scroll to Top">
 ↑</a>
 </div>

@@ -1,4 +1,4 @@
-# 系統使用操作手冊
+# 系統使用說明手冊
 
 [1. 簡介](#1-簡介)
 
@@ -53,7 +53,7 @@
 ## **3. 操作流程**
 
 - ### **3.1. 系統登入**
-  ![登入](./assets/image/login.png)
+  ![登入](./assets/image/instruction/login.png)
   <div class="text-center">【圖片】登入畫面</div>
 
   ◎ 欄位說明
@@ -70,13 +70,13 @@
 
   |圖示|功能欄位|說明|
   |--|--|--|
-  |<img src="./assets/image/verificationCode.png" style="width: 150px">|驗證碼刷新(右側圓圈符號)|重新產生一組新的驗證碼|
-  |<img src="./assets/image/loginButton.png" style="width: 150px">|登入|以此帳號、密碼做登入|
+  |<img src="./assets/image/instruction/verificationCode.png" style="width: 150px">|驗證碼刷新(右側圓圈符號)|重新產生一組新的驗證碼|
+  |<img src="./assets/image/instruction/loginButton.png" style="width: 150px">|登入|以此帳號、密碼做登入|
 
   <br/>
 
 - ### **3.2. 主畫面**
-    ![主畫面](./assets/image/dashboard.png)
+    ![主畫面](./assets/image/instruction/dashboard.png)
     <div class="text-center">【圖片】主畫面</div>
 
      ◎ 欄位說明
@@ -94,7 +94,7 @@
 
   1. 點擊官網管理(1) ➞ 多網站管理(2) ➞ 選擇網站列表(3)
 
-      ![多網站管理](./assets/image/multiSiteEntry.png)
+      ![多網站管理](./assets/image/instruction/multiSiteEntry.png)
       <div class="text-center">【圖片】多網站管理畫面</div>
 
       ◎ 欄位說明
@@ -108,14 +108,14 @@
 
   2. 點擊編輯《節點》[^1]
 
-      ![編輯節點](./assets/image/editNode.png)
+      ![編輯節點](./assets/image/instruction/editNode.png)
       <div class="text-center">【圖片】編輯節點按鈕畫面</div>
 
       <br/>
 
   3. 設定節點頁面
 
-      ![節點頁面](./assets/image/nodeListDetail.png)
+      ![節點頁面](./assets/image/instruction/nodeListDetail.png)
       <div class="text-center">【圖片】設定節點各功能畫面</div>
 
       ◎ 欄位說明
@@ -131,12 +131,12 @@
 
       後台設定的節點能與前台顯示畫面是相對應的，要更新前台畫面僅需在後台調整節點排列即可。
 
-      ![後台節點畫面](./assets/image/backendSitemap.png)
+      ![後台節點畫面](./assets/image/instruction/backendSitemap.png)
       <div class="text-center">【圖片】後台節點畫面畫面</div>
 
       <br/>
 
-      ![前台節點畫面](./assets/image/frontendSitemap.png)
+      ![前台節點畫面](./assets/image/instruction/frontendSitemap.png)
       <div class="text-center">【圖片】前台節點畫面畫面</div>
 
       <br/>
@@ -152,7 +152,7 @@
 
             b. 調整至灰色橫條變成黃色, 即可放開滑鼠
 
-          ![節點移動](./assets/image/nodeMove.png)
+          ![節點移動](./assets/image/instruction/nodeMove.png)
           <div class="text-center">【圖片】設定節點各功能畫面</div>
 
           <br/>
@@ -161,15 +161,15 @@
 
           放開滑鼠後, 會出現確認頁面
 
-            ![取消或確認](./assets/image/nodeMoveConfirm.png)
+            ![取消或確認](./assets/image/instruction/nodeMoveConfirm.png)
             <div class="text-center">【圖片】移動節點取消/確認畫面</div>
 
           ◎ 圖示說明
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次節點移動並關閉頁面|
-          |<img src="./assets/image/confirm.png" style="width: 70px">|確認|確認此次節點移動關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次節點移動並關閉頁面|
+          |<img src="./assets/image/instruction/confirm.png" style="width: 70px">|確認|確認此次節點移動關閉頁面|
 
           <br/>
 
@@ -177,7 +177,7 @@
 
           若點擊確認, 會看到此次節點移動結果
 
-           ![節點移動結果](./assets/image/nodeMoveResult.png)
+           ![節點移動結果](./assets/image/instruction/nodeMoveResult.png)
            <div class="text-center">【圖片】節點移動結果畫面</div>
 
       <br/>
@@ -186,14 +186,14 @@
 
       #### 1. 在想要新增的節點上, 按下滑鼠左鍵
 
-        ![節點新增／刪除](./assets/image/nodeAddDelete.png)
+        ![節點新增／刪除](./assets/image/instruction/nodeAddDelete.png)
         <div class="text-center">【圖片】節點新增/刪除畫面</div>
 
         <br/>
 
       #### 2. 點擊新增後, 會出現新增節點頁面
 
-        ![節點新增頁面](./assets/image/addNodePopup.png)
+        ![節點新增頁面](./assets/image/instruction/addNodePopup.png)
         <div class="text-center" style="width: 644px">【圖片】節點新增/刪除畫面</div>
 
         ◎ 欄位說明
@@ -225,22 +225,22 @@
 
       1. 在想要刪除的節點上, 按下滑鼠左鍵 ➞ 點擊刪除
 
-          ![節點新增／刪除](./assets/image/nodeAddDelete.png)
+          ![節點新增／刪除](./assets/image/instruction/nodeAddDelete.png)
           <div class="text-center">【圖片】節點新增/刪除畫面</div>
 
           <br/>
 
       2. 確認是否刪除
 
-          ![節點新增／刪除](./assets/image/nodeDeleteConfirm.png)
+          ![節點新增／刪除](./assets/image/instruction/nodeDeleteConfirm.png)
           <div class="text-center">【圖片】節點新增的取消/確認畫面</div>
 
           ◎ 圖示說明
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次節點刪除並關閉頁面|
-          |<img src="./assets/image/confirm.png" style="width: 70px">|確認|確認此次節點刪除關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次節點刪除並關閉頁面|
+          |<img src="./assets/image/instruction/confirm.png" style="width: 70px">|確認|確認此次節點刪除關閉頁面|
 
           <br/>
 
@@ -248,14 +248,14 @@
 
       1. 點擊編輯節點
 
-          ![點擊編輯節點](./assets/image/edittargetNode.png)
+          ![點擊編輯節點](./assets/image/instruction/edittargetNode.png)
           <div class="text-center">【圖片】編輯節點按鈕畫面</div>
 
           <br/>
 
       2. 出現編輯節點頁面
 
-            ![編輯節點 popup](./assets/image/editNodePopup.png)
+            ![編輯節點 popup](./assets/image/instruction/editNodePopup.png)
             <div class="text-center" style="width: 634px">【圖片】編輯節點頁面</div>
 
             欄位說明請參閱 [新增節點](#2-點擊新增後-會出現新增節點頁面), 僅差別在
@@ -271,14 +271,14 @@
 
       1. 點擊頁面編輯(只有節點類型是"頁面"才有此按鈕)
 
-          ![頁面編輯](./assets/image/pageEditButton.png)
+          ![頁面編輯](./assets/image/instruction/pageEditButton.png)
           <div class="text-center">【圖片】頁面編輯按鈕畫面</div>
         
         <br/>
 
       2. 頁面編輯各功能
 
-          ![頁面編輯區塊](./assets/image/pageEdit.png)
+          ![頁面編輯區塊](./assets/image/instruction/pageEdit.png)
           <div class="text-center">【圖片】頁面編輯各功能畫面</div>
 
           ◎ 欄位說明
@@ -297,13 +297,13 @@
 
         |圖示|功能欄位|說明|
         |--|--|--|
-        |<img src="./assets/image/saveFunction.png" style="width: 50px">|存檔|將目前編輯的內容儲存|
-        |<img src="./assets/image/undoFunction.png" style="width: 50px">|復原|復原成上一步|
-        |<img src="./assets/image/redoFunction.png" style="width: 50px">|重做|重做下一步|
-        |<img src="./assets/image/stepFunction.png" style="width: 150px">|步驟|可以看到過去的步驟歷程, 點擊還原到該步驟的頁面|
-        |<img src="./assets/image/clearFunction.png" style="width: 50px">|清除全部|將目前頁面清空|
-        |<img src="./assets/image/closeFunction.png" style="width: 50px">|關閉|關閉頁面編輯功能|
-        |<img src="./assets/image/historyFunction.png" style="width: 300px">|歷史版本|可以看到過去發佈過的版本歷史, 點擊還原到該版本的頁面|
+        |<img src="./assets/image/instruction/saveFunction.png" style="width: 50px">|存檔|將目前編輯的內容儲存|
+        |<img src="./assets/image/instruction/undoFunction.png" style="width: 50px">|復原|復原成上一步|
+        |<img src="./assets/image/instruction/redoFunction.png" style="width: 50px">|重做|重做下一步|
+        |<img src="./assets/image/instruction/stepFunction.png" style="width: 150px">|步驟|可以看到過去的步驟歷程, 點擊還原到該步驟的頁面|
+        |<img src="./assets/image/instruction/clearFunction.png" style="width: 50px">|清除全部|將目前頁面清空|
+        |<img src="./assets/image/instruction/closeFunction.png" style="width: 50px">|關閉|關閉頁面編輯功能|
+        |<img src="./assets/image/instruction/historyFunction.png" style="width: 300px">|歷史版本|可以看到過去發佈過的版本歷史, 點擊還原到該版本的頁面|
 
         <br/>
 
@@ -312,7 +312,7 @@
 
           #### 1. 有"綠色+"的區塊, 代表可以在該處新增一個版型
 
-            ![新增版型](./assets/image/addTemplate.png)
+            ![新增版型](./assets/image/instruction/addTemplate.png)
             <div class="text-center">【圖片】新增版型畫面</div>
 
             <br/>
@@ -321,28 +321,28 @@
 
             關於版型編輯器細部操作，請參閱 [3.3.4.1. 版型編輯器模組](#3341-版型編輯器模組)
 
-            ![新增版面](./assets/image/addTemplatePanel.png)
+            ![新增版面](./assets/image/instruction/addTemplatePanel.png)
             <div class="text-center">【圖片】選擇欲新增的版型畫面</div>
 
             <br/>
 
           #### 3. 點擊主題版型(1) ➞ 按鈕版型(A)(此處以新增按鈕版型當範例)
 
-            ![按鈕版型](./assets/image/addTemplateStep.png)
+            ![按鈕版型](./assets/image/instruction/addTemplateStep.png)
              <div class="text-center" id="button-template-image">【圖片】按鈕版型畫面</div>
 
              <br/>
 
           #### 4. 點擊確認
 
-            ![點擊確認](./assets/image/addTemplateConfirm.png)
+            ![點擊確認](./assets/image/instruction/addTemplateConfirm.png)
             <div class="text-center">【圖片】新增版型的取消/確認畫面</div>
 
             <br/>
 
           #### 5. 看到新增完的版型(A 按鈕版型可以對應到 [【圖片】按鈕版型畫面](#3-點擊主題版型(1)-➞-按鈕版型(A)(此處以新增按鈕版型當範例)))
 
-            ![新增版型結果](./assets/image/addTemplateResult.png)
+            ![新增版型結果](./assets/image/instruction/addTemplateResult.png)
             <div class="text-center">【圖片】新增完按鈕版型結果畫面</div>
 
             <br/>
@@ -353,7 +353,7 @@
 
           2. 右側出現修改版型面版
 
-              ![編輯版型](./assets/image/editTemplatePanel.png)
+              ![編輯版型](./assets/image/instruction/editTemplatePanel.png)
               <div class="text-center">【圖片】修改版型面版</div>
 
               - A - 版型資訊: 此版型的相關資訊
@@ -364,10 +364,10 @@
 
                 |圖示|功能欄位|說明|
                 |--|--|--|
-                |<img src="./assets/image/templateRestriction.png" style="width: 50px">|版型限制|點擊版型限制後, 會跳出版型限制描述的頁面 <br/><img src="./assets/image/templateRestrictionPopup.png" style="width: 500px">|
-                |<img src="./assets/image/templateUp.png" style="width: 50px">|上移|將此版型往上移動一個版型單位|
-                |<img src="./assets/image/templateDown.png" style="width: 50px">|下移|將此版型往下移動一個版型單位|
-                |<img src="./assets/image/templateDelete.png" style="width: 50px">|刪除|將此版型從內容中刪除|
+                |<img src="./assets/image/instruction/templateRestriction.png" style="width: 50px">|版型限制|點擊版型限制後, 會跳出版型限制描述的頁面 <br/><img src="./assets/image/instruction/templateRestrictionPopup.png" style="width: 500px">|
+                |<img src="./assets/image/instruction/templateUp.png" style="width: 50px">|上移|將此版型往上移動一個版型單位|
+                |<img src="./assets/image/instruction/templateDown.png" style="width: 50px">|下移|將此版型往下移動一個版型單位|
+                |<img src="./assets/image/instruction/templateDelete.png" style="width: 50px">|刪除|將此版型從內容中刪除|
 
               - C - 版型操作: 依據不同的版型, 可能會顯示不同的欄位, 主要會設定該版型的行為、內容、排列、是否顯示等等
 
@@ -377,21 +377,21 @@
 
           3. 修改內文變成"我是右邊的按鈕喔"後, 點擊套用變更
 
-              ![修改內文](./assets/image/editTemplateChange.png)
+              ![修改內文](./assets/image/instruction/editTemplateChange.png)
               <div class="text-center">【圖片】修改版型內容面版</div>
 
               <br/>
             
           4. 可以看到編輯頁面已經套用改變後的文字了
               
-              ![修改內文後編輯頁面](./assets/image/editTemplateAfterChange.png)
+              ![修改內文後編輯頁面](./assets/image/instruction/editTemplateAfterChange.png)
               <div class="text-center">【圖片】修改內文後的編輯畫面</div>
 
               <br/>
 
           5. 點擊左上角存檔
 
-              ![點擊左上角存檔](./assets/image/editTemplateSave.png)
+              ![點擊左上角存檔](./assets/image/instruction/editTemplateSave.png)
               <div class="text-center">【圖片】存檔按鈕畫面</div>
 
               <br/>
@@ -399,7 +399,7 @@
           6. 預覽頁面(詳細步驟請參閱 [3.3.3.2. 預覽頁面](#3332-預覽頁面))
 
               可以看到預覽頁面也已經套用改變後的文字了
-              ![預覽頁面](./assets/image/previewChange.png)
+              ![預覽頁面](./assets/image/instruction/previewChange.png)
               <div class="text-center">【圖片】修改內文後的預覽畫面</div>
 
               <br/>
@@ -407,14 +407,14 @@
     - #### **3.3.3.2. 預覽頁面**
       1. 點擊預覽(只有節點類型是"頁面"才有此按鈕)
 
-          ![點擊頁面預覽](./assets/image/pagePreviewButton.png)
+          ![點擊頁面預覽](./assets/image/instruction/pagePreviewButton.png)
           <div class="text-center">【圖片】預覽按鈕畫面</div>
 
           <br/>
 
       2. 頁面預覽
 
-          ![頁面預覽](./assets/image/pagePreview.png)
+          ![頁面預覽](./assets/image/instruction/pagePreview.png)
           <div class="text-center">【圖片】頁面預覽各功能畫面</div>
 
       - 操作功能區塊:
@@ -423,7 +423,7 @@
 
           比較目前發佈的正式版本與當前版本的差異，以利編輯者參考改動變化的幅度。
 
-            ![比較版本](./assets/image/pagePreviewCompare.png)
+            ![比較版本](./assets/image/instruction/pagePreviewCompare.png)
             <div class="text-center">【圖片】比較版本差異畫面</div>
 
             <br/>
@@ -449,7 +449,7 @@
 
       1. 選擇要更新的節點, 然後點擊頁面送審後, 會出現送審頁面
 
-          ![點擊頁面送審](./assets/image/nodeSubmit.png)
+          ![點擊頁面送審](./assets/image/instruction/nodeSubmit.png)
           <div class="text-center">【圖片】節點送審頁面</div>
 
         <br/>
@@ -482,7 +482,7 @@
 
         針對UI/UX設計完後，將統計所有頁面並取出圖文式的版型集合，這些版型集合即為主題版型，以利編輯者能對網頁內容做自由排列組合，以達到自主性編排之效。
 
-        ![新增主題版型](./assets/image/addTopicTemplate.png)
+        ![新增主題版型](./assets/image/instruction/addTopicTemplate.png)
         <div class="text-center">【圖片】新增主題版型（範例: 影音版型）</div>
 
         ◎ 版型分類說明
@@ -500,7 +500,7 @@
 
         針對UI/UX設計完後，將統計所有頁面並取出頁籤式的版型集合，以利編輯者能對網頁內容隨意增減頁籤版型，此外頁籤數量也可以彈性增減，各頁籤底下也可以再拉入其他版型或是頁籤版型。
 
-        ![新增頁籤版型](./assets/image/addTabTemplate.png)
+        ![新增頁籤版型](./assets/image/instruction/addTabTemplate.png)
         <div class="text-center">【圖片】新增頁籤類版型（範例: 頁籤版型）</div>
 
         <br/>
@@ -509,12 +509,12 @@
 
         針對最新消息、輪播、常見問題、表單下載等消息發佈類型提供的版型，版型樣式已經設計完成，編輯者僅需要設定消息來源即可更新網頁內容。
 
-        ![新增消息版型](./assets/image/addNewsTemplate.png)
+        ![新增消息版型](./assets/image/instruction/addNewsTemplate.png)
         <div class="text-center">【圖片】新增消息類版型（範例: 最新消息版型）</div>
 
         <br/>
 
-        ![設定消息來源畫面](./assets/image/chooseDataSource.png)
+        ![設定消息來源畫面](./assets/image/instruction/chooseDataSource.png)
         <div class="text-center">【圖片】設定消息來源畫面</div>
 
         <br/>
@@ -523,7 +523,7 @@
 
         針對專案客製化在網站上需揭露的客製化功能(如商品諮詢、服務據點等)，每一個客製化功能連同驗證規則、商業邏輯、畫面UI等會一併視為一個版型，供編輯者在網頁中若需要加入客製化功能時能自主性擴充，對於IT後續維運只需維護一套source code即可對應多頁面更新。
 
-        ![新增客製版型](./assets/image/addCustomTemplate.png)
+        ![新增客製版型](./assets/image/instruction/addCustomTemplate.png)
         <div class="text-center">【圖片】新增客製類版型（範例: 服務據點版型）</div>
 
         <br/>
@@ -534,14 +534,14 @@
 
       1. 點擊打開編輯器
 
-          ![打開html編輯](./assets/image/htmlEditPanel.png)
+          ![打開html編輯](./assets/image/instruction/htmlEditPanel.png)
           <div class="text-center" style="width: 600px">【圖片】編輯器設定面版</div>
 
           <br/>
 
       2. HTML 編輯器畫面
 
-          ![html編輯](./assets/image/htmlEdit.png)
+          ![html編輯](./assets/image/instruction/htmlEdit.png)
           <div class="text-center">【圖片】HTML 編輯器畫面</div>
 
           <br/>
@@ -550,22 +550,22 @@
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/htmlEditorInfo.png" style="width: 60px">|編輯器說明|說明所有編輯器的功能|
-          |<img src="./assets/image/htmlEditorBold.png" style="width: 60px">|粗體|將選取的字變粗體|
-          |<img src="./assets/image/htmlEditorItalic.png" style="width: 60px">|斜體|將選取的字變斜體|
-          |<img src="./assets/image/htmlEditorUnderline.png" style="width: 60px">|底線|將選取的字變加上底線|
-          |<img src="./assets/image/htmlEditorTextCenter.png" style="width: 60px">|居中|將選取的字置中|
-          |<img src="./assets/image/htmlEditorTextLeft.png" style="width: 60px">|置左|將選取的字靠左|
-          |<img src="./assets/image/htmlEditorTextRight.png" style="width: 60px">|置右|將選取的字靠右|
-          |<img src="./assets/image/htmlEditorList.png" style="width: 60px">|清單|將選取的內容下方加一個清單子項目|
-          |<img src="./assets/image/htmlEditorIncreaseLayout.png" style="width: 60px">|增加縮排|將選取的內容增加縮排|
-          |<img src="./assets/image/htmlEditorDecreaseLayout.png" style="width: 60px">|減少縮排|將選取的內容減少縮排|
-          |<img src="./assets/image/htmlEditorTextMark.png" style="width: 60px">|標記文字|將選取的字標記特殊樣式|
-          |<img src="./assets/image/htmlEditorLink.png" style="width: 60px">|插入連結|連結類型分為: 站內節點連結、站外連結、客製化動作|
-          |<img src="./assets/image/htmlEditorFile.png" style="width: 60px">|插入檔案|檔案來源有: 加入本地檔案、表單下載(可以從網站管理 ➞ 表單下載管理做設定)|
-          |<img src="./assets/image/htmlEditorImage.png" style="width: 60px">|插入圖片|將選取處插入圖片|
-          |<img src="./assets/image/htmlEditorTable.png" style="width: 60px">|插入表格|將選取處插入表格|
-          |<img src="./assets/image/htmlEditorYoutube.png" style="width: 60px">|插入 Youtube 影片|將選取處插入 Youtube 影片 |
+          |<img src="./assets/image/instruction/htmlEditorInfo.png" style="width: 60px">|編輯器說明|說明所有編輯器的功能|
+          |<img src="./assets/image/instruction/htmlEditorBold.png" style="width: 60px">|粗體|將選取的字變粗體|
+          |<img src="./assets/image/instruction/htmlEditorItalic.png" style="width: 60px">|斜體|將選取的字變斜體|
+          |<img src="./assets/image/instruction/htmlEditorUnderline.png" style="width: 60px">|底線|將選取的字變加上底線|
+          |<img src="./assets/image/instruction/htmlEditorTextCenter.png" style="width: 60px">|居中|將選取的字置中|
+          |<img src="./assets/image/instruction/htmlEditorTextLeft.png" style="width: 60px">|置左|將選取的字靠左|
+          |<img src="./assets/image/instruction/htmlEditorTextRight.png" style="width: 60px">|置右|將選取的字靠右|
+          |<img src="./assets/image/instruction/htmlEditorList.png" style="width: 60px">|清單|將選取的內容下方加一個清單子項目|
+          |<img src="./assets/image/instruction/htmlEditorIncreaseLayout.png" style="width: 60px">|增加縮排|將選取的內容增加縮排|
+          |<img src="./assets/image/instruction/htmlEditorDecreaseLayout.png" style="width: 60px">|減少縮排|將選取的內容減少縮排|
+          |<img src="./assets/image/instruction/htmlEditorTextMark.png" style="width: 60px">|標記文字|將選取的字標記特殊樣式|
+          |<img src="./assets/image/instruction/htmlEditorLink.png" style="width: 60px">|插入連結|連結類型分為: 站內節點連結、站外連結、客製化動作|
+          |<img src="./assets/image/instruction/htmlEditorFile.png" style="width: 60px">|插入檔案|檔案來源有: 加入本地檔案、表單下載(可以從網站管理 ➞ 表單下載管理做設定)|
+          |<img src="./assets/image/instruction/htmlEditorImage.png" style="width: 60px">|插入圖片|將選取處插入圖片|
+          |<img src="./assets/image/instruction/htmlEditorTable.png" style="width: 60px">|插入表格|將選取處插入表格|
+          |<img src="./assets/image/instruction/htmlEditorYoutube.png" style="width: 60px">|插入 Youtube 影片|將選取處插入 Youtube 影片 |
 
           <br/>
 
@@ -574,7 +574,7 @@
 
             Garden CMS針對表格可支援自由新增刪除行列、合併儲存格等機制。
 
-              ![插入表格](./assets/image/addTable.png)
+              ![插入表格](./assets/image/instruction/addTable.png)
               <div class="text-center">【圖片】插入表格</div>
 
               <br/>
@@ -582,19 +582,19 @@
 
             此外, 編輯器也可以支援於 word 中複製表格並貼上, 編輯器會自動過濾掉 word 原訂的表格樣式(背景色、框線、字體等)後轉換成符合網站風格的表格樣式，便於編輯者在進行表格編輯時提升易用性。
 
-              ![word複製表格](./assets/image/wordTable.png)
+              ![word複製表格](./assets/image/instruction/wordTable.png)
               <div class="text-center">【圖片】word 複製畫面</div>
               
               <br/>
               
-              ![從word貼上表格](./assets/image/tableFromWord.png)
+              ![從word貼上表格](./assets/image/instruction/tableFromWord.png)
               <div class="text-center">【圖片】word 表格貼上編輯器後的畫面</div>
 
               <br/>
 
             ◎ 表格選取方式說明
 
-              ![選取表格](./assets/image/chooseArea.png)
+              ![選取表格](./assets/image/instruction/chooseArea.png)
               <div class="text-center">【圖片】選取表格畫面</div>
 
               |表格選取方式|說明|操作|
@@ -608,7 +608,7 @@
 
             滿版縮放、Scroll、單筆顯示三種表格樣式可供選擇，以利使用者獲得表格瀏覽最佳體驗。
 
-              ![選取表格](./assets/image/adjustTableStyle.png)
+              ![選取表格](./assets/image/instruction/adjustTableStyle.png)
               <div class="text-center">【圖片】設定表格樣式畫面</div>
 
 
@@ -621,34 +621,34 @@
 
               <br/>
 
-              ![編輯表格](./assets/image/editTableCompare.png)
+              ![編輯表格](./assets/image/instruction/editTableCompare.png)
               <div class="text-center">【圖片】編輯模式三種表格樣式畫面</div>
 
               <br/>
 
-              ![大版預覽](./assets/image/previewTableBig.png)
+              ![大版預覽](./assets/image/instruction/previewTableBig.png)
               <div class="text-center">【圖片】預覽模式(電腦版)三種表格樣式畫面</div>
 
               <br/>
 
-              ![小版預覽](./assets/image/previewTableSmall.png)
+              ![小版預覽](./assets/image/instruction/previewTableSmall.png)
               <div class="text-center">【圖片】預覽模式(手機版)三種表格樣式畫面</div>
 
           - 插入 Youtube 影片
 
             編輯器也支援將 Youtube 影片內嵌在網頁中，直接設定 Youtube 網址即可。
 
-            ![插入 Youtube 影片](./assets/image/editYoutube.png)
+            ![插入 Youtube 影片](./assets/image/instruction/editYoutube.png)
             <div class="text-center">【圖片】插入 Youtube 設定頁面</div>
 
             <br/>
 
-            ![插入 Youtube 影片-編輯](./assets/image/afterEditYoutube.png)
+            ![插入 Youtube 影片-編輯](./assets/image/instruction/afterEditYoutube.png)
             <div class="text-center">【圖片】插入 Youtube 後編輯頁面</div>
 
             <br/>
 
-            ![插入 Youtube 影片-預覽](./assets/image/previewYoutube.png)
+            ![插入 Youtube 影片-預覽](./assets/image/instruction/previewYoutube.png)
             <div class="text-center">【圖片】插入 Youtube 後預覽頁面</div>
 
             <br/>
@@ -657,31 +657,31 @@
 
   1. 點擊官網管理 ➞ 我的申請單, 顯示我的申請單詳細資料頁面
 
-      ![我的申請單](./assets/image/myApplyRecord.png)
+      ![我的申請單](./assets/image/instruction/myApplyRecord.png)
       <div class="text-center">【圖片】我的申請單畫面</div>
 
       <br/>
 
   2. 點擊操作功能後, 會出現操作頁面
 
-      ![操作](./assets/image/myApplyRecordOperator.png)
+      ![操作](./assets/image/instruction/myApplyRecordOperator.png)
       <div class="text-center">【圖片】我的申請單操作頁面</div>
 
         - 點擊審核紀錄後, 出現紀錄頁面
 
-            ![審核紀錄](./assets/image/applyRecordPopup.png)
+            ![審核紀錄](./assets/image/instruction/applyRecordPopup.png)
             <div class="text-center">【圖片】我的申請單審核紀錄頁面</div>
 
         TODO-後台 看後台怎麼設定 ? 有規則嗎 ?
 
         - 點擊預覽後, 會出現預覽頁面顯示詳細資料
 
-            ![預覽詳細資料](./assets/image/myApplyPreviewPopup.png)
+            ![預覽詳細資料](./assets/image/instruction/myApplyPreviewPopup.png)
             <div class="text-center">【圖片】我的申請單預覽詳細資料頁面</div>
 
         - 點擊預覽後, 會另開分頁預覽此次送審節點畫面
 
-            ![預覽網站內容](./assets/image/myApplyPreview.png)
+            ![預覽網站內容](./assets/image/instruction/myApplyPreview.png)
             <div class="text-center">【圖片】我的申請單預覽網站內容畫面</div>
 
 
@@ -691,54 +691,54 @@
 
   1. 點擊官網管理 ➞ 審核/放行管理後, 會看到右側審核/放行管理畫面
 
-      ![節點審核](./assets/image/auditorApply.png)
+      ![節點審核](./assets/image/instruction/auditorApply.png)
        <div class="text-center">【圖片】審核、放行管理模組畫面</div>
 
        <br/>
 
   2. 點擊操作功能後, 會出現操作頁面
 
-      ![操作](./assets/image/auditorApplyPopup.png)
+      ![操作](./assets/image/instruction/auditorApplyPopup.png)
        <div class="text-center">【圖片】審核、放行管理操作頁面</div>
 
       - 點擊同意後, 出現審核通過頁面
 
-          ![同意](./assets/image/applyApprove.png)
+          ![同意](./assets/image/instruction/applyApprove.png)
           <div class="text-center">【圖片】審核、放行管理審核通過頁面</div>
 
           ◎ 圖示說明
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次操作並關閉頁面|
-          |<img src="./assets/image/pass.png" style="width: 70px">|通過|同意並通過此筆送審並關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次操作並關閉頁面|
+          |<img src="./assets/image/instruction/pass.png" style="width: 70px">|通過|同意並通過此筆送審並關閉頁面|
 
         <br/>
 
       - 點擊退回後, 出現審核退回頁面
         
-          ![退回](./assets/image/applyReject.png)
+          ![退回](./assets/image/instruction/applyReject.png)
           <div class="text-center">【圖片】審核、放行管理審核退回頁面</div>
 
           ◎ 圖示說明
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次操作並關閉頁面|
-          |<img src="./assets/image/notPass.png" style="width: 70px">|退回|退回此筆送審並關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次操作並關閉頁面|
+          |<img src="./assets/image/instruction/notPass.png" style="width: 70px">|退回|退回此筆送審並關閉頁面|
 
         <br/>
 
       - 預覽: 會另開分頁預覽此次送審節點
 
-          ![預覽送審的網站畫面](./assets/image/myApplyPreview.png)
+          ![預覽送審的網站畫面](./assets/image/instruction/myApplyPreview.png)
           <div class="text-center">【圖片】審核、放行管理預覽此筆送審的網站畫面</div>
 
         <br/>
 
   3. 如果要審核/放行多筆, 可以使用批次功能
 
-        ![批次](./assets/image/applyBatch.png)
+        ![批次](./assets/image/instruction/applyBatch.png)
         <div class="text-center">【圖片】審核、放行管理批次操作畫面</div>
 
       <br/>
@@ -761,7 +761,7 @@
 
   1. 點擊官網管理 ➞ 網站管理，會出現所有屬於網站管理模組的項目，此處以“最新消息管理”作範例說明
 
-      ![最新消息分類組](./assets/image/webManagementPair.png)
+      ![最新消息分類組](./assets/image/instruction/webManagementPair.png)
       <div class="text-center">【圖片】網站管理各功能畫面（範例: 最新消息分類管理）</div>
 
       - 最新消息分類管理
@@ -769,17 +769,17 @@
           以分類的方式管理所有的最新消息，可指定該分類底下的資料由哪個群組權限進行維護，以達到不同消息類型交由不同編輯者群組進行維護，常見問題分類管理、輪播分類管理以此類推。
 
            <span id="newsTypeManagement"><span>
-          ![最新消息分類管理](./assets/image/newsType.png)
+          ![最新消息分類管理](./assets/image/instruction/newsType.png)
           <div class="text-center">【圖片】最新消息分類管理畫面</div>
 
           <br/>
 
-          ![最新消息分類管理-編輯](./assets/image/newsTypeEdit.png)
+          ![最新消息分類管理-編輯](./assets/image/instruction/newsTypeEdit.png)
           <div class="text-center">【圖片】最新消息版型，選擇資料來源畫面（對應到上方圖片 <a href="#newsTypeManagement">最新消息分類管理畫面</a> ）</div>
 
           <br/>
          
-          ![修改最新消息分類管理](./assets/image/newsTypeAdjust.png)
+          ![修改最新消息分類管理](./assets/image/instruction/newsTypeAdjust.png)
           <div class="text-center">【圖片】修改最新消息分類管理畫面</div>
 
           ◎ 欄位說明
@@ -798,8 +798,8 @@
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次修改並關閉頁面|
-          |<img src="./assets/image/save.png" style="width: 70px">|儲存|儲存此次修改並關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次修改並關閉頁面|
+          |<img src="./assets/image/instruction/save.png" style="width: 70px">|儲存|儲存此次修改並關閉頁面|
 
           <br/>
 
@@ -810,17 +810,17 @@
           發佈一筆最新消息，可設定要發佈到哪些最新消息分類，以達到一稿多頁面發佈之效，減少編輯者重覆登打資料的困擾，常見問題管理、輪播管理以此類推。
 
           <span id="newsManagement"><span>
-          ![最新消息管理](./assets/image/newsContent.png)
+          ![最新消息管理](./assets/image/instruction/newsContent.png)
           <div class="text-center">【圖片】最新消息管理畫面（紅框處項目皆屬於“官網-最新消息“分類）</div>
 
           <br/>
 
-          ![最新消息管理-編輯](./assets/image/editNewsContent.png)
+          ![最新消息管理-編輯](./assets/image/instruction/editNewsContent.png)
           <div class="text-center">【圖片】最新消息版型，資料來源選擇”官網-最新消息“分類畫面（對應到上方圖片 <a href="#newsManagement">最新消息管理畫面</a> ）</div>
 
           <br/>
 
-          ![修改最新消息管理](./assets/image/newsAdjust.png)
+          ![修改最新消息管理](./assets/image/instruction/newsAdjust.png)
           <div class="text-center">【圖片】修改最新消息管理畫面</div>
 
           ◎ 欄位說明
@@ -841,8 +841,8 @@
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次修改並關閉頁面|
-          |<img src="./assets/image/save.png" style="width: 70px">|儲存|儲存此次修改並關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次修改並關閉頁面|
+          |<img src="./assets/image/instruction/save.png" style="width: 70px">|儲存|儲存此次修改並關閉頁面|
 
 
           <br/>
@@ -853,7 +853,7 @@
 
     1. 點擊官網管理 ➞ 報表管理 ➞ 權限報表後, 右側會看到權限報表頁面, 顯示每個帳號的權限資訊 (如何設定權限請參閱 [3.8. 中央權限管理](#38-中央權限管理))
 
-          ![權限報表](./assets/image/permissionReport.png)
+          ![權限報表](./assets/image/instruction/permissionReport.png)
           <div class="text-center">【圖片】權限報表畫面</div>
 
           ◎ 欄位說明
@@ -871,7 +871,7 @@
 
     1. 點擊官網管理 ➞ 報表管理 ➞ 使用者登入軌跡記錄後, 右側會看到使用者登入軌跡記錄頁面, 顯示每個使用者登入的詳細紀錄
 
-        ![使用者登入軌跡記錄](./assets/image/loginTrack.png)
+        ![使用者登入軌跡記錄](./assets/image/instruction/loginTrack.png)
         <div class="text-center">【圖片】使用者登入軌跡記錄畫面</div>
 
         <br/>
@@ -880,7 +880,7 @@
 
     1. 點擊官網管理 ➞ 報表管理 ➞ 登入操作功能項目紀錄後, 會看到登入操作功能項目紀錄頁面, 顯示每個使用者登入的操作詳細紀錄
 
-        ![登入操作功能項目紀錄](./assets/image/loginOperationRecord.png)
+        ![登入操作功能項目紀錄](./assets/image/instruction/loginOperationRecord.png)
         <div class="text-center">【圖片】登入操作功能項目紀錄畫面</div>
 
         <br/>
@@ -889,7 +889,7 @@
 
     1. 點擊官網管理 ➞ 報表管理 ➞ 審核報表後, 會看到審核報表頁面, 顯示所有審核的歷程
 
-        ![審核報表](./assets/image/reviewReport.png)
+        ![審核報表](./assets/image/instruction/reviewReport.png)
         <div class="text-center">【圖片】審核報表畫面</div>
 
         TODO-後台
@@ -897,13 +897,13 @@
 
           1. 詳細資料頁面
 
-              ![操作Popup](./assets/image/reviewReportPopup.png)
+              ![操作Popup](./assets/image/instruction/reviewReportPopup.png)
 
               <br/>
 
           2. 另開分頁預覽此節點內容
 
-              ![預覽網站內容](./assets/image/myApplyPreview.png)
+              ![預覽網站內容](./assets/image/instruction/myApplyPreview.png)
               <div class="text-center">【圖片】審核報表預覽節點內容畫面</div>
 
           <br/>
@@ -922,7 +922,7 @@
 
     1. 官網管理(1) ➞ 中央權限管理(2) ➞ 帳號管理(3)
 
-        ![設定帳號隸屬於哪個/些群組](./assets/image/authorityControlAccount.png)
+        ![設定帳號隸屬於哪個/些群組](./assets/image/instruction/authorityControlAccount.png)
         <div class="text-center">【圖片】審核報表預覽節點內容畫面</div>
 
       <br/>
@@ -930,7 +930,7 @@
     - #### E - 新增帳號
       1. 點擊新增按鈕後, 會出現輸入資料的頁面
 
-          ![新增帳號](./assets/image/addAccount.png)
+          ![新增帳號](./assets/image/instruction/addAccount.png)
           <div class="text-center">【圖片】新增帳號頁面</div>
 
           ◎ 欄位說明
@@ -951,15 +951,15 @@
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
-          |<img src="./assets/image/addAccountPopupSave.png" style="width: 70px">|儲存|儲存此帳號資訊並關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupSave.png" style="width: 70px">|儲存|儲存此帳號資訊並關閉頁面|
 
           <br/>
 
     - #### F - 預覽
       1. 點擊操作中的預覽按鈕, 會出現顯示此帳號資料的頁面
 
-          ![預覽](./assets/image/accountManagementPreview.png)
+          ![預覽](./assets/image/instruction/accountManagementPreview.png)
           <div class="text-center">【圖片】預覽帳號頁面</div>
 
         <br/>
@@ -975,7 +975,7 @@
 
     1. 官網管理(1) ➞ 中央權限管理(2) ➞ 群組管理(3)
 
-        ![群組管理](./assets/image/authorityControl.png)
+        ![群組管理](./assets/image/instruction/authorityControl.png)
         <div class="text-center">【圖片】群組管理各功能頁面</div>
 
     <br/>
@@ -987,14 +987,14 @@
 
       2. 選擇站台
 
-          ![選擇節點](./assets/image/authorityControlFrontendSelect.png)
+          ![選擇節點](./assets/image/instruction/authorityControlFrontendSelect.png)
           <div class="text-center" style="width: 551px">【圖片】選擇站台畫面</div>
 
           <br/>
 
       3. 設定該站台的各節點權限 (打勾代表有該權限)
 
-          ![設定該站台的節點](./assets/image/authorityControlFrontendDetail.png)
+          ![設定該站台的節點](./assets/image/instruction/authorityControlFrontendDetail.png)
           <div class="text-center" style="width: 818px">【圖片】設定站台節點權限畫面</div>
 
           <br/>
@@ -1007,8 +1007,8 @@
 
           |圖示|功能欄位|說明|
           |--|--|--|
-          |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
-          |<img src="./assets/image/addAccountPopupSave.png" style="width: 70px">|儲存|儲存此節點設定並關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
+          |<img src="./assets/image/instruction/addAccountPopupSave.png" style="width: 70px">|儲存|儲存此節點設定並關閉頁面|
 
           <br/>
 
@@ -1018,7 +1018,7 @@
 
       1. 設定目錄各項目的權限 (打勾代表此群組在目錄看得到此功能)
 
-          ![設定目錄各項目的權限](./assets/image/authorityControlBackend.png)
+          ![設定目錄各項目的權限](./assets/image/instruction/authorityControlBackend.png)
           <div class="text-center" style="width: 360px">【圖片】群組管理各功能頁面</div>
 
           <br/>
@@ -1031,8 +1031,8 @@
          
          |圖示|功能欄位|說明|
          |--|--|--|
-         |<img src="./assets/image/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
-         |<img src="./assets/image/addAccountPopupSave.png" style="width: 70px">|儲存|儲存此節點設定並關閉頁面|
+         |<img src="./assets/image/instruction/addAccountPopupCancel.png" style="width: 70px">|取消|取消此次變動並關閉頁面|
+         |<img src="./assets/image/instruction/addAccountPopupSave.png" style="width: 70px">|儲存|儲存此節點設定並關閉頁面|
 
          <br/>
 
@@ -1048,6 +1048,6 @@
 <link rel="stylesheet" type="text/css" href="./style/style.css" />
 
 <div class="back-to-top-wrapper">
-    <a href="#系統使用操作手冊" class="back-to-top-link" aria-label="Scroll to Top">
+    <a href="#系統使用說明手冊" class="back-to-top-link" aria-label="Scroll to Top">
 ↑</a>
 </div>
