@@ -1045,58 +1045,7 @@
 
 ---
 
-<style>
-
-.text-center {
-  text-align: center;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-#forkme_banner {
-  background: url("./assets/image/githubLogo.png") no-repeat;
-  background-size: contain;
-  padding: 15px;
-  margin-top: 50px;
-  right: -130px;
-  box-shadow: none;
-  color: transparent;
-}
-
-.inner {
-  /* max-width: 960px; */
-}
-
-.back-to-top-link {
-  display: inline-block;
-  text-decoration: none;
-  font-size: 2rem;
-  line-height: 3rem;
-  text-align: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  background-color: #D6E3F0;
-  padding: 0.25rem;
-}
-
-.back-to-top-link:hover{
-  text-decoration: none;
-  background-color: #c2def0;
-}
-
-.back-to-top-wrapper {
-  position: fixed;
-  z-index:1001;
-  right: 30px;
-  bottom: 30px;
-  width: 3em;
-  
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="./style/style.css" />
 
 <div class="back-to-top-wrapper">
     <a href="#系統使用操作手冊" class="back-to-top-link" aria-label="Scroll to Top">
