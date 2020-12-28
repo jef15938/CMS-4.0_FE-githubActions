@@ -213,10 +213,10 @@
         |*站外網址*|是|輸入框|連結類型選擇"站外"才會顯示|
         |*版面元件*|是|下拉選單|節點類型選擇"頁面"才會顯示，<br/>選項: 後台給的選項，<br/>此欄位是用來決定該節點的大 layout|
         |*節點連結路徑*|否|輸入框|節點類型選擇"頁面"才會顯示|
-        |Meta標題|是|輸入框|TODO-前台|
-        |Meta描述|否|輸入框|TODO-前台|
-        |Meta關鍵字|否|輸入框|TODO-前台|
-        |Meta圖片|否|圖片|TODO-前台|
+        |Meta標題|是|輸入框|此欄位跟 google seo title 欄位相關, 也會在分享社群媒體時的預覽網址看到, 此處以 Line 當範例 <br/> ![metaTitle](./assets/image/instruction/metaTitle.png)|
+        |Meta描述|否|輸入框|此欄位跟 google seo description 欄位相關, 也會在分享社群媒體時的預覽網址看到, 此處以 Line 當範例 <br/> ![metaDescription](./assets/image/instruction/metaDescription.png)|
+        |Meta關鍵字|否|輸入框|此欄位跟 google seo keyword 欄位相關|
+        |Meta圖片|否|圖片|此欄位跟 google seo image 相關, 也會在分享社群媒體時的預覽網址看到, 此處以 Line 當範例 <br/> ![metaTitle](./assets/image/instruction/metaImage.png)|
         |可選擇群組|是|下拉選單(可複選)|選項: 中央權限管理 ➞ 群組管理看到的所有群組,<br/>打勾代表群組對此節點有"閱讀", "修改"的權限, 在儲存時, 才會更新權限給後台|
 
         <br/>
@@ -322,7 +322,7 @@
             關於版型編輯器細部操作，請參閱 [3.3.4.1. 版型編輯器模組](#3341-版型編輯器模組)
 
             ![新增版面](./assets/image/instruction/addTemplatePanel.png)
-            <div class="text-center">【圖片】選擇欲新增的版型畫面</div>
+            <div class="text-center" style="width: 602px">【圖片】選擇欲新增的版型畫面</div>
 
             <br/>
 
@@ -378,7 +378,7 @@
           3. 修改內文變成"我是右邊的按鈕喔"後, 點擊套用變更
 
               ![修改內文](./assets/image/instruction/editTemplateChange.png)
-              <div class="text-center">【圖片】修改版型內容面版</div>
+              <div class="text-center" style="width: 454px">【圖片】修改版型內容面版</div>
 
               <br/>
             
@@ -672,18 +672,18 @@
             ![審核紀錄](./assets/image/instruction/applyRecordPopup.png)
             <div class="text-center">【圖片】我的申請單審核紀錄頁面</div>
 
-        TODO-後台 看後台怎麼設定 ? 有規則嗎 ?
+        - 點擊預覽後，根據該筆是屬於網站管理送審還是節點送審，決定執行的動作
+          - 若是網站管理送審, 會出現預覽頁面顯示詳細資料
 
-        - 點擊預覽後, 會出現預覽頁面顯示詳細資料
+              ![預覽詳細資料](./assets/image/instruction/myApplyPreviewPopup.png)
+              <div class="text-center">【圖片】我的申請單預覽詳細資料頁面</div>
 
-            ![預覽詳細資料](./assets/image/instruction/myApplyPreviewPopup.png)
-            <div class="text-center">【圖片】我的申請單預覽詳細資料頁面</div>
+          <br/>
 
-        - 點擊預覽後, 會另開分頁預覽此次送審節點畫面
+          - 若是節點送審, 會另開分頁預覽此次送審節點畫面
 
-            ![預覽網站內容](./assets/image/instruction/myApplyPreview.png)
-            <div class="text-center">【圖片】我的申請單預覽網站內容畫面</div>
-
+              ![預覽網站內容](./assets/image/instruction/myApplyPreview.png)
+              <div class="text-center">【圖片】我的申請單預覽網站內容畫面</div>
 
         <br/>
 
@@ -788,7 +788,7 @@
           |--|--|--|--|
           |類別ID|是|輸入框|此分類唯一ID|
           |類別名稱|是|輸入框|此分類顯示的名稱|
-          |上層分類|否|下拉選單|TODO-後台|
+          |上層分類|否|下拉選單|此分類隸屬於什麼上層分類|
           |是否顯示|是|單選框|此分類是否會在版型的選取資料來源選單顯示|
           |可存取群組|是|複選框|能夠存取此分類的群組|
 
@@ -892,16 +892,16 @@
         ![審核報表](./assets/image/instruction/reviewReport.png)
         <div class="text-center">【圖片】審核報表畫面</div>
 
-        TODO-後台
-        - 操作: 點擊操作會有以下兩種動作, 視後台如何設定
+        - 操作: 點擊操作後會有以下兩種動作, 根據該筆是屬於網站管理送審還是節點送審，決定執行的動作
 
-          1. 詳細資料頁面
+          - 若是網站管理送審，顯示詳細資料頁面
 
               ![操作Popup](./assets/image/instruction/reviewReportPopup.png)
+              <div class="text-center">【圖片】審核報表顯示詳細資料頁面</div>
 
               <br/>
 
-          2. 另開分頁預覽此節點內容
+          - 若是節點送審，另開分頁預覽此節點內容
 
               ![預覽網站內容](./assets/image/instruction/myApplyPreview.png)
               <div class="text-center">【圖片】審核報表預覽節點內容畫面</div>
@@ -912,7 +912,7 @@
 
   - #### **3.8.1. 部門管理**
 
-    部門管理提供新增、修改、刪除部門功能，以讓管理者在 cms 建立相關部門資料，並可針對各別部門給予對應的部門權限。(TODO-後台)
+    部門管理提供新增、修改、刪除部門功能，以讓管理者在 cms 建立相關部門資料，並可針對各別部門給予對應的部門權限(目前 cms 無相關功能使用部門設定的權限)。
 
     <br/>
 

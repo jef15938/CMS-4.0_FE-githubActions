@@ -14,10 +14,6 @@ html {
   box-shadow: none;
 }
 
-.inner {
-  /* max-width: 960px; */
-}
-
 .back-to-top-link {
   display: inline-block;
   text-decoration: none;
@@ -41,6 +37,32 @@ html {
   z-index:1001;
   right: 30px;
   bottom: 30px;
-  width: 3em;
-  
+  width: 3em;  
+}
+
+.inner {
+  max-width:1000px;
+}
+
+.inner img {
+  max-width:1000px;
+}
+
+
+#markdown-toc::before {
+    font-weight: bold;
+}
+
+#markdown-toc ul {
+    list-style: decimal;
+}
+
+#markdown-toc {
+    border: 1px solid #aaa;
+    padding: 1.5em;
+    list-style: decimal;
+    display: inline-block;
+    position: absolute;
+    overflow-y: auto;
+    margin-left: -350px;
 }
