@@ -180,9 +180,9 @@
 
   4. **Npm publish** :
 
-      4.1. render : `cd ./dist/libs/render && npm publish --tag=${{env.npm_version_tag}}`
+      4.1. render : `cd ./dist/libs/render && npm publish --tag = next | latest`
 
-      4.2. cms : `cd ./dist/libs/cms-core && npm publish --tag=${{env.npm_version_tag}}`
+      4.2. cms : `cd ./dist/libs/cms-core && npm publish --tag = next | latest`
 
   5. **Read npm publish 版本號碼** : 從 ./package.json 取得版本號碼
 
