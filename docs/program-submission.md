@@ -184,7 +184,7 @@
 
       4.2. cms : `cd ./dist/libs/cms-core && npm publish --tag=$\{\{env.npm_version_tag\}\}`
 
-  5. **Read package.json** : 從 ./package.json 取得版本號碼
+  5. **Read npm publish 版本號碼** : 從 ./package.json 取得版本號碼
 
   6. **在 github 押 tag** :
 
