@@ -6,9 +6,9 @@ name: CMSNpmPublishNext
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ npm-publish-github-actions ]
+    branches: [ npm-publish-github-actions, dev ]
   pull_request:
-    branches: [ npm-publish-github-actions ]
+    branches: [ npm-publish-github-actions, dev ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
