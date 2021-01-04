@@ -39,7 +39,7 @@
     "@ngrx/effects": "^10.0.0",
     "@ngrx/store": "^10.0.0",
     "angular-cropperjs": "^1.0.2",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.12.1",
     "cropperjs": "^1.5.7",
     "ngx-swiper-wrapper": "^10.0.0",
