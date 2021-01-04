@@ -1,16 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: RenderPublishNpm
+name: CMSNpmPublishNext
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    # branches: [ npm-publish-github-actions ]
-    branches: [ mock ]
+    branches: [ npm-publish-github-actions ]
   pull_request:
-    # branches: [ npm-publish-github-actions ]
-    branches: [ mock ]
+    branches: [ npm-publish-github-actions ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -18,11 +16,11 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build1:
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, 'npm-publish')"
+    if: "contains(github.event.head_commit.message, 'npm-publish-next') || contains(github.event.head_commit.message, 'npm-publish-latest')"
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -33,18 +31,11 @@ jobs:
       # === 1. 根據 commit 做變數處理 ===
       - name: Set Variable from Commit
         env:
-          IS_CMS: ${{ contains(github.event.head_commit.message, '--cms') }}
-          IS_NEXT: ${{ contains(github.event.head_commit.message, '--next') }}
+          IS_NEXT: ${{ contains(github.event.head_commit.message, 'npm-publish-next') }}
         run: |
-          if ${IS_CMS} == true; then
-            echo "task=cms" >> $GITHUB_ENV
-            echo "package_json_path=./cms/projects/cms-lib" >> $GITHUB_ENV
-            echo "task set to cms"
-          else
-            echo "task=render" >> $GITHUB_ENV
-            echo "package_json_path=./render-engine/projects/render" >> $GITHUB_ENV
-            echo "task set to render"
-          fi
+          echo "task=cms-core/render" >> $GITHUB_ENV
+          echo "package_json_path=." >> $GITHUB_ENV
+          
           if ${IS_NEXT} == true; then
             echo "npm_version_tag=next" >> $GITHUB_ENV
             echo "npm_version_tag set to next"
@@ -57,73 +48,24 @@ jobs:
 
       # === 2. 顯示變數 ===
       - name: Show variable
-        run: echo task:${{env.task}}, npm_version_tag:${{env.npm_version_tag}}
+        run: echo build1 task:${{env.task}}, npm_version_tag:${{env.npm_version_tag}}
       # ==================
 
+  build2:
 
-      # === 3. Setup npmrc (因為 dependency 有的是 private, 要用 token 取得 access ) ===
-      - name: Setup npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_AUTH_TOKEN}}" > ~/.npmrc
-      # ==========================================================================
-
-
-      # === 4. Install dependency === 
-      # Install render dependency
-      - name: Install render dependency
-        if: "contains(github.event.head_commit.message, '--render')"
-        run: npm install @neux/ui@next && npm install
-      
-
-      # === 5.Install cms dependency ===
-      - name: Install cms dependency
-        if: "contains(github.event.head_commit.message, '--cms')"
-        run: npm install @neux/ui@next && npm install @neux/render@latest && npm install 
-      # ================================
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    if: "contains(github.event.head_commit.message, 'npm-publish')"
 
 
-      # === 6.Build ===
-      # Build render
-      - name: Build render
-        if: "contains(github.event.head_commit.message, '--render')"
-        run: cd ./render-engine && rm -rf ./node_nodules && npm install && npm run build-render-lib
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-      # Build cms
-      - name: Build cms
-        if: "contains(github.event.head_commit.message, '--cms')"
-        run: cd ./cms && npm install && rm -rf ./node_nodules && npm run build-cms-lib
-      # ===============
+      # === 2. 顯示變數 ===
+      - name: Show variable
+        run: echo build2
+      # ==================
 
-
-      # === 7. Npm publish ===
-      # publish render
-      - name: Npm publish latest
-        if: "contains(github.event.head_commit.message, '--render')"
-        run: pwd && cd ./render-engine/dist/render && npm publish --tag=${{env.npm_version_tag}} && echo Render - Npm publish ${{env.npm_version_tag}}!
-
-      # publish cms
-      - name: Npm publish cms
-        if: "contains(github.event.head_commit.message, '--cms')"
-        run: pwd && cd ./cms/dist/cms-lib && npm publish --tag=${{env.npm_version_tag}} && echo CMS - Npm publish ${{env.npm_version_tag}}!
-      # ======================
-
-
-      # === 8. Read package.json version ===
-      # publish render
-      - name: Read render package.json
-        uses: tyankatsu0105/read-package-version-actions@v1
-        with: 
-          path: ${{env.package_json_path}}
-        id: package-version
-      # ====================================
-
-
-      # === 9. Slack Notification ===
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: NPM 發佈版本 ${{env.task}} - ${{steps.package-version.outputs.version}} - ${{env.npm_version_tag}}, 請大家記得更新喔!
-          SLACK_USERNAME: NPM 發佈機器人
-          SLACK_ICON: https://jef15938.github.io/Assests/garden-logo.png
-      # =============================
-     
+   
