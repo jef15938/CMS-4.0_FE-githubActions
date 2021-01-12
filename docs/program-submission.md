@@ -167,7 +167,7 @@
     |欄位|說明|
     |--|--|
     |pr 紀錄（A）|顯示此 pr 的詳細記錄|
-    |合併 pr 按鈕（B-1）|若審核此 pr 為通過，點擊此按鈕，會將改動合併到 dev 分支，並請押上 <img src="./assets/image/program-submission/merged-dev-label.png" style="width: 100px"/> label|
+    |合併 pr 按鈕（B-1）|a. feature 分支 -> dev 分支: 若審核此 pr 為通過，點擊此按鈕，會將改動合併到 dev 分支，並請押上 <img src="./assets/image/program-submission/merged-dev-label.png" style="width: 100px"/> label <br/> b. dev 分支 -> master 分支: 若審核此 pr 為通過，<span style="color: red">"請先在 B-2 標註 closes #&lt;issue-number&gt;"</span>，點擊此按鈕，會將改動合併到 master 分支，github 會自動關閉被標註的 issess|
     |新增評論區塊 （B-2）|若審核此 pr 為"不"通過或是對於 pr 想做特別說明，請於此處註明原因|
 
   <br/>
