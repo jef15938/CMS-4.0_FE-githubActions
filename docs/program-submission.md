@@ -37,13 +37,13 @@
 
   - 通常一個分支僅處理一個 issues，視情況或 issues 顆粒度太小，也可以同分支一併處理多個 issues
 
-  - 後續若審核者核可此分支的 pull request，便會將程式合併到 dev 並 "刪除此分支"，若因為特殊原因需要保留此分支，請在分支名稱後綴帶上 no-delete
+  - 後續若審核者審核通過此分支的 pull request，便會將程式合併到 dev 並 <span style="color: red">"刪除此分支"</span>，若因為特殊原因需要保留此分支，請在分支名稱後綴帶上 no-delete
 
 - ### 2.3. 處理 pull request（[細部說明](#33-處理-pull-request)）
 
   - 開發者 - 在創建的分支上提交程式後，新增一個 pull request 給審核者
 
-  - 審核者 - 審核 pull request，若同意即把程式合併到 dev，並刪除該分支 (若分支後綴帶有 no-delete，"不要刪除" 此分支)
+  - 審核者 - 審核 pull request，若同意即把程式合併到 dev，並刪除該分支 (若分支後綴帶有 no-delete，<span style="color: red">"不要刪除"</span> 此分支)
 
 - ### 2.4. 發佈 npm（[細部說明](#34-發佈-npm)）
 
@@ -148,7 +148,7 @@
       |欄位|說明|
       |--|--|
       |標題 (1)|設定此 pr 的標題，說明主要改動的地方|
-      |描述 (2)|設定此 pr 的描述，一定要填寫此 pr 修復哪個/些 issues（使用#&lt;pr-編號&gt;來標記，範例: #41）|
+      |描述 (2)|設定此 pr 的描述，<span style="color: red">"一定要" </span>填寫此 pr 修復哪個/些 issues（使用#&lt;pr-編號&gt;來標記，範例: #41）|
       |分配審核者 (3)|分配此 pr 的審核者 <br/> <img src="./assets/image/program-submission/pr-reviewers.png" style="width: 300px"/>|
 
       <br/>
