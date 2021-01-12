@@ -1,0 +1,14 @@
+@startuml
+start
+:建立元件;
+:繼承版型;
+:Import&Export;
+:加入Component Mapping;
+:建立Service;
+if (後端資料格式與前端相同?) then (yes)
+else (no)
+  :建立Model;
+endif 
+:建立測試節點;
+stop
+@enduml

@@ -1,6 +1,5 @@
 # Neux CMS 4.0 Documentation
 
-
 - [Neux CMS 4.0 Documentation](#neux-cms-40-documentation)
   - [系統使用說明手冊](#系統使用說明手冊)
   - [專案架構](#專案架構)
@@ -17,7 +16,7 @@
 
 ## 系統使用說明手冊
 
-請參閱[系統使用說明手冊](./instruction)
+請參閱 [系統使用說明手冊](./instruction)
 
 ## 專案架構
 
@@ -38,13 +37,14 @@
 
 - 渲染機制 (sitemap?)
 - 路由控制(多語系/參數等)
+- DebugTools
 
 ## 開發規範
 
 ### 共通
 - 程式提交
 
-    請參閱[程式提交文件](./program-submission)
+    請參閱 [程式提交文件](./program-submission)
 
 ### 切版
 
@@ -55,13 +55,11 @@
 
 ### 套版
 
-請參閱[套版說明文件](./wrap-template)
+請參閱 [套版說明文件](./wrap-template)
 
 ### 納版
 
-- 版型分類
-- 納版流程
-- 編輯用Directive...
+請參閱 [納版說明文件](./inclusion-template)
 
 ## 部署流程
 

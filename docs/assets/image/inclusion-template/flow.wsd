@@ -1,0 +1,10 @@
+@startuml
+start
+:建立元件;
+:繼承版型;
+:Import&Export;
+:加入Component Mapping;
+:實作元件功能;
+:加入版型清單;
+stop
+@enduml

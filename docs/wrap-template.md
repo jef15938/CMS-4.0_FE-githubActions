@@ -18,7 +18,12 @@
 * 根據網頁畫面元件之處理程序，版型(註[^1])分成兩個種類，第一種為納入版型:納版(註[^2])，第二種為套入版型:套版(註[^3])，被歸類為套版的版型不能夠由使用者調整編輯內容，通常只會應用在一個節點(註[^4])網頁裡。
 
 ## 2. 套版流程
- 以下為台灣人壽專案的範例
+- 流程圖
+ {: .no_toc}
+   ![](./assets/image/wrap-template/flow.png)
+  
+  以下為台灣人壽專案的範例
+
  - ### 2.1 建立元件
    - #### 2.1.1 元件名稱規範
      * 在元件名稱後方務必加上後綴 template(例如html-template.component.ts)
@@ -27,7 +32,7 @@
      * 位於 libs/taiwanlife-lib/src/cms-render/template
    ![](./assets/image/wrap-template/belong-folder.png)
    - #### 2.1.3 使用ng-cli建立元件
-      * project 位於 taiwanlife-lib 
+      * project 位於 taiwanlife-lib
         ![](https://i.imgur.com/uo9QZrZ.gif)
    - #### 2.1.4 元件匯出
      * 在 libs/taiwanlife-lib/src/lib/cms-render/index.ts 匯出新建立的元件 
@@ -68,10 +73,12 @@
       *  在 libs/taiwanlife-lib/src/lib/global/const/component-mapping.ts(註[^9]) 加入建立的版型元件
          
         ```typescript
+
          {
           component_id: 'sample', 
           component: SampleTemplateComponent,
          }
+
         ```
         
       ![](https://i.imgur.com/gFnMwmj.gif)
@@ -100,7 +107,7 @@
             ![](./assets/image/wrap-template/copy-content.png)
            * b.呼叫 https://dev.walkflow.biz/cms-api/Content/${content_id}，並在templates新增一個template的物件
             ![](./assets/image/wrap-template/add-content.png) 
-       5. 在本機 serve起來的 render app 查看建立的版型元件
+       1. 在本機 serve起來的 render app 查看建立的版型元件
            ![](./assets/image/wrap-template/template-work.png) 
 
 ## 3 新增API 
@@ -116,7 +123,7 @@
     ![](./assets/image/wrap-template/service-belong-folder.png)
     - #### 3.1.3 使用ng-cli建立服務
        * project 位於 taiwanlife-lib
-          ![](https://i.imgur.com/TwJRIvw.gif)
+         ![](https://i.imgur.com/TwJRIvw.gif)
     - #### 3.1.4 服務匯出
       * 在 libs/taiwanlife-lib/src/lib/global/api/service/_index.ts 匯出新建立的服務 
         ![](https://i.imgur.com/lzWcEsL.gif) 
@@ -135,7 +142,7 @@
       * ModelMapper(註[^12])
     - #### 3.1.6 元件注入service
       * 在元件的constructor裡注入新增service
-         ![](assets/image/wrap-template/use-service.gif)
+       ![](assets/image/wrap-template/use-service.gif)
     - #### 3.1.7 對應API
       * 在開發前會與後端concall 對應設計稿畫面的api
       * SRS 系統規格書 參照
@@ -225,10 +232,20 @@
     - ### 3.3 mock資料來源
        1.  於 libs/taiwanlife-lib/src/lib/global/api/neuxAPI/res-api.service.ts 找出該API相對應的mock json路徑
         ![](./assets/image/wrap-template/mock-dir.png)
-        2.  於 apps/taiwanlife-render/src/assets/mock 資料夾建立相對應的json檔案名稱
+        1.  於 apps/taiwanlife-render/src/assets/mock 資料夾建立相對應的json檔案名稱
          ![](./assets/image/wrap-template/mock-file.png) 
-        3.  於 libs/taiwanlife-lib/src/lib/global/api/neuxAPI/config.ts 更改該API的type為Mock
-         ![](./assets/image/wrap-template/mock-type.png)   
+        2.  於 libs/taiwanlife-lib/src/lib/global/api/neuxAPI/config.ts 更改該API的type為Mock
+         ![](./assets/image/wrap-template/mock-type.png) 
+  - ### 3.3 產出api-bean檔案
+       1. npm install -g @neux/cli
+       2. 於stoplight複製yaml程式碼
+          ![](./assets/image/wrap-template/copy_yaml.gif)
+       3. 在專案中建立yaml檔並貼上剛剛複製的程式碼
+          ![](./assets/image/wrap-template/yaml.png)
+       4. neux generate-api "yaml檔案 位址"   
+       5. 產出後端定義好的api 資料格式檔案
+          ![](./assets/image/wrap-template/bean.png) 
+   
     
 ## 4. 串接版型 
   - ### 4.1 套用切版版型 
@@ -257,7 +274,7 @@
           * 位於 libs/taiwanlife-lib/src/global/injection-token/taiwanlife-inject-token.ts
              ![](./assets/image/wrap-template/token-belong-folder.png)
           * 於 taiwanlife-injection-token 新增 token
-             ![](https://i.imgur.com/NCtqI9c.gif)
+            ![](https://i.imgur.com/NCtqI9c.gif)
  
 
 
