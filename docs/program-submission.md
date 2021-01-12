@@ -98,7 +98,7 @@
 
       |欄位|說明|
       |--|--|
-      |github issue 序號（Ａ）|此為 github 自動產生的獨特序號，後續 Pull Request 需要標記設定修復哪個/些 issues，就是拿此序號作為標記|
+      |github issue 編號（Ａ）|此為 github 自動產生的獨特編號，後續 Pull Request 需要標記設定修復哪個/些 issues，就是拿此編號作為標記|
 
   <br/>
 
@@ -148,7 +148,7 @@
       |欄位|說明|
       |--|--|
       |標題 (1)|設定此 pr 的標題，說明主要改動的地方|
-      |描述 (2)|設定此 pr 的描述，<span style="color: red">"一定要" </span>填寫此 pr 修復哪個/些 issues（使用#&lt;pr-編號&gt;來標記，範例: #41）|
+      |描述 (2)|設定此 pr 的描述，<span style="color: red">"一定要" </span>填寫此 pr 修復哪個/些 issues（使用#&lt;issue-編號&gt;來標記，範例: #41）|
       |分配審核者 (3)|分配此 pr 的審核者 <br/> <img src="./assets/image/program-submission/pr-reviewers.png" style="width: 300px"/>|
 
       <br/>
@@ -167,7 +167,7 @@
     |欄位|說明|
     |--|--|
     |pr 紀錄（A）|顯示此 pr 的詳細記錄|
-    |合併 pr 按鈕（B-1）|a. feature 分支 -> dev 分支: 若審核此 pr 為通過，點擊此按鈕，會將改動合併到 dev 分支，並請押上 <img src="./assets/image/program-submission/merged-dev-label.png" style="width: 100px"/> label <br/> b. dev 分支 -> master 分支: 若審核此 pr 為通過，<span style="color: red">"請先在 B-2 標註 closes #&lt;issue-number&gt;"</span>，點擊此按鈕，會將改動合併到 master 分支，github 會自動關閉被標註的 issess|
+    |合併 pr 按鈕（B-1）|a. feature 分支 -> dev 分支: 若審核此 pr 為通過，點擊此按鈕，會將改動合併到 dev 分支，並請押上 <img src="./assets/image/program-submission/merged-dev-label.png" style="width: 100px"/> label <br/> b. dev 分支 -> master 分支: 若審核此 pr 為通過，<span style="color: red">"請先在 B-2 標註 closes #&lt;issue-編號&gt;"</span>，點擊此按鈕，會將改動合併到 master 分支，且 github 會自動關閉被標註的 issues|
     |新增評論區塊 （B-2）|若審核此 pr 為"不"通過或是對於 pr 想做特別說明，請於此處註明原因|
 
   <br/>
