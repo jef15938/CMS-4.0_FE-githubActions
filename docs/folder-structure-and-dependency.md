@@ -8,7 +8,7 @@
 
 ## 1. 目錄結構、各模組範圍
 
-  <img src="./assets/image/folder-structure-and-dependency/folder-structure.png" style="width: 700px"></img>
+  <img src="./assets/image/folder-structure-and-dependency/folder-structure.png" style="width: 700px"/>
   <div class="text-center" style="width: 700px">【圖片】目錄結構、各模組範圍</div>
 <br/>
 
