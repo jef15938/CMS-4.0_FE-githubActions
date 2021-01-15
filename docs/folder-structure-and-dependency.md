@@ -8,14 +8,14 @@
 
 ## 1. 目錄結構、各模組範圍
 
-   ![folder structure](./assets/image/folder-structure-and-dependency/folder-structure.png)
-      <div class="text-center">【圖片】目錄結構、各模組範圍</div>
+  <img src="./assets/image/folder-structure-and-dependency/folder-structure.png" style="width: 700px"></img>
+  <div class="text-center" style="width: 700px">【圖片】目錄結構、各模組範圍</div>
 <br/>
 
 ## 2. 依賴關係
 
-   ![depemdency](./assets/image/folder-structure-and-dependency/dependency.png)
-      <div class="text-center">【圖片】依賴關係</div>
+  ![depemdency](./assets/image/folder-structure-and-dependency/dependency.png)
+  <div class="text-center">【圖片】依賴關係</div>
 <br/>
 
 <link rel="stylesheet" type="text/css" href="./style/style.css" />
