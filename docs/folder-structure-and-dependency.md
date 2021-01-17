@@ -12,30 +12,29 @@
 
     - #### app
 
-      - #### cms app: cms 主功能
+      - ##### cms app: cms 主功能
 
-      - #### render app: 實際看到的網頁內容
+      - ##### render app: 實際看到的網頁內容
 
     - #### library
 
-      - #### @neux/cms-core: cms 核心功能 library
+      - ##### @neux/cms-core: cms 核心功能 library
 
-      - #### @neux/render: render 核心功能 library
+      - ##### @neux/render: render 核心功能 library
 
-        - #### common: 共通模組
-        - #### data-access: 資料存取模組
-        - #### public-component: ui 模組
-        - #### renderer: renderer 模組
-        - #### render-templates: renderer 版型模組
-        - #### server-app: 啟動 render 模組
-
-
+        - ###### common: 共通模組
+        - ###### data-access: 資料存取模組
+        - ###### public-component: ui 模組
+        - ###### renderer: renderer 模組
+        - ###### render-templates: renderer 版型模組
+        - ###### server-app: 啟動 render 模組
 
   - ### 1.2. 各模組範圍圖示
 
     <img src="./assets/image/folder-structure-and-dependency/folder-structure.png" style="width: 700px"/>
     <div class="text-center" style="width: 700px">【圖片】目錄結構、各模組範圍</div>
-<br/>
+  
+    <br/>
 
 ## 2. 依賴關係
 
